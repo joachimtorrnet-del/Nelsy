@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import Stripe from 'npm:stripe@13.11.0'
+import { PostHog } from 'npm:posthog-node'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
 if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
@@ -111,6 +112,26 @@ serve(async (req) => {
       .from('bookings')
       .update({ stripe_payment_intent_id: paymentIntent.id })
       .eq('id', booking.id)
+
+    const posthog = new PostHog(Deno.env.get('POSTHOG_API_KEY') ?? '', {
+      host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
+      flushAt: 1,
+      flushInterval: 0,
+    })
+    posthog.capture({
+      distinctId: booking_data.client_email ?? booking.id,
+      event: 'booking created',
+      properties: {
+        booking_id: booking.id,
+        profile_id: booking_data.profile_id,
+        service_id: booking_data.service_id,
+        booking_datetime: booking_data.booking_datetime,
+        price_total: serviceAmount,
+        currency: 'eur',
+        has_connect_account: !!(profile.stripe_onboarding_complete && profile.stripe_account_id),
+      },
+    })
+    await posthog.shutdown()
 
     return new Response(
       JSON.stringify({

@@ -1,9 +1,18 @@
 import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
+import { PostHog } from 'npm:posthog-node'
+
+function createPostHogClient() {
+  return new PostHog(Deno.env.get('POSTHOG_API_KEY') ?? '', {
+    host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
+    flushAt: 1,
+    flushInterval: 0,
+  })
+}
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
-const FROM_EMAIL = 'Nelsy <onboarding@resend.dev>'
+const FROM_EMAIL = 'Nelsy <hello@nelsy.app>'
 
 async function sendEmail(to: string, subject: string, html: string) {
   if (!RESEND_API_KEY) return
@@ -84,6 +93,23 @@ serve(async (req) => {
           }
 
           console.log(`Booking ${meta.booking_id} paid: gross €${grossAmount}, Stripe fee €${stripeFee}, net to pro €${netAmount}`)
+
+          const posthogBooking = createPostHogClient()
+          posthogBooking.capture({
+            distinctId: meta.client_email ?? meta.booking_id,
+            event: 'booking payment completed',
+            properties: {
+              booking_id: meta.booking_id,
+              profile_id: meta.profile_id,
+              service_name: meta.service_name,
+              booking_datetime: meta.booking_datetime,
+              gross_amount: grossAmount,
+              net_amount: netAmount,
+              currency: 'eur',
+              payment_method: 'checkout_session',
+            },
+          })
+          await posthogBooking.shutdown()
 
           // ── Emails ────────────────────────────────────────────────
           try {
@@ -176,6 +202,17 @@ serve(async (req) => {
           .eq('id', userId)
 
         if (error) console.error('Error updating profile on checkout:', error.message)
+
+        const posthogTrial = createPostHogClient()
+        posthogTrial.capture({
+          distinctId: userId,
+          event: 'subscription trial started',
+          properties: {
+            plan: meta.plan ?? 'pro',
+            trial_ends_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+          },
+        })
+        await posthogTrial.shutdown()
         break
       }
 
@@ -213,6 +250,20 @@ serve(async (req) => {
           .eq('id', profile.id)
 
         if (error) console.error('Error updating subscription:', error.message)
+
+        if (status === 'active') {
+          const posthogSub = createPostHogClient()
+          posthogSub.capture({
+            distinctId: profile.id,
+            event: 'subscription activated',
+            properties: {
+              subscription_id: subscription.id,
+              plan: subscription.metadata?.plan ?? null,
+              current_period_end: new Date(subscription.current_period_end * 1000).toISOString(),
+            },
+          })
+          await posthogSub.shutdown()
+        }
         break
       }
 
@@ -239,6 +290,17 @@ serve(async (req) => {
           .eq('id', profile.id)
 
         if (error) console.error('Error cancelling subscription:', error.message)
+
+        const posthogCancel = createPostHogClient()
+        posthogCancel.capture({
+          distinctId: profile.id,
+          event: 'subscription cancelled',
+          properties: {
+            subscription_id: subscription.id,
+            plan: subscription.metadata?.plan ?? null,
+          },
+        })
+        await posthogCancel.shutdown()
         break
       }
 
@@ -300,6 +362,18 @@ serve(async (req) => {
           .eq('id', profile.id)
 
         if (error) console.error('Error updating past_due status:', error.message)
+
+        const posthogFailed = createPostHogClient()
+        posthogFailed.capture({
+          distinctId: profile.id,
+          event: 'subscription payment failed',
+          properties: {
+            invoice_id: invoice.id,
+            amount_due: (invoice.amount_due ?? 0) / 100,
+            currency: invoice.currency,
+          },
+        })
+        await posthogFailed.shutdown()
         break
       }
 
@@ -317,6 +391,18 @@ serve(async (req) => {
             .eq('stripe_account_id', account.id)
 
           if (error) console.error('Error updating stripe_onboarding_complete:', error.message)
+
+          const posthogConnect = createPostHogClient()
+          posthogConnect.capture({
+            distinctId: account.id,
+            event: 'stripe connect onboarding completed',
+            properties: {
+              stripe_account_id: account.id,
+              charges_enabled: account.charges_enabled,
+              details_submitted: account.details_submitted,
+            },
+          })
+          await posthogConnect.shutdown()
         }
         break
       }
@@ -359,12 +445,29 @@ serve(async (req) => {
         if (balanceError) console.error('Error adding to balance:', balanceError.message)
         console.log(`PaymentIntent booking: gross €${gross}, Stripe fee €${stripeFee}, net to pro €${net}`)
 
+        const posthogPI = createPostHogClient()
+        const serviceName = (booking.services as { name: string } | null)?.name ?? 'Service'
+        posthogPI.capture({
+          distinctId: booking.client_email ?? booking.id,
+          event: 'booking payment intent completed',
+          properties: {
+            booking_id: booking.id,
+            profile_id: booking.profile_id,
+            service_name: serviceName,
+            booking_datetime: booking.booking_datetime,
+            gross_amount: gross,
+            net_amount: net,
+            currency: 'eur',
+            payment_intent_id: paymentIntent.id,
+          },
+        })
+        await posthogPI.shutdown()
+
         // Emails
         try {
           const bookingDate = new Date(booking.booking_datetime ?? '')
           const dateStr = bookingDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
           const timeStr = bookingDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-          const serviceName = (booking.services as { name: string } | null)?.name ?? 'Service'
           const amount = parseFloat(String(booking.price_total)).toFixed(2)
 
           if (booking.client_email) {
@@ -459,6 +562,20 @@ serve(async (req) => {
         if (balanceError) console.error('Error deducting from balance:', balanceError.message)
 
         console.log(`Refund processed for booking ${booking.id}`)
+
+        const posthogRefund = createPostHogClient()
+        posthogRefund.capture({
+          distinctId: booking.profile_id,
+          event: 'booking refunded',
+          properties: {
+            booking_id: booking.id,
+            profile_id: booking.profile_id,
+            amount: booking.price_total,
+            currency: 'eur',
+            refund_id: refund?.id ?? null,
+          },
+        })
+        await posthogRefund.shutdown()
         break
       }
 

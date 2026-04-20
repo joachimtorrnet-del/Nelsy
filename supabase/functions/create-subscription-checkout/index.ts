@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
+import { PostHog } from 'npm:posthog-node'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
 if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
@@ -60,6 +61,23 @@ serve(async (req) => {
       success_url: `${origin}/onboarding/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/onboarding`,
     })
+
+    const posthog = new PostHog(Deno.env.get('POSTHOG_API_KEY') ?? '', {
+      host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
+      flushAt: 1,
+      flushInterval: 0,
+    })
+    posthog.capture({
+      distinctId: userId,
+      event: 'subscription checkout started',
+      properties: {
+        plan: plan ?? 'pro',
+        price_id: priceId,
+        trial_period_days: 14,
+        session_id: session.id,
+      },
+    })
+    await posthog.shutdown()
 
     return new Response(
       JSON.stringify({ url: session.url }),
