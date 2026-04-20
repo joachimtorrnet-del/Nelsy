@@ -777,8 +777,8 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
 // ─── Step 4 — Payment ─────────────────────────────────────────────────────────
 
 const PRICE_IDS: Record<'monthly' | 'yearly', string> = {
-  monthly: 'price_1T93HaKByJwN07HwOHfoFAYj',
-  yearly: 'price_1T93VSKByJwN07HwctacogTK',
+  monthly: 'price_1T8RQeKByJwN07Hw4mAN6FFD',
+  yearly: 'price_1T8RRxKByJwN07HwySgYEPTu',
 };
 
 function Step4({ formData, setFormData, prevStep }: StepProps) {
