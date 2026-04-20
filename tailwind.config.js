@@ -1,0 +1,123 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Legacy (used by Dashboard/Studio)
+        cream: '#FDFCF8',
+        espresso: '#2D2424',
+        primary: {
+          50: '#EEF2FF',
+          100: '#E0E7FF',
+          200: '#C7D2FE',
+          300: '#A5B4FC',
+          400: '#818CF8',
+          500: '#6366F1',
+          600: '#4F46E5',
+          700: '#4338CA',
+          900: '#312E81',
+        },
+        secondary: {
+          50: '#FDF2F8',
+          100: '#FCE7F3',
+          200: '#FBCFE8',
+          300: '#F9A8D4',
+          400: '#F472B6',
+          500: '#EC4899',
+          600: '#DB2777',
+        },
+        // Glowy Luxe Beauty Tech palette (Landing v1)
+        pearl: '#FFFBFB',
+        rose: {
+          50: '#FFF5F5',
+          100: '#FFE4E4',
+          200: '#F9CECE',
+          300: '#F4C2C2',
+          400: '#EDA0A0',
+          500: '#E07878',
+          600: '#C85252',
+        },
+        ink: '#1A1A1A',
+        mist: '#F7F3F3',
+        // Premium Electric palette (LandingPremium)
+        magenta: {
+          50:  '#FFF1F7',
+          100: '#FFE4F0',
+          200: '#FFC9E1',
+          300: '#FFA3CF',
+          400: '#FF6BB3',
+          500: '#F52B8C',
+          600: '#E0167A',
+          700: '#C00E68',
+          800: '#9D0D56',
+          900: '#7A0B45',
+        },
+        violet: {
+          400: '#9333EA',
+          500: '#7C3AED',
+          600: '#6D28D9',
+          700: '#5B21B6',
+        },
+        gray: {
+          50:  '#FAFAFA',
+          100: '#F4F4F5',
+          200: '#E4E4E7',
+          300: '#D4D4D8',
+          400: '#A1A1AA',
+          500: '#71717A',
+          600: '#52525B',
+          700: '#3F3F46',
+          800: '#27272A',
+          900: '#18181B',
+          950: '#09090B',
+        },
+      },
+      fontSize: {
+        // Mobile-first scale
+        'hero-mobile':    ['2rem',   { lineHeight: '1.1', fontWeight: '800' }],
+        'heading-mobile': ['1.5rem', { lineHeight: '1.2', fontWeight: '700' }],
+        'hero-desktop':   ['3.5rem', { lineHeight: '1.1', fontWeight: '800' }],
+        'heading-desktop':['2rem',   { lineHeight: '1.2', fontWeight: '700' }],
+        // Legacy display scale
+        'display-xl': ['5rem',   { lineHeight: '1.1', fontWeight: '800' }],
+        'display-lg': ['4rem',   { lineHeight: '1.1', fontWeight: '800' }],
+        'display-md': ['3rem',   { lineHeight: '1.2', fontWeight: '700' }],
+        'heading-xl': ['2.5rem', { lineHeight: '1.2', fontWeight: '700' }],
+        'heading-lg': ['2rem',   { lineHeight: '1.3', fontWeight: '600' }],
+        'body-lg':    ['1.25rem',{ lineHeight: '1.6', fontWeight: '400' }],
+        'body':       ['1rem',   { lineHeight: '1.6', fontWeight: '400' }],
+      },
+      spacing: {
+        '18': '4.5rem',
+        '22': '5.5rem',
+        '26': '6.5rem',
+        '30': '7.5rem',
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
+      },
+      keyframes: {
+        'fade-in': { from: { opacity: '0', transform: 'translateY(16px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+        'fade-in-up': { '0%': { opacity: '0', transform: 'translateY(20px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } },
+        float: { '0%, 100%': { transform: 'translateY(0px)' }, '50%': { transform: 'translateY(-10px)' } },
+        shimmer: { '0%': { backgroundPosition: '-200% center' }, '100%': { backgroundPosition: '200% center' } },
+        'glow-pulse': { '0%, 100%': { boxShadow: '0 0 20px 4px rgba(233,30,99,0.35)' }, '50%': { boxShadow: '0 0 40px 12px rgba(233,30,99,0.55)' } },
+        'marquee': { '0%': { transform: 'translateX(0)' }, '100%': { transform: 'translateX(-50%)' } },
+      },
+      animation: {
+        'fade-in': 'fade-in 0.5s ease-out forwards',
+        'fade-in-up': 'fade-in-up 0.6s ease-out forwards',
+        float: 'float 3s ease-in-out infinite',
+        shimmer: 'shimmer 2.5s linear infinite',
+        'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+        'marquee': 'marquee 20s linear infinite',
+      },
+    },
+  },
+  plugins: [],
+}
