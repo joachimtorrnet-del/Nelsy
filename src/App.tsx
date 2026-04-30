@@ -1,6 +1,8 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import { getStripe } from '@/lib/stripe';
+import { useEffect } from 'react';
+import posthog from 'posthog-js';
 import Landing from './pages/Landing';
 import LandingPremium from './pages/LandingPremium';
 import Onboarding from './pages/Onboarding';
@@ -16,10 +18,19 @@ import BookingConfirmed from './pages/BookingConfirmed';
 import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 
+function PageviewTracker() {
+  const location = useLocation();
+  useEffect(() => {
+    posthog.capture('$pageview');
+  }, [location.pathname]);
+  return null;
+}
+
 export default function App() {
   return (
     <Elements stripe={getStripe()}>
       <BrowserRouter>
+        <PageviewTracker />
         <Routes>
           <Route path="/" element={<LandingPremium />} />
           <Route path="/landing-old" element={<Landing />} />

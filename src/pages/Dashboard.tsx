@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import posthog from 'posthog-js';
 import { supabase } from '../lib/supabase';
 
 import Home from './dashboard/Home';
@@ -50,6 +51,12 @@ export default function Dashboard() {
         .single();
 
       setProfile(profile);
+
+      posthog.identify(user.id, {
+        email: user.email,
+        name: profile?.full_name,
+        slug: profile?.slug,
+      });
 
       // Load pending bookings count for badge
       const { count } = await supabase
