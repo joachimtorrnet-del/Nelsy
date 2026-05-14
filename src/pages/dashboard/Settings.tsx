@@ -113,7 +113,7 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
   const accountItems = [
     { label: 'Edit Profile Details', desc: 'Update name, email, address', action: () => setShowEditProfile(true) },
     { label: 'Change Password', desc: 'Update your password', action: () => setShowChangePassword(true) },
-    { label: 'Subscription', desc: loadingPortal ? 'Opening portal…' : (profile?.subscription_status as string || 'Trial plan'), action: () => void handleSubscription() },
+    { label: 'Manage subscription', desc: loadingPortal ? 'Opening portal…' : 'Change plan, update payment or cancel', action: () => void handleSubscription() },
     { label: 'Payment Methods', desc: 'Setup Stripe payouts', action: () => navigate('/onboarding-stripe') },
   ];
 

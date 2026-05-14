@@ -38,13 +38,15 @@ function Nav() {
           <div className="w-6 h-6 rounded-md" style={{ backgroundColor: '#F52B8C' }} />
           <span className="text-base font-bold text-gray-900">Nelsy</span>
         </div>
-        <div className="flex items-center gap-3">
-          <Link to="/login" className="text-sm text-gray-600 hover:text-gray-900 font-medium hidden sm:block">
-            Log in
+        <div className="flex items-center gap-2">
+          <Link to="/login">
+            <button className="px-4 py-2 rounded-lg text-sm font-bold border-2 border-gray-200 text-gray-700 hover:border-gray-300 transition active:scale-95">
+              Log in
+            </button>
           </Link>
           <Link to="/onboarding">
             <button className="px-4 py-2 text-white rounded-lg text-sm font-bold transition active:scale-95 shadow-sm hover:opacity-90" style={{ backgroundColor: '#F52B8C' }}>
-              Continue →
+              Get started →
             </button>
           </Link>
         </div>
