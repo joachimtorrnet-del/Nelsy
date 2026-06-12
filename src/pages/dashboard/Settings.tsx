@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, ChevronRight, ChevronDown, LogOut, Edit2, Clock } from 'lucide-react';
+import { Bell, ChevronRight, ChevronDown, LogOut, Edit2, Clock, AlertTriangle, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { updateProfile } from '../../lib/supabase-queries';
 import ImageUpload from '../../components/dashboard/ImageUpload';
@@ -33,6 +33,9 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
     reminders: false,
   });
   const [loadingPortal, setLoadingPortal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
+  const [cancelSuccess, setCancelSuccess] = useState<{ periodEnd: number } | null>(null);
 
   // Sync from parent prop, or load independently if not provided
   useEffect(() => {
@@ -110,11 +113,28 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
     }
   };
 
-  const accountItems = [
+  const handleCancelSubscription = async () => {
+    if (!supabase) return;
+    setCancelLoading(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('cancel-subscription', {});
+      if (error || !data?.success) throw new Error(error?.message ?? 'Failed to cancel');
+      setCancelSuccess({ periodEnd: data.current_period_end as number });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Could not cancel subscription. Try again.';
+      showToast(msg, 'error');
+      setShowCancelModal(false);
+    } finally {
+      setCancelLoading(false);
+    }
+  };
+
+  const accountItems: { label: string; desc: string; action: () => void; danger?: boolean }[] = [
     { label: 'Edit Profile Details', desc: 'Update name, email, address', action: () => setShowEditProfile(true) },
     { label: 'Change Password', desc: 'Update your password', action: () => setShowChangePassword(true) },
-    { label: 'Manage subscription', desc: loadingPortal ? 'Opening portal…' : 'Change plan, update payment or cancel', action: () => void handleSubscription() },
+    { label: 'Manage subscription', desc: loadingPortal ? 'Opening portal…' : 'Change plan or update payment', action: () => void handleSubscription() },
     { label: 'Payment Methods', desc: 'Setup Stripe payouts', action: () => navigate('/onboarding-stripe') },
+    { label: 'Cancel subscription', desc: 'End your Nelsy plan at period end', action: () => setShowCancelModal(true), danger: true },
   ];
 
   if (!profile) {
@@ -256,13 +276,15 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
                 <button
                   key={i}
                   onClick={item.action}
-                  className="w-full px-5 py-3.5 flex items-center justify-between hover:bg-gray-100 transition border-b border-gray-100 last:border-0"
+                  className={`w-full px-5 py-3.5 flex items-center justify-between transition border-b border-gray-100 last:border-0 ${
+                    item.danger ? 'hover:bg-red-50' : 'hover:bg-gray-100'
+                  }`}
                 >
                   <div className="text-left">
-                    <p className="text-sm font-semibold text-gray-900">{item.label}</p>
+                    <p className={`text-sm font-semibold ${item.danger ? 'text-red-500' : 'text-gray-900'}`}>{item.label}</p>
                     <p className="text-xs text-gray-400 mt-0.5">{item.desc}</p>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                  <ChevronRight className={`w-4 h-4 flex-shrink-0 ${item.danger ? 'text-red-300' : 'text-gray-400'}`} />
                 </button>
               ))}
             </div>
@@ -361,6 +383,69 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
       />
 
       {toast && <Toast type={toast.type} message={toast.message} onClose={hideToast} />}
+
+      {/* Cancel Subscription Modal */}
+      {showCancelModal && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+          <div className="bg-white rounded-2xl w-full max-w-sm p-6 shadow-2xl">
+            {cancelSuccess ? (
+              <>
+                <div className="text-center mb-4">
+                  <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">✅</span>
+                  </div>
+                  <h2 className="text-lg font-bold text-gray-900">Subscription cancelled</h2>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Your access remains active until{' '}
+                    <strong>
+                      {new Date(cancelSuccess.periodEnd * 1000).toLocaleDateString('en-GB', {
+                        day: 'numeric', month: 'long', year: 'numeric',
+                      })}
+                    </strong>
+                    . After that, your account will be deactivated.
+                  </p>
+                </div>
+                <button
+                  onClick={() => { setShowCancelModal(false); setCancelSuccess(null); }}
+                  className="w-full py-3 bg-gray-900 text-white rounded-xl font-semibold text-sm"
+                >
+                  Close
+                </button>
+              </>
+            ) : (
+              <>
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <AlertTriangle className="w-5 h-5 text-red-500" />
+                  </div>
+                  <button onClick={() => setShowCancelModal(false)} className="text-gray-400 hover:text-gray-600 p-1">
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <h2 className="text-lg font-bold text-gray-900 mb-1">Cancel your subscription?</h2>
+                <p className="text-sm text-gray-500 mb-5">
+                  You will keep full access until the end of your current billing period. After that, your studio page will be deactivated and clients won't be able to book.
+                </p>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setShowCancelModal(false)}
+                    className="w-full py-3 bg-[#F52B8C] text-white rounded-xl font-semibold text-sm hover:opacity-90 transition"
+                  >
+                    Keep my subscription
+                  </button>
+                  <button
+                    onClick={() => void handleCancelSubscription()}
+                    disabled={cancelLoading}
+                    className="w-full py-3 border border-red-200 text-red-500 rounded-xl font-semibold text-sm hover:bg-red-50 transition disabled:opacity-50"
+                  >
+                    {cancelLoading ? 'Cancelling…' : 'Yes, cancel subscription'}
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
