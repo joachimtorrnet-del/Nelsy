@@ -166,7 +166,7 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
             <div className="flex-1 min-w-0">
               <p className="font-bold text-gray-900">{profile.full_name as string}</p>
               <p className="text-gray-400 text-sm">{profile.email as string}</p>
-              <p className="text-[#F52B8C] text-xs mt-0.5">nelsy.app/{profile.slug as string}</p>
+              <p className="text-[#F52B8C] text-xs mt-0.5">getnelsy.com/{profile.slug as string}</p>
             </div>
             <button
               onClick={() => setShowEditProfile(true)}

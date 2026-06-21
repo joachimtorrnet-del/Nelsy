@@ -179,7 +179,7 @@ function Hero() {
                   <svg className="w-3 h-3 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>
-                  yourname.nelsy.app
+                  yourname.getnelsy.com
                 </div>
               </div>
             </div>
@@ -491,7 +491,7 @@ function Footer() {
         <div className="flex flex-wrap items-center justify-center gap-5 text-sm text-gray-500">
           <Link to="/privacy" className="hover:text-white transition">Privacy</Link>
           <Link to="/terms" className="hover:text-white transition">Terms</Link>
-          <a href="mailto:support@nelsy.app" className="hover:text-white transition">Contact</a>
+          <a href="mailto:support@getnelsy.com" className="hover:text-white transition">Contact</a>
           <Link to="/studio/maya" className="hover:text-white transition">Demo</Link>
         </div>
         <p className="text-xs text-gray-600">© {new Date().getFullYear()} Nelsy</p>

@@ -456,7 +456,7 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
           <div className="space-y-1">
             <div className="relative">
               <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none select-none">
-                nelsy.app/
+                getnelsy.com/
               </div>
               <input
                 type="text"
@@ -489,7 +489,7 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
             </div>
             {errors.username && <p className="text-xs text-red-600">{errors.username}</p>}
             {!errors.username && usernameAvailable === true && formData.username && (
-              <p className="text-xs text-green-600">✓ Username available — nelsy.app/{formData.username}</p>
+              <p className="text-xs text-green-600">✓ Username available — getnelsy.com/{formData.username}</p>
             )}
           </div>
 

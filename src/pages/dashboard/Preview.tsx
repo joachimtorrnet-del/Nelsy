@@ -114,7 +114,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   }, [profile?.id]);
 
   const copyLink = () => {
-    navigator.clipboard.writeText(`https://nelsy.app/${slug}`);
+    navigator.clipboard.writeText(`https://getnelsy.com/${slug}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
     showSuccess('Link copied!');
@@ -177,7 +177,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
           <div className="flex items-center gap-3 bg-gray-50 rounded-2xl px-4 py-3">
             <div className="flex-1 min-w-0">
               <p className="text-xs text-gray-400 mb-0.5">Your store link</p>
-              <p className="text-sm font-semibold text-gray-900 truncate">nelsy.app/{slug}</p>
+              <p className="text-sm font-semibold text-gray-900 truncate">getnelsy.com/{slug}</p>
             </div>
             <button
               onClick={copyLink}

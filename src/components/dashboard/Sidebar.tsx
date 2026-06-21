@@ -24,7 +24,7 @@ const navItems = [
   { to: '/dashboard/settings', icon: Settings, label: 'Réglages' },
 ];
 
-const studioUrl = 'nelsy.app/studio-maya';
+const studioUrl = 'getnelsy.com/studio-maya';
 
 interface SidebarProps {
   mobileOpen?: boolean;

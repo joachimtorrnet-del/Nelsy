@@ -120,7 +120,7 @@ export default function Privacy() {
               If you have any questions about this Privacy Policy, please contact us:
             </p>
             <p className="text-gray-600">
-              Email: <a href="mailto:privacy@nelsy.app" className="text-[#F52B8C] hover:opacity-80">privacy@nelsy.app</a>
+              Email: <a href="mailto:privacy@getnelsy.com" className="text-[#F52B8C] hover:opacity-80">privacy@getnelsy.com</a>
             </p>
           </section>
         </div>

@@ -12,7 +12,7 @@ function createPostHogClient() {
 }
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
-const FROM_EMAIL = 'Nelsy <hello@nelsy.app>'
+const FROM_EMAIL = 'Nelsy <hello@getnelsy.com>'
 
 async function sendEmail(to: string, subject: string, html: string) {
   if (!RESEND_API_KEY) return
@@ -173,7 +173,7 @@ serve(async (req) => {
                     </table>
                   </div>
                   <div style="text-align:center">
-                    <a href="https://nelsy.app/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Voir dans mon dashboard →</a>
+                    <a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Voir dans mon dashboard →</a>
                   </div>
                 </div>
                 `
@@ -520,7 +520,7 @@ serve(async (req) => {
                   </table>
                 </div>
                 <div style="text-align:center">
-                  <a href="https://nelsy.app/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Voir dans mon dashboard →</a>
+                  <a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Voir dans mon dashboard →</a>
                 </div>
               </div>`
             )

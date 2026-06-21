@@ -71,7 +71,7 @@ export function Hero() {
               <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto lg:mx-0">
                 <div className="flex-1 relative">
                   <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium text-sm pointer-events-none">
-                    nelsy.app/
+                    getnelsy.com/
                   </span>
                   <input
                     type="text"

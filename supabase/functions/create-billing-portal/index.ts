@@ -60,7 +60,7 @@ serve(async (req) => {
 
     const session = await stripe.billingPortal.sessions.create({
       customer: profile.stripe_customer_id,
-      return_url: return_url || Deno.env.get('SUPABASE_URL')?.replace('supabase.co', 'nelsy.app') + '/dashboard',
+      return_url: return_url || Deno.env.get('SUPABASE_URL')?.replace('supabase.co', 'getnelsy.com') + '/dashboard',
     })
 
     return new Response(JSON.stringify({ url: session.url }), {

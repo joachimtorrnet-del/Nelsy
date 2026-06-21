@@ -36,7 +36,7 @@ serve(async (req) => {
       })
     }
 
-    const origin = req.headers.get('origin') ?? 'https://nelsy.app'
+    const origin = req.headers.get('origin') ?? 'https://getnelsy.com'
 
     // Create customer first (required for Accounts V2)
     const customer = await stripe.customers.create({

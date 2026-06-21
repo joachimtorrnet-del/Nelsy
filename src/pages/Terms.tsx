@@ -110,7 +110,7 @@ export default function Terms() {
               If you have any questions about these Terms, please contact us at:
             </p>
             <p className="text-gray-600">
-              Email: <a href="mailto:support@nelsy.app" className="text-[#F52B8C] hover:opacity-80">support@nelsy.app</a>
+              Email: <a href="mailto:support@getnelsy.com" className="text-[#F52B8C] hover:opacity-80">support@getnelsy.com</a>
             </p>
           </section>
         </div>

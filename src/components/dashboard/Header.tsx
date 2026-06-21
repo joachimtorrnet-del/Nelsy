@@ -12,7 +12,7 @@ export default function Header({ profile }: { profile: Profile | null }) {
   const [copied, setCopied] = useState(false);
 
   const copyUrl = () => {
-    navigator.clipboard.writeText(`https://nelsy.app/${slug}`);
+    navigator.clipboard.writeText(`https://getnelsy.com/${slug}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
   };
@@ -36,7 +36,7 @@ export default function Header({ profile }: { profile: Profile | null }) {
             rel="noopener noreferrer"
             className="text-[#F52B8C] text-sm font-medium"
           >
-            nelsy.app/{slug}
+            getnelsy.com/{slug}
           </a>
           <button
             onClick={copyUrl}

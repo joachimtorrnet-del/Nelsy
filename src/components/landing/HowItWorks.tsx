@@ -14,7 +14,7 @@ const steps = [
     icon: Share2,
     number: '02',
     title: 'Partagez votre lien dans votre bio',
-    description: 'Un seul lien nelsy.app/votre-nom dans votre bio Instagram. Vos followers deviennent des clientes.',
+    description: 'Un seul lien getnelsy.com/votre-nom dans votre bio Instagram. Vos followers deviennent des clientes.',
     color: 'from-pink-400 to-rose-500',
     bgLight: 'bg-pink-50',
   },
