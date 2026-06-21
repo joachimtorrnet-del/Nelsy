@@ -20,7 +20,7 @@ export interface Merchant {
   rating?: number;
   review_count?: number;
   services: Service[];
-  theme?: 'light' | 'dark';
+  theme_preset?: string;
   color_accent?: string;
 }
 

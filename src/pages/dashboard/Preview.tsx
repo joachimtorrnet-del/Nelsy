@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Share2, Eye, Plus, Pencil, Check, ExternalLink } from 'lucide-react';
+import { THEMES } from '../../lib/themes';
 import Toast from '../../components/dashboard/Toast';
 import ConfirmDialog from '../../components/dashboard/ConfirmDialog';
 import AddEditServiceModal from '../../components/dashboard/AddEditServiceModal';
@@ -14,6 +15,8 @@ interface Profile {
   instagram_url?: string;
   tiktok_url?: string;
   color_accent?: string;
+  theme_preset?: string;
+  bio?: string;
 }
 
 const THEME_COLORS = ['#F52B8C', '#9B59B6', '#3498DB', '#E74C3C', '#2ECC71'] as const;
@@ -46,24 +49,26 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   const [avatarUrl, setAvatarUrl] = useState(profile?.logo_url || '');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Customize tab fields
   const [customForm, setCustomForm] = useState({
     full_name: profile?.full_name || '',
+    bio: profile?.bio || '',
     instagram_url: profile?.instagram_url || '',
     tiktok_url: profile?.tiktok_url || '',
     color_accent: profile?.color_accent || '#F52B8C',
+    theme_preset: profile?.theme_preset || 'soft',
   });
 
-  // Sync when profile prop changes
   useEffect(() => {
     setAvatarUrl(profile?.logo_url || '');
     setCustomForm({
       full_name: profile?.full_name || '',
+      bio: profile?.bio || '',
       instagram_url: profile?.instagram_url || '',
       tiktok_url: profile?.tiktok_url || '',
       color_accent: profile?.color_accent || '#F52B8C',
+      theme_preset: profile?.theme_preset || 'soft',
     });
-  }, [profile?.full_name, profile?.instagram_url, profile?.tiktok_url, profile?.color_accent, profile?.logo_url]);
+  }, [profile?.full_name, profile?.bio, profile?.instagram_url, profile?.tiktok_url, profile?.color_accent, profile?.theme_preset, profile?.logo_url]);
 
   const { toast, showSuccess, showError, hideToast } = useToast();
 
@@ -385,95 +390,58 @@ export default function Preview({ profile }: { profile: Profile | null }) {
 
       {/* ── EDIT DESIGN TAB ── */}
       {activeTab === 'customize' && (
-        <div className="px-4 pt-5 space-y-4">
+        <div className="px-4 pt-5 space-y-5 pb-6">
 
-          {/* Profile section */}
-          <div className="bg-gray-50 rounded-2xl p-5">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Profile</p>
-
-            <div className="flex items-center gap-4 mb-5">
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[#F52B8C] to-[#E0167A] flex items-center justify-center overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
-                {avatarUrl
-                  ? <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
-                  : <span className="text-white font-bold text-2xl">{initials}</span>
-                }
-              </div>
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploadingPhoto}
-                className="flex items-center gap-1.5 px-4 py-2 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 transition disabled:opacity-50"
-              >
-                <Pencil className="w-3.5 h-3.5" />
-                {uploadingPhoto ? 'Uploading…' : 'Change photo'}
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handlePhotoUpload}
-              />
-            </div>
-
-            <div className="space-y-3">
-              <div>
-                <label className="block text-xs font-semibold text-gray-500 mb-1.5">Studio name</label>
-                <input
-                  type="text"
-                  value={customForm.full_name}
-                  onChange={(e) => setCustomForm((f) => ({ ...f, full_name: e.target.value }))}
-                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
-                  placeholder="Your Studio Name"
-                />
-              </div>
+          {/* Templates */}
+          <div>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Template</p>
+            <div className="grid grid-cols-5 gap-2">
+              {Object.values(THEMES).map((t) => {
+                const selected = customForm.theme_preset === t.id;
+                return (
+                  <button
+                    key={t.id}
+                    onClick={() => setCustomForm((f) => ({ ...f, theme_preset: t.id, color_accent: t.defaultAccent }))}
+                    className={`relative rounded-2xl overflow-hidden transition-all ${selected ? 'ring-2 ring-[#F52B8C] ring-offset-2' : 'ring-1 ring-gray-200'}`}
+                  >
+                    {/* Mini preview header */}
+                    <div className="h-14" style={{ background: t.headerGradient }} />
+                    {/* Mini avatar dot */}
+                    <div
+                      className="absolute top-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-2 border-white"
+                      style={{ backgroundColor: t.defaultAccent }}
+                    />
+                    {/* Label */}
+                    <div className="py-1.5 text-center" style={{ backgroundColor: t.pageBg }}>
+                      <p className="text-[10px] font-bold truncate px-1" style={{ color: t.textPrimary }}>
+                        {t.name}
+                      </p>
+                    </div>
+                    {selected && (
+                      <div className="absolute top-1 right-1 w-4 h-4 bg-[#F52B8C] rounded-full flex items-center justify-center">
+                        <Check className="w-2.5 h-2.5 text-white" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
-          {/* Social Links */}
-          <div className="bg-gray-50 rounded-2xl p-5">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Social Links</p>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">
-                  IG
-                </div>
-                <input
-                  type="text"
-                  value={customForm.instagram_url}
-                  onChange={(e) => setCustomForm((f) => ({ ...f, instagram_url: e.target.value }))}
-                  placeholder="@your_instagram"
-                  className="flex-1 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-black rounded-xl flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">
-                  TT
-                </div>
-                <input
-                  type="text"
-                  value={customForm.tiktok_url}
-                  onChange={(e) => setCustomForm((f) => ({ ...f, tiktok_url: e.target.value }))}
-                  placeholder="@your_tiktok"
-                  className="flex-1 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Theme Color */}
-          <div className="bg-gray-50 rounded-2xl p-5">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Theme Color</p>
+          {/* Accent Color */}
+          <div>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Accent Color</p>
             <div className="flex items-center gap-3">
               <div
-                className="w-10 h-10 rounded-xl shadow-md flex-shrink-0 transition-all"
-                style={{ background: customForm.color_accent, boxShadow: `0 4px 12px ${customForm.color_accent}50` }}
+                className="w-9 h-9 rounded-xl shadow-sm flex-shrink-0"
+                style={{ background: customForm.color_accent }}
               />
-              <div className="flex gap-2">
-                {THEME_COLORS.map((color) => (
+              <div className="flex gap-2 flex-wrap">
+                {['#F52B8C', '#9333EA', '#3B82F6', '#E0024A', '#8B6343', '#059669'].map((color) => (
                   <button
                     key={color}
                     onClick={() => setCustomForm((f) => ({ ...f, color_accent: color }))}
-                    className="w-8 h-8 rounded-full shadow-sm transition hover:scale-110"
+                    className="w-7 h-7 rounded-full transition hover:scale-110"
                     style={{
                       background: color,
                       outline: customForm.color_accent === color ? `3px solid ${color}` : '3px solid transparent',
@@ -481,7 +449,85 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                     }}
                   />
                 ))}
+                <label className="w-7 h-7 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-gray-400 transition overflow-hidden">
+                  <input
+                    type="color"
+                    value={customForm.color_accent}
+                    onChange={(e) => setCustomForm((f) => ({ ...f, color_accent: e.target.value }))}
+                    className="opacity-0 absolute w-1 h-1"
+                  />
+                  <span className="text-gray-400 text-xs font-bold">+</span>
+                </label>
               </div>
+            </div>
+          </div>
+
+          {/* Profile info */}
+          <div className="bg-gray-50 rounded-2xl p-4 space-y-3">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Profile</p>
+
+            <div className="flex items-center gap-3">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#F52B8C] to-[#E0167A] flex items-center justify-center overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
+                {avatarUrl
+                  ? <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+                  : <span className="text-white font-bold text-xl">{initials}</span>
+                }
+              </div>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                disabled={uploadingPhoto}
+                className="flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 transition disabled:opacity-50"
+              >
+                <Pencil className="w-3.5 h-3.5" />
+                {uploadingPhoto ? 'Uploading…' : 'Change photo'}
+              </button>
+              <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5">Studio name</label>
+              <input
+                type="text"
+                value={customForm.full_name}
+                onChange={(e) => setCustomForm((f) => ({ ...f, full_name: e.target.value }))}
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+                placeholder="Your Studio Name"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5">Bio</label>
+              <textarea
+                value={customForm.bio}
+                onChange={(e) => setCustomForm((f) => ({ ...f, bio: e.target.value }))}
+                rows={2}
+                maxLength={120}
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition resize-none"
+                placeholder="Professional nail tech 💅 Paris 9e"
+              />
+              <p className="text-right text-[10px] text-gray-300 mt-1">{customForm.bio.length}/120</p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">IG</div>
+              <input
+                type="text"
+                value={customForm.instagram_url}
+                onChange={(e) => setCustomForm((f) => ({ ...f, instagram_url: e.target.value }))}
+                placeholder="@your_instagram"
+                className="flex-1 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+              />
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-black rounded-xl flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">TT</div>
+              <input
+                type="text"
+                value={customForm.tiktok_url}
+                onChange={(e) => setCustomForm((f) => ({ ...f, tiktok_url: e.target.value }))}
+                placeholder="@your_tiktok"
+                className="flex-1 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+              />
             </div>
           </div>
 
@@ -493,9 +539,11 @@ export default function Preview({ profile }: { profile: Profile | null }) {
               try {
                 const { error } = await updateProfile(profile.id, {
                   full_name: customForm.full_name,
+                  bio: customForm.bio,
                   instagram_url: customForm.instagram_url,
                   tiktok_url: customForm.tiktok_url,
                   color_accent: customForm.color_accent,
+                  theme_preset: customForm.theme_preset,
                 });
                 if (error) throw error;
                 showSuccess('Changes saved!');
@@ -510,7 +558,6 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             {savingProfile ? 'Saving...' : 'Save Changes'}
           </button>
 
-          {/* View live link */}
           <a
             href={`/${slug}`}
             target="_blank"

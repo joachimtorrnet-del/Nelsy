@@ -17,6 +17,7 @@ export interface DbProfileRow {
   instagram_url: string | null;
   tiktok_url: string | null;
   color_accent: string | null;
+  theme_preset: string | null;
   stripe_account_id: string | null;
   stripe_customer_id: string | null;
   stripe_onboarding_complete: boolean;

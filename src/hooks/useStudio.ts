@@ -33,6 +33,7 @@ function dbProfileToMerchant(profile: DbProfile, services: DbService[]): Merchan
       : undefined,
     tiktok: profile.tiktok_url ?? undefined,
     color_accent: profile.color_accent ?? undefined,
+    theme_preset: profile.theme_preset ?? 'soft',
     services: services.map(dbServiceToService),
   };
 }

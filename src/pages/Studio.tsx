@@ -16,6 +16,7 @@ import {
   getApprovedTestimonials,
   getBusinessHours,
 } from '@/lib/supabase-queries';
+import { getTheme } from '@/lib/themes';
 import type { GalleryPhoto, Testimonial, BusinessHour } from '@/lib/supabase-queries';
 
 // ── Skeleton ──────────────────────────────────────────────────────────────────
@@ -92,10 +93,11 @@ export default function Studio() {
     }
   };
 
-  const accent = merchant?.color_accent ?? '#F52B8C';
+  const theme = getTheme(merchant?.theme_preset, merchant?.color_accent);
+  const accent = theme.defaultAccent;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className={`min-h-screen ${theme.fontClass}`} style={{ backgroundColor: theme.pageBg }}>
       {/* Minimal sticky header */}
       <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-30">
         <div className="max-w-lg mx-auto px-4 h-12 flex items-center justify-between">
@@ -138,7 +140,7 @@ export default function Studio() {
           </div>
         ) : (
           <>
-            <StudioHero merchant={merchant} />
+            <StudioHero merchant={merchant} theme={theme} />
 
             <StudioServiceList
               services={merchant.services}

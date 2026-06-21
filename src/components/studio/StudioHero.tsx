@@ -2,6 +2,7 @@ import { Instagram } from 'lucide-react';
 import { motion } from 'framer-motion';
 import type { Merchant } from '@/types';
 import { Avatar } from '@/components/shared/Avatar';
+import type { NelsyTheme } from '@/lib/themes';
 
 function TikTokIcon() {
   return (
@@ -17,9 +18,10 @@ function parseTikTok(raw: string): string {
 
 interface Props {
   merchant: Merchant;
+  theme: NelsyTheme;
 }
 
-export function StudioHero({ merchant }: Props) {
+export function StudioHero({ merchant, theme }: Props) {
   const tiktokHandle = merchant.tiktok ? parseTikTok(merchant.tiktok) : undefined;
 
   return (
@@ -27,26 +29,32 @@ export function StudioHero({ merchant }: Props) {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className="flex flex-col items-center text-center pt-8 pb-6 px-4"
+      className="flex flex-col items-center text-center pt-10 pb-8 px-4"
+      style={{ background: theme.headerGradient }}
     >
       <Avatar
         src={merchant.logo_url}
         name={merchant.name}
         size="xl"
-        className="mb-4 shadow-lg"
+        className="mb-4 shadow-lg ring-4 ring-white/30"
       />
 
-      <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight mb-2">
+      <h1
+        className="text-3xl font-extrabold tracking-tight mb-2"
+        style={{ color: theme.headerTextPrimary }}
+      >
         {merchant.salon_name}
       </h1>
 
       {merchant.bio && (
-        <p className="text-gray-500 text-sm leading-relaxed max-w-xs mb-4">
+        <p
+          className="text-sm leading-relaxed max-w-xs mb-4"
+          style={{ color: theme.headerTextSecondary }}
+        >
           {merchant.bio}
         </p>
       )}
 
-      {/* Social icons — only if social links exist */}
       {(merchant.instagram || tiktokHandle) && (
         <div className="flex items-center gap-2">
           {merchant.instagram && (
@@ -54,10 +62,11 @@ export function StudioHero({ merchant }: Props) {
               href={`https://instagram.com/${merchant.instagram}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+              className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+              style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}
               aria-label="Instagram"
             >
-              <Instagram className="w-4 h-4 text-gray-600" />
+              <Instagram className="w-4 h-4" style={{ color: theme.headerTextPrimary }} />
             </a>
           )}
           {tiktokHandle && (
@@ -65,7 +74,8 @@ export function StudioHero({ merchant }: Props) {
               href={`https://tiktok.com/@${tiktokHandle}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
+              className="w-9 h-9 rounded-full flex items-center justify-center transition-colors"
+              style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}
               aria-label="TikTok"
             >
               <TikTokIcon />
