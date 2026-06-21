@@ -143,7 +143,7 @@ function Hero() {
         >
           <span className="flex items-center gap-1.5">
             <CheckIcon className="w-4 h-4 text-green-500" />
-            <span className="font-medium">Start free</span>
+            <span className="font-medium">14-day free trial</span>
           </span>
           <span className="text-gray-300">•</span>
           <span className="flex items-center gap-1.5">
@@ -478,6 +478,112 @@ function FinalCTA() {
   );
 }
 
+// ─── 6. ZERO COMMISSION ───────────────────────────────────────────────────────
+
+function ZeroCommission() {
+  return (
+    <section className="py-20 sm:py-32 bg-white px-4 overflow-hidden">
+      <div className="max-w-2xl mx-auto text-center">
+        <motion.div {...fadeUp()}>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="text-[7rem] sm:text-[11rem] font-black leading-none mb-2 select-none"
+            style={{ color: '#F52B8C', filter: 'drop-shadow(0 0 60px rgba(245,43,140,0.15))' }}
+          >
+            0%
+          </motion.div>
+          <motion.h2 {...fadeUp(0.1)} className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6">
+            Commission. Always.
+          </motion.h2>
+          <motion.p {...fadeUp(0.18)} className="text-lg sm:text-xl text-gray-500 max-w-lg mx-auto leading-relaxed">
+            Every other platform takes a cut of your bookings. Nelsy doesn't.
+            You keep 100% of what you charge — minus Stripe's standard 2.9% payment fee. That's it.
+          </motion.p>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
+// ─── 6b. COMPARISON TABLE ─────────────────────────────────────────────────────
+
+function ComparisonTable() {
+  const rows = [
+    { feature: 'Online booking page',     dms: false,   others: true,    nelsy: true  },
+    { feature: 'Commission per booking',  dms: false,   others: '5–20%', nelsy: '0%'  },
+    { feature: 'Deposit / prepayment',    dms: false,   others: true,    nelsy: true  },
+    { feature: 'No-show protection',      dms: false,   others: false,   nelsy: true  },
+    { feature: 'Your own brand & colors', dms: false,   others: false,   nelsy: true  },
+    { feature: 'Setup time',              dms: '∞ DMs', others: 'Days',  nelsy: '8 min' },
+  ];
+
+  const Cell = ({ value }: { value: boolean | string }) => {
+    if (value === true)  return <span className="text-xl" style={{ color: '#F52B8C' }}>✓</span>;
+    if (value === false) return <span className="text-xl text-gray-300">✕</span>;
+    return <span className="text-sm font-bold text-gray-700">{value}</span>;
+  };
+
+  return (
+    <section className="py-16 sm:py-24 bg-gray-50 px-4">
+      <div className="max-w-md mx-auto sm:max-w-3xl">
+        <motion.div {...fadeUp()} className="text-center mb-12">
+          <h2 className="text-heading-mobile sm:text-heading-desktop text-gray-900 mb-4">
+            Not just another booking app.
+          </h2>
+          <p className="text-lg sm:text-xl text-gray-500">
+            See what you've been missing.
+          </p>
+        </motion.div>
+
+        <motion.div {...fadeUp(0.1)} className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+          {/* Header */}
+          <div className="grid grid-cols-4 text-center text-xs sm:text-sm font-bold border-b border-gray-100">
+            <div className="py-4 px-2 text-left text-gray-400 pl-4 sm:pl-6">Feature</div>
+            <div className="py-4 px-2 text-gray-400">DMs</div>
+            <div className="py-4 px-2 text-gray-400">Others</div>
+            <div className="py-4 px-2 text-white rounded-tr-2xl" style={{ backgroundColor: '#F52B8C' }}>Nelsy</div>
+          </div>
+
+          {/* Rows */}
+          {rows.map((row, i) => (
+            <div
+              key={row.feature}
+              className={`grid grid-cols-4 text-center items-center border-b border-gray-50 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}
+            >
+              <div className="py-4 px-4 sm:px-6 text-left text-xs sm:text-sm font-medium text-gray-700">{row.feature}</div>
+              <div className="py-4 px-2"><Cell value={row.dms} /></div>
+              <div className="py-4 px-2"><Cell value={row.others} /></div>
+              <div className="py-4 px-2" style={{ backgroundColor: 'rgba(245,43,140,0.04)' }}>
+                <Cell value={row.nelsy} />
+              </div>
+            </div>
+          ))}
+
+          {/* Footer CTA row */}
+          <div className="grid grid-cols-4 text-center items-center bg-white border-t border-gray-100 rounded-b-2xl">
+            <div className="py-4 px-4 sm:px-6" />
+            <div className="py-4 px-2" />
+            <div className="py-4 px-2" />
+            <div className="py-4 px-2">
+              <Link to="/onboarding">
+                <button
+                  className="px-3 py-2 text-white text-xs sm:text-sm font-bold rounded-xl hover:opacity-90 active:scale-95 transition whitespace-nowrap"
+                  style={{ backgroundColor: '#F52B8C' }}
+                >
+                  Start free →
+                </button>
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 // ─── 7. FOOTER ────────────────────────────────────────────────────────────────
 
 function Footer() {
@@ -508,6 +614,8 @@ export default function LandingPremium() {
       <Nav />
       <Hero />
       <StatsBar />
+      <ZeroCommission />
+      <ComparisonTable />
       <Transformation />
       <CEOClub />
       <FinalCTA />
