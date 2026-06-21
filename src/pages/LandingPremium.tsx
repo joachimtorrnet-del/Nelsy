@@ -99,12 +99,12 @@ function Hero() {
           className="flex items-center justify-center gap-2 mb-10"
         >
           <div className="flex -space-x-3">
-            {[1, 2, 3, 4, 5].map((i) => (
+            {[44, 65, 26, 32, 50].map((i) => (
               <div
                 key={i}
                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white"
                 style={{
-                  backgroundImage: `url(https://i.pravatar.cc/100?img=${i})`,
+                  backgroundImage: `url(https://randomuser.me/api/portraits/women/${i}.jpg)`,
                   backgroundSize: 'cover',
                 }}
               />
@@ -123,9 +123,9 @@ function Hero() {
           className="flex justify-center mb-6"
         >
           <Link to="/onboarding">
-            <button className="group px-16 py-5 bg-[#F52B8C] text-white rounded-full font-bold text-2xl hover:bg-[#E0167A] transition-all shadow-xl active:scale-95">
+            <button className="group px-10 py-5 bg-[#F52B8C] text-white rounded-full font-bold text-xl sm:text-2xl hover:bg-[#E0167A] transition-all shadow-xl active:scale-95">
               <span className="flex items-center gap-2">
-                Continue
+                Get my free booking page
                 <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -458,7 +458,7 @@ function FinalCTA() {
               className="w-full sm:w-auto px-10 py-5 bg-white rounded-2xl font-bold hover:bg-gray-50 active:scale-95 transition-all shadow-2xl text-lg sm:text-xl mb-8"
               style={{ color: '#F52B8C' }}
             >
-              Continue →
+              Get my free booking page →
             </button>
           </Link>
         </motion.div>

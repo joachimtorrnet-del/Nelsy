@@ -309,37 +309,37 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
           {openSection === 'pricing' && (
             <div className="px-5 pb-5 border-t border-gray-200 pt-4 space-y-4">
               <div className="bg-green-50 border border-green-200 rounded-xl p-4">
-                <p className="text-sm font-semibold text-green-900 mb-2">Comment ça fonctionne</p>
+                <p className="text-sm font-semibold text-green-900 mb-2">How it works</p>
                 <ul className="text-sm text-green-800 space-y-1.5">
-                  <li>✅ Vos clientes paient le prix exact de votre prestation</li>
-                  <li>✅ Vous recevez 100% moins les frais de paiement (~2.9%)</li>
-                  <li>✅ <strong>Zéro commission Nelsy sur vos réservations</strong></li>
-                  <li>✅ Juste un abonnement mensuel pour tout illimité</li>
+                  <li>✅ Your clients pay the exact price of your service</li>
+                  <li>✅ You receive 100% minus payment fees (~2.9%)</li>
+                  <li>✅ <strong>Zero Nelsy commission on your bookings</strong></li>
+                  <li>✅ Just a monthly subscription for unlimited everything</li>
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-900 mb-2">Exemple concret :</p>
+                <p className="text-sm font-semibold text-gray-900 mb-2">Real example:</p>
                 <div className="bg-white border border-gray-200 rounded-xl p-3 space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Votre cliente paie</span>
+                    <span className="text-gray-500">Your client pays</span>
                     <span className="font-semibold text-gray-900">€65.00</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Frais Stripe (~2.9% + 0.25€)</span>
+                    <span className="text-gray-500">Stripe fees (~2.9% + €0.25)</span>
                     <span className="text-red-500 font-medium">−€2.14</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Commission Nelsy</span>
+                    <span className="text-gray-500">Nelsy commission</span>
                     <span className="text-green-600 font-semibold">€0.00 ✨</span>
                   </div>
                   <div className="border-t border-gray-200 pt-2 flex justify-between">
-                    <span className="font-bold text-gray-900">Vous recevez</span>
+                    <span className="font-bold text-gray-900">You receive</span>
                     <span className="font-bold text-[#F52B8C]">€62.86</span>
                   </div>
                 </div>
               </div>
               <p className="text-xs text-gray-400">
-                Les frais de paiement (~2.9% + 0.25€) vont à Stripe, le standard de l'industrie pour les paiements sécurisés. Nelsy prend 0% de commission — uniquement l'abonnement mensuel.
+                Payment fees (~2.9% + €0.25) go to Stripe, the industry standard for secure payments. Nelsy takes 0% commission — just the monthly subscription.
               </p>
             </div>
           )}
