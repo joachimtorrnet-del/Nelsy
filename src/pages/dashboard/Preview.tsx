@@ -19,7 +19,6 @@ interface Profile {
   bio?: string;
 }
 
-const THEME_COLORS = ['#F52B8C', '#9B59B6', '#3498DB', '#E74C3C', '#2ECC71'] as const;
 
 interface DbService {
   id: string;
