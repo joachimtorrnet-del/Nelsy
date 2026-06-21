@@ -20,9 +20,21 @@ import ResetPassword from './pages/ResetPassword';
 
 function PageviewTracker() {
   const location = useLocation();
+
+  useEffect(() => {
+    const handleUnload = () => posthog.capture('$pageleave');
+    window.addEventListener('beforeunload', handleUnload);
+    return () => window.removeEventListener('beforeunload', handleUnload);
+  }, []);
+
+  useEffect(() => {
+    return () => { posthog.capture('$pageleave'); };
+  }, [location.pathname]);
+
   useEffect(() => {
     posthog.capture('$pageview');
   }, [location.pathname]);
+
   return null;
 }
 
