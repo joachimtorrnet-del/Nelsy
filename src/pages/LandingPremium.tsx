@@ -360,19 +360,19 @@ function Transformation() {
 function CEOClub() {
   const items = [
     {
-      avatar: 'https://i.pravatar.cc/100?img=1',
+      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
       name: 'Sarah K.',    location: 'Paris',
       quote: 'I went from 20 to 80 bookings a month. The deposit feature alone paid for itself in week one.',
       metric: '+300%', metricLabel: 'bookings',
     },
     {
-      avatar: 'https://i.pravatar.cc/100?img=5',
+      avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
       name: 'Maya L.',     location: 'Lyon',
       quote: 'Setup took 8 minutes. I copied the link into my bio and woke up to 4 new bookings. Wild.',
       metric: '8 min', metricLabel: 'to go live',
     },
     {
-      avatar: 'https://i.pravatar.cc/100?img=9',
+      avatar: 'https://randomuser.me/api/portraits/women/26.jpg',
       name: 'Jade B.',     location: 'Bordeaux',
       quote: 'No more "how much?" DMs. Clients see prices, pick a slot, pay. Done. I got my weekends back.',
       metric: '3h', metricLabel: 'saved / week',
