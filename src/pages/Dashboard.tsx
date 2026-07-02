@@ -17,6 +17,7 @@ interface Profile {
   full_name?: string;
   slug?: string;
   instagram_url?: string;
+  subscription_status?: string;
 }
 
 export default function Dashboard() {
@@ -73,10 +74,37 @@ export default function Dashboard() {
     }
   };
 
+  const BLOCKED_STATUSES = ['canceled', 'cancelled', 'inactive'];
+  const isBlocked = profile && BLOCKED_STATUSES.includes(profile.subscription_status ?? '');
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#F52B8C] border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (isBlocked) {
+    return (
+      <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 text-center">
+        <div className="text-5xl mb-6">💅</div>
+        <h1 className="text-2xl font-bold text-gray-900 mb-3">Your subscription has ended</h1>
+        <p className="text-gray-500 text-sm max-w-xs mb-8 leading-relaxed">
+          Reactivate your plan to access your dashboard, bookings, and studio page.
+        </p>
+        <a
+          href="/onboarding"
+          className="w-full max-w-xs py-4 bg-[#F52B8C] text-white rounded-2xl font-bold text-base text-center hover:opacity-90 transition active:scale-95 shadow-md shadow-[#F52B8C]/25"
+        >
+          Reactivate my plan →
+        </a>
+        <button
+          onClick={async () => { await supabase?.auth.signOut(); navigate('/login'); }}
+          className="mt-4 text-sm text-gray-400 hover:text-gray-600 transition"
+        >
+          Sign out
+        </button>
       </div>
     );
   }
