@@ -69,12 +69,12 @@ function Hero() {
           transition={{ delay: 0.08 }}
           className="text-[2.5rem] sm:text-[4rem] lg:text-[5rem] text-center text-gray-900 mb-8 leading-[1.1] font-extrabold tracking-tight px-4"
         >
-          Get booked. Get paid.{' '}
+          The aesthetic booking page{' '}
           <span
             className="block mt-3 sm:mt-4 relative"
             style={{ color: '#F52B8C', filter: 'drop-shadow(0 0 30px rgba(245,43,140,0.15))' }}
           >
-            Stop chasing.
+            that actually fills your schedule.
             <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 400 12" fill="none" aria-hidden="true">
               <path d="M2 10C100 5 300 5 398 10" stroke="#F52B8C" strokeWidth="4" strokeLinecap="round" opacity="0.3" />
             </svg>
@@ -88,7 +88,7 @@ function Hero() {
           transition={{ delay: 0.15 }}
           className="text-xl sm:text-2xl text-center text-gray-600 mb-8 max-w-2xl mx-auto px-4"
         >
-          Booking page. Auto deposits. Zero no-shows.
+          Automate deposits, look premium, and turn profile clicks into paying clients in 2 minutes.
         </motion.p>
 
         {/* Social proof badge — après subtitle */}
@@ -125,7 +125,7 @@ function Hero() {
           <Link to="/onboarding">
             <button className="group px-10 py-5 bg-[#F52B8C] text-white rounded-full font-bold text-xl sm:text-2xl hover:bg-[#E0167A] transition-all shadow-xl active:scale-95">
               <span className="flex items-center gap-2">
-                Get my free booking page
+                Create your free page 💅
                 <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
