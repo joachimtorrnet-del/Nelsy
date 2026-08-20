@@ -88,7 +88,7 @@ function Hero() {
           transition={{ delay: 0.15 }}
           className="text-xl sm:text-2xl text-center text-gray-600 mb-8 max-w-2xl mx-auto px-4"
         >
-          Stop chasing DMs. Start building an empire.
+          Booking page. Auto deposits. Zero no-shows.
         </motion.p>
 
         {/* Social proof badge — après subtitle */}
@@ -111,7 +111,7 @@ function Hero() {
             ))}
           </div>
           <p className="text-sm sm:text-base font-semibold text-gray-700">
-            Join <span style={{ color: '#F52B8C' }}>500+ nail techs</span>
+            Already used by <span style={{ color: '#F52B8C' }}>500+ nail techs</span>
           </p>
         </motion.div>
 
@@ -312,6 +312,12 @@ function Transformation() {
   return (
     <section className="py-16 sm:py-24 bg-white px-4">
       <div className="max-w-md mx-auto sm:max-w-6xl">
+        <motion.div {...fadeUp()} className="text-center mb-12">
+          <p className="text-xs font-bold tracking-widest text-gray-400 mb-4 uppercase">[ HOW IT WORKS ]</p>
+          <h2 className="text-heading-mobile sm:text-heading-desktop text-gray-900 mb-4">
+            Three things that change everything.
+          </h2>
+        </motion.div>
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -383,11 +389,12 @@ function CEOClub() {
     <section className="py-16 sm:py-24 bg-gray-50 px-4">
       <div className="max-w-md mx-auto sm:max-w-6xl">
         <motion.div {...fadeUp()} className="text-center mb-12">
+          <p className="text-xs font-bold tracking-widest text-gray-400 mb-4 uppercase">[ WALL OF LOVE ]</p>
           <h2 className="text-heading-mobile sm:text-heading-desktop text-gray-900 mb-4">
-            The CEO Club.
+            They love it. Why not you?
           </h2>
           <p className="text-lg sm:text-xl text-gray-600">
-            Join 500+ nail techs scaling with Nelsy.
+            500+ nail techs have already taken back their time — and their income.
           </p>
         </motion.div>
 
@@ -444,12 +451,15 @@ function FinalCTA() {
   return (
     <section className="py-16 sm:py-24 text-white px-4" style={{ background: 'linear-gradient(to bottom right, #F52B8C, #9333EA)' }}>
       <div className="max-w-2xl mx-auto text-center">
-        <motion.h2 {...fadeUp()} className="text-hero-mobile sm:text-hero-desktop font-bold mb-6">
-          Own your brand.
+        <motion.p {...fadeUp()} className="text-xs font-bold tracking-widest text-white/50 mb-6 uppercase">
+          [ GET STARTED ]
+        </motion.p>
+        <motion.h2 {...fadeUp(0.04)} className="text-hero-mobile sm:text-hero-desktop font-bold mb-6">
+          Ready to book your first client tonight?
         </motion.h2>
 
         <motion.p {...fadeUp(0.08)} className="text-lg sm:text-2xl mb-10 text-white/90">
-          Free setup. 2 minutes.
+          2 minutes setup. Your link, live tonight.
         </motion.p>
 
         <motion.div {...fadeUp(0.16)}>
@@ -485,6 +495,9 @@ function ZeroCommission() {
     <section className="py-20 sm:py-32 bg-white px-4 overflow-hidden">
       <div className="max-w-2xl mx-auto text-center">
         <motion.div {...fadeUp()}>
+          <motion.p {...fadeUp()} className="text-xs font-bold tracking-widest text-gray-400 mb-6 uppercase">
+            [ 0% COMMISSION ]
+          </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -499,8 +512,8 @@ function ZeroCommission() {
             Commission. Always.
           </motion.h2>
           <motion.p {...fadeUp(0.18)} className="text-lg sm:text-xl text-gray-500 max-w-lg mx-auto leading-relaxed">
-            Every other platform takes a cut of your bookings. Nelsy doesn't.
-            You keep 100% of what you charge — minus Stripe's standard 2.9% payment fee. That's it.
+            Every booking platform takes a cut of your income. Nelsy doesn't.
+            You keep everything you charge — only Stripe's standard 2.9% applies. That's it.
           </motion.p>
         </motion.div>
       </div>
@@ -530,8 +543,9 @@ function ComparisonTable() {
     <section className="py-16 sm:py-24 bg-gray-50 px-4">
       <div className="max-w-md mx-auto sm:max-w-3xl">
         <motion.div {...fadeUp()} className="text-center mb-12">
+          <p className="text-xs font-bold tracking-widest text-gray-400 mb-4 uppercase">[ VS THE REST ]</p>
           <h2 className="text-heading-mobile sm:text-heading-desktop text-gray-900 mb-4">
-            Not just another booking app.
+            The booking app that doesn't steal from you.
           </h2>
           <p className="text-lg sm:text-xl text-gray-500">
             See what you've been missing.
