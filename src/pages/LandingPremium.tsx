@@ -69,12 +69,12 @@ function Hero() {
           transition={{ delay: 0.08 }}
           className="text-[2.5rem] sm:text-[4rem] lg:text-[5rem] text-center text-gray-900 mb-8 leading-[1.1] font-extrabold tracking-tight px-4"
         >
-          Nelsy turns nail techs into{' '}
+          Get booked. Get paid.{' '}
           <span
             className="block mt-3 sm:mt-4 relative"
             style={{ color: '#F52B8C', filter: 'drop-shadow(0 0 30px rgba(245,43,140,0.15))' }}
           >
-            Beauty CEOs.
+            Stop chasing.
             <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 400 12" fill="none" aria-hidden="true">
               <path d="M2 10C100 5 300 5 398 10" stroke="#F52B8C" strokeWidth="4" strokeLinecap="round" opacity="0.3" />
             </svg>
