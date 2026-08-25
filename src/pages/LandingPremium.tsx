@@ -69,12 +69,12 @@ function Hero() {
           transition={{ delay: 0.08 }}
           className="text-[2.5rem] sm:text-[4rem] lg:text-[5rem] text-center text-gray-900 mb-8 leading-[1.1] font-extrabold tracking-tight px-4"
         >
-          The aesthetic booking page{' '}
+          The all-in-one link in bio{' '}
           <span
             className="block mt-3 sm:mt-4 relative"
             style={{ color: '#F52B8C', filter: 'drop-shadow(0 0 30px rgba(245,43,140,0.15))' }}
           >
-            that actually fills your schedule.
+            for Nail Techs.
             <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 400 12" fill="none" aria-hidden="true">
               <path d="M2 10C100 5 300 5 398 10" stroke="#F52B8C" strokeWidth="4" strokeLinecap="round" opacity="0.3" />
             </svg>
@@ -88,7 +88,7 @@ function Hero() {
           transition={{ delay: 0.15 }}
           className="text-xl sm:text-2xl text-center text-gray-600 mb-8 max-w-2xl mx-auto px-4"
         >
-          Automate deposits, look premium, and turn profile clicks into paying clients in 2 minutes.
+          The aesthetic booking page that actually fills your schedule. Collect deposits, stop back-and-forth DMs, and set up your link in under 2 minutes.
         </motion.p>
 
         {/* Social proof badge — après subtitle */}
@@ -139,22 +139,9 @@ function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.35 }}
-          className="text-xs sm:text-sm text-center text-gray-500 flex items-center justify-center gap-4 flex-wrap mb-16 sm:mb-20"
+          className="text-sm text-center text-gray-400 mb-16 sm:mb-20"
         >
-          <span className="flex items-center gap-1.5">
-            <CheckIcon className="w-4 h-4 text-green-500" />
-            <span className="font-medium">14-day free trial</span>
-          </span>
-          <span className="text-gray-300">•</span>
-          <span className="flex items-center gap-1.5">
-            <CheckIcon className="w-4 h-4 text-green-500" />
-            <span className="font-medium">2 min setup</span>
-          </span>
-          <span className="text-gray-300">•</span>
-          <span className="flex items-center gap-1.5">
-            <CheckIcon className="w-4 h-4 text-green-500" />
-            <span className="font-medium">No credit card</span>
-          </span>
+          No credit card required&nbsp;&nbsp;•&nbsp;&nbsp;Instant setup
         </motion.p>
 
         {/* Product screenshot */}
