@@ -46,7 +46,7 @@ function Nav() {
           </Link>
           <Link to="/onboarding">
             <button className="px-4 py-2 text-white rounded-lg text-sm font-bold transition active:scale-95 shadow-sm hover:opacity-90" style={{ backgroundColor: '#F52B8C' }}>
-              Get started →
+              Continue →
             </button>
           </Link>
         </div>
@@ -88,7 +88,7 @@ function Hero() {
           transition={{ delay: 0.15 }}
           className="text-xl sm:text-2xl text-center text-gray-600 mb-8 max-w-2xl mx-auto px-4"
         >
-          The aesthetic booking page that actually fills your schedule. Collect deposits, stop back-and-forth DMs, and set up your link in under 2 minutes.
+          Nelsy is the easiest way to make money as a Nail Tech. All of your bookings, upfront deposits, and payments are now hosted within your link-in-bio.
         </motion.p>
 
         {/* Social proof badge — après subtitle */}
