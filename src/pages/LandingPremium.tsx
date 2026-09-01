@@ -125,7 +125,7 @@ function Hero() {
           <Link to="/onboarding">
             <button className="group px-10 py-5 bg-[#F52B8C] text-white rounded-full font-bold text-xl sm:text-2xl hover:bg-[#E0167A] transition-all shadow-xl active:scale-95">
               <span className="flex items-center gap-2">
-                Create your free page 💅
+                Continue
                 <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
@@ -135,14 +135,7 @@ function Hero() {
         </motion.div>
 
         {/* Trust line */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.35 }}
-          className="text-sm text-center text-gray-400 mb-16 sm:mb-20"
-        >
-          No credit card required&nbsp;&nbsp;•&nbsp;&nbsp;Instant setup
-        </motion.p>
+        <div className="mb-16 sm:mb-20" />
 
         {/* Product screenshot */}
         <motion.div
