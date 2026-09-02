@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { supabase } from '../lib/supabase';
-import { validateEmail, validatePassword } from '../utils/validation';
+import { validatePassword } from '../utils/validation';
 import { handleSupabaseError } from '../utils/errorHandler';
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -774,14 +778,136 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
   );
 }
 
-// ─── Step 4 — Payment ─────────────────────────────────────────────────────────
+// ─── Step 4 — Payment (embedded Stripe Elements) ──────────────────────────────
 
 const PRICE_IDS: Record<'monthly' | 'yearly', string> = {
   monthly: 'price_1T8RQeKByJwN07Hw4mAN6FFD',
   yearly: 'price_1T8RRxKByJwN07HwySgYEPTu',
 };
 
-function Step4({ formData, setFormData, prevStep }: StepProps) {
+const STRIPE_APPEARANCE = {
+  theme: 'stripe' as const,
+  variables: {
+    colorPrimary: '#F52B8C',
+    colorBackground: '#ffffff',
+    colorText: '#111827',
+    colorDanger: '#ef4444',
+    fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
+    borderRadius: '12px',
+    spacingUnit: '4px',
+  },
+  rules: {
+    '.Input': { border: '2px solid #E4E4E7', padding: '14px 16px', fontSize: '15px' },
+    '.Input:focus': { border: '2px solid #F52B8C', boxShadow: 'none', outline: 'none' },
+    '.Label': { fontWeight: '600', fontSize: '13px', marginBottom: '6px' },
+    '.Tab': { border: '2px solid #E4E4E7', borderRadius: '10px' },
+    '.Tab--selected': { border: '2px solid #F52B8C', color: '#F52B8C' },
+    '.Tab:focus': { boxShadow: 'none' },
+  },
+};
+
+// Inner component — must live inside <Elements> to call useStripe/useElements
+interface PaymentStepProps {
+  plan: 'monthly' | 'yearly';
+  formattedDate: string;
+  intentType: 'setup' | 'payment';
+  onSuccess: () => void;
+  onBack: () => void;
+}
+
+function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: PaymentStepProps) {
+  const stripe = useStripe();
+  const elements = useElements();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleConfirm = async () => {
+    if (!stripe || !elements) return;
+    setLoading(true);
+    setError('');
+
+    const result = intentType === 'setup'
+      ? await stripe.confirmSetup({ elements, redirect: 'if_required' })
+      : await stripe.confirmPayment({ elements, redirect: 'if_required' });
+
+    if (result.error) {
+      setError(result.error.message ?? 'Payment failed. Please try again.');
+      setLoading(false);
+    } else {
+      onSuccess();
+    }
+  };
+
+  return (
+    <>
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 text-center">
+          Add your payment details
+        </h1>
+        <p className="text-base text-gray-500 mb-6 text-center">
+          You won't be charged until {formattedDate} 🎉
+        </p>
+
+        {/* Plan recap */}
+        <div className="flex items-center justify-between bg-gray-50 rounded-2xl px-4 py-3 mb-5 border border-gray-100">
+          <div>
+            <p className="text-xs text-gray-500">Plan</p>
+            <p className="font-bold text-gray-900">{plan === 'monthly' ? 'Monthly — $29/mo' : 'Yearly — $25/mo'}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-xs text-gray-500">Due today</p>
+            <p className="text-2xl font-bold" style={{ color: '#F52B8C' }}>$0</p>
+          </div>
+        </div>
+
+        {/* Embedded payment form */}
+        <div className="mb-4">
+          <PaymentElement options={{ layout: 'tabs' }} />
+        </div>
+
+        {error && (
+          <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs mb-3">
+            {error}
+          </div>
+        )}
+
+        <p className="text-xs text-center text-gray-400 mb-4 flex items-center justify-center gap-1">
+          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
+          </svg>
+          Secured by Stripe — Apple Pay & Google Pay supported
+        </p>
+      </div>
+
+      <div className="space-y-3">
+        <button
+          onClick={handleConfirm}
+          disabled={!stripe || !elements || loading}
+          className="w-full py-4 text-white rounded-2xl font-bold text-base hover:opacity-90 transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          style={{ backgroundColor: '#F52B8C' }}
+        >
+          {loading ? (
+            <>
+              <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              </svg>
+              Processing...
+            </>
+          ) : 'Start your 14-day free trial'}
+        </button>
+        <button onClick={onBack} disabled={loading} className="w-full font-semibold text-sm disabled:opacity-50" style={{ color: '#F52B8C' }}>
+          ← Change plan
+        </button>
+      </div>
+    </>
+  );
+}
+
+function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
+  const [phase, setPhase] = useState<'info' | 'payment'>('info');
+  const [clientSecret, setClientSecret] = useState('');
+  const [intentType, setIntentType] = useState<'setup' | 'payment'>('setup');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -789,50 +915,15 @@ function Step4({ formData, setFormData, prevStep }: StepProps) {
   trialEndDate.setDate(trialEndDate.getDate() + 14);
   const formattedDate = trialEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
-  const handleStartTrial = async () => {
-    // Client-side validation
-    if (!formData.email || !validateEmail(formData.email)) {
-      setError('Please enter a valid email address');
-      return;
-    }
-
-    if (!formData.password) {
-      setError('Password is required');
-      return;
-    } else {
-      const passwordValidation = validatePassword(formData.password);
-      if (!passwordValidation.valid) {
-        setError(passwordValidation.errors[0]);
-        return;
-      }
-    }
-
-    if (!formData.fullName || formData.fullName.length < 2) {
-      setError('Please enter your full name');
-      return;
-    }
-
-    if (!formData.username || formData.username.length < 3) {
-      setError('Username must be at least 3 characters');
-      return;
-    }
-
-    if (!formData.agreedToTerms) {
-      setError('Please accept the terms and conditions');
-      return;
-    }
+  const handleCreateAccountAndFetchIntent = async () => {
+    if (!formData.agreedToTerms) { setError('Please accept the terms and conditions'); return; }
+    if (!supabase) { setError('Configuration error. Please contact support.'); return; }
 
     setLoading(true);
     setError('');
 
-    if (!supabase) {
-      setError('Configuration error. Please contact support.');
-      setLoading(false);
-      return;
-    }
-
     try {
-      // 1. Créer le compte Supabase
+      // 1. Create Supabase account
       const { data: { user }, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -846,142 +937,112 @@ function Step4({ formData, setFormData, prevStep }: StepProps) {
           },
         },
       });
-
       if (signUpError) throw signUpError;
       if (!user) throw new Error('No user returned from signup');
 
-      // 2. Wait for DB trigger to create profile automatically
+      // 2. Wait for DB trigger to create profile
       let profile = null;
-      let retries = 5;
+      let retries = 6;
       while (retries > 0 && !profile) {
-        await new Promise(resolve => setTimeout(resolve, 500));
-        const { data } = await supabase.from('profiles').select('*').eq('id', user.id).maybeSingle();
+        await new Promise((r) => setTimeout(r, 500));
+        const { data } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
         if (data) { profile = data; break; }
         retries--;
       }
+      if (!profile) throw new Error('Profile creation timed out. Please contact support.');
 
-      if (!profile) throw new Error('Profile was not created by trigger after 2.5 seconds');
-
-      // 3. Se logger avec le user qu'on vient de créer
+      // 3. Sign in to get a valid session
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
-
       if (signInError) throw new Error('Failed to sign in after signup');
 
-      // 4. Create Stripe Checkout
-      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-      const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+      // 4. Get session token for edge function auth
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No session available');
 
-      const response = await fetch(`${supabaseUrl}/functions/v1/create-subscription-checkout`, {
+      // 5. Create subscription intent (returns clientSecret instead of redirect URL)
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${supabaseAnonKey}`,
-          'apikey': supabaseAnonKey,
+          'Authorization': `Bearer ${session.access_token}`,
+          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY as string,
         },
-        body: JSON.stringify({
-          userId: user.id,
-          priceId: PRICE_IDS[formData.plan],
-          email: formData.email,
-          plan: 'pro',
-        }),
+        body: JSON.stringify({ priceId: PRICE_IDS[formData.plan], plan: 'pro' }),
       });
 
-      if (!response.ok) throw new Error(`Checkout failed: ${response.status}`);
+      if (!res.ok) throw new Error(`Intent creation failed (${res.status})`);
+      const data = await res.json() as { clientSecret: string; type: 'setup' | 'payment' };
 
-      const checkoutData = await response.json() as { url?: string };
-      if (!checkoutData?.url) throw new Error('No checkout URL in response');
-
-      window.location.href = checkoutData.url;
+      setClientSecret(data.clientSecret);
+      setIntentType(data.type);
+      setPhase('payment');
 
     } catch (err: unknown) {
-      const message = handleSupabaseError(err);
-      setError(message);
+      setError(handleSupabaseError(err));
+    } finally {
       setLoading(false);
     }
   };
 
+  // Payment phase — render embedded Stripe PaymentElement
+  if (phase === 'payment' && clientSecret) {
+    return (
+      <Elements stripe={stripePromise} options={{ clientSecret, appearance: STRIPE_APPEARANCE }}>
+        <PaymentStep
+          plan={formData.plan}
+          formattedDate={formattedDate}
+          intentType={intentType}
+          onSuccess={nextStep}
+          onBack={() => setPhase('info')}
+        />
+      </Elements>
+    );
+  }
+
+  // Info phase — plan recap + terms + create account button
   return (
     <>
       <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 text-center">
+        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 text-center">
           Free till {formattedDate} 🎉
         </h1>
-        <p className="text-base sm:text-lg text-gray-600 mb-6 text-center">
-          Cancel anytime 💝
-        </p>
+        <p className="text-base text-gray-500 mb-6 text-center">Cancel anytime before your trial ends</p>
 
         {/* Plan recap */}
-        <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-4 mb-4 border-2" style={{ borderColor: '#F52B8C' }}>
+        <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-4 mb-4 border-2" style={{ borderColor: '#F52B8C' }}>
           <div className="flex items-center justify-between mb-3">
             <div>
-              <p className="text-xs text-gray-600 mb-0.5">Your plan</p>
+              <p className="text-xs text-gray-500 mb-0.5">Your plan</p>
               <p className="text-lg font-bold text-gray-900">
                 {formData.plan === 'monthly' ? 'Monthly' : 'Yearly'}
               </p>
             </div>
             <div className="text-right">
-              <p className="text-xs text-gray-600 mb-0.5">Due today</p>
+              <p className="text-xs text-gray-500 mb-0.5">Due today</p>
               <p className="text-2xl font-bold" style={{ color: '#F52B8C' }}>$0</p>
             </div>
           </div>
           <div className="pt-3 border-t border-gray-200 space-y-1.5">
             {[
-              '14 days free trial starts today',
-              `Then ${formData.plan === 'monthly' ? '$29/month' : '$300/year'}`,
+              '14-day free trial starts today',
+              `Then ${formData.plan === 'monthly' ? '$29/month' : '$300/year ($25/mo)'}`,
               `Cancel anytime before ${formattedDate}`,
             ].map((text) => (
               <div key={text} className="flex items-center gap-2 text-xs text-gray-600">
                 <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-                <span dangerouslySetInnerHTML={{ __html: text.replace(/(\$[\d/a-z]+)/g, '<strong>$1</strong>') }} />
+                {text}
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Payment methods */}
-        <div className="mb-4">
-          <p className="font-semibold text-gray-900 mb-2 text-sm">Available payment methods</p>
-          <div className="bg-white rounded-2xl p-3 border-2 border-gray-100 space-y-2">
-            {[
-              { icon: (
-                  <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                    </svg>
-                  </div>
-                ), label: 'Credit Card', sub: 'Visa, Mastercard, Amex' },
-              { icon: (
-                  <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                      <path d="M17.05 20.28c-.98.95-2.05.88-3.08.4-1.09-.5-2.08-.48-3.24 0-1.44.62-2.2.44-3.06-.4C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
-                    </svg>
-                  </div>
-                ), label: 'Apple Pay', sub: 'Fast & secure' },
-              { icon: (
-                  <div className="w-8 h-8 bg-white rounded-lg border border-gray-200 flex items-center justify-center">
-                    <span className="text-xs font-bold"><span className="text-blue-600">G</span><span className="text-red-600">P</span><span className="text-yellow-500">a</span><span className="text-blue-600">y</span></span>
-                  </div>
-                ), label: 'Google Pay', sub: 'One-click payment' },
-            ].map(({ icon, label, sub }) => (
-              <div key={label} className="flex items-center gap-2">
-                {icon}
-                <div>
-                  <p className="font-semibold text-gray-900 text-xs">{label}</p>
-                  <p className="text-xs text-gray-500">{sub}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="text-xs text-gray-500 mt-2 text-center">💡 You'll be redirected to Stripe's secure checkout</p>
         </div>
 
         {/* Terms */}
-        <label className="flex items-start gap-2 cursor-pointer mb-3">
+        <label className="flex items-start gap-2 cursor-pointer mb-4">
           <input
             type="checkbox"
             checked={formData.agreedToTerms}
@@ -989,11 +1050,11 @@ function Step4({ formData, setFormData, prevStep }: StepProps) {
             className="mt-0.5 w-4 h-4 rounded border-2 border-gray-300 accent-[#F52B8C]"
           />
           <span className="text-xs text-gray-600">
-            I have read and understand the{' '}
+            I agree to the{' '}
             <a href="/terms" className="underline" style={{ color: '#F52B8C' }}>Terms</a>{' '}
             and{' '}
             <a href="/privacy" className="underline" style={{ color: '#F52B8C' }}>Privacy Policy</a>.
-            Our <a href="/privacy" className="underline" style={{ color: '#F52B8C' }}>Privacy Policy</a> covers GDPR compliance.
+            GDPR compliant.
           </span>
         </label>
 
@@ -1004,10 +1065,9 @@ function Step4({ formData, setFormData, prevStep }: StepProps) {
         )}
       </div>
 
-      {/* CTAs */}
       <div className="space-y-3">
         <button
-          onClick={handleStartTrial}
+          onClick={handleCreateAccountAndFetchIntent}
           disabled={!formData.agreedToTerms || loading}
           className="w-full py-4 text-white rounded-2xl font-bold text-base hover:opacity-90 transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           style={{ backgroundColor: '#F52B8C' }}
@@ -1018,9 +1078,9 @@ function Step4({ formData, setFormData, prevStep }: StepProps) {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
               </svg>
-              Processing...
+              Setting up your account...
             </>
-          ) : 'Start Your 14-Day Free Trial'}
+          ) : 'Start your 14-day free trial →'}
         </button>
         <button
           onClick={prevStep}
