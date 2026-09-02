@@ -924,6 +924,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
 
     try {
       // 1. Create Supabase account
+      setError('Step 1/4 — Creating your account...');
       const { data: { user }, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
@@ -937,10 +938,11 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
           },
         },
       });
-      if (signUpError) throw signUpError;
-      if (!user) throw new Error('No user returned from signup');
+      if (signUpError) throw new Error(`[signup] ${signUpError.message}`);
+      if (!user) throw new Error('[signup] No user returned');
 
       // 2. Wait for DB trigger to create profile
+      setError('Step 2/4 — Setting up your profile...');
       let profile = null;
       let retries = 6;
       while (retries > 0 && !profile) {
@@ -949,21 +951,21 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
         if (data) { profile = data; break; }
         retries--;
       }
-      if (!profile) throw new Error('Profile creation timed out. Please contact support.');
+      if (!profile) throw new Error('[profile] Profile creation timed out');
 
       // 3. Sign in to get a valid session
+      setError('Step 3/4 — Signing you in...');
       const { error: signInError } = await supabase.auth.signInWithPassword({
         email: formData.email,
         password: formData.password,
       });
-      if (signInError) throw new Error('Failed to sign in after signup');
+      if (signInError) throw new Error(`[signin] ${signInError.message}`);
 
-      // 4. Get session token for edge function auth
       const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('No session available');
+      if (!session) throw new Error('[session] No session after sign in');
 
-      // 5. Create subscription intent (returns clientSecret instead of redirect URL)
-      console.log('[Onboarding] Calling create-subscription-intent...');
+      // 4. Create subscription intent
+      setError('Step 4/4 — Setting up payment...');
       const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
         method: 'POST',
         headers: {
@@ -976,17 +978,19 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
 
       if (!res.ok) {
         const body = await res.text().catch(() => '');
-        throw new Error(`Intent creation failed (${res.status}): ${body}`);
+        throw new Error(`[intent] ${res.status}: ${body}`);
       }
       const data = await res.json() as { clientSecret: string; type: 'setup' | 'payment' };
 
+      setError('');
       setClientSecret(data.clientSecret);
       setIntentType(data.type);
       setPhase('payment');
 
     } catch (err: unknown) {
-      console.error('[Onboarding] Error:', err);
-      setError(handleSupabaseError(err));
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('[Onboarding]', msg);
+      setError(msg);
     } finally {
       setLoading(false);
     }
