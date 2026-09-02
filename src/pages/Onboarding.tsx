@@ -963,6 +963,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       if (!session) throw new Error('No session available');
 
       // 5. Create subscription intent (returns clientSecret instead of redirect URL)
+      console.log('[Onboarding] Calling create-subscription-intent...');
       const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
         method: 'POST',
         headers: {
@@ -973,7 +974,10 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
         body: JSON.stringify({ priceId: PRICE_IDS[formData.plan], plan: 'pro' }),
       });
 
-      if (!res.ok) throw new Error(`Intent creation failed (${res.status})`);
+      if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        throw new Error(`Intent creation failed (${res.status}): ${body}`);
+      }
       const data = await res.json() as { clientSecret: string; type: 'setup' | 'payment' };
 
       setClientSecret(data.clientSecret);
@@ -981,6 +985,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       setPhase('payment');
 
     } catch (err: unknown) {
+      console.error('[Onboarding] Error:', err);
       setError(handleSupabaseError(err));
     } finally {
       setLoading(false);
