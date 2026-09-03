@@ -861,7 +861,7 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
 
         {/* Embedded payment form */}
         <div className="mb-4">
-          <PaymentElement options={{ layout: 'tabs' }} />
+          <PaymentElement options={{ layout: 'tabs', wallets: { applePay: 'auto', googlePay: 'auto' } } as object} />
         </div>
 
         {error && (
@@ -998,7 +998,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
   // Payment phase — render embedded Stripe PaymentElement
   if (phase === 'payment' && clientSecret) {
     return (
-      <Elements stripe={stripePromise} options={{ clientSecret, appearance: STRIPE_APPEARANCE, wallets: { applePay: 'auto', googlePay: 'auto' } }}>
+      <Elements stripe={stripePromise} options={{ clientSecret, appearance: STRIPE_APPEARANCE }}>
         <PaymentStep
           plan={formData.plan}
           formattedDate={formattedDate}
