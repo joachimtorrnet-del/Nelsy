@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Share2, Eye, Plus, Pencil, Check, ExternalLink } from 'lucide-react';
 import { THEMES } from '../../lib/themes';
 import Toast from '../../components/dashboard/Toast';
@@ -6,6 +6,8 @@ import ConfirmDialog from '../../components/dashboard/ConfirmDialog';
 import AddEditServiceModal from '../../components/dashboard/AddEditServiceModal';
 import { useToast } from '../../hooks/useToast';
 import { getServices, deleteService, toggleServiceActive, updateProfile, uploadImage } from '../../lib/supabase-queries';
+import { PublicStudioView } from '../../components/studio/PublicStudioView';
+import type { Merchant, Service } from '../../types';
 
 interface Profile {
   id?: string;
@@ -35,6 +37,84 @@ interface DbService {
 }
 
 type ActiveTab = 'studio' | 'services' | 'customize';
+
+// ── Live iPhone bezel preview ─────────────────────────────────────────────────
+
+interface LivePhonePreviewProps {
+  customForm: {
+    full_name: string; bio: string; instagram_url: string; tiktok_url: string;
+    color_accent: string; theme_preset: string;
+  };
+  avatarUrl: string;
+  activeServices: DbService[];
+  profileId?: string;
+  profileSlug?: string;
+  getServicePrice: (s: DbService) => number;
+  getServiceDuration: (s: DbService) => number;
+}
+
+function LivePhonePreview({
+  customForm, avatarUrl, activeServices, profileId, profileSlug,
+  getServicePrice, getServiceDuration,
+}: LivePhonePreviewProps) {
+  const previewMerchant: Merchant = useMemo(() => {
+    const mappedServices: Service[] = activeServices.map((s) => ({
+      id: s.id,
+      name: s.name,
+      description: s.description ?? '',
+      price: getServicePrice(s),
+      duration: getServiceDuration(s),
+      deposit: s.deposit_amount ?? 0,
+      category: s.category,
+      image_url: s.image_url,
+    }));
+
+    return {
+      id: profileId ?? 'preview',
+      slug: profileSlug ?? 'preview',
+      salon_name: customForm.full_name || 'Your Studio',
+      name: customForm.full_name || 'Your Studio',
+      bio: customForm.bio || '',
+      logo_url: avatarUrl || undefined,
+      instagram: customForm.instagram_url.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\/?/, '') || undefined,
+      tiktok: customForm.tiktok_url || undefined,
+      color_accent: customForm.color_accent,
+      theme_preset: customForm.theme_preset,
+      services: mappedServices,
+    };
+  }, [customForm, avatarUrl, activeServices, profileId, profileSlug, getServicePrice, getServiceDuration]);
+
+  return (
+    <div className="flex justify-center">
+      {/* Outer bezel */}
+      <div className="relative" style={{ width: 240 }}>
+        <div className="bg-gray-900 rounded-[44px] p-2.5 shadow-2xl shadow-gray-400/30">
+          {/* Dynamic island */}
+          <div className="flex justify-center mb-1">
+            <div className="w-20 h-5 bg-gray-900 rounded-full border-2 border-gray-800" />
+          </div>
+          {/* Screen — 240px wide × 480px tall */}
+          <div className="rounded-[36px] overflow-hidden" style={{ height: 480, position: 'relative' }}>
+            {/* Content renders at 480px wide, scaled 0.5 → fits in 240px; height 960px → 480px */}
+            <div
+              style={{
+                width: 480, height: 960,
+                transform: 'scale(0.5)',
+                transformOrigin: 'top left',
+                pointerEvents: 'none',
+                userSelect: 'none',
+              }}
+            >
+              <PublicStudioView merchant={previewMerchant} mode="preview" />
+            </div>
+          </div>
+        </div>
+        {/* Reflection */}
+        <div className="absolute inset-0 rounded-[44px] bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
+      </div>
+    </div>
+  );
+}
 
 export default function Preview({ profile }: { profile: Profile | null }) {
   const [activeTab, setActiveTab] = useState<ActiveTab>('studio');
@@ -193,85 +273,16 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             </button>
           </div>
 
-          {/* Phone Mockup Preview */}
-          <div className="flex justify-center">
-            <div className="relative" style={{ width: 240 }}>
-              {/* Phone frame */}
-              <div className="bg-gray-900 rounded-[44px] p-2.5 shadow-2xl shadow-gray-400/30">
-                {/* Dynamic island */}
-                <div className="flex justify-center mb-1">
-                  <div className="w-20 h-5 bg-gray-900 rounded-full border-2 border-gray-800" />
-                </div>
-                {/* Screen */}
-                <div className="bg-white rounded-[36px] overflow-hidden" style={{ height: 460 }}>
-                  {/* Store header */}
-                  <div className="bg-gradient-to-b from-[#F52B8C] to-[#E0167A] px-4 pt-5 pb-6 text-center">
-                    <div className="w-14 h-14 rounded-full bg-white/25 border-2 border-white/60 flex items-center justify-center mx-auto mb-2">
-                      <span className="text-white font-bold text-xl">{initials}</span>
-                    </div>
-                    <p className="text-white font-bold text-sm leading-tight">{displayName}</p>
-                    <p className="text-white/70 text-xs mt-0.5">Professional Nail Tech 💅</p>
-                    <div className="flex justify-center mt-2">
-                      <div className="w-5 h-5 bg-white/20 rounded-md flex items-center justify-center">
-                        <span className="text-white text-[9px] font-bold">IG</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Services inside preview */}
-                  <div className="px-3 pt-3 overflow-y-auto" style={{ height: 300 }}>
-                    {loading ? (
-                      <div className="space-y-2">
-                        {[0, 1].map((i) => (
-                          <div key={i} className="h-14 bg-gray-100 rounded-xl animate-pulse" />
-                        ))}
-                      </div>
-                    ) : activeServices.length === 0 ? (
-                      <div className="text-center py-6">
-                        <p className="text-gray-300 text-xs">No services yet</p>
-                        <button
-                          onClick={() => setActiveTab('services')}
-                          className="mt-2 text-[10px] text-[#F52B8C] font-semibold"
-                        >
-                          + Add a service
-                        </button>
-                      </div>
-                    ) : (
-                      <div className="space-y-2">
-                        {activeServices.slice(0, 4).map((service) => (
-                          <div key={service.id} className="bg-gray-50 rounded-xl p-2.5 flex items-center justify-between">
-                            <div className="min-w-0">
-                              <p className="text-gray-900 font-semibold text-[11px] truncate">{service.name}</p>
-                              <p className="text-gray-400 text-[10px]">{getServiceDuration(service)} min</p>
-                            </div>
-                            <div className="flex items-center gap-1.5 flex-shrink-0">
-                              <p className="text-gray-900 font-bold text-[11px]">€{getServicePrice(service).toFixed(0)}</p>
-                              <div className="bg-[#F52B8C] rounded-lg px-1.5 py-0.5">
-                                <p className="text-white text-[9px] font-bold">Book</p>
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                        {activeServices.length > 4 && (
-                          <p className="text-center text-gray-300 text-[10px]">+{activeServices.length - 4} more</p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Bottom CTA inside phone */}
-                  <div className="px-3 pb-3">
-                    <div className="bg-[#F52B8C] rounded-xl py-2 text-center">
-                      <p className="text-white font-bold text-xs">Book a Service</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Reflection effect */}
-              <div className="absolute inset-0 rounded-[44px] bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
-            </div>
-          </div>
+          {/* Live iPhone Preview */}
+          <LivePhonePreview
+            customForm={customForm}
+            avatarUrl={avatarUrl}
+            activeServices={activeServices}
+            profileId={profile?.id}
+            profileSlug={profile?.slug}
+            getServicePrice={getServicePrice}
+            getServiceDuration={getServiceDuration}
+          />
 
           {/* Action buttons */}
           <div className="flex gap-3">

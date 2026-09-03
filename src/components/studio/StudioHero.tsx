@@ -29,25 +29,22 @@ function parseTikTok(raw: string): string {
 
 function AvatarFrame({ src, name, accent }: { src?: string; name: string; accent: string }) {
   const initials = name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2);
-
   return (
     <div
-      className="w-20 h-20 rounded-full flex-shrink-0 overflow-hidden"
       style={{
-        boxShadow: `0 0 0 3px ${accent}30, 0 0 0 1.5px ${accent}60, 0 8px 24px rgba(0,0,0,0.10)`,
+        width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', flexShrink: 0,
+        boxShadow: `0 0 0 3px ${accent}30, 0 0 0 1.5px ${accent}60, 0 8px 24px rgba(0,0,0,0.12)`,
       }}
     >
       {src ? (
-        <img
-          src={src}
-          alt={name}
-          className="w-full h-full object-cover"
-          loading="eager"
-        />
+        <img src={src} alt={name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="eager" />
       ) : (
         <div
-          className="w-full h-full flex items-center justify-center font-bold text-xl text-white"
-          style={{ background: `linear-gradient(135deg, ${accent}CC, ${accent})` }}
+          style={{
+            width: '100%', height: '100%', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', fontWeight: 700, fontSize: 24, color: '#FFFFFF',
+            background: `linear-gradient(135deg, ${accent}CC, ${accent})`,
+          }}
         >
           {initials}
         </div>
@@ -61,9 +58,10 @@ function AvatarFrame({ src, name, accent }: { src?: string; name: string; accent
 interface Props {
   merchant: Merchant;
   theme: NelsyTheme;
+  isPreview?: boolean;
 }
 
-export function StudioHero({ merchant, theme }: Props) {
+export function StudioHero({ merchant, theme, isPreview = false }: Props) {
   const accent = theme.defaultAccent;
   const tiktokHandle = merchant.tiktok ? parseTikTok(merchant.tiktok) : undefined;
 
@@ -79,29 +77,36 @@ export function StudioHero({ merchant, theme }: Props) {
     <motion.header
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.38, ease: 'easeOut' }}
-      className="flex flex-col items-center text-center px-6 pt-10 pb-8 relative"
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', padding: '40px 24px 28px', position: 'relative' }}
     >
-      {/* Share button — floating top-right */}
-      <button
-        onClick={handleShare}
-        aria-label="Share"
-        className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center transition-colors"
-        style={{ backgroundColor: theme.cardBorder, color: theme.textSecondary }}
-      >
-        <Share2 className="w-4 h-4" />
-      </button>
+      {/* Share — hidden in preview */}
+      {!isPreview && (
+        <button
+          onClick={handleShare}
+          aria-label="Share"
+          style={{
+            position: 'absolute', top: 16, right: 16,
+            width: 36, height: 36, borderRadius: '50%', border: 'none',
+            backgroundColor: theme.cardBorder, color: theme.textSecondary,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer', transition: 'opacity 0.2s',
+          }}
+        >
+          <Share2 size={15} />
+        </button>
+      )}
 
-      {/* Avatar */}
       <AvatarFrame src={merchant.logo_url} name={merchant.salon_name} accent={accent} />
 
       {/* Verified badge */}
       <div
-        className="inline-flex items-center gap-1.5 mt-4 mb-2 px-3 py-1 rounded-full text-[11px] font-semibold"
         style={{
-          backgroundColor: theme.cardBg,
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+          marginTop: 16, marginBottom: 8, padding: '4px 12px',
+          borderRadius: 99, backgroundColor: theme.cardBg,
           border: `1px solid ${theme.cardBorder}`,
-          color: theme.textSecondary,
+          fontSize: 11, fontWeight: 600, color: theme.textSecondary,
           boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
         }}
       >
@@ -110,18 +115,19 @@ export function StudioHero({ merchant, theme }: Props) {
       </div>
 
       {/* Name */}
-      <h1
-        className="text-xl font-bold leading-tight"
-        style={{ color: theme.textPrimary, letterSpacing: '-0.02em' }}
-      >
+      <h1 style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.25, margin: 0 }}>
         {merchant.salon_name}
       </h1>
 
       {/* Bio */}
       {merchant.bio && (
         <p
-          className="text-[14px] leading-relaxed mt-2 max-w-[280px] line-clamp-2"
-          style={{ color: theme.textSecondary }}
+          style={{
+            color: theme.textSecondary, fontSize: 14, lineHeight: 1.6,
+            marginTop: 8, maxWidth: 280,
+            overflow: 'hidden', display: '-webkit-box',
+            WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+          }}
         >
           {merchant.bio}
         </p>
@@ -129,27 +135,35 @@ export function StudioHero({ merchant, theme }: Props) {
 
       {/* Social links */}
       {(merchant.instagram || tiktokHandle) && (
-        <div className="flex items-center gap-2.5 mt-4">
+        <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
           {merchant.instagram && (
             <a
-              href={`https://instagram.com/${merchant.instagram}`}
-              target="_blank"
+              href={isPreview ? '#' : `https://instagram.com/${merchant.instagram}`}
+              target={isPreview ? undefined : '_blank'}
               rel="noopener noreferrer"
               aria-label="Instagram"
-              className="w-9 h-9 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
-              style={{ backgroundColor: theme.cardBg, color: theme.textPrimary, border: `1px solid ${theme.cardBorder}` }}
+              style={{
+                width: 36, height: 36, borderRadius: '50%', border: `1px solid ${theme.cardBorder}`,
+                backgroundColor: theme.cardBg, color: theme.textPrimary,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                textDecoration: 'none',
+              }}
             >
               <InstagramIcon />
             </a>
           )}
           {tiktokHandle && (
             <a
-              href={`https://tiktok.com/@${tiktokHandle}`}
-              target="_blank"
+              href={isPreview ? '#' : `https://tiktok.com/@${tiktokHandle}`}
+              target={isPreview ? undefined : '_blank'}
               rel="noopener noreferrer"
               aria-label="TikTok"
-              className="w-9 h-9 rounded-full flex items-center justify-center transition-opacity hover:opacity-70"
-              style={{ backgroundColor: theme.cardBg, color: theme.textPrimary, border: `1px solid ${theme.cardBorder}` }}
+              style={{
+                width: 36, height: 36, borderRadius: '50%', border: `1px solid ${theme.cardBorder}`,
+                backgroundColor: theme.cardBg, color: theme.textPrimary,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                textDecoration: 'none',
+              }}
             >
               <TikTokIcon />
             </a>

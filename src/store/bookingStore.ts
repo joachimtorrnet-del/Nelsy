@@ -12,6 +12,8 @@ interface BookingStore {
   clientPhone: string;
 
   openModal: (service: Service) => void;
+  // Pre-populates date + time and opens at step 3 (client info) — used by inline booking flow
+  openWithDateTime: (service: Service, date: string, time: string) => void;
   closeModal: () => void;
   setStep: (step: number) => void;
   setSelectedDate: (date: string) => void;
@@ -36,6 +38,9 @@ export const useBookingStore = create<BookingStore>((set) => ({
 
   openModal: (service) =>
     set({ isOpen: true, selectedService: service, step: 1, selectedDate: null, selectedTime: null }),
+
+  openWithDateTime: (service, date, time) =>
+    set({ isOpen: true, selectedService: service, step: 3, selectedDate: date, selectedTime: time }),
 
   closeModal: () =>
     set({ isOpen: false }),
