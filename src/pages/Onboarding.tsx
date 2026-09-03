@@ -998,7 +998,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
   // Payment phase — render embedded Stripe PaymentElement
   if (phase === 'payment' && clientSecret) {
     return (
-      <Elements stripe={stripePromise} options={{ clientSecret, appearance: STRIPE_APPEARANCE }}>
+      <Elements stripe={stripePromise} options={{ clientSecret, appearance: STRIPE_APPEARANCE, wallets: { applePay: 'auto', googlePay: 'auto' } }}>
         <PaymentStep
           plan={formData.plan}
           formattedDate={formattedDate}
