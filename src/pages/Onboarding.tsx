@@ -909,6 +909,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
   const [intentType, setIntentType] = useState<'setup' | 'payment'>('setup');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [accountCreated, setAccountCreated] = useState(false);
 
   const trialEndDate = new Date();
   trialEndDate.setDate(trialEndDate.getDate() + 14);
@@ -922,46 +923,54 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
     setError('');
 
     try {
-      // 1. Create Supabase account
-      setError('Step 1/4 — Creating your account...');
-      const { data: { user }, error: signUpError } = await supabase.auth.signUp({
-        email: formData.email,
-        password: formData.password,
-        options: {
-          data: {
-            full_name: formData.fullName,
-            slug: formData.username,
-            phone: formData.phone,
-            instagram: formData.instagram,
-            tiktok: formData.tiktok,
+      let session;
+
+      if (!accountCreated) {
+        // 1. Create Supabase account
+        setError('Step 1/4 — Creating your account...');
+        const { data: { user }, error: signUpError } = await supabase.auth.signUp({
+          email: formData.email,
+          password: formData.password,
+          options: {
+            data: {
+              full_name: formData.fullName,
+              slug: formData.username,
+              phone: formData.phone,
+              instagram: formData.instagram,
+              tiktok: formData.tiktok,
+            },
           },
-        },
-      });
-      if (signUpError) throw new Error(`[signup] ${signUpError.message}`);
-      if (!user) throw new Error('[signup] No user returned');
+        });
+        if (signUpError) throw new Error(`[signup] ${signUpError.message}`);
+        if (!user) throw new Error('[signup] No user returned');
 
-      // 2. Wait for DB trigger to create profile
-      setError('Step 2/4 — Setting up your profile...');
-      let profile = null;
-      let retries = 6;
-      while (retries > 0 && !profile) {
-        await new Promise((r) => setTimeout(r, 500));
-        const { data } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
-        if (data) { profile = data; break; }
-        retries--;
+        // 2. Wait for DB trigger to create profile
+        setError('Step 2/4 — Setting up your profile...');
+        let profile = null;
+        let retries = 6;
+        while (retries > 0 && !profile) {
+          await new Promise((r) => setTimeout(r, 500));
+          const { data } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
+          if (data) { profile = data; break; }
+          retries--;
+        }
+        if (!profile) throw new Error('[profile] Profile creation timed out');
+
+        // 3. Sign in to get a valid session
+        setError('Step 3/4 — Signing you in...');
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email: formData.email,
+          password: formData.password,
+        });
+        if (signInError) throw new Error(`[signin] ${signInError.message}`);
+
+        setAccountCreated(true);
       }
-      if (!profile) throw new Error('[profile] Profile creation timed out');
 
-      // 3. Sign in to get a valid session
-      setError('Step 3/4 — Signing you in...');
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: formData.email,
-        password: formData.password,
-      });
-      if (signInError) throw new Error(`[signin] ${signInError.message}`);
-
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session) throw new Error('[session] No session after sign in');
+      // Get current session (works whether account was just created or already existed)
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      session = currentSession;
+      if (!session) throw new Error('[session] No session available');
 
       // 4. Create subscription intent
       setError('Step 4/4 — Setting up payment...');
