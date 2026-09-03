@@ -231,9 +231,15 @@ serve(async (req) => {
 
         let status = 'inactive'
         if (subscription.status === 'active') status = 'active'
-        if (subscription.status === 'trialing') status = 'trialing'
+        if (subscription.status === 'trialing') {
+          // pending_setup_intent is non-null while the user still hasn't entered a card.
+          // Only promote to 'trialing' once that intent is gone (card saved successfully).
+          status = subscription.pending_setup_intent ? 'incomplete' : 'trialing'
+        }
         if (subscription.status === 'past_due') status = 'past_due'
         if (subscription.status === 'canceled') status = 'cancelled'
+        if (subscription.status === 'incomplete') status = 'incomplete'
+        if (subscription.status === 'incomplete_expired') status = 'cancelled'
 
         const { error } = await supabase
           .from('profiles')

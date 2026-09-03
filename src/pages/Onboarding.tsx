@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import { Elements, PaymentElement, ExpressCheckoutElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { supabase } from '../lib/supabase';
 import { validatePassword } from '../utils/validation';
 
@@ -819,8 +819,9 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [expressAvailable, setExpressAvailable] = useState(false);
 
-  const handleConfirm = async () => {
+  const confirm = async () => {
     if (!stripe || !elements) return;
     setLoading(true);
     setError('');
@@ -859,9 +860,32 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
           </div>
         </div>
 
-        {/* Embedded payment form */}
+        {/* Apple Pay / Google Pay express buttons */}
+        <div className="mb-2">
+          <ExpressCheckoutElement
+            onConfirm={confirm}
+            onReady={({ availablePaymentMethods }) => {
+              setExpressAvailable(!!availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0);
+            }}
+            options={{
+              buttonHeight: 48,
+              buttonType: { applePay: 'subscribe', googlePay: 'subscribe' },
+            }}
+          />
+        </div>
+
+        {/* OR divider — only visible when at least one express method is available */}
+        {expressAvailable && (
+          <div className="flex items-center gap-3 my-4">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">or pay by card</span>
+            <div className="flex-1 h-px bg-gray-200" />
+          </div>
+        )}
+
+        {/* Card fields — wallets suppressed here since ECE handles them above */}
         <div className="mb-4">
-          <PaymentElement options={{ layout: 'tabs', wallets: { applePay: 'auto', googlePay: 'auto' } } as object} />
+          <PaymentElement options={{ layout: 'tabs', wallets: { applePay: 'never', googlePay: 'never' } } as object} />
         </div>
 
         {error && (
@@ -874,13 +898,13 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
           <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
           </svg>
-          Secured by Stripe — Apple Pay & Google Pay supported
+          Secured by Stripe
         </p>
       </div>
 
       <div className="space-y-3">
         <button
-          onClick={handleConfirm}
+          onClick={confirm}
           disabled={!stripe || !elements || loading}
           className="w-full py-4 text-white rounded-2xl font-bold text-base hover:opacity-90 transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           style={{ backgroundColor: '#F52B8C' }}
@@ -925,7 +949,11 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
     try {
       let session;
 
-      if (!accountCreated) {
+      // Check for an existing session first — handles returning users who abandoned
+      // the payment step in a previous session (e.g. closed the tab).
+      const { data: { session: existingSession } } = await supabase.auth.getSession();
+
+      if (!existingSession && !accountCreated) {
         // 1. Create Supabase account
         setError('Step 1/4 — Creating your account...');
         const { data: { user }, error: signUpError } = await supabase.auth.signUp({
@@ -966,6 +994,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
 
         setAccountCreated(true);
       }
+      // else: user is already logged in (returning from a previous session) — skip to intent fetch
 
       // Get current session (works whether account was just created or already existed)
       const { data: { session: currentSession } } = await supabase.auth.getSession();

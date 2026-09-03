@@ -53,6 +53,13 @@ export default function Dashboard() {
 
       setProfile(profile);
 
+      // Users who started onboarding but abandoned before entering a card have
+      // 'incomplete' status. Send them back to finish, not to the dashboard.
+      if (profile?.subscription_status === 'incomplete') {
+        navigate('/onboarding');
+        return;
+      }
+
       posthog.identify(user.id, {
         email: user.email,
         name: profile?.full_name,

@@ -1,40 +1,101 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Share2 } from 'lucide-react';
 import { useStudio } from '@/hooks/useStudio';
 import { useBookingStore } from '@/store/bookingStore';
 import { BookingModal } from '@/components/studio/BookingModal';
 import { StudioHero } from '@/components/studio/StudioHero';
 import { StudioServiceList } from '@/components/studio/StudioServiceList';
-import { StudioGallery } from '@/components/studio/StudioGallery';
-import { StudioTestimonials } from '@/components/studio/StudioTestimonials';
-import { StudioHours } from '@/components/studio/StudioHours';
 import type { Service } from '@/types';
-import {
-  recordPageView,
-  getGalleryPhotos,
-  getApprovedTestimonials,
-  getBusinessHours,
-} from '@/lib/supabase-queries';
+import { recordPageView } from '@/lib/supabase-queries';
 import { getTheme } from '@/lib/themes';
-import type { GalleryPhoto, Testimonial, BusinessHour } from '@/lib/supabase-queries';
+import type { NelsyTheme } from '@/lib/themes';
 
 // ── Skeleton ──────────────────────────────────────────────────────────────────
 
-function Skeleton() {
+function Skeleton({ theme }: { theme: NelsyTheme }) {
+  const pulse = { backgroundColor: theme.cardBorder };
   return (
-    <div className="animate-pulse px-4">
-      <div className="flex flex-col items-center pt-8 pb-6">
-        <div className="w-24 h-24 rounded-full bg-gray-200 mb-4" />
-        <div className="h-8 bg-gray-200 rounded-xl w-44 mb-2" />
-        <div className="h-4 bg-gray-200 rounded w-64 mb-1" />
-        <div className="h-4 bg-gray-200 rounded w-48" />
+    <div className="animate-pulse px-5 pt-10">
+      {/* Avatar */}
+      <div className="flex flex-col items-center mb-8">
+        <div className="w-20 h-20 rounded-full mb-4" style={{ backgroundColor: theme.cardBorder }} />
+        <div className="h-3 w-28 rounded-full mb-3" style={pulse} />
+        <div className="h-5 w-44 rounded-full mb-2" style={pulse} />
+        <div className="h-3 w-56 rounded-full mb-1" style={pulse} />
+        <div className="h-3 w-40 rounded-full" style={pulse} />
       </div>
-      <div className="flex flex-col gap-3">
+      {/* Cards */}
+      <div className="space-y-3">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="bg-gray-100 rounded-2xl h-32" />
+          <div key={i} className="rounded-2xl h-20" style={{ backgroundColor: theme.cardBorder }} />
         ))}
       </div>
+    </div>
+  );
+}
+
+// ── PLG viral footer ──────────────────────────────────────────────────────────
+
+function PlgFooter({ accent, slug }: { accent: string; slug: string }) {
+  const href = `https://getnelsy.com/signup?utm_source=studio_footer&ref=${encodeURIComponent(slug)}`;
+  return (
+    <div
+      className="fixed bottom-0 inset-x-0 z-30 flex justify-center pointer-events-none"
+      aria-hidden="true"
+    >
+      <div className="w-full max-w-[480px] pointer-events-auto px-4 pb-4">
+        <div
+          className="flex items-center justify-between px-4 py-3 rounded-2xl bg-white"
+          style={{
+            boxShadow: '0 -2px 20px rgba(0,0,0,0.08), 0 4px 20px rgba(0,0,0,0.06)',
+            border: '1px solid rgba(0,0,0,0.06)',
+          }}
+        >
+          <Link
+            to="/"
+            className="flex items-center gap-2"
+          >
+            <div
+              className="w-6 h-6 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: accent }}
+            >
+              <span className="text-white font-black text-[10px] leading-none">N</span>
+            </div>
+            <span className="font-bold text-gray-900 text-sm">Nelsy</span>
+          </Link>
+
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 px-4 py-2 rounded-full text-[13px] font-bold transition-opacity hover:opacity-90 active:scale-95"
+            style={{ backgroundColor: accent, color: '#FFFFFF' }}
+          >
+            Try 14 Days Free →
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── 404 ───────────────────────────────────────────────────────────────────────
+
+function NotFound({ accent }: { accent: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-24 text-center px-6">
+      <div className="text-5xl mb-4">💅</div>
+      <h1 className="text-xl font-bold text-gray-900 mb-2">Studio not found</h1>
+      <p className="text-gray-400 text-sm mb-6">
+        This studio doesn't exist on Nelsy yet.
+      </p>
+      <Link
+        to="/"
+        className="inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-xl font-semibold text-sm"
+        style={{ background: accent }}
+      >
+        Create mine →
+      </Link>
     </div>
   );
 }
@@ -47,9 +108,6 @@ export default function Studio() {
   const { merchant, loading } = useStudio(slug ?? '');
 
   const trackedRef = useRef(false);
-  const [gallery, setGallery] = useState<GalleryPhoto[]>([]);
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
-  const [hours, setHours] = useState<BusinessHour[]>([]);
 
   // Track visit once per session
   useEffect(() => {
@@ -61,20 +119,11 @@ export default function Studio() {
     void recordPageView(merchant.id);
   }, [merchant?.id]);
 
-  // SEO title
+  // SEO
   useEffect(() => {
-    if (merchant) document.title = `${merchant.salon_name} — Réserver sur Nelsy`;
+    if (merchant) document.title = `${merchant.salon_name} — Book on Nelsy`;
     return () => { document.title = 'Nelsy'; };
   }, [merchant?.salon_name]);
-
-  // Fetch supplementary data
-  useEffect(() => {
-    if (!merchant?.id) return;
-    const id = merchant.id;
-    void getGalleryPhotos(id).then(setGallery);
-    void getApprovedTestimonials(id).then(setTestimonials);
-    void getBusinessHours(id).then(setHours);
-  }, [merchant?.id]);
 
   const handleBook = (service?: Service) => {
     if (service) { openModal(service); return; }
@@ -85,86 +134,43 @@ export default function Studio() {
     }
   };
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({ title: merchant?.salon_name, url: window.location.href }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href).catch(() => {});
-    }
-  };
-
   const theme = getTheme(merchant?.theme_preset, merchant?.color_accent);
   const accent = theme.defaultAccent;
 
   return (
-    <div className={`min-h-screen ${theme.fontClass}`} style={{ backgroundColor: theme.pageBg }}>
-      {/* Minimal sticky header */}
-      <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-30">
-        <div className="max-w-lg mx-auto px-4 h-12 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-1.5">
-            <div
-              className="w-6 h-6 rounded-lg flex items-center justify-center"
-              style={{ background: accent }}
-            >
-              <span className="text-white font-bold text-[10px]">N</span>
-            </div>
-            <span className="font-bold text-gray-900 text-sm">Nelsy</span>
-          </Link>
-          {merchant && (
-            <button
-              onClick={handleShare}
-              className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-700 transition-colors px-2.5 py-1.5 rounded-lg hover:bg-gray-100"
-            >
-              <Share2 className="w-3.5 h-3.5" />
-              Partager
-            </button>
+    // Outer: subtle desktop background dimming
+    <div
+      className={`min-h-dvh ${theme.fontClass}`}
+      style={{ backgroundColor: '#E8E8E8' }}
+    >
+      {/* Inner: the 480px mobile column */}
+      <div
+        className="w-full max-w-[480px] mx-auto min-h-dvh flex flex-col relative"
+        style={{ backgroundColor: theme.pageBg }}
+      >
+        {/* Scrollable content — pb-24 clears the sticky PLG footer */}
+        <main className="flex-1 pb-24">
+          {loading ? (
+            <Skeleton theme={theme} />
+          ) : !merchant ? (
+            <NotFound accent={accent} />
+          ) : (
+            <>
+              <StudioHero merchant={merchant} theme={theme} />
+
+              <div id="services" className="px-4 mt-2">
+                <StudioServiceList
+                  services={merchant.services}
+                  theme={theme}
+                  onBook={handleBook}
+                />
+              </div>
+            </>
           )}
-        </div>
-      </header>
+        </main>
 
-      <div className="max-w-lg mx-auto pb-20">
-        {loading ? (
-          <Skeleton />
-        ) : !merchant ? (
-          <div className="flex flex-col items-center justify-center py-24 text-center px-4">
-            <div className="text-5xl mb-4">💅</div>
-            <h1 className="text-xl font-bold text-gray-900 mb-2">Studio introuvable</h1>
-            <p className="text-gray-400 text-sm mb-6">Ce studio n'existe pas encore sur Nelsy.</p>
-            <Link
-              to="/"
-              className="inline-flex items-center gap-2 text-white px-5 py-2.5 rounded-xl font-semibold text-sm"
-              style={{ background: accent }}
-            >
-              Créer le mien →
-            </Link>
-          </div>
-        ) : (
-          <>
-            <StudioHero merchant={merchant} theme={theme} />
-
-            <StudioServiceList
-              services={merchant.services}
-              accentColor={accent}
-              onBook={handleBook}
-            />
-
-            <div className="px-4">
-              <StudioGallery photos={gallery} />
-              <StudioTestimonials testimonials={testimonials} accentColor={accent} />
-              <StudioHours hours={hours} accentColor={accent} />
-            </div>
-
-            {/* Footer */}
-            <div className="text-center mt-10 pb-4">
-              <Link
-                to="/"
-                className="text-xs text-gray-300 hover:text-gray-400 transition-colors"
-              >
-                Propulsé par <span className="font-bold" style={{ color: accent }}>Nelsy</span>
-              </Link>
-            </div>
-          </>
-        )}
+        {/* PLG viral acquisition bar */}
+        {merchant && <PlgFooter accent={accent} slug={merchant.slug} />}
       </div>
 
       {merchant && <BookingModal merchant={merchant} />}

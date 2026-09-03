@@ -6,6 +6,7 @@ export interface Service {
   duration: number;
   deposit: number;
   category?: string;
+  image_url?: string;
 }
 
 export interface Merchant {

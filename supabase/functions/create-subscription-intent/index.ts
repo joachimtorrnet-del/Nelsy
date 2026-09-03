@@ -41,19 +41,56 @@ serve(async (req) => {
       })
     }
 
-    // Create Stripe customer
-    const customer = await stripe.customers.create({
-      email: user.email ?? '',
-      metadata: { supabase_user_id: user.id, plan: plan ?? 'pro' },
-    })
+    // Load existing Stripe IDs so we never duplicate customers or subscriptions
+    const { data: existingProfile } = await supabase
+      .from('profiles')
+      .select('stripe_customer_id, subscription_id')
+      .eq('id', user.id)
+      .single()
+
+    let customerId = existingProfile?.stripe_customer_id ?? null
+
+    // If there's already a pending subscription with a live setup intent, reuse it.
+    // This handles the case where the user abandoned the payment step and came back.
+    if (existingProfile?.subscription_id) {
+      try {
+        const existingSub = await stripe.subscriptions.retrieve(existingProfile.subscription_id, {
+          expand: ['pending_setup_intent'],
+        })
+        const psi = existingSub.pending_setup_intent as Stripe.SetupIntent | null
+
+        if (psi?.client_secret && existingSub.status === 'trialing') {
+          // Still a valid pending setup — return the existing intent, no new subscription
+          return new Response(
+            JSON.stringify({ clientSecret: psi.client_secret, type: 'setup', subscriptionId: existingSub.id }),
+            { headers: { 'Content-Type': 'application/json', ...corsHeaders } },
+          )
+        }
+      } catch {
+        // Subscription not found or already expired — fall through to create a new one
+      }
+    }
+
+    // Reuse existing Stripe customer or create a new one
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: user.email ?? '',
+        metadata: { supabase_user_id: user.id, plan: plan ?? 'pro' },
+      })
+      customerId = customer.id
+    }
 
     // Create subscription with 14-day trial.
-    // payment_behavior: 'default_incomplete' + pending_setup_intent lets us collect
-    // the card upfront without charging — Stripe returns a SetupIntent client_secret.
+    // payment_behavior: 'default_incomplete' + pending_setup_intent collects the card
+    // upfront without charging. trial_settings ensures Stripe auto-cancels at trial end
+    // if no payment method was ever saved.
     const subscription = await stripe.subscriptions.create({
-      customer: customer.id,
+      customer: customerId,
       items: [{ price: priceId }],
       trial_period_days: 14,
+      trial_settings: {
+        end_behavior: { missing_payment_method: 'cancel' },
+      },
       payment_behavior: 'default_incomplete',
       payment_settings: {
         save_default_payment_method: 'on_subscription',
@@ -63,8 +100,6 @@ serve(async (req) => {
       metadata: { supabase_user_id: user.id, plan: plan ?? 'pro' },
     })
 
-    // For free-trial subscriptions Stripe uses pending_setup_intent.
-    // Fall back to latest_invoice.payment_intent for non-zero first invoices.
     const psi = subscription.pending_setup_intent as Stripe.SetupIntent | null
     const latestInvoice = subscription.latest_invoice as Stripe.Invoice | null
     const pi = latestInvoice?.payment_intent as Stripe.PaymentIntent | null
@@ -82,11 +117,13 @@ serve(async (req) => {
 
     if (!clientSecret) throw new Error('No client_secret returned by Stripe subscription')
 
-    // Persist Stripe IDs on the profile so the webhook can cross-reference
+    // Write 'incomplete' — the user has NOT entered a card yet.
+    // The webhook will upgrade this to 'trialing' only once the SetupIntent succeeds
+    // (i.e. pending_setup_intent becomes null on customer.subscription.updated).
     await supabase.from('profiles').update({
-      stripe_customer_id: customer.id,
+      stripe_customer_id: customerId,
       subscription_id: subscription.id,
-      subscription_status: subscription.status,
+      subscription_status: 'incomplete',
     }).eq('id', user.id)
 
     return new Response(
