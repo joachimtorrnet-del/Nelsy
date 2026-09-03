@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useStudio } from '@/hooks/useStudio';
 import { useBookingStore } from '@/store/bookingStore';
