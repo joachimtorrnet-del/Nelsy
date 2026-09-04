@@ -2,9 +2,7 @@ import { supabase, isSupabaseConfigured } from './supabase';
 import { TIME_SLOTS } from './mockData';
 import { isDateInPast } from './utils';
 
-// ----------------------------------------------------------------
-// Types
-// ----------------------------------------------------------------
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 export interface CreateBookingParams {
   serviceId: string;
@@ -25,20 +23,16 @@ export interface CreatedBooking {
   client_email: string;
 }
 
-// ----------------------------------------------------------------
-// createBooking
-// Persists a booking to Supabase (if configured), otherwise
-// returns a mock confirmation object.
-// ----------------------------------------------------------------
+// ── createBooking ─────────────────────────────────────────────────────────────
+// Dev/fallback path used when Supabase + Stripe are not configured.
+// In production the booking is created inside create-payment-intent (Edge Function).
 
 export async function createBooking(
-  params: CreateBookingParams
+  params: CreateBookingParams,
 ): Promise<CreatedBooking> {
-  // Capture in local const so TypeScript can narrow the type
   const client = supabase;
 
   if (!isSupabaseConfigured || !client) {
-    // Mock mode: simulate a short delay then return a fake booking
     await new Promise<void>((resolve) => setTimeout(resolve, 1200));
     return {
       id: crypto.randomUUID(),
@@ -49,9 +43,9 @@ export async function createBooking(
     };
   }
 
-  // 1. Verify the slot is still free (optimistic concurrency check)
+  // Verify slot is still free (optimistic pre-check; DB constraint is authoritative)
   const slotStart = new Date(params.datetime);
-  const slotEnd = new Date(params.datetime.getTime() + 60 * 60 * 1000); // +1h buffer
+  const slotEnd = new Date(params.datetime.getTime() + 60 * 60 * 1000);
 
   const { data: conflicts } = await client
     .from('bookings')
@@ -59,14 +53,13 @@ export async function createBooking(
     .eq('profile_id', params.profileId)
     .gte('booking_datetime', slotStart.toISOString())
     .lt('booking_datetime', slotEnd.toISOString())
-    .not('status', 'in', '("cancelled","no_show")')
+    .not('status', 'in', '("cancelled","no_show","expired")')
     .limit(1);
 
   if (conflicts && conflicts.length > 0) {
     throw new Error('Ce créneau vient d\'être pris. Choisissez un autre horaire.');
   }
 
-  // 2. Insert booking (status = 'pending' until Stripe payment confirmed)
   const { data, error } = await client
     .from('bookings')
     .insert({
@@ -85,39 +78,41 @@ export async function createBooking(
     .single();
 
   if (error) throw new Error(error.message);
-
   return data;
 }
 
-// ----------------------------------------------------------------
-// getAvailableSlots
-// Returns array of "HH:MM" strings for a given merchant + date.
-// Falls back to mock slots when Supabase is not configured.
-// ----------------------------------------------------------------
+// ── getAvailableSlots ─────────────────────────────────────────────────────────
+// Returns 'HH:MM' strings for available 30-min slot starts on the given date.
+// serviceDurationMinutes: the selected service's duration — used to:
+//   (a) exclude start-time slots where a prior booking overlaps
+//   (b) exclude start-time slots where the service would end past closing
+//
+// Slots are generated every 30 minutes between the pro's open/close times.
+// A slot at time T is available only if:
+//   - No existing booking occupies [T, T + serviceDuration)
+//   - The service end time T + serviceDuration ≤ closing time
+//
+// This matches the server-side EXCLUDE constraint logic so the UI accurately
+// reflects which slots the server will accept.
 
-const TAKEN_MOCK = new Set(['10:00', '11:30', '15:00']);
+const MOCK_TAKEN_TIMES = new Set(['10:00', '11:30', '15:00']);
 
 export async function getAvailableSlots(
   profileId: string,
-  date: Date
+  date: Date,
+  serviceDurationMinutes = 60,
 ): Promise<string[]> {
-  // Never return slots for past dates
-  if (isDateInPast(date)) {
-    return [];
-  }
+  if (isDateInPast(date)) return [];
 
-  // Capture in local const so TypeScript can narrow the type
   const client = supabase;
 
   if (!isSupabaseConfigured || !client) {
-    // Mock: return hardcoded slots minus a few "taken" ones
-    return TIME_SLOTS.filter((s) => !TAKEN_MOCK.has(s));
+    return TIME_SLOTS.filter((s) => !MOCK_TAKEN_TIMES.has(s));
   }
 
   try {
     const dayOfWeek = date.getDay();
 
-    // Check if there's an availability window for this day
     const { data: avail } = await client
       .from('availabilities')
       .select('start_time, end_time, break_duration_minutes')
@@ -128,7 +123,7 @@ export async function getAvailableSlots(
 
     if (!avail) return [];
 
-    // Fetch bookings on this date
+    // Fetch bookings that overlap the whole day
     const startOfDay = new Date(date);
     startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date(date);
@@ -136,36 +131,46 @@ export async function getAvailableSlots(
 
     const { data: existingBookings } = await client
       .from('bookings')
-      .select('booking_datetime')
+      .select('booking_datetime, duration_minutes')
       .eq('profile_id', profileId)
       .gte('booking_datetime', startOfDay.toISOString())
       .lte('booking_datetime', endOfDay.toISOString())
-      .not('status', 'in', '("cancelled","no_show")');
+      .not('status', 'in', '("cancelled","no_show","expired")');
 
-    const bookedTimes = new Set(
-      (existingBookings ?? []).map((b) => {
-        const dt = new Date(b.booking_datetime);
-        return `${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}`;
-      })
-    );
+    // Convert each booking to a [startMin, endMin) range in minutes-since-midnight
+    const occupiedRanges = (existingBookings ?? []).map((b) => {
+      const dt = new Date(b.booking_datetime);
+      const startMin = dt.getHours() * 60 + dt.getMinutes();
+      const duration = Number(b.duration_minutes ?? 60);
+      return { start: startMin, end: startMin + duration };
+    });
 
-    // Generate 30-min slots between start_time and end_time
-    const [startH, startM] = avail.start_time.split(':').map(Number);
-    const [endH, endM] = avail.end_time.split(':').map(Number);
+    // Parse availability window (stored as 'HH:MM:SS' or 'HH:MM')
+    const [openH, openM] = avail.start_time.split(':').map(Number);
+    const [closeH, closeM] = avail.end_time.split(':').map(Number);
+    const openMin = openH * 60 + openM;
+    const closeMin = closeH * 60 + closeM;
 
+    const SLOT_STEP = 30; // minutes between slot starts
     const slots: string[] = [];
-    let current = startH * 60 + startM;
-    const end = endH * 60 + endM;
+    let current = openMin;
 
-    while (current < end) {
-      const h = Math.floor(current / 60);
-      const m = current % 60;
-      const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+    while (current + serviceDurationMinutes <= closeMin) {
+      const slotEnd = current + serviceDurationMinutes;
 
-      if (!bookedTimes.has(timeStr)) {
-        slots.push(timeStr);
+      // A slot is available iff its range [current, slotEnd) doesn't overlap
+      // any existing booking range [occ.start, occ.end)
+      const overlaps = occupiedRanges.some(
+        (occ) => current < occ.end && slotEnd > occ.start,
+      );
+
+      if (!overlaps) {
+        const h = Math.floor(current / 60);
+        const m = current % 60;
+        slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
       }
-      current += 30;
+
+      current += SLOT_STEP;
     }
 
     return slots;

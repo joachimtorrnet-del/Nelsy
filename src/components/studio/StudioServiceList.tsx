@@ -228,7 +228,7 @@ function ServiceCard({
     let cancelled = false;
     setSlotsLoading(true);
     setSlots([]);
-    void getAvailableSlots(merchant.id, new Date(selectedDate)).then((s) => {
+    void getAvailableSlots(merchant.id, new Date(selectedDate), service.duration).then((s) => {
       if (!cancelled) { setSlots(s); setSlotsLoading(false); }
     });
     return () => { cancelled = true; };

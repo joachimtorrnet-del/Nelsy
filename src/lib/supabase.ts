@@ -21,7 +21,8 @@ export interface DbProfileRow {
   stripe_account_id: string | null;
   stripe_customer_id: string | null;
   stripe_onboarding_complete: boolean;
-  subscription_status: 'trial' | 'active' | 'cancelled' | 'trialing' | 'past_due' | 'inactive';
+  subscription_status: 'trial' | 'trialing' | 'active' | 'past_due' | 'cancelled' | 'inactive' | 'incomplete';
+  timezone: string;
   notification_preferences: {
     new_bookings: boolean;
     purchase_confirmations: boolean;
@@ -55,13 +56,16 @@ export interface DbBookingRow {
   client_name: string;
   client_email: string;
   client_phone: string;
-  status: 'pending' | 'confirmed' | 'paid' | 'completed' | 'no_show' | 'cancelled';
+  status: 'pending' | 'confirmed' | 'paid' | 'completed' | 'no_show' | 'cancelled' | 'refunded' | 'expired';
+  duration_minutes: number;
   price_total: number;
   deposit_paid: number;
   nelsy_fee: number;
   stripe_payment_intent_id: string | null;
   stripe_fee_estimated: number;
   net_to_pro: number;
+  expires_at: string | null;
+  booking_end_datetime: string | null;
   created_at: string;
   paid_at: string | null;
   completed_at: string | null;
@@ -105,13 +109,15 @@ export interface DbBookingInsert {
   client_name: string;
   client_email: string;
   client_phone: string;
-  status?: 'pending' | 'confirmed' | 'paid' | 'completed' | 'no_show' | 'cancelled';
+  status?: 'pending' | 'confirmed' | 'paid' | 'completed' | 'no_show' | 'cancelled' | 'refunded' | 'expired';
+  duration_minutes?: number;
   price_total: number;
   deposit_paid: number;
   nelsy_fee?: number;
   stripe_payment_intent_id?: string | null;
   stripe_fee_estimated?: number;
   net_to_pro?: number;
+  expires_at?: string | null;
   paid_at?: string | null;
   completed_at?: string | null;
 }

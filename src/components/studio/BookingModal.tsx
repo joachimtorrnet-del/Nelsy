@@ -85,11 +85,11 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
   // Fetch slots when step 2 is reached
   useEffect(() => {
-    if (step !== 2 || !selectedDate) return;
+    if (step !== 2 || !selectedDate || !selectedService) return;
     let cancelled = false;
     setSlotsLoading(true);
     setAvailableSlots([]);
-    void getAvailableSlots(merchant.id, new Date(selectedDate)).then((slots) => {
+    void getAvailableSlots(merchant.id, new Date(selectedDate), selectedService.duration).then((slots) => {
       if (!cancelled) { setAvailableSlots(slots); setSlotsLoading(false); }
     });
     return () => { cancelled = true; };
@@ -136,9 +136,8 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                 client_name: data.name,
                 client_email: data.email,
                 client_phone: data.phone,
-                price_total: selectedService.price,
-                deposit_paid: 0,
-                nelsy_fee: 0,
+                // Financial fields (price, deposit, fees) are intentionally
+                // omitted — the server derives all amounts from the DB.
               },
             },
           }
