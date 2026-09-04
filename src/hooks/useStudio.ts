@@ -17,6 +17,7 @@ function dbServiceToService(s: DbService): Service {
     duration: s.duration_minutes,
     deposit: Number(s.deposit_amount),
     category: s.category ?? undefined,
+    image_url: s.image_url ?? undefined,
   };
 }
 
@@ -85,11 +86,9 @@ export function useStudio(slug: string): UseStudioResult {
           .single();
 
         if (profileError) {
-          // Fall back to mock data on error (404, network, etc.)
-          const mock = getMerchantBySlug(slug);
           if (!cancelled) {
-            setMerchant(mock ?? null);
-            setUsingMockData(true);
+            setError('Studio introuvable');
+            setMerchant(null);
             setLoading(false);
           }
           return;
@@ -113,10 +112,7 @@ export function useStudio(slug: string): UseStudioResult {
       } catch (err) {
         if (!cancelled) {
           setError(err instanceof Error ? err.message : 'Erreur inconnue');
-          // Still try mock as final fallback
-          const mock = getMerchantBySlug(slug);
-          setMerchant(mock ?? null);
-          setUsingMockData(true);
+          setMerchant(null);
           setLoading(false);
         }
       }

@@ -9,7 +9,6 @@ import type { FormEvent } from 'react';
 import type { StripeExpressCheckoutElementConfirmEvent } from '@stripe/stripe-js';
 import { Loader2 } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
-import { supabase } from '@/lib/supabase';
 
 interface PaymentFormProps {
   amount: number;
@@ -17,22 +16,12 @@ interface PaymentFormProps {
   onSuccess: () => void;
 }
 
-export default function PaymentForm({ amount, bookingId, onSuccess }: PaymentFormProps) {
+export default function PaymentForm({ amount, onSuccess }: PaymentFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [expressAvailable, setExpressAvailable] = useState(false);
-
-  const markBookingPaid = async () => {
-    if (bookingId && supabase) {
-      await supabase
-        .from('bookings')
-        .update({ status: 'paid', paid_at: new Date().toISOString() })
-        .eq('id', bookingId);
-    }
-    onSuccess();
-  };
 
   const confirmPayment = async () => {
     if (!stripe || !elements) return;
@@ -47,7 +36,9 @@ export default function PaymentForm({ amount, bookingId, onSuccess }: PaymentFor
       if (error) {
         setErrorMessage(error.message ?? 'Payment failed');
       } else if (paymentIntent?.status === 'succeeded') {
-        await markBookingPaid();
+        // The payment_intent.succeeded webhook is the sole authority for marking bookings paid.
+        // We call onSuccess() immediately so the UI reflects payment accepted by Stripe.
+        onSuccess();
       }
     } catch {
       setErrorMessage('Payment error. Please try again.');
@@ -70,7 +61,7 @@ export default function PaymentForm({ amount, bookingId, onSuccess }: PaymentFor
         event.paymentFailed({ reason: 'fail' });
         setErrorMessage(error.message ?? 'Payment failed');
       } else if (paymentIntent?.status === 'succeeded') {
-        await markBookingPaid();
+        onSuccess();
       }
     } catch {
       event.paymentFailed({ reason: 'fail' });

@@ -42,6 +42,7 @@ export interface DbServiceRow {
   deposit_amount: number;
   display_order: number;
   active: boolean;
+  image_url: string | null;
   created_at: string;
   updated_at: string;
 }

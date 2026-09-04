@@ -44,7 +44,7 @@ serve(async (req) => {
     // Load existing Stripe IDs so we never duplicate customers or subscriptions
     const { data: existingProfile } = await supabase
       .from('profiles')
-      .select('stripe_customer_id, subscription_id')
+      .select('stripe_customer_id, stripe_subscription_id')
       .eq('id', user.id)
       .single()
 
@@ -52,9 +52,9 @@ serve(async (req) => {
 
     // If there's already a pending subscription with a live setup intent, reuse it.
     // This handles the case where the user abandoned the payment step and came back.
-    if (existingProfile?.subscription_id) {
+    if (existingProfile?.stripe_subscription_id) {
       try {
-        const existingSub = await stripe.subscriptions.retrieve(existingProfile.subscription_id, {
+        const existingSub = await stripe.subscriptions.retrieve(existingProfile.stripe_subscription_id, {
           expand: ['pending_setup_intent'],
         })
         const psi = existingSub.pending_setup_intent as Stripe.SetupIntent | null
@@ -122,7 +122,7 @@ serve(async (req) => {
     // (i.e. pending_setup_intent becomes null on customer.subscription.updated).
     await supabase.from('profiles').update({
       stripe_customer_id: customerId,
-      subscription_id: subscription.id,
+      stripe_subscription_id: subscription.id,
       subscription_status: 'incomplete',
     }).eq('id', user.id)
 

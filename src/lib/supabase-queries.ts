@@ -157,12 +157,28 @@ export async function reorderServices(serviceUpdates: { id: string; display_orde
 
 // ============ PROFILE ============
 
+const PROFILE_SAFE_COLUMNS = new Set([
+  'full_name', 'salon_name', 'bio', 'phone',
+  'instagram_url', 'tiktok_url', 'instagram', 'tiktok',
+  'logo_url', 'color_accent', 'theme_preset',
+  'slug', 'notification_preferences',
+]);
+
 export async function updateProfile(userId: string, updates: Record<string, unknown>) {
   if (!supabase) throw new Error('Supabase not initialized');
 
+  const safe: Record<string, unknown> = {};
+  for (const key of Object.keys(updates)) {
+    if (PROFILE_SAFE_COLUMNS.has(key)) {
+      safe[key] = updates[key];
+    } else {
+      throw new Error(`updateProfile: column '${key}' is not in the safe allowlist`);
+    }
+  }
+
   return supabase
     .from('profiles')
-    .update({ ...updates, updated_at: new Date().toISOString() })
+    .update({ ...safe, updated_at: new Date().toISOString() })
     .eq('id', userId)
     .select()
     .single();

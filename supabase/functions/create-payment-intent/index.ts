@@ -51,6 +51,24 @@ serve(async (req) => {
       throw new Error('Invalid profile_id — salon not found')
     }
 
+    // Fetch authoritative price from DB — never trust frontend-supplied price_total
+    if (!booking_data.service_id) throw new Error('Missing service_id')
+    const { data: service, error: serviceError } = await supabase
+      .from('services')
+      .select('price, deposit_amount')
+      .eq('id', booking_data.service_id)
+      .eq('profile_id', booking_data.profile_id)
+      .single()
+
+    if (serviceError || !service) {
+      throw new Error('Invalid service_id — service not found for this salon')
+    }
+
+    const dbPrice = Number(service.price)
+    const dbDeposit = Number(service.deposit_amount ?? 0)
+    // Charge the deposit if the service requires one, otherwise charge the full price.
+    const serviceAmount = dbDeposit > 0 ? dbDeposit : dbPrice
+
     // 1. Create the booking using service_role (bypasses RLS — safe for anonymous clients)
     const { data: booking, error: bookingError } = await supabase
       .from('bookings')
@@ -61,8 +79,8 @@ serve(async (req) => {
         client_name: booking_data.client_name,
         client_email: booking_data.client_email,
         client_phone: booking_data.client_phone,
-        price_total: booking_data.price_total,
-        deposit_paid: booking_data.deposit_paid,
+        price_total: dbPrice,
+        deposit_paid: dbDeposit,
         nelsy_fee: 0,
         status: 'pending',
       })
@@ -70,8 +88,6 @@ serve(async (req) => {
       .single()
 
     if (bookingError) throw bookingError
-
-    const serviceAmount = Number(booking_data.price_total)
 
     // 2. Create Payment Intent — Nelsy takes 0% commission, pro receives 100% minus Stripe fees
     let paymentIntent: Stripe.PaymentIntent
@@ -126,7 +142,8 @@ serve(async (req) => {
         profile_id: booking_data.profile_id,
         service_id: booking_data.service_id,
         booking_datetime: booking_data.booking_datetime,
-        price_total: serviceAmount,
+        price_total: dbPrice,
+        charge_amount: serviceAmount,
         currency: 'eur',
         has_connect_account: !!(profile.stripe_onboarding_complete && profile.stripe_account_id),
       },

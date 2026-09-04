@@ -20,7 +20,6 @@ import { formatDate, formatCurrency, getDaysInMonth, isDateInPast } from '@/lib/
 import { createBooking, getAvailableSlots } from '@/lib/bookings';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { getStripe, isStripeConfigured } from '@/lib/stripe';
-import { CLOSED_DAYS } from '@/lib/mockData';
 import PaymentForm from './PaymentForm';
 
 // ── Schema ────────────────────────────────────────────────────────────────────
@@ -335,8 +334,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       {days.map((date) => {
                         const dateStr = date.toISOString().split('T')[0];
                         const past = isDateInPast(date);
-                        const closed = CLOSED_DAYS.includes(date.getDay());
-                        const disabled = past || closed;
+                        const disabled = past;
                         const selected = selectedDate === dateStr;
                         const isToday = dateStr === todayStr;
                         return (

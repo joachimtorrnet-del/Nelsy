@@ -11,11 +11,6 @@ const stripe = new Stripe(stripeSecretKey, {
   httpClient: Stripe.createFetchHttpClient(),
 })
 
-const supabase = createClient(
-  Deno.env.get('SUPABASE_URL') ?? '',
-  Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-)
-
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -23,21 +18,44 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
-  if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders })
-  }
+  if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders })
 
   try {
-    const { profile_id, refresh_url, return_url } = await req.json()
+    // ── Auth: verify the caller is a logged-in user ──────────────────────────
+    const authHeader = req.headers.get('Authorization') ?? ''
+    const token = authHeader.replace('Bearer ', '')
+    if (!token) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      })
+    }
 
-    if (!profile_id || !refresh_url || !return_url) {
-      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    )
+
+    // Verify JWT and extract the caller's user id
+    const { data: { user }, error: authError } = await supabase.auth.getUser(token)
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      })
+    }
+
+    const { refresh_url, return_url } = await req.json()
+    if (!refresh_url || !return_url) {
+      return new Response(JSON.stringify({ error: 'Missing refresh_url or return_url' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
     }
 
-    // Check existing account
+    // profile_id is derived from the verified JWT — never taken from the request body.
+    const profile_id = user.id
+
     const { data: profile, error: profileError } = await supabase
       .from('profiles')
       .select('stripe_account_id, email, slug')
@@ -53,7 +71,6 @@ serve(async (req) => {
 
     let accountId = profile.stripe_account_id
 
-    // Create if doesn't exist
     if (!accountId) {
       let account
       try {
@@ -95,15 +112,11 @@ serve(async (req) => {
       posthog.capture({
         distinctId: profile_id,
         event: 'stripe connect account created',
-        properties: {
-          stripe_account_id: accountId,
-          country: 'FR',
-        },
+        properties: { stripe_account_id: accountId, country: 'FR' },
       })
       await posthog.shutdown()
     }
 
-    // Create onboarding link
     const accountLink = await stripe.accountLinks.create({
       account: accountId,
       refresh_url,
@@ -113,13 +126,13 @@ serve(async (req) => {
 
     return new Response(
       JSON.stringify({ url: accountLink.url, account_id: accountId }),
-      { headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      { headers: { 'Content-Type': 'application/json', ...corsHeaders } },
     )
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : 'Internal server error'
     return new Response(
       JSON.stringify({ error: message }),
-      { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } }
+      { status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders } },
     )
   }
 })

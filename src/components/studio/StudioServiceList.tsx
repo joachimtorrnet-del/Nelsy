@@ -6,7 +6,6 @@ import type { Service, Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { getDaysInMonth, isDateInPast } from '@/lib/utils';
 import { getAvailableSlots } from '@/lib/bookings';
-import { CLOSED_DAYS } from '@/lib/mockData';
 import { useBookingStore } from '@/store/bookingStore';
 
 // ── Constants ─────────────────────────────────────────────────────────────────
@@ -83,8 +82,7 @@ function InlineCalendar({ selectedDate, onSelect, theme }: CalendarProps) {
         {days.map((date) => {
           const dateStr = date.toISOString().split('T')[0];
           const past = isDateInPast(date);
-          const closed = CLOSED_DAYS.includes(date.getDay());
-          const disabled = past || closed;
+          const disabled = past;
           const selected = selectedDate === dateStr;
           const isToday = dateStr === todayStr;
 
