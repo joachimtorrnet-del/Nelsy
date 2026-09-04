@@ -928,6 +928,7 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
 }
 
 function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
+  const navigate = useNavigate();
   const [phase, setPhase] = useState<'info' | 'payment'>('info');
   const [clientSecret, setClientSecret] = useState('');
   const [intentType, setIntentType] = useState<'setup' | 'payment'>('setup');
