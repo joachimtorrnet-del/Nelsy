@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import {
   ChevronLeft,
+  ChevronRight,
   CheckCircle2,
   MessageCircle,
   AlertCircle,
@@ -194,6 +195,10 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
   if (!selectedService) return null;
 
+  // Deposit-aware charge amount for display (matches server logic in create-payment-intent)
+  const chargeAmount = selectedService.deposit > 0 ? selectedService.deposit : selectedService.price;
+  const hasDeposit = selectedService.deposit > 0;
+
   const stepLabels = ['Date', 'Horaire', 'Mes infos', 'Paiement'];
 
   return (
@@ -242,7 +247,10 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">
-                    <p className="text-xl font-extrabold text-gray-900">{selectedService.price}€</p>
+                    <p className="text-xl font-extrabold text-gray-900">{formatCurrency(selectedService.price)}</p>
+                    {hasDeposit && (
+                      <p className="text-xs text-gray-400 mt-0.5">Acompte {formatCurrency(chargeAmount)}</p>
+                    )}
                   </div>
                   <button
                     onClick={handleClose}
@@ -311,10 +319,10 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       </p>
                       <button
                         onClick={nextMonth}
-                        className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors rotate-180"
+                        className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
                         aria-label="Mois suivant"
                       >
-                        <ChevronLeft className="w-5 h-5 text-gray-600" />
+                        <ChevronRight className="w-5 h-5 text-gray-600" />
                       </button>
                     </div>
 
@@ -497,22 +505,6 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
                       <div>
                         <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">
-                          Téléphone
-                        </label>
-                        <input
-                          {...register('phone')}
-                          type="tel"
-                          placeholder="06 12 34 56 78"
-                          autoComplete="tel"
-                          className={`w-full px-4 py-3.5 rounded-2xl border-2 text-gray-900 placeholder-gray-300 outline-none transition-colors text-base ${
-                            errors.phone ? 'border-red-400 bg-red-50' : 'border-gray-100 bg-gray-50 focus:border-gray-300'
-                          }`}
-                        />
-                        {errors.phone && <p className="text-xs text-red-500 mt-1 ml-1">{errors.phone.message}</p>}
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">
                           Email
                         </label>
                         <input
@@ -527,14 +519,48 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         {errors.email && <p className="text-xs text-red-500 mt-1 ml-1">{errors.email.message}</p>}
                       </div>
 
+                      <div>
+                        <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">
+                          Téléphone
+                        </label>
+                        <input
+                          {...register('phone')}
+                          type="tel"
+                          placeholder="06 12 34 56 78"
+                          autoComplete="tel"
+                          className={`w-full px-4 py-3.5 rounded-2xl border-2 text-gray-900 placeholder-gray-300 outline-none transition-colors text-base ${
+                            errors.phone ? 'border-red-400 bg-red-50' : 'border-gray-100 bg-gray-50 focus:border-gray-300'
+                          }`}
+                        />
+                        {errors.phone && <p className="text-xs text-red-500 mt-1 ml-1">{errors.phone.message}</p>}
+                      </div>
+
                       {/* Payment summary */}
                       <div className="rounded-2xl border border-gray-100 p-4 mt-5 space-y-2">
-                        <div className="flex justify-between text-sm pt-2">
-                          <span className="font-bold text-gray-900">Total</span>
-                          <span className="font-bold" style={{ color: accent }}>
-                            {formatCurrency(selectedService.price)}
-                          </span>
-                        </div>
+                        {hasDeposit ? (
+                          <>
+                            <div className="flex justify-between text-sm text-gray-500">
+                              <span>Total service</span>
+                              <span>{formatCurrency(selectedService.price)}</span>
+                            </div>
+                            <div className="flex justify-between text-sm border-t border-gray-50 pt-2">
+                              <span className="font-bold text-gray-900">Acompte dû maintenant</span>
+                              <span className="font-bold" style={{ color: accent }}>
+                                {formatCurrency(chargeAmount)}
+                              </span>
+                            </div>
+                            <p className="text-xs text-gray-400">
+                              Reste à régler : {formatCurrency(selectedService.price - chargeAmount)} le jour du rendez-vous
+                            </p>
+                          </>
+                        ) : (
+                          <div className="flex justify-between text-sm pt-2">
+                            <span className="font-bold text-gray-900">Total</span>
+                            <span className="font-bold" style={{ color: accent }}>
+                              {formatCurrency(selectedService.price)}
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Submit */}
@@ -547,7 +573,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         {isSubmitting ? (
                           <><Loader2 className="w-5 h-5 animate-spin" /> Réservation en cours...</>
                         ) : (
-                          `💳 Payer ${formatCurrency(selectedService.price)} →`
+                          `💳 Payer ${formatCurrency(chargeAmount)} →`
                         )}
                       </button>
                     </form>
@@ -578,12 +604,26 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         <span className="text-gray-500">{selectedService.name}</span>
                         <span className="font-semibold text-gray-900">{formatCurrency(selectedService.price)}</span>
                       </div>
-                      <div className="flex justify-between text-sm pt-2 border-t border-gray-100">
-                        <span className="font-bold text-gray-900">Total</span>
-                        <span className="font-bold text-lg" style={{ color: accent }}>
-                          {formatCurrency(selectedService.price)}
-                        </span>
-                      </div>
+                      {hasDeposit ? (
+                        <>
+                          <div className="flex justify-between text-sm border-t border-gray-100 pt-2">
+                            <span className="font-bold text-gray-900">Acompte dû</span>
+                            <span className="font-bold text-lg" style={{ color: accent }}>
+                              {formatCurrency(chargeAmount)}
+                            </span>
+                          </div>
+                          <p className="text-xs text-gray-400">
+                            Solde {formatCurrency(selectedService.price - chargeAmount)} le jour du RDV
+                          </p>
+                        </>
+                      ) : (
+                        <div className="flex justify-between text-sm border-t border-gray-100 pt-2">
+                          <span className="font-bold text-gray-900">Total</span>
+                          <span className="font-bold text-lg" style={{ color: accent }}>
+                            {formatCurrency(selectedService.price)}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     <Elements
@@ -597,7 +637,8 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       }}
                     >
                       <PaymentForm
-                        amount={selectedService.price}
+                        amount={chargeAmount}
+                        accent={accent}
                         bookingId={paymentBookingId}
                         onSuccess={() => goTo(5)}
                       />

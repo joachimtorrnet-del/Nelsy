@@ -120,7 +120,6 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
       <div style={{ padding: '0 16px', flex: 1 }}>
         <StudioServiceList
           services={merchant.services}
-          merchant={merchant}
           theme={theme}
           isPreview={mode === 'preview'}
         />

@@ -48,7 +48,7 @@ export default function Studio() {
 
   return (
     <div className={`min-h-dvh ${theme.fontClass}`} style={{ backgroundColor: '#E8E8E8' }}>
-      <div className="w-full max-w-[480px] mx-auto min-h-dvh relative">
+      <div className="w-full max-w-[480px] md:max-w-[560px] mx-auto min-h-dvh relative">
         {loading ? (
           <PreviewSkeleton bgColor={theme.pageBg} />
         ) : !merchant ? (

@@ -99,23 +99,8 @@ export function StudioHero({ merchant, theme, isPreview = false }: Props) {
 
       <AvatarFrame src={merchant.logo_url} name={merchant.salon_name} accent={accent} />
 
-      {/* Verified badge */}
-      <div
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: 6,
-          marginTop: 16, marginBottom: 8, padding: '4px 12px',
-          borderRadius: 99, backgroundColor: theme.cardBg,
-          border: `1px solid ${theme.cardBorder}`,
-          fontSize: 11, fontWeight: 600, color: theme.textSecondary,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-        }}
-      >
-        <span>✨</span>
-        <span>Verified Nail Artist</span>
-      </div>
-
       {/* Name */}
-      <h1 style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.25, margin: 0 }}>
+      <h1 style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.25, margin: 0, marginTop: 16 }}>
         {merchant.salon_name}
       </h1>
 

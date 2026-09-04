@@ -12,11 +12,12 @@ import { formatCurrency } from '@/lib/utils';
 
 interface PaymentFormProps {
   amount: number;
+  accent?: string;
   bookingId: string | null;
   onSuccess: () => void;
 }
 
-export default function PaymentForm({ amount, onSuccess }: PaymentFormProps) {
+export default function PaymentForm({ amount, accent = '#F52B8C', onSuccess }: PaymentFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -102,7 +103,7 @@ export default function PaymentForm({ amount, onSuccess }: PaymentFormProps) {
       {expressAvailable && (
         <div className="flex items-center gap-3">
           <div className="flex-1 h-px bg-gray-200" />
-          <span className="text-xs text-gray-400 font-medium">or pay by card</span>
+          <span className="text-xs text-gray-400 font-medium">ou par carte</span>
           <div className="flex-1 h-px bg-gray-200" />
         </div>
       )}
@@ -120,21 +121,22 @@ export default function PaymentForm({ amount, onSuccess }: PaymentFormProps) {
         <button
           type="submit"
           disabled={!stripe || isProcessing}
-          className="w-full py-4 bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white rounded-2xl font-bold text-base hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          className="w-full py-4 text-white rounded-2xl font-bold text-base hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          style={{ backgroundColor: accent }}
         >
           {isProcessing ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              Processing…
+              Traitement en cours…
             </>
           ) : (
-            `Pay ${formatCurrency(amount)}`
+            `Payer ${formatCurrency(amount)}`
           )}
         </button>
       </form>
 
       <p className="text-xs text-gray-500 text-center">
-        Secured by Stripe · Your data is protected
+        Paiement sécurisé par Stripe
       </p>
     </div>
   );
