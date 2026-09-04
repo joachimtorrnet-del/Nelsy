@@ -62,11 +62,27 @@ serve(async (req) => {
 
         // ── Booking payment (full price) ──────────────────────────
         if (meta.booking_id) {
+          const sessionPaymentIntentId = session.payment_intent as string | null
+
+          // Idempotency: skip if this payment was already credited
+          if (sessionPaymentIntentId) {
+            const { data: existingCreditCO } = await supabase
+              .from('balance_transactions')
+              .select('id')
+              .eq('stripe_payment_id', sessionPaymentIntentId)
+              .maybeSingle()
+
+            if (existingCreditCO) {
+              console.log(`[idempotent] checkout.session.completed already credited: ${sessionPaymentIntentId}`)
+              break
+            }
+          }
+
           const { error: bookingError } = await supabase
             .from('bookings')
             .update({
               status: 'confirmed',
-              stripe_payment_intent_id: session.payment_intent as string,
+              stripe_payment_intent_id: sessionPaymentIntentId ?? undefined,
               paid_at: new Date().toISOString(),
             })
             .eq('id', meta.booking_id)
@@ -80,16 +96,17 @@ serve(async (req) => {
           const stripeFee = parseFloat(((grossAmount * 0.029) + 0.25).toFixed(2))
           const netAmount = parseFloat((grossAmount - stripeFee).toFixed(2))
 
-          const { error: balanceError } = await supabase.rpc('add_to_balance', {
-            p_profile_id: meta.profile_id,
-            p_amount: netAmount,
-            p_booking_id: meta.booking_id,
-            p_type: 'booking_payment',
-            p_stripe_payment_id: session.payment_intent as string,
-          })
-
-          if (balanceError) {
-            console.error('Error adding to balance:', balanceError.message)
+          if (sessionPaymentIntentId) {
+            const { error: balanceError } = await supabase.rpc('add_to_balance', {
+              p_profile_id: meta.profile_id,
+              p_amount: netAmount,
+              p_booking_id: meta.booking_id,
+              p_type: 'booking_payment',
+              p_stripe_payment_id: sessionPaymentIntentId,
+            })
+            if (balanceError && !balanceError.message?.includes('unique')) {
+              console.error('Error adding to balance:', balanceError.message)
+            }
           }
 
           console.log(`Booking ${meta.booking_id} paid: gross €${grossAmount}, Stripe fee €${stripeFee}, net to pro €${netAmount}`)
@@ -513,6 +530,20 @@ serve(async (req) => {
         const meta = paymentIntent.metadata ?? {}
         if (!meta.booking_id) break
 
+        // ── Idempotency: skip if this PaymentIntent was already credited ───────
+        // The UNIQUE index on balance_transactions.stripe_payment_id is the
+        // DB-level guard. This application-level check provides a clean early exit.
+        const { data: existingCredit } = await supabase
+          .from('balance_transactions')
+          .select('id')
+          .eq('stripe_payment_id', paymentIntent.id)
+          .maybeSingle()
+
+        if (existingCredit) {
+          console.log(`[idempotent] payment_intent.succeeded already processed: ${paymentIntent.id}`)
+          break
+        }
+
         // Fetch full booking details from DB
         const { data: booking } = await supabase
           .from('bookings')
@@ -522,15 +553,21 @@ serve(async (req) => {
 
         if (!booking) break
 
-        // Mark as paid if client-side update hasn't done it yet
-        if (booking.status === 'pending') {
-          await supabase
-            .from('bookings')
-            .update({ status: 'paid', stripe_payment_intent_id: paymentIntent.id, paid_at: new Date().toISOString() })
-            .eq('id', booking.id)
+        // Only process if booking is in a payable state.
+        // Expired bookings where payment somehow succeeded are logged and skipped
+        // (rare edge case — handle manually from the dashboard).
+        if (booking.status !== 'pending') {
+          console.log(`[skip] payment_intent.succeeded: booking ${booking.id} status=${booking.status}`)
+          break
         }
 
-        // Pro receives 100% minus Stripe fees only (no Nelsy commission)
+        // Transition booking to paid
+        await supabase
+          .from('bookings')
+          .update({ status: 'paid', stripe_payment_intent_id: paymentIntent.id, paid_at: new Date().toISOString() })
+          .eq('id', booking.id)
+
+        // Credit pro balance — only reached when transitioning pending → paid
         const gross = parseFloat(String(booking.price_total ?? 0))
         const stripeFee = parseFloat(((gross * 0.029) + 0.25).toFixed(2))
         const net = parseFloat((gross - stripeFee).toFixed(2))
@@ -542,7 +579,10 @@ serve(async (req) => {
           p_type: 'booking_payment',
           p_stripe_payment_id: paymentIntent.id,
         })
-        if (balanceError) console.error('Error adding to balance:', balanceError.message)
+        // A unique violation here means a concurrent retry already credited — safe to ignore
+        if (balanceError && !balanceError.message?.includes('unique')) {
+          console.error('Error adding to balance:', balanceError.message)
+        }
         console.log(`PaymentIntent booking: gross €${gross}, Stripe fee €${stripeFee}, net to pro €${net}`)
 
         const posthogPI = createPostHogClient()
@@ -636,20 +676,36 @@ serve(async (req) => {
         const charge = event.data.object as Stripe.Charge
         const refund = charge.refunds?.data[0]
 
+        // Idempotency: skip if this refund was already deducted
+        if (refund?.id) {
+          const { data: existingRefund } = await supabase
+            .from('balance_transactions')
+            .select('id')
+            .eq('stripe_refund_id', refund.id)
+            .maybeSingle()
+
+          if (existingRefund) {
+            console.log(`[idempotent] charge.refunded already processed: ${refund.id}`)
+            break
+          }
+        }
+
         const { data: booking } = await supabase
           .from('bookings')
-          .select('id, profile_id, price_total')
+          .select('id, profile_id, price_total, status')
           .eq('stripe_payment_intent_id', charge.payment_intent as string)
           .single()
 
         if (!booking) break
 
-        const { error: bookingError } = await supabase
-          .from('bookings')
-          .update({ status: 'cancelled' })
-          .eq('id', booking.id)
-
-        if (bookingError) console.error('Error updating refunded booking:', bookingError.message)
+        // Only cancel if not already cancelled (idempotent status update)
+        if (booking.status !== 'cancelled') {
+          const { error: bookingError } = await supabase
+            .from('bookings')
+            .update({ status: 'cancelled' })
+            .eq('id', booking.id)
+          if (bookingError) console.error('Error updating refunded booking:', bookingError.message)
+        }
 
         const { error: balanceError } = await supabase.rpc('deduct_from_balance', {
           p_profile_id: booking.profile_id,
@@ -658,8 +714,9 @@ serve(async (req) => {
           p_type: 'refund',
           p_stripe_refund_id: refund?.id ?? null,
         })
-
-        if (balanceError) console.error('Error deducting from balance:', balanceError.message)
+        if (balanceError && !balanceError.message?.includes('unique')) {
+          console.error('Error deducting from balance:', balanceError.message)
+        }
 
         console.log(`Refund processed for booking ${booking.id}`)
 
