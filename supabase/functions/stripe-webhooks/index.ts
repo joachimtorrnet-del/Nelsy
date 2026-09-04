@@ -383,6 +383,100 @@ serve(async (req) => {
         break
       }
 
+      // ── Setup intent succeeded (onboarding card collection) ────────
+      // Fires after the user confirms their card in Step 4.
+      // This is where we create the Stripe subscription — guaranteeing
+      // that no subscription exists in Stripe until a real card is saved.
+      case 'setup_intent.succeeded': {
+        const setupIntent = event.data.object as Stripe.SetupIntent
+        const customerId = setupIntent.customer as string | null
+        const priceId = setupIntent.metadata?.price_id
+        const userId = setupIntent.metadata?.supabase_user_id
+        const plan = setupIntent.metadata?.plan ?? 'pro'
+
+        // Only handle our onboarding SetupIntents (they have price_id in metadata)
+        if (!customerId || !priceId || !userId) break
+
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('id, stripe_subscription_id, subscription_id')
+          .eq('id', userId)
+          .single()
+
+        if (!profile) break
+
+        const existingSubId = (profile as { stripe_subscription_id?: string; subscription_id?: string }).stripe_subscription_id
+          ?? (profile as { stripe_subscription_id?: string; subscription_id?: string }).subscription_id
+
+        if (existingSubId) {
+          try {
+            const existingSub = await stripe.subscriptions.retrieve(existingSubId)
+            const isLive = existingSub.status === 'trialing' || existingSub.status === 'active'
+
+            if (isLive && existingSub.default_payment_method) {
+              // Already fully set up — nothing to do
+              console.log(`User ${userId} already has subscription with payment method`)
+              break
+            }
+
+            if (isLive && !existingSub.default_payment_method) {
+              // Old-flow subscription exists but has no card — attach payment method to it
+              await stripe.subscriptions.update(existingSubId, {
+                default_payment_method: setupIntent.payment_method as string,
+              })
+              const trialEnd = existingSub.trial_end
+                ? new Date(existingSub.trial_end * 1000).toISOString()
+                : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString()
+              await supabase.from('profiles').update({
+                subscription_status: 'trialing',
+                trial_ends_at: trialEnd,
+                onboarding_completed: true,
+                updated_at: new Date().toISOString(),
+              }).eq('id', userId)
+              break
+            }
+          } catch {
+            // Subscription not found or expired — create a new one below
+          }
+        }
+
+        // Create the subscription now that the card is confirmed
+        const subscription = await stripe.subscriptions.create({
+          customer: customerId,
+          items: [{ price: priceId }],
+          trial_period_days: 14,
+          trial_settings: { end_behavior: { missing_payment_method: 'cancel' } },
+          default_payment_method: setupIntent.payment_method as string,
+          metadata: { supabase_user_id: userId, plan },
+        })
+
+        const trialEnd = subscription.trial_end
+          ? new Date(subscription.trial_end * 1000).toISOString()
+          : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString()
+
+        const { error: subError } = await supabase
+          .from('profiles')
+          .update({
+            stripe_subscription_id: subscription.id,
+            subscription_status: 'trialing',
+            trial_ends_at: trialEnd,
+            onboarding_completed: true,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', userId)
+
+        if (subError) console.error('Error saving subscription after setup:', subError.message)
+
+        const posthogSetup = createPostHogClient()
+        posthogSetup.capture({
+          distinctId: userId,
+          event: 'subscription trial started',
+          properties: { plan, subscription_id: subscription.id, trial_ends_at: trialEnd },
+        })
+        await posthogSetup.shutdown()
+        break
+      }
+
       // account.updated fires when Stripe finishes Connect onboarding
       case 'account.updated': {
         const account = event.data.object as Stripe.Account

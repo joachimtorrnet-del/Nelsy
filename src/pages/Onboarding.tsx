@@ -1001,9 +1001,9 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       session = currentSession;
       if (!session) throw new Error('[session] No session available');
 
-      // 4. Create subscription intent
+      // 4. Create setup intent (card collection only — subscription created after card confirmed)
       setError('Step 4/4 — Setting up payment...');
-      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-setup-intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1017,11 +1017,19 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
         const body = await res.text().catch(() => '');
         throw new Error(`[intent] ${res.status}: ${body}`);
       }
-      const data = await res.json() as { clientSecret: string; type: 'setup' | 'payment' };
+      const data = await res.json() as { clientSecret?: string; type?: 'setup' | 'payment'; alreadySubscribed?: boolean };
+
+      // User already completed onboarding in a previous session
+      if (data.alreadySubscribed) {
+        navigate('/dashboard');
+        return;
+      }
+
+      if (!data.clientSecret) throw new Error('[intent] No client secret returned');
 
       setError('');
-      setClientSecret(data.clientSecret);
-      setIntentType(data.type);
+      setClientSecret(data.clientSecret!);
+      setIntentType(data.type ?? 'setup');
       setPhase('payment');
 
     } catch (err: unknown) {
