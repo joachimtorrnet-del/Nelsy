@@ -567,8 +567,10 @@ serve(async (req) => {
           .update({ status: 'paid', stripe_payment_intent_id: paymentIntent.id, paid_at: new Date().toISOString() })
           .eq('id', booking.id)
 
-        // Credit pro balance — only reached when transitioning pending → paid
-        const gross = parseFloat(String(booking.price_total ?? 0))
+        // Credit pro balance — only reached when transitioning pending → paid.
+        // Use paymentIntent.amount (actual charged cents) not booking.price_total (full price).
+        // This is correct for both deposit-only and full-price payments.
+        const gross = paymentIntent.amount / 100
         const stripeFee = parseFloat(((gross * 0.029) + 0.25).toFixed(2))
         const net = parseFloat((gross - stripeFee).toFixed(2))
 
@@ -608,7 +610,7 @@ serve(async (req) => {
           const bookingDate = new Date(booking.booking_datetime ?? '')
           const dateStr = bookingDate.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
           const timeStr = bookingDate.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })
-          const amount = parseFloat(String(booking.price_total)).toFixed(2)
+          const amount = (paymentIntent.amount / 100).toFixed(2)
 
           if (booking.client_email) {
             await sendEmail(
@@ -676,18 +678,23 @@ serve(async (req) => {
         const charge = event.data.object as Stripe.Charge
         const refund = charge.refunds?.data[0]
 
-        // Idempotency: skip if this refund was already deducted
-        if (refund?.id) {
-          const { data: existingRefund } = await supabase
-            .from('balance_transactions')
-            .select('id')
-            .eq('stripe_refund_id', refund.id)
-            .maybeSingle()
+        // Guard: without a specific refund object we cannot identify the amount or
+        // guarantee idempotency — skip to avoid incorrect balance deductions.
+        if (!refund?.id || !refund.amount) {
+          console.error('[charge.refunded] No refund data — skipping balance deduction')
+          break
+        }
 
-          if (existingRefund) {
-            console.log(`[idempotent] charge.refunded already processed: ${refund.id}`)
-            break
-          }
+        // Idempotency: skip if this refund was already deducted
+        const { data: existingRefund } = await supabase
+          .from('balance_transactions')
+          .select('id')
+          .eq('stripe_refund_id', refund.id)
+          .maybeSingle()
+
+        if (existingRefund) {
+          console.log(`[idempotent] charge.refunded already processed: ${refund.id}`)
+          break
         }
 
         const { data: booking } = await supabase
@@ -707,18 +714,22 @@ serve(async (req) => {
           if (bookingError) console.error('Error updating refunded booking:', bookingError.message)
         }
 
+        // Use the actual Stripe refund amount (in cents → EUR), not booking.price_total.
+        // This is correct for partial refunds and deposit-only refunds.
+        const refundAmount = refund.amount / 100
+
         const { error: balanceError } = await supabase.rpc('deduct_from_balance', {
           p_profile_id: booking.profile_id,
-          p_amount: booking.price_total,
+          p_amount: refundAmount,
           p_booking_id: booking.id,
           p_type: 'refund',
-          p_stripe_refund_id: refund?.id ?? null,
+          p_stripe_refund_id: refund.id,
         })
         if (balanceError && !balanceError.message?.includes('unique')) {
           console.error('Error deducting from balance:', balanceError.message)
         }
 
-        console.log(`Refund processed for booking ${booking.id}`)
+        console.log(`Refund processed for booking ${booking.id}: €${refundAmount}`)
 
         const posthogRefund = createPostHogClient()
         posthogRefund.capture({
@@ -727,9 +738,9 @@ serve(async (req) => {
           properties: {
             booking_id: booking.id,
             profile_id: booking.profile_id,
-            amount: booking.price_total,
+            amount: refundAmount,
             currency: 'eur',
-            refund_id: refund?.id ?? null,
+            refund_id: refund.id,
           },
         })
         await posthogRefund.shutdown()

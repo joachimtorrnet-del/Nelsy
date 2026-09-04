@@ -303,3 +303,73 @@ describe('charge amount calculation', () => {
     expect(Math.round(20.005 * 100)).toBe(2001); // rounding edge
   });
 });
+
+// ── Webhook balance calculation (P0-2 / P0-3 regression tests) ───────────────
+// These tests document the correct behavior after the accounting bug fixes.
+// The bugs: using booking.price_total instead of the actual Stripe amount.
+
+describe('webhook balance calculation', () => {
+  // Simulates the fixed payment_intent.succeeded logic
+  function calcCreditFromPI(piAmountCents: number): { gross: number; net: number } {
+    const gross = piAmountCents / 100; // actual charged amount from Stripe event
+    const stripeFee = parseFloat(((gross * 0.029) + 0.25).toFixed(2));
+    const net = parseFloat((gross - stripeFee).toFixed(2));
+    return { gross, net };
+  }
+
+  // Simulates the fixed charge.refunded deduction logic
+  function calcDeductionFromRefund(refundAmountCents: number): number {
+    return refundAmountCents / 100; // actual refund amount from Stripe event
+  }
+
+  it('P0-2 fix: credits deposit amount (not full price) when deposit charged', () => {
+    // Service: price=€80, deposit=€20 → Stripe PI amount = 2000 cents
+    const { gross, net } = calcCreditFromPI(2000);
+    expect(gross).toBe(20);
+    expect(net).toBeLessThan(20); // net = 20 - fees
+    expect(net).toBeGreaterThan(0);
+    // The old (wrong) behavior: gross = 80 (booking.price_total)
+    const wrongGross = 80;
+    expect(wrongGross).not.toBe(gross); // confirm they differ
+  });
+
+  it('P0-2 fix: credits full price when no deposit', () => {
+    // Service: price=€80, no deposit → Stripe PI amount = 8000 cents
+    const { gross } = calcCreditFromPI(8000);
+    expect(gross).toBe(80);
+  });
+
+  it('P0-3 fix: deducts actual refund amount for full refund', () => {
+    // Full refund of deposit payment: Stripe refunds 2000 cents (€20)
+    const deduction = calcDeductionFromRefund(2000);
+    expect(deduction).toBe(20);
+    // Old (wrong) behavior: deduction = booking.price_total = 80
+    const wrongDeduction = 80;
+    expect(wrongDeduction).not.toBe(deduction);
+  });
+
+  it('P0-3 fix: deducts actual refund amount for partial refund', () => {
+    // Partial refund: Stripe refunds 4000 cents (€40) of an €80 charge
+    const deduction = calcDeductionFromRefund(4000);
+    expect(deduction).toBe(40);
+  });
+
+  it('P0-3 fix: deducts correct amount for deposit-only refund on full-price service', () => {
+    // Service: price=€80, deposit=€20 charged, then fully refunded (€20)
+    const deduction = calcDeductionFromRefund(2000); // only €20 was charged
+    expect(deduction).toBe(20); // only €20 should be deducted, not €80
+  });
+
+  it('balance is consistent: credit and deduct cancel out for full-price full-refund', () => {
+    const piAmountCents = 8000; // €80 full price, no deposit
+    const { net: credited } = calcCreditFromPI(piAmountCents);
+    const deducted = calcDeductionFromRefund(piAmountCents);
+    // net credited is less than deducted (Stripe fee is non-refundable)
+    // so pro ends up with negative balance (Stripe fee absorbed by pro on refund)
+    expect(deducted).toBe(80);
+    expect(credited).toBeLessThan(80); // e.g. ~77.57
+    // This is correct — Stripe fees are non-refundable
+    expect(deducted - credited).toBeGreaterThan(0);
+    expect(deducted - credited).toBeLessThan(5); // fee should be < €5 on €80
+  });
+});
