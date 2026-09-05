@@ -18,6 +18,13 @@ import {
 import { useBookingStore } from '@/store/bookingStore';
 import type { Merchant } from '@/types';
 import { formatDate, formatCurrency, getDaysInMonth, isDateInPast } from '@/lib/utils';
+import {
+  trackBookingStarted,
+  trackSlotSelected,
+  trackBookingDetailsCompleted,
+  trackPaymentStarted,
+  trackBookingCompleted,
+} from '@/lib/analytics';
 import { createBooking, getAvailableSlots } from '@/lib/bookings';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { getStripe, isStripeConfigured } from '@/lib/stripe';
@@ -72,12 +79,21 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
   const [viewMonth, setViewMonth] = useState(today.getMonth());
 
   const contentRef = useRef<HTMLDivElement>(null);
+  const wasOpenRef = useRef(false);
 
   // Lock scroll when open
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
+
+  // Track booking_started on first open
+  useEffect(() => {
+    if (isOpen && !wasOpenRef.current && selectedService) {
+      trackBookingStarted(merchant.id, selectedService.id);
+    }
+    wasOpenRef.current = isOpen;
+  }, [isOpen, selectedService, merchant.id]);
 
   // Reset scroll when step changes
   useEffect(() => {
@@ -112,6 +128,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
   const handleTimeSelect = (slot: string) => {
     setSelectedTime(slot);
+    trackSlotSelected(merchant.id);
     setTimeout(() => goTo(3), 320);
   };
 
@@ -147,6 +164,8 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
         const { client_secret, booking_id } = payData as { client_secret: string; booking_id: string };
         setPaymentClientSecret(client_secret);
         setPaymentBookingId(booking_id);
+        trackBookingDetailsCompleted(merchant.id);
+        trackPaymentStarted(merchant.id);
         goTo(4);
       } else {
         await createBooking({
@@ -159,6 +178,8 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
           priceTotal: selectedService.price,
           depositAmount: selectedService.deposit,
         });
+        trackBookingDetailsCompleted(merchant.id);
+        trackBookingCompleted(merchant.id);
         goTo(5);
       }
     } catch (err) {
@@ -640,7 +661,10 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         amount={chargeAmount}
                         accent={accent}
                         bookingId={paymentBookingId}
-                        onSuccess={() => goTo(5)}
+                        onSuccess={() => {
+                          trackBookingCompleted(merchant.id);
+                          goTo(5);
+                        }}
                       />
                     </Elements>
                   </motion.div>

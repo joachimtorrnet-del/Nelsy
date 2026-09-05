@@ -3,14 +3,17 @@ import type { GalleryPhoto } from '@/lib/supabase-queries';
 
 interface Props {
   photos: GalleryPhoto[];
+  textPrimary?: string;
 }
 
-export function StudioGallery({ photos }: Props) {
+export function StudioGallery({ photos, textPrimary = '#111827' }: Props) {
   if (photos.length === 0) return null;
 
   return (
     <section className="mb-5">
-      <h2 className="text-base font-bold text-gray-900 mb-3">Galerie</h2>
+      <h2 className="text-sm font-bold mb-3 uppercase tracking-wide" style={{ fontSize: 11, letterSpacing: '1px', color: textPrimary, opacity: 0.55 }}>
+        Mes réalisations
+      </h2>
       <div className="grid grid-cols-2 gap-2">
         {photos.map((photo, i) => (
           <motion.div

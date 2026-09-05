@@ -78,6 +78,62 @@ const SPEC_THEMES: Record<string, NelsyTheme> = {
   },
 };
 
+// ── 2026 collection ───────────────────────────────────────────────────────────
+
+const COLLECTION_THEMES: Record<string, NelsyTheme> = {
+  blush: {
+    id: 'blush',
+    name: 'Blush',
+    emoji: '🌺',
+    pageBg: '#FFF8F9',
+    headerGradient: 'linear-gradient(160deg, #FFD6E7 0%, #FFC2D4 100%)',
+    headerTextPrimary: '#3D1F28',
+    headerTextSecondary: '#8B5E6B',
+    cardBg: '#FFFFFF',
+    cardBorder: 'rgba(245,114,155,0.10)',
+    textPrimary: '#3D1F28',
+    textSecondary: '#8B5E6B',
+    fontClass: 'font-sans',
+    defaultAccent: '#E8446E',
+    accentText: '#FFFFFF',
+  },
+
+  editorial: {
+    id: 'editorial',
+    name: 'Editorial',
+    emoji: '📰',
+    pageBg: '#FAFAFA',
+    headerGradient: 'linear-gradient(160deg, #1A1A1A 0%, #2D2D2D 100%)',
+    headerTextPrimary: '#FFFFFF',
+    headerTextSecondary: 'rgba(255,255,255,0.55)',
+    cardBg: '#FFFFFF',
+    cardBorder: 'rgba(0,0,0,0.08)',
+    textPrimary: '#0A0A0A',
+    textSecondary: '#6B6B6B',
+    fontClass: 'font-serif',
+    defaultAccent: '#0A0A0A',
+    accentText: '#FFFFFF',
+  },
+
+  chrome: {
+    id: 'chrome',
+    name: 'Chrome',
+    emoji: '🪞',
+    pageBg: '#F4F4F4',
+    headerGradient: 'linear-gradient(160deg, #CFCFCF 0%, #E8E8E8 100%)',
+    headerTextPrimary: '#1A1A1A',
+    headerTextSecondary: '#666666',
+    cardBg: 'rgba(255,255,255,0.90)',
+    cardBorder: 'rgba(0,0,0,0.07)',
+    cardBlur: 'blur(10px)',
+    textPrimary: '#1A1A1A',
+    textSecondary: '#666666',
+    fontClass: 'font-sans',
+    defaultAccent: '#1A1A1A',
+    accentText: '#FFFFFF',
+  },
+};
+
 // ── Legacy presets (kept for existing users) ──────────────────────────────────
 
 const LEGACY_THEMES: Record<string, NelsyTheme> = {
@@ -181,6 +237,7 @@ const LEGACY_THEMES: Record<string, NelsyTheme> = {
 
 export const THEMES: Record<string, NelsyTheme> = {
   ...SPEC_THEMES,
+  ...COLLECTION_THEMES,
   ...LEGACY_THEMES,
 };
 
