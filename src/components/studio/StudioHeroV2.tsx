@@ -183,12 +183,19 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
           {merchant.salon_name}
         </h1>
 
+        {/* Specialty + location — real data only, shown as subtitle */}
+        {(merchant.specialty || merchant.location) && (
+          <p style={{ fontSize: 13, color: theme.textSecondary, marginTop: 4, lineHeight: 1.4 }}>
+            {[merchant.specialty, merchant.location].filter(Boolean).join(' · ')}
+          </p>
+        )}
+
         {/* Bio */}
         {merchant.bio && (
           <p
             style={{
-              fontSize: 14, color: theme.textSecondary,
-              lineHeight: 1.5, marginTop: 5, maxWidth: 280,
+              fontSize: 13, color: theme.textSecondary,
+              lineHeight: 1.55, marginTop: 6, maxWidth: 270,
               overflow: 'hidden', display: '-webkit-box',
               WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
             }}

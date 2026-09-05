@@ -17,6 +17,8 @@ export interface Merchant {
   bio: string;
   logo_url?: string;
   cover_url?: string;
+  specialty?: string;
+  location?: string;
   instagram?: string;
   tiktok?: string;
   rating?: number;
