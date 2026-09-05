@@ -120,6 +120,8 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
       </div>
 
       {/* ── Identity section — avatar overlaps cover ──────── */}
+      {/* position+zIndex required: cover has position:relative so it paints after static
+          elements; without this the cover gradient would clip the avatar's upper half */}
       <div
         style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
@@ -127,6 +129,8 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
           marginTop: -48,
           padding: '0 24px 28px',
           backgroundColor: theme.pageBg,
+          position: 'relative',
+          zIndex: 1,
         }}
       >
         {/* Avatar */}
