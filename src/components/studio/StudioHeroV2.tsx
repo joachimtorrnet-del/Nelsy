@@ -26,7 +26,7 @@ function parseTikTok(raw: string): string {
   return raw.replace(/^https?:\/\/(www\.)?tiktok\.com\/@?/, '').replace(/^@/, '').split('?')[0];
 }
 
-// ── Rating row ─────────────────────────────────────────────────────────────────
+// ── Rating row ────────────────────────────────────────────────────────────────
 
 function RatingRow({ rating, reviewCount, textPrimary }: { rating: number; reviewCount: number; textPrimary: string }) {
   return (
@@ -60,16 +60,18 @@ interface Props {
   theme: NelsyTheme;
   isPreview?: boolean;
   ctaRef?: RefObject<HTMLDivElement | null>;
+  /** cover_url or first gallery photo — makes the hero visual when real work exists */
+  heroPhotoUrl?: string;
 }
 
-export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Props) {
+export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroPhotoUrl }: Props) {
   const accent = theme.defaultAccent;
   const accentText = theme.accentText;
   const tiktokHandle = merchant.tiktok ? parseTikTok(merchant.tiktok) : undefined;
 
-  // With real cover photo: tall cover (220px). Without: compact accent strip (140px).
-  const hasCover = !!merchant.cover_url;
-  const COVER_H = hasCover ? 220 : 140;
+  // Larger cover when real photo exists (portfolio image or explicit cover)
+  const hasPhoto = !!heroPhotoUrl;
+  const COVER_H = hasPhoto ? 280 : 180;
   const AVATAR_SIZE = 96;
   const OVERLAP = AVATAR_SIZE / 2; // 48px
 
@@ -94,17 +96,28 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
       animate={{ opacity: 1 }}
       transition={{ duration: 0.25 }}
     >
-      {/* ── Cover band ─────────────────────────────────────── */}
+      {/* ── Cover band ─────────────────────────────────────────── */}
       <div
         style={{
           height: COVER_H,
-          background: hasCover
-            ? `url(${merchant.cover_url}) center/cover no-repeat`
+          background: hasPhoto
+            ? `url(${heroPhotoUrl}) center/cover no-repeat`
             : theme.headerGradient,
           position: 'relative',
           flexShrink: 0,
         }}
       >
+        {/* Bottom fade overlay on real photos — keeps avatar transition clean */}
+        {hasPhoto && (
+          <div
+            style={{
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(to top, rgba(0,0,0,0.22) 0%, transparent 50%)',
+            }}
+          />
+        )}
+
+        {/* Share button */}
         {!isPreview && (
           <button
             onClick={handleShare}
@@ -116,7 +129,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
               backdropFilter: 'blur(8px)',
               WebkitBackdropFilter: 'blur(8px)',
               border: '1px solid rgba(255,255,255,0.30)',
-              color: theme.headerTextPrimary,
+              color: hasPhoto ? '#FFFFFF' : theme.headerTextPrimary,
               display: 'flex', alignItems: 'center', justifyContent: 'center',
               cursor: 'pointer',
             }}
@@ -126,16 +139,15 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
         )}
       </div>
 
-      {/* ── Identity section ──────────────────────────────────
-          position + zIndex: the cover div has position:relative so it paints
-          after static elements; this makes the identity div paint on top,
-          keeping the avatar fully visible above the cover gradient.        */}
+      {/* ── Identity section ──────────────────────────────────────
+          position + zIndex: cover paints after static elements;
+          this div paints on top so the avatar stays fully visible. */}
       <div
         style={{
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           textAlign: 'center',
           marginTop: -OVERLAP,
-          padding: `0 24px 24px`,
+          padding: '0 24px 24px',
           backgroundColor: theme.pageBg,
           position: 'relative',
           zIndex: 1,
@@ -148,7 +160,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
             border: `4px solid ${theme.pageBg}`,
             boxShadow: `0 2px 16px rgba(0,0,0,0.12), 0 0 0 1px ${accent}20`,
             overflow: 'hidden', flexShrink: 0,
-            marginBottom: 12,
+            marginBottom: 14,
           }}
         >
           {merchant.logo_url ? (
@@ -176,16 +188,16 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
         {/* Name */}
         <h1
           style={{
-            fontSize: 22, fontWeight: 800, letterSpacing: '-0.025em',
-            lineHeight: 1.15, color: theme.textPrimary, margin: 0,
+            fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em',
+            lineHeight: 1.1, color: theme.textPrimary, margin: 0,
           }}
         >
           {merchant.salon_name}
         </h1>
 
-        {/* Specialty + location — real data only, shown as subtitle */}
+        {/* Specialty + location */}
         {(merchant.specialty || merchant.location) && (
-          <p style={{ fontSize: 13, color: theme.textSecondary, marginTop: 4, lineHeight: 1.4 }}>
+          <p style={{ fontSize: 13, color: theme.textSecondary, marginTop: 5, lineHeight: 1.4 }}>
             {[merchant.specialty, merchant.location].filter(Boolean).join(' · ')}
           </p>
         )}
@@ -195,7 +207,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
           <p
             style={{
               fontSize: 13, color: theme.textSecondary,
-              lineHeight: 1.55, marginTop: 6, maxWidth: 270,
+              lineHeight: 1.55, marginTop: 7, maxWidth: 280,
               overflow: 'hidden', display: '-webkit-box',
               WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
             }}
@@ -254,7 +266,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef }: Pro
         )}
 
         {/* Primary Book CTA — observed by StickyBookCTA */}
-        <div ref={ctaRef} style={{ width: '100%', marginTop: 18 }}>
+        <div ref={ctaRef} style={{ width: '100%', marginTop: 20 }}>
           <motion.button
             whileTap={isPreview ? {} : { scale: 0.97 }}
             onClick={scrollToServices}

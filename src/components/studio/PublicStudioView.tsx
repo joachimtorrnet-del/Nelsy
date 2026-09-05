@@ -58,6 +58,9 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
 
   const { photos, testimonials, hours } = useStudioPublic(isPreview ? '' : merchant.id);
 
+  // Hero photo: explicit cover takes priority, then first gallery photo
+  const heroPhotoUrl = merchant.cover_url ?? photos[0]?.image_url;
+
   // Sticky CTA: watch when hero Book button leaves viewport
   const heroCTARef = useRef<HTMLDivElement>(null);
   const [heroCTAVisible, setHeroCTAVisible] = useState(true);
@@ -91,13 +94,12 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
         theme={theme}
         isPreview={isPreview}
         ctaRef={heroCTARef}
+        heroPhotoUrl={heroPhotoUrl}
       />
 
-      {/* ── Gallery — no outer padding; StudioGallery handles its own ── */}
+      {/* ── Gallery — StudioGallery manages its own insets ─────────── */}
       {photos.length > 0 && (
-        <div style={{ padding: '0 16px' }}>
-          <StudioGallery photos={photos} textSecondary={theme.textSecondary} />
-        </div>
+        <StudioGallery photos={photos} textSecondary={theme.textSecondary} accent={accent} />
       )}
 
       {/* ── Services ─────────────────────────────────────────── */}

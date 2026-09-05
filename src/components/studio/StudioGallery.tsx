@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { GalleryPhoto } from '@/lib/supabase-queries';
@@ -17,16 +17,6 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: LightboxProps) {
   const photo = photos[index];
   const hasPrev = index > 0;
   const hasNext = index < photos.length - 1;
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft' && hasPrev) onPrev();
-      if (e.key === 'ArrowRight' && hasNext) onNext();
-    };
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
-  }, [onClose, onPrev, onNext, hasPrev, hasNext]);
 
   return (
     <motion.div
@@ -75,7 +65,7 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: LightboxProps) {
       <motion.img
         key={photo.id}
         src={photo.image_url}
-        alt={photo.caption ?? 'Nail art'}
+        alt={photo.caption ?? 'Portfolio'}
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.2 }}
@@ -141,9 +131,10 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: LightboxProps) {
 interface Props {
   photos: GalleryPhoto[];
   textSecondary?: string;
+  accent?: string;
 }
 
-export function StudioGallery({ photos, textSecondary = '#9CA3AF' }: Props) {
+export function StudioGallery({ photos, textSecondary = '#9CA3AF', accent = '#F52B8C' }: Props) {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   const openLightbox = useCallback((i: number) => setLightboxIdx(i), []);
@@ -157,24 +148,48 @@ export function StudioGallery({ photos, textSecondary = '#9CA3AF' }: Props) {
 
   return (
     <>
-      <section style={{ marginBottom: 28 }}>
-        <p
-          style={{
-            fontSize: 11, fontWeight: 600, letterSpacing: '0.04em',
-            color: textSecondary, marginBottom: 10,
-            textTransform: 'uppercase',
-          }}
-        >
-          My work
-        </p>
-
-        {/* 2-col portrait grid — tappable */}
+      <section style={{ marginBottom: 32 }}>
+        {/* Header */}
         <div
           style={{
-            display: 'grid',
-            gridTemplateColumns: '1fr 1fr',
-            gap: 4,
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            marginBottom: 12, padding: '0 16px',
           }}
+        >
+          <p
+            style={{
+              fontSize: 11, fontWeight: 600, letterSpacing: '0.02em',
+              color: textSecondary,
+            }}
+          >
+            My work
+          </p>
+          {photos.length > 4 && (
+            <button
+              onClick={() => openLightbox(0)}
+              style={{
+                fontSize: 12, fontWeight: 600, color: accent,
+                background: 'none', border: 'none', cursor: 'pointer', padding: 0,
+              }}
+            >
+              See all →
+            </button>
+          )}
+        </div>
+
+        {/* Horizontal scroll carousel */}
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            overflowX: 'auto',
+            paddingLeft: 16,
+            paddingRight: 16,
+            paddingBottom: 4,
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            scrollSnapType: 'x mandatory',
+          } as React.CSSProperties}
         >
           {photos.map((photo, i) => (
             <motion.button
@@ -185,18 +200,23 @@ export function StudioGallery({ photos, textSecondary = '#9CA3AF' }: Props) {
               transition={{ delay: i * 0.04, duration: 0.3 }}
               whileTap={{ scale: 0.97 }}
               style={{
-                aspectRatio: '3 / 4',
+                flexShrink: 0,
+                width: 140,
+                height: 187,
                 borderRadius: 14,
                 overflow: 'hidden',
                 backgroundColor: '#f0ece8',
-                padding: 0, border: 'none',
-                cursor: 'pointer', display: 'block',
-              }}
-              aria-label={photo.caption ?? `Nail art photo ${i + 1}`}
+                padding: 0,
+                border: 'none',
+                cursor: 'pointer',
+                display: 'block',
+                scrollSnapAlign: 'start',
+              } as React.CSSProperties}
+              aria-label={photo.caption ?? `Portfolio photo ${i + 1}`}
             >
               <img
                 src={photo.image_url}
-                alt={photo.caption ?? 'Nail art'}
+                alt={photo.caption ?? 'Portfolio'}
                 style={{
                   width: '100%', height: '100%', objectFit: 'cover',
                   display: 'block',
@@ -208,7 +228,7 @@ export function StudioGallery({ photos, textSecondary = '#9CA3AF' }: Props) {
         </div>
       </section>
 
-      {/* Lightbox portal */}
+      {/* Lightbox */}
       <AnimatePresence>
         {lightboxIdx !== null && (
           <Lightbox

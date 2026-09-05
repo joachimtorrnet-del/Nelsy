@@ -183,7 +183,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
         goTo(5);
       }
     } catch (err) {
-      setBookingError(err instanceof Error ? err.message : 'Une erreur est survenue. Veuillez réessayer.');
+      setBookingError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -283,26 +283,38 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                 </div>
 
                 {/* Step progress */}
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center">
                   {stepLabels.map((label, i) => {
                     const s = i + 1;
                     const active = s === step;
                     const done = s < step;
                     return (
-                      <div key={s} className="flex items-center gap-1.5 flex-1">
-                        <div className="flex flex-col items-center flex-1">
+                      <div key={s} className="flex items-center flex-1">
+                        <div className="flex flex-col items-center gap-1 flex-shrink-0">
                           <div
-                            className={`h-1 w-full rounded-full transition-all duration-400 ${
-                              done ? '' : active ? '' : 'bg-gray-100'
-                            }`}
-                            style={done || active ? { background: done ? `${accent}80` : accent } : {}}
-                          />
-                          {active && (
-                            <p className="text-[10px] font-semibold mt-1.5" style={{ color: accent }}>
-                              {label}
-                            </p>
-                          )}
+                            className="flex items-center justify-center rounded-full transition-all"
+                            style={{
+                              width: 22, height: 22,
+                              backgroundColor: done || active ? accent : '#F3F4F6',
+                              color: done || active ? '#FFFFFF' : '#9CA3AF',
+                              fontSize: 10, fontWeight: 700,
+                            }}
+                          >
+                            {done ? '✓' : s}
+                          </div>
+                          <p
+                            className="text-[9px] font-semibold"
+                            style={{ color: active ? accent : '#9CA3AF', whiteSpace: 'nowrap' }}
+                          >
+                            {label}
+                          </p>
                         </div>
+                        {i < stepLabels.length - 1 && (
+                          <div
+                            className="flex-1 h-px mx-1 mb-3 rounded-full transition-all"
+                            style={{ backgroundColor: done ? `${accent}50` : '#E5E7EB' }}
+                          />
+                        )}
                       </div>
                     );
                   })}
@@ -515,7 +527,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         <input
                           {...register('name')}
                           type="text"
-                          placeholder="Marie Dupont"
+                          placeholder="Your name"
                           autoComplete="name"
                           className={`w-full px-4 py-3.5 rounded-2xl border-2 text-gray-900 placeholder-gray-300 outline-none transition-colors text-base ${
                             errors.name ? 'border-red-400 bg-red-50' : 'border-gray-100 bg-gray-50 focus:border-gray-300'
@@ -531,7 +543,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         <input
                           {...register('email')}
                           type="email"
-                          placeholder="marie@email.fr"
+                          placeholder="you@email.com"
                           autoComplete="email"
                           className={`w-full px-4 py-3.5 rounded-2xl border-2 text-gray-900 placeholder-gray-300 outline-none transition-colors text-base ${
                             errors.email ? 'border-red-400 bg-red-50' : 'border-gray-100 bg-gray-50 focus:border-gray-300'
@@ -547,7 +559,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         <input
                           {...register('phone')}
                           type="tel"
-                          placeholder="06 12 34 56 78"
+                          placeholder="Phone number"
                           autoComplete="tel"
                           className={`w-full px-4 py-3.5 rounded-2xl border-2 text-gray-900 placeholder-gray-300 outline-none transition-colors text-base ${
                             errors.phone ? 'border-red-400 bg-red-50' : 'border-gray-100 bg-gray-50 focus:border-gray-300'

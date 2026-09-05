@@ -16,149 +16,208 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
   const accentText = theme.accentText;
   const hasDeposit = service.deposit > 0;
   const chargeNow = hasDeposit ? service.deposit : service.price;
+  const hasImage = !!service.image_url;
 
   const handleBook = () => {
     if (isPreview) return;
     openModal(service);
   };
 
-  // Header area: real image takes priority; otherwise the theme's own gradient
-  const headerBg = service.image_url
-    ? `url(${service.image_url}) center/cover no-repeat`
-    : theme.headerGradient;
-
-  // When image exists, overlay text in white; otherwise use theme header text
-  const headerTextPrimary = service.image_url ? '#FFFFFF' : theme.headerTextPrimary;
-  const headerTextSecondary = service.image_url ? 'rgba(255,255,255,0.75)' : theme.headerTextSecondary;
-
   return (
     <section style={{ marginBottom: 28 }}>
+      {/* Section label — same style as other section labels */}
+      <p style={{
+        fontSize: 11, fontWeight: 600, letterSpacing: '0.02em',
+        color: theme.textSecondary, marginBottom: 10,
+      }}>
+        Popular
+      </p>
+
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, ease: 'easeOut' }}
         style={{
-          borderRadius: 22,
+          borderRadius: 20,
           overflow: 'hidden',
           border: `1px solid ${theme.cardBorder}`,
-          boxShadow: '0 4px 24px rgba(0,0,0,0.07)',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
+          backgroundColor: theme.cardBg,
         }}
       >
-        {/* ── Image / gradient header — always present ───── */}
-        <div
-          style={{
-            height: 190,
-            background: headerBg,
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'space-between',
-            padding: '14px 16px 18px',
-          }}
-        >
-          {/* Dark overlay only when image — for text legibility */}
-          {service.image_url && (
+        {hasImage ? (
+          // ── State A: service has a photo ──────────────────────────────
+          <>
             <div
               style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.05) 55%)',
-              }}
-            />
-          )}
-
-          {/* "Featured" badge — top left */}
-          <div style={{ position: 'relative', zIndex: 1, alignSelf: 'flex-start' }}>
-            <span
-              style={{
-                fontSize: 10, fontWeight: 700, letterSpacing: '0.07em',
-                color: headerTextSecondary,
-                backgroundColor: service.image_url
-                  ? 'rgba(255,255,255,0.18)'
-                  : 'rgba(0,0,0,0.06)',
-                borderRadius: 6, padding: '3px 9px',
-                backdropFilter: service.image_url ? 'blur(6px)' : undefined,
-                WebkitBackdropFilter: service.image_url ? 'blur(6px)' : undefined,
+                height: 200,
+                background: `url(${service.image_url}) center/cover no-repeat`,
+                position: 'relative',
               }}
             >
-              FEATURED
-            </span>
-          </div>
+              <div
+                style={{
+                  position: 'absolute', inset: 0,
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.02) 55%)',
+                }}
+              />
+              <div style={{ position: 'absolute', bottom: 18, left: 18, right: 18, zIndex: 1 }}>
+                <h3
+                  style={{
+                    fontSize: 22, fontWeight: 900, color: '#FFFFFF',
+                    margin: '0 0 4px', letterSpacing: '-0.025em', lineHeight: 1.1,
+                  }}
+                >
+                  {service.name}
+                </h3>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                  <span
+                    style={{
+                      fontSize: 26, fontWeight: 900, color: '#FFFFFF', letterSpacing: '-0.035em',
+                    }}
+                  >
+                    {formatCurrency(service.price)}
+                  </span>
+                  <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)' }}>
+                    · {service.duration} min
+                  </span>
+                </div>
+              </div>
+            </div>
 
-          {/* Service name + price — bottom of header */}
-          <div style={{ position: 'relative', zIndex: 1 }}>
+            <div style={{ padding: '14px 18px 18px' }}>
+              {service.description && (
+                <p
+                  style={{
+                    fontSize: 13, color: theme.textSecondary, lineHeight: 1.55,
+                    margin: '0 0 14px',
+                    overflow: 'hidden', display: '-webkit-box',
+                    WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+                  }}
+                >
+                  {service.description}
+                </p>
+              )}
+
+              <div
+                style={{
+                  display: 'flex', alignItems: 'center',
+                  justifyContent: hasDeposit ? 'space-between' : 'flex-end',
+                  gap: 12,
+                }}
+              >
+                {hasDeposit && (
+                  <p style={{ fontSize: 12, color: theme.textSecondary, lineHeight: 1.4 }}>
+                    {formatCurrency(service.deposit)}<br />
+                    <span style={{ opacity: 0.7 }}>deposit today</span>
+                  </p>
+                )}
+                <motion.button
+                  whileTap={isPreview ? {} : { scale: 0.96 }}
+                  onClick={handleBook}
+                  disabled={isPreview}
+                  style={{
+                    backgroundColor: accent, color: accentText,
+                    borderRadius: 14, border: 'none',
+                    padding: '12px 24px',
+                    fontSize: 15, fontWeight: 700,
+                    cursor: isPreview ? 'default' : 'pointer',
+                    opacity: isPreview ? 0.5 : 1,
+                    boxShadow: `0 4px 16px ${accent}35`,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {hasDeposit ? `Book · ${formatCurrency(chargeNow)}` : 'Book now →'}
+                </motion.button>
+              </div>
+            </div>
+          </>
+        ) : (
+          // ── State B: no photo — clean text-first layout ───────────────
+          <div style={{ padding: '20px 20px 20px' }}>
+            <span
+              style={{
+                display: 'inline-block',
+                fontSize: 11, fontWeight: 700, letterSpacing: '0.04em',
+                color: accent, backgroundColor: `${accent}14`,
+                borderRadius: 99, padding: '4px 12px',
+                marginBottom: 14,
+              }}
+            >
+              Popular
+            </span>
+
             <h3
               style={{
-                fontSize: 21, fontWeight: 900, color: headerTextPrimary,
-                margin: 0, letterSpacing: '-0.025em', lineHeight: 1.15,
+                fontSize: 22, fontWeight: 900, color: theme.textPrimary,
+                margin: '0 0 8px', letterSpacing: '-0.02em', lineHeight: 1.1,
               }}
             >
               {service.name}
             </h3>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 4 }}>
+
+            {service.description && (
+              <p
+                style={{
+                  fontSize: 13, color: theme.textSecondary, lineHeight: 1.55,
+                  margin: '0 0 16px',
+                  overflow: 'hidden', display: '-webkit-box',
+                  WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+                }}
+              >
+                {service.description}
+              </p>
+            )}
+
+            <div
+              style={{
+                display: 'flex', alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 18,
+              }}
+            >
+              <span style={{ fontSize: 13, color: theme.textSecondary }}>
+                {service.duration} min
+              </span>
               <span
                 style={{
-                  fontSize: 26, fontWeight: 900, color: headerTextPrimary,
+                  fontSize: 28, fontWeight: 900, color: theme.textPrimary,
                   letterSpacing: '-0.035em', lineHeight: 1,
                 }}
               >
                 {formatCurrency(service.price)}
               </span>
-              <span style={{ fontSize: 13, color: headerTextSecondary }}>
-                · {service.duration} min
-              </span>
             </div>
-          </div>
-        </div>
-
-        {/* ── Content below header ─────────────────────── */}
-        <div style={{ padding: '14px 18px 18px', backgroundColor: theme.cardBg }}>
-          {service.description && (
-            <p
-              style={{
-                fontSize: 13, color: theme.textSecondary, lineHeight: 1.55,
-                margin: '0 0 14px',
-                overflow: 'hidden', display: '-webkit-box',
-                WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
-              }}
-            >
-              {service.description}
-            </p>
-          )}
-
-          <div
-            style={{
-              display: 'flex', alignItems: 'center',
-              justifyContent: hasDeposit ? 'space-between' : 'flex-end',
-              gap: 12,
-              marginTop: service.description ? 0 : 4,
-            }}
-          >
-            {hasDeposit && (
-              <p style={{ fontSize: 12, color: theme.textSecondary, lineHeight: 1.4 }}>
-                {formatCurrency(service.deposit)}<br />
-                <span style={{ opacity: 0.7 }}>deposit today</span>
-              </p>
-            )}
 
             <motion.button
               whileTap={isPreview ? {} : { scale: 0.96 }}
               onClick={handleBook}
               disabled={isPreview}
               style={{
-                backgroundColor: accent, color: accentText,
-                borderRadius: 14, border: 'none',
-                padding: '12px 24px',
-                fontSize: 15, fontWeight: 700,
+                display: 'block', width: '100%', height: 50,
+                borderRadius: 14, backgroundColor: accent, color: accentText,
+                border: 'none', fontSize: 16, fontWeight: 700,
                 cursor: isPreview ? 'default' : 'pointer',
                 opacity: isPreview ? 0.5 : 1,
-                boxShadow: `0 4px 16px ${accent}40`,
-                whiteSpace: 'nowrap',
+                boxShadow: `0 4px 16px ${accent}35`,
+                letterSpacing: '-0.01em',
               }}
             >
-              {hasDeposit ? `Book · ${formatCurrency(chargeNow)}` : 'Book →'}
+              {hasDeposit ? `Book · ${formatCurrency(chargeNow)}` : 'Book now →'}
             </motion.button>
+
+            {hasDeposit && (
+              <p
+                style={{
+                  fontSize: 11, color: theme.textSecondary,
+                  textAlign: 'center', marginTop: 8,
+                }}
+              >
+                {formatCurrency(service.price - service.deposit)} balance due on the day
+              </p>
+            )}
           </div>
-        </div>
+        )}
       </motion.div>
     </section>
   );

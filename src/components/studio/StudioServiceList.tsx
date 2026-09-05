@@ -158,7 +158,7 @@ export function StudioServiceList({ services, theme, isPreview = false }: Props)
         fontSize: 11, fontWeight: 600, letterSpacing: '0.02em',
         color: theme.textSecondary, marginBottom: 10,
       }}>
-        Services
+        All services
       </p>
 
       <motion.div

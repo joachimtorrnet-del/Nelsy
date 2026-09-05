@@ -30,9 +30,9 @@ export function StudioTestimonials({ testimonials, accentColor = '#F52B8C' }: Pr
 
   return (
     <section style={{ marginBottom: 28 }}>
-      <div className="flex items-center justify-between mb-3" style={{ padding: '0 16px' }}>
+      <div className="flex items-center justify-between mb-4" style={{ padding: '0 16px' }}>
         <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.02em', color: '#9CA3AF' }}>
-          Reviews
+          Loved by my clients
         </p>
         <div className="flex items-center gap-1.5">
           <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
