@@ -57,160 +57,390 @@ function Nav() {
 
 // ─── 2. HERO ──────────────────────────────────────────────────────────────────
 
-function Hero() {
+const PINK = '#F52B8C';
+
+// ── Mini social icons (inside product mockup only) ────────────────────────────
+
+function IgMini() {
   return (
-    <section className="relative bg-white pt-24 sm:pt-32 pb-16 sm:pb-20 px-4">
-      <div className="max-w-md mx-auto sm:max-w-6xl">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="#374151" aria-hidden="true">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+    </svg>
+  );
+}
+function TtMini() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="#374151" aria-hidden="true">
+      <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.13 8.13 0 004.78 1.52V6.82a4.85 4.85 0 01-1-.13z" />
+    </svg>
+  );
+}
+function PtMini() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="#E60023" aria-hidden="true">
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 010 .345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z" />
+    </svg>
+  );
+}
+function LinkMini() {
+  return (
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#374151" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
+      <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />
+    </svg>
+  );
+}
 
-        {/* H1 */}
-        <motion.h1
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.08 }}
-          className="text-[2.5rem] sm:text-[4rem] lg:text-[5rem] text-center text-gray-900 mb-8 leading-[1.1] font-extrabold tracking-tight px-4"
-        >
-          The all-in-one link in bio{' '}
-          <span
-            className="block mt-3 sm:mt-4 relative"
-            style={{ color: '#F52B8C', filter: 'drop-shadow(0 0 30px rgba(245,43,140,0.15))' }}
-          >
-            for Nail Techs.
-            <svg className="absolute -bottom-2 left-0 w-full h-3" viewBox="0 0 400 12" fill="none" aria-hidden="true">
-              <path d="M2 10C100 5 300 5 398 10" stroke="#F52B8C" strokeWidth="4" strokeLinecap="round" opacity="0.3" />
-            </svg>
-          </span>
-        </motion.h1>
+// ── Product mockup ────────────────────────────────────────────────────────────
 
-        {/* Sub-H1 */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="text-xl sm:text-2xl text-center text-gray-600 mb-8 max-w-2xl mx-auto px-4"
-        >
-          Nelsy is the easiest way to make money as a Nail Tech. All of your bookings, upfront deposits, and payments are now hosted within your link-in-bio.
-        </motion.p>
+function NelsyProductMockup() {
+  return (
+    <div style={{ position: 'relative', width: 290, flexShrink: 0 }}>
 
-        {/* Social proof badge — après subtitle */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex items-center justify-center gap-2 mb-10"
-        >
-          <div className="flex -space-x-3">
-            {[44, 65, 26, 32, 50].map((i) => (
-              <div
-                key={i}
-                className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 border-white"
-                style={{
-                  backgroundImage: `url(https://randomuser.me/api/portraits/women/${i}.jpg)`,
-                  backgroundSize: 'cover',
-                }}
-              />
+      {/* Soft depth layer behind */}
+      <div style={{
+        position: 'absolute',
+        inset: 14,
+        backgroundColor: '#FDDDE9',
+        borderRadius: 28,
+        transform: 'rotate(-4deg)',
+        zIndex: 0,
+      }} />
+
+      {/* ── Central booking UI ── */}
+      <div style={{
+        position: 'relative',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 24,
+        boxShadow: '0 20px 60px rgba(0,0,0,0.10)',
+        overflow: 'hidden',
+        zIndex: 1,
+        margin: '0 14px',
+      }}>
+        {/* Cover band */}
+        <div style={{
+          height: 82,
+          background: 'linear-gradient(135deg, #FBCFE8 0%, #F9A8D4 60%, #F472B6 100%)',
+          position: 'relative', flexShrink: 0,
+        }}>
+          {/* Avatar */}
+          <div style={{
+            position: 'absolute', bottom: -22, left: '50%', transform: 'translateX(-50%)',
+            width: 46, height: 46, borderRadius: '50%',
+            border: '3px solid #FFFFFF',
+            background: 'linear-gradient(135deg, #FDE68A, #F59E0B)',
+            boxShadow: '0 2px 10px rgba(0,0,0,0.10)',
+          }} />
+        </div>
+
+        {/* Identity */}
+        <div style={{ textAlign: 'center', paddingTop: 30, padding: '30px 14px 10px' }}>
+          <p style={{ fontSize: 15, fontWeight: 800, color: '#0D0D0D', margin: '0 0 2px', letterSpacing: '-0.02em' }}>
+            Mia Nails
+          </p>
+          <p style={{ fontSize: 11, color: '#6B7280', margin: '0 0 5px' }}>
+            Nail Artist · Paris
+          </p>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 3, marginBottom: 7 }}>
+            <span style={{ color: '#FBBF24', fontSize: 11 }}>★</span>
+            <span style={{ fontSize: 11, fontWeight: 700, color: '#0D0D0D' }}>4.9</span>
+            <span style={{ fontSize: 10, color: '#9CA3AF' }}>(127 reviews)</span>
+          </div>
+          {/* Social icons */}
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 5, marginBottom: 10 }}>
+            {([<IgMini key="ig" />, <TtMini key="tt" />, <PtMini key="pt" />, <LinkMini key="link" />] as React.ReactNode[]).map((icon, i) => (
+              <div key={i} style={{
+                width: 26, height: 26, borderRadius: '50%',
+                backgroundColor: '#F9FAFB', border: '1px solid #E5E7EB',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                {icon}
+              </div>
             ))}
           </div>
-          <p className="text-sm sm:text-base font-semibold text-gray-700">
-            Already used by <span style={{ color: '#F52B8C' }}>500+ nail techs</span>
-          </p>
-        </motion.div>
+          {/* Book now */}
+          <div style={{
+            backgroundColor: PINK, borderRadius: 10,
+            padding: '9px 0', color: '#FFFFFF',
+            fontSize: 12, fontWeight: 700, letterSpacing: '-0.01em', marginBottom: 10,
+          }}>
+            Book now →
+          </div>
+        </div>
 
-        {/* CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.27 }}
-          className="flex justify-center mb-6"
-        >
-          <Link to="/onboarding">
-            <button className="group px-10 py-5 bg-[#F52B8C] text-white rounded-full font-bold text-xl sm:text-2xl hover:bg-[#E0167A] transition-all shadow-xl active:scale-95">
-              <span className="flex items-center gap-2">
-                Continue
-                <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </span>
-            </button>
-          </Link>
-        </motion.div>
+        {/* My work */}
+        <div style={{ padding: '0 12px 10px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+            <p style={{ fontSize: 11, fontWeight: 800, color: '#0D0D0D', margin: 0 }}>My work</p>
+            <p style={{ fontSize: 10, fontWeight: 600, color: PINK, margin: 0 }}>See all →</p>
+          </div>
+          <div style={{ display: 'flex', gap: 5 }}>
+            {[
+              'linear-gradient(135deg,#FBCFE8,#F9A8D4)',
+              'linear-gradient(135deg,#FDE68A,#FCA5A5)',
+              'linear-gradient(135deg,#C7D2FE,#DDD6FE)',
+            ].map((g, i) => (
+              <div key={i} style={{ flex: 1, height: 52, borderRadius: 9, background: g }} />
+            ))}
+          </div>
+        </div>
 
-        {/* Trust line */}
-        <div className="mb-16 sm:mb-20" />
-
-        {/* Product screenshot */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.38, duration: 0.6 }}
-          className="relative mt-16 sm:mt-20"
-        >
-          <div className="absolute inset-0 opacity-10 blur-3xl rounded-3xl" style={{ backgroundColor: '#F52B8C' }} />
-
-          <div className="relative bg-white rounded-2xl shadow-2xl overflow-hidden" style={{ border: '4px solid #F52B8C' }}>
-            {/* Browser chrome */}
-            <div className="bg-gray-100 px-3 py-2 sm:px-4 sm:py-3 flex items-center gap-2" style={{ borderBottom: '2px solid #F52B8C' }}>
-              <div className="flex gap-1.5">
-                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gray-300" />
-                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gray-300" />
-                <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-gray-300" />
-              </div>
-              <div className="flex-1 flex justify-center">
-                <div className="bg-white rounded-lg px-3 py-1.5 text-xs sm:text-sm text-gray-500 font-mono flex items-center gap-1.5">
-                  <svg className="w-3 h-3 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                    <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-                  </svg>
-                  yourname.getnelsy.com
-                </div>
+        {/* Featured service */}
+        <div style={{ padding: '0 12px 14px' }}>
+          <p style={{ fontSize: 11, fontWeight: 800, color: '#0D0D0D', margin: '0 0 6px' }}>Featured service</p>
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 8,
+            backgroundColor: '#FFF5F9', borderRadius: 12, padding: 8,
+            border: '1px solid rgba(245,43,140,0.08)',
+          }}>
+            <div style={{
+              position: 'relative', width: 46, height: 46, flexShrink: 0,
+              borderRadius: 9, overflow: 'hidden',
+              background: 'linear-gradient(135deg,#FBCFE8,#F9A8D4)',
+            }}>
+              <div style={{
+                position: 'absolute', bottom: 3, left: 3,
+                backgroundColor: 'rgba(255,255,255,0.90)', borderRadius: 99,
+                padding: '1px 5px', fontSize: 7, fontWeight: 700, color: PINK,
+                lineHeight: 1.5,
+              }}>
+                Most booked
               </div>
             </div>
-
-            {/* Dashboard content */}
-            <div className="p-4 sm:p-6 bg-gradient-to-br from-white to-gray-50">
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-md border border-gray-100">
-                  <p className="text-xs text-gray-500 mb-1">Today's bookings</p>
-                  <p className="text-xl sm:text-2xl font-bold text-gray-900">3</p>
-                </div>
-                <div className="bg-white rounded-xl p-3 sm:p-4 shadow-md border border-gray-100">
-                  <p className="text-xs text-gray-500 mb-1">Deposits</p>
-                  <p className="text-xl sm:text-2xl font-bold" style={{ color: '#F52B8C' }}>€127</p>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                {[
-                  { initial: 'S', name: 'Sophie M.', time: '11:00', service: 'Gel Set',  paid: true,  color: 'from-pink-400 to-pink-500' },
-                  { initial: 'L', name: 'Léa P.',    time: '14:00', service: 'Nail Art', paid: true,  color: 'from-purple-400 to-purple-500' },
-                  { initial: 'E', name: 'Emma D.',   time: '16:30', service: 'Fill-in',  paid: false, color: 'from-blue-400 to-blue-500' },
-                ].map((b) => (
-                  <div key={b.name} className="flex items-center gap-3 p-3 bg-white rounded-xl shadow-sm border border-gray-100">
-                    <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br ${b.color} flex items-center justify-center text-white font-bold text-sm sm:text-base flex-shrink-0`}>
-                      {b.initial}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-semibold text-gray-900 text-sm sm:text-base truncate">{b.name}</p>
-                      <p className="text-xs sm:text-sm text-gray-500">{b.time} · {b.service}</p>
-                    </div>
-                    <div className={`px-2.5 py-1 rounded-full text-xs font-semibold flex-shrink-0 ${b.paid ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>
-                      {b.paid ? '✓ paid' : 'pending'}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <p style={{ fontSize: 10.5, fontWeight: 700, color: '#0D0D0D', margin: '0 0 1px' }}>BIAB Full Set</p>
+              <p style={{ fontSize: 9.5, color: '#6B7280', margin: '0 0 2px' }}>Strong, natural and glossy.</p>
+              <p style={{ fontSize: 9.5, color: '#9CA3AF', margin: 0 }}>
+                60 min · <strong style={{ color: '#0D0D0D' }}>€65</strong>
+              </p>
+            </div>
+            <div style={{
+              backgroundColor: PINK, borderRadius: 99,
+              padding: '5px 10px', flexShrink: 0,
+              color: '#FFFFFF', fontSize: 9.5, fontWeight: 700,
+            }}>
+              Book →
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Floating notification */}
-          <div className="absolute -bottom-4 -right-2 sm:-bottom-6 sm:-right-4 bg-white rounded-xl shadow-2xl p-3 sm:p-4 border border-gray-100 animate-float">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse flex-shrink-0" />
-              <div className="text-xs sm:text-sm">
-                <p className="font-semibold text-gray-900">New booking</p>
-                <p className="text-gray-500">Emma D. just booked</p>
-              </div>
-            </div>
+      {/* ── Floating card: New booking (top-left) ── */}
+      <motion.div
+        animate={{ y: [0, -7, 0] }}
+        transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
+        style={{
+          position: 'absolute', top: 28, left: -20,
+          backgroundColor: '#FFFFFF', borderRadius: 16,
+          padding: '10px 12px',
+          boxShadow: '0 8px 28px rgba(0,0,0,0.09)',
+          zIndex: 3, width: 158,
+          transform: 'rotate(-2deg)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6 }}>
+          <div style={{
+            width: 26, height: 26, borderRadius: 7, backgroundColor: '#FDE8F3',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0,
+          }}>📅</div>
+          <p style={{ fontSize: 10, fontWeight: 700, color: '#0D0D0D', margin: 0 }}>New booking ✨</p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{
+            width: 22, height: 22, borderRadius: '50%', flexShrink: 0,
+            background: 'linear-gradient(135deg,#F9A8D4,#F52B8C)',
+          }} />
+          <div>
+            <p style={{ fontSize: 10, fontWeight: 700, color: '#0D0D0D', margin: 0 }}>Sarah</p>
+            <p style={{ fontSize: 9.5, color: '#6B7280', margin: 0 }}>BIAB Full Set</p>
+            <p style={{ fontSize: 9.5, color: '#9CA3AF', margin: 0 }}>Today · 2:30 PM</p>
           </div>
-        </motion.div>
+        </div>
+      </motion.div>
+
+      {/* ── Floating card: Revenue (bottom-left) ── */}
+      <motion.div
+        animate={{ y: [0, 6, 0] }}
+        transition={{ repeat: Infinity, duration: 4.1, ease: 'easeInOut', delay: 1 }}
+        style={{
+          position: 'absolute', bottom: 72, left: -24,
+          backgroundColor: '#FFFFFF', borderRadius: 16,
+          padding: '10px 14px',
+          boxShadow: '0 8px 28px rgba(0,0,0,0.09)',
+          zIndex: 3,
+          transform: 'rotate(2.5deg)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{
+            width: 34, height: 34, borderRadius: 10, backgroundColor: '#FDE8F3',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, flexShrink: 0,
+          }}>📊</div>
+          <div>
+            <p style={{ fontSize: 17, fontWeight: 900, color: '#0D0D0D', margin: 0, letterSpacing: '-0.025em', lineHeight: 1 }}>€320</p>
+            <p style={{ fontSize: 9.5, color: '#6B7280', margin: '1px 0' }}>earned this week</p>
+            <p style={{ fontSize: 10, fontWeight: 700, color: '#10B981', margin: 0 }}>↑ +24%</p>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ── Floating card: Calendar (top-right) ── */}
+      <motion.div
+        animate={{ y: [0, -5, 0] }}
+        transition={{ repeat: Infinity, duration: 3.8, ease: 'easeInOut', delay: 0.6 }}
+        style={{
+          position: 'absolute', top: 22, right: -16,
+          backgroundColor: '#FFFFFF', borderRadius: 16,
+          padding: '10px 12px',
+          boxShadow: '0 8px 28px rgba(0,0,0,0.09)',
+          zIndex: 3, width: 138,
+          transform: 'rotate(3deg)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 7 }}>
+          <div style={{
+            width: 26, height: 26, borderRadius: 7, backgroundColor: '#FDE8F3',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, flexShrink: 0,
+          }}>📅</div>
+          <div>
+            <p style={{ fontSize: 10, fontWeight: 800, color: '#0D0D0D', margin: 0 }}>Today</p>
+            <p style={{ fontSize: 9.5, color: '#6B7280', margin: 0 }}>6 appointments</p>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 2 }}>
+          {(['Mon','Tue','Wed','Thu','Fri'] as const).map((d, i) => (
+            <div key={d} style={{ flex: 1, textAlign: 'center' }}>
+              <p style={{ fontSize: 7.5, color: '#9CA3AF', margin: '0 0 2px' }}>{d.slice(0,1)}</p>
+              <p style={{
+                fontSize: 8.5, fontWeight: 700, margin: 0,
+                color: i === 2 ? '#FFFFFF' : '#374151',
+                backgroundColor: i === 2 ? PINK : 'transparent',
+                borderRadius: 4, padding: '1px 0',
+              }}>{[8,9,10,11,12][i]}</p>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* ── Floating card: Payment received (bottom-right) ── */}
+      <motion.div
+        animate={{ y: [0, 5, 0] }}
+        transition={{ repeat: Infinity, duration: 4.3, ease: 'easeInOut', delay: 1.8 }}
+        style={{
+          position: 'absolute', bottom: 58, right: -20,
+          backgroundColor: '#FFFFFF', borderRadius: 16,
+          padding: '10px 12px',
+          boxShadow: '0 8px 28px rgba(0,0,0,0.09)',
+          zIndex: 3,
+          transform: 'rotate(-2deg)',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{
+            width: 30, height: 30, borderRadius: 9, backgroundColor: '#D1FAE5',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+          }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M2 7l3.5 3.5L12 3" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </div>
+          <div>
+            <p style={{ fontSize: 9.5, color: '#6B7280', margin: 0 }}>Payment received</p>
+            <p style={{ fontSize: 14, fontWeight: 800, color: '#0D0D0D', margin: '1px 0', letterSpacing: '-0.02em', lineHeight: 1 }}>€65</p>
+            <p style={{ fontSize: 9.5, color: '#9CA3AF', margin: 0 }}>Today · 12:14 PM</p>
+          </div>
+        </div>
+      </motion.div>
+
+    </div>
+  );
+}
+
+// ── Hero ──────────────────────────────────────────────────────────────────────
+
+function Hero() {
+  return (
+    <section style={{ backgroundColor: '#FEF6F9', paddingTop: 56, overflow: 'hidden' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
+        <div
+          className="flex flex-col lg:flex-row lg:items-center"
+          style={{ gap: 40, paddingBottom: 80 }}
+        >
+          {/* ── Copy ── */}
+          <motion.div
+            className="flex flex-col items-center lg:items-start text-center lg:text-left"
+            style={{ flex: '0 0 auto', maxWidth: 480, width: '100%', paddingTop: 60 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            {/* Eyebrow */}
+            <p style={{
+              fontSize: 11, fontWeight: 700, letterSpacing: '0.14em',
+              color: PINK, marginBottom: 20, textTransform: 'uppercase', lineHeight: 1,
+            }}>
+              BUILT FOR NAIL TECHS
+            </p>
+
+            {/* Headline */}
+            <h1 style={{
+              fontSize: 'clamp(2.25rem, 7vw, 3.75rem)',
+              fontWeight: 900,
+              color: '#0D0D0D',
+              lineHeight: 1.08,
+              letterSpacing: '-0.03em',
+              marginBottom: 20,
+            }}>
+              Your All-in-One<br />
+              Link in Bio<br />
+              <span style={{ color: PINK }}>for Nail Techs.</span>
+            </h1>
+
+            {/* Supporting copy */}
+            <p style={{
+              fontSize: 16.5,
+              color: '#6B7280',
+              lineHeight: 1.6,
+              marginBottom: 38,
+              maxWidth: 360,
+            }}>
+              Bookings, payments, your work and more —<br />
+              all in one beautiful page.
+            </p>
+
+            {/* CTA */}
+            <Link to="/onboarding">
+              <motion.button
+                whileTap={{ scale: 0.97 }}
+                style={{
+                  backgroundColor: PINK,
+                  color: '#FFFFFF',
+                  borderRadius: 99,
+                  padding: '15px 40px',
+                  fontSize: 17,
+                  fontWeight: 700,
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 8px 28px rgba(245,43,140,0.28)',
+                  letterSpacing: '-0.01em',
+                }}
+              >
+                Continue →
+              </motion.button>
+            </Link>
+          </motion.div>
+
+          {/* ── Mockup ── */}
+          <motion.div
+            className="flex justify-center lg:justify-end flex-1"
+            style={{ paddingTop: 48, paddingBottom: 60 }}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.18 }}
+          >
+            <NelsyProductMockup />
+          </motion.div>
+        </div>
       </div>
     </section>
   );
