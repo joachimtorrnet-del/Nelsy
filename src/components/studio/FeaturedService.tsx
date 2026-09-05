@@ -11,6 +11,11 @@ interface Props {
   isPreview?: boolean;
 }
 
+// Image dimensions — drives the card height
+const IMG_W = 96;
+const IMG_H = 118;
+const CARD_PAD = 12;
+
 export function FeaturedService({ service, theme, isPreview = false }: Props) {
   const { openModal } = useBookingStore();
   const accent = theme.defaultAccent;
@@ -34,39 +39,45 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
           style={{
             borderRadius: 20,
             border: `1px solid ${theme.cardBorder}`,
-            boxShadow: '0 1px 12px rgba(0,0,0,0.06)',
+            boxShadow: '0 1px 10px rgba(0,0,0,0.055)',
             backgroundColor: theme.cardBg,
-            padding: 14,
+            padding: CARD_PAD,
             display: 'flex',
             flexDirection: 'row',
-            gap: 14,
+            alignItems: 'stretch',
+            gap: 12,
             backdropFilter: theme.cardBlur,
             WebkitBackdropFilter: theme.cardBlur,
           }}
         >
-          {/* ── Image (inset, own border-radius) ─────────────── */}
-          <div style={{ position: 'relative', width: 130, flexShrink: 0 }}>
+          {/* ── Image — fixed dimensions ──────────────────────── */}
+          <div style={{
+            position: 'relative',
+            width: IMG_W,
+            height: IMG_H,
+            flexShrink: 0,
+          }}>
             <img
               src={service.image_url}
               alt={service.name}
               style={{
-                width: '100%',
-                height: '100%',
+                width: IMG_W,
+                height: IMG_H,
                 objectFit: 'cover',
                 display: 'block',
-                borderRadius: 12,
+                borderRadius: 10,
               }}
             />
-            {/* Most booked — bottom-left overlay */}
-            <div style={{ position: 'absolute', bottom: 8, left: 8 }}>
+            {/* Most booked badge */}
+            <div style={{ position: 'absolute', bottom: 7, left: 7 }}>
               <span style={{
                 display: 'inline-block',
-                fontSize: 10, fontWeight: 700, letterSpacing: '0.02em',
+                fontSize: 10, fontWeight: 600,
                 color: accent,
-                backgroundColor: 'rgba(255,255,255,0.88)',
+                backgroundColor: 'rgba(255,255,255,0.90)',
                 borderRadius: 99,
-                padding: '3px 9px',
-                lineHeight: 1.5,
+                padding: '2px 8px',
+                lineHeight: 1.6,
               }}>
                 Most booked
               </span>
@@ -79,42 +90,42 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
             minWidth: 0,
             display: 'flex',
             flexDirection: 'column',
+            justifyContent: 'space-between',
           }}>
-            {/* Name */}
-            <p style={{
-              fontSize: 18, fontWeight: 800, color: theme.textPrimary,
-              margin: '0 0 5px', letterSpacing: '-0.02em', lineHeight: 1.2,
-              overflow: 'hidden', display: '-webkit-box',
-              WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
-            }}>
-              {service.name}
-            </p>
-
-            {/* Description */}
-            {service.description && (
+            {/* Top: name + description */}
+            <div>
               <p style={{
-                fontSize: 13, color: theme.textSecondary, lineHeight: 1.45,
-                margin: '0 0 10px', flex: 1,
+                fontSize: 16, fontWeight: 700, color: theme.textPrimary,
+                margin: '0 0 4px', letterSpacing: '-0.015em', lineHeight: 1.25,
                 overflow: 'hidden', display: '-webkit-box',
                 WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
               }}>
-                {service.description}
+                {service.name}
               </p>
-            )}
+              {service.description && (
+                <p style={{
+                  fontSize: 12.5, color: theme.textSecondary, lineHeight: 1.45,
+                  margin: 0,
+                  overflow: 'hidden', display: '-webkit-box',
+                  WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+                }}>
+                  {service.description}
+                </p>
+              )}
+            </div>
 
-            {/* Bottom row: metadata left, Book right */}
+            {/* Bottom: metadata + Book pill */}
             <div style={{
               display: 'flex', alignItems: 'center',
               justifyContent: 'space-between',
-              marginTop: 'auto',
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                <Clock size={13} style={{ color: theme.textSecondary, flexShrink: 0 }} />
-                <span style={{ fontSize: 13, color: theme.textSecondary }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                <Clock size={12} style={{ color: theme.textSecondary, flexShrink: 0 }} />
+                <span style={{ fontSize: 12.5, color: theme.textSecondary }}>
                   {service.duration} min
                 </span>
-                <span style={{ fontSize: 13, color: theme.textSecondary, opacity: 0.4 }}>|</span>
-                <span style={{ fontSize: 14, fontWeight: 700, color: theme.textPrimary }}>
+                <span style={{ fontSize: 12, color: theme.textSecondary, opacity: 0.35, margin: '0 1px' }}>|</span>
+                <span style={{ fontSize: 13, fontWeight: 700, color: theme.textPrimary }}>
                   {formatCurrency(service.price)}
                 </span>
               </div>
@@ -126,11 +137,11 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
                 style={{
                   backgroundColor: accent, color: accentText,
                   borderRadius: 99, border: 'none',
-                  height: 44, padding: '0 20px',
-                  fontSize: 14, fontWeight: 700,
+                  height: 40, padding: '0 18px',
+                  fontSize: 13.5, fontWeight: 700,
                   cursor: isPreview ? 'default' : 'pointer',
                   opacity: isPreview ? 0.5 : 1,
-                  boxShadow: `0 3px 10px ${accent}40`,
+                  boxShadow: `0 3px 10px ${accent}38`,
                   letterSpacing: '-0.01em',
                   flexShrink: 0,
                   whiteSpace: 'nowrap',
@@ -155,7 +166,7 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
         style={{
           borderRadius: 20,
           border: `1px solid ${theme.cardBorder}`,
-          boxShadow: '0 1px 12px rgba(0,0,0,0.06)',
+          boxShadow: '0 1px 10px rgba(0,0,0,0.055)',
           backgroundColor: theme.cardBg,
           padding: 16,
           backdropFilter: theme.cardBlur,
@@ -164,17 +175,16 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
       >
         <span style={{
           display: 'inline-block',
-          fontSize: 10, fontWeight: 700, letterSpacing: '0.04em',
-          color: accent, backgroundColor: `${accent}15`,
-          border: `1px solid ${accent}25`,
-          borderRadius: 99, padding: '3px 10px', marginBottom: 10,
+          fontSize: 10, fontWeight: 600,
+          color: accent, backgroundColor: `${accent}14`,
+          borderRadius: 99, padding: '2px 9px', marginBottom: 9,
         }}>
           Most booked
         </span>
 
         <p style={{
-          fontSize: 20, fontWeight: 900, color: theme.textPrimary,
-          margin: '0 0 6px', letterSpacing: '-0.02em', lineHeight: 1.1,
+          fontSize: 19, fontWeight: 800, color: theme.textPrimary,
+          margin: '0 0 5px', letterSpacing: '-0.02em', lineHeight: 1.15,
         }}>
           {service.name}
         </p>
@@ -190,12 +200,12 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
           </p>
         )}
 
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: service.description ? 0 : 12 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-            <Clock size={13} style={{ color: theme.textSecondary }} />
-            <span style={{ fontSize: 13, color: theme.textSecondary }}>{service.duration} min</span>
-            <span style={{ fontSize: 13, color: theme.textSecondary, opacity: 0.4 }}>|</span>
-            <span style={{ fontSize: 18, fontWeight: 900, color: theme.textPrimary, letterSpacing: '-0.03em' }}>
+            <Clock size={12} style={{ color: theme.textSecondary }} />
+            <span style={{ fontSize: 12.5, color: theme.textSecondary }}>{service.duration} min</span>
+            <span style={{ fontSize: 12, color: theme.textSecondary, opacity: 0.35 }}>|</span>
+            <span style={{ fontSize: 17, fontWeight: 800, color: theme.textPrimary, letterSpacing: '-0.025em' }}>
               {formatCurrency(service.price)}
             </span>
           </div>
@@ -206,11 +216,11 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
             disabled={isPreview}
             style={{
               borderRadius: 99, backgroundColor: accent, color: accentText,
-              border: 'none', height: 44, padding: '0 20px',
-              fontSize: 14, fontWeight: 700,
+              border: 'none', height: 40, padding: '0 18px',
+              fontSize: 13.5, fontWeight: 700,
               cursor: isPreview ? 'default' : 'pointer',
               opacity: isPreview ? 0.5 : 1,
-              boxShadow: `0 3px 10px ${accent}40`,
+              boxShadow: `0 3px 10px ${accent}38`,
               letterSpacing: '-0.01em', flexShrink: 0,
             }}
           >
