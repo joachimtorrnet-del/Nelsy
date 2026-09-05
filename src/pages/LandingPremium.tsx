@@ -94,8 +94,8 @@ function Hero() {
             fontSize: 16, color: '#6B7280', lineHeight: 1.65,
             marginBottom: 36, maxWidth: 340,
           }}>
-            Bookings, payments, your work and more —<br />
-            all in one beautiful page.
+            Show your work. Get booked. Get paid.<br />
+            Everything you need to grow your nail business, all in one link.
           </p>
 
           <Link to="/onboarding">
