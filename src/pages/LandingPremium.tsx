@@ -61,7 +61,7 @@ const PINK = '#F52B8C';
 
 function Hero() {
   return (
-    <section style={{ backgroundColor: '#FEF6F9', paddingTop: 56, overflow: 'hidden' }}>
+    <section style={{ backgroundColor: '#FFFFFF', paddingTop: 56, overflow: 'hidden' }}>
       <div style={{ maxWidth: 1100, margin: '0 auto' }}>
 
         {/* Copy — left-aligned */}
@@ -117,7 +117,7 @@ function Hero() {
 
         {/* Supplied Nelsy product mockup — static image, not reconstructed in HTML */}
         <motion.div
-          style={{ marginTop: 40, padding: '0 0 0 16px' }}
+          style={{ marginTop: 40 }}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.2 }}
