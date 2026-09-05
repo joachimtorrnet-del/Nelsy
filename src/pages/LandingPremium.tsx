@@ -62,11 +62,20 @@ const PINK = '#F52B8C';
 function Hero() {
   return (
     <section style={{ backgroundColor: '#FFFFFF', paddingTop: 56, overflow: 'hidden' }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      {/*
+        Mobile  : flex-col — copy on top, mockup below (unchanged)
+        Desktop : flex-row — copy left ~46%, mockup right ~54%, fills viewport height
+      */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:min-h-[calc(100vh-56px)]">
 
-        {/* Copy — left-aligned */}
+        {/* ── LEFT: Copy ────────────────────────────────────────────────────── */}
+        {/*
+          Padding strategy — all via className so lg: breakpoint can override:
+          Mobile : pt-[52px] px-6 (52px top, 24px sides — identical to before)
+          Desktop: pt-0 pl-16 pr-10 xl:pl-24 (flex centering handles vertical)
+        */}
         <motion.div
-          style={{ padding: '52px 24px 0' }}
+          className="lg:w-[46%] lg:flex-shrink-0 pt-[52px] px-6 lg:pt-0 lg:pl-16 lg:pr-10 xl:pl-24"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
@@ -115,9 +124,14 @@ function Hero() {
           </Link>
         </motion.div>
 
-        {/* Supplied Nelsy product mockup — static image, not reconstructed in HTML */}
+        {/* ── RIGHT: Mockup ─────────────────────────────────────────────────── */}
+        {/*
+          mt-10 (40px) on mobile preserves the current gap below the copy block.
+          lg:mt-0 removes it on desktop (flex row, no vertical gap needed).
+          Image: w-full on mobile, capped to 700-800px on desktop, object-contain always.
+        */}
         <motion.div
-          style={{ marginTop: 40 }}
+          className="mt-10 lg:mt-0 lg:flex-1 lg:flex lg:items-center lg:justify-center"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.2 }}
@@ -125,8 +139,9 @@ function Hero() {
           <img
             src="/hero-mockup.png"
             alt="Nelsy booking page preview"
-            className="w-full h-auto object-contain mx-auto md:w-[70vw] lg:w-[62vw] xl:w-[58vw] md:max-w-[1050px]"
-            style={{ display: 'block' }}
+            className="block h-auto object-contain w-full mx-auto
+                       md:w-[70vw] md:max-w-[900px]
+                       lg:w-full lg:max-w-[700px] xl:max-w-[800px]"
             draggable={false}
           />
         </motion.div>
