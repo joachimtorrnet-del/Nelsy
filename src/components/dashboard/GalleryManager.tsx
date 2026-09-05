@@ -12,6 +12,7 @@ interface Props {
 export default function GalleryManager({ profileId, photos, onPhotosChange }: Props) {
   const [uploading, setUploading] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +22,7 @@ export default function GalleryManager({ profileId, photos, onPhotosChange }: Pr
     if (!toUpload.length) return;
 
     setUploading(true);
+    setUploadError(null);
     const newPhotos = [...photos];
     try {
       for (const file of toUpload) {
@@ -31,6 +33,8 @@ export default function GalleryManager({ profileId, photos, onPhotosChange }: Pr
       onPhotosChange(newPhotos);
     } catch (err) {
       console.error('Gallery upload error:', err);
+      const msg = err instanceof Error ? err.message : String(err);
+      setUploadError(msg);
     } finally {
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -39,11 +43,14 @@ export default function GalleryManager({ profileId, photos, onPhotosChange }: Pr
 
   const handleDelete = async (id: string) => {
     setDeletingId(id);
+    setUploadError(null);
     try {
       await deleteGalleryPhoto(id);
       onPhotosChange(photos.filter((p) => p.id !== id));
     } catch (err) {
       console.error('Gallery delete error:', err);
+      const msg = err instanceof Error ? err.message : String(err);
+      setUploadError(msg);
     } finally {
       setDeletingId(null);
     }
@@ -91,6 +98,9 @@ export default function GalleryManager({ profileId, photos, onPhotosChange }: Pr
       </div>
 
       <p className="text-xs text-gray-400 mt-2">{photos.length}/12 photos</p>
+      {uploadError && (
+        <p className="text-xs text-red-500 mt-2 break-all">{uploadError}</p>
+      )}
 
       <input
         ref={fileInputRef}
