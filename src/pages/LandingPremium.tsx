@@ -125,7 +125,8 @@ function Hero() {
           <img
             src="/hero-mockup.png"
             alt="Nelsy booking page preview"
-            style={{ display: 'block', width: '100%', objectFit: 'contain' }}
+            className="w-full h-auto object-contain mx-auto md:w-[70vw] lg:w-[62vw] xl:w-[58vw] md:max-w-[1050px]"
+            style={{ display: 'block' }}
             draggable={false}
           />
         </motion.div>
