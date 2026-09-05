@@ -76,8 +76,10 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
     return () => observer.disconnect();
   }, [isPreview]);
 
-  const featuredService = merchant.services.find((s) => s.is_featured) ?? merchant.services[0];
-  const restServices = merchant.services.filter((s) => s.id !== featuredService?.id);
+  const featuredService = merchant.services.find((s) => s.is_featured) ?? null;
+  const restServices = featuredService
+    ? merchant.services.filter((s) => s.id !== featuredService.id)
+    : merchant.services;
 
   return (
     <div
