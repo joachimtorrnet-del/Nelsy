@@ -252,8 +252,9 @@ export default function Preview({ profile }: { profile: Profile | null }) {
       await updateProfile(profile.id, { logo_url: url });
       setAvatarUrl(url);
       showSuccess('Profile photo updated!');
-    } catch {
-      showError('Failed to upload photo');
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : JSON.stringify(err);
+      showError(`Avatar upload failed: ${msg}`);
     } finally {
       setUploadingAvatar(false);
       if (avatarInputRef.current) avatarInputRef.current.value = '';
@@ -269,8 +270,9 @@ export default function Preview({ profile }: { profile: Profile | null }) {
       await updateProfile(profile.id, { cover_url: url });
       setCoverUrl(url);
       showSuccess('Cover photo updated!');
-    } catch {
-      showError('Failed to upload cover');
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : JSON.stringify(err);
+      showError(`Cover upload failed: ${msg}`);
     } finally {
       setUploadingCover(false);
       if (coverInputRef.current) coverInputRef.current.value = '';
