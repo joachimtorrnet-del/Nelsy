@@ -100,7 +100,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
 
       {/* ── Gallery — StudioGallery manages its own insets ─────────── */}
       {photos.length > 0 && (
-        <StudioGallery photos={photos} textSecondary={theme.textSecondary} accent={accent} />
+        <StudioGallery photos={photos} textPrimary={theme.textPrimary} textSecondary={theme.textSecondary} accent={accent} />
       )}
 
       {/* ── Services ─────────────────────────────────────────── */}

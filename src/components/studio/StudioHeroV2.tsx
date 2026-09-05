@@ -1,6 +1,6 @@
 import type { RefObject } from 'react';
 import { motion } from 'framer-motion';
-import { Share2, Star } from 'lucide-react';
+import { Share2, Star, Globe } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 
@@ -22,6 +22,14 @@ function TikTokIcon() {
   );
 }
 
+function PinterestIcon() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 0 1 .083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/>
+    </svg>
+  );
+}
+
 function parseTikTok(raw: string): string {
   return raw.replace(/^https?:\/\/(www\.)?tiktok\.com\/@?/, '').replace(/^@/, '').split('?')[0];
 }
@@ -30,26 +38,44 @@ function parseTikTok(raw: string): string {
 
 function RatingRow({ rating, reviewCount, textPrimary }: { rating: number; reviewCount: number; textPrimary: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8 }}>
-      <div style={{ display: 'flex', gap: 2 }}>
-        {[1, 2, 3, 4, 5].map((s) => (
-          <Star
-            key={s}
-            size={12}
-            style={{
-              color: s <= Math.round(rating) ? '#FBBF24' : '#E5E7EB',
-              fill: s <= Math.round(rating) ? '#FBBF24' : '#E5E7EB',
-            }}
-          />
-        ))}
-      </div>
-      <span style={{ fontSize: 13, fontWeight: 700, color: textPrimary }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 6 }}>
+      <Star size={14} style={{ color: '#FBBF24', fill: '#FBBF24' }} />
+      <span style={{ fontSize: 14, fontWeight: 700, color: textPrimary, lineHeight: 1 }}>
         {rating.toFixed(1)}
       </span>
       <span style={{ fontSize: 13, color: '#9CA3AF' }}>
-        · {reviewCount.toLocaleString('en')} {reviewCount === 1 ? 'review' : 'reviews'}
+        ({reviewCount.toLocaleString('en')} reviews)
       </span>
     </div>
+  );
+}
+
+// ── Social button ─────────────────────────────────────────────────────────────
+
+function SocialBtn({
+  href, label, isPreview, theme, children,
+}: {
+  href: string; label: string; isPreview: boolean; theme: NelsyTheme; children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={isPreview ? '#' : href}
+      target={isPreview ? undefined : '_blank'}
+      rel="noopener noreferrer"
+      aria-label={label}
+      onClick={isPreview ? (e) => e.preventDefault() : undefined}
+      style={{
+        width: 38, height: 38, borderRadius: '50%',
+        border: `1px solid ${theme.cardBorder}`,
+        backgroundColor: theme.cardBg,
+        color: theme.textPrimary,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        textDecoration: 'none',
+        flexShrink: 0,
+      }}
+    >
+      {children}
+    </a>
   );
 }
 
@@ -60,7 +86,6 @@ interface Props {
   theme: NelsyTheme;
   isPreview?: boolean;
   ctaRef?: RefObject<HTMLDivElement | null>;
-  /** cover_url or first gallery photo — makes the hero visual when real work exists */
   heroPhotoUrl?: string;
 }
 
@@ -69,11 +94,12 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
   const accentText = theme.accentText;
   const tiktokHandle = merchant.tiktok ? parseTikTok(merchant.tiktok) : undefined;
 
-  // Larger cover when real photo exists (portfolio image or explicit cover)
   const hasPhoto = !!heroPhotoUrl;
   const COVER_H = hasPhoto ? 260 : 140;
   const AVATAR_SIZE = 96;
-  const OVERLAP = AVATAR_SIZE / 2; // 48px
+  const OVERLAP = AVATAR_SIZE / 2;
+
+  const hasSocials = !!(merchant.instagram || tiktokHandle || merchant.pinterest_url || merchant.website_url);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -107,7 +133,6 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
           flexShrink: 0,
         }}
       >
-        {/* Bottom fade overlay on real photos — keeps avatar transition clean */}
         {hasPhoto && (
           <div
             style={{
@@ -186,86 +211,64 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
         </div>
 
         {/* Name */}
-        <h1
-          style={{
-            fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em',
-            lineHeight: 1.1, color: theme.textPrimary, margin: 0,
-          }}
-        >
+        <h1 style={{
+          fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em',
+          lineHeight: 1.1, color: theme.textPrimary, margin: 0,
+        }}>
           {merchant.salon_name}
         </h1>
 
-        {/* Specialty + location */}
+        {/* Specialty · Location */}
         {(merchant.specialty || merchant.location) && (
           <p style={{ fontSize: 13, color: theme.textSecondary, marginTop: 5, lineHeight: 1.4 }}>
             {[merchant.specialty, merchant.location].filter(Boolean).join(' · ')}
           </p>
         )}
 
+        {/* Rating */}
+        {merchant.rating && merchant.review_count && merchant.review_count > 0 && (
+          <RatingRow rating={merchant.rating} reviewCount={merchant.review_count} textPrimary={theme.textPrimary} />
+        )}
+
         {/* Bio */}
         {merchant.bio && (
-          <p
-            style={{
-              fontSize: 13, color: theme.textSecondary,
-              lineHeight: 1.55, marginTop: 7, maxWidth: 280,
-              overflow: 'hidden', display: '-webkit-box',
-              WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
-            }}
-          >
+          <p style={{
+            fontSize: 13, color: theme.textSecondary,
+            lineHeight: 1.55, marginTop: 8, maxWidth: 280,
+            overflow: 'hidden', display: '-webkit-box',
+            WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+          }}>
             {merchant.bio}
           </p>
         )}
 
-        {/* Rating — real data only */}
-        {merchant.rating && merchant.review_count && merchant.review_count > 0 && (
-          <RatingRow
-            rating={merchant.rating}
-            reviewCount={merchant.review_count}
-            textPrimary={theme.textPrimary}
-          />
-        )}
-
         {/* Social links */}
-        {(merchant.instagram || tiktokHandle) && (
+        {hasSocials && (
           <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
             {merchant.instagram && (
-              <a
-                href={isPreview ? '#' : `https://instagram.com/${merchant.instagram}`}
-                target={isPreview ? undefined : '_blank'}
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                style={{
-                  width: 36, height: 36, borderRadius: '50%',
-                  border: `1px solid ${theme.cardBorder}`,
-                  backgroundColor: theme.cardBg, color: theme.textPrimary,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  textDecoration: 'none',
-                }}
-              >
+              <SocialBtn href={`https://instagram.com/${merchant.instagram}`} label="Instagram" isPreview={isPreview} theme={theme}>
                 <InstagramIcon />
-              </a>
+              </SocialBtn>
             )}
             {tiktokHandle && (
-              <a
-                href={isPreview ? '#' : `https://tiktok.com/@${tiktokHandle}`}
-                target={isPreview ? undefined : '_blank'}
-                rel="noopener noreferrer"
-                aria-label="TikTok"
-                style={{
-                  width: 36, height: 36, borderRadius: '50%',
-                  border: `1px solid ${theme.cardBorder}`,
-                  backgroundColor: theme.cardBg, color: theme.textPrimary,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  textDecoration: 'none',
-                }}
-              >
+              <SocialBtn href={`https://tiktok.com/@${tiktokHandle}`} label="TikTok" isPreview={isPreview} theme={theme}>
                 <TikTokIcon />
-              </a>
+              </SocialBtn>
+            )}
+            {merchant.pinterest_url && (
+              <SocialBtn href={merchant.pinterest_url} label="Pinterest" isPreview={isPreview} theme={theme}>
+                <PinterestIcon />
+              </SocialBtn>
+            )}
+            {merchant.website_url && (
+              <SocialBtn href={merchant.website_url} label="Website" isPreview={isPreview} theme={theme}>
+                <Globe size={16} />
+              </SocialBtn>
             )}
           </div>
         )}
 
-        {/* Primary Book CTA — observed by StickyBookCTA */}
+        {/* Primary Book CTA */}
         <div ref={ctaRef} style={{ width: '100%', marginTop: 20 }}>
           <motion.button
             whileTap={isPreview ? {} : { scale: 0.97 }}

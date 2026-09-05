@@ -1,28 +1,12 @@
 import { motion } from 'framer-motion';
 import type { Variants } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
 import type { Service } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { formatCurrency } from '@/lib/utils';
 import { useBookingStore } from '@/store/bookingStore';
 
-// ── Thumbnail — only renders when real image exists ───────────────────────────
-
-function Thumbnail({ src, name }: { src?: string; name: string }) {
-  if (!src) return null;
-  return (
-    <img
-      src={src}
-      alt={name}
-      loading="lazy"
-      style={{
-        width: 52, height: 52, borderRadius: 11,
-        objectFit: 'cover', flexShrink: 0,
-      }}
-    />
-  );
-}
-
-// ── Service card ──────────────────────────────────────────────────────────────
+// ── Service row ───────────────────────────────────────────────────────────────
 
 interface CardProps {
   service: Service;
@@ -33,10 +17,6 @@ interface CardProps {
 function ServiceCard({ service, theme, isPreview }: CardProps) {
   const { openModal } = useBookingStore();
   const accent = theme.defaultAccent;
-  const accentText = theme.accentText ?? '#FFFFFF';
-  const hasImage = !!service.image_url;
-  const chargeNow = service.deposit > 0 ? service.deposit : service.price;
-  const hasDeposit = service.deposit > 0;
 
   const handleBook = () => {
     if (isPreview) return;
@@ -45,87 +25,65 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
 
   return (
     <div
+      onClick={handleBook}
+      role={isPreview ? undefined : 'button'}
+      tabIndex={isPreview ? undefined : 0}
       style={{
+        display: 'flex', alignItems: 'center', gap: 12,
+        padding: '12px 12px',
         backgroundColor: theme.cardBg,
         border: `1px solid ${theme.cardBorder}`,
         borderRadius: 16,
         boxShadow: '0 1px 8px rgba(0,0,0,0.04)',
+        cursor: isPreview ? 'default' : 'pointer',
         backdropFilter: theme.cardBlur,
         WebkitBackdropFilter: theme.cardBlur,
-        overflow: 'hidden',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 14px 14px 16px' }}>
+      {/* Square thumbnail — always rendered */}
+      <div style={{
+        width: 76, height: 76, borderRadius: 12,
+        overflow: 'hidden', flexShrink: 0,
+        backgroundColor: `${accent}10`,
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}>
+        {service.image_url ? (
+          <img
+            src={service.image_url}
+            alt={service.name}
+            loading="lazy"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        ) : (
+          <span style={{ fontSize: 26 }}>💅</span>
+        )}
+      </div>
 
-        {/* Real image only — no fake placeholder */}
-        {hasImage && <Thumbnail src={service.image_url} name={service.name} />}
-
-        {/* Info */}
-        <div style={{ flex: 1, minWidth: 0 }}>
+      {/* Info */}
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <p style={{
+          fontSize: 15, fontWeight: 700, color: theme.textPrimary,
+          margin: '0 0 3px',
+          overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+        }}>
+          {service.name}
+        </p>
+        {service.description && (
           <p style={{
-            fontSize: 15, fontWeight: 700, color: theme.textPrimary,
-            margin: 0, lineHeight: 1.3,
+            fontSize: 12, color: theme.textSecondary, margin: '0 0 5px',
             overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
           }}>
-            {service.name}
+            {service.description}
           </p>
-
-          {service.description && (
-            <p style={{
-              fontSize: 12, color: theme.textSecondary, margin: '2px 0 0',
-              overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
-            }}>
-              {service.description}
-            </p>
-          )}
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4, flexWrap: 'wrap' }}>
-            <span style={{ fontSize: 12, color: theme.textSecondary }}>
-              {service.duration} min
-            </span>
-            {hasDeposit && (
-              <>
-                <span style={{ fontSize: 10, color: theme.textSecondary }}>·</span>
-                <span style={{
-                  fontSize: 11, fontWeight: 600, color: accent,
-                  backgroundColor: `${accent}12`, borderRadius: 5,
-                  padding: '1px 6px',
-                }}>
-                  Deposit {formatCurrency(service.deposit)}
-                </span>
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Price + CTA */}
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, flexShrink: 0 }}>
-          <span style={{ fontSize: 17, fontWeight: 800, color: theme.textPrimary, lineHeight: 1 }}>
-            {formatCurrency(service.price)}
-          </span>
-          <button
-            onClick={handleBook}
-            disabled={isPreview}
-            aria-label={`Book ${service.name}`}
-            style={{
-              backgroundColor: accent,
-              color: accentText,
-              borderRadius: 99,
-              border: 'none',
-              padding: '7px 16px',
-              fontSize: 13,
-              fontWeight: 700,
-              cursor: isPreview ? 'default' : 'pointer',
-              opacity: isPreview ? 0.5 : 1,
-              transition: 'opacity 0.15s',
-              whiteSpace: 'nowrap',
-              minHeight: 32,
-            }}
-          >
-            {hasDeposit ? `Book · ${formatCurrency(chargeNow)}` : 'Book →'}
-          </button>
-        </div>
+        )}
+        <p style={{ fontSize: 12, color: theme.textSecondary, margin: 0 }}>
+          {service.duration} min
+          <span style={{ margin: '0 5px', opacity: 0.4 }}>|</span>
+          <span style={{ fontWeight: 700, color: theme.textPrimary }}>{formatCurrency(service.price)}</span>
+        </p>
       </div>
+
+      <ChevronRight size={18} style={{ color: theme.textSecondary, flexShrink: 0, opacity: 0.4 }} />
     </div>
   );
 }
@@ -155,8 +113,8 @@ export function StudioServiceList({ services, theme, isPreview = false }: Props)
   return (
     <section style={{ paddingBottom: 8 }}>
       <p style={{
-        fontSize: 11, fontWeight: 600, letterSpacing: '0.02em',
-        color: theme.textSecondary, marginBottom: 10,
+        fontSize: 17, fontWeight: 800, color: theme.textPrimary,
+        letterSpacing: '-0.02em', margin: '0 0 12px',
       }}>
         All services
       </p>

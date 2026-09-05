@@ -130,11 +130,12 @@ function Lightbox({ photos, index, onClose, onPrev, onNext }: LightboxProps) {
 
 interface Props {
   photos: GalleryPhoto[];
+  textPrimary?: string;
   textSecondary?: string;
   accent?: string;
 }
 
-export function StudioGallery({ photos, textSecondary = '#9CA3AF', accent = '#F52B8C' }: Props) {
+export function StudioGallery({ photos, textPrimary = '#1A1A1A', accent = '#F52B8C' }: Props) {
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
   const openLightbox = useCallback((i: number) => setLightboxIdx(i), []);
@@ -156,12 +157,10 @@ export function StudioGallery({ photos, textSecondary = '#9CA3AF', accent = '#F5
             marginBottom: 12, padding: '0 16px',
           }}
         >
-          <p
-            style={{
-              fontSize: 11, fontWeight: 600, letterSpacing: '0.02em',
-              color: textSecondary,
-            }}
-          >
+          <p style={{
+            fontSize: 17, fontWeight: 800, color: textPrimary,
+            letterSpacing: '-0.02em', margin: 0,
+          }}>
             My work
           </p>
           {photos.length > 4 && (
@@ -201,8 +200,8 @@ export function StudioGallery({ photos, textSecondary = '#9CA3AF', accent = '#F5
               whileTap={{ scale: 0.97 }}
               style={{
                 flexShrink: 0,
-                width: 140,
-                height: 187,
+                width: 120,
+                height: 120,
                 borderRadius: 14,
                 overflow: 'hidden',
                 backgroundColor: '#f0ece8',
