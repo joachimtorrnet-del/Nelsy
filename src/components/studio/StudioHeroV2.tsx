@@ -71,7 +71,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
 
   // Larger cover when real photo exists (portfolio image or explicit cover)
   const hasPhoto = !!heroPhotoUrl;
-  const COVER_H = hasPhoto ? 280 : 180;
+  const COVER_H = hasPhoto ? 260 : 140;
   const AVATAR_SIZE = 96;
   const OVERLAP = AVATAR_SIZE / 2; // 48px
 

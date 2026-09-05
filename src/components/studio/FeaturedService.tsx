@@ -25,14 +25,6 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
 
   return (
     <section style={{ marginBottom: 28 }}>
-      {/* Section label — same style as other section labels */}
-      <p style={{
-        fontSize: 11, fontWeight: 600, letterSpacing: '0.02em',
-        color: theme.textSecondary, marginBottom: 10,
-      }}>
-        Popular
-      </p>
-
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -61,6 +53,21 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
                   background: 'linear-gradient(to top, rgba(0,0,0,0.58) 0%, rgba(0,0,0,0.02) 55%)',
                 }}
               />
+              {/* Most booked badge — top left on image */}
+              <div style={{ position: 'absolute', top: 14, left: 14, zIndex: 1 }}>
+                <span
+                  style={{
+                    fontSize: 10, fontWeight: 700, letterSpacing: '0.04em',
+                    color: 'rgba(255,255,255,0.92)',
+                    backgroundColor: 'rgba(255,255,255,0.18)',
+                    backdropFilter: 'blur(6px)',
+                    WebkitBackdropFilter: 'blur(6px)',
+                    borderRadius: 99, padding: '4px 10px',
+                  }}
+                >
+                  Most booked
+                </span>
+              </div>
               <div style={{ position: 'absolute', bottom: 18, left: 18, right: 18, zIndex: 1 }}>
                 <h3
                   style={{
@@ -138,13 +145,13 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
             <span
               style={{
                 display: 'inline-block',
-                fontSize: 11, fontWeight: 700, letterSpacing: '0.04em',
-                color: accent, backgroundColor: `${accent}14`,
+                fontSize: 10, fontWeight: 700, letterSpacing: '0.04em',
+                color: accent, backgroundColor: `${accent}12`,
                 borderRadius: 99, padding: '4px 12px',
                 marginBottom: 14,
               }}
             >
-              Popular
+              Most booked
             </span>
 
             <h3
