@@ -18,6 +18,7 @@ function dbServiceToService(s: DbService): Service {
     deposit: Number(s.deposit_amount),
     category: s.category ?? undefined,
     image_url: s.image_url ?? undefined,
+    is_featured: s.is_featured,
   };
 }
 
@@ -29,10 +30,15 @@ function dbProfileToMerchant(profile: DbProfile, services: DbService[]): Merchan
     name: profile.full_name,
     bio: profile.bio ?? '',
     logo_url: profile.logo_url ?? undefined,
+    cover_url: profile.cover_url ?? undefined,
+    specialty: profile.specialty ?? undefined,
+    location: profile.location ?? undefined,
     instagram: profile.instagram_url
       ? profile.instagram_url.replace(/^https?:\/\/(www\.)?instagram\.com\//, '')
       : undefined,
     tiktok: profile.tiktok_url ?? undefined,
+    pinterest_url: profile.pinterest_url ?? undefined,
+    website_url: profile.website_url ?? undefined,
     color_accent: profile.color_accent ?? undefined,
     theme_preset: profile.theme_preset ?? 'soft',
     services: services.map(dbServiceToService),

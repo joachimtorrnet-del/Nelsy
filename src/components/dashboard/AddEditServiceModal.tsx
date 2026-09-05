@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
-import { createService, updateService } from '../../lib/supabase-queries';
+import { useState, useEffect, useRef } from 'react';
+import { X, Star, Loader2 } from 'lucide-react';
+import { createService, updateService, uploadImage } from '../../lib/supabase-queries';
 import { validatePrice, sanitizeInput } from '../../utils/validation';
 
 interface Service {
@@ -12,6 +12,8 @@ interface Service {
   price_total: number;
   deposit_amount: number;
   active: boolean;
+  image_url?: string;
+  is_featured?: boolean;
 }
 
 interface Props {
@@ -23,14 +25,7 @@ interface Props {
 }
 
 const CATEGORIES = [
-  'Nails',
-  'Hair',
-  'Makeup',
-  'Lashes',
-  'Brows',
-  'Skin Care',
-  'Massage',
-  'Other',
+  'Nails', 'Hair', 'Makeup', 'Lashes', 'Brows', 'Skin Care', 'Massage', 'Other',
 ];
 
 const DURATIONS = [
@@ -56,10 +51,14 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
     price_total: '',
     deposit_amount: '',
     active: true,
+    is_featured: false,
   });
 
+  const [imageUrl, setImageUrl] = useState('');
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(false);
+  const imageFileRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'unset';
@@ -83,7 +82,9 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
         price_total: service.price_total.toString(),
         deposit_amount: service.deposit_amount.toString(),
         active: service.active,
+        is_featured: service.is_featured ?? false,
       });
+      setImageUrl(service.image_url ?? '');
     } else {
       setFormData({
         name: '',
@@ -93,10 +94,27 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
         price_total: '',
         deposit_amount: '',
         active: true,
+        is_featured: false,
       });
+      setImageUrl('');
     }
     setErrors({});
   }, [service, isOpen]);
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingImage(true);
+    try {
+      const url = await uploadImage(file, 'services');
+      setImageUrl(url);
+    } catch {
+      setErrors((prev) => ({ ...prev, submit: 'Failed to upload image. Please try again.' }));
+    } finally {
+      setUploadingImage(false);
+      if (imageFileRef.current) imageFileRef.current.value = '';
+    }
+  };
 
   const handleSubmit = async () => {
     const newErrors: Record<string, string> = {};
@@ -132,6 +150,8 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
         price_total: parseFloat(formData.price_total),
         deposit_amount: formData.deposit_amount ? parseFloat(formData.deposit_amount) : 0,
         active: formData.active,
+        is_featured: formData.is_featured,
+        image_url: imageUrl || null,
       };
 
       if (service?.id) {
@@ -166,10 +186,7 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
           <h2 className="text-xl font-bold text-gray-900">
             {service ? 'Edit Service' : 'Add Service'}
           </h2>
-          <button
-            onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition"
-          >
+          <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition">
             <X className="w-5 h-5 text-gray-500" />
           </button>
         </div>
@@ -178,9 +195,7 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
         <div className="p-6 space-y-4">
           {/* Name */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Service Name *
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Service Name *</label>
             <input
               type="text"
               value={formData.name}
@@ -195,9 +210,7 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
 
           {/* Description */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
             <textarea
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -207,11 +220,49 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
             />
           </div>
 
+          {/* Service photo */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Service photo (optional)</label>
+            <div className="flex items-center gap-3">
+              <div className="w-16 h-16 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center">
+                {imageUrl
+                  ? <img src={imageUrl} alt="service preview" className="w-full h-full object-cover" />
+                  : <span className="text-2xl">💅</span>}
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => imageFileRef.current?.click()}
+                  disabled={uploadingImage}
+                  className="flex items-center gap-1.5 px-3 py-2 border border-gray-300 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 transition disabled:opacity-50"
+                >
+                  {uploadingImage
+                    ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Uploading…</>
+                    : 'Upload photo'}
+                </button>
+                {imageUrl && (
+                  <button
+                    type="button"
+                    onClick={() => setImageUrl('')}
+                    className="px-3 py-2 text-gray-400 text-sm hover:text-gray-600 transition"
+                  >
+                    Remove
+                  </button>
+                )}
+              </div>
+              <input
+                ref={imageFileRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+            </div>
+          </div>
+
           {/* Category */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Category *
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Category *</label>
             <select
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
@@ -225,9 +276,7 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
 
           {/* Duration */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Duration *
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Duration *</label>
             <select
               value={formData.duration_minutes}
               onChange={(e) => setFormData({ ...formData, duration_minutes: parseInt(e.target.value) })}
@@ -241,9 +290,7 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
 
           {/* Price */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Price *
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Price *</label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">€</span>
               <input
@@ -263,9 +310,7 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
 
           {/* Deposit */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Deposit (optional)
-            </label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Deposit (optional)</label>
             <div className="relative">
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500">€</span>
               <input
@@ -292,15 +337,26 @@ export default function AddEditServiceModal({ isOpen, onClose, onSuccess, servic
             </div>
             <button
               onClick={() => setFormData({ ...formData, active: !formData.active })}
-              className={`relative w-14 h-8 rounded-full transition ${
-                formData.active ? 'bg-green-500' : 'bg-gray-300'
-              }`}
+              className={`relative w-14 h-8 rounded-full transition ${formData.active ? 'bg-green-500' : 'bg-gray-300'}`}
             >
-              <div
-                className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform ${
-                  formData.active ? 'translate-x-6' : ''
-                }`}
-              />
+              <div className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform ${formData.active ? 'translate-x-6' : ''}`} />
+            </button>
+          </div>
+
+          {/* Most booked / Featured Toggle */}
+          <div className="flex items-center justify-between p-4 bg-amber-50 rounded-xl border border-amber-100">
+            <div>
+              <p className="font-medium text-gray-900 flex items-center gap-1.5">
+                <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                Most booked
+              </p>
+              <p className="text-sm text-gray-500">Highlight as your featured service</p>
+            </div>
+            <button
+              onClick={() => setFormData({ ...formData, is_featured: !formData.is_featured })}
+              className={`relative w-14 h-8 rounded-full transition ${formData.is_featured ? 'bg-amber-500' : 'bg-gray-300'}`}
+            >
+              <div className={`absolute top-1 left-1 w-6 h-6 bg-white rounded-full transition-transform ${formData.is_featured ? 'translate-x-6' : ''}`} />
             </button>
           </div>
 

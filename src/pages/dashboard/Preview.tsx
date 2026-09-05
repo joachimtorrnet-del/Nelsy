@@ -1,13 +1,20 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
-import { Share2, Eye, Plus, Pencil, Check, ExternalLink } from 'lucide-react';
+import { Share2, Eye, Plus, Pencil, Check, ExternalLink, Star, Camera, Loader2 } from 'lucide-react';
 import { THEMES } from '../../lib/themes';
 import Toast from '../../components/dashboard/Toast';
 import ConfirmDialog from '../../components/dashboard/ConfirmDialog';
 import AddEditServiceModal from '../../components/dashboard/AddEditServiceModal';
+import GalleryManager from '../../components/dashboard/GalleryManager';
 import { useToast } from '../../hooks/useToast';
-import { getServices, deleteService, toggleServiceActive, updateProfile, uploadImage } from '../../lib/supabase-queries';
+import {
+  getServices, deleteService, toggleServiceActive, updateProfile, uploadImage,
+  getGalleryPhotos, setFeaturedService, clearFeaturedService,
+} from '../../lib/supabase-queries';
+import type { GalleryPhoto } from '../../lib/supabase-queries';
 import { PublicStudioView } from '../../components/studio/PublicStudioView';
 import type { Merchant, Service } from '../../types';
+
+// ── Types ─────────────────────────────────────────────────────────────────────
 
 interface Profile {
   id?: string;
@@ -19,8 +26,10 @@ interface Profile {
   color_accent?: string;
   theme_preset?: string;
   bio?: string;
+  cover_url?: string;
+  specialty?: string;
+  location?: string;
 }
-
 
 interface DbService {
   id: string;
@@ -34,18 +43,32 @@ interface DbService {
   duration_minutes?: number;
   active: boolean;
   image_url?: string;
+  is_featured?: boolean;
 }
 
-type ActiveTab = 'studio' | 'services' | 'customize';
+interface ContentForm {
+  full_name: string;
+  specialty: string;
+  location: string;
+  bio: string;
+  instagram_url: string;
+  tiktok_url: string;
+}
+
+interface DesignForm {
+  color_accent: string;
+  theme_preset: string;
+}
+
+type ActiveTab = 'preview' | 'content' | 'services' | 'design';
 
 // ── Live iPhone bezel preview ─────────────────────────────────────────────────
 
 interface LivePhonePreviewProps {
-  customForm: {
-    full_name: string; bio: string; instagram_url: string; tiktok_url: string;
-    color_accent: string; theme_preset: string;
-  };
+  contentForm: ContentForm;
+  designForm: DesignForm;
   avatarUrl: string;
+  coverUrl: string;
   activeServices: DbService[];
   profileId?: string;
   profileSlug?: string;
@@ -54,7 +77,8 @@ interface LivePhonePreviewProps {
 }
 
 function LivePhonePreview({
-  customForm, avatarUrl, activeServices, profileId, profileSlug,
+  contentForm, designForm, avatarUrl, coverUrl,
+  activeServices, profileId, profileSlug,
   getServicePrice, getServiceDuration,
 }: LivePhonePreviewProps) {
   const previewMerchant: Merchant = useMemo(() => {
@@ -67,35 +91,37 @@ function LivePhonePreview({
       deposit: s.deposit_amount ?? 0,
       category: s.category,
       image_url: s.image_url,
+      is_featured: s.is_featured ?? false,
     }));
 
     return {
       id: profileId ?? 'preview',
       slug: profileSlug ?? 'preview',
-      salon_name: customForm.full_name || 'Your Studio',
-      name: customForm.full_name || 'Your Studio',
-      bio: customForm.bio || '',
+      salon_name: contentForm.full_name || 'Your Studio',
+      name: contentForm.full_name || 'Your Studio',
+      bio: contentForm.bio || '',
       logo_url: avatarUrl || undefined,
-      instagram: customForm.instagram_url.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\/?/, '') || undefined,
-      tiktok: customForm.tiktok_url || undefined,
-      color_accent: customForm.color_accent,
-      theme_preset: customForm.theme_preset,
+      cover_url: coverUrl || undefined,
+      specialty: contentForm.specialty || undefined,
+      location: contentForm.location || undefined,
+      instagram: contentForm.instagram_url
+        ? contentForm.instagram_url.replace(/^@/, '').replace(/^https?:\/\/(www\.)?instagram\.com\/?/, '')
+        : undefined,
+      tiktok: contentForm.tiktok_url || undefined,
+      color_accent: designForm.color_accent,
+      theme_preset: designForm.theme_preset,
       services: mappedServices,
     };
-  }, [customForm, avatarUrl, activeServices, profileId, profileSlug, getServicePrice, getServiceDuration]);
+  }, [contentForm, designForm, avatarUrl, coverUrl, activeServices, profileId, profileSlug, getServicePrice, getServiceDuration]);
 
   return (
     <div className="flex justify-center">
-      {/* Outer bezel */}
       <div className="relative" style={{ width: 240 }}>
         <div className="bg-gray-900 rounded-[44px] p-2.5 shadow-2xl shadow-gray-400/30">
-          {/* Dynamic island */}
           <div className="flex justify-center mb-1">
             <div className="w-20 h-5 bg-gray-900 rounded-full border-2 border-gray-800" />
           </div>
-          {/* Screen — 240px wide × 480px tall */}
           <div className="rounded-[36px] overflow-hidden" style={{ height: 480, position: 'relative' }}>
-            {/* Content renders at 480px wide, scaled 0.5 → fits in 240px; height 960px → 480px */}
             <div
               style={{
                 width: 480, height: 960,
@@ -109,64 +135,70 @@ function LivePhonePreview({
             </div>
           </div>
         </div>
-        {/* Reflection */}
         <div className="absolute inset-0 rounded-[44px] bg-gradient-to-tr from-transparent via-white/5 to-white/10 pointer-events-none" />
       </div>
     </div>
   );
 }
 
+// ── Main component ─────────────────────────────────────────────────────────────
+
 export default function Preview({ profile }: { profile: Profile | null }) {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('studio');
+  const [activeTab, setActiveTab] = useState<ActiveTab>('preview');
   const [services, setServices] = useState<DbService[]>([]);
   const [loading, setLoading] = useState(true);
+  const [galleryPhotos, setGalleryPhotos] = useState<GalleryPhoto[]>([]);
   const [showAddService, setShowAddService] = useState(false);
   const [editingService, setEditingService] = useState<DbService | null>(null);
   const [copied, setCopied] = useState(false);
-  const [savingProfile, setSavingProfile] = useState(false);
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [savingContent, setSavingContent] = useState(false);
+  const [savingDesign, setSavingDesign] = useState(false);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
+  const [uploadingCover, setUploadingCover] = useState(false);
+  const [settingFeatured, setSettingFeatured] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState(profile?.logo_url || '');
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [coverUrl, setCoverUrl] = useState(profile?.cover_url || '');
 
-  const [customForm, setCustomForm] = useState({
+  const avatarInputRef = useRef<HTMLInputElement>(null);
+  const coverInputRef = useRef<HTMLInputElement>(null);
+
+  const [contentForm, setContentForm] = useState<ContentForm>({
     full_name: profile?.full_name || '',
+    specialty: profile?.specialty || '',
+    location: profile?.location || '',
     bio: profile?.bio || '',
     instagram_url: profile?.instagram_url || '',
     tiktok_url: profile?.tiktok_url || '',
+  });
+
+  const [designForm, setDesignForm] = useState<DesignForm>({
     color_accent: profile?.color_accent || '#F52B8C',
     theme_preset: profile?.theme_preset || 'soft',
   });
 
+  // Re-sync when profile loads
   useEffect(() => {
     setAvatarUrl(profile?.logo_url || '');
-    setCustomForm({
+    setCoverUrl(profile?.cover_url || '');
+    setContentForm({
       full_name: profile?.full_name || '',
+      specialty: profile?.specialty || '',
+      location: profile?.location || '',
       bio: profile?.bio || '',
       instagram_url: profile?.instagram_url || '',
       tiktok_url: profile?.tiktok_url || '',
+    });
+    setDesignForm({
       color_accent: profile?.color_accent || '#F52B8C',
       theme_preset: profile?.theme_preset || 'soft',
     });
-  }, [profile?.full_name, profile?.bio, profile?.instagram_url, profile?.tiktok_url, profile?.color_accent, profile?.theme_preset, profile?.logo_url]);
+  }, [
+    profile?.full_name, profile?.specialty, profile?.location, profile?.bio,
+    profile?.instagram_url, profile?.tiktok_url, profile?.color_accent,
+    profile?.theme_preset, profile?.logo_url, profile?.cover_url,
+  ]);
 
   const { toast, showSuccess, showError, hideToast } = useToast();
-
-  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !profile?.id) return;
-    setUploadingPhoto(true);
-    try {
-      const url = await uploadImage(file, 'avatars');
-      await updateProfile(profile.id, { logo_url: url });
-      setAvatarUrl(url);
-      showSuccess('Photo updated!');
-    } catch {
-      showError('Failed to upload photo');
-    } finally {
-      setUploadingPhoto(false);
-      if (fileInputRef.current) fileInputRef.current.value = '';
-    }
-  };
 
   const [confirmDialog, setConfirmDialog] = useState<{
     isOpen: boolean; title: string; message: string; onConfirm: () => void;
@@ -193,7 +225,12 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   };
 
   useEffect(() => {
-    if (profile?.id) loadServices(); else setLoading(false);
+    if (profile?.id) {
+      void loadServices();
+      getGalleryPhotos(profile.id).then(setGalleryPhotos).catch(console.error);
+    } else {
+      setLoading(false);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profile?.id]);
 
@@ -204,6 +241,84 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     showSuccess('Link copied!');
   };
 
+  // ── Upload handlers ────────────────────────────────────────────
+
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !profile?.id) return;
+    setUploadingAvatar(true);
+    try {
+      const url = await uploadImage(file, 'avatars');
+      await updateProfile(profile.id, { logo_url: url });
+      setAvatarUrl(url);
+      showSuccess('Profile photo updated!');
+    } catch {
+      showError('Failed to upload photo');
+    } finally {
+      setUploadingAvatar(false);
+      if (avatarInputRef.current) avatarInputRef.current.value = '';
+    }
+  };
+
+  const handleCoverUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !profile?.id) return;
+    setUploadingCover(true);
+    try {
+      const url = await uploadImage(file, 'covers');
+      await updateProfile(profile.id, { cover_url: url });
+      setCoverUrl(url);
+      showSuccess('Cover photo updated!');
+    } catch {
+      showError('Failed to upload cover');
+    } finally {
+      setUploadingCover(false);
+      if (coverInputRef.current) coverInputRef.current.value = '';
+    }
+  };
+
+  // ── Save handlers ──────────────────────────────────────────────
+
+  const saveContent = async () => {
+    if (!profile?.id) return;
+    setSavingContent(true);
+    try {
+      const { error } = await updateProfile(profile.id, {
+        full_name: contentForm.full_name,
+        bio: contentForm.bio,
+        instagram_url: contentForm.instagram_url,
+        tiktok_url: contentForm.tiktok_url,
+        specialty: contentForm.specialty || null,
+        location: contentForm.location || null,
+      });
+      if (error) throw error;
+      showSuccess('Profile saved!');
+    } catch {
+      showError('Failed to save profile');
+    } finally {
+      setSavingContent(false);
+    }
+  };
+
+  const saveDesign = async () => {
+    if (!profile?.id) return;
+    setSavingDesign(true);
+    try {
+      const { error } = await updateProfile(profile.id, {
+        color_accent: designForm.color_accent,
+        theme_preset: designForm.theme_preset,
+      });
+      if (error) throw error;
+      showSuccess('Design saved!');
+    } catch {
+      showError('Failed to save design');
+    } finally {
+      setSavingDesign(false);
+    }
+  };
+
+  // ── Service handlers ───────────────────────────────────────────
+
   const handleDeleteService = (service: DbService) => {
     setConfirmDialog({
       isOpen: true,
@@ -213,7 +328,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
         try {
           await deleteService(service.id);
           showSuccess('Service deleted');
-          loadServices();
+          void loadServices();
         } catch { showError('Failed to delete service'); }
       },
     });
@@ -223,14 +338,32 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     try {
       await toggleServiceActive(service.id, !service.active);
       showSuccess(service.active ? 'Service hidden' : 'Service activated');
-      loadServices();
+      void loadServices();
     } catch { showError('Failed to update service'); }
   };
 
+  const handleToggleFeatured = async (service: DbService) => {
+    if (!profile?.id) return;
+    setSettingFeatured(service.id);
+    try {
+      if (service.is_featured) {
+        await clearFeaturedService(profile.id);
+        setServices((prev) => prev.map((s) => ({ ...s, is_featured: false })));
+      } else {
+        await setFeaturedService(profile.id, service.id);
+        setServices((prev) => prev.map((s) => ({ ...s, is_featured: s.id === service.id })));
+      }
+    } catch { showError('Failed to update featured service'); }
+    finally { setSettingFeatured(null); }
+  };
+
+  // ── Tabs ───────────────────────────────────────────────────────
+
   const tabs: { id: ActiveTab; label: string }[] = [
-    { id: 'studio', label: 'Studio' },
-    { id: 'services', label: `Services (${services.length})` },
-    { id: 'customize', label: 'Edit Design' },
+    { id: 'preview', label: 'Preview' },
+    { id: 'content', label: 'Content' },
+    { id: 'services', label: `Services${services.length ? ` (${services.length})` : ''}` },
+    { id: 'design', label: 'Design' },
   ];
 
   return (
@@ -242,7 +375,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 py-3.5 text-sm font-semibold transition-colors border-b-2 -mb-px ${
+            className={`flex-1 py-3.5 text-xs font-semibold transition-colors border-b-2 -mb-px ${
               activeTab === tab.id
                 ? 'text-gray-900 border-[#F52B8C]'
                 : 'text-gray-400 border-transparent'
@@ -253,10 +386,9 @@ export default function Preview({ profile }: { profile: Profile | null }) {
         ))}
       </div>
 
-      {/* ── STUDIO TAB ── */}
-      {activeTab === 'studio' && (
+      {/* ── PREVIEW TAB ────────────────────────────────────────── */}
+      {activeTab === 'preview' && (
         <div className="px-4 pt-5 space-y-5">
-
           {/* Store URL banner */}
           <div className="flex items-center gap-3 bg-gray-50 rounded-2xl px-4 py-3">
             <div className="flex-1 min-w-0">
@@ -269,14 +401,18 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                 copied ? 'bg-green-100 text-green-700' : 'bg-[#F52B8C] text-white hover:opacity-90'
               }`}
             >
-              {copied ? <><Check className="w-3 h-3" /> Copied!</> : <><Share2 className="w-3 h-3" /> Share</>}
+              {copied
+                ? <><Check className="w-3 h-3" /> Copied!</>
+                : <><Share2 className="w-3 h-3" /> Share</>}
             </button>
           </div>
 
-          {/* Live iPhone Preview */}
+          {/* Live phone preview */}
           <LivePhonePreview
-            customForm={customForm}
+            contentForm={contentForm}
+            designForm={designForm}
             avatarUrl={avatarUrl}
+            coverUrl={coverUrl}
             activeServices={activeServices}
             profileId={profile?.id}
             profileSlug={profile?.slug}
@@ -284,7 +420,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             getServiceDuration={getServiceDuration}
           />
 
-          {/* Action buttons */}
+          {/* Actions */}
           <div className="flex gap-3">
             <button
               onClick={copyLink}
@@ -316,7 +452,184 @@ export default function Preview({ profile }: { profile: Profile | null }) {
         </div>
       )}
 
-      {/* ── SERVICES TAB ── */}
+      {/* ── CONTENT TAB ────────────────────────────────────────── */}
+      {activeTab === 'content' && (
+        <div className="px-4 pt-5 space-y-5 pb-6">
+
+          {/* Photos section */}
+          <div>
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Photos</p>
+
+            {/* Cover photo */}
+            <div className="mb-3">
+              <label className="block text-xs font-semibold text-gray-500 mb-2">Cover photo</label>
+              <div
+                onClick={() => coverInputRef.current?.click()}
+                className="relative w-full rounded-2xl overflow-hidden cursor-pointer group"
+                style={{ height: 110 }}
+              >
+                {coverUrl ? (
+                  <>
+                    <img src={coverUrl} alt="cover" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                      <Camera className="w-6 h-6 text-white" />
+                    </div>
+                  </>
+                ) : (
+                  <div className="w-full h-full bg-gray-100 border-2 border-dashed border-gray-200 rounded-2xl flex flex-col items-center justify-center gap-1 group-hover:bg-gray-50 transition">
+                    <Camera className="w-5 h-5 text-gray-400" />
+                    <span className="text-xs text-gray-400 font-medium">Add cover photo</span>
+                  </div>
+                )}
+                {uploadingCover && (
+                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center rounded-2xl">
+                    <Loader2 className="w-6 h-6 text-white animate-spin" />
+                  </div>
+                )}
+              </div>
+              <input ref={coverInputRef} type="file" accept="image/*" className="hidden" onChange={handleCoverUpload} />
+            </div>
+
+            {/* Avatar */}
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 mb-2">Profile photo</label>
+              <div className="flex items-center gap-3">
+                <div
+                  className="w-14 h-14 rounded-full overflow-hidden border-2 border-white shadow-sm flex-shrink-0 flex items-center justify-center cursor-pointer"
+                  style={{ background: 'linear-gradient(135deg, #F52B8C, #E0167A)' }}
+                  onClick={() => avatarInputRef.current?.click()}
+                >
+                  {avatarUrl
+                    ? <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+                    : <span className="text-white font-bold text-xl">{initials}</span>}
+                </div>
+                <button
+                  onClick={() => avatarInputRef.current?.click()}
+                  disabled={uploadingAvatar}
+                  className="flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 transition disabled:opacity-50"
+                >
+                  {uploadingAvatar ? <><Loader2 className="w-3.5 h-3.5 animate-spin" />Uploading…</> : <><Pencil className="w-3.5 h-3.5" />Change photo</>}
+                </button>
+                <input ref={avatarInputRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarUpload} />
+              </div>
+            </div>
+          </div>
+
+          {/* Profile info */}
+          <div className="space-y-3">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Profile</p>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5">Studio name</label>
+              <input
+                type="text"
+                value={contentForm.full_name}
+                onChange={(e) => setContentForm((f) => ({ ...f, full_name: e.target.value }))}
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+                placeholder="Your Studio Name"
+              />
+            </div>
+
+            <div className="flex gap-3">
+              <div className="flex-1">
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5">Specialty</label>
+                <input
+                  type="text"
+                  value={contentForm.specialty}
+                  onChange={(e) => setContentForm((f) => ({ ...f, specialty: e.target.value }))}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+                  placeholder="Nail Artist"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-xs font-semibold text-gray-500 mb-1.5">Location</label>
+                <input
+                  type="text"
+                  value={contentForm.location}
+                  onChange={(e) => setContentForm((f) => ({ ...f, location: e.target.value }))}
+                  className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+                  placeholder="Paris 9e"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-gray-500 mb-1.5">Bio</label>
+              <textarea
+                value={contentForm.bio}
+                onChange={(e) => setContentForm((f) => ({ ...f, bio: e.target.value }))}
+                rows={2}
+                maxLength={160}
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition resize-none"
+                placeholder="Gel & nail art specialist · 5+ years"
+              />
+              <p className="text-right text-[10px] text-gray-300 mt-1">{contentForm.bio.length}/160</p>
+            </div>
+          </div>
+
+          {/* Social links */}
+          <div className="space-y-3">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Social Links</p>
+
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">IG</div>
+              <input
+                type="text"
+                value={contentForm.instagram_url}
+                onChange={(e) => setContentForm((f) => ({ ...f, instagram_url: e.target.value }))}
+                placeholder="@your_instagram"
+                className="flex-1 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+              />
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-black rounded-xl flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">TT</div>
+              <input
+                type="text"
+                value={contentForm.tiktok_url}
+                onChange={(e) => setContentForm((f) => ({ ...f, tiktok_url: e.target.value }))}
+                placeholder="@your_tiktok"
+                className="flex-1 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+              />
+            </div>
+          </div>
+
+          {/* Portfolio gallery */}
+          <div className="space-y-3">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Portfolio</p>
+            <p className="text-xs text-gray-400">Add your best work — shown as a scrollable gallery on your page.</p>
+            {profile?.id ? (
+              <GalleryManager
+                profileId={profile.id}
+                photos={galleryPhotos}
+                onPhotosChange={setGalleryPhotos}
+              />
+            ) : (
+              <p className="text-sm text-gray-400 py-4 text-center">Connect your Nelsy account to manage your portfolio.</p>
+            )}
+          </div>
+
+          <button
+            disabled={savingContent}
+            onClick={saveContent}
+            className="w-full py-4 bg-[#F52B8C] text-white rounded-2xl font-bold text-base hover:opacity-90 active:scale-[0.98] transition shadow-md shadow-[#F52B8C]/25 disabled:opacity-50"
+          >
+            {savingContent ? 'Saving…' : 'Save Profile'}
+          </button>
+
+          <a
+            href={`/${slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full py-3 text-[#F52B8C] text-sm font-semibold"
+          >
+            <Eye className="w-4 h-4" />
+            View live store
+          </a>
+        </div>
+      )}
+
+      {/* ── SERVICES TAB ───────────────────────────────────────── */}
       {activeTab === 'services' && (
         <div className="px-4 pt-5 space-y-3">
           {loading ? (
@@ -339,14 +652,16 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                   <div className="w-14 h-14 rounded-xl bg-gray-200 flex items-center justify-center flex-shrink-0 overflow-hidden">
                     {service.image_url
                       ? <img src={service.image_url} alt={service.name} className="w-full h-full object-cover" />
-                      : <span className="text-2xl">💅</span>
-                    }
+                      : <span className="text-2xl">💅</span>}
                   </div>
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2 mb-0.5">
-                      <p className="font-bold text-gray-900 leading-tight">{service.name}</p>
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <p className="font-bold text-gray-900 leading-tight truncate">{service.name}</p>
+                      {service.is_featured && (
+                        <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 flex-shrink-0" />
+                      )}
                     </div>
                     {service.description && (
                       <p className="text-xs text-gray-400 truncate mb-1">{service.description}</p>
@@ -366,6 +681,20 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                   >
                     <Pencil className="w-3 h-3" />
                     Edit
+                  </button>
+                  <button
+                    onClick={() => handleToggleFeatured(service)}
+                    disabled={settingFeatured === service.id}
+                    className={`flex-1 py-2 rounded-xl text-xs font-semibold transition border flex items-center justify-center gap-1 ${
+                      service.is_featured
+                        ? 'bg-amber-50 text-amber-700 border-amber-200'
+                        : 'bg-white text-gray-500 border-gray-200 hover:border-amber-200 hover:text-amber-600'
+                    }`}
+                  >
+                    {settingFeatured === service.id
+                      ? <Loader2 className="w-3 h-3 animate-spin" />
+                      : <Star className={`w-3 h-3 ${service.is_featured ? 'fill-amber-500 text-amber-500' : ''}`} />}
+                    {service.is_featured ? 'Featured' : 'Feature'}
                   </button>
                   <button
                     onClick={() => handleToggleActive(service)}
@@ -398,8 +727,8 @@ export default function Preview({ profile }: { profile: Profile | null }) {
         </div>
       )}
 
-      {/* ── EDIT DESIGN TAB ── */}
-      {activeTab === 'customize' && (
+      {/* ── DESIGN TAB ─────────────────────────────────────────── */}
+      {activeTab === 'design' && (
         <div className="px-4 pt-5 space-y-5 pb-6">
 
           {/* Templates */}
@@ -407,21 +736,18 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Template</p>
             <div className="grid grid-cols-5 gap-2">
               {Object.values(THEMES).map((t) => {
-                const selected = customForm.theme_preset === t.id;
+                const selected = designForm.theme_preset === t.id;
                 return (
                   <button
                     key={t.id}
-                    onClick={() => setCustomForm((f) => ({ ...f, theme_preset: t.id, color_accent: t.defaultAccent }))}
+                    onClick={() => setDesignForm((f) => ({ ...f, theme_preset: t.id, color_accent: t.defaultAccent }))}
                     className={`relative rounded-2xl overflow-hidden transition-all ${selected ? 'ring-2 ring-[#F52B8C] ring-offset-2' : 'ring-1 ring-gray-200'}`}
                   >
-                    {/* Mini preview header */}
                     <div className="h-14" style={{ background: t.headerGradient }} />
-                    {/* Mini avatar dot */}
                     <div
                       className="absolute top-2 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full border-2 border-white"
                       style={{ backgroundColor: t.defaultAccent }}
                     />
-                    {/* Label */}
                     <div className="py-1.5 text-center" style={{ backgroundColor: t.pageBg }}>
                       <p className="text-[10px] font-bold truncate px-1" style={{ color: t.textPrimary }}>
                         {t.name}
@@ -438,23 +764,23 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             </div>
           </div>
 
-          {/* Accent Color */}
+          {/* Accent color */}
           <div>
             <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Accent Color</p>
             <div className="flex items-center gap-3">
               <div
                 className="w-9 h-9 rounded-xl shadow-sm flex-shrink-0"
-                style={{ background: customForm.color_accent }}
+                style={{ background: designForm.color_accent }}
               />
               <div className="flex gap-2 flex-wrap">
                 {['#F52B8C', '#9333EA', '#3B82F6', '#E0024A', '#8B6343', '#059669'].map((color) => (
                   <button
                     key={color}
-                    onClick={() => setCustomForm((f) => ({ ...f, color_accent: color }))}
+                    onClick={() => setDesignForm((f) => ({ ...f, color_accent: color }))}
                     className="w-7 h-7 rounded-full transition hover:scale-110"
                     style={{
                       background: color,
-                      outline: customForm.color_accent === color ? `3px solid ${color}` : '3px solid transparent',
+                      outline: designForm.color_accent === color ? `3px solid ${color}` : '3px solid transparent',
                       outlineOffset: '2px',
                     }}
                   />
@@ -462,8 +788,8 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                 <label className="w-7 h-7 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-gray-400 transition overflow-hidden">
                   <input
                     type="color"
-                    value={customForm.color_accent}
-                    onChange={(e) => setCustomForm((f) => ({ ...f, color_accent: e.target.value }))}
+                    value={designForm.color_accent}
+                    onChange={(e) => setDesignForm((f) => ({ ...f, color_accent: e.target.value }))}
                     className="opacity-0 absolute w-1 h-1"
                   />
                   <span className="text-gray-400 text-xs font-bold">+</span>
@@ -472,100 +798,12 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             </div>
           </div>
 
-          {/* Profile info */}
-          <div className="bg-gray-50 rounded-2xl p-4 space-y-3">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Profile</p>
-
-            <div className="flex items-center gap-3">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#F52B8C] to-[#E0167A] flex items-center justify-center overflow-hidden border-2 border-white shadow-sm flex-shrink-0">
-                {avatarUrl
-                  ? <img src={avatarUrl} alt="avatar" className="w-full h-full object-cover" />
-                  : <span className="text-white font-bold text-xl">{initials}</span>
-                }
-              </div>
-              <button
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploadingPhoto}
-                className="flex items-center gap-1.5 px-3 py-2 bg-white border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 transition disabled:opacity-50"
-              >
-                <Pencil className="w-3.5 h-3.5" />
-                {uploadingPhoto ? 'Uploading…' : 'Change photo'}
-              </button>
-              <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5">Studio name</label>
-              <input
-                type="text"
-                value={customForm.full_name}
-                onChange={(e) => setCustomForm((f) => ({ ...f, full_name: e.target.value }))}
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
-                placeholder="Your Studio Name"
-              />
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-gray-500 mb-1.5">Bio</label>
-              <textarea
-                value={customForm.bio}
-                onChange={(e) => setCustomForm((f) => ({ ...f, bio: e.target.value }))}
-                rows={2}
-                maxLength={120}
-                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition resize-none"
-                placeholder="Professional nail tech 💅 Paris 9e"
-              />
-              <p className="text-right text-[10px] text-gray-300 mt-1">{customForm.bio.length}/120</p>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">IG</div>
-              <input
-                type="text"
-                value={customForm.instagram_url}
-                onChange={(e) => setCustomForm((f) => ({ ...f, instagram_url: e.target.value }))}
-                placeholder="@your_instagram"
-                className="flex-1 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
-              />
-            </div>
-
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-black rounded-xl flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">TT</div>
-              <input
-                type="text"
-                value={customForm.tiktok_url}
-                onChange={(e) => setCustomForm((f) => ({ ...f, tiktok_url: e.target.value }))}
-                placeholder="@your_tiktok"
-                className="flex-1 px-3 py-2.5 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
-              />
-            </div>
-          </div>
-
           <button
-            disabled={savingProfile}
-            onClick={async () => {
-              if (!profile?.id) return;
-              setSavingProfile(true);
-              try {
-                const { error } = await updateProfile(profile.id, {
-                  full_name: customForm.full_name,
-                  bio: customForm.bio,
-                  instagram_url: customForm.instagram_url,
-                  tiktok_url: customForm.tiktok_url,
-                  color_accent: customForm.color_accent,
-                  theme_preset: customForm.theme_preset,
-                });
-                if (error) throw error;
-                showSuccess('Changes saved!');
-              } catch {
-                showError('Failed to save changes');
-              } finally {
-                setSavingProfile(false);
-              }
-            }}
+            disabled={savingDesign}
+            onClick={saveDesign}
             className="w-full py-4 bg-[#F52B8C] text-white rounded-2xl font-bold text-base hover:opacity-90 active:scale-[0.98] transition shadow-md shadow-[#F52B8C]/25 disabled:opacity-50"
           >
-            {savingProfile ? 'Saving...' : 'Save Changes'}
+            {savingDesign ? 'Saving…' : 'Save Design'}
           </button>
 
           <a
@@ -584,7 +822,10 @@ export default function Preview({ profile }: { profile: Profile | null }) {
       <AddEditServiceModal
         isOpen={showAddService}
         onClose={() => { setShowAddService(false); setEditingService(null); }}
-        onSuccess={() => { loadServices(); showSuccess(editingService ? 'Service updated!' : 'Service added!'); }}
+        onSuccess={() => {
+          void loadServices();
+          showSuccess(editingService ? 'Service updated!' : 'Service added!');
+        }}
         service={editingService ? {
           id: editingService.id,
           name: editingService.name,
@@ -594,6 +835,8 @@ export default function Preview({ profile }: { profile: Profile | null }) {
           price_total: editingService.price_total ?? editingService.price ?? 0,
           deposit_amount: editingService.deposit_amount ?? 0,
           active: editingService.active,
+          image_url: editingService.image_url,
+          is_featured: editingService.is_featured ?? false,
         } : null}
         profileId={profile?.id ?? ''}
       />

@@ -56,7 +56,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   const accent = theme.defaultAccent;
   const isPreview = mode === 'preview';
 
-  const { photos, testimonials, hours } = useStudioPublic(isPreview ? '' : merchant.id);
+  const { photos, testimonials, hours } = useStudioPublic(merchant.id);
 
   // Hero photo: explicit cover takes priority, then first gallery photo
   const heroPhotoUrl = merchant.cover_url ?? photos[0]?.image_url;
@@ -76,7 +76,8 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
     return () => observer.disconnect();
   }, [isPreview]);
 
-  const [featuredService, ...restServices] = merchant.services;
+  const featuredService = merchant.services.find((s) => s.is_featured) ?? merchant.services[0];
+  const restServices = merchant.services.filter((s) => s.id !== featuredService?.id);
 
   return (
     <div

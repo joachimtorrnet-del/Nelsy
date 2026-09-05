@@ -162,6 +162,7 @@ const PROFILE_SAFE_COLUMNS = new Set([
   'instagram_url', 'tiktok_url', 'instagram', 'tiktok',
   'logo_url', 'color_accent', 'theme_preset',
   'slug', 'notification_preferences',
+  'cover_url', 'specialty', 'location', 'pinterest_url', 'website_url',
 ]);
 
 export async function updateProfile(userId: string, updates: Record<string, unknown>) {
@@ -387,6 +388,45 @@ export interface BusinessHour {
   open_time: string | null;
   close_time: string | null;
   is_closed: boolean;
+}
+
+export async function addGalleryPhoto(
+  profileId: string,
+  imageUrl: string,
+  caption?: string,
+): Promise<GalleryPhoto | null> {
+  if (!supabase) throw new Error('Supabase not configured');
+  const { data: existing } = await supabase
+    .from('gallery_photos')
+    .select('order_index')
+    .eq('profile_id', profileId)
+    .order('order_index', { ascending: false })
+    .limit(1);
+  const nextOrder = ((existing?.[0] as { order_index: number } | undefined)?.order_index ?? -1) + 1;
+  const { data, error } = await supabase
+    .from('gallery_photos')
+    .insert({ profile_id: profileId, image_url: imageUrl, caption: caption ?? null, order_index: nextOrder })
+    .select('id, image_url, caption, order_index')
+    .single();
+  if (error) throw error;
+  return data as GalleryPhoto | null;
+}
+
+export async function deleteGalleryPhoto(id: string): Promise<void> {
+  if (!supabase) throw new Error('Supabase not configured');
+  const { error } = await supabase.from('gallery_photos').delete().eq('id', id);
+  if (error) throw error;
+}
+
+export async function setFeaturedService(profileId: string, serviceId: string): Promise<void> {
+  if (!supabase) throw new Error('Supabase not configured');
+  await supabase.from('services').update({ is_featured: false }).eq('profile_id', profileId);
+  await supabase.from('services').update({ is_featured: true }).eq('id', serviceId);
+}
+
+export async function clearFeaturedService(profileId: string): Promise<void> {
+  if (!supabase) throw new Error('Supabase not configured');
+  await supabase.from('services').update({ is_featured: false }).eq('profile_id', profileId);
 }
 
 export async function getGalleryPhotos(profileId: string): Promise<GalleryPhoto[]> {

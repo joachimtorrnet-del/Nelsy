@@ -7,6 +7,7 @@ export interface Service {
   deposit: number;
   category?: string;
   image_url?: string;
+  is_featured?: boolean;
 }
 
 export interface Merchant {
@@ -21,6 +22,8 @@ export interface Merchant {
   location?: string;
   instagram?: string;
   tiktok?: string;
+  pinterest_url?: string;
+  website_url?: string;
   rating?: number;
   review_count?: number;
   services: Service[];

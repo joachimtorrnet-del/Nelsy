@@ -16,6 +16,11 @@ export interface DbProfileRow {
   logo_url: string | null;
   instagram_url: string | null;
   tiktok_url: string | null;
+  pinterest_url: string | null;
+  website_url: string | null;
+  cover_url: string | null;
+  specialty: string | null;
+  location: string | null;
   color_accent: string | null;
   theme_preset: string | null;
   stripe_account_id: string | null;
@@ -43,6 +48,7 @@ export interface DbServiceRow {
   deposit_amount: number;
   display_order: number;
   active: boolean;
+  is_featured: boolean;
   image_url: string | null;
   created_at: string;
   updated_at: string;
