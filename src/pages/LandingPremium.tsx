@@ -66,7 +66,7 @@ function Hero() {
         Mobile  : flex-col — copy on top, mockup below (unchanged)
         Desktop : flex-row — copy left ~46%, mockup right ~54%, fills viewport height
       */}
-      <div className="flex flex-col lg:flex-row lg:items-center lg:min-h-[calc(100vh-56px)]">
+      <div className="flex flex-col lg:flex-row lg:items-center lg:min-h-[86vh]">
 
         {/* ── LEFT: Copy ────────────────────────────────────────────────────── */}
         {/*
@@ -75,7 +75,7 @@ function Hero() {
           Desktop: pt-0 pl-16 pr-10 xl:pl-24 (flex centering handles vertical)
         */}
         <motion.div
-          className="lg:w-[46%] lg:flex-shrink-0 pt-[52px] px-6 lg:pt-0 lg:pl-16 lg:pr-10 xl:pl-24"
+          className="lg:w-[46%] lg:flex-shrink-0 pt-[52px] px-6 lg:pt-0 lg:pl-16 lg:pr-10 xl:pl-24 lg:-mt-16"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
@@ -144,7 +144,7 @@ function Hero() {
             alt="Nelsy booking page preview"
             className="block h-auto object-contain w-full mx-auto
                        md:w-[70vw] md:max-w-[900px]
-                       lg:w-full lg:max-w-[700px] xl:max-w-[800px]"
+                       lg:w-full lg:max-w-[640px] xl:max-w-[740px]"
             draggable={false}
           />
         </motion.div>
