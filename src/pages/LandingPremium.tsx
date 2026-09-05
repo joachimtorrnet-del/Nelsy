@@ -132,6 +132,9 @@ function Hero() {
         */}
         <motion.div
           className="mt-10 lg:mt-0 lg:flex-1 lg:flex lg:items-center lg:justify-center"
+          style={{
+            background: 'radial-gradient(ellipse 90% 80% at 58% 44%, #FDDDE9 0%, #FEF0F6 42%, #FFFFFF 72%)',
+          }}
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.2 }}
