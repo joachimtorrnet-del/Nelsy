@@ -163,7 +163,7 @@ export function StudioGallery({ photos, textPrimary = '#1A1A1A', accent = '#F52B
           }}>
             My work
           </p>
-          {photos.length > 4 && (
+          {photos.length > 3 && (
             <button
               onClick={() => openLightbox(0)}
               style={{
@@ -200,8 +200,8 @@ export function StudioGallery({ photos, textPrimary = '#1A1A1A', accent = '#F52B
               whileTap={{ scale: 0.97 }}
               style={{
                 flexShrink: 0,
-                width: 120,
-                height: 120,
+                width: 110,
+                height: 110,
                 borderRadius: 14,
                 overflow: 'hidden',
                 backgroundColor: '#f0ece8',

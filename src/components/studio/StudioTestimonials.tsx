@@ -9,13 +9,12 @@ interface Props {
 
 function StarRow({ rating }: { rating: number }) {
   return (
-    <div className="flex items-center gap-0.5 mb-2">
+    <div style={{ display: 'flex', gap: 2, marginBottom: 6 }}>
       {[1, 2, 3, 4, 5].map((s) => (
         <Star
           key={s}
-          className={`w-3.5 h-3.5 ${
-            s <= rating ? 'text-amber-400 fill-amber-400' : 'text-gray-200 fill-gray-200'
-          }`}
+          size={13}
+          style={{ color: s <= rating ? '#FBBF24' : '#E5E7EB', fill: s <= rating ? '#FBBF24' : '#E5E7EB' }}
         />
       ))}
     </div>
@@ -25,59 +24,77 @@ function StarRow({ rating }: { rating: number }) {
 export function StudioTestimonials({ testimonials, accentColor = '#F52B8C' }: Props) {
   if (testimonials.length === 0) return null;
 
-  const avgRating =
-    testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length;
+  const shown = testimonials.slice(0, 4);
 
   return (
-    <section style={{ marginBottom: 28 }}>
-      <div className="flex items-center justify-between mb-4" style={{ padding: '0 16px' }}>
-        <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.02em', color: '#9CA3AF' }}>
+    <section style={{ padding: '0 16px', marginBottom: 28 }}>
+      {/* Header */}
+      <div style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        marginBottom: 12,
+      }}>
+        <p style={{
+          fontSize: 17, fontWeight: 800, color: '#1A1A1A',
+          letterSpacing: '-0.02em', margin: 0,
+        }}>
           Loved by my clients
         </p>
-        <div className="flex items-center gap-1.5">
-          <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-          <span className="text-sm font-bold text-gray-900">{avgRating.toFixed(1)}</span>
-          <span className="text-xs text-gray-400">({testimonials.length})</span>
-        </div>
+        {testimonials.length > 4 && (
+          <span style={{ fontSize: 12, fontWeight: 600, color: accentColor }}>
+            See all →
+          </span>
+        )}
       </div>
 
-      {/* Horizontal scroll — no side padding so cards appear closer to edge */}
-      <div
-        className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory"
-        style={{
-          paddingLeft: 16, paddingRight: 16,
-          scrollbarWidth: 'none', msOverflowStyle: 'none',
-        } as React.CSSProperties}
-      >
-        {testimonials.map((t, i) => (
+      {/* 2-column grid */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+        {shown.map((t, i) => (
           <motion.div
             key={t.id}
-            initial={{ opacity: 0, x: 16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.06, duration: 0.3 }}
-            className="flex-shrink-0 bg-white rounded-2xl p-4 border border-gray-100 snap-start"
-            style={{ width: 260 }}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.06, duration: 0.25 }}
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 16,
+              padding: '12px 12px',
+              border: '1px solid rgba(0,0,0,0.06)',
+              boxShadow: '0 1px 6px rgba(0,0,0,0.04)',
+              display: 'flex', flexDirection: 'column',
+            }}
           >
             <StarRow rating={t.rating} />
-            <p className="text-sm text-gray-700 leading-relaxed mb-3 line-clamp-4">
+            <p style={{
+              fontSize: 12, color: '#374151', lineHeight: 1.45,
+              margin: '0 0 10px', flex: 1,
+              overflow: 'hidden', display: '-webkit-box',
+              WebkitLineClamp: 4, WebkitBoxOrient: 'vertical',
+            }}>
               "{t.text}"
             </p>
-            <div className="flex items-center gap-2">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
               {t.client_avatar ? (
                 <img
                   src={t.client_avatar}
                   alt={t.client_name}
-                  className="w-6 h-6 rounded-full object-cover flex-shrink-0"
+                  style={{ width: 22, height: 22, borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }}
                 />
               ) : (
-                <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                  style={{ background: accentColor }}
-                >
+                <div style={{
+                  width: 22, height: 22, borderRadius: '50%',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  backgroundColor: accentColor, color: '#FFFFFF',
+                  fontSize: 10, fontWeight: 700, flexShrink: 0,
+                }}>
                   {t.client_name.charAt(0).toUpperCase()}
                 </div>
               )}
-              <span className="text-xs font-semibold text-gray-900 truncate">{t.client_name}</span>
+              <span style={{
+                fontSize: 12, fontWeight: 600, color: '#111827',
+                overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+              }}>
+                {t.client_name}
+              </span>
             </div>
           </motion.div>
         ))}

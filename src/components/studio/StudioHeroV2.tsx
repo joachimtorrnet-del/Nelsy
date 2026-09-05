@@ -95,8 +95,8 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
   const tiktokHandle = merchant.tiktok ? parseTikTok(merchant.tiktok) : undefined;
 
   const hasPhoto = !!heroPhotoUrl;
-  const COVER_H = hasPhoto ? 260 : 140;
-  const AVATAR_SIZE = 96;
+  const COVER_H = hasPhoto ? 220 : 120;
+  const AVATAR_SIZE = 88;
   const OVERLAP = AVATAR_SIZE / 2;
 
   const hasSocials = !!(merchant.instagram || tiktokHandle || merchant.pinterest_url || merchant.website_url);
@@ -172,7 +172,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
           display: 'flex', flexDirection: 'column', alignItems: 'center',
           textAlign: 'center',
           marginTop: -OVERLAP,
-          padding: '0 24px 24px',
+          padding: '0 20px 20px',
           backgroundColor: theme.pageBg,
           position: 'relative',
           zIndex: 1,
@@ -185,7 +185,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
             border: `4px solid ${theme.pageBg}`,
             boxShadow: `0 2px 16px rgba(0,0,0,0.12), 0 0 0 1px ${accent}20`,
             overflow: 'hidden', flexShrink: 0,
-            marginBottom: 14,
+            marginBottom: 10,
           }}
         >
           {merchant.logo_url ? (
@@ -212,7 +212,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
 
         {/* Name */}
         <h1 style={{
-          fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em',
+          fontSize: 22, fontWeight: 800, letterSpacing: '-0.03em',
           lineHeight: 1.1, color: theme.textPrimary, margin: 0,
         }}>
           {merchant.salon_name}
@@ -234,7 +234,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
         {merchant.bio && (
           <p style={{
             fontSize: 13, color: theme.textSecondary,
-            lineHeight: 1.55, marginTop: 8, maxWidth: 280,
+            lineHeight: 1.5, marginTop: 6, maxWidth: 280,
             overflow: 'hidden', display: '-webkit-box',
             WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
           }}>
@@ -244,7 +244,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
 
         {/* Social links */}
         {hasSocials && (
-          <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
+          <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
             {merchant.instagram && (
               <SocialBtn href={`https://instagram.com/${merchant.instagram}`} label="Instagram" isPreview={isPreview} theme={theme}>
                 <InstagramIcon />
@@ -269,7 +269,7 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
         )}
 
         {/* Primary Book CTA */}
-        <div ref={ctaRef} style={{ width: '100%', marginTop: 20 }}>
+        <div ref={ctaRef} style={{ width: '100%', marginTop: 16 }}>
           <motion.button
             whileTap={isPreview ? {} : { scale: 0.97 }}
             onClick={scrollToServices}

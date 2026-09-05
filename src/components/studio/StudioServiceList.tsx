@@ -6,8 +6,6 @@ import type { NelsyTheme } from '@/lib/themes';
 import { formatCurrency } from '@/lib/utils';
 import { useBookingStore } from '@/store/bookingStore';
 
-// ── Service row ───────────────────────────────────────────────────────────────
-
 interface CardProps {
   service: Service;
   theme: NelsyTheme;
@@ -30,19 +28,19 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
       tabIndex={isPreview ? undefined : 0}
       style={{
         display: 'flex', alignItems: 'center', gap: 12,
-        padding: '12px 12px',
+        padding: '10px 12px',
         backgroundColor: theme.cardBg,
         border: `1px solid ${theme.cardBorder}`,
         borderRadius: 16,
-        boxShadow: '0 1px 8px rgba(0,0,0,0.04)',
+        boxShadow: '0 1px 6px rgba(0,0,0,0.04)',
         cursor: isPreview ? 'default' : 'pointer',
         backdropFilter: theme.cardBlur,
         WebkitBackdropFilter: theme.cardBlur,
       }}
     >
-      {/* Square thumbnail — always rendered */}
+      {/* Square thumbnail */}
       <div style={{
-        width: 76, height: 76, borderRadius: 12,
+        width: 88, height: 88, borderRadius: 12,
         overflow: 'hidden', flexShrink: 0,
         backgroundColor: `${accent}10`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -55,7 +53,7 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
             style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
           />
         ) : (
-          <span style={{ fontSize: 26 }}>💅</span>
+          <span style={{ fontSize: 28 }}>💅</span>
         )}
       </div>
 
@@ -63,7 +61,7 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
       <div style={{ flex: 1, minWidth: 0 }}>
         <p style={{
           fontSize: 15, fontWeight: 700, color: theme.textPrimary,
-          margin: '0 0 3px',
+          margin: '0 0 3px', letterSpacing: '-0.01em',
           overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
         }}>
           {service.name}
@@ -78,28 +76,24 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
         )}
         <p style={{ fontSize: 12, color: theme.textSecondary, margin: 0 }}>
           {service.duration} min
-          <span style={{ margin: '0 5px', opacity: 0.4 }}>|</span>
+          <span style={{ margin: '0 5px', opacity: 0.35 }}>|</span>
           <span style={{ fontWeight: 700, color: theme.textPrimary }}>{formatCurrency(service.price)}</span>
         </p>
       </div>
 
-      <ChevronRight size={18} style={{ color: theme.textSecondary, flexShrink: 0, opacity: 0.4 }} />
+      <ChevronRight size={16} style={{ color: theme.textSecondary, flexShrink: 0, opacity: 0.35 }} />
     </div>
   );
 }
-
-// ── Animation ─────────────────────────────────────────────────────────────────
 
 const listVariants: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.05 } },
 };
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' } },
+  hidden: { opacity: 0, y: 6 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.22, ease: 'easeOut' } },
 };
-
-// ── Component ─────────────────────────────────────────────────────────────────
 
 interface Props {
   services: Service[];
@@ -114,7 +108,7 @@ export function StudioServiceList({ services, theme, isPreview = false }: Props)
     <section style={{ paddingBottom: 8 }}>
       <p style={{
         fontSize: 17, fontWeight: 800, color: theme.textPrimary,
-        letterSpacing: '-0.02em', margin: '0 0 12px',
+        letterSpacing: '-0.02em', margin: '0 0 10px',
       }}>
         All services
       </p>
