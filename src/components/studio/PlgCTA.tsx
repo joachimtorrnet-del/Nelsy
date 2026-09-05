@@ -27,7 +27,7 @@ export function PlgCTA({ profileId, theme }: Props) {
   const href = `https://getnelsy.com/signup?utm_source=studio_plg&ref=${encodeURIComponent(profileId)}`;
 
   return (
-    <div style={{ textAlign: 'center', padding: '28px 0 40px' }}>
+    <div style={{ textAlign: 'center', padding: '20px 0 32px' }}>
       <a
         ref={ref}
         href={href}
@@ -38,14 +38,14 @@ export function PlgCTA({ profileId, theme }: Props) {
           fontSize: 12,
           color: theme.textSecondary,
           textDecoration: 'none',
-          opacity: 0.75,
+          opacity: 0.65,
           transition: 'opacity 0.15s',
           letterSpacing: '0.01em',
         }}
         onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1'; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.75'; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.65'; }}
       >
-        Créez votre Nelsy →
+        Made with Nelsy · Create yours →
       </a>
     </div>
   );

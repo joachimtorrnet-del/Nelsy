@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import type { BusinessHour } from '@/lib/supabase-queries';
 
-const DAYS = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 function formatTime(t: string): string {
   return t.slice(0, 5); // "09:00:00" → "09:00"
@@ -21,9 +21,11 @@ export function StudioHours({ hours, accentColor = '#F52B8C' }: Props) {
   const isOpenToday = todayHour && !todayHour.is_closed;
 
   return (
-    <section className="mb-5">
+    <section style={{ marginBottom: 28 }}>
       <div className="flex items-center justify-between mb-3">
-        <h2 className="text-base font-bold text-gray-900">Horaires</h2>
+        <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.02em', color: '#9CA3AF' }}>
+          Hours
+        </p>
         {todayHour && (
           <span
             className="text-xs font-semibold px-2.5 py-1 rounded-full"
@@ -34,16 +36,16 @@ export function StudioHours({ hours, accentColor = '#F52B8C' }: Props) {
             }
           >
             {isOpenToday
-              ? `Ouvert · ${formatTime(todayHour.open_time!)}–${formatTime(todayHour.close_time!)}`
-              : "Fermé aujourd'hui"}
+              ? `Open · ${formatTime(todayHour.open_time!)}–${formatTime(todayHour.close_time!)}`
+              : 'Closed today'}
           </span>
         )}
       </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 12 }}
+        initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.35 }}
         className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
       >
         {sorted.map((h, i) => {
@@ -56,9 +58,7 @@ export function StudioHours({ hours, accentColor = '#F52B8C' }: Props) {
               } ${isToday ? 'bg-gray-50' : ''}`}
             >
               <div className="flex items-center gap-2">
-                <span
-                  className={`text-sm ${isToday ? 'font-bold text-gray-900' : 'text-gray-600'}`}
-                >
+                <span className={`text-sm ${isToday ? 'font-bold text-gray-900' : 'text-gray-600'}`}>
                   {DAYS[h.day_of_week]}
                 </span>
                 {isToday && (
@@ -66,12 +66,12 @@ export function StudioHours({ hours, accentColor = '#F52B8C' }: Props) {
                     className="text-[9px] font-bold uppercase tracking-wide px-1.5 py-0.5 rounded-full"
                     style={{ color: accentColor, background: `${accentColor}18` }}
                   >
-                    Auj.
+                    Today
                   </span>
                 )}
               </div>
               {h.is_closed ? (
-                <span className="text-sm text-gray-400">Fermé</span>
+                <span className="text-sm text-gray-400">Closed</span>
               ) : (
                 <span className={`text-sm ${isToday ? 'font-semibold text-gray-900' : 'text-gray-500'}`}>
                   {h.open_time ? formatTime(h.open_time) : '?'} –{' '}

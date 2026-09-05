@@ -5,32 +5,20 @@ import type { NelsyTheme } from '@/lib/themes';
 import { formatCurrency } from '@/lib/utils';
 import { useBookingStore } from '@/store/bookingStore';
 
-// ── Thumbnail ─────────────────────────────────────────────────────────────────
+// ── Thumbnail — only renders when real image exists ───────────────────────────
 
-function Thumbnail({ src, name, accent }: { src?: string; name: string; accent: string }) {
-  if (src) {
-    return (
-      <img
-        src={src}
-        alt={name}
-        loading="lazy"
-        style={{ width: 52, height: 52, borderRadius: 12, objectFit: 'cover', flexShrink: 0 }}
-      />
-    );
-  }
-  const initial = name.charAt(0).toUpperCase();
+function Thumbnail({ src, name }: { src?: string; name: string }) {
+  if (!src) return null;
   return (
-    <div
+    <img
+      src={src}
+      alt={name}
+      loading="lazy"
       style={{
-        width: 52, height: 52, borderRadius: 12, flexShrink: 0,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: 18, fontWeight: 700, color: '#FFFFFF',
-        background: `linear-gradient(135deg, ${accent}CC, ${accent})`,
-        userSelect: 'none',
+        width: 52, height: 52, borderRadius: 11,
+        objectFit: 'cover', flexShrink: 0,
       }}
-    >
-      {initial}
-    </div>
+    />
   );
 }
 
@@ -46,15 +34,14 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
   const { openModal } = useBookingStore();
   const accent = theme.defaultAccent;
   const accentText = theme.accentText ?? '#FFFFFF';
+  const hasImage = !!service.image_url;
+  const chargeNow = service.deposit > 0 ? service.deposit : service.price;
+  const hasDeposit = service.deposit > 0;
 
   const handleBook = () => {
     if (isPreview) return;
     openModal(service);
   };
-
-  // Amount charged now: deposit if set, otherwise full price
-  const chargeNow = service.deposit > 0 ? service.deposit : service.price;
-  const hasDeposit = service.deposit > 0;
 
   return (
     <div
@@ -62,17 +49,16 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
         backgroundColor: theme.cardBg,
         border: `1px solid ${theme.cardBorder}`,
         borderRadius: 16,
-        boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+        boxShadow: '0 1px 8px rgba(0,0,0,0.04)',
         backdropFilter: theme.cardBlur,
         WebkitBackdropFilter: theme.cardBlur,
         overflow: 'hidden',
-        transition: 'box-shadow 0.2s ease',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '14px 16px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 14px 14px 16px' }}>
 
-        {/* Thumbnail */}
-        <Thumbnail src={service.image_url} name={service.name} accent={accent} />
+        {/* Real image only — no fake placeholder */}
+        {hasImage && <Thumbnail src={service.image_url} name={service.name} />}
 
         {/* Info */}
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -84,7 +70,6 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
             {service.name}
           </p>
 
-          {/* Description — 1 line truncated */}
           {service.description && (
             <p style={{
               fontSize: 12, color: theme.textSecondary, margin: '2px 0 0',
@@ -94,7 +79,6 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
             </p>
           )}
 
-          {/* Meta row */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 4, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 12, color: theme.textSecondary }}>
               {service.duration} min
@@ -104,10 +88,10 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
                 <span style={{ fontSize: 10, color: theme.textSecondary }}>·</span>
                 <span style={{
                   fontSize: 11, fontWeight: 600, color: accent,
-                  backgroundColor: `${accent}12`, borderRadius: 6,
+                  backgroundColor: `${accent}12`, borderRadius: 5,
                   padding: '1px 6px',
                 }}>
-                  Acompte {formatCurrency(service.deposit)}
+                  Deposit {formatCurrency(service.deposit)}
                 </span>
               </>
             )}
@@ -122,7 +106,7 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
           <button
             onClick={handleBook}
             disabled={isPreview}
-            aria-label={`Réserver ${service.name}`}
+            aria-label={`Book ${service.name}`}
             style={{
               backgroundColor: accent,
               color: accentText,
@@ -135,9 +119,10 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
               opacity: isPreview ? 0.5 : 1,
               transition: 'opacity 0.15s',
               whiteSpace: 'nowrap',
+              minHeight: 32,
             }}
           >
-            {hasDeposit ? `Réserver · ${formatCurrency(chargeNow)}` : 'Réserver →'}
+            {hasDeposit ? `Book · ${formatCurrency(chargeNow)}` : 'Book →'}
           </button>
         </div>
       </div>
@@ -145,29 +130,16 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
   );
 }
 
-// ── Stagger animation ─────────────────────────────────────────────────────────
+// ── Animation ─────────────────────────────────────────────────────────────────
 
 const listVariants: Variants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.055 } },
+  visible: { transition: { staggerChildren: 0.05 } },
 };
 const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 10 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: 'easeOut' } },
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.25, ease: 'easeOut' } },
 };
-
-// ── Section label ─────────────────────────────────────────────────────────────
-
-function SectionLabel({ label, theme }: { label: string; theme: NelsyTheme }) {
-  return (
-    <p style={{
-      fontSize: 11, fontWeight: 700, textTransform: 'uppercase',
-      letterSpacing: '1px', color: theme.textSecondary, marginBottom: 12,
-    }}>
-      {label}
-    </p>
-  );
-}
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
@@ -178,34 +150,26 @@ interface Props {
 }
 
 export function StudioServiceList({ services, theme, isPreview = false }: Props) {
-  if (services.length === 0) {
-    return (
-      <div style={{
-        textAlign: 'center', padding: '32px 0',
-        color: theme.textSecondary, fontSize: 14,
-      }}>
-        Aucun service disponible pour le moment.
-      </div>
-    );
-  }
+  if (services.length === 0) return null;
 
   return (
     <section style={{ paddingBottom: 8 }}>
-      <SectionLabel label="Services" theme={theme} />
+      <p style={{
+        fontSize: 11, fontWeight: 600, letterSpacing: '0.02em',
+        color: theme.textSecondary, marginBottom: 10,
+      }}>
+        More services
+      </p>
 
       <motion.div
-        style={{ display: 'flex', flexDirection: 'column', gap: 10 }}
+        style={{ display: 'flex', flexDirection: 'column', gap: 8 }}
         variants={listVariants}
         initial="hidden"
         animate="visible"
       >
         {services.map((service) => (
           <motion.div key={service.id} variants={itemVariants}>
-            <ServiceCard
-              service={service}
-              theme={theme}
-              isPreview={isPreview}
-            />
+            <ServiceCard service={service} theme={theme} isPreview={isPreview} />
           </motion.div>
         ))}
       </motion.div>

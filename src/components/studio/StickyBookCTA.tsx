@@ -32,11 +32,11 @@ export function StickyBookCTA({ merchant, show }: Props) {
             paddingBottom: 'calc(10px + env(safe-area-inset-bottom, 0px))',
             backdropFilter: 'blur(14px)',
             WebkitBackdropFilter: 'blur(14px)',
-            backgroundColor: 'rgba(255,255,255,0.85)',
+            backgroundColor: 'rgba(255,255,255,0.88)',
             borderTop: '1px solid rgba(0,0,0,0.06)',
           }}
           role="banner"
-          aria-label="Réserver"
+          aria-label="Book"
         >
           <button
             onClick={scrollToServices}
@@ -50,7 +50,7 @@ export function StickyBookCTA({ merchant, show }: Props) {
               letterSpacing: '-0.01em',
             }}
           >
-            Réserver un créneau →
+            Book now →
           </button>
         </motion.div>
       )}

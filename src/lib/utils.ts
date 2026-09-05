@@ -1,5 +1,5 @@
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('fr-FR', {
+  return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 0,
@@ -9,7 +9,7 @@ export function formatCurrency(amount: number): string {
 
 export function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
-  return new Intl.DateTimeFormat('fr-FR', {
+  return new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: 'numeric',
     month: 'long',
@@ -18,7 +18,7 @@ export function formatDate(dateStr: string): string {
 
 export function formatShortDate(dateStr: string): string {
   const date = new Date(dateStr);
-  return new Intl.DateTimeFormat('fr-FR', {
+  return new Intl.DateTimeFormat('en-US', {
     day: 'numeric',
     month: 'short',
   }).format(date);

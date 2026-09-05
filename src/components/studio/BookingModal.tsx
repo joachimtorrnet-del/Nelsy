@@ -33,19 +33,19 @@ import PaymentForm from './PaymentForm';
 // ── Schema ────────────────────────────────────────────────────────────────────
 
 const clientSchema = z.object({
-  name: z.string().min(2, 'Nom trop court'),
-  email: z.string().email('Email invalide'),
-  phone: z.string().min(10, 'Numéro invalide'),
+  name: z.string().min(2, 'Name too short'),
+  email: z.string().email('Invalid email'),
+  phone: z.string().min(10, 'Invalid phone number'),
 });
 type ClientForm = z.infer<typeof clientSchema>;
 
 // ── Constants ─────────────────────────────────────────────────────────────────
 
 const MONTH_NAMES = [
-  'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
-  'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
 ];
-const DAY_INITIALS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+const DAY_INITIALS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
 // ── Animation variants ────────────────────────────────────────────────────────
 
@@ -220,7 +220,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
   const chargeAmount = selectedService.deposit > 0 ? selectedService.deposit : selectedService.price;
   const hasDeposit = selectedService.deposit > 0;
 
-  const stepLabels = ['Date', 'Horaire', 'Mes infos', 'Paiement'];
+  const stepLabels = ['Date', 'Time', 'Details', 'Payment'];
 
   return (
     <AnimatePresence>
@@ -270,13 +270,13 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                   <div className="text-right flex-shrink-0">
                     <p className="text-xl font-extrabold text-gray-900">{formatCurrency(selectedService.price)}</p>
                     {hasDeposit && (
-                      <p className="text-xs text-gray-400 mt-0.5">Acompte {formatCurrency(chargeAmount)}</p>
+                      <p className="text-xs text-gray-400 mt-0.5">Deposit {formatCurrency(chargeAmount)}</p>
                     )}
                   </div>
                   <button
                     onClick={handleClose}
                     className="ml-1 w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0 hover:bg-gray-300 transition-colors"
-                    aria-label="Fermer"
+                    aria-label="Close"
                   >
                     <X className="w-3.5 h-3.5 text-gray-500" />
                   </button>
@@ -331,7 +331,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       <button
                         onClick={prevMonth}
                         className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-                        aria-label="Mois précédent"
+                        aria-label="Previous month"
                       >
                         <ChevronLeft className="w-5 h-5 text-gray-600" />
                       </button>
@@ -341,7 +341,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       <button
                         onClick={nextMonth}
                         className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-                        aria-label="Mois suivant"
+                        aria-label="Next month"
                       >
                         <ChevronRight className="w-5 h-5 text-gray-600" />
                       </button>
@@ -395,7 +395,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     {/* Hint */}
                     {!selectedDate && (
                       <p className="text-center text-xs text-gray-400 mt-6">
-                        Sélectionnez une date disponible
+                        Pick an available date
                       </p>
                     )}
                   </motion.div>
@@ -426,25 +426,25 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     {slotsLoading ? (
                       <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-400">
                         <Loader2 className="w-6 h-6 animate-spin" style={{ color: accent }} />
-                        <p className="text-sm">Vérification des disponibilités...</p>
+                        <p className="text-sm">Checking availability…</p>
                       </div>
                     ) : availableSlots.length === 0 ? (
                       <div className="text-center py-16">
                         <p className="text-3xl mb-3">😔</p>
-                        <p className="font-semibold text-gray-900 mb-1">Aucun créneau disponible</p>
-                        <p className="text-sm text-gray-400 mb-6">Essayez une autre date</p>
+                        <p className="font-semibold text-gray-900 mb-1">No slots available</p>
+                        <p className="text-sm text-gray-400 mb-6">Try a different date</p>
                         <button
                           onClick={() => goTo(1)}
                           className="px-6 py-2.5 rounded-xl font-semibold text-sm text-white"
                           style={{ background: accent }}
                         >
-                          Changer de date
+                          Change date
                         </button>
                       </div>
                     ) : (
                       <>
                         <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">
-                          {availableSlots.length} créneaux disponibles
+                          {availableSlots.length} {availableSlots.length === 1 ? 'slot' : 'slots'} available
                         </p>
                         <div className="grid grid-cols-3 gap-2">
                           {availableSlots.map((slot) => {
@@ -510,7 +510,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
                       <div>
                         <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">
-                          Prénom et nom
+                          Full name
                         </label>
                         <input
                           {...register('name')}
@@ -542,7 +542,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
                       <div>
                         <label className="block text-xs font-semibold text-gray-500 mb-1.5 uppercase tracking-wide">
-                          Téléphone
+                          Phone
                         </label>
                         <input
                           {...register('phone')}
@@ -561,17 +561,17 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         {hasDeposit ? (
                           <>
                             <div className="flex justify-between text-sm text-gray-500">
-                              <span>Total service</span>
+                              <span>Service total</span>
                               <span>{formatCurrency(selectedService.price)}</span>
                             </div>
                             <div className="flex justify-between text-sm border-t border-gray-50 pt-2">
-                              <span className="font-bold text-gray-900">Acompte dû maintenant</span>
+                              <span className="font-bold text-gray-900">Deposit due now</span>
                               <span className="font-bold" style={{ color: accent }}>
                                 {formatCurrency(chargeAmount)}
                               </span>
                             </div>
                             <p className="text-xs text-gray-400">
-                              Reste à régler : {formatCurrency(selectedService.price - chargeAmount)} le jour du rendez-vous
+                              Balance {formatCurrency(selectedService.price - chargeAmount)} due on the day
                             </p>
                           </>
                         ) : (
@@ -592,9 +592,9 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         style={{ background: accent }}
                       >
                         {isSubmitting ? (
-                          <><Loader2 className="w-5 h-5 animate-spin" /> Réservation en cours...</>
+                          <><Loader2 className="w-5 h-5 animate-spin" /> Processing…</>
                         ) : (
-                          `💳 Payer ${formatCurrency(chargeAmount)} →`
+                          `Pay ${formatCurrency(chargeAmount)} →`
                         )}
                       </button>
                     </form>
@@ -628,13 +628,13 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       {hasDeposit ? (
                         <>
                           <div className="flex justify-between text-sm border-t border-gray-100 pt-2">
-                            <span className="font-bold text-gray-900">Acompte dû</span>
+                            <span className="font-bold text-gray-900">Deposit due</span>
                             <span className="font-bold text-lg" style={{ color: accent }}>
                               {formatCurrency(chargeAmount)}
                             </span>
                           </div>
                           <p className="text-xs text-gray-400">
-                            Solde {formatCurrency(selectedService.price - chargeAmount)} le jour du RDV
+                            Balance {formatCurrency(selectedService.price - chargeAmount)} due on the day
                           </p>
                         </>
                       ) : (
@@ -697,9 +697,9 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 }}
                     >
-                      <h2 className="text-2xl font-extrabold text-gray-900 mb-1">C'est réservé !</h2>
+                      <h2 className="text-2xl font-extrabold text-gray-900 mb-1">You're booked!</h2>
                       <p className="text-gray-500 text-sm mb-6">
-                        Un email de confirmation vous a été envoyé.
+                        A confirmation email has been sent.
                       </p>
 
                       <div className="bg-gray-50 rounded-2xl p-4 text-sm text-left space-y-2.5 mb-6">
@@ -708,7 +708,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                           <span className="font-semibold text-gray-900">{selectedService.name}</span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Salon</span>
+                          <span className="text-gray-400">Studio</span>
                           <span className="font-semibold text-gray-900">{merchant.salon_name}</span>
                         </div>
                         <div className="flex justify-between border-t border-gray-100 pt-2.5">
@@ -718,14 +718,14 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                           </span>
                         </div>
                         <div className="flex justify-between">
-                          <span className="text-gray-400">Heure</span>
+                          <span className="text-gray-400">Time</span>
                           <span className="font-semibold text-gray-900">{selectedTime}</span>
                         </div>
                       </div>
 
                       <motion.a
                         href={`https://wa.me/?text=${encodeURIComponent(
-                          `✅ Réservé : "${selectedService.name}" chez ${merchant.salon_name} le ${selectedDate ? formatDate(selectedDate) : ''} à ${selectedTime} !`
+                          `✅ Booked: "${selectedService.name}" at ${merchant.salon_name} — ${selectedDate ? formatDate(selectedDate) : ''} at ${selectedTime}`
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -733,14 +733,14 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         className="w-full flex items-center justify-center gap-2 py-4 rounded-2xl bg-[#25D366] text-white font-bold text-sm mb-3"
                       >
                         <MessageCircle className="w-5 h-5" />
-                        Partager sur WhatsApp
+                        Share via WhatsApp
                       </motion.a>
 
                       <button
                         onClick={handleClose}
                         className="w-full py-3 text-sm text-gray-400 font-medium"
                       >
-                        Fermer
+                        Close
                       </button>
                     </motion.div>
                   </motion.div>
@@ -757,7 +757,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                   className="flex items-center gap-1.5 text-sm font-semibold text-gray-400 hover:text-gray-700 transition-colors"
                 >
                   <ChevronLeft className="w-4 h-4" />
-                  Retour
+                  Back
                 </button>
               </div>
             )}

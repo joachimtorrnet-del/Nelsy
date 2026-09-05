@@ -16,20 +16,28 @@ import { PlgCTA } from './PlgCTA';
 
 export type StudioMode = 'live' | 'preview';
 
-// ── Skeleton ──────────────────────────────────────────────────────────────────
+// ── Skeleton (preview loading state) ─────────────────────────────────────────
 
 function PreviewSkeleton({ bgColor }: { bgColor: string }) {
   return (
     <div style={{ backgroundColor: bgColor, minHeight: '100%' }}>
       {/* Cover skeleton */}
-      <div style={{ height: 200, backgroundColor: 'rgba(128,128,128,0.12)' }} />
-      <div style={{ padding: '0 20px 20px', marginTop: -48, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ width: 96, height: 96, borderRadius: '50%', backgroundColor: 'rgba(128,128,128,0.15)', marginBottom: 14 }} />
-        <div style={{ width: 140, height: 20, borderRadius: 8, backgroundColor: 'rgba(128,128,128,0.12)', marginBottom: 8 }} />
-        <div style={{ width: 200, height: 14, borderRadius: 8, backgroundColor: 'rgba(128,128,128,0.10)', marginBottom: 20 }} />
-        <div style={{ width: '100%', height: 54, borderRadius: 16, backgroundColor: 'rgba(128,128,128,0.15)', marginBottom: 24 }} />
+      <div style={{ height: 140, backgroundColor: 'rgba(128,128,128,0.12)' }} />
+      {/* Identity — same zIndex fix as real hero */}
+      <div
+        style={{
+          padding: '0 20px 20px',
+          marginTop: -48,
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          position: 'relative', zIndex: 1,
+        }}
+      >
+        <div style={{ width: 96, height: 96, borderRadius: '50%', backgroundColor: 'rgba(128,128,128,0.15)', marginBottom: 12 }} />
+        <div style={{ width: 140, height: 18, borderRadius: 8, backgroundColor: 'rgba(128,128,128,0.12)', marginBottom: 7 }} />
+        <div style={{ width: 200, height: 13, borderRadius: 8, backgroundColor: 'rgba(128,128,128,0.10)', marginBottom: 18 }} />
+        <div style={{ width: '100%', height: 52, borderRadius: 16, backgroundColor: 'rgba(128,128,128,0.15)', marginBottom: 24 }} />
         {[1, 2, 3].map((i) => (
-          <div key={i} style={{ width: '100%', height: 72, borderRadius: 16, backgroundColor: 'rgba(128,128,128,0.10)', marginBottom: 10 }} />
+          <div key={i} style={{ width: '100%', height: 68, borderRadius: 16, backgroundColor: 'rgba(128,128,128,0.10)', marginBottom: 8 }} />
         ))}
       </div>
     </div>
@@ -48,7 +56,6 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   const accent = theme.defaultAccent;
   const isPreview = mode === 'preview';
 
-  // Public data: gallery, testimonials, hours
   const { photos, testimonials, hours } = useStudioPublic(isPreview ? '' : merchant.id);
 
   // Sticky CTA: watch when hero Book button leaves viewport
@@ -66,7 +73,6 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
     return () => observer.disconnect();
   }, [isPreview]);
 
-  // Split services: first = featured, rest = compact list
   const [featuredService, ...restServices] = merchant.services;
 
   return (
@@ -79,7 +85,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
         flexDirection: 'column',
       }}
     >
-      {/* ── Hero V2 ─────────────────────────────────────────── */}
+      {/* ── Hero ─────────────────────────────────────────────── */}
       <StudioHeroV2
         merchant={merchant}
         theme={theme}
@@ -87,52 +93,51 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
         ctaRef={heroCTARef}
       />
 
-      {/* ── Gallery (shows only when photos available) ───────── */}
-      <div style={{ padding: '0 16px' }}>
-        <StudioGallery photos={photos} textPrimary={theme.textSecondary} />
-      </div>
-
-      {/* ── Services section ──────────────────────────────────── */}
-      <div id="nelsy-services" style={{ padding: '0 16px' }}>
-        {/* Featured service — first in list */}
-        {featuredService && (
-          <FeaturedService
-            service={featuredService}
-            theme={theme}
-            isPreview={isPreview}
-          />
-        )}
-
-        {/* Remaining services */}
-        {restServices.length > 0 && (
-          <StudioServiceList
-            services={restServices}
-            theme={theme}
-            isPreview={isPreview}
-          />
-        )}
-
-        {/* Empty state */}
-        {merchant.services.length === 0 && (
-          <div
-            style={{
-              textAlign: 'center', padding: '40px 0',
-              color: theme.textSecondary, fontSize: 14,
-            }}
-          >
-            Aucun service disponible pour le moment.
-          </div>
-        )}
-      </div>
-
-      {/* ── Testimonials (shows only when data available) ────── */}
-      {testimonials.length > 0 && (
-        <div style={{ padding: '0 0 0 16px' }}>
-          <StudioTestimonials testimonials={testimonials} accentColor={accent} />
+      {/* ── Gallery — no outer padding; StudioGallery handles its own ── */}
+      {photos.length > 0 && (
+        <div style={{ padding: '0 16px' }}>
+          <StudioGallery photos={photos} textSecondary={theme.textSecondary} />
         </div>
       )}
 
-      {/* ── Business hours (shows only when data available) ──── */}
+      {/* ── Services ─────────────────────────────────────────── */}
+      {merchant.services.length > 0 && (
+        <div id="nelsy-services" style={{ padding: '0 16px' }}>
+          {featuredService && (
+            <FeaturedService
+              service={featuredService}
+              theme={theme}
+              isPreview={isPreview}
+            />
+          )}
+          {restServices.length > 0 && (
+            <StudioServiceList
+              services={restServices}
+              theme={theme}
+              isPreview={isPreview}
+            />
+          )}
+        </div>
+      )}
+
+      {/* Empty state — only when no services at all */}
+      {merchant.services.length === 0 && (
+        <div
+          style={{
+            textAlign: 'center', padding: '40px 24px',
+            color: theme.textSecondary, fontSize: 14,
+          }}
+        >
+          No services available yet.
+        </div>
+      )}
+
+      {/* ── Reviews — real data only ──────────────────────────── */}
+      {testimonials.length > 0 && (
+        <StudioTestimonials testimonials={testimonials} accentColor={accent} />
+      )}
+
+      {/* ── Hours — real data only ────────────────────────────── */}
       {hours.length > 0 && (
         <div style={{ padding: '0 16px' }}>
           <StudioHours hours={hours} accentColor={accent} />
@@ -141,7 +146,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
 
       {/* ── Footer ───────────────────────────────────────────── */}
       {isPreview ? (
-        <div style={{ textAlign: 'center', padding: '16px 0 28px' }}>
+        <div style={{ textAlign: 'center', padding: '16px 0 24px' }}>
           <Link
             to="/"
             style={{ fontSize: 11, color: theme.textSecondary, textDecoration: 'none' }}
@@ -153,7 +158,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
         <PlgCTA profileId={merchant.id} theme={theme} />
       )}
 
-      {/* Safe area spacer (accounts for sticky CTA height) */}
+      {/* Safe area spacer for sticky CTA */}
       <div style={{ height: isPreview ? 0 : 80, flexShrink: 0 }} />
 
       {/* ── Sticky Book CTA (live only) ───────────────────────── */}
@@ -164,5 +169,4 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   );
 }
 
-// Re-export skeleton for Studio.tsx usage
 export { PreviewSkeleton };

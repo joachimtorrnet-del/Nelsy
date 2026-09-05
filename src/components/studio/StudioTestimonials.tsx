@@ -29,28 +29,34 @@ export function StudioTestimonials({ testimonials, accentColor = '#F52B8C' }: Pr
     testimonials.reduce((sum, t) => sum + t.rating, 0) / testimonials.length;
 
   return (
-    <section className="mb-5">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-base font-bold text-gray-900">Avis clients</h2>
+    <section style={{ marginBottom: 28 }}>
+      <div className="flex items-center justify-between mb-3" style={{ padding: '0 16px' }}>
+        <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.02em', color: '#9CA3AF' }}>
+          Reviews
+        </p>
         <div className="flex items-center gap-1.5">
-          <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+          <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
           <span className="text-sm font-bold text-gray-900">{avgRating.toFixed(1)}</span>
           <span className="text-xs text-gray-400">({testimonials.length})</span>
         </div>
       </div>
 
-      {/* Horizontal scroll */}
+      {/* Horizontal scroll — no side padding so cards appear closer to edge */}
       <div
-        className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 snap-x snap-mandatory"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}
+        className="flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory"
+        style={{
+          paddingLeft: 16, paddingRight: 16,
+          scrollbarWidth: 'none', msOverflowStyle: 'none',
+        } as React.CSSProperties}
       >
         {testimonials.map((t, i) => (
           <motion.div
             key={t.id}
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 16 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: i * 0.07, duration: 0.35 }}
-            className="flex-shrink-0 w-72 bg-white rounded-2xl p-4 border border-gray-100 shadow-sm snap-start"
+            transition={{ delay: i * 0.06, duration: 0.3 }}
+            className="flex-shrink-0 bg-white rounded-2xl p-4 border border-gray-100 snap-start"
+            style={{ width: 260 }}
           >
             <StarRow rating={t.rating} />
             <p className="text-sm text-gray-700 leading-relaxed mb-3 line-clamp-4">
@@ -61,11 +67,11 @@ export function StudioTestimonials({ testimonials, accentColor = '#F52B8C' }: Pr
                 <img
                   src={t.client_avatar}
                   alt={t.client_name}
-                  className="w-7 h-7 rounded-full object-cover flex-shrink-0"
+                  className="w-6 h-6 rounded-full object-cover flex-shrink-0"
                 />
               ) : (
                 <div
-                  className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
+                  className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
                   style={{ background: accentColor }}
                 >
                   {t.client_name.charAt(0).toUpperCase()}
