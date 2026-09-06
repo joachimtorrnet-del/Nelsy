@@ -75,24 +75,24 @@ function Hero() {
           Desktop: pt-0 pl-16 pr-10 xl:pl-24 (flex centering handles vertical)
         */}
         <motion.div
-          className="lg:w-[46%] lg:flex-shrink-0 pt-[52px] px-6 lg:pt-0 lg:pl-16 lg:pr-10 xl:pl-24 lg:-mt-16"
+          className="lg:w-[46%] lg:flex-shrink-0 pt-8 px-6 lg:pt-0 lg:pl-16 lg:pr-10 xl:pl-24 lg:-mt-16"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
         >
           <p style={{
             fontSize: 11, fontWeight: 700, letterSpacing: '0.14em',
-            color: PINK, marginBottom: 18, textTransform: 'uppercase',
+            color: PINK, marginBottom: 12, textTransform: 'uppercase',
             lineHeight: 1,
           }}>
             BUILT FOR NAIL TECHS
           </p>
 
           <h1 style={{
-            fontSize: 'clamp(2.5rem, 10vw, 3.5rem)',
+            fontSize: 'clamp(2.1rem, 8.5vw, 3.5rem)',
             fontWeight: 900, color: '#0D0D0D',
             lineHeight: 1.05, letterSpacing: '-0.035em',
-            marginBottom: 20, maxWidth: 480,
+            marginBottom: 14, maxWidth: 480,
           }}>
             Your All-in-One<br />
             Link in Bio<br />
@@ -100,8 +100,8 @@ function Hero() {
           </h1>
 
           <p style={{
-            fontSize: 16, color: '#6B7280', lineHeight: 1.65,
-            marginBottom: 36, maxWidth: 340,
+            fontSize: 16, color: '#6B7280', lineHeight: 1.6,
+            marginBottom: 24, maxWidth: 340,
           }}>
             Show your work. Get booked. Get paid.<br />
             Everything you need to grow your nail business, all in one link.
@@ -110,10 +110,10 @@ function Hero() {
           <Link to="/onboarding">
             <motion.button
               whileTap={{ scale: 0.97 }}
+              className="text-[15px] px-9 py-[13px] lg:text-[17px] lg:px-11 lg:py-4"
               style={{
                 backgroundColor: PINK, color: '#FFFFFF',
-                borderRadius: 99, padding: '16px 44px',
-                fontSize: 17, fontWeight: 700, border: 'none',
+                borderRadius: 99, fontWeight: 700, border: 'none',
                 cursor: 'pointer',
                 boxShadow: '0 8px 28px rgba(245,43,140,0.28)',
                 letterSpacing: '-0.01em',
@@ -131,7 +131,7 @@ function Hero() {
           Image: w-full on mobile, capped to 700-800px on desktop, object-contain always.
         */}
         <motion.div
-          className="mt-10 lg:mt-0 lg:flex-1 lg:flex lg:items-center lg:justify-center"
+          className="mt-6 px-3 lg:mt-0 lg:px-0 lg:flex-1 lg:flex lg:items-center lg:justify-center"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, delay: 0.2 }}
