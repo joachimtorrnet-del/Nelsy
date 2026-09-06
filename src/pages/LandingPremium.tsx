@@ -153,208 +153,31 @@ function Hero() {
 
 // ─── 3. HOW IT WORKS ─────────────────────────────────────────────────────────
 
-function MockupFrame({ children }: { children: React.ReactNode }) {
-  return (
-    <div style={{
-      width: 196,
-      borderRadius: 22,
-      backgroundColor: '#FFFFFF',
-      boxShadow: '0 8px 36px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.05)',
-      border: '1px solid rgba(0,0,0,0.06)',
-      overflow: 'hidden',
-      flexShrink: 0,
-    }}>
-      {children}
-    </div>
-  );
-}
-
-function IgMockup() {
-  return (
-    <MockupFrame>
-      <div style={{ padding: '14px 12px 12px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-          <div style={{
-            width: 34, height: 34, borderRadius: '50%', flexShrink: 0,
-            background: 'linear-gradient(135deg, #F52B8C, #FF8FAB)',
-          }} />
-          <div>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#0D0D0D' }}>nailsbymaya</div>
-            <div style={{ fontSize: 9.5, color: '#6B7280' }}>💅 Nail Tech · Paris</div>
-          </div>
-        </div>
-        <div style={{ fontSize: 9.5, color: '#374151', lineHeight: 1.5, marginBottom: 7 }}>
-          ✨ Gel · Nail art · French<br />
-          📍 By appointment only
-        </div>
-        <div style={{
-          fontSize: 10, fontWeight: 700, color: '#F52B8C',
-          backgroundColor: '#FFF0F7', borderRadius: 7,
-          padding: '4px 9px', display: 'inline-block', marginBottom: 10,
-        }}>
-          nelsy.co/maya →
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 3 }}>
-          {[0, 1, 2].map((i) => (
-            <div key={i} style={{
-              aspectRatio: '1', borderRadius: 6, overflow: 'hidden',
-              backgroundColor: i === 0 ? '#FADADD' : i === 1 ? '#FFD6E7' : '#F4C2C2',
-            }}>
-              <img src={`/nail-${i + 1}.jpg`} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-            </div>
-          ))}
-        </div>
-      </div>
-    </MockupFrame>
-  );
-}
-
-function ServiceMockup() {
-  return (
-    <MockupFrame>
-      <div style={{ padding: 11 }}>
-        <div style={{
-          height: 88, borderRadius: 12, marginBottom: 9, overflow: 'hidden',
-          backgroundColor: '#FADADD', position: 'relative',
-        }}>
-          <img src="/nail-4.jpg" alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-          <div style={{
-            position: 'absolute', bottom: 6, left: 6,
-            fontSize: 9, fontWeight: 600, color: '#F52B8C',
-            backgroundColor: 'rgba(255,255,255,0.92)', borderRadius: 99, padding: '2px 7px',
-          }}>Most booked</div>
-        </div>
-        <div style={{ fontSize: 13, fontWeight: 800, color: '#0D0D0D', marginBottom: 3, letterSpacing: '-0.015em' }}>
-          Gel Manicure
-        </div>
-        <div style={{ fontSize: 10, color: '#6B7280', marginBottom: 10 }}>45 min · French or color</div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <span style={{ fontSize: 15, fontWeight: 800, color: '#0D0D0D', letterSpacing: '-0.02em' }}>€45</span>
-          <div style={{
-            backgroundColor: '#F52B8C', color: '#FFFFFF',
-            borderRadius: 99, padding: '5px 13px',
-            fontSize: 11, fontWeight: 700,
-          }}>Book →</div>
-        </div>
-      </div>
-    </MockupFrame>
-  );
-}
-
-function CalendarMockup() {
-  const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-  const dates: (number | null)[][] = [
-    [null, null, 1, 2, 3, 4, 5],
-    [6, 7, 8, 9, 10, 11, 12],
-    [13, 14, 15, 16, 17, 18, 19],
-    [20, 21, 22, 23, 24, 25, 26],
-  ];
-  const selected = 17;
-  return (
-    <MockupFrame>
-      <div style={{ padding: '12px 10px 10px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 9 }}>
-          <span style={{ fontSize: 11.5, fontWeight: 700, color: '#0D0D0D' }}>September 2025</span>
-          <div style={{ display: 'flex', gap: 5 }}>
-            <span style={{ fontSize: 13, color: '#9CA3AF' }}>‹</span>
-            <span style={{ fontSize: 13, color: '#F52B8C' }}>›</span>
-          </div>
-        </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 4 }}>
-          {days.map((d, i) => (
-            <div key={i} style={{ textAlign: 'center', fontSize: 8.5, fontWeight: 600, color: '#9CA3AF' }}>{d}</div>
-          ))}
-        </div>
-        {dates.map((row, ri) => (
-          <div key={ri} style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', marginBottom: 1 }}>
-            {row.map((d, di) => (
-              <div key={di} style={{
-                textAlign: 'center', fontSize: 9.5, lineHeight: '18px', height: 18,
-                fontWeight: d === selected ? 700 : 400,
-                color: d === selected ? '#FFFFFF' : d ? '#374151' : 'transparent',
-                backgroundColor: d === selected ? '#F52B8C' : 'transparent',
-                borderRadius: 99,
-              }}>{d ?? ''}</div>
-            ))}
-          </div>
-        ))}
-        <div style={{ display: 'flex', gap: 5, marginTop: 10 }}>
-          {['10:00', '11:30', '14:00'].map((t, i) => (
-            <div key={i} style={{
-              fontSize: 9.5, fontWeight: 600, padding: '4px 8px', borderRadius: 99,
-              backgroundColor: i === 1 ? '#F52B8C' : '#F3F4F6',
-              color: i === 1 ? '#FFFFFF' : '#374151',
-            }}>{t}</div>
-          ))}
-        </div>
-      </div>
-    </MockupFrame>
-  );
-}
-
-function PaymentMockup() {
-  return (
-    <MockupFrame>
-      <div style={{ padding: '20px 14px 16px', textAlign: 'center' }}>
-        <div style={{
-          width: 46, height: 46, borderRadius: '50%', backgroundColor: '#F52B8C',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          margin: '0 auto 10px', boxShadow: '0 4px 16px rgba(245,43,140,0.28)',
-        }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
-        </div>
-        <div style={{ fontSize: 13, fontWeight: 800, color: '#0D0D0D', marginBottom: 3, letterSpacing: '-0.015em' }}>
-          Booking confirmed!
-        </div>
-        <div style={{ fontSize: 10, color: '#6B7280', marginBottom: 12, lineHeight: 1.5 }}>
-          Gel Manicure<br />Sep 17 · 11:30 am
-        </div>
-        <div style={{
-          backgroundColor: '#F9FAFB', borderRadius: 10, padding: '8px 10px',
-          textAlign: 'left', marginBottom: 10,
-        }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-            <span style={{ fontSize: 10, color: '#6B7280' }}>Deposit paid</span>
-            <span style={{ fontSize: 10, fontWeight: 700, color: '#0D0D0D' }}>€15</span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <span style={{ fontSize: 10, color: '#6B7280' }}>Balance due</span>
-            <span style={{ fontSize: 10, color: '#6B7280' }}>€30 on the day</span>
-          </div>
-        </div>
-        <div style={{ fontSize: 10, color: '#F52B8C', fontWeight: 600 }}>
-          📱 Maya notified instantly
-        </div>
-      </div>
-    </MockupFrame>
-  );
-}
-
 function HowItWorks() {
   const steps = [
     {
       title: 'Share your link',
       desc: 'Drop your Nelsy link in your Instagram bio. Followers tap it — they land on your booking page.',
-      mockup: <IgMockup />,
+      src: '/nelsy-step-1-instagram.png',
+      alt: 'Instagram profile with Nelsy link in bio',
     },
     {
       title: 'They browse & choose',
       desc: 'Your gallery, services, prices, and reviews — all in one polished page.',
-      mockup: <ServiceMockup />,
+      src: '/nelsy-step-2-services.png',
+      alt: 'Nelsy service browsing page',
     },
     {
       title: 'Pick a date & time',
       desc: 'Your calendar syncs live. No DMs, no back-and-forth, no double bookings.',
-      mockup: <CalendarMockup />,
+      src: '/nelsy-step-3-calendar.png',
+      alt: 'Nelsy date and time picker',
     },
     {
       title: 'Pay & confirm',
       desc: "Clients pay a deposit upfront. You're notified instantly. Zero no-shows.",
-      mockup: <PaymentMockup />,
+      src: '/nelsy-step-4-payment.png',
+      alt: 'Booking confirmation and payment screen',
     },
   ];
 
@@ -387,7 +210,7 @@ function HowItWorks() {
               {/* Desktop: arrow between steps */}
               {i < steps.length - 1 && (
                 <div className="hidden lg:flex absolute items-center justify-center"
-                  style={{ right: -14, top: 88, zIndex: 10, width: 28 }}>
+                  style={{ right: -14, top: 128, zIndex: 10, width: 28 }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d="M5 12h14M13 6l6 6-6 6" stroke={PINK} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
@@ -395,8 +218,13 @@ function HowItWorks() {
               )}
 
               <motion.div className="flex flex-col items-center text-center" {...fadeUp(i * 0.1)}>
-                {/* Mockup */}
-                <div className="mb-5">{step.mockup}</div>
+                {/* Mockup image — RGBA transparent PNG, never recreated in HTML */}
+                <img
+                  src={step.src}
+                  alt={step.alt}
+                  className="h-[270px] w-auto mx-auto mb-5"
+                  draggable={false}
+                />
 
                 {/* Number */}
                 <div style={{
