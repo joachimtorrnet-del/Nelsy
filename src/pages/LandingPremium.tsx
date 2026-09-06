@@ -157,104 +157,124 @@ function HowItWorks() {
   const steps = [
     {
       title: 'Share your link',
-      desc: 'Drop your Nelsy link in your Instagram bio. Followers tap it — they land on your booking page.',
+      desc: 'Add your Nelsy link to Instagram, TikTok, or anywhere your clients find you.',
       src: '/nelsy-step-1-instagram.png',
       alt: 'Instagram profile with Nelsy link in bio',
     },
     {
-      title: 'They browse & choose',
-      desc: 'Your gallery, services, prices, and reviews — all in one polished page.',
+      title: 'They choose a service',
+      desc: 'Clients browse your services, prices and work.',
       src: '/nelsy-step-2-services.png',
       alt: 'Nelsy service browsing page',
     },
     {
-      title: 'Pick a date & time',
-      desc: 'Your calendar syncs live. No DMs, no back-and-forth, no double bookings.',
+      title: 'They pick a time',
+      desc: 'They choose a date and time that works for them.',
       src: '/nelsy-step-3-calendar.png',
       alt: 'Nelsy date and time picker',
     },
     {
-      title: 'Pay & confirm',
-      desc: "Clients pay a deposit upfront. You're notified instantly. Zero no-shows.",
+      title: 'They book and pay',
+      desc: 'They confirm and pay online. You get a new booking. ✨',
       src: '/nelsy-step-4-payment.png',
       alt: 'Booking confirmation and payment screen',
     },
   ];
 
   return (
-    <section style={{ backgroundColor: '#FFFFFF', paddingTop: 88, paddingBottom: 88 }}>
-      <div className="max-w-6xl mx-auto px-6">
+    <section style={{
+      background: 'radial-gradient(ellipse 120% 65% at 50% 10%, #FFE4F0 0%, #FFF3F8 45%, #FFFFFF 80%)',
+      paddingTop: 80,
+      paddingBottom: 88,
+    }}>
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
         {/* Header */}
-        <motion.div className="text-center mb-14" {...fadeUp()}>
+        <motion.div className="text-center mb-10 lg:mb-12" {...fadeUp()}>
           <p style={{
             fontSize: 11, fontWeight: 700, letterSpacing: '0.14em',
-            color: PINK, marginBottom: 10, textTransform: 'uppercase',
+            color: PINK, marginBottom: 14, textTransform: 'uppercase',
           }}>
             FROM LINK IN BIO TO PAID APPOINTMENTS
           </p>
           <h2 style={{
-            fontSize: 'clamp(1.75rem, 4.5vw, 2.75rem)',
-            fontWeight: 900, color: '#0D0D0D',
-            lineHeight: 1.1, letterSpacing: '-0.03em',
+            fontSize: 'clamp(2.2rem, 5.5vw, 3.75rem)',
+            fontWeight: 900, lineHeight: 1.08, letterSpacing: '-0.03em',
+            marginBottom: 16,
           }}>
-            Turn followers into paying clients.
+            <span style={{ color: '#0D0D0D' }}>Turn followers into</span><br />
+            <span style={{ color: PINK }}>paying clients.</span>
           </h2>
+          <p style={{
+            fontSize: 'clamp(14px, 1.5vw, 17px)',
+            color: '#6B7280', lineHeight: 1.65,
+            maxWidth: 500, margin: '0 auto',
+          }}>
+            From your link in bio to a booked and paid appointment —{' '}
+            without the back-and-forth in DMs.
+          </p>
         </motion.div>
 
-        {/* Steps */}
-        <div className="flex flex-col items-center lg:flex-row lg:items-start lg:gap-6">
+        {/* Steps — desktop: 4-column row, mobile: stacked */}
+        <div className="flex flex-col items-center lg:flex-row lg:items-start lg:gap-5">
           {steps.map((step, i) => (
-            <div key={i} className="flex flex-col items-center relative lg:flex-1">
+            <div key={i} className="flex flex-col items-center relative lg:flex-1 w-full max-w-[300px] lg:max-w-none">
 
-              {/* Desktop: arrow between steps */}
+              {/* Desktop: arrow centered on the image */}
               {i < steps.length - 1 && (
-                <div className="hidden lg:flex absolute items-center justify-center"
-                  style={{ right: -14, top: 128, zIndex: 10, width: 28 }}>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <div
+                  className="hidden lg:flex absolute items-center justify-center"
+                  style={{ right: -18, top: 195, zIndex: 10, width: 36 }}
+                >
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
                     <path d="M5 12h14M13 6l6 6-6 6" stroke={PINK} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               )}
 
-              <motion.div className="flex flex-col items-center text-center" {...fadeUp(i * 0.1)}>
-                {/* Mockup image — RGBA transparent PNG, never recreated in HTML */}
+              <motion.div className="flex flex-col items-center text-center w-full" {...fadeUp(i * 0.1)}>
+
+                {/* Mockup — exact asset, no modifications */}
                 <img
                   src={step.src}
                   alt={step.alt}
-                  className="h-[270px] w-auto mx-auto mb-5"
+                  className="h-[310px] lg:h-[390px] w-auto mx-auto mb-5"
                   draggable={false}
                 />
 
-                {/* Number */}
+                {/* Number + title on same row */}
                 <div style={{
-                  width: 30, height: 30, borderRadius: '50%',
-                  backgroundColor: PINK, color: '#FFFFFF',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: 13, fontWeight: 800,
-                  marginBottom: 9, flexShrink: 0,
-                  boxShadow: '0 4px 12px rgba(245,43,140,0.28)',
+                  gap: 9, marginBottom: 7,
                 }}>
-                  {i + 1}
+                  <div style={{
+                    width: 26, height: 26, borderRadius: '50%', flexShrink: 0,
+                    backgroundColor: PINK, color: '#FFFFFF',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 12, fontWeight: 800,
+                    boxShadow: '0 3px 10px rgba(245,43,140,0.30)',
+                  }}>
+                    {i + 1}
+                  </div>
+                  <h3 style={{
+                    fontSize: 15, fontWeight: 800, color: '#0D0D0D',
+                    letterSpacing: '-0.02em', lineHeight: 1.2, margin: 0,
+                  }}>
+                    {step.title}
+                  </h3>
                 </div>
 
-                <h3 style={{
-                  fontSize: 15, fontWeight: 800, color: '#0D0D0D',
-                  marginBottom: 6, letterSpacing: '-0.02em', lineHeight: 1.2,
-                }}>
-                  {step.title}
-                </h3>
-                <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.55, maxWidth: 175 }}>
+                <p style={{ fontSize: 13, color: '#6B7280', lineHeight: 1.6, maxWidth: 190 }}>
                   {step.desc}
                 </p>
               </motion.div>
 
-              {/* Mobile: vertical connector */}
+              {/* Mobile: vertical connector after description */}
               {i < steps.length - 1 && (
-                <div className="lg:hidden flex flex-col items-center my-5">
-                  <div style={{ width: 1.5, height: 22, backgroundColor: `${PINK}28` }} />
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 5v14M6 13l6 6 6-6" stroke={PINK} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <div className="lg:hidden flex flex-col items-center mt-6 mb-2">
+                  <div style={{ width: 1.5, height: 28, backgroundColor: `${PINK}25` }} />
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5v14M6 13l6 6 6-6" stroke={PINK} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </div>
               )}
@@ -263,7 +283,7 @@ function HowItWorks() {
         </div>
 
         {/* CTA */}
-        <motion.div className="text-center mt-14" {...fadeUp(0.35)}>
+        <motion.div className="text-center mt-12 lg:mt-14" {...fadeUp(0.35)}>
           <Link to="/onboarding">
             <motion.button
               whileTap={{ scale: 0.97 }}
@@ -276,7 +296,7 @@ function HowItWorks() {
                 letterSpacing: '-0.01em',
               }}
             >
-              Get my Nelsy link →
+              Continue →
             </motion.button>
           </Link>
         </motion.div>
