@@ -834,6 +834,23 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
       setError(result.error.message ?? 'Payment failed. Please try again.');
       setLoading(false);
     } else {
+      // Webhook updates profile status to 'trialing' asynchronously (2-10s after
+      // confirmSetup returns). Poll until the DB reflects the change so Dashboard
+      // doesn't see 'incomplete' and incorrectly bounce the user back to /onboarding.
+      if (supabase) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          for (let i = 0; i < 15; i++) {
+            await new Promise<void>((r) => setTimeout(r, 1000));
+            const { data: profile } = await supabase
+              .from('profiles')
+              .select('subscription_status')
+              .eq('id', session.user.id)
+              .single();
+            if (profile?.subscription_status === 'trialing') break;
+          }
+        }
+      }
       onSuccess();
     }
   };
@@ -928,7 +945,6 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
 }
 
 function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
-  const navigate = useNavigate();
   const [phase, setPhase] = useState<'info' | 'payment'>('info');
   const [clientSecret, setClientSecret] = useState('');
   const [intentType, setIntentType] = useState<'setup' | 'payment'>('setup');
@@ -1002,9 +1018,9 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       session = currentSession;
       if (!session) throw new Error('[session] No session available');
 
-      // 4. Create setup intent (card collection only — subscription created after card confirmed)
+      // 4. Create subscription + SetupIntent (Architecture B: subscription-first, card collected via pending_setup_intent)
       setError('Step 4/4 — Setting up payment...');
-      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-setup-intent`, {
+      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -1018,13 +1034,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
         const body = await res.text().catch(() => '');
         throw new Error(`[intent] ${res.status}: ${body}`);
       }
-      const data = await res.json() as { clientSecret?: string; type?: 'setup' | 'payment'; alreadySubscribed?: boolean };
-
-      // User already completed onboarding in a previous session
-      if (data.alreadySubscribed) {
-        navigate('/dashboard');
-        return;
-      }
+      const data = await res.json() as { clientSecret?: string; type?: 'setup' | 'payment'; subscriptionId?: string };
 
       if (!data.clientSecret) throw new Error('[intent] No client secret returned');
 
