@@ -53,9 +53,12 @@ export default function Dashboard() {
 
       setProfile(profile);
 
-      // Users who started onboarding but abandoned before entering a card have
-      // 'incomplete' status. Send them back to finish, not to the dashboard.
-      if (profile?.subscription_status === 'incomplete') {
+      // 'inactive' = never subscribed or mid-onboarding (pending_setup_intent not yet cleared).
+      // 'incomplete' = legacy status (check constraint blocks it, but guard it anyway).
+      // Both send the user back to finish onboarding rather than showing the blocked screen.
+      if (!profile?.subscription_status ||
+          profile.subscription_status === 'inactive' ||
+          profile.subscription_status === 'incomplete') {
         navigate('/onboarding');
         return;
       }
@@ -81,7 +84,7 @@ export default function Dashboard() {
     }
   };
 
-  const BLOCKED_STATUSES = ['canceled', 'cancelled', 'inactive'];
+  const BLOCKED_STATUSES = ['canceled', 'cancelled'];
   const isBlocked = profile && BLOCKED_STATUSES.includes(profile.subscription_status ?? '');
 
   if (loading) {

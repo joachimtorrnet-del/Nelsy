@@ -834,21 +834,16 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
       setError(result.error.message ?? 'Payment failed. Please try again.');
       setLoading(false);
     } else {
-      // Webhook updates profile status to 'trialing' asynchronously (2-10s after
-      // confirmSetup returns). Poll until the DB reflects the change so Dashboard
-      // doesn't see 'incomplete' and incorrectly bounce the user back to /onboarding.
+      // confirmSetup() success means the card is attached and pending_setup_intent is cleared.
+      // Write 'trialing' immediately so Dashboard doesn't bounce back while waiting for
+      // the webhook to fire. The webhook writes the same value later (idempotent).
       if (supabase) {
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
-          for (let i = 0; i < 15; i++) {
-            await new Promise<void>((r) => setTimeout(r, 1000));
-            const { data: profile } = await supabase
-              .from('profiles')
-              .select('subscription_status')
-              .eq('id', session.user.id)
-              .single();
-            if (profile?.subscription_status === 'trialing') break;
-          }
+          await supabase
+            .from('profiles')
+            .update({ subscription_status: 'trialing' })
+            .eq('id', session.user.id);
         }
       }
       onSuccess();

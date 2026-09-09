@@ -52,8 +52,8 @@ serve(async (req) => {
   try {
     const body = await req.text()
 
-    // Verify webhook signature — throws if invalid
-    const event = stripe.webhooks.constructEvent(body, signature, webhookSecret)
+    // Verify webhook signature — must use async form in Deno (SubtleCrypto is async-only)
+    const event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecret)
 
     switch (event.type) {
       case 'checkout.session.completed': {
@@ -250,12 +250,13 @@ serve(async (req) => {
         if (subscription.status === 'active') status = 'active'
         if (subscription.status === 'trialing') {
           // pending_setup_intent is non-null while the user still hasn't entered a card.
-          // Only promote to 'trialing' once that intent is gone (card saved successfully).
-          status = subscription.pending_setup_intent ? 'incomplete' : 'trialing'
+          // Keep 'inactive' until the intent clears (card saved); then promote to 'trialing'.
+          // 'incomplete' is not in the DB check constraint — use 'inactive' as the intermediate.
+          status = subscription.pending_setup_intent ? 'inactive' : 'trialing'
         }
         if (subscription.status === 'past_due') status = 'past_due'
         if (subscription.status === 'canceled') status = 'cancelled'
-        if (subscription.status === 'incomplete') status = 'incomplete'
+        if (subscription.status === 'incomplete') status = 'inactive'
         if (subscription.status === 'incomplete_expired') status = 'cancelled'
 
         const { error } = await supabase

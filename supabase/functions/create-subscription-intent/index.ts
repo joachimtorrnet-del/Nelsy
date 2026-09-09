@@ -117,14 +117,14 @@ serve(async (req) => {
 
     if (!clientSecret) throw new Error('No client_secret returned by Stripe subscription')
 
-    // Write 'incomplete' — the user has NOT entered a card yet.
-    // The webhook will upgrade this to 'trialing' only once the SetupIntent succeeds
-    // (i.e. pending_setup_intent becomes null on customer.subscription.updated).
-    await supabase.from('profiles').update({
+    // Save Stripe IDs so the webhook can look up the profile by stripe_customer_id.
+    // Do NOT write subscription_status: the DB check constraint does not allow 'incomplete',
+    // and the webhook will write 'inactive' → 'trialing' as the SetupIntent progresses.
+    const { error: dbError } = await supabase.from('profiles').update({
       stripe_customer_id: customerId,
       stripe_subscription_id: subscription.id,
-      subscription_status: 'incomplete',
     }).eq('id', user.id)
+    if (dbError) console.error('create-subscription-intent DB write error:', dbError.message)
 
     return new Response(
       JSON.stringify({ clientSecret, type, subscriptionId: subscription.id }),
