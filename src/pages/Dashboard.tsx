@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import posthog from 'posthog-js';
 import { supabase } from '../lib/supabase';
+import { track } from '../lib/analytics';
 
 import Home from './dashboard/Home';
 import Calendar from './dashboard/Calendar';
@@ -76,6 +77,11 @@ export default function Dashboard() {
         .eq('profile_id', user.id)
         .in('status', ['pending', 'confirmed']);
       setPendingCount(count ?? 0);
+
+      if (sessionStorage.getItem('nelsy_onboarding_just_completed')) {
+        sessionStorage.removeItem('nelsy_onboarding_just_completed');
+        track('dashboard_first_view', { plan: profile?.subscription_status });
+      }
 
       setLoading(false);
     } catch (error) {

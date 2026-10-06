@@ -4,6 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, ExpressCheckoutElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { supabase } from '../lib/supabase';
 import { validatePassword } from '../utils/validation';
+import { track, identify } from '../lib/analytics';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
 
@@ -31,6 +32,33 @@ interface StepProps {
   prevStep?: () => void;
 }
 
+// ─── Analytics helpers ────────────────────────────────────────────────────────
+
+const STEP_NAMES: Record<number, string> = {
+  1: 'account_info',
+  2: 'social_links',
+  3: 'plan_selection',
+  4: 'trial_confirmation',
+};
+
+function parseBackendError(msg: string): { operation: string; http_status?: number; error_type: string } {
+  const opMatch = msg.match(/^\[([^\]]+)\]/);
+  const rawOp = opMatch?.[1] ?? 'unknown';
+  const opMap: Record<string, string> = {
+    signup: 'signup', profile: 'profile_creation',
+    signin: 'signin', intent: 'subscription_intent', session: 'session',
+  };
+  const operation = opMap[rawOp] ?? 'unknown';
+  const statusMatch = msg.match(/\] (\d{3}):/);
+  const http_status = statusMatch ? parseInt(statusMatch[1]) : undefined;
+  const error_type = msg.includes('timed out') ? 'timeout'
+    : msg.includes('No user') ? 'no_user'
+    : msg.includes('No session') ? 'no_session'
+    : http_status ? `http_${http_status}`
+    : 'unknown';
+  return { operation, http_status, error_type };
+}
+
 // ─── Main Onboarding ──────────────────────────────────────────────────────────
 
 export default function Onboarding() {
@@ -51,6 +79,26 @@ export default function Onboarding() {
   });
 
   const navigate = useNavigate();
+  const viewedSteps = useRef<Set<number>>(new Set());
+  // Always-current plan ref so the step_viewed effect has a fresh value without
+  // plan needing to be a dependency (which would re-fire on every plan toggle).
+  const planRef = useRef<'monthly' | 'yearly'>(formData.plan);
+  planRef.current = formData.plan;
+
+  useEffect(() => {
+    track('onboarding_started');
+  }, []);
+
+  useEffect(() => {
+    if (!viewedSteps.current.has(step)) {
+      viewedSteps.current.add(step);
+      track('onboarding_step_viewed', {
+        step: STEP_NAMES[step],
+        step_number: step,
+        plan: planRef.current,
+      });
+    }
+  }, [step]);
 
   const nextStep = () => {
     if (step < 4) setStep(step + 1);
@@ -59,6 +107,16 @@ export default function Onboarding() {
 
   const prevStep = () => {
     if (step > 1) setStep(step - 1);
+  };
+
+  // Steps 2 and 3 have no internal validation — fire completed before advancing.
+  const completeAndAdvance = (stepNum: number) => () => {
+    track('onboarding_step_completed', {
+      step: STEP_NAMES[stepNum],
+      step_number: stepNum,
+      plan: planRef.current,
+    });
+    nextStep();
   };
 
   return (
@@ -80,8 +138,8 @@ export default function Onboarding() {
       {/* Steps Content */}
       <div className="flex flex-col justify-between px-4 py-6 max-w-md mx-auto w-full min-h-[calc(100vh-2.5rem)]">
         {step === 1 && <Step1 formData={formData} setFormData={setFormData} nextStep={nextStep} />}
-        {step === 2 && <Step2 formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep} />}
-        {step === 3 && <Step3 formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep} />}
+        {step === 2 && <Step2 formData={formData} setFormData={setFormData} nextStep={completeAndAdvance(2)} prevStep={prevStep} />}
+        {step === 3 && <Step3 formData={formData} setFormData={setFormData} nextStep={completeAndAdvance(3)} prevStep={prevStep} />}
         {step === 4 && <Step4 formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep} />}
       </div>
 
@@ -433,12 +491,45 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
     }
 
     setErrors(newErrors);
+
+    if (!isValid) {
+      if (newErrors.username) track('onboarding_validation_error', {
+        step: 'account_info', field: 'username',
+        error_type: usernameAvailable === false ? 'already_taken' : 'too_short',
+      });
+      if (newErrors.fullName) track('onboarding_validation_error', {
+        step: 'account_info', field: 'full_name', error_type: 'too_short',
+      });
+      if (newErrors.email) track('onboarding_validation_error', {
+        step: 'account_info', field: 'email',
+        error_type: emailExists === true ? 'already_registered'
+          : !validateEmailFormat(formData.email) ? 'invalid_format'
+          : 'required',
+      });
+      if (newErrors.phone) track('onboarding_validation_error', {
+        step: 'account_info', field: 'phone', error_type: 'too_short',
+      });
+      if (newErrors.password) {
+        const pwErrors = formData.password ? validatePassword(formData.password).errors : [];
+        const pwType = !formData.password ? 'required'
+          : pwErrors.some(e => e.includes('8 characters')) ? 'too_short'
+          : pwErrors.some(e => e.includes('uppercase')) ? 'missing_uppercase'
+          : pwErrors.some(e => e.includes('lowercase')) ? 'missing_lowercase'
+          : pwErrors.some(e => e.includes('number')) ? 'missing_number'
+          : 'too_weak';
+        track('onboarding_validation_error', { step: 'account_info', field: 'password', error_type: pwType });
+      }
+    }
+
     return isValid;
   };
 
   const handleNext = () => {
     if (checkingUsername || checkingEmail) return;
-    if (validateForm()) nextStep();
+    if (validateForm()) {
+      track('onboarding_step_completed', { step: 'account_info', step_number: 1 });
+      nextStep();
+    }
   };
 
   const inputClass = (error: string, valid?: boolean) =>
@@ -780,8 +871,8 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
 // ─── Step 4 — Payment (embedded Stripe Elements) ──────────────────────────────
 
 const PRICE_IDS: Record<'monthly' | 'yearly', string> = {
-  monthly: 'price_1T8RQeKByJwN07Hw4mAN6FFD',
-  yearly: 'price_1T8RRxKByJwN07HwySgYEPTu',
+  monthly: import.meta.env.VITE_STRIPE_PRICE_MONTHLY as string,
+  yearly: import.meta.env.VITE_STRIPE_PRICE_YEARLY as string,
 };
 
 const STRIPE_APPEARANCE = {
@@ -825,18 +916,26 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
     if (!stripe || !elements) return;
     setLoading(true);
     setError('');
+    track('card_submitted', { plan });
 
     const result = intentType === 'setup'
       ? await stripe.confirmSetup({ elements, redirect: 'if_required' })
       : await stripe.confirmPayment({ elements, redirect: 'if_required' });
 
     if (result.error) {
+      track('stripe_setup_failed', {
+        plan,
+        error_code: result.error.code ?? 'unknown',
+        error_type: result.error.type ?? 'unknown',
+        decline_code: result.error.decline_code ?? null,
+      });
       setError(result.error.message ?? 'Payment failed. Please try again.');
       setLoading(false);
     } else {
       // confirmSetup() success means the card is attached and pending_setup_intent is cleared.
       // Write 'trialing' immediately so Dashboard doesn't bounce back while waiting for
       // the webhook to fire. The webhook writes the same value later (idempotent).
+      track('stripe_setup_succeeded', { plan });
       if (supabase) {
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
@@ -844,8 +943,11 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
             .from('profiles')
             .update({ subscription_status: 'trialing' })
             .eq('id', session.user.id);
+          track('subscription_trial_started', { plan });
         }
       }
+      track('onboarding_completed', { plan });
+      sessionStorage.setItem('nelsy_onboarding_just_completed', '1');
       onSuccess();
     }
   };
@@ -897,7 +999,10 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
 
         {/* Card fields — wallets suppressed here since ECE handles them above */}
         <div className="mb-4">
-          <PaymentElement options={{ layout: 'tabs', wallets: { applePay: 'never', googlePay: 'never' } } as object} />
+          <PaymentElement
+            onReady={() => track('stripe_setup_started', { plan })}
+            options={{ layout: 'tabs', wallets: { applePay: 'never', googlePay: 'never' } } as object}
+          />
         </div>
 
         {error && (
@@ -965,6 +1070,8 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       // the payment step in a previous session (e.g. closed the tab).
       const { data: { session: existingSession } } = await supabase.auth.getSession();
 
+      if (existingSession) identify(existingSession.user.id);
+
       if (!existingSession && !accountCreated) {
         // 1. Create Supabase account
         setError('Step 1/4 — Creating your account...');
@@ -983,6 +1090,8 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
         });
         if (signUpError) throw new Error(`[signup] ${signUpError.message}`);
         if (!user) throw new Error('[signup] No user returned');
+        identify(user.id);
+        track('account_created', { plan: formData.plan });
 
         // 2. Wait for DB trigger to create profile
         setError('Step 2/4 — Setting up your profile...');
@@ -1036,11 +1145,19 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       setError('');
       setClientSecret(data.clientSecret!);
       setIntentType(data.type ?? 'setup');
+      track('onboarding_step_completed', {
+        step: 'trial_confirmation', step_number: 4, plan: formData.plan,
+      });
       setPhase('payment');
 
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error('[Onboarding]', msg);
+      const { operation, http_status, error_type } = parseBackendError(msg);
+      track('onboarding_backend_error', {
+        step: 'trial_confirmation', operation, error_type,
+        ...(http_status !== undefined ? { http_status } : {}),
+      });
       setError(msg);
     } finally {
       setLoading(false);

@@ -12,6 +12,11 @@ export function track(event: string, props?: Record<string, unknown>) {
   posthog.capture(event, props);
 }
 
+export function identify(userId: string) {
+  if (!isConfigured()) return;
+  posthog.identify(userId);
+}
+
 // ── Public studio funnel ──────────────────────────────────────────────────────
 
 export function trackStudioView(profileId: string) {
