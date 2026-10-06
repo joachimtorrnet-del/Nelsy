@@ -12,21 +12,6 @@ const fadeUp = (delay = 0) => ({
 
 // ─── SVG helpers ──────────────────────────────────────────────────────────────
 
-function CheckIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-    </svg>
-  );
-}
-
-function StarIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-    </svg>
-  );
-}
 
 // ─── 1. NAV ───────────────────────────────────────────────────────────────────
 
@@ -46,7 +31,7 @@ function Nav() {
           </Link>
           <Link to="/onboarding" className="hidden sm:block">
             <button className="px-4 py-2 text-white rounded-lg text-sm font-bold transition active:scale-95 shadow-sm hover:opacity-90" style={{ backgroundColor: '#F52B8C' }}>
-              Continue →
+              Start free →
             </button>
           </Link>
         </div>
@@ -104,7 +89,7 @@ function Hero() {
             marginBottom: 24, maxWidth: 340,
           }}>
             Show your work. Get booked. Get paid.<br />
-            Everything you need to grow your nail business, all in one link.
+            Turn your followers into paying clients — all from one link.
           </p>
 
           <Link to="/onboarding">
@@ -119,7 +104,7 @@ function Hero() {
                 letterSpacing: '-0.01em',
               }}
             >
-              Continue →
+              Create my booking page →
             </motion.button>
           </Link>
         </motion.div>
@@ -296,7 +281,7 @@ function HowItWorks() {
                 letterSpacing: '-0.01em',
               }}
             >
-              Continue →
+              Create my booking page →
             </motion.button>
           </Link>
         </motion.div>
@@ -305,35 +290,53 @@ function HowItWorks() {
   );
 }
 
-// ─── 4. STATS BAR ─────────────────────────────────────────────────────────────
+// ─── 4. PRODUCT BENEFITS ──────────────────────────────────────────────────────
 
-function StatsBar() {
-  const stats = [
-    { value: '$2.4M', label: 'Booked',     icon: '💰' },
-    { value: '98%',   label: 'Show-up',    icon: '✅' },
-    { value: '3h',    label: 'Saved/week', icon: '⏰' },
-    { value: '500+',  label: 'Nail techs', icon: '💅' },
+function ProductBenefits() {
+  const items = [
+    { icon: '💅', title: 'Services',     desc: 'Show your services and prices clearly.' },
+    { icon: '📅', title: 'Availability', desc: 'Let clients choose a time that works for them.' },
+    { icon: '💰', title: 'Deposits',     desc: 'Collect deposits before the appointment.' },
+    { icon: '💳', title: 'Payments',     desc: 'Let clients book and pay online.' },
   ];
 
   return (
-    <section className="py-8 text-white" style={{ backgroundColor: '#F52B8C' }}>
-      <div className="max-w-md mx-auto px-4 sm:max-w-6xl">
+    <section className="py-14 sm:py-20 bg-white px-4">
+      <div className="max-w-md mx-auto sm:max-w-6xl">
+        <motion.div {...fadeUp()} className="text-center mb-10">
+          <p style={{
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.14em',
+            color: PINK, marginBottom: 14, textTransform: 'uppercase',
+          }}>
+            [ EVERYTHING IN ONE LINK ]
+          </p>
+          <h2 style={{
+            fontSize: 'clamp(1.75rem, 4.5vw, 2.75rem)',
+            fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.03em',
+            color: '#0D0D0D',
+          }}>
+            Everything your clients need. One link.
+          </h2>
+        </motion.div>
+
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          variants={{ visible: { transition: { staggerChildren: 0.08 } }, hidden: {} }}
-          className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 text-center"
+          variants={{ visible: { transition: { staggerChildren: 0.09 } }, hidden: {} }}
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
         >
-          {stats.map((s) => (
+          {items.map((item) => (
             <motion.div
-              key={s.label}
-              variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}
-              className="py-2"
+              key={item.title}
+              variants={{ hidden: { opacity: 0, y: 14 }, visible: { opacity: 1, y: 0, transition: { duration: 0.4 } } }}
+              className="bg-white rounded-2xl p-5 border-2 border-gray-100 text-center hover:shadow-lg transition-all"
+              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#F52B8C'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#F3F4F6'; }}
             >
-              <div className="text-3xl sm:text-4xl mb-1">{s.icon}</div>
-              <div className="text-3xl sm:text-5xl font-bold mb-1">{s.value}</div>
-              <div className="text-sm sm:text-base text-white/80">{s.label}</div>
+              <div className="text-3xl sm:text-4xl mb-3">{item.icon}</div>
+              <div className="text-sm sm:text-base font-bold text-gray-900 mb-1">{item.title}</div>
+              <div className="text-xs sm:text-sm text-gray-500 leading-relaxed">{item.desc}</div>
             </motion.div>
           ))}
         </motion.div>
@@ -347,34 +350,22 @@ function StatsBar() {
 function Transformation() {
   const cards = [
     {
-      leftEmoji: '👻', leftLabel: 'Ghosting',
-      rightEmoji: '💳', rightLabel: 'Deposits',
-      title: 'From Ghosting to Deposits.',
-      sub: 'No more no-shows. Get paid before they sit down.',
-      badge: '−85% no-shows',
-      badgeClass: 'bg-green-50',
-      badgeText: 'text-green-700',
-      checkClass: 'text-green-600',
+      leftEmoji: '📱', leftLabel: 'DMs',
+      rightEmoji: '📅', rightLabel: 'Bookings',
+      title: 'From DMs to Bookings.',
+      sub: 'Clients choose a service and time themselves.',
     },
     {
-      leftEmoji: '⏰', leftLabel: 'Hours',
-      rightEmoji: '💎', rightLabel: 'Assets',
-      title: 'From Hours to Assets.',
-      sub: 'Sell e-guides 24/7. Stop trading time for money.',
-      badge: '3h saved / week',
-      badgeClass: 'bg-blue-50',
-      badgeText: 'text-blue-700',
-      checkClass: 'text-blue-600',
+      leftEmoji: '👻', leftLabel: 'No-Shows',
+      rightEmoji: '💰', rightLabel: 'Deposits',
+      title: 'From No-Shows to Deposits.',
+      sub: 'Collect deposits before appointments and protect your time.',
     },
     {
-      leftEmoji: '📱', leftLabel: 'Profile',
-      rightEmoji: '🏢', rightLabel: 'Platform',
-      title: 'From Profile to Platform.',
-      sub: 'Your colors. Your link. A studio that looks like you.',
-      badge: '2 min setup',
-      badgeClass: 'bg-purple-50',
-      badgeText: 'text-purple-700',
-      checkClass: 'text-purple-600',
+      leftEmoji: '📸', leftLabel: 'Followers',
+      rightEmoji: '💅', rightLabel: 'Clients',
+      title: 'From Followers to Clients.',
+      sub: 'Turn your Instagram audience into booked appointments.',
     },
   ];
 
@@ -416,12 +407,7 @@ function Transformation() {
               </div>
 
               <h3 className="text-xl font-bold text-gray-900 mb-3">{c.title}</h3>
-              <p className="text-sm sm:text-base text-gray-600 mb-4 leading-relaxed">{c.sub}</p>
-
-              <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full ${c.badgeClass}`}>
-                <CheckIcon className={`w-4 h-4 flex-shrink-0 ${c.checkClass}`} />
-                <span className={`text-sm font-bold ${c.badgeText}`}>{c.badge}</span>
-              </div>
+              <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{c.sub}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -430,40 +416,25 @@ function Transformation() {
   );
 }
 
-// ─── 5. THE CEO CLUB ──────────────────────────────────────────────────────────
+// ─── 5. BRAND SECTION ────────────────────────────────────────────────────────
 
-function CEOClub() {
-  const items = [
-    {
-      avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
-      name: 'Sarah K.',    location: 'Paris',
-      quote: 'I went from 20 to 80 bookings a month. The deposit feature alone paid for itself in week one.',
-      metric: '+300%', metricLabel: 'bookings',
-    },
-    {
-      avatar: 'https://randomuser.me/api/portraits/women/65.jpg',
-      name: 'Maya L.',     location: 'Lyon',
-      quote: 'Setup took 8 minutes. I copied the link into my bio and woke up to 4 new bookings. Wild.',
-      metric: '8 min', metricLabel: 'to go live',
-    },
-    {
-      avatar: 'https://randomuser.me/api/portraits/women/26.jpg',
-      name: 'Jade B.',     location: 'Bordeaux',
-      quote: 'No more "how much?" DMs. Clients see prices, pick a slot, pay. Done. I got my weekends back.',
-      metric: '3h', metricLabel: 'saved / week',
-    },
+function BrandSection() {
+  const previews = [
+    { src: '/nelsy-step-2-services.png', alt: 'Services page preview' },
+    { src: '/nelsy-step-3-calendar.png', alt: 'Availability picker preview' },
+    { src: '/nelsy-step-4-payment.png',  alt: 'Booking and payment preview' },
   ];
 
   return (
     <section className="py-16 sm:py-24 bg-gray-50 px-4">
       <div className="max-w-md mx-auto sm:max-w-6xl">
         <motion.div {...fadeUp()} className="text-center mb-12">
-          <p className="text-xs font-bold tracking-widest text-gray-400 mb-4 uppercase">[ WALL OF LOVE ]</p>
+          <p className="text-xs font-bold tracking-widest text-gray-400 mb-4 uppercase">[ BUILT FOR YOUR BRAND ]</p>
           <h2 className="text-heading-mobile sm:text-heading-desktop text-gray-900 mb-4">
-            They love it. Why not you?
+            Your booking page should look like you.
           </h2>
-          <p className="text-lg sm:text-xl text-gray-600">
-            500+ nail techs have already taken back their time — and their income.
+          <p className="text-lg sm:text-xl text-gray-500 max-w-lg mx-auto">
+            Customize your page, services and booking experience to match your brand.
           </p>
         </motion.div>
 
@@ -472,40 +443,20 @@ function CEOClub() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={{ visible: { transition: { staggerChildren: 0.1 } }, hidden: {} }}
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-4 sm:grid-cols-3 justify-items-center"
         >
-          {items.map((t) => (
+          {previews.map((p) => (
             <motion.div
-              key={t.name}
+              key={p.src}
               variants={{ hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.45 } } }}
-              className="bg-white rounded-2xl p-6 border border-gray-200 hover:shadow-xl transition-all"
-              onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#F52B8C'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#E4E4E7'; }}
+              className="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all w-full max-w-[260px]"
             >
-              {/* Stars */}
-              <div className="flex gap-0.5 mb-4">
-                {[...Array(5)].map((_, j) => (
-                  <StarIcon key={j} className="w-5 h-5 text-[#F52B8C]" />
-                ))}
-              </div>
-
-              <p className="text-sm sm:text-base text-gray-700 mb-6 italic leading-relaxed">
-                "{t.quote}"
-              </p>
-
-              {/* Metric gradient card */}
-              <div className="rounded-xl p-4 mb-6 text-white" style={{ background: 'linear-gradient(to right, #F52B8C, #9333EA)' }}>
-                <div className="text-3xl sm:text-4xl font-bold mb-1">{t.metric}</div>
-                <div className="text-sm opacity-90">{t.metricLabel}</div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <img src={t.avatar} alt={t.name} className="w-12 h-12 rounded-full border-2 border-gray-100" />
-                <div>
-                  <div className="font-semibold text-gray-900">{t.name}</div>
-                  <div className="text-sm text-gray-500">{t.location}</div>
-                </div>
-              </div>
+              <img
+                src={p.src}
+                alt={p.alt}
+                className="w-full h-auto object-contain"
+                draggable={false}
+              />
             </motion.div>
           ))}
         </motion.div>
@@ -524,11 +475,11 @@ function FinalCTA() {
           [ GET STARTED ]
         </motion.p>
         <motion.h2 {...fadeUp(0.04)} className="text-hero-mobile sm:text-hero-desktop font-bold mb-6">
-          Ready to book your first client tonight?
+          Your next client could already be following you.
         </motion.h2>
 
         <motion.p {...fadeUp(0.08)} className="text-lg sm:text-2xl mb-10 text-white/90">
-          2 minutes setup. Your link, live tonight.
+          Turn your bio into your booking page.
         </motion.p>
 
         <motion.div {...fadeUp(0.16)}>
@@ -537,21 +488,14 @@ function FinalCTA() {
               className="w-full sm:w-auto px-10 py-5 bg-white rounded-2xl font-bold hover:bg-gray-50 active:scale-95 transition-all shadow-2xl text-lg sm:text-xl mb-8"
               style={{ color: '#F52B8C' }}
             >
-              Get my free booking page →
+              Start your 14-day free trial →
             </button>
           </Link>
         </motion.div>
 
-        <motion.div
-          {...fadeUp(0.24)}
-          className="mt-8 flex items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-white/80 flex-wrap"
-        >
-          <span className="flex items-center gap-1.5"><CheckIcon className="w-4 h-4" /> No credit card</span>
-          <span className="opacity-40">•</span>
-          <span className="flex items-center gap-1.5"><CheckIcon className="w-4 h-4" /> 2 min setup</span>
-          <span className="opacity-40">•</span>
-          <span className="flex items-center gap-1.5"><CheckIcon className="w-4 h-4" /> Cancel anytime</span>
-        </motion.div>
+        <motion.p {...fadeUp(0.24)} className="mt-6 text-xs sm:text-sm text-white/70">
+          $0 today · Cancel anytime · 0% Nelsy booking commission
+        </motion.p>
       </div>
     </section>
   );
@@ -565,7 +509,7 @@ function ZeroCommission() {
       <div className="max-w-2xl mx-auto text-center">
         <motion.div {...fadeUp()}>
           <motion.p {...fadeUp()} className="text-xs font-bold tracking-widest text-gray-400 mb-6 uppercase">
-            [ 0% COMMISSION ]
+            [ 0% NELSY BOOKING COMMISSION ]
           </motion.p>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
@@ -578,11 +522,10 @@ function ZeroCommission() {
             0%
           </motion.div>
           <motion.h2 {...fadeUp(0.1)} className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6">
-            Commission. Always.
+            Nelsy doesn't take a cut of your bookings.
           </motion.h2>
           <motion.p {...fadeUp(0.18)} className="text-lg sm:text-xl text-gray-500 max-w-lg mx-auto leading-relaxed">
-            Every booking platform takes a cut of your income. Nelsy doesn't.
-            You keep everything you charge — only Stripe's standard 2.9% applies. That's it.
+            You keep what you charge. Standard payment processing fees may apply when clients pay online.
           </motion.p>
         </motion.div>
       </div>
@@ -593,13 +536,12 @@ function ZeroCommission() {
 // ─── 6b. COMPARISON TABLE ─────────────────────────────────────────────────────
 
 function ComparisonTable() {
-  const rows = [
-    { feature: 'Online booking page',     dms: false,   others: true,    nelsy: true  },
-    { feature: 'Commission per booking',  dms: false,   others: '5–20%', nelsy: '0%'  },
-    { feature: 'Deposit / prepayment',    dms: false,   others: true,    nelsy: true  },
-    { feature: 'No-show protection',      dms: false,   others: false,   nelsy: true  },
-    { feature: 'Your own brand & colors', dms: false,   others: false,   nelsy: true  },
-    { feature: 'Setup time',              dms: '∞ DMs', others: 'Days',  nelsy: '8 min' },
+  const rows: { feature: string; dms: boolean | string; nelsy: boolean | string }[] = [
+    { feature: '24/7 booking',           dms: false, nelsy: true  },
+    { feature: 'Online deposits',        dms: false, nelsy: true  },
+    { feature: 'Custom branded page',    dms: false, nelsy: true  },
+    { feature: 'Services + availability',dms: false, nelsy: true  },
+    { feature: 'Nelsy booking commission', dms: '—', nelsy: '0%'  },
   ];
 
   const Cell = ({ value }: { value: boolean | string }) => {
@@ -612,21 +554,20 @@ function ComparisonTable() {
     <section className="py-16 sm:py-24 bg-gray-50 px-4">
       <div className="max-w-md mx-auto sm:max-w-3xl">
         <motion.div {...fadeUp()} className="text-center mb-12">
-          <p className="text-xs font-bold tracking-widest text-gray-400 mb-4 uppercase">[ VS THE REST ]</p>
+          <p className="text-xs font-bold tracking-widest text-gray-400 mb-4 uppercase">[ BUILT DIFFERENTLY ]</p>
           <h2 className="text-heading-mobile sm:text-heading-desktop text-gray-900 mb-4">
-            The booking app that doesn't steal from you.
+            Your brand. Your clients. Your business.
           </h2>
           <p className="text-lg sm:text-xl text-gray-500">
-            See what you've been missing.
+            A booking experience designed for independent nail techs.
           </p>
         </motion.div>
 
         <motion.div {...fadeUp(0.1)} className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
           {/* Header */}
-          <div className="grid grid-cols-4 text-center text-xs sm:text-sm font-bold border-b border-gray-100">
+          <div className="grid grid-cols-3 text-center text-xs sm:text-sm font-bold border-b border-gray-100">
             <div className="py-4 px-2 text-left text-gray-400 pl-4 sm:pl-6">Feature</div>
             <div className="py-4 px-2 text-gray-400">DMs</div>
-            <div className="py-4 px-2 text-gray-400">Others</div>
             <div className="py-4 px-2 text-white rounded-tr-2xl" style={{ backgroundColor: '#F52B8C' }}>Nelsy</div>
           </div>
 
@@ -634,11 +575,10 @@ function ComparisonTable() {
           {rows.map((row, i) => (
             <div
               key={row.feature}
-              className={`grid grid-cols-4 text-center items-center border-b border-gray-50 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}
+              className={`grid grid-cols-3 text-center items-center border-b border-gray-50 last:border-0 ${i % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'}`}
             >
               <div className="py-4 px-4 sm:px-6 text-left text-xs sm:text-sm font-medium text-gray-700">{row.feature}</div>
               <div className="py-4 px-2"><Cell value={row.dms} /></div>
-              <div className="py-4 px-2"><Cell value={row.others} /></div>
               <div className="py-4 px-2" style={{ backgroundColor: 'rgba(245,43,140,0.04)' }}>
                 <Cell value={row.nelsy} />
               </div>
@@ -646,9 +586,8 @@ function ComparisonTable() {
           ))}
 
           {/* Footer CTA row */}
-          <div className="grid grid-cols-4 text-center items-center bg-white border-t border-gray-100 rounded-b-2xl">
+          <div className="grid grid-cols-3 text-center items-center bg-white border-t border-gray-100 rounded-b-2xl">
             <div className="py-4 px-4 sm:px-6" />
-            <div className="py-4 px-2" />
             <div className="py-4 px-2" />
             <div className="py-4 px-2">
               <Link to="/onboarding">
@@ -697,11 +636,11 @@ export default function LandingPremium() {
       <Nav />
       <Hero />
       <HowItWorks />
-      <StatsBar />
+      <ProductBenefits />
       <ZeroCommission />
       <ComparisonTable />
       <Transformation />
-      <CEOClub />
+      <BrandSection />
       <FinalCTA />
       <Footer />
     </div>
