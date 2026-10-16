@@ -1123,6 +1123,10 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       if (!session) throw new Error('[session] No session available');
 
       // 4. Create subscription + SetupIntent (Architecture B: subscription-first, card collected via pending_setup_intent)
+      const priceId = PRICE_IDS[formData.plan];
+      if (!priceId || priceId === 'undefined') {
+        throw new Error('[intent] Payment configuration error. Please contact support.');
+      }
       setError('Step 4/4 — Setting up payment...');
       const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
         method: 'POST',
@@ -1131,7 +1135,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
           'Authorization': `Bearer ${session.access_token}`,
           'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY as string,
         },
-        body: JSON.stringify({ priceId: PRICE_IDS[formData.plan], plan: 'pro' }),
+        body: JSON.stringify({ priceId, plan: 'pro' }),
       });
 
       if (!res.ok) {

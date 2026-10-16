@@ -465,6 +465,116 @@ function BrandSection() {
   );
 }
 
+// ─── PRICING SECTION ─────────────────────────────────────────────────────────
+
+function PricingSection() {
+  const benefits = [
+    '$0 today',
+    'Cancel anytime',
+    '0% Nelsy booking commission',
+  ];
+
+  return (
+    <section className="py-16 sm:py-24 bg-white px-4">
+      <div className="max-w-md mx-auto sm:max-w-2xl">
+
+        <motion.div {...fadeUp()} className="text-center mb-10">
+          <p style={{
+            fontSize: 11, fontWeight: 700, letterSpacing: '0.14em',
+            color: PINK, marginBottom: 14, textTransform: 'uppercase',
+          }}>
+            [ SIMPLE PRICING ]
+          </p>
+          <h2 style={{
+            fontSize: 'clamp(1.75rem, 4.5vw, 2.75rem)',
+            fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.03em',
+            color: '#0D0D0D', marginBottom: 8,
+          }}>
+            One simple plan. Everything you need.
+          </h2>
+        </motion.div>
+
+        <motion.div
+          {...fadeUp(0.08)}
+          className="rounded-3xl border-2 p-8 sm:p-10 text-center"
+          style={{ borderColor: PINK, background: 'linear-gradient(135deg, #FFF7FA 0%, #FFFFFF 100%)' }}
+        >
+          {/* Main price */}
+          <div className="mb-2">
+            <span style={{
+              fontSize: 'clamp(3.5rem, 12vw, 5.5rem)',
+              fontWeight: 900, color: '#0D0D0D', lineHeight: 1,
+              letterSpacing: '-0.04em',
+            }}>
+              $29.99
+            </span>
+            <span className="text-lg sm:text-xl text-gray-500 font-medium ml-1">/ month</span>
+          </div>
+
+          <p className="text-base sm:text-lg text-gray-500 mb-8">
+            Start with a 14-day free trial.
+          </p>
+
+          {/* Benefits */}
+          <ul className="space-y-3 mb-8 text-left max-w-xs mx-auto">
+            {benefits.map((b) => (
+              <li key={b} className="flex items-center gap-3 text-sm sm:text-base text-gray-700">
+                <span
+                  className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-white text-xs font-bold"
+                  style={{ backgroundColor: PINK }}
+                  aria-hidden="true"
+                >✓</span>
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          {/* Primary CTA */}
+          <Link to="/onboarding">
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              className="w-full sm:w-auto text-[15px] sm:text-[17px] px-10 py-4 text-white font-bold rounded-2xl hover:opacity-90 transition active:scale-95"
+              style={{
+                backgroundColor: PINK,
+                boxShadow: '0 8px 28px rgba(245,43,140,0.28)',
+                letterSpacing: '-0.01em',
+              }}
+            >
+              Start your 14-day free trial →
+            </motion.button>
+          </Link>
+        </motion.div>
+
+        {/* Annual option */}
+        <motion.div
+          {...fadeUp(0.14)}
+          className="mt-4 rounded-2xl border border-gray-200 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 bg-gray-50"
+        >
+          <div className="text-center sm:text-left">
+            <span className="text-base font-bold text-gray-900">$300 </span>
+            <span className="text-sm text-gray-500">/ year</span>
+            <span
+              className="ml-2 text-xs font-bold px-2 py-0.5 rounded-full"
+              style={{ backgroundColor: '#EEF2FF', color: '#4F46E5' }}
+            >
+              Save compared to monthly
+            </span>
+          </div>
+          <Link to="/onboarding">
+            <button
+              className="text-sm font-bold px-5 py-2.5 rounded-xl border-2 hover:opacity-80 transition whitespace-nowrap"
+              style={{ borderColor: PINK, color: PINK }}
+            >
+              Choose annual →
+            </button>
+          </Link>
+        </motion.div>
+
+      </div>
+    </section>
+  );
+}
+
 // ─── 6. FINAL CTA ─────────────────────────────────────────────────────────────
 
 function FinalCTA() {
@@ -479,7 +589,7 @@ function FinalCTA() {
         </motion.h2>
 
         <motion.p {...fadeUp(0.08)} className="text-lg sm:text-2xl mb-10 text-white/90">
-          Turn your bio into your booking page.
+          Start free for 14 days, then $29.99/month.
         </motion.p>
 
         <motion.div {...fadeUp(0.16)}>
@@ -641,6 +751,7 @@ export default function LandingPremium() {
       <ComparisonTable />
       <Transformation />
       <BrandSection />
+      <PricingSection />
       <FinalCTA />
       <Footer />
     </div>
