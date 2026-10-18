@@ -6,10 +6,7 @@ import { supabase } from '../lib/supabase';
 import { validatePassword } from '../utils/validation';
 import { track, identify } from '../lib/analytics';
 
-const stripePromise = loadStripe(
-  (import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string) ||
-  'pk_live_51QkRCcKByJwN07Hwy3K5FVGYFJUMEsNECokJHs2twScSUNBWaVsH294mjPFvUoix8oowlYr8x5zp0Kr0ZCT2gOrG00AsMjQYdg'
-);
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -874,8 +871,8 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
 // ─── Step 4 — Payment (embedded Stripe Elements) ──────────────────────────────
 
 const PRICE_IDS: Record<'monthly' | 'yearly', string> = {
-  monthly: (import.meta.env.VITE_STRIPE_PRICE_MONTHLY as string) || 'price_1T8RQeKByJwN07Hw4mAN6FFD',
-  yearly: (import.meta.env.VITE_STRIPE_PRICE_YEARLY as string) || 'price_1T8RRxKByJwN07HwySgYEPTu',
+  monthly: import.meta.env.VITE_STRIPE_PRICE_MONTHLY as string,
+  yearly: import.meta.env.VITE_STRIPE_PRICE_YEARLY as string,
 };
 
 const STRIPE_APPEARANCE = {
