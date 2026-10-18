@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { PostHog } from 'npm:posthog-node'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
@@ -22,62 +23,94 @@ serve(async (req) => {
   }
 
   try {
-    const { userId, priceId, email, plan } = await req.json() as {
-      userId: string
-      priceId: string
-      email: string
-      plan: string
+    // Validate JWT
+    const authHeader = req.headers.get('authorization')
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401, headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      })
     }
 
-    if (!userId || !priceId || !email) {
-      return new Response(JSON.stringify({ error: 'Missing required fields' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    const userClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { authorization: authHeader } } }
+    )
+
+    const { data: { user }, error: authError } = await userClient.auth.getUser()
+    if (authError || !user) {
+      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+        status: 401, headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      })
+    }
+
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
+    )
+
+    const { priceId, plan } = await req.json() as { priceId: string; plan?: string }
+
+    if (!priceId) {
+      return new Response(JSON.stringify({ error: 'priceId is required' }), {
+        status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
     }
 
     const origin = req.headers.get('origin') ?? 'https://getnelsy.com'
 
-    // Create customer first (required for Accounts V2)
-    const customer = await stripe.customers.create({
-      email,
-      metadata: { userId, plan: plan ?? 'pro' },
-    })
+    // Reuse existing Stripe customer if available
+    const { data: existingProfile } = await supabase
+      .from('profiles')
+      .select('stripe_customer_id')
+      .eq('id', user.id)
+      .single()
+
+    let customerId = existingProfile?.stripe_customer_id ?? null
+
+    if (!customerId) {
+      const customer = await stripe.customers.create({
+        email: user.email ?? '',
+        metadata: { supabase_user_id: user.id, plan: plan ?? 'pro' },
+      })
+      customerId = customer.id
+
+      await supabase.from('profiles').update({ stripe_customer_id: customerId }).eq('id', user.id)
+    }
 
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       payment_method_types: ['card'],
-      customer: customer.id,
-      client_reference_id: userId,
+      customer: customerId,
+      client_reference_id: user.id,
       line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: {
         trial_period_days: 14,
         metadata: { plan: plan ?? 'pro' },
       },
       metadata: {
-        userId,
+        userId: user.id,
         plan: plan ?? 'pro',
       },
-      success_url: `${origin}/onboarding/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/onboarding`,
+      success_url: `${origin}/dashboard?subscribed=1`,
+      cancel_url: `${origin}/dashboard`,
     })
 
-    const posthog = new PostHog(Deno.env.get('POSTHOG_API_KEY') ?? '', {
-      host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
-      flushAt: 1,
-      flushInterval: 0,
-    })
-    posthog.capture({
-      distinctId: userId,
-      event: 'subscription checkout started',
-      properties: {
-        plan: plan ?? 'pro',
-        price_id: priceId,
-        trial_period_days: 14,
-        session_id: session.id,
-      },
-    })
-    await posthog.shutdown()
+    try {
+      const posthog = new PostHog(Deno.env.get('POSTHOG_API_KEY') ?? '', {
+        host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
+        flushAt: 1,
+        flushInterval: 0,
+      })
+      posthog.capture({
+        distinctId: user.id,
+        event: 'subscription checkout started',
+        properties: { plan: plan ?? 'pro', price_id: priceId, trial_period_days: 14, session_id: session.id },
+      })
+      await posthog.shutdown()
+    } catch {
+      // Analytics failure must never block the response
+    }
 
     return new Response(
       JSON.stringify({ url: session.url }),

@@ -101,13 +101,36 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
     if (!supabase || !profile?.id) return;
     setLoadingPortal(true);
     try {
-      const { data, error } = await supabase.functions.invoke('create-billing-portal', {
-        body: { return_url: window.location.origin + '/dashboard' },
-      });
-      if (error || !data?.url) throw new Error(error?.message ?? 'No URL returned');
-      window.location.href = data.url as string;
-    } catch {
-      showToast('Could not open subscription portal. Try again later.', 'error');
+      const status = profile.subscription_status as string | undefined;
+      const hasActiveSub = status === 'active' || status === 'trialing' || status === 'past_due';
+
+      if (hasActiveSub) {
+        // Open billing portal to manage existing subscription
+        const { data, error } = await supabase.functions.invoke('create-billing-portal', {
+          body: { return_url: window.location.origin + '/dashboard' },
+        });
+        if (error || !data?.url) throw new Error(error?.message ?? 'No URL returned');
+        window.location.href = data.url as string;
+      } else {
+        // No active sub — redirect to Stripe Checkout to subscribe
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) throw new Error('Non authentifié');
+        const priceId = import.meta.env.VITE_STRIPE_PRICE_MONTHLY as string;
+        if (!priceId) throw new Error('Plan non configuré');
+        const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
+          body: {
+            userId: user.id,
+            email: user.email ?? '',
+            priceId,
+            plan: 'pro',
+          },
+        });
+        if (error || !data?.url) throw new Error(error?.message ?? 'No URL returned');
+        window.location.href = data.url as string;
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : 'Une erreur est survenue';
+      showToast(msg, 'error');
     } finally {
       setLoadingPortal(false);
     }
@@ -132,7 +155,17 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
   const accountItems: { label: string; desc: string; action: () => void; danger?: boolean }[] = [
     { label: 'Edit Profile Details', desc: 'Update name, email, address', action: () => setShowEditProfile(true) },
     { label: 'Change Password', desc: 'Update your password', action: () => setShowChangePassword(true) },
-    { label: 'Manage subscription', desc: loadingPortal ? 'Opening portal…' : 'Change plan or update payment', action: () => void handleSubscription() },
+    {
+      label: (() => {
+        const s = profile?.subscription_status as string | undefined;
+        return (s === 'active' || s === 'trialing' || s === 'past_due') ? 'Manage subscription' : 'Subscribe to Nelsy';
+      })(),
+      desc: loadingPortal ? 'Redirecting…' : (() => {
+        const s = profile?.subscription_status as string | undefined;
+        return (s === 'active' || s === 'trialing' || s === 'past_due') ? 'Change plan or update payment' : 'Start your 14-day free trial';
+      })(),
+      action: () => void handleSubscription(),
+    },
     { label: 'Payment Methods', desc: 'Setup Stripe payouts', action: () => navigate('/onboarding-stripe') },
     { label: 'Cancel subscription', desc: 'End your Nelsy plan at period end', action: () => setShowCancelModal(true), danger: true },
   ];

@@ -6,7 +6,10 @@ import { supabase } from '../lib/supabase';
 import { validatePassword } from '../utils/validation';
 import { track, identify } from '../lib/analytics';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
+const stripePromise = loadStripe(
+  (import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string) ||
+  'pk_live_51QkRCcKByJwN07Hwy3K5FVGYFJUMEsNECokJHs2twScSUNBWaVsH294mjPFvUoix8oowlYr8x5zp0Kr0ZCT2gOrG00AsMjQYdg'
+);
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -871,8 +874,8 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
 // ─── Step 4 — Payment (embedded Stripe Elements) ──────────────────────────────
 
 const PRICE_IDS: Record<'monthly' | 'yearly', string> = {
-  monthly: import.meta.env.VITE_STRIPE_PRICE_MONTHLY as string,
-  yearly: import.meta.env.VITE_STRIPE_PRICE_YEARLY as string,
+  monthly: (import.meta.env.VITE_STRIPE_PRICE_MONTHLY as string) || 'price_1T8RQeKByJwN07Hw4mAN6FFD',
+  yearly: (import.meta.env.VITE_STRIPE_PRICE_YEARLY as string) || 'price_1T8RRxKByJwN07HwySgYEPTu',
 };
 
 const STRIPE_APPEARANCE = {
@@ -1128,19 +1131,31 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
         throw new Error('[intent] Payment configuration error. Please contact support.');
       }
       setError('Step 4/4 — Setting up payment...');
-      const res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session.access_token}`,
-          'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY as string,
-        },
-        body: JSON.stringify({ priceId, plan: 'pro' }),
-      });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 20000);
+      let res: Response;
+      try {
+        res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
+          method: 'POST',
+          signal: controller.signal,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY as string,
+          },
+          body: JSON.stringify({ priceId, plan: 'pro' }),
+        });
+      } catch (fetchErr) {
+        throw new Error(`[intent] Network error: ${fetchErr instanceof Error ? fetchErr.message : String(fetchErr)}`);
+      } finally {
+        clearTimeout(timeout);
+      }
 
       if (!res.ok) {
         const body = await res.text().catch(() => '');
-        throw new Error(`[intent] ${res.status}: ${body}`);
+        let detail = body;
+        try { detail = (JSON.parse(body) as { error?: string }).error ?? body; } catch { /* keep raw */ }
+        throw new Error(`[intent] ${res.status}: ${detail}`);
       }
       const data = await res.json() as { clientSecret?: string; type?: 'setup' | 'payment'; subscriptionId?: string };
 
@@ -1240,7 +1255,11 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
         </label>
 
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs mb-3">
+          <div className={`p-3 rounded-xl text-xs mb-3 ${
+            error.startsWith('Step')
+              ? 'bg-blue-50 border border-blue-200 text-blue-700'
+              : 'bg-red-50 border border-red-200 text-red-700'
+          }`}>
             {error}
           </div>
         )}
