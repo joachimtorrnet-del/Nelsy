@@ -98,7 +98,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
   const [serviceCount, setServiceCount] = useState(0);
   const [stripeReady, setStripeReady] = useState(false);
 
-  const { toast, showSuccess, showError, hideToast } = useToast();
+  const { toast, showSuccess, hideToast } = useToast();
   const currency = (profile?.business_currency ?? 'EUR').toUpperCase();
 
   // ── Period-derived KPIs (computed from cached allBookings) ───────────────
