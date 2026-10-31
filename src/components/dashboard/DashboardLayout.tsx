@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Copy, CheckCheck, ExternalLink, Menu } from 'lucide-react';
 import { Sidebar } from './Sidebar';
+import BottomNav from './BottomNav';
 import type { ReactNode } from 'react';
 
 interface Profile {
@@ -133,11 +134,18 @@ export default function DashboardLayout({
           </div>
         </header>
 
-        {/* Main content */}
-        <main className="flex-1 overflow-y-auto">
+        {/* Main content — extra bottom padding on mobile for BottomNav */}
+        <main className="flex-1 overflow-y-auto pb-20 lg:pb-0">
           {children}
         </main>
       </div>
+
+      {/* Mobile bottom nav — hidden on desktop */}
+      <BottomNav
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        pendingCount={pendingCount}
+      />
     </div>
   );
 }
