@@ -80,6 +80,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
   // desktop-only extras
   const [serviceCount, setServiceCount] = useState(0);
   const [stripeReady, setStripeReady] = useState(false);
+  const [checklistCollapsed, setChecklistCollapsed] = useState(false);
 
   const { toast, showSuccess, showError, hideToast } = useToast();
   const chartData = buildChartData(allBookings, RANGE_DAYS[chartRange]);
@@ -445,66 +446,88 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
       {/* ════════════════════════════════════════════════════════════════
           DESKTOP  (≥ lg)  — new layout
       ════════════════════════════════════════════════════════════════ */}
-      <div className="hidden lg:block bg-white min-h-full pb-12">
-        <div className="w-full max-w-[1400px] mx-auto px-8 py-7">
+      <div className="hidden lg:block bg-white min-h-full pb-10">
+        <div className="w-full max-w-[1400px] mx-auto px-8 py-5">
 
           {/* Greeting + period selector */}
-          <div className="flex items-center justify-between gap-4 mb-6">
+          <div className="flex items-center justify-between gap-4 mb-4">
             <div>
-              <h2 className="text-2xl font-bold text-[#1A1A1A]">Hey {displayFirstName}, welcome back!</h2>
-              <p className="text-sm text-gray-400 mt-0.5">
+              <h2 className="text-xl font-bold text-[#1A1A1A]">Hey {displayFirstName}, welcome back!</h2>
+              <p className="text-xs text-gray-400 mt-0.5">
                 {chartRange === '7d' ? 'Last 7 days' : chartRange === '30d' ? 'Last 30 days' : 'Last 90 days'}
               </p>
             </div>
             <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
               {(['7d', '30d', '90d'] as ChartRange[]).map((r) => (
                 <button key={r} onClick={() => setChartRange(r)}
-                  className={`px-4 py-1.5 rounded-lg text-sm font-semibold transition-all ${chartRange === r ? 'bg-white text-[#1A1A1A] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
+                  className={`px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-all ${chartRange === r ? 'bg-white text-[#1A1A1A] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
                   {r === '7d' ? 'Last 7 days' : r === '30d' ? 'Last 30 days' : 'Last 90 days'}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Setup checklist */}
+          {/* Setup checklist — collapsible */}
           {!allSetupDone && (
-            <div className="mb-6 bg-[#fff8fa] border border-pink-100 rounded-2xl p-5">
-              <div className="flex items-center justify-between mb-3">
-                <p className="font-semibold text-[#1A1A1A] text-sm">Get your studio ready — {setupDoneCount}/{setupSteps.length} steps done</p>
-                <div className="w-24 h-1.5 bg-pink-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#F52B8C] rounded-full transition-all" style={{ width: `${(setupDoneCount / setupSteps.length) * 100}%` }} />
+            <div className="mb-4 bg-[#fff8fa] border border-pink-100 rounded-2xl overflow-hidden">
+              {/* Header — always visible */}
+              <button
+                onClick={() => setChecklistCollapsed((v) => !v)}
+                className="w-full flex items-center justify-between px-4 py-3 hover:bg-pink-50/50 transition"
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-semibold text-[#1A1A1A] text-sm">
+                    Get your studio ready
+                  </span>
+                  <span className="text-xs text-gray-400">{setupDoneCount}/{setupSteps.length} done</span>
                 </div>
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                {setupSteps.map(({ id, label, done, action }) => (
-                  <button key={id} onClick={() => !done && action()} disabled={done}
-                    className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm text-left transition-all ${done ? 'bg-white text-gray-400 cursor-default' : 'bg-white border border-pink-100 text-[#1A1A1A] hover:border-[#F52B8C] hover:shadow-sm'}`}>
-                    {done ? <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" /> : <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />}
-                    <span className={done ? 'line-through' : 'font-medium'}>{label}</span>
-                    {!done && <ChevronRight className="w-4 h-4 text-[#F52B8C] ml-auto flex-shrink-0" />}
-                  </button>
-                ))}
-              </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-20 h-1.5 bg-pink-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-[#F52B8C] rounded-full transition-all" style={{ width: `${(setupDoneCount / setupSteps.length) * 100}%` }} />
+                  </div>
+                  <ChevronRight className={`w-4 h-4 text-gray-400 transition-transform ${checklistCollapsed ? '' : 'rotate-90'}`} />
+                </div>
+              </button>
+              {/* Steps — hidden when collapsed */}
+              {!checklistCollapsed && (
+                <div className="px-4 pb-3 grid grid-cols-2 gap-2">
+                  {setupSteps.map(({ id, label, done, action }) => (
+                    <button key={id} onClick={() => !done && action()} disabled={done}
+                      className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-left transition-all ${done ? 'bg-white text-gray-400 cursor-default' : 'bg-white border border-pink-100 text-[#1A1A1A] hover:border-[#F52B8C]'}`}>
+                      {done ? <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" /> : <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />}
+                      <span className={done ? 'line-through text-xs' : 'font-medium text-sm'}>{label}</span>
+                      {!done && <ChevronRight className="w-3.5 h-3.5 text-[#F52B8C] ml-auto flex-shrink-0" />}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
           {/* KPI cards */}
-          <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-2">
+          <div className="grid grid-cols-3 gap-3 mb-4">
+            {/* Studio visits */}
+            <div className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Studio visits</span>
-                <Eye className="w-4 h-4 text-gray-300" />
+                <span className="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Studio visits</span>
+                <Eye className="w-3.5 h-3.5 text-gray-200" />
               </div>
-              <p className="text-3xl font-bold text-[#1A1A1A] leading-none">{storeViews !== null ? storeViews.toLocaleString() : '—'}</p>
-              <button onClick={() => onNavigate?.('analytics')} className="text-xs text-[#F52B8C] font-semibold hover:opacity-75 transition text-left">View analytics →</button>
+              <p className="text-3xl font-bold text-[#1A1A1A] leading-none tracking-tight">
+                {storeViews !== null ? storeViews.toLocaleString() : '—'}
+              </p>
+              <button onClick={() => onNavigate?.('analytics')}
+                className="text-[11px] text-gray-400 hover:text-[#F52B8C] transition text-left mt-auto">
+                View analytics →
+              </button>
             </div>
-            <div className="bg-gray-50 rounded-2xl p-5 flex flex-col gap-2">
+            {/* Bookings */}
+            <div className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Bookings</span>
-                <CalendarDays className="w-4 h-4 text-gray-300" />
+                <span className="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Bookings</span>
+                <CalendarDays className="w-3.5 h-3.5 text-gray-200" />
               </div>
               <div className="flex items-end gap-2">
-                <p className="text-3xl font-bold text-[#1A1A1A] leading-none">{periodKpis.bookingCount}</p>
+                <p className="text-3xl font-bold text-[#1A1A1A] leading-none tracking-tight">{periodKpis.bookingCount}</p>
                 {periodKpis.bookingGrowth !== 0 && (
                   <span className={`text-xs font-semibold mb-0.5 flex items-center gap-0.5 ${periodKpis.bookingGrowth > 0 ? 'text-green-600' : 'text-red-500'}`}>
                     {periodKpis.bookingGrowth > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
@@ -512,15 +535,21 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                   </span>
                 )}
               </div>
-              <button onClick={() => onNavigate?.('calendar')} className="text-xs text-[#F52B8C] font-semibold hover:opacity-75 transition text-left">View calendar →</button>
+              <button onClick={() => onNavigate?.('calendar')}
+                className="text-[11px] text-gray-400 hover:text-[#F52B8C] transition text-left mt-auto">
+                View calendar →
+              </button>
             </div>
-            <div className="bg-[#fff8fa] border border-pink-100 rounded-2xl p-5 flex flex-col gap-2">
+            {/* Revenue */}
+            <div className="bg-white border border-pink-100 rounded-2xl p-4 flex flex-col gap-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-medium text-gray-500 uppercase tracking-wide">Revenue</span>
-                <Wallet className="w-4 h-4 text-[#F52B8C]/40" />
+                <span className="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Revenue</span>
+                <Wallet className="w-3.5 h-3.5 text-[#F52B8C]/30" />
               </div>
               <div className="flex items-end gap-2">
-                <p className="text-3xl font-bold text-[#F52B8C] leading-none">{fmt(periodKpis.periodRevenue, currency)}</p>
+                <p className="text-3xl font-bold text-[#F52B8C] leading-none tracking-tight">
+                  {fmt(periodKpis.periodRevenue, currency)}
+                </p>
                 {periodKpis.revenueGrowth !== 0 && (
                   <span className={`text-xs font-semibold mb-0.5 flex items-center gap-0.5 ${periodKpis.revenueGrowth > 0 ? 'text-green-600' : 'text-red-500'}`}>
                     {periodKpis.revenueGrowth > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
@@ -528,19 +557,29 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                   </span>
                 )}
               </div>
-              <button onClick={() => onNavigate?.('revenue')} className="text-xs text-[#F52B8C] font-semibold hover:opacity-75 transition text-left">View income →</button>
+              <button onClick={() => onNavigate?.('revenue')}
+                className="text-[11px] text-gray-400 hover:text-[#F52B8C] transition text-left mt-auto">
+                View income →
+              </button>
             </div>
           </div>
 
-          {/* Chart + Balance */}
-          <div className="flex gap-4 mb-6">
-            <div className="flex-1 bg-gray-50 rounded-2xl p-5 min-w-0">
-              <p className="text-xs text-gray-400 uppercase tracking-wide font-medium">Revenue · {currency}</p>
-              <p className="text-xl font-bold text-[#1A1A1A] mt-0.5 mb-4">{fmt(periodKpis.periodRevenue, currency)}</p>
+          {/* Chart + Balance — 2/3 + 1/3 grid */}
+          <div className="grid grid-cols-[2fr_1fr] gap-3 mb-4">
+            {/* Revenue chart */}
+            <div className="bg-white border border-gray-100 rounded-2xl p-4">
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <p className="text-[11px] text-gray-400 uppercase tracking-wide font-medium">Revenue · {currency}</p>
+                  <p className="text-lg font-bold text-[#1A1A1A] mt-0.5">{fmt(periodKpis.periodRevenue, currency)}</p>
+                </div>
+              </div>
               {chartData.every((p) => p.revenue === 0) ? (
-                <div className="flex items-center justify-center h-[260px] text-gray-400 text-sm">No revenue yet for this period</div>
+                <div className="flex items-center gap-2 py-3 text-gray-400 text-sm">
+                  <span>No revenue recorded for this period.</span>
+                </div>
               ) : (
-                <div className="h-[260px]">
+                <div className="h-[280px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={chartData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
                       {chartGradient}
@@ -559,38 +598,58 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
             </div>
 
             {/* Balance */}
-            <div className="w-64 flex-shrink-0 bg-[#1A1A1A] rounded-2xl p-5 flex flex-col justify-between gap-4">
-              <div>
-                <p className="text-white/50 text-[11px] font-medium uppercase tracking-wider mb-4">Current balance</p>
-                <div className="space-y-4">
+            <div className="bg-[#1A1A1A] rounded-2xl p-4 flex flex-col gap-3">
+              <p className="text-white/50 text-[11px] font-medium uppercase tracking-wider">Current balance</p>
+
+              {!stripeReady ? (
+                /* Stripe not connected */
+                <div className="flex-1 flex flex-col justify-between">
                   <div>
-                    <p className="text-white/50 text-xs mb-1">Available</p>
-                    <p className="text-white text-2xl font-bold tracking-tight">{fmt(balance?.available ?? 0, currency)}</p>
+                    <p className="text-white font-semibold text-sm mb-1">Payments not set up</p>
+                    <p className="text-white/50 text-xs leading-relaxed">
+                      Connect Stripe to accept payments and receive payouts.
+                    </p>
                   </div>
-                  <div className="border-t border-white/10 pt-4">
-                    <p className="text-white/50 text-xs mb-1">Pending</p>
-                    <p className="text-white text-xl font-bold tracking-tight">{fmt(balance?.pending ?? 0, currency)}</p>
-                  </div>
+                  <button onClick={() => onNavigate?.('stripe')}
+                    className="w-full py-2.5 bg-white text-[#1A1A1A] rounded-xl text-sm font-bold hover:opacity-90 transition mt-4">
+                    Set up payments →
+                  </button>
                 </div>
-              </div>
-              {!stripeReady && (
-                <div className="bg-white/10 rounded-xl px-3 py-2.5">
-                  <p className="text-white/80 text-xs font-medium">Connect Stripe to receive payouts</p>
+              ) : (
+                /* Stripe connected */
+                <div className="flex-1 flex flex-col justify-between">
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-white/50 text-xs mb-0.5">Available</p>
+                      <p className="text-white text-2xl font-bold tracking-tight leading-none">
+                        {fmt(balance?.available ?? 0, currency)}
+                      </p>
+                    </div>
+                    <div className="border-t border-white/10 pt-3">
+                      <p className="text-white/50 text-xs mb-0.5">Pending</p>
+                      <p className="text-white text-xl font-bold tracking-tight leading-none">
+                        {fmt(balance?.pending ?? 0, currency)}
+                      </p>
+                    </div>
+                  </div>
+                  <button onClick={() => onNavigate?.('revenue')}
+                    className="w-full py-2.5 bg-[#F52B8C] text-white rounded-xl text-sm font-bold hover:opacity-90 transition mt-4">
+                    View income →
+                  </button>
                 </div>
               )}
-              <button onClick={() => onNavigate?.('revenue')}
-                className="w-full py-2.5 bg-[#F52B8C] text-white rounded-xl text-sm font-bold hover:opacity-90 transition">
-                View income →
-              </button>
             </div>
           </div>
 
           {/* Upcoming appointments */}
-          <div className="bg-gray-50 rounded-2xl p-5">
-            <div className="flex items-center justify-between mb-4">
+          <div className="bg-white border border-gray-100 rounded-2xl p-4">
+            <div className="flex items-center justify-between mb-3">
               <span className="font-bold text-[#1A1A1A]">Upcoming appointments</span>
               <div className="flex items-center gap-2">
-                <button onClick={() => onNavigate?.('calendar')} className="text-sm text-gray-500 font-medium hover:text-[#1A1A1A] transition">View calendar</button>
+                <button onClick={() => onNavigate?.('calendar')}
+                  className="text-xs text-gray-400 font-medium hover:text-[#1A1A1A] transition">
+                  View calendar
+                </button>
                 <button onClick={() => setShowAddBooking(true)}
                   className="flex items-center gap-1 px-3 py-1.5 bg-[#F52B8C] text-white rounded-lg text-xs font-bold hover:opacity-90 transition">
                   <Plus className="w-3.5 h-3.5" /> Add
@@ -598,16 +657,15 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
               </div>
             </div>
             {bookings.length === 0 ? (
-              <div className="text-center py-8">
-                <p className="text-gray-900 font-semibold text-sm mb-1">No upcoming appointments</p>
-                <p className="text-gray-400 text-xs mb-4">Share your studio link to receive bookings</p>
+              <div className="flex items-center justify-between py-3 px-1">
+                <p className="text-sm text-gray-400">No upcoming appointments. Share your link to get booked.</p>
                 <button onClick={() => setShowAddBooking(true)}
-                  className="px-5 py-2.5 bg-[#F52B8C] text-white rounded-xl text-sm font-semibold hover:opacity-90 transition">
+                  className="flex-shrink-0 px-4 py-2 bg-[#F52B8C] text-white rounded-xl text-xs font-semibold hover:opacity-90 transition ml-4">
                   + Add appointment
                 </button>
               </div>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {bookings.slice(0, 6).map((booking) => {
                   const service = servicesMap.get(booking.service_id ?? '');
                   const dt = new Date(booking.booking_datetime);
@@ -619,14 +677,14 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                   const clientInitials = clientName.split(' ').map((n: string) => n[0]).filter(Boolean).join('').toUpperCase().slice(0, 2) || '?';
                   const price = Number(booking.price_total ?? 0);
                   return (
-                    <div key={booking.id} className="bg-white rounded-xl p-3.5 flex items-center gap-3">
-                      <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${cfg.avatar} flex items-center justify-center flex-shrink-0`}>
+                    <div key={booking.id} className="bg-gray-50 rounded-xl p-3 flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${cfg.avatar} flex items-center justify-center flex-shrink-0`}>
                         <span className="text-white text-xs font-bold">{clientInitials}</span>
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
                           <p className="font-semibold text-sm text-[#1A1A1A] truncate">{clientName}</p>
-                          <p className="font-bold text-sm text-[#F52B8C] flex-shrink-0">€{price.toFixed(2)}</p>
+                          <p className="font-bold text-sm text-[#F52B8C] flex-shrink-0">{fmt(price, currency)}</p>
                         </div>
                         <div className="flex items-center justify-between gap-2 mt-0.5">
                           <p className="text-xs text-gray-400 truncate">{service?.name ?? 'Service'} · {dateStr} {timeStr}</p>
@@ -639,7 +697,8 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                   );
                 })}
                 {bookings.length > 6 && (
-                  <button onClick={() => onNavigate?.('calendar')} className="w-full py-2.5 text-sm text-[#F52B8C] font-semibold hover:opacity-75 transition text-center">
+                  <button onClick={() => onNavigate?.('calendar')}
+                    className="w-full py-2 text-xs text-[#F52B8C] font-semibold hover:opacity-75 transition text-center">
                     View {bookings.length - 6} more →
                   </button>
                 )}

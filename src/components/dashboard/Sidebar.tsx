@@ -163,7 +163,7 @@ export function Sidebar({
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden lg:flex flex-col w-60 flex-shrink-0 bg-[#fff8fa] border-r border-pink-100 h-full">
+      <aside className="hidden lg:flex flex-col w-[250px] flex-shrink-0 bg-[#fff8fa] border-r border-pink-100 h-full">
         {content}
       </aside>
 
