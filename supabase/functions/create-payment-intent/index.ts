@@ -108,7 +108,7 @@ serve(async (req) => {
     // ── 3. Validate profile ───────────────────────────────────────────────────
     const { data: profile, error: profileErr } = await supabase
       .from('profiles')
-      .select('id, stripe_account_id, stripe_onboarding_complete, timezone')
+      .select('id, stripe_account_id, stripe_onboarding_complete, timezone, business_currency')
       .eq('id', profileId)
       .single()
 
@@ -144,8 +144,31 @@ serve(async (req) => {
       return jsonResponse({ error: 'Charge amount is invalid' }, 500)
     }
 
+    // Resolve currency from profile (set during onboarding); fall back to EUR.
+    const currency = ((profile.business_currency as string | null) ?? 'eur').toLowerCase()
+    const isZeroDecimal = ['jpy', 'krw'].includes(currency)
+
+    // Stripe minimum charge amounts per currency (major unit).
+    const MINIMUMS: Record<string, number> = {
+      aud: 0.50, bgn: 1.00, cad: 0.50, chf: 0.50, czk: 15.00, dkk: 2.50,
+      eur: 0.50, gbp: 0.30, hkd: 4.00, huf: 175,  idr: 10000, inr: 0.50,
+      isk: 100,  jpy: 50,   krw: 50,   mxn: 10.00, myr: 2.00,  nok: 3.00,
+      nzd: 0.50, pln: 2.00, ron: 2.00, sek: 3.00,  sgd: 0.50,  thb: 10.00,
+      usd: 0.50, aed: 2.00,
+    }
+    const minimum = MINIMUMS[currency] ?? 0.50
+    if (chargeAmount < minimum) {
+      return jsonResponse(
+        { error: `Minimum charge for ${currency.toUpperCase()} is ${minimum}. Please set a higher deposit or price.` },
+        400,
+      )
+    }
+
     // ── 6. Timezone-aware availability checks ─────────────────────────────────
     const tz = (profile.timezone as string | null) ?? 'Europe/Paris'
+    if (!profile.timezone) {
+      console.warn(`Profile ${profileId} has no timezone set — defaulting to Europe/Paris`)
+    }
     const localDate = getLocalDateInTz(bookingDt, tz)
     const dayOfWeek = getDayOfWeekInTz(bookingDt, tz)
     const localTime = getLocalTimeInTz(bookingDt, tz)
@@ -187,11 +210,16 @@ serve(async (req) => {
     }
 
     // ── 7. Idempotence — look up existing booking for this slot ───────────────
-    // If the client retries after a network timeout, we reuse the existing
-    // PaymentIntent rather than creating a second booking.
+    // A booking_session_token is issued when a booking is first created.
+    // Only the same session (proven by the token) may reuse an existing
+    // PaymentIntent. A different client trying the same slot must get a 409.
+    const sessionToken = typeof body.booking_session_token === 'string'
+      ? body.booking_session_token
+      : null
+
     const { data: existingBooking } = await supabase
       .from('bookings')
-      .select('id, stripe_payment_intent_id, status, expires_at')
+      .select('id, stripe_payment_intent_id, status, expires_at, booking_session_token')
       .eq('profile_id', profileId)
       .eq('booking_datetime', bookingDt.toISOString())
       .not('status', 'in', '("cancelled","no_show","expired")')
@@ -204,7 +232,15 @@ serve(async (req) => {
         new Date(existingBooking.expires_at) < new Date()
 
       if (!isExpiredPending && existingBooking.stripe_payment_intent_id) {
-        // Try to return the existing PaymentIntent to the client
+        // Check whether this is a genuine retry from the same session.
+        // If no token or wrong token → reject to prevent PI leakage.
+        if (!sessionToken || sessionToken !== existingBooking.booking_session_token) {
+          return jsonResponse(
+            { error: 'This time slot is currently being booked. Please choose another time.' },
+            409,
+          )
+        }
+        // Same session: try to return the existing PaymentIntent
         try {
           const pi = await stripe.paymentIntents.retrieve(existingBooking.stripe_payment_intent_id)
           const reusable = ['requires_payment_method', 'requires_confirmation', 'requires_action']
@@ -213,6 +249,7 @@ serve(async (req) => {
               client_secret: pi.client_secret,
               payment_intent_id: pi.id,
               booking_id: existingBooking.id,
+              booking_session_token: existingBooking.booking_session_token,
             })
           }
         } catch {
@@ -238,7 +275,10 @@ serve(async (req) => {
     // Stripe payment form (network error, browser close), the booking will be
     // cleaned up by the cron job. Bookings that do get a PaymentIntent are NOT
     // expired by the cron (they wait for payment or the PI's 24h lifetime).
+    // booking_session_token is a one-time token returned to the client so that
+    // genuine retries can reuse the PaymentIntent without leaking it to others.
     const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString()
+    const newSessionToken = crypto.randomUUID()
 
     const { data: booking, error: bookingErr } = await supabase
       .from('bookings')
@@ -253,8 +293,10 @@ serve(async (req) => {
         price_total: dbPrice,
         deposit_paid: dbDeposit,
         nelsy_fee: 0,
+        currency,
         status: 'pending',
         expires_at: expiresAt,
+        booking_session_token: newSessionToken,
       })
       .select('id')
       .single()
@@ -271,7 +313,20 @@ serve(async (req) => {
       throw bookingErr
     }
 
-    // ── 9. Create Stripe PaymentIntent ────────────────────────────────────────
+    // ── 9. Guard: require Stripe Connect to be set up ─────────────────────────
+    if (!profile.stripe_onboarding_complete || !profile.stripe_account_id) {
+      // Clean up the pending booking so the slot doesn't stay blocked
+      await supabase.from('bookings').update({ status: 'expired' }).eq('id', booking.id)
+      return jsonResponse(
+        {
+          error: 'payment_unavailable',
+          message: 'This professional has not yet completed payment setup. Please contact them directly.',
+        },
+        400,
+      )
+    }
+
+    // ── 10. Create Stripe PaymentIntent ───────────────────────────────────────
     // Idempotency key is scoped to the booking UUID so that:
     // - retries with the same booking ID return the same PI
     // - a new booking (different UUID) always gets a fresh PI
@@ -279,38 +334,27 @@ serve(async (req) => {
     let paymentIntent: Stripe.PaymentIntent
 
     try {
-      if (profile.stripe_onboarding_complete && profile.stripe_account_id) {
-        paymentIntent = await stripe.paymentIntents.create(
-          {
-            amount: Math.round(chargeAmount * 100),
-            currency: 'eur',
-            application_fee_amount: 0,
-            transfer_data: { destination: profile.stripe_account_id as string },
-            metadata: {
-              booking_id: booking.id,
-              profile_id: profileId,
-              client_email: String(bd.client_email).trim(),
-            },
-            automatic_payment_methods: { enabled: true },
+      // Convert to smallest currency unit (JPY/KRW are zero-decimal)
+      const stripeAmount = isZeroDecimal
+        ? Math.round(chargeAmount)
+        : Math.round(chargeAmount * 100)
+
+      // Direct charge: PaymentIntent created on the connected account.
+      // Stripe processing fees are deducted from the connected account directly.
+      // Nelsy takes 0% commission — no application_fee_amount, no transfer_data.
+      paymentIntent = await stripe.paymentIntents.create(
+        {
+          amount: stripeAmount,
+          currency,
+          metadata: {
+            booking_id: booking.id,
+            profile_id: profileId,
+            client_email: String(bd.client_email).trim(),
           },
-          { idempotencyKey },
-        )
-      } else {
-        paymentIntent = await stripe.paymentIntents.create(
-          {
-            amount: Math.round(chargeAmount * 100),
-            currency: 'eur',
-            metadata: {
-              booking_id: booking.id,
-              profile_id: profileId,
-              client_email: String(bd.client_email).trim(),
-              mode: 'direct_pre_connect',
-            },
-            automatic_payment_methods: { enabled: true },
-          },
-          { idempotencyKey },
-        )
-      }
+          automatic_payment_methods: { enabled: true },
+        },
+        { idempotencyKey, stripeAccount: profile.stripe_account_id as string },
+      )
     } catch (stripeErr) {
       // Stripe creation failed — expire the booking immediately so it doesn't
       // block the slot until the cron job runs.
@@ -318,13 +362,13 @@ serve(async (req) => {
       throw stripeErr
     }
 
-    // ── 10. Persist PaymentIntent ID on the booking ───────────────────────────
+    // ── 11. Persist PaymentIntent ID on the booking ───────────────────────────
     await supabase
       .from('bookings')
       .update({ stripe_payment_intent_id: paymentIntent.id })
       .eq('id', booking.id)
 
-    // ── 11. Analytics ─────────────────────────────────────────────────────────
+    // ── 12. Analytics ─────────────────────────────────────────────────────────
     try {
       const posthog = new PostHog(Deno.env.get('POSTHOG_API_KEY') ?? '', {
         host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
@@ -342,7 +386,7 @@ serve(async (req) => {
           price_total: dbPrice,
           charge_amount: chargeAmount,
           duration_minutes: dbDuration,
-          currency: 'eur',
+          currency,
           has_connect: !!(profile.stripe_onboarding_complete && profile.stripe_account_id),
         },
       })
@@ -355,6 +399,10 @@ serve(async (req) => {
       client_secret: paymentIntent.client_secret,
       payment_intent_id: paymentIntent.id,
       booking_id: booking.id,
+      booking_session_token: newSessionToken,
+      // Caller must pass this to Stripe.js (loadStripe stripeAccount option) so
+      // stripe.confirmPayment() targets the connected account, not the platform.
+      stripe_account_id: profile.stripe_account_id,
     })
   } catch (err: unknown) {
     console.error('create-payment-intent error:', err instanceof Error ? err.message : String(err))

@@ -10,6 +10,7 @@ export default function BookingConfirmed() {
   const [loading, setLoading] = useState(true);
 
   const sessionId = searchParams.get('session_id');
+  const stripeAccountId = searchParams.get('account');
 
   useEffect(() => {
     loadBookingDetails();
@@ -24,7 +25,10 @@ export default function BookingConfirmed() {
 
     try {
       const { data, error } = await supabase.functions.invoke('get-booking-from-session', {
-        body: { session_id: sessionId },
+        body: {
+          session_id: sessionId,
+          ...(stripeAccountId ? { stripe_account_id: stripeAccountId } : {}),
+        },
       });
 
       if (error) throw error;
@@ -84,12 +88,14 @@ export default function BookingConfirmed() {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
+                  timeZone: booking.salon_timezone ?? undefined,
                 })}
               </p>
               <p className="text-gray-700">
                 {new Date(booking.booking_datetime).toLocaleTimeString('en-US', {
                   hour: '2-digit',
                   minute: '2-digit',
+                  timeZone: booking.salon_timezone ?? undefined,
                 })}
               </p>
             </div>
@@ -112,7 +118,13 @@ export default function BookingConfirmed() {
 
           <div className="flex items-center justify-between">
             <span className="text-gray-600">Amount Paid</span>
-            <span className="text-2xl font-bold text-[#F52B8C]">€{Number(booking.price_total).toFixed(2)}</span>
+            <span className="text-2xl font-bold text-[#F52B8C]">
+              {new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: (booking.salon_currency ?? 'eur').toUpperCase(),
+                minimumFractionDigits: ['jpy', 'krw'].includes(booking.salon_currency ?? '') ? 0 : 2,
+              }).format(Number(booking.price_total))}
+            </span>
           </div>
 
         </div>

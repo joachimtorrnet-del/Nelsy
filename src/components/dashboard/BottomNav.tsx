@@ -1,4 +1,4 @@
-import { Home, CalendarDays, Sparkles, BarChart2, Settings } from 'lucide-react';
+import { Home, CalendarDays, Sparkles, TrendingUp, Settings } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 
 interface Tab {
@@ -15,11 +15,11 @@ interface BottomNavProps {
 }
 
 const BASE_TABS: Tab[] = [
-  { id: 'home',      label: 'Home',         Icon: Home },
-  { id: 'calendar',  label: 'Bookings',     Icon: CalendarDays },
-  { id: 'preview',   label: 'Studio',       Icon: Sparkles },
-  { id: 'analytics', label: 'Stats',        Icon: BarChart2 },
-  { id: 'settings',  label: 'More',         Icon: Settings },
+  { id: 'home',     label: 'Home',     Icon: Home },
+  { id: 'calendar', label: 'Bookings', Icon: CalendarDays },
+  { id: 'preview',  label: 'Studio',   Icon: Sparkles },
+  { id: 'revenue',  label: 'Revenus',  Icon: TrendingUp },
+  { id: 'settings', label: 'Plus',     Icon: Settings },
 ];
 
 export default function BottomNav({ activeTab, setActiveTab, pendingCount }: BottomNavProps) {

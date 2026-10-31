@@ -870,11 +870,6 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
 
 // ─── Step 4 — Payment (embedded Stripe Elements) ──────────────────────────────
 
-const PRICE_IDS: Record<'monthly' | 'yearly', string> = {
-  monthly: import.meta.env.VITE_STRIPE_PRICE_MONTHLY as string,
-  yearly: import.meta.env.VITE_STRIPE_PRICE_YEARLY as string,
-};
-
 const STRIPE_APPEARANCE = {
   theme: 'stripe' as const,
   variables: {
@@ -936,14 +931,33 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
       // Write 'trialing' immediately so Dashboard doesn't bounce back while waiting for
       // the webhook to fire. The webhook writes the same value later (idempotent).
       track('stripe_setup_succeeded', { plan });
+      // subscription_status is a protected field written only by the stripe-webhooks
+      // edge function (service_role). Poll until the webhook fires (typically < 3s)
+      // before navigating so Dashboard doesn't bounce the user back.
       if (supabase) {
         const { data: { session } } = await supabase.auth.getSession();
         if (session) {
-          await supabase
-            .from('profiles')
-            .update({ subscription_status: 'trialing' })
-            .eq('id', session.user.id);
-          track('subscription_trial_started', { plan });
+          const POLL_INTERVAL_MS = 1000;
+          const POLL_TIMEOUT_MS = 8000;
+          const deadline = Date.now() + POLL_TIMEOUT_MS;
+          let confirmed = false;
+          while (Date.now() < deadline) {
+            await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+            const { data: p } = await supabase
+              .from('profiles')
+              .select('subscription_status')
+              .eq('id', session.user.id)
+              .single();
+            if (p?.subscription_status === 'trialing' || p?.subscription_status === 'active') {
+              confirmed = true;
+              track('subscription_trial_started', { plan });
+              break;
+            }
+          }
+          if (!confirmed) {
+            // Webhook delayed — navigate anyway; Dashboard will recheck on load.
+            console.warn('subscription_status not yet updated by webhook after 8s — navigating anyway');
+          }
         }
       }
       track('onboarding_completed', { plan });
@@ -1123,10 +1137,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       if (!session) throw new Error('[session] No session available');
 
       // 4. Create subscription + SetupIntent (Architecture B: subscription-first, card collected via pending_setup_intent)
-      const priceId = PRICE_IDS[formData.plan];
-      if (!priceId || priceId === 'undefined') {
-        throw new Error('[intent] Payment configuration error. Please contact support.');
-      }
+      const plan = formData.plan === 'yearly' ? 'yearly' : 'monthly';
       setError('Step 4/4 — Setting up payment...');
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 20000);
@@ -1140,7 +1151,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
             'Authorization': `Bearer ${session.access_token}`,
             'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY as string,
           },
-          body: JSON.stringify({ priceId, plan: 'pro' }),
+          body: JSON.stringify({ plan }),
         });
       } catch (fetchErr) {
         throw new Error(`[intent] Network error: ${fetchErr instanceof Error ? fetchErr.message : String(fetchErr)}`);

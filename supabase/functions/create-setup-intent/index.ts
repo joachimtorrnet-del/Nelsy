@@ -2,7 +2,10 @@ import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
 import { createClient } from 'npm:@supabase/supabase-js@2'
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
+const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
+if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
+
+const stripe = new Stripe(stripeSecretKey, {
   apiVersion: '2023-10-16',
   httpClient: Stripe.createFetchHttpClient(),
 })
@@ -33,9 +36,19 @@ serve(async (req) => {
       })
     }
 
-    const { priceId, plan } = await req.json() as { priceId: string; plan?: string }
+    const { priceId: rawPriceId, plan } = await req.json() as { priceId?: string; plan?: string }
+
+    // Resolve priceId server-side from plan name, ignoring any client-supplied priceId.
+    // Accepting an arbitrary priceId from the client would allow subscribing at wrong prices.
+    const PLAN_PRICE_MAP: Record<string, string | undefined> = {
+      monthly: Deno.env.get('STRIPE_PRICE_MONTHLY'),
+      yearly: Deno.env.get('STRIPE_PRICE_YEARLY'),
+    }
+    const resolvedPlan = (plan && Object.prototype.hasOwnProperty.call(PLAN_PRICE_MAP, plan)) ? plan : null
+    const priceId = resolvedPlan ? PLAN_PRICE_MAP[resolvedPlan] : rawPriceId  // legacy fallback
+
     if (!priceId) {
-      return new Response(JSON.stringify({ error: 'priceId is required' }), {
+      return new Response(JSON.stringify({ error: "plan must be 'monthly' or 'yearly'" }), {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })

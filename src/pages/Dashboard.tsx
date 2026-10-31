@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import posthog from 'posthog-js';
 import { supabase } from '../lib/supabase';
 import { track } from '../lib/analytics';
@@ -10,6 +10,8 @@ import Preview from './dashboard/Preview';
 import Analytics from './dashboard/Analytics';
 import Settings from './dashboard/Settings';
 import type { SettingsProfile } from './dashboard/Settings';
+import StripeSettings from './dashboard/StripeSettings';
+import Revenue from './dashboard/Revenue';
 import BottomNav from '../components/dashboard/BottomNav';
 import Header from '../components/dashboard/Header';
 
@@ -19,14 +21,25 @@ interface Profile {
   slug?: string;
   instagram_url?: string;
   subscription_status?: string;
+  timezone?: string;
 }
 
+const VALID_TABS = ['home', 'calendar', 'preview', 'analytics', 'revenue', 'stripe', 'settings'];
+
 export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState('home');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialTab = VALID_TABS.includes(searchParams.get('tab') ?? '') ? (searchParams.get('tab') as string) : 'home';
+  const [activeTab, setActiveTab] = useState(initialTab);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [pendingCount, setPendingCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const handleSetTab = (tab: string) => {
+    setActiveTab(tab);
+    // Remove ?tab= query param once navigated so URL stays clean
+    if (searchParams.get('tab')) setSearchParams({});
+  };
 
   useEffect(() => {
     checkUser();
@@ -54,12 +67,10 @@ export default function Dashboard() {
 
       setProfile(profile);
 
-      // 'inactive' = never subscribed or mid-onboarding (pending_setup_intent not yet cleared).
-      // 'incomplete' = legacy status (check constraint blocks it, but guard it anyway).
-      // Both send the user back to finish onboarding rather than showing the blocked screen.
-      if (!profile?.subscription_status ||
-          profile.subscription_status === 'inactive' ||
-          profile.subscription_status === 'incomplete') {
+      // No session at all → onboarding (shouldn't happen but guard it).
+      // 'incomplete' = payment was started but not finished → resume onboarding plan step.
+      // 'inactive' = draft mode (user hit "Maybe later") → allow into dashboard, show banner.
+      if (!profile?.subscription_status || profile.subscription_status === 'incomplete') {
         navigate('/onboarding');
         return;
       }
@@ -125,19 +136,46 @@ export default function Dashboard() {
     );
   }
 
+  const isDraft = profile?.subscription_status === 'inactive';
+
   return (
     <div className="min-h-screen bg-white pb-20">
       <Header profile={profile} />
 
-      <div className="pt-16">
-        {activeTab === 'home' && <Home onNavigate={setActiveTab} />}
+      {/* Draft mode banner — shown when user skipped plan selection */}
+      {isDraft && (
+        <div className="fixed top-16 left-0 right-0 z-30 bg-[#1A1A1A] text-white px-4 py-3 flex items-center justify-between gap-3">
+          <p className="text-[13px] font-medium leading-snug flex-1 min-w-0">
+            Your page isn't live yet. Start your free trial to publish it.
+          </p>
+          <a
+            href="/onboarding?step=plan"
+            className="flex-shrink-0 px-4 py-1.5 rounded-lg text-[12px] font-bold text-[#1A1A1A] bg-white hover:bg-gray-100 transition whitespace-nowrap"
+          >
+            Choose plan →
+          </a>
+        </div>
+      )}
+
+      <div className={isDraft ? 'pt-28' : 'pt-16'}>
+        {activeTab === 'home' && <Home onNavigate={handleSetTab} />}
         {activeTab === 'calendar' && <Calendar profile={profile} />}
         {activeTab === 'preview' && <Preview profile={profile} />}
         {activeTab === 'analytics' && <Analytics profile={profile} />}
-        {activeTab === 'settings' && <Settings profile={profile as SettingsProfile | null} />}
+        {activeTab === 'revenue' && (
+          <div className="px-4 py-6">
+            <Revenue />
+          </div>
+        )}
+        {activeTab === 'stripe' && (
+          <div className="px-4 py-6">
+            <StripeSettings />
+          </div>
+        )}
+        {activeTab === 'settings' && <Settings profile={profile as SettingsProfile | null} onNavigate={handleSetTab} />}
       </div>
 
-      <BottomNav activeTab={activeTab} setActiveTab={setActiveTab} pendingCount={pendingCount} />
+      <BottomNav activeTab={activeTab} setActiveTab={handleSetTab} pendingCount={pendingCount} />
     </div>
   );
 }

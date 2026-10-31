@@ -2,13 +2,62 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#db2777">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nelsy — The booking platform for nail artists</title>
-    <meta name="description" content="Turn your Instagram into a professional booking system. Deposits, calendar, analytics — in 10 minutes." />
+
+    <!-- Default title — overridden per-route by react-helmet-async -->
+    <title>Nelsy | The All-In-One Platform For Beauty Creators</title>
+    <!-- No default meta description here: every public route injects its own via SEOMeta/react-helmet-async -->
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Site-wide structured data — Organization + SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://getnelsy.com/#organization",
+          "name": "Nelsy",
+          "url": "https://getnelsy.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://getnelsy.com/favicon.png"
+          },
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@getnelsy.com",
+            "contactType": "customer support"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://getnelsy.com/#website",
+          "name": "Nelsy",
+          "url": "https://getnelsy.com",
+          "publisher": { "@id": "https://getnelsy.com/#organization" }
+        },
+        {
+          "@type": "SoftwareApplication",
+          "@id": "https://getnelsy.com/#app",
+          "name": "Nelsy",
+          "applicationCategory": "BusinessApplication",
+          "operatingSystem": "Web",
+          "description": "Book clients, sell online courses & digital products. One link, 0% commission. The all-in-one platform for beauty creators.",
+          "url": "https://getnelsy.com",
+          "publisher": { "@id": "https://getnelsy.com/#organization" }
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

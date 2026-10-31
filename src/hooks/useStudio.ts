@@ -41,6 +41,7 @@ function dbProfileToMerchant(profile: DbProfile, services: DbService[]): Merchan
     website_url: profile.website_url ?? undefined,
     color_accent: profile.color_accent ?? undefined,
     theme_preset: profile.theme_preset ?? 'soft',
+    timezone: profile.timezone ?? undefined,
     services: services.map(dbServiceToService),
   };
 }
@@ -84,14 +85,24 @@ export function useStudio(slug: string): UseStudioResult {
       }
 
       try {
-        // Fetch profile by slug
+        // Fetch profile via public_profiles view — never reads financial/Stripe columns
         const { data: profileData, error: profileError } = await client
-          .from('profiles')
+          .from('public_profiles')
           .select('*')
           .eq('slug', slug)
           .single();
 
         if (profileError) {
+          if (!cancelled) {
+            setError('Studio introuvable');
+            setMerchant(null);
+            setLoading(false);
+          }
+          return;
+        }
+
+        // Draft studios (inactive subscription) are not publicly accessible
+        if (profileData.subscription_status === 'inactive' || !profileData.subscription_status) {
           if (!cancelled) {
             setError('Studio introuvable');
             setMerchant(null);

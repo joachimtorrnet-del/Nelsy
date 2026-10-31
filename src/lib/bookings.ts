@@ -101,6 +101,7 @@ export async function getAvailableSlots(
   profileId: string,
   date: Date,
   serviceDurationMinutes = 60,
+  timezone = 'Europe/Paris',
 ): Promise<string[]> {
   if (isDateInPast(date)) return [];
 
@@ -111,69 +112,23 @@ export async function getAvailableSlots(
   }
 
   try {
-    const dayOfWeek = date.getDay();
+    // Format date as YYYY-MM-DD in the salon's timezone (not UTC)
+    const dateStr = date.toLocaleDateString('sv-SE', { timeZone: timezone });
 
-    const { data: avail } = await client
-      .from('availabilities')
-      .select('start_time, end_time, break_duration_minutes')
-      .eq('profile_id', profileId)
-      .eq('day_of_week', dayOfWeek)
-      .eq('active', true)
-      .single();
-
-    if (!avail) return [];
-
-    // Fetch bookings that overlap the whole day
-    const startOfDay = new Date(date);
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date(date);
-    endOfDay.setHours(23, 59, 59, 999);
-
-    const { data: existingBookings } = await client
-      .from('bookings')
-      .select('booking_datetime, duration_minutes')
-      .eq('profile_id', profileId)
-      .gte('booking_datetime', startOfDay.toISOString())
-      .lte('booking_datetime', endOfDay.toISOString())
-      .not('status', 'in', '("cancelled","no_show","expired")');
-
-    // Convert each booking to a [startMin, endMin) range in minutes-since-midnight
-    const occupiedRanges = (existingBookings ?? []).map((b) => {
-      const dt = new Date(b.booking_datetime);
-      const startMin = dt.getHours() * 60 + dt.getMinutes();
-      const duration = Number(b.duration_minutes ?? 60);
-      return { start: startMin, end: startMin + duration };
+    const { data, error } = await client.rpc('get_available_slots', {
+      p_profile_id: profileId,
+      p_date: dateStr,
+      p_timezone: timezone,
+      p_duration_minutes: serviceDurationMinutes,
     });
 
-    // Parse availability window (stored as 'HH:MM:SS' or 'HH:MM')
-    const [openH, openM] = avail.start_time.split(':').map(Number);
-    const [closeH, closeM] = avail.end_time.split(':').map(Number);
-    const openMin = openH * 60 + openM;
-    const closeMin = closeH * 60 + closeM;
+    if (error || !data) return [];
 
-    const SLOT_STEP = 30; // minutes between slot starts
-    const slots: string[] = [];
-    let current = openMin;
-
-    while (current + serviceDurationMinutes <= closeMin) {
-      const slotEnd = current + serviceDurationMinutes;
-
-      // A slot is available iff its range [current, slotEnd) doesn't overlap
-      // any existing booking range [occ.start, occ.end)
-      const overlaps = occupiedRanges.some(
-        (occ) => current < occ.end && slotEnd > occ.start,
-      );
-
-      if (!overlaps) {
-        const h = Math.floor(current / 60);
-        const m = current % 60;
-        slots.push(`${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`);
-      }
-
-      current += SLOT_STEP;
-    }
-
-    return slots;
+    // The RPC now checks the full service duration window server-side.
+    // It returns only slots where [T, T+duration) is fully clear.
+    return (data as Array<{ slot_time: string }>)
+      .map((row) => row.slot_time)
+      .sort();
   } catch {
     return [];
   }

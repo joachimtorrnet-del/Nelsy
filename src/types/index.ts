@@ -29,6 +29,7 @@ export interface Merchant {
   services: Service[];
   theme_preset?: string;
   color_accent?: string;
+  timezone?: string;
 }
 
 export interface Booking {

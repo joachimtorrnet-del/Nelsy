@@ -24,19 +24,19 @@ const navItems = [
   { to: '/dashboard/settings', icon: Settings, label: 'Réglages' },
 ];
 
-const studioUrl = 'getnelsy.com/studio-maya';
-
 interface SidebarProps {
   mobileOpen?: boolean;
   onMobileClose?: () => void;
+  slug?: string;
 }
 
-export function Sidebar({ mobileOpen, onMobileClose }: SidebarProps) {
+export function Sidebar({ mobileOpen, onMobileClose, slug }: SidebarProps) {
   const [copied, setCopied] = useState(false);
   const navigate = useNavigate();
+  const studioUrl = `getnelsy.com/${slug ?? 'mon-studio'}`;
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(studioUrl).catch(() => {});
+    navigator.clipboard.writeText(`https://${studioUrl}`).catch(() => {});
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };

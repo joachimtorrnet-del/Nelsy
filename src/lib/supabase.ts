@@ -26,7 +26,13 @@ export interface DbProfileRow {
   stripe_account_id: string | null;
   stripe_customer_id: string | null;
   stripe_onboarding_complete: boolean;
+  stripe_subscription_id: string | null;
   subscription_status: 'trial' | 'trialing' | 'active' | 'past_due' | 'cancelled' | 'inactive' | 'incomplete';
+  current_period_end: string | null;
+  trial_ends_at: string | null;
+  plan: string | null;
+  business_country: string | null;
+  business_currency: string | null;
   timezone: string;
   notification_preferences: {
     new_bookings: boolean;

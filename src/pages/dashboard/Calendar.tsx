@@ -12,6 +12,7 @@ import { getBookings, confirmBooking, cancelBooking, updateBooking } from '../..
 interface Profile {
   id?: string;
   full_name?: string;
+  timezone?: string;
 }
 
 interface Appointment {
@@ -55,12 +56,12 @@ function getStatusBadge(status: string) {
   );
 }
 
-function formatTime(date: Date) {
-  return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+function formatTime(date: Date, timezone?: string) {
+  return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: timezone });
 }
 
-function formatDateFull(date: Date) {
-  return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+function formatDateFull(date: Date, timezone?: string) {
+  return date.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', timeZone: timezone });
 }
 
 interface CardHandlers {
@@ -169,7 +170,7 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
     setConfirmDialog({
       isOpen: true,
       title: 'Confirm appointment',
-      message: `Confirm ${apt.client}'s appointment for ${apt.service} on ${formatDateFull(apt.date)}?`,
+      message: `Confirm ${apt.client}'s appointment for ${apt.service} on ${formatDateFull(apt.date, profile?.timezone)}?`,
       type: 'info',
       onConfirm: async () => {
         try {
@@ -379,7 +380,7 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
           {/* Selected day appointments */}
           <div>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-bold text-gray-900">{formatDateFull(selectedDate)}</h3>
+              <h3 className="font-bold text-gray-900">{formatDateFull(selectedDate, profile?.timezone)}</h3>
               <span className="text-sm text-gray-500">
                 {selectedDateAppointments.length} appointment{selectedDateAppointments.length !== 1 ? 's' : ''}
               </span>
@@ -399,7 +400,7 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
             ) : (
               <div className="space-y-3">
                 {selectedDateAppointments.map((apt) => (
-                  <AppointmentCard key={apt.id} apt={apt} showActions handlers={handlers} />
+                  <AppointmentCard key={apt.id} apt={apt} showActions handlers={handlers} timezone={profile?.timezone} />
                 ))}
               </div>
             )}
@@ -434,10 +435,10 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
             <div className="space-y-6">
               {Object.entries(grouped).map(([dateKey, apts]) => (
                 <div key={dateKey}>
-                  <h3 className="font-bold text-gray-900 mb-3">{formatDateFull(new Date(dateKey))}</h3>
+                  <h3 className="font-bold text-gray-900 mb-3">{formatDateFull(new Date(dateKey), profile?.timezone)}</h3>
                   <div className="space-y-3">
                     {apts.map((apt) => (
-                      <AppointmentCard key={apt.id} apt={apt} handlers={handlers} />
+                      <AppointmentCard key={apt.id} apt={apt} handlers={handlers} timezone={profile?.timezone} />
                     ))}
                   </div>
                 </div>
@@ -481,11 +482,11 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">Date</span>
-                <span className="font-semibold">{formatDateFull(selectedAppointment.date)}</span>
+                <span className="font-semibold">{formatDateFull(selectedAppointment.date, profile?.timezone)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">Time</span>
-                <span className="font-semibold">{formatTime(selectedAppointment.date)}</span>
+                <span className="font-semibold">{formatTime(selectedAppointment.date, profile?.timezone)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-gray-500">Duration</span>
@@ -634,10 +635,12 @@ function AppointmentCard({
   apt,
   showActions = false,
   handlers,
+  timezone,
 }: {
   apt: Appointment;
   showActions?: boolean;
   handlers: CardHandlers;
+  timezone?: string;
 }) {
   return (
     <div className="bg-gray-50 rounded-2xl p-4">
@@ -656,7 +659,7 @@ function AppointmentCard({
           </div>
 
           <div className="flex items-center gap-3 text-xs mb-3">
-            <span className="text-gray-500">🕐 {formatTime(apt.date)}</span>
+            <span className="text-gray-500">🕐 {formatTime(apt.date, timezone)}</span>
             {showActions && <span className="text-gray-500">⏱ {apt.duration} min</span>}
             {getStatusBadge(apt.status)}
           </div>

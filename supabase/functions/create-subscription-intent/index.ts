@@ -2,7 +2,10 @@ import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
 import { createClient } from 'npm:@supabase/supabase-js@2'
 
-const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
+const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
+if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
+
+const stripe = new Stripe(stripeSecretKey, {
   apiVersion: '2023-10-16',
   httpClient: Stripe.createFetchHttpClient(),
 })
@@ -33,20 +36,48 @@ serve(async (req) => {
       })
     }
 
-    const { priceId, plan } = await req.json() as { priceId: string; plan?: string }
-    if (!priceId) {
-      return new Response(JSON.stringify({ error: 'priceId is required' }), {
+    const { plan } = await req.json() as { plan?: string }
+
+    // Map plan to an authorized server-side Price ID — never accept arbitrary priceId from client
+    const PLAN_PRICE_MAP: Record<string, string | undefined> = {
+      monthly: Deno.env.get('STRIPE_PRICE_MONTHLY'),
+      yearly: Deno.env.get('STRIPE_PRICE_YEARLY'),
+    }
+    if (!plan || !Object.prototype.hasOwnProperty.call(PLAN_PRICE_MAP, plan)) {
+      return new Response(JSON.stringify({ error: "plan must be 'monthly' or 'yearly'" }), {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
     }
+    const priceId = PLAN_PRICE_MAP[plan]
+    if (!priceId) {
+      return new Response(JSON.stringify({ error: `STRIPE_PRICE_${plan.toUpperCase()} env var is not set` }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      })
+    }
 
-    // Load existing Stripe IDs so we never duplicate customers or subscriptions
+    // Load existing Stripe IDs and subscription status to prevent duplicate subscriptions
     const { data: existingProfile } = await supabase
       .from('profiles')
-      .select('stripe_customer_id, stripe_subscription_id')
+      .select('stripe_customer_id, stripe_subscription_id, subscription_status')
       .eq('id', user.id)
       .single()
+
+    // Guard: if user already has a live subscription, return it rather than creating another
+    if (
+      existingProfile?.stripe_subscription_id &&
+      (existingProfile.subscription_status === 'trialing' || existingProfile.subscription_status === 'active')
+    ) {
+      return new Response(
+        JSON.stringify({
+          alreadySubscribed: true,
+          subscriptionId: existingProfile.stripe_subscription_id,
+          subscription_status: existingProfile.subscription_status,
+        }),
+        { headers: { 'Content-Type': 'application/json', ...corsHeaders } },
+      )
+    }
 
     let customerId = existingProfile?.stripe_customer_id ?? null
 
@@ -75,7 +106,7 @@ serve(async (req) => {
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user.email ?? '',
-        metadata: { supabase_user_id: user.id, plan: plan ?? 'pro' },
+        metadata: { supabase_user_id: user.id, plan: plan },
       })
       customerId = customer.id
     }
@@ -97,7 +128,7 @@ serve(async (req) => {
         payment_method_types: ['card'],
       },
       expand: ['latest_invoice.payment_intent', 'pending_setup_intent'],
-      metadata: { supabase_user_id: user.id, plan: plan ?? 'pro' },
+      metadata: { supabase_user_id: user.id, plan },
     })
 
     const psi = subscription.pending_setup_intent as Stripe.SetupIntent | null

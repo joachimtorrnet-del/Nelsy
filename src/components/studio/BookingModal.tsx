@@ -27,7 +27,7 @@ import {
 } from '@/lib/analytics';
 import { createBooking, getAvailableSlots } from '@/lib/bookings';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
-import { getStripe, isStripeConfigured } from '@/lib/stripe';
+import { getStripe, getStripeForAccount, isStripeConfigured } from '@/lib/stripe';
 import PaymentForm from './PaymentForm';
 
 // ── Schema ────────────────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@ import PaymentForm from './PaymentForm';
 const clientSchema = z.object({
   name: z.string().min(2, 'Name too short'),
   email: z.string().email('Invalid email'),
-  phone: z.string().min(10, 'Invalid phone number'),
+  phone: z.string().min(8, 'Invalid phone number'),
 });
 type ClientForm = z.infer<typeof clientSchema>;
 
@@ -73,6 +73,8 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [paymentClientSecret, setPaymentClientSecret] = useState<string | null>(null);
   const [paymentBookingId, setPaymentBookingId] = useState<string | null>(null);
+  const [bookingSessionToken, setBookingSessionToken] = useState<string | null>(null);
+  const [paymentStripeAccountId, setPaymentStripeAccountId] = useState<string | null>(null);
 
   const today = new Date();
   const [viewYear, setViewYear] = useState(today.getFullYear());
@@ -106,7 +108,9 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
     let cancelled = false;
     setSlotsLoading(true);
     setAvailableSlots([]);
-    void getAvailableSlots(merchant.id, new Date(selectedDate), selectedService.duration).then((slots) => {
+    // Fallback to Europe/Paris (primary market) when timezone not yet set on profile.
+    // Timezone is set via create-connect-account at onboarding; existing accounts may lack it.
+    void getAvailableSlots(merchant.id, new Date(selectedDate), selectedService.duration, merchant.timezone ?? 'Europe/Paris').then((slots) => {
       if (!cancelled) { setAvailableSlots(slots); setSlotsLoading(false); }
     });
     return () => { cancelled = true; };
@@ -157,13 +161,23 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                 // Financial fields (price, deposit, fees) are intentionally
                 // omitted — the server derives all amounts from the DB.
               },
+              // Send session token on retry so the server can reuse the same
+              // PaymentIntent instead of returning 409 for the same slot.
+              ...(bookingSessionToken ? { booking_session_token: bookingSessionToken } : {}),
             },
           }
         );
         if (payError) throw new Error(payError.message);
-        const { client_secret, booking_id } = payData as { client_secret: string; booking_id: string };
+        const { client_secret, booking_id, booking_session_token, stripe_account_id } = payData as {
+          client_secret: string;
+          booking_id: string;
+          booking_session_token: string;
+          stripe_account_id?: string;
+        };
         setPaymentClientSecret(client_secret);
         setPaymentBookingId(booking_id);
+        setBookingSessionToken(booking_session_token);
+        if (stripe_account_id) setPaymentStripeAccountId(stripe_account_id);
         trackBookingDetailsCompleted(merchant.id);
         trackPaymentStarted(merchant.id);
         goTo(4);
@@ -196,6 +210,8 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
       setBookingError(null);
       setPaymentClientSecret(null);
       setPaymentBookingId(null);
+      setBookingSessionToken(null);
+      setPaymentStripeAccountId(null);
       reset();
     }, 350);
   };
@@ -660,7 +676,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     </div>
 
                     <Elements
-                      stripe={getStripe()}
+                      stripe={paymentStripeAccountId ? getStripeForAccount(paymentStripeAccountId) : getStripe()}
                       options={{
                         clientSecret: paymentClientSecret,
                         appearance: {

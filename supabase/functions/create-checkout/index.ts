@@ -16,6 +16,18 @@ const supabase = createClient(
   Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
 )
 
+// ── Origin validation ─────────────────────────────────────────────────────────
+const DEFAULT_ALLOWED_ORIGINS = ['https://getnelsy.com', 'http://localhost:5173', 'http://localhost:3000']
+function getAllowedOrigins(): string[] {
+  const env = Deno.env.get('ALLOWED_ORIGINS')
+  if (env) return env.split(',').map((o) => o.trim()).filter(Boolean)
+  return DEFAULT_ALLOWED_ORIGINS
+}
+function validateOrigin(url: string): boolean {
+  const allowed = getAllowedOrigins()
+  return allowed.some((origin) => url.startsWith(origin))
+}
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -37,10 +49,17 @@ serve(async (req) => {
       })
     }
 
+    if (!validateOrigin(origin)) {
+      return new Response(JSON.stringify({ error: 'Invalid origin' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      })
+    }
+
     // Fetch booking
     const { data: booking, error: bookingError } = await supabase
       .from('bookings')
-      .select('id, profile_id, service_id, booking_datetime, client_name, client_email, price_total')
+      .select('id, profile_id, service_id, booking_datetime, client_name, client_email, price_total, status')
       .eq('id', booking_id)
       .single()
 
@@ -51,10 +70,18 @@ serve(async (req) => {
       })
     }
 
+    // Prevent paying twice: reject if already confirmed or paid
+    if (['confirmed', 'paid', 'cancelled', 'expired'].includes((booking as { status?: string }).status ?? '')) {
+      return new Response(JSON.stringify({ error: 'This booking cannot be paid in its current state.' }), {
+        status: 409,
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      })
+    }
+
     // Fetch profile
     const { data: profileData, error: profileError } = await supabase
       .from('profiles')
-      .select('full_name, salon_name, slug, logo_url, stripe_account_id, stripe_onboarding_complete')
+      .select('full_name, salon_name, slug, logo_url, stripe_account_id, stripe_onboarding_complete, business_currency')
       .eq('id', booking.profile_id)
       .single()
 
@@ -82,14 +109,37 @@ serve(async (req) => {
 
     const proName = profileData.full_name || profileData.salon_name
 
+    const currency = ((profileData.business_currency ?? 'eur') as string).toLowerCase()
+    const isZeroDecimal = ['jpy', 'krw'].includes(currency)
+
+    // Validate minimum charge amount per Stripe's requirements
+    const MINIMUMS: Record<string, number> = {
+      aud: 0.50, bgn: 1.00, cad: 0.50, chf: 0.50, czk: 15.00, dkk: 2.50,
+      eur: 0.50, gbp: 0.30, hkd: 4.00, huf: 175,  idr: 10000, inr: 0.50,
+      isk: 100,  jpy: 50,   krw: 50,   mxn: 10.00, myr: 2.00,  nok: 3.00,
+      nzd: 0.50, pln: 2.00, ron: 2.00, sek: 3.00,  sgd: 0.50,  thb: 10.00,
+      usd: 0.50, aed: 2.00,
+    }
+    const minimum = MINIMUMS[currency] ?? 0.50
+    if (booking.price_total < minimum) {
+      return new Response(
+        JSON.stringify({ error: `Minimum charge for ${currency.toUpperCase()} is ${minimum}.` }),
+        { status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders } },
+      )
+    }
+
+    const connectedAccountId = profileData.stripe_onboarding_complete && profileData.stripe_account_id
+      ? (profileData.stripe_account_id as string)
+      : null
+
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode: 'payment',
       payment_method_types: ['card'],
 
       line_items: [{
         price_data: {
-          currency: 'eur',
-          unit_amount: Math.round(booking.price_total * 100),
+          currency,
+          unit_amount: isZeroDecimal ? Math.round(booking.price_total) : Math.round(booking.price_total * 100),
           product_data: {
             name: serviceName,
             description: `${duration} min appointment with ${proName}`,
@@ -110,19 +160,21 @@ serve(async (req) => {
         amount_total: booking.price_total.toString(),
       },
 
-      success_url: `${origin}/booking-confirmed?session_id={CHECKOUT_SESSION_ID}`,
+      // Pass account so BookingConfirmed can retrieve the session from the right account.
+      success_url: connectedAccountId
+        ? `${origin}/booking-confirmed?session_id={CHECKOUT_SESSION_ID}&account=${connectedAccountId}`
+        : `${origin}/booking-confirmed?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/${profileData.slug}`,
     }
 
-    // Connect split if pro has verified Stripe account (5% Nelsy commission)
-    if (profileData.stripe_onboarding_complete && profileData.stripe_account_id) {
-      sessionParams.payment_intent_data = {
-        application_fee_amount: Math.round(booking.price_total * 0.05 * 100),
-        transfer_data: { destination: profileData.stripe_account_id },
-      }
-    }
+    // Direct charge: session is created on the connected account.
+    // Stripe processing fees are deducted from the connected account directly.
+    // Nelsy takes 0% commission — no application_fee_amount, no transfer_data.
+    const stripeRequestOptions: Stripe.RequestOptions = connectedAccountId
+      ? { stripeAccount: connectedAccountId }
+      : {}
 
-    const session = await stripe.checkout.sessions.create(sessionParams)
+    const session = await stripe.checkout.sessions.create(sessionParams, stripeRequestOptions)
 
     // Persist payment intent on booking
     await supabase
@@ -144,7 +196,7 @@ serve(async (req) => {
         service_name: serviceName,
         booking_datetime: booking.booking_datetime,
         price_total: booking.price_total,
-        currency: 'eur',
+        currency,
         session_id: session.id,
       },
     })

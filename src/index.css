@@ -84,3 +84,56 @@
     background-clip: text;
   }
 }
+
+/* ── Article body typography ─────────────────────────────────────────────── */
+.prose-article {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: #1A1A1A;
+}
+.prose-article p {
+  margin-bottom: 1.25em;
+}
+.prose-article h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+  color: #1A1A1A;
+  scroll-margin-top: 5rem;
+}
+.prose-article h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #1A1A1A;
+  scroll-margin-top: 5rem;
+}
+.prose-article ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25em;
+}
+.prose-article ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25em;
+}
+.prose-article li {
+  margin-bottom: 0.4em;
+}
+.prose-article strong {
+  font-weight: 700;
+  color: #1A1A1A;
+}
+.prose-article a {
+  color: #F52B8C;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.prose-article section {
+  scroll-margin-top: 5rem;
+}

@@ -25,7 +25,10 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders })
 
   try {
-    const { session_id } = await req.json() as { session_id: string }
+    const { session_id, stripe_account_id } = await req.json() as {
+      session_id: string
+      stripe_account_id?: string
+    }
 
     if (!session_id) {
       return new Response(JSON.stringify({ error: 'Missing session_id' }), {
@@ -34,8 +37,10 @@ serve(async (req) => {
       })
     }
 
-    // Retrieve Stripe session — metadata has booking_id, service_name, etc.
-    const session = await stripe.checkout.sessions.retrieve(session_id)
+    // For direct charges, the checkout session is on the connected account.
+    // stripe_account_id is passed from the success_url query param set by create-checkout.
+    const stripeOpts = stripe_account_id ? { stripeAccount: stripe_account_id } : {}
+    const session = await stripe.checkout.sessions.retrieve(session_id, {}, stripeOpts)
     const meta = session.metadata ?? {}
     const bookingId = meta.booking_id
 
@@ -62,6 +67,13 @@ serve(async (req) => {
 
     const service = (booking.services as { name: string; duration_minutes: number } | null)
 
+    // Fetch salon timezone and currency for correct display on confirmation page
+    const { data: salonProfile } = await supabase
+      .from('profiles')
+      .select('timezone, business_currency')
+      .eq('id', booking.profile_id)
+      .single()
+
     return new Response(
       JSON.stringify({
         booking: {
@@ -74,6 +86,8 @@ serve(async (req) => {
           status: booking.status,
           service_name: meta.service_name ?? service?.name ?? 'Service',
           duration: service?.duration_minutes ?? null,
+          salon_timezone: salonProfile?.timezone ?? 'Europe/Paris',
+          salon_currency: (salonProfile?.business_currency ?? 'eur').toLowerCase(),
         },
       }),
       { headers: { 'Content-Type': 'application/json', ...corsHeaders } },

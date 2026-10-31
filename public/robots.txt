@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+Allow: /tools/
+Allow: /blog/
+Allow: /learn/
+Disallow: /dashboard
+Disallow: /onboarding
+Disallow: /login
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /onboarding-stripe
+Disallow: /stripe/
+Disallow: /booking-confirmed
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://getnelsy.com/sitemap.xml

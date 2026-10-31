@@ -24,7 +24,7 @@ export function PlgCTA({ profileId, theme }: Props) {
     return () => observer.disconnect();
   }, [profileId]);
 
-  const href = `https://getnelsy.com/signup?utm_source=studio_plg&ref=${encodeURIComponent(profileId)}`;
+  const href = `https://getnelsy.com/onboarding?utm_source=studio_plg&ref=${encodeURIComponent(profileId)}`;
 
   return (
     <div style={{ textAlign: 'center', padding: '20px 0 32px' }}>

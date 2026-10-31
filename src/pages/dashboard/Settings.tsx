@@ -18,7 +18,7 @@ export interface SettingsProfile {
   [key: string]: unknown;
 }
 
-export default function Settings({ profile: profileProp }: { profile?: SettingsProfile | null }) {
+export default function Settings({ profile: profileProp, onNavigate }: { profile?: SettingsProfile | null; onNavigate?: (tab: string) => void }) {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<SettingsProfile | null>(profileProp ?? null);
   const [saving, setSaving] = useState(false);
@@ -115,14 +115,11 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
         // No active sub — redirect to Stripe Checkout to subscribe
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) throw new Error('Non authentifié');
-        const priceId = import.meta.env.VITE_STRIPE_PRICE_MONTHLY as string;
-        if (!priceId) throw new Error('Plan non configuré');
         const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
           body: {
             userId: user.id,
             email: user.email ?? '',
-            priceId,
-            plan: 'pro',
+            plan: 'monthly',
           },
         });
         if (error || !data?.url) throw new Error(error?.message ?? 'No URL returned');
@@ -166,7 +163,8 @@ export default function Settings({ profile: profileProp }: { profile?: SettingsP
       })(),
       action: () => void handleSubscription(),
     },
-    { label: 'Payment Methods', desc: 'Setup Stripe payouts', action: () => navigate('/onboarding-stripe') },
+    { label: 'Paiements Stripe', desc: 'Compte connecté, versements, configuration', action: () => onNavigate ? onNavigate('stripe') : navigate('/onboarding-stripe') },
+    { label: 'Revenus', desc: 'Solde, historique, retrait des fonds', action: () => onNavigate ? onNavigate('revenue') : navigate('/dashboard') },
     { label: 'Cancel subscription', desc: 'End your Nelsy plan at period end', action: () => setShowCancelModal(true), danger: true },
   ];
 

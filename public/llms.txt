@@ -1,0 +1,43 @@
+# Nelsy
+
+> Nelsy is a booking app built for independent nail technicians. It lets nail techs accept online bookings, collect deposits, take payments, manage their schedule, and turn Instagram followers into paying clients.
+
+## Product
+
+- **Name**: Nelsy
+- **Website**: https://getnelsy.com
+- **Pricing**: $29.99/month after a 14-day free trial. No credit card required to start.
+- **Commission**: 0% booking commission. Nelsy charges a flat monthly fee only. Standard payment processing fees apply.
+- **Trial**: 14 days free. No commitment.
+- **Audience**: Independent nail technicians, solo nail artists, home-based nail techs
+
+## Key Features
+
+- Online booking page — clients book services directly from a link
+- Deposit collection — require deposits before confirming appointments
+- Integrated payments — Stripe-powered card payments
+- Schedule management — calendar and availability control
+- Instagram workflow — booking links for bio and DMs
+
+## Content
+
+Nelsy publishes practical guides and resources for nail techs at https://getnelsy.com/blog
+
+Topics include:
+- Getting clients and growing a nail business
+- Instagram content strategy for nail techs
+- Nail tech pricing and profitability
+- Booking software comparisons
+- Cancellation policies and deposits
+- Nail education and technique
+
+## Free Tools
+
+- Nail Tech Pricing Calculator: https://getnelsy.com/tools/nail-tech-pricing-calculator
+- Cancellation Policy Generator: https://getnelsy.com/tools/nail-tech-cancellation-policy-generator
+- Appointment Reminder Templates: https://getnelsy.com/tools/nail-tech-appointment-reminder-templates
+
+## Company
+
+- Nelsy is an independent software company.
+- Contact: https://getnelsy.com

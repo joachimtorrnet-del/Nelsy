@@ -49,11 +49,19 @@ serve(async (req) => {
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
     )
 
-    const { priceId, plan } = await req.json() as { priceId: string; plan?: string }
+    const { plan } = await req.json() as { plan?: string }
+
+    // Resolve priceId server-side — never accept an arbitrary priceId from the client
+    const PLAN_PRICE_MAP: Record<string, string | undefined> = {
+      monthly: Deno.env.get('STRIPE_PRICE_MONTHLY'),
+      yearly: Deno.env.get('STRIPE_PRICE_YEARLY'),
+    }
+    const resolvedPlan = (plan && Object.prototype.hasOwnProperty.call(PLAN_PRICE_MAP, plan)) ? plan : 'monthly'
+    const priceId = PLAN_PRICE_MAP[resolvedPlan]
 
     if (!priceId) {
-      return new Response(JSON.stringify({ error: 'priceId is required' }), {
-        status: 400, headers: { 'Content-Type': 'application/json', ...corsHeaders },
+      return new Response(JSON.stringify({ error: `STRIPE_PRICE_${resolvedPlan.toUpperCase()} env var is not set` }), {
+        status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
     }
 
@@ -71,7 +79,7 @@ serve(async (req) => {
     if (!customerId) {
       const customer = await stripe.customers.create({
         email: user.email ?? '',
-        metadata: { supabase_user_id: user.id, plan: plan ?? 'pro' },
+        metadata: { supabase_user_id: user.id, plan: resolvedPlan },
       })
       customerId = customer.id
 
@@ -86,11 +94,11 @@ serve(async (req) => {
       line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: {
         trial_period_days: 14,
-        metadata: { plan: plan ?? 'pro' },
+        metadata: { plan: resolvedPlan },
       },
       metadata: {
         userId: user.id,
-        plan: plan ?? 'pro',
+        plan: resolvedPlan,
       },
       success_url: `${origin}/dashboard?subscribed=1`,
       cancel_url: `${origin}/dashboard`,
@@ -105,7 +113,7 @@ serve(async (req) => {
       posthog.capture({
         distinctId: user.id,
         event: 'subscription checkout started',
-        properties: { plan: plan ?? 'pro', price_id: priceId, trial_period_days: 14, session_id: session.id },
+        properties: { plan: resolvedPlan, price_id: priceId, trial_period_days: 14, session_id: session.id },
       })
       await posthog.shutdown()
     } catch {

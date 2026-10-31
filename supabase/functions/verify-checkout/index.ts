@@ -16,7 +16,7 @@ serve(async (req) => {
   }
 
   try {
-    const { sessionId } = await req.json()
+    const { sessionId, stripe_account_id } = await req.json()
 
     if (!sessionId) {
       return new Response(
@@ -25,7 +25,9 @@ serve(async (req) => {
       )
     }
 
-    const session = await stripe.checkout.sessions.retrieve(sessionId)
+    // For direct charges, the session is on the connected account.
+    const stripeOpts = stripe_account_id ? { stripeAccount: stripe_account_id as string } : {}
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {}, stripeOpts)
 
     const success = session.payment_status === 'paid' || session.status === 'complete'
 
@@ -35,8 +37,9 @@ serve(async (req) => {
     )
   } catch (error) {
     console.error('❌ Error verifying checkout:', error)
+    const message = error instanceof Error ? error.message : String(error)
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ success: false, error: message }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 400 },
     )
   }
