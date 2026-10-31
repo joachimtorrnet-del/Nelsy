@@ -28,6 +28,9 @@ async function sendEmail(to: string, subject: string, html: string) {
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
 const webhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET')
+// Second secret for the Connect-only webhook endpoint (listens to Connected accounts events).
+// Absent on the platform endpoint — undefined is safe here.
+const webhookSecretConnect = Deno.env.get('STRIPE_WEBHOOK_SECRET_CONNECT')
 
 if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
 if (!webhookSecret) throw new Error('STRIPE_WEBHOOK_SECRET is not set')
@@ -52,8 +55,15 @@ serve(async (req) => {
   try {
     const body = await req.text()
 
-    // Verify webhook signature — must use async form in Deno (SubtleCrypto is async-only)
-    const event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecret)
+    // Try platform secret first, then Connect secret.
+    // Both endpoints share the same URL — the correct secret is whichever verifies.
+    let event: Stripe.Event
+    try {
+      event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecret)
+    } catch {
+      if (!webhookSecretConnect) throw new Error('Webhook signature verification failed')
+      event = await stripe.webhooks.constructEventAsync(body, signature, webhookSecretConnect)
+    }
 
     switch (event.type) {
       case 'checkout.session.completed': {
