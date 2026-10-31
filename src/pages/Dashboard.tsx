@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import posthog from 'posthog-js';
 import { supabase } from '../lib/supabase';
 import { track } from '../lib/analytics';
@@ -13,7 +13,7 @@ import type { SettingsProfile } from './dashboard/Settings';
 import StripeSettings from './dashboard/StripeSettings';
 import Revenue from './dashboard/Revenue';
 import BottomNav from '../components/dashboard/BottomNav';
-import Header from '../components/dashboard/Header';
+import DashboardLayout from '../components/dashboard/DashboardLayout';
 
 interface Profile {
   id: string;
@@ -26,23 +26,33 @@ interface Profile {
 
 const VALID_TABS = ['home', 'calendar', 'preview', 'analytics', 'revenue', 'stripe', 'settings'];
 
+function tabFromPath(pathname: string): string {
+  const seg = pathname.replace(/^\/dashboard\/?/, '') || 'home';
+  return VALID_TABS.includes(seg) ? seg : 'home';
+}
+
 export default function Dashboard() {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const initialTab = VALID_TABS.includes(searchParams.get('tab') ?? '') ? (searchParams.get('tab') as string) : 'home';
-  const [activeTab, setActiveTab] = useState(initialTab);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [activeTab, setActiveTab] = useState(() => tabFromPath(location.pathname));
   const [profile, setProfile] = useState<Profile | null>(null);
   const [pendingCount, setPendingCount] = useState(0);
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+
+  // Keep activeTab in sync when user navigates back/forward
+  useEffect(() => {
+    setActiveTab(tabFromPath(location.pathname));
+  }, [location.pathname]);
 
   const handleSetTab = (tab: string) => {
     setActiveTab(tab);
-    // Remove ?tab= query param once navigated so URL stays clean
-    if (searchParams.get('tab')) setSearchParams({});
+    navigate(tab === 'home' ? '/dashboard' : `/dashboard/${tab}`, { replace: false });
   };
 
   useEffect(() => {
     checkUser();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkUser = async () => {
@@ -53,35 +63,27 @@ export default function Dashboard() {
       }
 
       const { data: { user } } = await supabase.auth.getUser();
+      if (!user) { navigate('/login'); return; }
 
-      if (!user) {
-        navigate('/login');
-        return;
-      }
-
-      const { data: profile } = await supabase
+      const { data: profileData } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', user.id)
         .single();
 
-      setProfile(profile);
+      setProfile(profileData);
 
-      // No session at all → onboarding (shouldn't happen but guard it).
-      // 'incomplete' = payment was started but not finished → resume onboarding plan step.
-      // 'inactive' = draft mode (user hit "Maybe later") → allow into dashboard, show banner.
-      if (!profile?.subscription_status || profile.subscription_status === 'incomplete') {
+      if (!profileData?.subscription_status || profileData.subscription_status === 'incomplete') {
         navigate('/onboarding');
         return;
       }
 
       posthog.identify(user.id, {
         email: user.email,
-        name: profile?.full_name,
-        slug: profile?.slug,
+        name: profileData?.full_name,
+        slug: profileData?.slug,
       });
 
-      // Load pending bookings count for badge
       const { count } = await supabase
         .from('bookings')
         .select('id', { count: 'exact', head: true })
@@ -91,12 +93,11 @@ export default function Dashboard() {
 
       if (sessionStorage.getItem('nelsy_onboarding_just_completed')) {
         sessionStorage.removeItem('nelsy_onboarding_just_completed');
-        track('dashboard_first_view', { plan: profile?.subscription_status });
+        track('dashboard_first_view', { plan: profileData?.subscription_status });
       }
 
       setLoading(false);
-    } catch (error) {
-      console.error('Dashboard error:', error);
+    } catch {
       navigate('/login');
     }
   };
@@ -136,46 +137,117 @@ export default function Dashboard() {
     );
   }
 
-  const isDraft = profile?.subscription_status === 'inactive';
-
   return (
-    <div className="min-h-screen bg-white pb-20">
-      <Header profile={profile} />
-
-      {/* Draft mode banner — shown when user skipped plan selection */}
-      {isDraft && (
-        <div className="fixed top-16 left-0 right-0 z-30 bg-[#1A1A1A] text-white px-4 py-3 flex items-center justify-between gap-3">
-          <p className="text-[13px] font-medium leading-snug flex-1 min-w-0">
-            Your page isn't live yet. Start your free trial to publish it.
-          </p>
-          <a
-            href="/onboarding?step=plan"
-            className="flex-shrink-0 px-4 py-1.5 rounded-lg text-[12px] font-bold text-[#1A1A1A] bg-white hover:bg-gray-100 transition whitespace-nowrap"
-          >
-            Choose plan →
-          </a>
-        </div>
-      )}
-
-      <div className={isDraft ? 'pt-28' : 'pt-16'}>
-        {activeTab === 'home' && <Home onNavigate={handleSetTab} />}
-        {activeTab === 'calendar' && <Calendar profile={profile} />}
-        {activeTab === 'preview' && <Preview profile={profile} />}
-        {activeTab === 'analytics' && <Analytics profile={profile} />}
-        {activeTab === 'revenue' && (
-          <div className="px-4 py-6">
-            <Revenue />
-          </div>
-        )}
-        {activeTab === 'stripe' && (
-          <div className="px-4 py-6">
-            <StripeSettings />
-          </div>
-        )}
-        {activeTab === 'settings' && <Settings profile={profile as SettingsProfile | null} onNavigate={handleSetTab} />}
+    <>
+      {/* Desktop layout with sidebar */}
+      <div className="hidden lg:flex h-screen">
+        <DashboardLayout
+          profile={profile}
+          activeTab={activeTab}
+          setActiveTab={handleSetTab}
+          pendingCount={pendingCount}
+        >
+          <TabContent activeTab={activeTab} profile={profile} onNavigate={handleSetTab} />
+        </DashboardLayout>
       </div>
 
-      <BottomNav activeTab={activeTab} setActiveTab={handleSetTab} pendingCount={pendingCount} />
+      {/* Mobile layout — original design preserved */}
+      <div className="lg:hidden min-h-screen bg-white pb-20">
+        <MobileHeader profile={profile} />
+
+        {profile?.subscription_status === 'inactive' && (
+          <div className="fixed top-14 left-0 right-0 z-30 bg-[#1A1A1A] text-white px-4 py-3 flex items-center justify-between gap-3">
+            <p className="text-[13px] font-medium leading-snug flex-1 min-w-0">
+              Your page isn't live yet. Start your free trial to publish it.
+            </p>
+            <a
+              href="/onboarding?step=plan"
+              className="flex-shrink-0 px-4 py-1.5 rounded-lg text-[12px] font-bold text-[#1A1A1A] bg-white hover:bg-gray-100 transition whitespace-nowrap"
+            >
+              Choose plan →
+            </a>
+          </div>
+        )}
+
+        <div className={profile?.subscription_status === 'inactive' ? 'pt-28' : 'pt-14'}>
+          <TabContent activeTab={activeTab} profile={profile} onNavigate={handleSetTab} />
+        </div>
+
+        <BottomNav activeTab={activeTab} setActiveTab={handleSetTab} pendingCount={pendingCount} />
+      </div>
+    </>
+  );
+}
+
+// ── Shared tab content ───────────────────────────────────────────────────────
+
+interface TabContentProps {
+  activeTab: string;
+  profile: Profile | null;
+  onNavigate: (tab: string) => void;
+}
+
+function TabContent({ activeTab, profile, onNavigate }: TabContentProps) {
+  return (
+    <>
+      {activeTab === 'home'     && <Home onNavigate={onNavigate} />}
+      {activeTab === 'calendar' && <Calendar profile={profile} />}
+      {activeTab === 'preview'  && <Preview profile={profile} />}
+      {activeTab === 'analytics'&& <Analytics profile={profile} />}
+      {activeTab === 'revenue'  && (
+        <div className="px-4 py-6 lg:px-8">
+          <Revenue />
+        </div>
+      )}
+      {activeTab === 'stripe'   && (
+        <div className="px-4 py-6 lg:px-8">
+          <StripeSettings />
+        </div>
+      )}
+      {activeTab === 'settings' && (
+        <Settings profile={profile as SettingsProfile | null} onNavigate={onNavigate} />
+      )}
+    </>
+  );
+}
+
+// ── Compact mobile header ────────────────────────────────────────────────────
+
+import { Copy } from 'lucide-react';
+import { useState as useLocalState } from 'react';
+
+function MobileHeader({ profile }: { profile: Profile | null }) {
+  const slug = profile?.slug ?? 'mon-studio';
+  const [copied, setCopied] = useLocalState(false);
+
+  const copyUrl = () => {
+    navigator.clipboard.writeText(`https://getnelsy.com/${slug}`).catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  return (
+    <div className="fixed top-0 left-0 right-0 bg-white border-b border-gray-100 z-40 h-14 flex items-center justify-between px-4">
+      <span className="font-black text-[#1A1A1A] text-lg">Nelsy</span>
+      <div className="flex items-center gap-2">
+        <a
+          href={`/${slug}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#F52B8C] text-sm font-medium truncate max-w-[140px]"
+        >
+          getnelsy.com/{slug}
+        </a>
+        <button
+          onClick={copyUrl}
+          className="w-7 h-7 border border-gray-200 rounded-lg flex items-center justify-center transition-colors active:bg-gray-50"
+        >
+          {copied
+            ? <span className="text-[10px] text-green-600 font-bold">✓</span>
+            : <Copy className="w-3.5 h-3.5 text-gray-500" />
+          }
+        </button>
+      </div>
     </div>
   );
 }

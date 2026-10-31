@@ -1,114 +1,161 @@
-import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
-  Home,
-  Calendar,
-  Sparkles,
-  CreditCard,
-  Wallet,
-  Settings,
-  Copy,
-  CheckCheck,
-  LogOut,
-  X,
+  Home, Sparkles, CalendarDays, ShoppingBag, TrendingUp, BarChart2,
+  Users, Megaphone, Gift, HelpCircle, Settings, LogOut, X,
 } from 'lucide-react';
-import { useState } from 'react';
+import type { LucideIcon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { useNavigate } from 'react-router-dom';
 
-const navItems = [
-  { to: '/dashboard', icon: Home, label: 'Accueil', end: true },
-  { to: '/dashboard/calendar', icon: Calendar, label: 'Agenda' },
-  { to: '/dashboard/services', icon: Sparkles, label: 'Services' },
-  { to: '/dashboard/stripe', icon: CreditCard, label: 'Paiements' },
-  { to: '/dashboard/cash-out', icon: Wallet, label: 'Cash Out' },
-  { to: '/dashboard/settings', icon: Settings, label: 'Réglages' },
+interface NavItem {
+  id: string;
+  label: string;
+  icon: LucideIcon;
+  live: boolean;
+  badge?: number;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { id: 'home',      label: 'Home',             icon: Home,        live: true  },
+  { id: 'preview',   label: 'My Studio',        icon: Sparkles,    live: true  },
+  { id: 'calendar',  label: 'Bookings',         icon: CalendarDays,live: true  },
+  { id: 'orders',    label: 'Orders',           icon: ShoppingBag, live: false },
+  { id: 'revenue',   label: 'Income',           icon: TrendingUp,  live: true  },
+  { id: 'analytics', label: 'Analytics',        icon: BarChart2,   live: true  },
+  { id: 'customers', label: 'Customers',        icon: Users,       live: false },
+  { id: 'marketing', label: 'Marketing',        icon: Megaphone,   live: false },
+  { id: 'referrals', label: 'Referrals',        icon: Gift,        live: false },
+  { id: 'help',      label: 'Help & Tutorials', icon: HelpCircle,  live: false },
 ];
 
-interface SidebarProps {
-  mobileOpen?: boolean;
-  onMobileClose?: () => void;
+interface Profile {
+  id?: string;
+  full_name?: string;
   slug?: string;
 }
 
-export function Sidebar({ mobileOpen, onMobileClose, slug }: SidebarProps) {
-  const [copied, setCopied] = useState(false);
-  const navigate = useNavigate();
-  const studioUrl = `getnelsy.com/${slug ?? 'mon-studio'}`;
+interface SidebarProps {
+  profile?: Profile | null;
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
+  pendingCount?: number;
+}
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(`https://${studioUrl}`).catch(() => {});
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+export function Sidebar({
+  profile,
+  activeTab,
+  setActiveTab,
+  mobileOpen,
+  onMobileClose,
+  pendingCount = 0,
+}: SidebarProps) {
+  const navigate = useNavigate();
+
+  const handleTab = (id: string) => {
+    setActiveTab(id);
+    navigate(id === 'home' ? '/dashboard' : `/dashboard/${id}`);
+    onMobileClose?.();
   };
 
+  const handleSignOut = async () => {
+    if (supabase) await supabase.auth.signOut();
+    navigate('/login');
+  };
+
+  const liveItems = NAV_ITEMS.map((item) =>
+    item.id === 'calendar' && pendingCount > 0
+      ? { ...item, badge: Math.min(pendingCount, 99) }
+      : item,
+  ).filter((item) => item.live);
+
+  const initials = profile?.full_name
+    ? profile.full_name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
+    : 'N';
+
   const content = (
-    <div className="h-full flex flex-col py-6 px-4">
+    <div className="h-full flex flex-col">
       {/* Logo */}
-      <div className="flex items-center justify-between mb-8">
-        <span className="text-2xl font-black text-espresso">Nelsy</span>
+      <div className="flex items-center justify-between px-5 pt-6 pb-5">
+        <span className="text-2xl font-black text-[#1A1A1A] tracking-tight">Nelsy</span>
         {onMobileClose && (
-          <button onClick={onMobileClose} className="lg:hidden p-1 rounded-lg hover:bg-gray-100">
-            <X className="w-5 h-5 text-gray-500" />
+          <button
+            onClick={onMobileClose}
+            className="lg:hidden p-1.5 rounded-lg hover:bg-[#fde8f3] text-gray-500"
+          >
+            <X className="w-4 h-4" />
           </button>
         )}
       </div>
 
-      {/* Navigation */}
-      <nav className="flex flex-col gap-1 flex-1">
-        {navItems.map(({ to, icon: Icon, label, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            onClick={onMobileClose}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-xl font-medium text-sm transition-all ${
-                isActive
-                  ? 'bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white shadow-md'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`
-            }
-          >
-            {({ isActive }) => (
-              <>
-                <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-white' : 'text-gray-400'}`} />
-                {label}
-              </>
-            )}
-          </NavLink>
-        ))}
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto px-3 pb-4 space-y-0.5">
+        {liveItems.map(({ id, label, icon: Icon, badge }) => {
+          const active = activeTab === id;
+          return (
+            <button
+              key={id}
+              onClick={() => handleTab(id)}
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-left focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none ${
+                active
+                  ? 'bg-[#fde8f3] text-[#F52B8C]'
+                  : 'text-gray-600 hover:bg-[#fdf0f7] hover:text-[#F52B8C]'
+              }`}
+            >
+              <Icon
+                className={`w-[18px] h-[18px] flex-shrink-0 transition-colors ${
+                  active ? 'text-[#F52B8C]' : 'text-gray-400'
+                }`}
+                strokeWidth={active ? 2.2 : 1.8}
+              />
+              <span className="flex-1 min-w-0 truncate">{label}</span>
+              {badge !== undefined && (
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#F52B8C] text-white text-[10px] font-bold flex items-center justify-center">
+                  {badge}
+                </span>
+              )}
+            </button>
+          );
+        })}
       </nav>
 
-      {/* Studio link */}
-      <div className="border-t border-gray-100 pt-4 mt-4">
-        <p className="text-xs font-semibold text-gray-400 mb-2 uppercase tracking-wide">Mon studio</p>
-        <div className="bg-gray-50 rounded-2xl p-3">
-          <p className="text-xs text-gray-500 mb-2 truncate font-medium">{studioUrl}</p>
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleCopy}
-            className={`w-full flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold transition-colors ${
-              copied
-                ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-white border border-gray-200 text-gray-700 hover:border-purple-200'
-            }`}
-          >
-            {copied ? <CheckCheck className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
-            {copied ? 'Copié !' : 'Copier mon lien'}
-          </motion.button>
-        </div>
-
+      {/* Bottom section */}
+      <div className="border-t border-pink-100 px-3 py-4 space-y-0.5">
+        {/* Settings */}
         <button
-          onClick={async () => {
-            if (supabase) await supabase.auth.signOut();
-            navigate('/login');
-          }}
-          className="flex items-center gap-2 mt-3 px-3 py-2 text-sm text-gray-400 hover:text-gray-600 transition-colors w-full rounded-xl hover:bg-gray-50"
+          onClick={() => handleTab('settings')}
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none ${
+            activeTab === 'settings'
+              ? 'bg-[#fde8f3] text-[#F52B8C]'
+              : 'text-gray-600 hover:bg-[#fdf0f7] hover:text-[#F52B8C]'
+          }`}
         >
-          <LogOut className="w-4 h-4" />
-          Déconnexion
+          <Settings
+            className={`w-[18px] h-[18px] flex-shrink-0 ${activeTab === 'settings' ? 'text-[#F52B8C]' : 'text-gray-400'}`}
+            strokeWidth={activeTab === 'settings' ? 2.2 : 1.8}
+          />
+          Settings
         </button>
+
+        {/* User row */}
+        <div className="flex items-center gap-3 px-3 py-2.5 rounded-xl">
+          <div className="w-8 h-8 rounded-full bg-[#F52B8C] flex items-center justify-center flex-shrink-0">
+            <span className="text-white text-xs font-bold">{initials}</span>
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-[#1A1A1A] truncate">
+              {profile?.full_name ?? 'Your account'}
+            </p>
+          </div>
+          <button
+            onClick={handleSignOut}
+            title="Sign out"
+            className="p-1.5 rounded-lg text-gray-400 hover:text-[#F52B8C] hover:bg-[#fde8f3] transition"
+          >
+            <LogOut className="w-4 h-4" />
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -116,7 +163,7 @@ export function Sidebar({ mobileOpen, onMobileClose, slug }: SidebarProps) {
   return (
     <>
       {/* Desktop sidebar */}
-      <aside className="hidden lg:block w-64 flex-shrink-0 bg-white border-r border-gray-100 min-h-screen">
+      <aside className="hidden lg:flex flex-col w-60 flex-shrink-0 bg-[#fff8fa] border-r border-pink-100 h-full">
         {content}
       </aside>
 
@@ -135,7 +182,7 @@ export function Sidebar({ mobileOpen, onMobileClose, slug }: SidebarProps) {
             animate={{ x: 0 }}
             exit={{ x: -280 }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="relative w-72 bg-white h-full shadow-2xl"
+            className="relative w-64 bg-[#fff8fa] h-full shadow-2xl border-r border-pink-100"
           >
             {content}
           </motion.aside>
@@ -144,3 +191,6 @@ export function Sidebar({ mobileOpen, onMobileClose, slug }: SidebarProps) {
     </>
   );
 }
+
+// keep default export for any legacy import
+export default Sidebar;
