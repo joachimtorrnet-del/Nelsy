@@ -31,3 +31,6 @@ dist-ssr
 .env.local
 .vercel
 .env*
+.claude/worktrees/
+NELSY_*.md
+SEO_*.md
