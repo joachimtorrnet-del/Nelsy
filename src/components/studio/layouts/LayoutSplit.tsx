@@ -226,7 +226,7 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Prop
                         cursor: isPreview ? 'default' : 'pointer', whiteSpace: 'nowrap',
                       }}
                     >
-                      Réserver
+                      Book now
                     </button>
                   </div>
                 </div>

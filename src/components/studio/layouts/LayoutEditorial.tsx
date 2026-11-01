@@ -215,7 +215,7 @@ export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook }: 
                       cursor: isPreview ? 'default' : 'pointer',
                       letterSpacing: '0.01em',
                     }}>
-                    Réserver
+                    Book now
                   </button>
                 </div>
               </div>
