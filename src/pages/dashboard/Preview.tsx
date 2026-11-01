@@ -107,7 +107,7 @@ function getOfferTypeFromCategory(category?: string): OfferType {
 const TEMPLATES = [
   { id: 'split',     name: 'Split',     themeId: 'minimal_nude', accentColor: '#3D312E' },
   { id: 'editorial', name: 'Editorial', themeId: 'editorial',    accentColor: '#0A0A0A' },
-  { id: 'spotlight', name: 'Spotlight', themeId: 'blush',        accentColor: '#E8446E' },
+  { id: 'spotlight', name: 'Spotlight', themeId: 'blush',        accentColor: '#F52B8C' },
 ];
 
 // Demo merchant for template gallery — uses picsum.photos placeholder photography
@@ -117,13 +117,15 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
   slug: 'demo',
   salon_name: 'Camille Studio',
   name: 'Camille Studio',
-  bio: 'Nail art & lashes · Spécialiste gel · Paris 9e',
+  bio: 'Spécialiste nail art & lashes, Paris 9e. Volume russe, gel builder & nail art sur mesure.',
   specialty: 'Nail Artist',
   location: 'Paris 9e',
   instagram: 'camille.studio',
   tiktok: 'camille.studio',
-  // Portrait headshot (beauty / warm tones, seed 433)
-  logo_url: 'https://picsum.photos/seed/433/400/500',
+  // Portrait: seed 433 renders a warm-toned beauty headshot portrait
+  logo_url: 'https://picsum.photos/seed/433/400/600',
+  rating: 5.0,
+  review_count: 24,
   services: [
     {
       id: 'd1', name: 'Gel naturel',
@@ -136,7 +138,7 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
       description: 'Volume russe, effet naturel à dramatique',
       price: 90, duration: 120, deposit: 20, category: 'Lashes',
       is_featured: true,
-      image_url: 'https://picsum.photos/seed/lashes-beauty/300/300',
+      image_url: 'https://picsum.photos/seed/lashes-beauty/400/300',
     },
     {
       id: 'd3', name: 'Nail art 2 doigts',
