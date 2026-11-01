@@ -117,15 +117,15 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
   slug: 'demo',
   salon_name: 'Camille Studio',
   name: 'Camille Studio',
-  bio: 'Nail art & lashes specialist. Gel builder, Russian volume & custom nail designs.',
+  bio: 'Precision nail art & Russian volume lashes, Paris.',
   specialty: 'Nail Artist',
   location: 'Paris',
   instagram: 'camille.studio',
   tiktok: 'camille.studio',
   // id/1027: warm beauty close-up portrait (Unsplash CC0)
   logo_url: 'https://picsum.photos/id/1027/400/600',
-  rating: 5.0,
-  review_count: 24,
+  rating: 0,
+  review_count: 0,
   services: [
     {
       id: 'd1', name: 'Gel Manicure',
