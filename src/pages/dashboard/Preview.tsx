@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Plus, Pencil, Trash2, EyeOff, GripVertical, MoreVertical,
   ChevronLeft, ChevronRight, Camera, Loader2, Star, Sparkles, FileDown, Package,
@@ -550,6 +551,7 @@ function EditProfilePanel({ profile, onBack }: { profile: Profile | null; onBack
 // ── Main component ─────────────────────────────────────────────────────────────
 
 export default function Preview({ profile }: { profile: Profile | null }) {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<MainTab>('studio');
   const [studioScreen, setStudioScreen] = useState<StudioScreen>('list');
   const [services, setServices] = useState<DbService[]>([]);
@@ -596,7 +598,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
 
   useEffect(() => { void loadServices(); }, [loadServices]);
 
-  const handleEdit = (service: DbService) => { setEditingService(service); setShowServiceModal(true); };
+  const handleEdit = (service: DbService) => { navigate(`/dashboard/offer/${service.id}`); };
 
   const handleDuplicate = async (service: DbService) => {
     if (!profile?.id) return;
@@ -721,9 +723,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
           {studioScreen === 'type-picker' && (
             <OfferTypePicker
               onSelect={() => {
-                setEditingService(null);
-                setStudioScreen('list');
-                setShowServiceModal(true);
+                navigate('/dashboard/offer/new');
               }}
               onCancel={() => setStudioScreen('list')}
             />

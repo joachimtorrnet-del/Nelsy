@@ -40,6 +40,7 @@ import TurnFollowersPage from './pages/use-cases/TurnFollowersIntoBookings';
 import GrowYourBeautyBusinessPage from './pages/use-cases/GrowYourBeautyBusiness';
 
 // App routes — lazy loaded (kept out of the marketing bundle)
+const OfferEditor = lazy(() => import('./pages/dashboard/OfferEditor'));
 const Onboarding = lazy(() => import('./pages/Onboarding'));
 const OnboardingSuccess = lazy(() => import('./pages/OnboardingSuccess'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
@@ -151,6 +152,15 @@ export default function App() {
 
 
             {/* ── App routes — noindex ───────────────────────────────────── */}
+            <Route
+              path="/dashboard/offer/:serviceId"
+              element={
+                <>
+                  <SEOMeta title="Edit service" description="" noindex />
+                  <OfferEditor />
+                </>
+              }
+            />
             <Route
               path="/onboarding"
               element={
