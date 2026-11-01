@@ -584,7 +584,12 @@ export default function OfferEditor() {
       }
     } catch (err) {
       setSaveState('error');
-      setSaveError(err instanceof Error ? err.message : 'Save failed. Please try again.');
+      const raw = err instanceof Error ? err.message : String(err);
+      // PostgREST PGRST204: schema cache doesn't know this column — migration not applied
+      const msg = raw.includes('PGRST204') || raw.includes('column') && raw.includes('schema cache')
+        ? 'Database schema is out of date. Ask your admin to apply the latest migration (20261101_01_service_card_fields.sql) and try again. Your edits are preserved.'
+        : raw || 'Save failed. Please try again.';
+      setSaveError(msg);
     }
   };
 
@@ -640,9 +645,81 @@ export default function OfferEditor() {
           price={priceTotal} deposit={depositAmount} duration={durationMinutes} accent={accent} cta={cardCta} />
       </PhoneMockup>
     ) : (
-      <div style={{ width: '100%', maxWidth: 390, border: '1px solid #e5e7eb', borderRadius: 16, overflow: 'hidden' }}>
-        <CheckoutPagePreview name={name} description={description} heroUrl={heroUrl}
-          price={priceTotal} deposit={depositAmount} duration={durationMinutes} accent={accent} cta={cardCta} />
+      // Desktop: render at 1024px viewport, scaled to fit the 240px preview column
+      <div style={{ width: '100%' }}>
+        {/* Browser chrome */}
+        <div style={{ background: '#e5e7eb', borderRadius: '10px 10px 0 0', padding: '7px 10px',
+          display: 'flex', alignItems: 'center', gap: 6 }}>
+          <div style={{ display: 'flex', gap: 4 }}>
+            {['#fc5f57','#febc2e','#28c840'].map((c) => (
+              <div key={c} style={{ width: 8, height: 8, borderRadius: '50%', background: c }} />
+            ))}
+          </div>
+          <div style={{ flex: 1, background: '#fff', borderRadius: 4, height: 14,
+            display: 'flex', alignItems: 'center', paddingLeft: 6 }}>
+            <span style={{ fontSize: 9, color: '#9ca3af' }}>getnelsy.com/{slug}/book</span>
+          </div>
+        </div>
+        {/* Viewport at 1024px, scaled */}
+        <div style={{ overflow: 'hidden', borderRadius: '0 0 8px 8px', border: '1px solid #e5e7eb', borderTop: 'none' }}>
+          <div style={{ width: 1024, transform: `scale(${240 / 1024})`, transformOrigin: 'top left',
+            height: Math.round(500 * (1024 / 240)), pointerEvents: 'none', userSelect: 'none' }}>
+            {/* Side-by-side desktop layout: hero left, form right */}
+            <div style={{ display: 'flex', minHeight: 500, fontFamily: 'Inter, sans-serif' }}>
+              {/* Left: hero + details */}
+              <div style={{ flex: 1, background: '#f9fafb', borderRight: '1px solid #e5e7eb', position: 'relative', overflow: 'hidden' }}>
+                {heroUrl
+                  ? <img src={heroUrl} alt="" style={{ width: '100%', height: 320, objectFit: 'cover', display: 'block' }} />
+                  : <div style={{ height: 320, background: `linear-gradient(135deg, ${accent}20, ${accent}55)` }} />}
+                <div style={{ padding: '28px 32px' }}>
+                  <h1 style={{ fontSize: 32, fontWeight: 800, color: '#1A1A1A', margin: '0 0 12px',
+                    fontFamily: 'Playfair Display, Georgia, serif' }}>
+                    {name || 'Service name'}
+                  </h1>
+                  {description && <p style={{ fontSize: 15, color: '#374151', lineHeight: 1.7, margin: 0 }}>{description}</p>}
+                  <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
+                    {durationMinutes > 0 && (
+                      <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: '#e5e7eb',
+                        borderRadius: 8, padding: '5px 12px', fontSize: 13, color: '#374151' }}>
+                        {durationMinutes} min
+                      </span>
+                    )}
+                    {priceTotal && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: accent + '18',
+                      borderRadius: 8, padding: '5px 12px', fontSize: 13, color: accent, fontWeight: 600 }}>
+                      {priceTotal ? `€${parseFloat(priceTotal).toFixed(0)}` : ''}
+                    </span>}
+                  </div>
+                </div>
+              </div>
+              {/* Right: booking panel */}
+              <div style={{ width: 380, background: '#fff', padding: '36px 32px', flexShrink: 0 }}>
+                <p style={{ fontSize: 18, fontWeight: 700, color: '#1A1A1A', margin: '0 0 20px' }}>Book this service</p>
+                {['Name', 'Email', 'Phone'].map((f) => (
+                  <div key={f} style={{ border: '1px solid #e5e7eb', borderRadius: 10, padding: '12px 14px',
+                    marginBottom: 10, fontSize: 14, color: '#9ca3af' }}>{f}</div>
+                ))}
+                {parseFloat(depositAmount) > 0 && priceTotal && (
+                  <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 10,
+                    padding: '12px 14px', marginBottom: 10, fontSize: 13 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span style={{ color: '#6b7280' }}>Deposit due now</span>
+                      <span style={{ fontWeight: 600 }}>€{parseFloat(depositAmount).toFixed(0)}</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ color: '#6b7280' }}>Balance due on the day</span>
+                      <span style={{ color: '#6b7280' }}>€{(parseFloat(priceTotal) - parseFloat(depositAmount)).toFixed(0)}</span>
+                    </div>
+                  </div>
+                )}
+                <button style={{ width: '100%', height: 50, borderRadius: 12, background: accent, color: '#fff',
+                  border: 'none', fontSize: 16, fontWeight: 700, marginTop: 6,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+                  {cardCta.trim() || 'Book now'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     )
   ) : null;
