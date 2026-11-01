@@ -110,46 +110,52 @@ const TEMPLATES = [
   { id: 'spotlight', name: 'Spotlight', themeId: 'blush',        accentColor: '#F52B8C' },
 ];
 
-// Demo merchant for template gallery — uses picsum.photos placeholder photography
-// These images are for gallery preview only, never shown on a user's public studio
+// Demo merchant for template gallery — uses specific picsum.photos IDs (Unsplash CC0)
+// Gallery preview only — never applied to a user's published studio
 const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
   id: 'demo-preview',
   slug: 'demo',
   salon_name: 'Camille Studio',
   name: 'Camille Studio',
-  bio: 'Spécialiste nail art & lashes, Paris 9e. Volume russe, gel builder & nail art sur mesure.',
+  bio: 'Nail art & lashes specialist. Gel builder, Russian volume & custom nail designs.',
   specialty: 'Nail Artist',
-  location: 'Paris 9e',
+  location: 'Paris',
   instagram: 'camille.studio',
   tiktok: 'camille.studio',
-  // Portrait: id/1027 is a warm-toned beauty close-up portrait (Unsplash CC0)
+  // id/1027: warm beauty close-up portrait (Unsplash CC0)
   logo_url: 'https://picsum.photos/id/1027/400/600',
   rating: 5.0,
   review_count: 24,
   services: [
     {
-      id: 'd1', name: 'Gel naturel',
-      description: 'Pose gel builder + vernis semi-permanent',
+      id: 'd1', name: 'Gel Manicure',
+      description: 'Gel builder base with semi-permanent polish finish',
       price: 55, duration: 60, deposit: 15, category: 'Nails',
-      image_url: 'https://picsum.photos/seed/nail-art-1/300/300',
+      // id/306: lotus flower — delicate, clean aesthetic
+      image_url: 'https://picsum.photos/id/306/300/300',
     },
     {
-      id: 'd2', name: 'Extension cils',
-      description: 'Volume russe, effet naturel à dramatique',
+      id: 'd2', name: 'Lash Extensions',
+      description: 'Russian volume lashes, natural to dramatic looks',
       price: 90, duration: 120, deposit: 20, category: 'Lashes',
       is_featured: true,
-      image_url: 'https://picsum.photos/seed/lashes-beauty/400/300',
+      // id/888: warm atmospheric purple tones — works as hero image
+      image_url: 'https://picsum.photos/id/888/400/300',
     },
     {
-      id: 'd3', name: 'Nail art 2 doigts',
-      description: 'Motifs custom sur 2 ongles au choix',
+      id: 'd3', name: 'Nail Art (2 fingers)',
+      description: 'Custom designs on any two fingers',
       price: 15, duration: 20, deposit: 0, category: 'Nails',
-      image_url: 'https://picsum.photos/seed/nail-art-3/300/300',
+      // id/26: accessories flatlay — clean editorial aesthetic
+      image_url: 'https://picsum.photos/id/26/300/300',
     },
   ] as Service[],
 };
 
 // ── Template gallery card ─────────────────────────────────────────────────────
+// Card frame: 240×462px
+// Inner render: 390×750px at scale(240/390 ≈ 0.615) — true mobile-width viewport
+// Selected card: elevated shadow; others slightly dimmed. No colored ring.
 
 interface TemplateCardProps {
   template: typeof TEMPLATES[number];
@@ -157,6 +163,12 @@ interface TemplateCardProps {
   selected: boolean;
   onClick: () => void;
 }
+
+const CARD_W = 240;
+const CARD_H = 462;
+const INNER_W = 390;
+const INNER_H = 750;
+const CARD_SCALE = CARD_W / INNER_W; // 0.6154…
 
 function TemplateCard({ template, accentOverride, selected, onClick }: TemplateCardProps) {
   const demoMerchant: Merchant = {
@@ -166,43 +178,36 @@ function TemplateCard({ template, accentOverride, selected, onClick }: TemplateC
   };
 
   return (
-    <div className="flex-shrink-0 flex flex-col items-center gap-2.5">
-      <button
-        onClick={onClick}
-        className={`relative rounded-2xl overflow-hidden transition-all cursor-pointer focus-visible:outline-none ${
-          selected
-            ? 'ring-[2.5px] ring-[#F52B8C] ring-offset-2 shadow-xl'
-            : 'ring-1 ring-gray-200 hover:ring-gray-300 hover:shadow-lg'
-        }`}
-        style={{ width: 195, height: 390 }}
+    <button
+      onClick={onClick}
+      aria-pressed={selected}
+      aria-label={`${template.name} template`}
+      className="flex-shrink-0 relative rounded-[20px] overflow-hidden transition-all duration-200 focus-visible:outline-2 focus-visible:outline-[#F52B8C] focus-visible:outline-offset-2 cursor-pointer"
+      style={{
+        width: CARD_W,
+        height: CARD_H,
+        // Selected: prominent shadow + full opacity; others: dimmed
+        boxShadow: selected
+          ? '0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08)'
+          : '0 2px 8px rgba(0,0,0,0.07)',
+        opacity: selected ? 1 : 0.72,
+        transform: selected ? 'translateY(-2px)' : 'none',
+      }}
+    >
+      {/* Mobile-width render clipped inside the card frame */}
+      <div
+        style={{
+          width: INNER_W,
+          height: INNER_H,
+          transform: `scale(${CARD_SCALE})`,
+          transformOrigin: 'top left',
+          pointerEvents: 'none',
+          userSelect: 'none',
+        }}
       >
-        {/* Render at 390×780 (mobile viewport) then scale 0.5 → fits 195×390 frame */}
-        <div
-          style={{
-            width: 390, height: 780,
-            transform: 'scale(0.5)', transformOrigin: 'top left',
-            pointerEvents: 'none', userSelect: 'none',
-          }}
-        >
-          <PublicStudioView merchant={demoMerchant} mode="preview" />
-        </div>
-
-        {/* Selected check badge */}
-        {selected && (
-          <>
-            <div className="absolute inset-0 ring-2 ring-inset ring-[#F52B8C] rounded-2xl pointer-events-none" />
-            <div className="absolute top-3 right-3 w-6 h-6 bg-[#F52B8C] rounded-full flex items-center justify-center shadow-sm">
-              <Check className="w-3.5 h-3.5 text-white" />
-            </div>
-          </>
-        )}
-      </button>
-
-      {/* Template name label */}
-      <p className={`text-[13px] font-semibold transition-colors ${selected ? 'text-[#F52B8C]' : 'text-gray-600'}`}>
-        {template.name}
-      </p>
-    </div>
+        <PublicStudioView merchant={demoMerchant} mode="preview" />
+      </div>
+    </button>
   );
 }
 
@@ -885,53 +890,63 @@ export default function Preview({ profile }: { profile: Profile | null }) {
       {/* ── DESIGN TAB ─────────────────────────────────────────────── */}
       {activeTab === 'design' && (
         <div>
-          {/* Section header */}
-          <div className="px-8 pt-6 pb-5 flex items-center justify-between">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Template</p>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => navigateTemplate(-1)}
-                className="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 transition"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => navigateTemplate(1)}
-                className="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 transition"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
+          {/* Gallery — full width, cards centered */}
+          <div className="pt-6 pb-2">
+            <div className="flex items-start justify-center gap-5 px-8 overflow-x-auto pb-2">
+              {TEMPLATES.map((tpl, idx) => (
+                <TemplateCard
+                  key={tpl.id}
+                  template={tpl}
+                  accentOverride={currentTplIdx === idx ? designForm.color_accent : tpl.accentColor}
+                  selected={currentTplIdx === idx}
+                  onClick={() => setDesignForm((f) => ({ ...f, theme_preset: tpl.themeId, color_accent: tpl.accentColor }))}
+                />
+              ))}
             </div>
           </div>
 
-          {/* Gallery cards — horizontal scroll, wide */}
-          <div className="flex items-start gap-5 px-8 pb-6 overflow-x-auto scrollbar-hide">
-            {TEMPLATES.map((tpl, idx) => (
-              <TemplateCard
-                key={tpl.id}
-                template={tpl}
-                accentOverride={currentTplIdx === idx ? designForm.color_accent : tpl.accentColor}
-                selected={currentTplIdx === idx}
-                onClick={() => setDesignForm((f) => ({ ...f, theme_preset: tpl.themeId, color_accent: tpl.accentColor }))}
-              />
-            ))}
+          {/* Template name + prev/next controls */}
+          <div className="flex items-center justify-center gap-4 py-4">
+            <button
+              onClick={() => navigateTemplate(-1)}
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-500 transition"
+              aria-label="Previous template"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <span className="text-[18px] font-bold text-[#1A1A1A] w-28 text-center">
+              {TEMPLATES[currentTplIdx]?.name ?? ''}
+            </span>
+            <button
+              onClick={() => navigateTemplate(1)}
+              className="p-2 rounded-full hover:bg-gray-100 text-gray-500 transition"
+              aria-label="Next template"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
           </div>
+          <p className="text-center text-[13px] text-gray-400 pb-5">
+            Click a card or use the arrows to choose a template.
+          </p>
 
-          {/* Colors + Font */}
+          {/* Settings panel */}
           <div className="border-t border-gray-100 px-8 py-6 grid grid-cols-2 gap-10">
             {/* Colors */}
             <div>
-              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Colors</p>
-              <div className="flex gap-8">
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-5">Colors</p>
+              <div className="flex gap-8 mb-4">
                 {/* Accent */}
                 <div>
                   <p className="text-xs text-gray-400 mb-2">Accent</p>
                   <label className="flex items-center gap-2.5 cursor-pointer group">
                     <div className="w-10 h-10 rounded-xl shadow-sm border border-gray-200 overflow-hidden relative">
                       <div className="w-full h-full" style={{ background: designForm.color_accent }} />
-                      <input type="color" value={designForm.color_accent}
+                      <input
+                        type="color"
+                        value={designForm.color_accent}
                         onChange={(e) => setDesignForm((f) => ({ ...f, color_accent: e.target.value }))}
-                        className="opacity-0 absolute inset-0 w-full h-full cursor-pointer" />
+                        className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                      />
                     </div>
                     <code className="text-sm font-mono text-gray-700 group-hover:text-[#F52B8C] transition">
                       {designForm.color_accent.toUpperCase()}
@@ -947,17 +962,27 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                   </div>
                 </div>
               </div>
-              {/* Color swatches */}
-              <div className="flex gap-2 mt-4 flex-wrap">
+              {/* Quick-pick color swatches */}
+              <div className="flex gap-2 flex-wrap">
                 {['#F52B8C', '#E8446E', '#0A0A0A', '#3B82F6', '#8B5CF6', '#059669', '#D97706'].map((c) => (
-                  <button key={c} onClick={() => setDesignForm((f) => ({ ...f, color_accent: c }))}
+                  <button
+                    key={c}
+                    onClick={() => setDesignForm((f) => ({ ...f, color_accent: c }))}
                     className="w-7 h-7 rounded-full transition hover:scale-110"
-                    style={{ background: c, outline: designForm.color_accent === c ? `3px solid ${c}` : '3px solid transparent', outlineOffset: '2px' }} />
+                    style={{
+                      background: c,
+                      outline: designForm.color_accent === c ? `3px solid ${c}` : '3px solid transparent',
+                      outlineOffset: '2px',
+                    }}
+                  />
                 ))}
                 <label className="w-7 h-7 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-gray-400 transition overflow-hidden relative">
-                  <input type="color" value={designForm.color_accent}
+                  <input
+                    type="color"
+                    value={designForm.color_accent}
                     onChange={(e) => setDesignForm((f) => ({ ...f, color_accent: e.target.value }))}
-                    className="opacity-0 absolute inset-0 w-full h-full cursor-pointer" />
+                    className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                  />
                   <span className="text-gray-400 text-xs font-bold pointer-events-none">+</span>
                 </label>
               </div>
@@ -965,23 +990,26 @@ export default function Preview({ profile }: { profile: Profile | null }) {
 
             {/* Font */}
             <div>
-              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Font</p>
+              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-5">Font</p>
               <div className="space-y-2">
                 {[
-                  { label: 'Inter', value: 'sans', preview: 'Aa', class: 'font-sans' },
-                  { label: 'Playfair Display', value: 'serif', preview: 'Aa', class: 'font-serif' },
+                  { label: 'Inter', value: 'sans', preview: 'Aa', className: 'font-sans' },
+                  { label: 'Playfair Display', value: 'serif', preview: 'Aa', className: 'font-serif' },
                 ].map((font) => {
                   const currentFont = THEMES[designForm.theme_preset]?.fontClass ?? 'font-sans';
-                  const isSelected = currentFont === `font-${font.value}`;
+                  const isActive = currentFont === `font-${font.value}`;
                   return (
-                    <button key={font.value}
+                    <button
+                      key={font.value}
                       className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border text-left transition-all ${
-                        isSelected ? 'border-[#F52B8C] bg-[#fff8fa]' : 'border-gray-200 hover:border-gray-300'
+                        isActive ? 'border-[#F52B8C] bg-[#fff8fa]' : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
-                      <span className={`text-xl font-bold text-gray-700 w-8 text-center ${font.class}`}>{font.preview}</span>
+                      <span className={`text-xl font-bold text-gray-700 w-8 text-center ${font.className}`}>
+                        {font.preview}
+                      </span>
                       <span className="text-sm text-gray-700">{font.label}</span>
-                      {isSelected && <Check className="w-4 h-4 text-[#F52B8C] ml-auto" />}
+                      {isActive && <Check className="w-4 h-4 text-[#F52B8C] ml-auto" />}
                     </button>
                   );
                 })}
@@ -989,14 +1017,19 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             </div>
           </div>
 
-          {/* Actions */}
+          {/* Cancel / Save */}
           <div className="border-t border-gray-100 px-8 py-4 flex items-center justify-end gap-3">
-            <button onClick={cancelDesign}
-              className="px-5 py-2.5 text-sm font-semibold text-gray-600 border border-gray-200 rounded-xl hover:border-gray-300 transition">
+            <button
+              onClick={cancelDesign}
+              className="px-5 py-2.5 text-sm font-semibold text-gray-600 border border-gray-200 rounded-xl hover:border-gray-300 transition"
+            >
               Cancel
             </button>
-            <button onClick={saveDesign} disabled={savingDesign}
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-[#F52B8C] rounded-xl hover:opacity-90 transition disabled:opacity-50">
+            <button
+              onClick={saveDesign}
+              disabled={savingDesign}
+              className="px-5 py-2.5 text-sm font-semibold text-white bg-[#F52B8C] rounded-xl hover:opacity-90 transition disabled:opacity-50"
+            >
               {savingDesign ? 'Saving…' : 'Save'}
             </button>
           </div>

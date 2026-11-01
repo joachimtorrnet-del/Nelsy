@@ -250,7 +250,7 @@ export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook }: 
                       display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                     }}
                   >
-                    Réserver <ArrowRight size={16} />
+                    Book now <ArrowRight size={16} />
                   </button>
                 </div>
               </div>
@@ -331,7 +331,7 @@ export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook }: 
                     display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
                   }}
                 >
-                  Réserver <ArrowRight size={16} />
+                  Book now <ArrowRight size={16} />
                 </button>
               </div>
             </div>
