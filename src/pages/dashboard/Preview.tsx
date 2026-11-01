@@ -122,8 +122,8 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
   location: 'Paris 9e',
   instagram: 'camille.studio',
   tiktok: 'camille.studio',
-  // Portrait: seed 433 renders a warm-toned beauty headshot portrait
-  logo_url: 'https://picsum.photos/seed/433/400/600',
+  // Portrait: id/1027 is a warm-toned beauty close-up portrait (Unsplash CC0)
+  logo_url: 'https://picsum.photos/id/1027/400/600',
   rating: 5.0,
   review_count: 24,
   services: [
