@@ -462,6 +462,133 @@ export async function getBusinessHours(profileId: string): Promise<BusinessHour[
   return (data ?? []) as BusinessHour[];
 }
 
+// ============ SERVICE COLLECTIONS ============
+
+import type { ServiceCollection, CollectionSubcategory, CollectionMember } from '@/types';
+
+export async function getCollectionsForProfile(profileId: string): Promise<ServiceCollection[]> {
+  if (!supabase) throw new Error('Supabase not initialized');
+  const { data: cols, error: colErr } = await supabase
+    .from('service_collections')
+    .select('*')
+    .eq('profile_id', profileId)
+    .order('display_order', { ascending: true });
+  if (colErr) throw colErr;
+  if (!cols?.length) return [];
+
+  const colIds = cols.map((c: Record<string, unknown>) => c.id as string);
+
+  const [{ data: subs }, { data: members }] = await Promise.all([
+    supabase.from('collection_subcategories').select('*').in('collection_id', colIds).order('display_order'),
+    supabase.from('collection_members')
+      .select('collection_id, service_id, subcategory_id, display_order, services(*)')
+      .in('collection_id', colIds)
+      .order('display_order'),
+  ]);
+
+  return cols.map((col: Record<string, unknown>) => {
+    const colSubs = ((subs ?? []) as Record<string, unknown>[])
+      .filter((s) => s.collection_id === col.id)
+      .map((s) => ({ id: s.id as string, name: s.name as string, display_order: s.display_order as number }));
+    const colMembers = ((members ?? []) as Record<string, unknown>[])
+      .filter((m) => m.collection_id === col.id)
+      .map((m) => {
+        const svc = m.services as Record<string, unknown>;
+        return {
+          service: {
+            id: svc.id as string,
+            name: svc.name as string,
+            description: (svc.description as string) ?? '',
+            price: parseFloat(String(svc.price_total ?? 0)),
+            duration: (svc.duration_minutes as number) ?? 60,
+            deposit: parseFloat(String(svc.deposit_amount ?? 0)),
+            category: svc.category as string | undefined,
+            image_url: svc.image_url as string | undefined,
+            is_featured: (svc.is_featured as boolean) ?? false,
+            active: (svc.active as boolean) ?? true,
+            studio_placement: (svc.studio_placement as 'individual' | 'collection' | 'both') ?? 'individual',
+            card_style: (svc.card_style as 'button' | 'callout' | 'preview') ?? 'callout',
+            card_subtitle: svc.card_subtitle as string | undefined,
+            card_cta_text: svc.card_cta_text as string | undefined,
+          },
+          subcategory_id: m.subcategory_id as string | null,
+          display_order: m.display_order as number,
+        } satisfies CollectionMember;
+      });
+    return {
+      id: col.id as string,
+      profile_id: col.profile_id as string,
+      title: col.title as string,
+      description: col.description as string | null,
+      image_url: col.image_url as string | null,
+      display_order: col.display_order as number,
+      active: col.active as boolean,
+      subcategories: colSubs,
+      members: colMembers,
+    } satisfies ServiceCollection;
+  });
+}
+
+export async function getPublicCollections(profileId: string): Promise<ServiceCollection[]> {
+  if (!supabase) throw new Error('Supabase not initialized');
+  const all = await getCollectionsForProfile(profileId);
+  return all
+    .filter((c) => c.active)
+    .map((c) => ({ ...c, members: c.members.filter((m) => m.service.active !== false) }))
+    .filter((c) => c.members.length > 0);
+}
+
+export async function createCollection(data: { profile_id: string; title: string; description?: string; image_url?: string; active?: boolean }) {
+  if (!supabase) throw new Error('Supabase not initialized');
+  return supabase.from('service_collections').insert(data).select().single();
+}
+
+export async function updateCollection(id: string, updates: Record<string, unknown>) {
+  if (!supabase) throw new Error('Supabase not initialized');
+  return supabase.from('service_collections').update({ ...updates, updated_at: new Date().toISOString() }).eq('id', id).select().single();
+}
+
+export async function deleteCollection(id: string) {
+  if (!supabase) throw new Error('Supabase not initialized');
+  return supabase.from('service_collections').delete().eq('id', id);
+}
+
+export async function addCollectionMember(collectionId: string, serviceId: string, subcategoryId?: string) {
+  if (!supabase) throw new Error('Supabase not initialized');
+  const { data: existing } = await supabase.from('collection_members')
+    .select('display_order').eq('collection_id', collectionId).order('display_order', { ascending: false }).limit(1);
+  const nextOrder = ((existing?.[0] as { display_order: number } | undefined)?.display_order ?? -1) + 1;
+  return supabase.from('collection_members')
+    .insert({ collection_id: collectionId, service_id: serviceId, subcategory_id: subcategoryId ?? null, display_order: nextOrder })
+    .select().single();
+}
+
+export async function removeCollectionMember(serviceId: string) {
+  if (!supabase) throw new Error('Supabase not initialized');
+  return supabase.from('collection_members').delete().eq('service_id', serviceId);
+}
+
+export async function updateCollectionMember(serviceId: string, updates: { subcategory_id?: string | null; display_order?: number }) {
+  if (!supabase) throw new Error('Supabase not initialized');
+  return supabase.from('collection_members').update(updates).eq('service_id', serviceId);
+}
+
+export async function upsertSubcategory(data: { id?: string; collection_id: string; profile_id: string; name: string; display_order: number }): Promise<CollectionSubcategory> {
+  if (!supabase) throw new Error('Supabase not initialized');
+  const { id, ...rest } = data;
+  const query = id
+    ? supabase.from('collection_subcategories').update(rest).eq('id', id).select().single()
+    : supabase.from('collection_subcategories').insert(rest).select().single();
+  const { data: row, error } = await query;
+  if (error) throw error;
+  return row as CollectionSubcategory;
+}
+
+export async function deleteSubcategory(id: string) {
+  if (!supabase) throw new Error('Supabase not initialized');
+  return supabase.from('collection_subcategories').delete().eq('id', id);
+}
+
 // ============ TRANSACTIONS ============
 
 export async function getTransactions(proId: string) {

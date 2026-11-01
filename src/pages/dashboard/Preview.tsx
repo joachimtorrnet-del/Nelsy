@@ -834,9 +834,17 @@ export default function Preview({ profile }: { profile: Profile | null }) {
               {/* Add offer */}
               <button
                 onClick={() => setStudioScreen('type-picker')}
-                className="w-full h-12 bg-[#F52B8C] text-white rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 hover:opacity-90 transition mb-4"
+                className="w-full h-12 bg-[#F52B8C] text-white rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 hover:opacity-90 transition mb-3"
               >
                 <Plus className="w-4 h-4" /> Add an offer
+              </button>
+
+              {/* Add collection */}
+              <button
+                onClick={() => navigate('/dashboard/collection/new')}
+                className="w-full h-11 border border-[#F52B8C] text-[#F52B8C] rounded-full font-semibold text-[14px] flex items-center justify-center gap-2 hover:bg-[#F52B8C]/5 transition mb-4"
+              >
+                <Plus className="w-4 h-4" /> Add a service collection
               </button>
 
               {/* Add section */}

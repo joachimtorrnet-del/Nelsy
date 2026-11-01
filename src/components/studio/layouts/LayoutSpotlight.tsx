@@ -1,6 +1,7 @@
 import { Globe, ArrowRight } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
+import { ServiceCollectionCard } from '../ServiceCollectionCard';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -338,6 +339,13 @@ export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook }: 
           );
         })}
       </div>
+
+      {/* Service collections */}
+      {(merchant.collections ?? []).filter((c) => c.active && c.members.length > 0).map((col) => (
+        <div key={col.id} style={{ padding: '0 16px 0' }}>
+          <ServiceCollectionCard collection={col} theme={theme} isPreview={isPreview} onBook={onBook} />
+        </div>
+      ))}
 
       {/* Footer */}
       <div style={{ textAlign: 'center', paddingBottom: 32 }}>

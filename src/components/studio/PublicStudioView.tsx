@@ -66,7 +66,9 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   const accent = theme.defaultAccent;
   const isPreview = mode === 'preview';
 
-  const { photos, testimonials, hours } = useStudioPublic(merchant.id);
+  const { photos, testimonials, hours, collections } = useStudioPublic(merchant.id);
+  // Merge live collections into the merchant object for layout components
+  const merchantWithCollections = { ...merchant, collections: merchant.collections ?? collections };
 
   // Hero photo: explicit cover takes priority, then first gallery photo
   const heroPhotoUrl = merchant.cover_url ?? photos[0]?.image_url;
@@ -92,7 +94,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   if (layoutVariant === 'split') {
     return (
       <>
-        <LayoutSplit merchant={merchant} theme={theme} isPreview={isPreview} photos={photos} />
+        <LayoutSplit merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
       </>
     );
@@ -100,7 +102,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   if (layoutVariant === 'editorial') {
     return (
       <>
-        <LayoutEditorial merchant={merchant} theme={theme} isPreview={isPreview} photos={photos} />
+        <LayoutEditorial merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
       </>
     );
@@ -108,7 +110,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   if (layoutVariant === 'spotlight') {
     return (
       <>
-        <LayoutSpotlight merchant={merchant} theme={theme} isPreview={isPreview} photos={photos} />
+        <LayoutSpotlight merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
       </>
     );

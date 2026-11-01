@@ -8,6 +8,35 @@ export interface Service {
   category?: string;
   image_url?: string;
   is_featured?: boolean;
+  active?: boolean;
+  studio_placement?: 'individual' | 'collection' | 'both';
+  card_style?: 'button' | 'callout' | 'preview';
+  card_subtitle?: string;
+  card_cta_text?: string;
+}
+
+export interface CollectionSubcategory {
+  id: string;
+  name: string;
+  display_order: number;
+}
+
+export interface CollectionMember {
+  service: Service;
+  subcategory_id: string | null;
+  display_order: number;
+}
+
+export interface ServiceCollection {
+  id: string;
+  profile_id: string;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  display_order: number;
+  active: boolean;
+  subcategories: CollectionSubcategory[];
+  members: CollectionMember[];
 }
 
 export interface Merchant {
@@ -27,6 +56,7 @@ export interface Merchant {
   rating?: number;
   review_count?: number;
   services: Service[];
+  collections?: ServiceCollection[];
   theme_preset?: string;
   color_accent?: string;
   timezone?: string;
