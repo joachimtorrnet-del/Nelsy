@@ -57,6 +57,7 @@ const DEMO_MERCHANT: Merchant = {
 const DEMO_THEME: NelsyTheme = {
   id: 'blush',
   name: 'Blush',
+  emoji: '🌺',
   pageBg: ACCENT,
   cardBg: 'rgba(255,255,255,0.14)',
   cardBorder: 'rgba(255,255,255,0.12)',
@@ -65,6 +66,9 @@ const DEMO_THEME: NelsyTheme = {
   accentText: '#FFFFFF',
   defaultAccent: ACCENT,
   fontClass: 'font-sans',
+  headerGradient: 'linear-gradient(160deg, #FFD6E7 0%, #FFC2D4 100%)',
+  headerTextPrimary: '#3D1F28',
+  headerTextSecondary: '#8B5E6B',
 };
 
 export default function SpotlightPreview() {

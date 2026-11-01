@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, Copy, CheckCheck, ChevronDown, ChevronUp,
   Loader2, Trash2, Eye, Smartphone, Monitor, AlertTriangle,
-  ArrowRight, X,
+  ArrowRight,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { updateService, createService, deleteService, uploadImage } from '@/lib/supabase-queries';

@@ -55,6 +55,7 @@ const DEMO_MERCHANT: Merchant = {
 const DEMO_THEME: NelsyTheme = {
   id: 'editorial',
   name: 'Editorial',
+  emoji: '📰',
   pageBg: '#F7F4F0',
   cardBg: '#FDF8F3',
   cardBorder: '#E8E0D8',
@@ -63,6 +64,9 @@ const DEMO_THEME: NelsyTheme = {
   accentText: '#FFFFFF',
   defaultAccent: ACCENT,
   fontClass: 'font-sans',
+  headerGradient: 'linear-gradient(160deg, #1A1A1A 0%, #2D2D2D 100%)',
+  headerTextPrimary: '#FFFFFF',
+  headerTextSecondary: 'rgba(255,255,255,0.55)',
 };
 
 export default function EditorialPreview() {
