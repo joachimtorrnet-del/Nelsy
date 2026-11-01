@@ -36,7 +36,6 @@ export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook }: 
   const accent = theme.defaultAccent;
   const heroPhoto = merchant.cover_url ?? photos[0]?.image_url;
   const font = theme.fontClass === 'font-serif' ? 'Playfair Display, Georgia, serif' : 'Inter, sans-serif';
-  const initials = merchant.salon_name.split(' ').map((w) => w[0]).join('').toUpperCase().slice(0, 2);
 
   return (
     <div style={{

@@ -662,7 +662,6 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     { id: 'design' as MainTab,        label: 'Edit Design',   Icon: SlidersHorizontal },
   ];
 
-  const currentTemplate = TEMPLATES[currentTplIdx];
   const bgColor = THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
 
   // ── Render ───────────────────────────────────────────────────────
