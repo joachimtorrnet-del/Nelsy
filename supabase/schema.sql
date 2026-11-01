@@ -41,6 +41,10 @@ CREATE TABLE IF NOT EXISTS services (
     CHECK (deposit_amount > 0 AND deposit_amount <= price_total),
   display_order INTEGER DEFAULT 0,
   active BOOLEAN DEFAULT true,
+  -- Card presentation (added by migration 20261101_01_service_card_fields)
+  card_style TEXT NOT NULL DEFAULT 'callout' CHECK (card_style IN ('button', 'callout', 'preview')),
+  card_subtitle TEXT,
+  card_cta_text TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()) NOT NULL,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()) NOT NULL
 );

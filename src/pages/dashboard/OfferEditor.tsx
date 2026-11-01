@@ -3,13 +3,14 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, Copy, CheckCheck, ChevronDown, ChevronUp,
   Loader2, Trash2, Eye, Smartphone, Monitor, AlertTriangle,
-  ArrowRight,
+  ArrowRight, Clock, Tag,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { updateService, createService, deleteService, uploadImage } from '@/lib/supabase-queries';
 import { validatePrice } from '@/utils/validation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
 import { PublicStudioView } from '@/components/studio/PublicStudioView';
+import { formatCurrency } from '@/lib/utils';
 import type { Merchant } from '@/types';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -18,14 +19,18 @@ interface ServiceRow {
   id: string;
   profile_id: string;
   name: string;
-  description: string;
-  category: string;
+  description: string | null;
+  category: string | null;
   duration_minutes: number;
   price_total: number;
   deposit_amount: number;
   active: boolean;
   is_featured: boolean;
   image_url: string | null;
+  // card presentation columns (added by migration 20261101_01_service_card_fields)
+  card_style: 'button' | 'callout' | 'preview' | null;
+  card_subtitle: string | null;
+  card_cta_text: string | null;
 }
 
 interface ProfileRow {
@@ -63,57 +68,48 @@ type CardStyle = 'button' | 'callout' | 'preview';
 type SaveState = 'idle' | 'saving' | 'saved' | 'error';
 type ActiveTab = 'thumbnail' | 'checkout' | 'options';
 
-function localKey(serviceId: string) {
-  return `nelsy_offer_style_${serviceId}`;
+// localStorage is a recovery fallback only — DB is authoritative.
+function localKey(serviceId: string) { return `nelsy_offer_style_${serviceId}`; }
+function cacheLocalStyle(serviceId: string, style: CardStyle) {
+  try { localStorage.setItem(localKey(serviceId), style); } catch { /* noop */ }
+}
+function readLocalStyle(serviceId: string): CardStyle | null {
+  try { return (localStorage.getItem(localKey(serviceId)) as CardStyle) || null; } catch { return null; }
 }
 
-function loadLocalPrefs(serviceId: string): { cardStyle: CardStyle; cardSubtitle: string; cardCta: string } {
-  try {
-    const raw = localStorage.getItem(localKey(serviceId));
-    if (raw) return JSON.parse(raw);
-  } catch { /* empty */ }
-  return { cardStyle: 'callout', cardSubtitle: '', cardCta: 'Book now' };
-}
-
-function saveLocalPrefs(serviceId: string, prefs: { cardStyle: CardStyle; cardSubtitle: string; cardCta: string }) {
-  try { localStorage.setItem(localKey(serviceId), JSON.stringify(prefs)); } catch { /* empty */ }
-}
-
-// ── Card style icons ───────────────────────────────────────────────────────────
+// ── Small SVG icons for card style tiles ──────────────────────────────────────
 
 function ButtonIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="3" y="9" width="18" height="6" rx="3"/>
+      <rect x="3" y="9" width="18" height="6" rx="3" />
     </svg>
   );
 }
-
 function CalloutIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="3" y="4" width="18" height="16" rx="2"/>
-      <rect x="6" y="8" width="5" height="5" rx="1"/>
-      <line x1="13" y1="9" x2="18" y2="9"/>
-      <line x1="13" y1="12" x2="18" y2="12"/>
-      <line x1="6" y1="16" x2="18" y2="16"/>
+      <rect x="3" y="4" width="18" height="16" rx="2" />
+      <rect x="6" y="8" width="5" height="5" rx="1" />
+      <line x1="13" y1="9" x2="18" y2="9" />
+      <line x1="13" y1="12" x2="18" y2="12" />
+      <line x1="6" y1="16" x2="18" y2="16" />
     </svg>
   );
 }
-
 function PreviewIcon() {
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <rect x="3" y="3" width="18" height="18" rx="2"/>
-      <rect x="3" y="3" width="18" height="8" rx="2"/>
-      <line x1="3" y1="11" x2="21" y2="11"/>
-      <line x1="6" y1="15" x2="14" y2="15"/>
-      <line x1="6" y1="18" x2="11" y2="18"/>
+      <rect x="3" y="3" width="18" height="18" rx="2" />
+      <rect x="3" y="3" width="18" height="8" rx="2" />
+      <line x1="3" y1="11" x2="21" y2="11" />
+      <line x1="6" y1="15" x2="14" y2="15" />
+      <line x1="6" y1="18" x2="11" y2="18" />
     </svg>
   );
 }
 
-// ── Mini card previews ─────────────────────────────────────────────────────────
+// ── Live card preview (Thumbnail tab) ─────────────────────────────────────────
 
 interface CardPreviewProps {
   cardStyle: CardStyle;
@@ -126,23 +122,25 @@ interface CardPreviewProps {
 }
 
 function ServiceCardPreview({ cardStyle, name, subtitle, cta, imageUrl, price, accent }: CardPreviewProps) {
-  const formattedPrice = price ? `€${parseFloat(price || '0').toFixed(0)}` : '';
+  const priceNum = parseFloat(price);
+  const priceLabel = price && !isNaN(priceNum) ? formatCurrency(priceNum) : '';
+  const ctaLabel = cta.trim() || 'Book now';
+  const nameLabel = name.trim() || 'Service name';
 
   if (cardStyle === 'button') {
     return (
       <div style={{
         border: '1px solid #e5e7eb', borderRadius: 12, padding: '12px 14px',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
-        background: '#fff',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, background: '#fff',
       }}>
         <div style={{ minWidth: 0, flex: 1 }}>
-          <p style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', margin: 0 }}>{name || 'Service name'}</p>
-          {formattedPrice && <p style={{ fontSize: 13, color: '#6b7280', margin: '2px 0 0' }}>{formattedPrice}</p>}
+          <p style={{ fontSize: 14, fontWeight: 600, color: '#1A1A1A', margin: 0 }}>{nameLabel}</p>
+          {priceLabel && <p style={{ fontSize: 13, color: '#6b7280', margin: '2px 0 0' }}>{priceLabel}</p>}
         </div>
         <button style={{
           flexShrink: 0, padding: '8px 14px', borderRadius: 8,
           background: accent, color: '#fff', border: 'none', fontSize: 12, fontWeight: 600,
-        }}>{cta || 'Book now'}</button>
+        }}>{ctaLabel}</button>
       </div>
     );
   }
@@ -158,41 +156,145 @@ function ServiceCardPreview({ cardStyle, name, subtitle, cta, imageUrl, price, a
             {imageUrl && <img src={imageUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <p style={{ fontSize: 14, fontWeight: 700, color: '#1A1A1A', margin: '0 0 2px' }}>{name || 'Service name'}</p>
+            <p style={{ fontSize: 14, fontWeight: 700, color: '#1A1A1A', margin: '0 0 2px' }}>{nameLabel}</p>
             {subtitle && <p style={{ fontSize: 12, color: '#6b7280', margin: 0, lineHeight: 1.4 }}>{subtitle}</p>}
-            {formattedPrice && <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', margin: '4px 0 0' }}>{formattedPrice}</p>}
+            {priceLabel && <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', margin: '4px 0 0' }}>{priceLabel}</p>}
           </div>
         </div>
         <div style={{ padding: '0 14px 12px' }}>
           <button style={{
-            width: '100%', padding: '9px 0', borderRadius: 8,
-            background: accent, color: '#fff', border: 'none', fontSize: 13, fontWeight: 600,
+            width: '100%', padding: '9px 0', borderRadius: 8, background: accent, color: '#fff',
+            border: 'none', fontSize: 13, fontWeight: 600,
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-          }}>{cta || 'Book now'} <ArrowRight size={13} /></button>
+          }}>{ctaLabel} <ArrowRight size={13} /></button>
         </div>
       </div>
     );
   }
 
-  // preview style
+  // preview
   return (
     <div style={{ border: '1px solid #e5e7eb', borderRadius: 12, overflow: 'hidden', background: '#fff' }}>
-      {imageUrl ? (
-        <div style={{ height: 120, overflow: 'hidden' }}>
-          <img src={imageUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-        </div>
-      ) : (
-        <div style={{ height: 120, background: `linear-gradient(135deg, ${accent}20, ${accent}60)` }} />
-      )}
+      {imageUrl
+        ? <div style={{ height: 120, overflow: 'hidden' }}><img src={imageUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
+        : <div style={{ height: 120, background: `linear-gradient(135deg, ${accent}20, ${accent}60)` }} />}
       <div style={{ padding: '12px 14px' }}>
-        <p style={{ fontSize: 14, fontWeight: 700, color: '#1A1A1A', margin: '0 0 2px' }}>{name || 'Service name'}</p>
+        <p style={{ fontSize: 14, fontWeight: 700, color: '#1A1A1A', margin: '0 0 2px' }}>{nameLabel}</p>
         {subtitle && <p style={{ fontSize: 12, color: '#6b7280', margin: '0 0 6px', lineHeight: 1.4 }}>{subtitle}</p>}
-        {formattedPrice && <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', margin: '0 0 10px' }}>{formattedPrice}</p>}
+        {priceLabel && <p style={{ fontSize: 13, fontWeight: 600, color: '#1A1A1A', margin: '0 0 10px' }}>{priceLabel}</p>}
         <button style={{
-          width: '100%', padding: '9px 0', borderRadius: 8,
-          background: accent, color: '#fff', border: 'none', fontSize: 13, fontWeight: 600,
+          width: '100%', padding: '9px 0', borderRadius: 8, background: accent, color: '#fff',
+          border: 'none', fontSize: 13, fontWeight: 600,
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-        }}>{cta || 'Book now'} <ArrowRight size={13} /></button>
+        }}>{ctaLabel} <ArrowRight size={13} /></button>
+      </div>
+    </div>
+  );
+}
+
+// ── Checkout page preview ──────────────────────────────────────────────────────
+
+interface CheckoutPreviewProps {
+  name: string;
+  description: string;
+  heroUrl: string;
+  price: string;
+  deposit: string;
+  duration: number;
+  accent: string;
+  cta: string;
+}
+
+function CheckoutPagePreview({ name, description, heroUrl, price, deposit, duration, accent, cta }: CheckoutPreviewProps) {
+  const priceNum = parseFloat(price);
+  const depositNum = parseFloat(deposit);
+  const hasDeposit = deposit.trim() !== '' && !isNaN(depositNum) && depositNum > 0;
+  const priceLabel = price && !isNaN(priceNum) ? formatCurrency(priceNum) : '';
+  const chargeLabel = hasDeposit ? formatCurrency(depositNum) : priceLabel;
+  const balanceLabel = hasDeposit && priceLabel ? formatCurrency(priceNum - depositNum) : '';
+
+  return (
+    <div style={{ background: '#fff', minHeight: '100%', fontFamily: 'Inter, sans-serif' }}>
+      {/* Hero */}
+      <div style={{ position: 'relative', height: 200, background: `linear-gradient(160deg, ${accent}25, ${accent}60)`, overflow: 'hidden' }}>
+        {heroUrl && (
+          <img src={heroUrl} alt="" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+        )}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.55) 100%)',
+        }} />
+        <div style={{ position: 'absolute', bottom: 16, left: 16, right: 16 }}>
+          <p style={{ fontSize: 22, fontWeight: 800, color: '#fff', margin: 0, lineHeight: 1.2,
+            fontFamily: 'Playfair Display, Georgia, serif' }}>
+            {name || 'Service name'}
+          </p>
+        </div>
+      </div>
+
+      {/* Details */}
+      <div style={{ padding: '16px 16px 0' }}>
+        {/* Duration + price row */}
+        <div style={{ display: 'flex', gap: 10, marginBottom: 12 }}>
+          {duration > 0 && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, background: '#f3f4f6',
+              borderRadius: 8, padding: '5px 10px', fontSize: 12, color: '#374151', fontWeight: 500 }}>
+              <Clock size={12} />
+              {duration} min
+            </div>
+          )}
+          {priceLabel && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, background: '#f3f4f6',
+              borderRadius: 8, padding: '5px 10px', fontSize: 12, color: '#374151', fontWeight: 500 }}>
+              <Tag size={12} />
+              {priceLabel}
+            </div>
+          )}
+        </div>
+
+        {/* Description */}
+        {description && (
+          <p style={{ fontSize: 14, color: '#374151', lineHeight: 1.6, margin: '0 0 16px' }}>
+            {description}
+          </p>
+        )}
+
+        {/* Deposit info */}
+        {hasDeposit && priceLabel && (
+          <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 10,
+            padding: '10px 12px', marginBottom: 16, fontSize: 13 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+              <span style={{ color: '#6b7280' }}>Deposit due now</span>
+              <span style={{ fontWeight: 600, color: '#1A1A1A' }}>{chargeLabel}</span>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ color: '#6b7280' }}>Balance due on the day</span>
+              <span style={{ color: '#6b7280' }}>{balanceLabel}</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* CTA */}
+      <div style={{ padding: '0 16px 16px' }}>
+        <button style={{
+          width: '100%', height: 48, borderRadius: 12, background: accent, color: '#fff',
+          border: 'none', fontSize: 15, fontWeight: 700,
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+        }}>
+          {cta.trim() || 'Book now'} <ArrowRight size={16} />
+        </button>
+      </div>
+
+      {/* Collect info preview */}
+      <div style={{ padding: '0 16px 20px' }}>
+        <p style={{ fontSize: 12, fontWeight: 600, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', margin: '0 0 10px' }}>
+          Client info collected
+        </p>
+        {['Name', 'Email', 'Phone'].map((f) => (
+          <div key={f} style={{ border: '1px solid #e5e7eb', borderRadius: 8, padding: '9px 12px',
+            marginBottom: 6, fontSize: 13, color: '#9ca3af' }}>{f}</div>
+        ))}
       </div>
     </div>
   );
@@ -208,29 +310,11 @@ function PhoneMockup({ children }: { children: React.ReactNode }) {
       boxShadow: '0 20px 60px rgba(0,0,0,0.22), inset 0 0 0 1px rgba(255,255,255,0.08)',
       position: 'relative',
     }}>
-      {/* Side buttons */}
-      <div style={{
-        position: 'absolute', left: -2, top: 80, width: 3, height: 24,
-        background: '#333', borderRadius: '2px 0 0 2px',
-      }} />
-      <div style={{
-        position: 'absolute', left: -2, top: 112, width: 3, height: 24,
-        background: '#333', borderRadius: '2px 0 0 2px',
-      }} />
-      <div style={{
-        position: 'absolute', right: -2, top: 100, width: 3, height: 36,
-        background: '#333', borderRadius: '0 2px 2px 0',
-      }} />
-      {/* Screen */}
-      <div style={{
-        background: '#fff', borderRadius: 28, overflow: 'hidden',
-        height: 462,
-      }}>
-        <div style={{
-          width: 390, height: 750,
-          transform: `scale(${224 / 390})`, transformOrigin: 'top left',
-          pointerEvents: 'none', userSelect: 'none',
-        }}>
+      <div style={{ position: 'absolute', left: -2, top: 80, width: 3, height: 24, background: '#333', borderRadius: '2px 0 0 2px' }} />
+      <div style={{ position: 'absolute', left: -2, top: 112, width: 3, height: 24, background: '#333', borderRadius: '2px 0 0 2px' }} />
+      <div style={{ position: 'absolute', right: -2, top: 100, width: 3, height: 36, background: '#333', borderRadius: '0 2px 2px 0' }} />
+      <div style={{ background: '#fff', borderRadius: 28, overflow: 'hidden', height: 462 }}>
+        <div style={{ width: 390, height: 750, transform: `scale(${224 / 390})`, transformOrigin: 'top left', pointerEvents: 'none', userSelect: 'none' }}>
           {children}
         </div>
       </div>
@@ -240,21 +324,11 @@ function PhoneMockup({ children }: { children: React.ReactNode }) {
 
 // ── Accordion ─────────────────────────────────────────────────────────────────
 
-interface AccordionProps {
-  title: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-  defaultOpen?: boolean;
-}
-
-function Accordion({ title, icon, children, defaultOpen = false }: AccordionProps) {
+function Accordion({ title, icon, children, defaultOpen = false }: { title: string; icon: React.ReactNode; children: React.ReactNode; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition text-left"
-      >
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between p-5 hover:bg-gray-50 transition text-left">
         <div className="flex items-center gap-3">
           <span className="text-gray-500">{icon}</span>
           <span className="font-semibold text-gray-900 text-sm">{title}</span>
@@ -266,7 +340,7 @@ function Accordion({ title, icon, children, defaultOpen = false }: AccordionProp
   );
 }
 
-// ── Confirm delete dialog ──────────────────────────────────────────────────────
+// ── Delete confirm ─────────────────────────────────────────────────────────────
 
 function DeleteConfirm({ onConfirm, onCancel, loading }: { onConfirm: () => void; onCancel: () => void; loading: boolean }) {
   return (
@@ -278,13 +352,9 @@ function DeleteConfirm({ onConfirm, onCancel, loading }: { onConfirm: () => void
           </div>
           <h3 className="font-bold text-gray-900">Delete this service?</h3>
         </div>
-        <p className="text-sm text-gray-500 mb-6">
-          This will permanently remove the service. Existing bookings are preserved. This cannot be undone.
-        </p>
+        <p className="text-sm text-gray-500 mb-6">This permanently removes the service. Existing bookings are not affected. This cannot be undone.</p>
         <div className="flex gap-3">
-          <button onClick={onCancel} className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">
-            Cancel
-          </button>
+          <button onClick={onCancel} className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm font-semibold text-gray-700 hover:bg-gray-50 transition">Cancel</button>
           <button onClick={onConfirm} disabled={loading} className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-xl text-sm font-semibold hover:bg-red-700 transition disabled:opacity-50">
             {loading ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : 'Delete'}
           </button>
@@ -294,14 +364,14 @@ function DeleteConfirm({ onConfirm, onCancel, loading }: { onConfirm: () => void
   );
 }
 
-// ── Main ──────────────────────────────────────────────────────────────────────
+// ── Main ───────────────────────────────────────────────────────────────────────
 
 export default function OfferEditor() {
   const { serviceId } = useParams<{ serviceId: string }>();
   const navigate = useNavigate();
   const isNew = serviceId === 'new';
 
-  // ── Auth + data ──
+  // Auth + data
   const [profileId, setProfileId] = useState<string | null>(null);
   const [profile, setProfile] = useState<ProfileRow | null>(null);
   const [loading, setLoading] = useState(true);
@@ -310,18 +380,18 @@ export default function OfferEditor() {
   const [showDelete, setShowDelete] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  // ── Tab ──
+  // Tab + preview
   const [activeTab, setActiveTab] = useState<ActiveTab>('thumbnail');
   const [previewMode, setPreviewMode] = useState<'phone' | 'desktop'>('phone');
 
-  // ── Thumbnail tab ──
+  // Thumbnail tab fields
   const [cardStyle, setCardStyle] = useState<CardStyle>('callout');
   const [cardSubtitle, setCardSubtitle] = useState('');
   const [cardCta, setCardCta] = useState('Book now');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [uploadingThumb, setUploadingThumb] = useState(false);
 
-  // ── Checkout tab (main service fields) ──
+  // Checkout tab fields
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [heroUrl, setHeroUrl] = useState('');
@@ -331,24 +401,22 @@ export default function OfferEditor() {
   const [durationMinutes, setDurationMinutes] = useState(60);
   const [category, setCategory] = useState('Nails');
 
-  // ── Options tab ──
+  // Options tab
   const [isActive, setIsActive] = useState(true);
   const [isFeatured, setIsFeatured] = useState(false);
 
-  // ── Validation errors ──
+  // Validation + dirty
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  // ── Unsaved changes ──
   const [dirty, setDirty] = useState(false);
+  // Track initial load so we don't mark dirty during hydration
+  const loadedRef = useRef(false);
 
   const thumbRef = useRef<HTMLInputElement>(null);
   const heroRef = useRef<HTMLInputElement>(null);
   const [copied, setCopied] = useState(false);
-
-  // ── Sidebar state ──
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // ── Load data ──
+  // ── Load ──
   const load = useCallback(async () => {
     if (!supabase) { navigate('/login'); return; }
     const { data: { user } } = await supabase.auth.getUser();
@@ -359,8 +427,13 @@ export default function OfferEditor() {
     setProfile(prof);
 
     if (!isNew && serviceId) {
-      const { data: svc } = await supabase.from('services').select('*').eq('id', serviceId).eq('profile_id', user.id).single();
-      if (!svc) { navigate('/dashboard/preview'); return; }
+      const { data: svc, error } = await supabase
+        .from('services')
+        .select('*')
+        .eq('id', serviceId)
+        .eq('profile_id', user.id)
+        .single();
+      if (error || !svc) { navigate('/dashboard/preview'); return; }
       const row = svc as ServiceRow;
       setName(row.name);
       setDescription(row.description ?? '');
@@ -373,87 +446,123 @@ export default function OfferEditor() {
       setIsActive(row.active ?? true);
       setIsFeatured(row.is_featured ?? false);
 
-      // Load local prefs
-      const prefs = loadLocalPrefs(row.id);
-      setCardStyle(prefs.cardStyle);
-      setCardSubtitle(prefs.cardSubtitle);
-      setCardCta(prefs.cardCta || 'Book now');
+      // DB is authoritative for card_style. Fall back to localStorage cache only if DB column is null
+      // (i.e. migration not yet applied on this instance).
+      const dbStyle = row.card_style;
+      if (dbStyle) {
+        setCardStyle(dbStyle);
+        cacheLocalStyle(row.id, dbStyle); // keep cache in sync
+      } else {
+        const cached = readLocalStyle(row.id);
+        setCardStyle(cached ?? 'callout');
+      }
+      setCardSubtitle(row.card_subtitle ?? '');
+      setCardCta(row.card_cta_text ?? 'Book now');
     }
 
     setLoading(false);
+    // Mark hydration complete on next tick so state setters above don't trip dirty
+    setTimeout(() => { loadedRef.current = true; }, 0);
   }, [serviceId, isNew, navigate]);
 
-  useEffect(() => { load(); }, [load]);
+  useEffect(() => { void load(); }, [load]);
 
-  // ── Mark dirty on change ──
+  // Mark dirty after hydration
   useEffect(() => {
-    if (!loading) setDirty(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (!loadedRef.current) return;
+    setDirty(true);
   }, [name, description, thumbnailUrl, heroUrl, priceTotal, depositAmount, durationMinutes,
       category, isActive, isFeatured, cardStyle, cardSubtitle, cardCta]);
 
-  // ── Warn on navigation with unsaved changes ──
+  // Warn on unload with unsaved changes
   useEffect(() => {
-    const handler = (e: BeforeUnloadEvent) => {
-      if (dirty) { e.preventDefault(); e.returnValue = ''; }
-    };
+    const handler = (e: BeforeUnloadEvent) => { if (dirty) { e.preventDefault(); e.returnValue = ''; } };
     window.addEventListener('beforeunload', handler);
     return () => window.removeEventListener('beforeunload', handler);
   }, [dirty]);
 
-  // ── Upload handlers ──
+  // ── Uploads ──
   const handleThumbUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const prev = thumbnailUrl;
     setUploadingThumb(true);
+    setErrors((p) => { const n = { ...p }; delete n.thumb; return n; });
     try {
       const url = await uploadImage(file, 'services');
       setThumbnailUrl(url);
-      if (!heroUrl) setHeroUrl(url); // pre-fill hero if empty
-    } catch { setErrors((p) => ({ ...p, thumb: 'Upload failed. Please try again.' })); }
-    finally { setUploadingThumb(false); if (thumbRef.current) thumbRef.current.value = ''; }
+    } catch {
+      setThumbnailUrl(prev); // restore on failure
+      setErrors((p) => ({ ...p, thumb: 'Upload failed. Please try again.' }));
+    } finally {
+      setUploadingThumb(false);
+      if (thumbRef.current) thumbRef.current.value = '';
+    }
   };
 
   const handleHeroUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const prev = heroUrl;
     setUploadingHero(true);
+    setErrors((p) => { const n = { ...p }; delete n.hero; return n; });
     try {
       const url = await uploadImage(file, 'services');
       setHeroUrl(url);
-    } catch { setErrors((p) => ({ ...p, hero: 'Upload failed. Please try again.' })); }
-    finally { setUploadingHero(false); if (heroRef.current) heroRef.current.value = ''; }
+    } catch {
+      setHeroUrl(prev);
+      setErrors((p) => ({ ...p, hero: 'Upload failed. Please try again.' }));
+    } finally {
+      setUploadingHero(false);
+      if (heroRef.current) heroRef.current.value = '';
+    }
   };
 
-  // ── Validate ──
-  const validate = () => {
+  // ── Validation ──
+  const validate = (switchToTab?: (tab: ActiveTab) => void) => {
     const e: Record<string, string> = {};
-    if (!name.trim()) e.name = 'Service name is required.';
+    if (!name.trim()) { e.name = 'Service name is required.'; }
     const price = parseFloat(priceTotal);
-    if (!priceTotal || isNaN(price) || !validatePrice(price)) e.price = 'Enter a valid price.';
+    if (!priceTotal || isNaN(price) || !validatePrice(price)) {
+      e.price = 'Enter a valid price greater than 0.';
+    }
     const dep = parseFloat(depositAmount);
-    if (depositAmount && (isNaN(dep) || dep < 0 || dep > price)) e.deposit = 'Deposit must be between 0 and the total price.';
+    if (depositAmount.trim() !== '' && (!isNaN(dep) && (dep < 0 || dep > price))) {
+      e.deposit = 'Deposit must be between 0 and the total price.';
+    }
+    if (uploadingThumb || uploadingHero) {
+      e.upload = 'Please wait for uploads to complete.';
+    }
     setErrors(e);
+
+    // Navigate to the tab that has the first error
+    if (switchToTab && Object.keys(e).length > 0) {
+      if (e.name || e.price || e.deposit || e.upload) switchToTab('checkout');
+    }
     return Object.keys(e).length === 0;
   };
 
   // ── Save ──
-  const handleSave = async (publish = true) => {
-    if (!validate() || !profileId) return;
+  const handleSave = async (publish: boolean) => {
+    if (!validate((tab) => setActiveTab(tab)) || !profileId) return;
     setSaveState('saving');
     setSaveError('');
 
-    const payload = {
+    const payload: Record<string, unknown> = {
       profile_id: profileId,
       name: name.trim(),
       description: description.trim(),
       image_url: thumbnailUrl || null,
       price_total: parseFloat(priceTotal),
-      deposit_amount: depositAmount ? parseFloat(depositAmount) : 0,
+      deposit_amount: depositAmount.trim() !== '' ? parseFloat(depositAmount) : 0,
       duration_minutes: durationMinutes,
       category,
-      active: publish ? true : false,
+      active: publish,
       is_featured: isFeatured,
+      // Card presentation — saved to DB when migration is applied
+      card_style: cardStyle,
+      card_subtitle: cardSubtitle.trim() || null,
+      card_cta_text: cardCta.trim() || null,
     };
 
     try {
@@ -461,22 +570,21 @@ export default function OfferEditor() {
         const { data, error } = await createService(payload);
         if (error) throw error;
         const newId = (data as ServiceRow).id;
-        saveLocalPrefs(newId, { cardStyle, cardSubtitle, cardCta });
+        cacheLocalStyle(newId, cardStyle); // keep local in sync
         setDirty(false);
         setSaveState('saved');
         navigate(`/dashboard/offer/${newId}`, { replace: true });
       } else if (serviceId) {
         const { error } = await updateService(serviceId, payload);
         if (error) throw error;
-        saveLocalPrefs(serviceId, { cardStyle, cardSubtitle, cardCta });
+        cacheLocalStyle(serviceId, cardStyle);
         setDirty(false);
         setSaveState('saved');
         setTimeout(() => setSaveState('idle'), 2500);
       }
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Save failed. Please try again.';
       setSaveState('error');
-      setSaveError(msg);
+      setSaveError(err instanceof Error ? err.message : 'Save failed. Please try again.');
     }
   };
 
@@ -490,15 +598,14 @@ export default function OfferEditor() {
     } catch { setDeleting(false); setShowDelete(false); }
   };
 
-  // ── Studio slug ──
+  // ── Preview merchant ──
+  const accent = profile?.color_accent ?? '#F52B8C';
   const slug = profile?.slug ?? 'my-studio';
   const studioUrl = `getnelsy.com/${slug}`;
 
-  // ── Build live merchant for preview ──
-  const accent = profile?.color_accent ?? '#F52B8C';
   const previewMerchant: Merchant = {
     id: profile?.id ?? 'preview',
-    slug: slug,
+    slug,
     salon_name: profile?.salon_name ?? profile?.full_name ?? 'My Studio',
     name: profile?.full_name ?? '',
     bio: profile?.bio ?? '',
@@ -513,7 +620,7 @@ export default function OfferEditor() {
     services: [{
       id: serviceId ?? 'preview-service',
       name: name || 'Service name',
-      description: description,
+      description,
       price: parseFloat(priceTotal) || 0,
       duration: durationMinutes,
       deposit: parseFloat(depositAmount) || 0,
@@ -525,6 +632,27 @@ export default function OfferEditor() {
     review_count: 0,
   };
 
+  // ── Preview panel node (not a component — no hooks) ──
+  const checkoutPreviewNode = activeTab === 'checkout' ? (
+    previewMode === 'phone' ? (
+      <PhoneMockup>
+        <CheckoutPagePreview name={name} description={description} heroUrl={heroUrl}
+          price={priceTotal} deposit={depositAmount} duration={durationMinutes} accent={accent} cta={cardCta} />
+      </PhoneMockup>
+    ) : (
+      <div style={{ width: '100%', maxWidth: 390, border: '1px solid #e5e7eb', borderRadius: 16, overflow: 'hidden' }}>
+        <CheckoutPagePreview name={name} description={description} heroUrl={heroUrl}
+          price={priceTotal} deposit={depositAmount} duration={durationMinutes} accent={accent} cta={cardCta} />
+      </div>
+    )
+  ) : null;
+
+  const optionsPreviewNode = activeTab === 'options' ? (
+    <PhoneMockup>
+      <PublicStudioView merchant={previewMerchant} mode="preview" />
+    </PhoneMockup>
+  ) : null;
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
@@ -535,7 +663,6 @@ export default function OfferEditor() {
 
   return (
     <div className="flex h-screen overflow-hidden bg-white">
-      {/* Sidebar */}
       <Sidebar
         profile={profile}
         activeTab="preview"
@@ -544,37 +671,26 @@ export default function OfferEditor() {
         onMobileClose={() => setMobileOpen(false)}
       />
 
-      {/* ── Main panel ── */}
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
-        {/* ── Header ── */}
+        {/* Header */}
         <header className="h-14 flex-shrink-0 bg-white border-b border-gray-100 flex items-center px-4 lg:px-6 gap-3">
-          <Link
-            to="/dashboard/preview"
-            className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition"
-          >
+          <Link to="/dashboard/preview" className="flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-900 transition">
             <ArrowLeft className="w-4 h-4" />
             <span className="hidden sm:inline">My Studio</span>
           </Link>
           <span className="text-gray-300 text-sm">/</span>
-          <span className="text-sm font-semibold text-gray-900">
+          <span className="text-sm font-semibold text-gray-900 truncate max-w-[160px]">
             {isNew ? 'New service' : (name || 'Edit service')}
           </span>
           <div className="flex-1" />
-          {/* Studio URL */}
           <div className="hidden sm:flex items-center gap-2">
-            <a
-              href={`/${slug}`} target="_blank" rel="noopener noreferrer"
-              className="text-[#F52B8C] text-sm font-medium hover:opacity-80 transition truncate max-w-[180px]"
-            >
+            <a href={`/${slug}`} target="_blank" rel="noopener noreferrer"
+              className="text-[#F52B8C] text-sm font-medium hover:opacity-80 transition truncate max-w-[180px]">
               {studioUrl}
             </a>
             <button
-              onClick={() => {
-                navigator.clipboard.writeText(`https://${studioUrl}`).catch(() => {});
-                setCopied(true);
-                setTimeout(() => setCopied(false), 2000);
-              }}
+              onClick={() => { navigator.clipboard.writeText(`https://${studioUrl}`).catch(() => {}); setCopied(true); setTimeout(() => setCopied(false), 2000); }}
               className="flex items-center gap-1 px-2.5 py-1.5 border border-gray-200 rounded-lg text-xs font-semibold text-gray-600 hover:border-[#F52B8C] hover:text-[#F52B8C] transition"
             >
               {copied ? <CheckCheck className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -583,10 +699,9 @@ export default function OfferEditor() {
           </div>
         </header>
 
-        {/* ── Body: form + preview ── */}
         <div className="flex-1 flex overflow-hidden">
 
-          {/* ── Edit column ── */}
+          {/* Edit column */}
           <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
 
             {/* Tabs */}
@@ -598,9 +713,7 @@ export default function OfferEditor() {
                     key={tab}
                     onClick={() => setActiveTab(tab)}
                     className={`px-4 py-3.5 text-sm font-semibold border-b-2 transition mr-2 ${
-                      activeTab === tab
-                        ? 'border-[#F52B8C] text-[#F52B8C]'
-                        : 'border-transparent text-gray-500 hover:text-gray-700'
+                      activeTab === tab ? 'border-[#F52B8C] text-[#F52B8C]' : 'border-transparent text-gray-500 hover:text-gray-700'
                     }`}
                   >
                     {label}
@@ -609,14 +722,13 @@ export default function OfferEditor() {
               })}
             </div>
 
-            {/* Form area */}
+            {/* Form */}
             <div className="flex-1 overflow-y-auto">
               <div className="max-w-xl px-4 lg:px-6 py-6 space-y-8">
 
                 {/* ── THUMBNAIL TAB ── */}
                 {activeTab === 'thumbnail' && (
                   <>
-                    {/* Step 1: Card style */}
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">1</span>
@@ -627,7 +739,7 @@ export default function OfferEditor() {
                           { id: 'button' as CardStyle, label: 'Button', icon: <ButtonIcon /> },
                           { id: 'callout' as CardStyle, label: 'Callout', icon: <CalloutIcon /> },
                           { id: 'preview' as CardStyle, label: 'Preview', icon: <PreviewIcon /> },
-                        ] as const).map((style) => (
+                        ]).map((style) => (
                           <button
                             key={style.id}
                             onClick={() => setCardStyle(style.id)}
@@ -642,12 +754,8 @@ export default function OfferEditor() {
                           </button>
                         ))}
                       </div>
-                      <p className="text-xs text-gray-400 mt-3">
-                        Card style is saved to this device. A future update will sync it across devices.
-                      </p>
                     </section>
 
-                    {/* Step 2: Image */}
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">2</span>
@@ -673,16 +781,15 @@ export default function OfferEditor() {
                             disabled={uploadingThumb}
                             className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-semibold text-gray-600 hover:bg-gray-50 transition disabled:opacity-50"
                           >
-                            {uploadingThumb ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
+                            {uploadingThumb && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                             {uploadingThumb ? 'Uploading…' : 'Choose image'}
                           </button>
+                          {errors.thumb && <p className="text-red-500 text-xs mt-1">{errors.thumb}</p>}
                         </div>
                       </div>
-                      {errors.thumb && <p className="text-red-500 text-xs mt-1">{errors.thumb}</p>}
                       <input ref={thumbRef} type="file" accept="image/*" className="hidden" onChange={handleThumbUpload} />
                     </section>
 
-                    {/* Step 3: Text */}
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">3</span>
@@ -695,10 +802,7 @@ export default function OfferEditor() {
                             <span className="text-xs text-gray-400">{name.length}/50</span>
                           </div>
                           <input
-                            type="text"
-                            value={name}
-                            maxLength={50}
-                            onChange={(e) => setName(e.target.value)}
+                            type="text" value={name} maxLength={50} onChange={(e) => setName(e.target.value)}
                             placeholder="Gel Manicure"
                             className={`w-full px-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.name ? 'border-red-400' : 'border-gray-200'}`}
                           />
@@ -710,25 +814,19 @@ export default function OfferEditor() {
                             <span className="text-xs text-gray-400">{cardSubtitle.length}/100</span>
                           </div>
                           <input
-                            type="text"
-                            value={cardSubtitle}
-                            maxLength={100}
-                            onChange={(e) => setCardSubtitle(e.target.value)}
+                            type="text" value={cardSubtitle} maxLength={100} onChange={(e) => setCardSubtitle(e.target.value)}
                             placeholder="Short tagline for this service"
                             className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none"
                           />
-                          <p className="text-xs text-gray-400 mt-1">Only shown in Callout and Preview styles.</p>
+                          <p className="text-xs text-gray-400 mt-1">Shown in Callout and Preview styles.</p>
                         </div>
                         <div>
                           <div className="flex items-center justify-between mb-1.5">
-                            <label className="text-sm font-medium text-gray-700">Button text <span className="text-red-500">*</span></label>
+                            <label className="text-sm font-medium text-gray-700">Button text</label>
                             <span className="text-xs text-gray-400">{cardCta.length}/30</span>
                           </div>
                           <input
-                            type="text"
-                            value={cardCta}
-                            maxLength={30}
-                            onChange={(e) => setCardCta(e.target.value)}
+                            type="text" value={cardCta} maxLength={30} onChange={(e) => setCardCta(e.target.value)}
                             placeholder="Book now"
                             className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none"
                           />
@@ -741,11 +839,10 @@ export default function OfferEditor() {
                 {/* ── CHECKOUT PAGE TAB ── */}
                 {activeTab === 'checkout' && (
                   <>
-                    {/* Step 1: Image */}
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">1</span>
-                        Select image
+                        Service image
                       </p>
                       <div
                         className="border-2 border-dashed border-gray-200 rounded-xl p-4 flex items-center gap-4 hover:border-gray-300 transition cursor-pointer"
@@ -757,43 +854,36 @@ export default function OfferEditor() {
                             : <Eye className="w-6 h-6 text-gray-400" />}
                         </div>
                         <div className="flex-1">
-                          <p className="text-xs text-gray-400 mb-2">Drag your image here · 1920 × 1080 recommended</p>
-                          <button
-                            type="button"
-                            disabled={uploadingHero}
-                            className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-semibold text-gray-600 hover:bg-gray-50 transition disabled:opacity-50"
-                          >
-                            {uploadingHero ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : null}
+                          <p className="text-xs text-gray-400 mb-2">Shown as hero on the booking page · 1920 × 1080 recommended</p>
+                          <button type="button" disabled={uploadingHero}
+                            className="flex items-center gap-1.5 px-3 py-1.5 border border-gray-300 rounded-lg text-xs font-semibold text-gray-600 hover:bg-gray-50 transition disabled:opacity-50">
+                            {uploadingHero && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
                             {uploadingHero ? 'Uploading…' : 'Choose image'}
                           </button>
+                          {errors.hero && <p className="text-red-500 text-xs mt-1">{errors.hero}</p>}
                         </div>
                       </div>
-                      {errors.hero && <p className="text-red-500 text-xs mt-1">{errors.hero}</p>}
                       <input ref={heroRef} type="file" accept="image/*" className="hidden" onChange={handleHeroUpload} />
                     </section>
 
-                    {/* Step 2: Description */}
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">2</span>
-                        Write description
+                        Description
                       </p>
                       <div className="space-y-4">
                         <div>
                           <label className="text-sm font-medium text-gray-700 block mb-1.5">Title <span className="text-red-500">*</span></label>
                           <input
-                            type="text"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            placeholder="Gel Manicure"
+                            type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Gel Manicure"
                             className={`w-full px-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.name ? 'border-red-400' : 'border-gray-200'}`}
                           />
+                          {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                         </div>
                         <div>
                           <label className="text-sm font-medium text-gray-700 block mb-1.5">Description</label>
                           <textarea
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
+                            value={description} onChange={(e) => setDescription(e.target.value)}
                             placeholder="Describe what clients can expect from this service…"
                             rows={5}
                             className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none resize-none"
@@ -802,21 +892,18 @@ export default function OfferEditor() {
                       </div>
                     </section>
 
-                    {/* Step 3: Price */}
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">3</span>
-                        Set price
+                        Price
                       </p>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <label className="text-sm font-medium text-gray-700 block mb-1.5">Price (€) <span className="text-red-500">*</span></label>
                           <div className="relative">
                             <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
-                            <input
-                              type="number" value={priceTotal} step="0.01" min="0"
-                              onChange={(e) => setPriceTotal(e.target.value)}
-                              placeholder="65"
+                            <input type="number" value={priceTotal} step="0.01" min="0.01"
+                              onChange={(e) => setPriceTotal(e.target.value)} placeholder="65"
                               className={`w-full pl-7 pr-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.price ? 'border-red-400' : 'border-gray-200'}`}
                             />
                           </div>
@@ -826,10 +913,8 @@ export default function OfferEditor() {
                           <label className="text-sm font-medium text-gray-700 block mb-1.5">Deposit (€)</label>
                           <div className="relative">
                             <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
-                            <input
-                              type="number" value={depositAmount} step="0.01" min="0"
-                              onChange={(e) => setDepositAmount(e.target.value)}
-                              placeholder="0"
+                            <input type="number" value={depositAmount} step="0.01" min="0"
+                              onChange={(e) => setDepositAmount(e.target.value)} placeholder="0"
                               className={`w-full pl-7 pr-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.deposit ? 'border-red-400' : 'border-gray-200'}`}
                             />
                           </div>
@@ -838,27 +923,25 @@ export default function OfferEditor() {
                       </div>
                     </section>
 
-                    {/* Step 4: Collect info */}
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">4</span>
-                        Collect info
+                        Client info collected
                       </p>
                       <div className="border border-gray-200 rounded-xl overflow-hidden">
-                        {['Name', 'Email'].map((field, i) => (
+                        {['Name', 'Email', 'Phone'].map((field, i) => (
                           <div key={field} className={`flex items-center gap-3 px-4 py-3 ${i > 0 ? 'border-t border-gray-100' : ''}`}>
                             <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-gray-500">
-                              {field === 'Name' ? '👤' : '✉️'}
+                              {field === 'Name' ? '👤' : field === 'Email' ? '✉️' : '📱'}
                             </div>
                             <span className="text-sm font-medium text-gray-700">{field}</span>
                             <span className="ml-auto text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded-md">Required</span>
                           </div>
                         ))}
                       </div>
-                      <p className="text-xs text-gray-400 mt-2">Name and email are always collected. Custom fields are coming soon.</p>
+                      <p className="text-xs text-gray-400 mt-2">Custom fields are coming in a future update.</p>
                     </section>
 
-                    {/* Step 5: Service details */}
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">5</span>
@@ -867,21 +950,15 @@ export default function OfferEditor() {
                       <div className="grid grid-cols-2 gap-4">
                         <div>
                           <label className="text-sm font-medium text-gray-700 block mb-1.5">Duration</label>
-                          <select
-                            value={durationMinutes}
-                            onChange={(e) => setDurationMinutes(parseInt(e.target.value))}
-                            className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none bg-white"
-                          >
+                          <select value={durationMinutes} onChange={(e) => setDurationMinutes(parseInt(e.target.value))}
+                            className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none bg-white">
                             {DURATIONS.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}
                           </select>
                         </div>
                         <div>
                           <label className="text-sm font-medium text-gray-700 block mb-1.5">Category</label>
-                          <select
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                            className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none bg-white"
-                          >
+                          <select value={category} onChange={(e) => setCategory(e.target.value)}
+                            className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none bg-white">
                             {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                           </select>
                         </div>
@@ -893,16 +970,11 @@ export default function OfferEditor() {
                 {/* ── OPTIONS TAB ── */}
                 {activeTab === 'options' && (
                   <div className="space-y-3">
-                    {/* Featured */}
-                    <Accordion
-                      title="Featured service"
-                      icon={<span>⭐</span>}
-                      defaultOpen
-                    >
+                    <Accordion title="Feature this service" icon={<span>⭐</span>} defaultOpen>
                       <div className="flex items-center justify-between pt-4">
                         <div>
-                          <p className="text-sm font-medium text-gray-900">Highlight as most booked</p>
-                          <p className="text-xs text-gray-500 mt-0.5">Marks this card as your featured service in the studio.</p>
+                          <p className="text-sm font-medium text-gray-900">Feature this service</p>
+                          <p className="text-xs text-gray-500 mt-0.5">Highlight this service in your studio.</p>
                         </div>
                         <button
                           onClick={() => setIsFeatured(!isFeatured)}
@@ -913,12 +985,13 @@ export default function OfferEditor() {
                       </div>
                     </Accordion>
 
-                    {/* Active */}
                     <Accordion title="Visibility" icon={<Eye className="w-4 h-4" />}>
                       <div className="flex items-center justify-between pt-4">
                         <div>
                           <p className="text-sm font-medium text-gray-900">Active</p>
-                          <p className="text-xs text-gray-500 mt-0.5">Visible to clients on your public studio page.</p>
+                          <p className="text-xs text-gray-500 mt-0.5">
+                            {isActive ? 'Visible to clients on your studio page.' : 'Hidden from your studio page.'}
+                          </p>
                         </div>
                         <button
                           onClick={() => setIsActive(!isActive)}
@@ -929,51 +1002,43 @@ export default function OfferEditor() {
                       </div>
                     </Accordion>
 
-                    {/* Email flows */}
                     <Accordion title="Confirmation email" icon={<span>✉️</span>}>
                       <div className="pt-4">
                         <p className="text-sm text-gray-600">Nelsy automatically sends a booking confirmation email to your client when a booking is created.</p>
-                        <p className="text-xs text-gray-400 mt-2">Custom email content and flows are coming in a future update.</p>
+                        <p className="text-xs text-gray-400 mt-2">Custom email content is coming in a future update.</p>
                       </div>
                     </Accordion>
 
-                    {/* Reviews */}
-                    <Accordion title="Reviews" icon={<span>⭐</span>}>
-                      <div className="pt-4">
-                        <p className="text-sm text-gray-600">Collect verified reviews from clients after their appointment.</p>
-                        <p className="text-xs text-gray-400 mt-2">Review collection is coming in a future update.</p>
-                      </div>
-                    </Accordion>
-
-                    {/* Advanced */}
                     <Accordion title="Advanced" icon={<span>⚙️</span>}>
-                      <div className="pt-4 space-y-3">
-                        <div>
-                          <label className="text-xs font-semibold text-gray-500 block mb-1.5">Service URL</label>
-                          {serviceId && !isNew ? (
+                      <div className="pt-4">
+                        {serviceId && !isNew ? (
+                          <div>
+                            <label className="text-xs font-semibold text-gray-500 block mb-1.5">Service URL</label>
                             <div className="flex items-center gap-2">
-                              <input
-                                readOnly
-                                value={`getnelsy.com/${slug}#${serviceId.slice(0, 8)}`}
-                                className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-xs text-gray-500 bg-gray-50 outline-none"
-                              />
-                              <button
-                                onClick={() => { navigator.clipboard.writeText(`https://getnelsy.com/${slug}`).catch(() => {}); }}
-                                className="p-2 border border-gray-200 rounded-lg text-gray-400 hover:text-gray-600 transition"
-                              >
+                              <input readOnly value={`getnelsy.com/${slug}#${serviceId.slice(0, 8)}`}
+                                className="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-xs text-gray-500 bg-gray-50 outline-none" />
+                              <button onClick={() => { navigator.clipboard.writeText(`https://getnelsy.com/${slug}`).catch(() => {}); }}
+                                className="p-2 border border-gray-200 rounded-lg text-gray-400 hover:text-gray-600 transition">
                                 <Copy className="w-3.5 h-3.5" />
                               </button>
                             </div>
-                          ) : (
-                            <p className="text-xs text-gray-400">URL will be available after saving.</p>
-                          )}
-                        </div>
+                          </div>
+                        ) : (
+                          <p className="text-xs text-gray-400">URL will be available after saving.</p>
+                        )}
                       </div>
                     </Accordion>
                   </div>
                 )}
 
-                {/* Global save error */}
+                {/* Upload pending warning */}
+                {errors.upload && (
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl flex items-center gap-2">
+                    <Loader2 className="w-4 h-4 text-amber-600 animate-spin flex-shrink-0" />
+                    <p className="text-sm text-amber-800">{errors.upload}</p>
+                  </div>
+                )}
+
                 {saveState === 'error' && (
                   <div className="p-4 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
                     <AlertTriangle className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
@@ -983,66 +1048,53 @@ export default function OfferEditor() {
               </div>
             </div>
 
-            {/* ── Footer ── */}
+            {/* Footer */}
             <div className="flex-shrink-0 border-t border-gray-100 bg-white px-4 lg:px-6 py-3 flex items-center gap-3">
               {!isNew && (
-                <button
-                  onClick={() => setShowDelete(true)}
-                  className="flex items-center gap-1.5 px-3.5 py-2 border border-red-200 text-red-600 rounded-xl text-sm font-semibold hover:bg-red-50 transition"
-                >
+                <button onClick={() => setShowDelete(true)}
+                  className="flex items-center gap-1.5 px-3.5 py-2 border border-red-200 text-red-600 rounded-xl text-sm font-semibold hover:bg-red-50 transition">
                   <Trash2 className="w-3.5 h-3.5" />
                   Delete
                 </button>
               )}
               <div className="flex-1" />
-              <button
-                onClick={() => handleSave(false)}
-                disabled={saveState === 'saving'}
-                className="px-4 py-2 border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 transition disabled:opacity-50"
-              >
+              <button onClick={() => handleSave(false)} disabled={saveState === 'saving'}
+                className="px-4 py-2 border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50 transition disabled:opacity-50">
                 Save as draft
               </button>
-              <button
-                onClick={() => handleSave(true)}
-                disabled={saveState === 'saving'}
-                className="flex items-center gap-1.5 px-4 py-2 bg-[#F52B8C] text-white rounded-xl text-sm font-semibold hover:opacity-90 transition disabled:opacity-50"
-              >
-                {saveState === 'saving' ? (
-                  <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Saving…</>
-                ) : saveState === 'saved' ? (
-                  <><CheckCheck className="w-3.5 h-3.5" /> Saved!</>
-                ) : (
-                  'Publish'
-                )}
+              <button onClick={() => handleSave(true)} disabled={saveState === 'saving'}
+                className="flex items-center gap-1.5 px-4 py-2 bg-[#F52B8C] text-white rounded-xl text-sm font-semibold hover:opacity-90 transition disabled:opacity-50">
+                {saveState === 'saving'
+                  ? <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Saving…</>
+                  : saveState === 'saved'
+                  ? <><CheckCheck className="w-3.5 h-3.5" /> Saved!</>
+                  : 'Publish'}
               </button>
             </div>
           </div>
 
-          {/* ── Preview column (desktop only) ── */}
+          {/* Preview column (desktop only) */}
           <div className="hidden lg:flex w-72 flex-shrink-0 flex-col border-l border-gray-100 bg-gray-50">
-            {/* Preview controls */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-white flex-shrink-0">
               <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Preview</span>
-              <div className="flex border border-gray-200 rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setPreviewMode('phone')}
-                  className={`p-1.5 transition ${previewMode === 'phone' ? 'bg-[#F52B8C] text-white' : 'text-gray-400 hover:text-gray-600'}`}
-                >
-                  <Smartphone className="w-3.5 h-3.5" />
-                </button>
-                <button
-                  onClick={() => setPreviewMode('desktop')}
-                  className={`p-1.5 transition ${previewMode === 'desktop' ? 'bg-[#F52B8C] text-white' : 'text-gray-400 hover:text-gray-600'}`}
-                >
-                  <Monitor className="w-3.5 h-3.5" />
-                </button>
-              </div>
+              {activeTab !== 'thumbnail' && (
+                <div className="flex border border-gray-200 rounded-lg overflow-hidden">
+                  <button onClick={() => setPreviewMode('phone')}
+                    className={`p-1.5 transition ${previewMode === 'phone' ? 'bg-[#F52B8C] text-white' : 'text-gray-400 hover:text-gray-600'}`}>
+                    <Smartphone className="w-3.5 h-3.5" />
+                  </button>
+                  <button onClick={() => setPreviewMode('desktop')}
+                    className={`p-1.5 transition ${previewMode === 'desktop' ? 'bg-[#F52B8C] text-white' : 'text-gray-400 hover:text-gray-600'}`}>
+                    <Monitor className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
 
             <div className="flex-1 overflow-y-auto flex flex-col items-center py-6 px-4 gap-4">
-              {previewMode === 'phone' && activeTab === 'thumbnail' ? (
+              {activeTab === 'thumbnail' ? (
                 <>
-                  <p className="text-xs text-gray-400 text-center">Service card preview</p>
+                  <p className="text-xs text-gray-400 text-center">Card preview</p>
                   <div className="w-full max-w-[260px]">
                     <ServiceCardPreview
                       cardStyle={cardStyle}
@@ -1054,18 +1106,23 @@ export default function OfferEditor() {
                       accent={accent}
                     />
                   </div>
-                  <p className="text-xs text-gray-400 text-center px-4">
-                    {cardStyle === 'button' && 'Minimal button — works well for express services.'}
-                    {cardStyle === 'callout' && 'Callout — shows photo, title, subtitle, and CTA.'}
+                  <p className="text-xs text-gray-400 text-center px-2">
+                    {cardStyle === 'button' && 'Minimal button — best for quick-service items.'}
+                    {cardStyle === 'callout' && 'Callout — photo, title, subtitle, and CTA.'}
                     {cardStyle === 'preview' && 'Preview — large image with full details.'}
                   </p>
                 </>
+              ) : activeTab === 'checkout' ? (
+                <>
+                  <p className="text-xs text-gray-400 text-center">Booking page preview</p>
+                  {checkoutPreviewNode}
+                </>
               ) : (
                 <>
-                  <p className="text-xs text-gray-400 text-center">Studio preview</p>
-                  <PhoneMockup>
-                    <PublicStudioView merchant={previewMerchant} mode="preview" />
-                  </PhoneMockup>
+                  <p className="text-xs text-gray-400 text-center">
+                    Studio preview{!isActive && <> · <span className="text-amber-600 font-semibold">Hidden</span></>}
+                  </p>
+                  {optionsPreviewNode}
                 </>
               )}
             </div>
@@ -1073,13 +1130,8 @@ export default function OfferEditor() {
         </div>
       </div>
 
-      {/* Delete confirm */}
       {showDelete && (
-        <DeleteConfirm
-          onConfirm={handleDelete}
-          onCancel={() => setShowDelete(false)}
-          loading={deleting}
-        />
+        <DeleteConfirm onConfirm={handleDelete} onCancel={() => setShowDelete(false)} loading={deleting} />
       )}
     </div>
   );
