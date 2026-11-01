@@ -110,7 +110,8 @@ const TEMPLATES = [
   { id: 'spotlight', name: 'Spotlight', themeId: 'blush',        accentColor: '#E8446E' },
 ];
 
-// Demo merchant for template gallery (isolated from user data)
+// Demo merchant for template gallery — uses picsum.photos placeholder photography
+// These images are for gallery preview only, never shown on a user's public studio
 const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
   id: 'demo-preview',
   slug: 'demo',
@@ -121,10 +122,28 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
   location: 'Paris 9e',
   instagram: 'camille.studio',
   tiktok: 'camille.studio',
+  // Portrait headshot (beauty / warm tones, seed 433)
+  logo_url: 'https://picsum.photos/seed/433/400/500',
   services: [
-    { id: 'd1', name: 'Gel naturel', description: 'Pose gel builder + vernis semi-permanent', price: 55, duration: 60, deposit: 15, category: 'Nails' },
-    { id: 'd2', name: 'Extension cils', description: 'Volume russe, effet naturel à dramatique', price: 90, duration: 120, deposit: 20, category: 'Lashes' },
-    { id: 'd3', name: 'Nail art 2 doigts', description: 'Motifs custom sur 2 ongles au choix', price: 15, duration: 20, deposit: 0, category: 'Nails' },
+    {
+      id: 'd1', name: 'Gel naturel',
+      description: 'Pose gel builder + vernis semi-permanent',
+      price: 55, duration: 60, deposit: 15, category: 'Nails',
+      image_url: 'https://picsum.photos/seed/nail-art-1/300/300',
+    },
+    {
+      id: 'd2', name: 'Extension cils',
+      description: 'Volume russe, effet naturel à dramatique',
+      price: 90, duration: 120, deposit: 20, category: 'Lashes',
+      is_featured: true,
+      image_url: 'https://picsum.photos/seed/lashes-beauty/300/300',
+    },
+    {
+      id: 'd3', name: 'Nail art 2 doigts',
+      description: 'Motifs custom sur 2 ongles au choix',
+      price: 15, duration: 20, deposit: 0, category: 'Nails',
+      image_url: 'https://picsum.photos/seed/nail-art-3/300/300',
+    },
   ] as Service[],
 };
 
@@ -153,12 +172,12 @@ function TemplateCard({ template, accentOverride, selected, onClick }: TemplateC
             ? 'ring-[2.5px] ring-[#F52B8C] ring-offset-2 shadow-xl'
             : 'ring-1 ring-gray-200 hover:ring-gray-300 hover:shadow-lg'
         }`}
-        style={{ width: 260, height: 500 }}
+        style={{ width: 195, height: 390 }}
       >
-        {/* Scaled PublicStudioView at 260×500 → renders at 520×1000 then scaled 0.5 */}
+        {/* Render at 390×780 (mobile viewport) then scale 0.5 → fits 195×390 frame */}
         <div
           style={{
-            width: 520, height: 1000,
+            width: 390, height: 780,
             transform: 'scale(0.5)', transformOrigin: 'top left',
             pointerEvents: 'none', userSelect: 'none',
           }}
