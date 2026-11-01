@@ -105,7 +105,7 @@ function getOfferTypeFromCategory(category?: string): OfferType {
 // ── Templates config ──────────────────────────────────────────────────────────
 
 const TEMPLATES = [
-  { id: 'clean',     name: 'Clean',     themeId: 'minimal_nude', accentColor: '#1A1A1A' },
+  { id: 'split',     name: 'Split',     themeId: 'minimal_nude', accentColor: '#3D312E' },
   { id: 'editorial', name: 'Editorial', themeId: 'editorial',    accentColor: '#0A0A0A' },
   { id: 'spotlight', name: 'Spotlight', themeId: 'blush',        accentColor: '#E8446E' },
 ];
@@ -117,8 +117,10 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
   salon_name: 'Camille Studio',
   name: 'Camille Studio',
   bio: 'Nail art & lashes · Spécialiste gel · Paris 9e',
-  specialty: 'Nail Art',
+  specialty: 'Nail Artist',
   location: 'Paris 9e',
+  instagram: 'camille.studio',
+  tiktok: 'camille.studio',
   services: [
     { id: 'd1', name: 'Gel naturel', description: 'Pose gel builder + vernis semi-permanent', price: 55, duration: 60, deposit: 15, category: 'Nails' },
     { id: 'd2', name: 'Extension cils', description: 'Volume russe, effet naturel à dramatique', price: 90, duration: 120, deposit: 20, category: 'Lashes' },
@@ -143,36 +145,43 @@ function TemplateCard({ template, accentOverride, selected, onClick }: TemplateC
   };
 
   return (
-    <button
-      onClick={onClick}
-      className={`relative flex-shrink-0 rounded-2xl overflow-hidden transition-all cursor-pointer focus-visible:outline-none ${
-        selected
-          ? 'ring-2 ring-[#F52B8C] ring-offset-2 shadow-lg'
-          : 'ring-1 ring-gray-200 hover:ring-gray-300 hover:shadow-md'
-      }`}
-      style={{ width: 240, height: 460 }}
-    >
-      {/* Scaled PublicStudioView */}
-      <div
-        style={{
-          width: 480, height: 920,
-          transform: 'scale(0.5)', transformOrigin: 'top left',
-          pointerEvents: 'none', userSelect: 'none',
-        }}
+    <div className="flex-shrink-0 flex flex-col items-center gap-2.5">
+      <button
+        onClick={onClick}
+        className={`relative rounded-2xl overflow-hidden transition-all cursor-pointer focus-visible:outline-none ${
+          selected
+            ? 'ring-[2.5px] ring-[#F52B8C] ring-offset-2 shadow-xl'
+            : 'ring-1 ring-gray-200 hover:ring-gray-300 hover:shadow-lg'
+        }`}
+        style={{ width: 260, height: 500 }}
       >
-        <PublicStudioView merchant={demoMerchant} mode="preview" />
-      </div>
+        {/* Scaled PublicStudioView at 260×500 → renders at 520×1000 then scaled 0.5 */}
+        <div
+          style={{
+            width: 520, height: 1000,
+            transform: 'scale(0.5)', transformOrigin: 'top left',
+            pointerEvents: 'none', userSelect: 'none',
+          }}
+        >
+          <PublicStudioView merchant={demoMerchant} mode="preview" />
+        </div>
 
-      {/* Selected ring overlay */}
-      {selected && (
-        <>
-          <div className="absolute inset-0 ring-2 ring-inset ring-[#F52B8C] rounded-2xl pointer-events-none" />
-          <div className="absolute top-3 right-3 w-6 h-6 bg-[#F52B8C] rounded-full flex items-center justify-center shadow-sm">
-            <Check className="w-3.5 h-3.5 text-white" />
-          </div>
-        </>
-      )}
-    </button>
+        {/* Selected check badge */}
+        {selected && (
+          <>
+            <div className="absolute inset-0 ring-2 ring-inset ring-[#F52B8C] rounded-2xl pointer-events-none" />
+            <div className="absolute top-3 right-3 w-6 h-6 bg-[#F52B8C] rounded-full flex items-center justify-center shadow-sm">
+              <Check className="w-3.5 h-3.5 text-white" />
+            </div>
+          </>
+        )}
+      </button>
+
+      {/* Template name label */}
+      <p className={`text-[13px] font-semibold transition-colors ${selected ? 'text-[#F52B8C]' : 'text-gray-600'}`}>
+        {template.name}
+      </p>
+    </div>
   );
 }
 
@@ -856,13 +865,27 @@ export default function Preview({ profile }: { profile: Profile | null }) {
       {/* ── DESIGN TAB ─────────────────────────────────────────────── */}
       {activeTab === 'design' && (
         <div>
-          {/* Template gallery — full width */}
-          <div className="px-8 pt-6 pb-4">
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-5">Template</p>
+          {/* Section header */}
+          <div className="px-8 pt-6 pb-5 flex items-center justify-between">
+            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">Template</p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigateTemplate(-1)}
+                className="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 transition"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => navigateTemplate(1)}
+                className="p-1.5 rounded-full hover:bg-gray-100 text-gray-500 transition"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          {/* Gallery cards */}
-          <div className="flex items-stretch justify-center gap-5 px-8 pb-4 overflow-x-auto">
+          {/* Gallery cards — horizontal scroll, wide */}
+          <div className="flex items-start gap-5 px-8 pb-6 overflow-x-auto scrollbar-hide">
             {TEMPLATES.map((tpl, idx) => (
               <TemplateCard
                 key={tpl.id}
@@ -872,23 +895,6 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                 onClick={() => setDesignForm((f) => ({ ...f, theme_preset: tpl.themeId, color_accent: tpl.accentColor }))}
               />
             ))}
-          </div>
-
-          {/* Navigation + name */}
-          <div className="flex items-center justify-center gap-4 py-4">
-            <button
-              onClick={() => navigateTemplate(-1)}
-              className="p-2 rounded-full hover:bg-gray-100 text-gray-500 transition"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <p className="font-semibold text-[#1A1A1A] text-sm w-24 text-center">{currentTemplate.name}</p>
-            <button
-              onClick={() => navigateTemplate(1)}
-              className="p-2 rounded-full hover:bg-gray-100 text-gray-500 transition"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
           </div>
 
           {/* Colors + Font */}

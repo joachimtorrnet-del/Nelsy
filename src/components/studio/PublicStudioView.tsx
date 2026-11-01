@@ -11,6 +11,16 @@ import { StudioTestimonials } from './StudioTestimonials';
 import { StudioHours } from './StudioHours';
 import { StickyBookCTA } from './StickyBookCTA';
 import { PlgCTA } from './PlgCTA';
+import { LayoutSplit } from './layouts/LayoutSplit';
+import { LayoutEditorial } from './layouts/LayoutEditorial';
+import { LayoutSpotlight } from './layouts/LayoutSpotlight';
+
+// Theme presets that use a standalone layout component (no StudioHeroV2 sections)
+const LAYOUT_PRESETS: Record<string, 'split' | 'editorial' | 'spotlight'> = {
+  minimal_nude: 'split',
+  editorial: 'editorial',
+  blush: 'spotlight',
+};
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -75,6 +85,34 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
     observer.observe(el);
     return () => observer.disconnect();
   }, [isPreview]);
+
+  // Route to standalone layout components for new-generation templates
+  const layoutVariant = LAYOUT_PRESETS[merchant.theme_preset ?? ''];
+
+  if (layoutVariant === 'split') {
+    return (
+      <>
+        <LayoutSplit merchant={merchant} theme={theme} isPreview={isPreview} photos={photos} />
+        {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
+      </>
+    );
+  }
+  if (layoutVariant === 'editorial') {
+    return (
+      <>
+        <LayoutEditorial merchant={merchant} theme={theme} isPreview={isPreview} photos={photos} />
+        {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
+      </>
+    );
+  }
+  if (layoutVariant === 'spotlight') {
+    return (
+      <>
+        <LayoutSpotlight merchant={merchant} theme={theme} isPreview={isPreview} photos={photos} />
+        {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
+      </>
+    );
+  }
 
   const featuredService = merchant.services.find((s) => s.is_featured) ?? null;
   const restServices = featuredService
