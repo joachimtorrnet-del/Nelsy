@@ -47,6 +47,7 @@ export default function DashboardLayout({
   const studioUrl = `getnelsy.com/${slug}`;
   const pageTitle = PAGE_TITLES[activeTab] ?? 'Dashboard';
   const isDraft = profile?.subscription_status === 'inactive';
+  const isLive = !isDraft && !!profile?.subscription_status && !['incomplete', 'canceled', 'cancelled'].includes(profile.subscription_status);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`https://${studioUrl}`).catch(() => {});
@@ -73,7 +74,7 @@ export default function DashboardLayout({
         {isDraft && (
           <div className="bg-[#1A1A1A] text-white px-4 py-2 flex items-center justify-between gap-3 flex-shrink-0">
             <p className="text-[13px] font-medium leading-snug flex-1 min-w-0">
-              Your page isn't live yet. Start your free trial to publish it.
+              Your studio is not published yet. Choose a plan to go live.
             </p>
             <a
               href="/onboarding?step=plan"
@@ -103,8 +104,22 @@ export default function DashboardLayout({
 
           <div className="flex-1 lg:flex-none" />
 
-          {/* Studio link */}
+          {/* Studio status + link */}
           <div className="flex items-center gap-2">
+            {/* Studio live/unpublished status pill — desktop only */}
+            {isLive ? (
+              <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] font-semibold text-green-700 bg-green-50 border border-green-200 rounded-full px-2.5 py-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 inline-block" />
+                Live
+              </span>
+            ) : (
+              profile && (
+                <span className="hidden lg:inline-flex items-center gap-1.5 text-[11px] font-semibold text-gray-500 bg-gray-100 border border-gray-200 rounded-full px-2.5 py-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-gray-400 inline-block" />
+                  Not published
+                </span>
+              )
+            )}
             <a
               href={`/${slug}`}
               target="_blank"

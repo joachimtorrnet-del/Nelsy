@@ -5,6 +5,7 @@ import {
   ChevronLeft, ChevronRight, Camera, Loader2, Star, Sparkles, FileDown, Package,
   UserRound, BookOpen, Users, Gift, Link2, Instagram, Check, Copy,
   Layers, ArrowUpRight, SlidersHorizontal,
+  Eye, Monitor, Smartphone, X as XIcon, Info,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { THEMES } from '../../lib/themes';
@@ -270,15 +271,13 @@ function OfferRow({
 
       {/* Name + price + duration */}
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 flex-wrap">
           <p className="font-semibold text-[#1A1A1A] text-[15px] leading-tight truncate">{service.name}</p>
           {service.is_featured && <Star className="w-3 h-3 text-amber-500 fill-amber-500 flex-shrink-0" />}
           {offerType.id !== 'beauty' && (
             <TypeIcon className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
           )}
-          {!service.active && (
-            <span className="text-[10px] text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-full flex-shrink-0">Hidden</span>
-          )}
+          <OfferStatusBadge active={service.active} />
         </div>
         <p className="text-[14px] font-normal text-gray-700 mt-0.5">
           {fmt(price)}
@@ -548,6 +547,132 @@ function EditProfilePanel({ profile, onBack }: { profile: Profile | null; onBack
   );
 }
 
+// ── Studio Preview Modal ───────────────────────────────────────────────────────
+
+type PreviewViewport = 'phone' | 'desktop';
+
+interface StudioPreviewModalProps {
+  merchant: Merchant;
+  onClose: () => void;
+}
+
+function StudioPreviewModal({ merchant, onClose }: StudioPreviewModalProps) {
+  const [viewport, setViewport] = useState<PreviewViewport>('phone');
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', handler);
+    return () => document.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  return (
+    <div className="fixed inset-0 z-50 flex flex-col bg-black/60 backdrop-blur-sm">
+      {/* Header bar */}
+      <div className="flex-shrink-0 flex items-center justify-between px-4 py-3 bg-[#1A1A1A]">
+        <div className="flex items-center gap-1 bg-white/10 rounded-lg p-0.5">
+          <button
+            onClick={() => setViewport('phone')}
+            aria-label="Phone preview"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition ${
+              viewport === 'phone' ? 'bg-white text-[#1A1A1A]' : 'text-white/70 hover:text-white'
+            }`}
+          >
+            <Smartphone className="w-3.5 h-3.5" /> Phone
+          </button>
+          <button
+            onClick={() => setViewport('desktop')}
+            aria-label="Desktop preview"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition ${
+              viewport === 'desktop' ? 'bg-white text-[#1A1A1A]' : 'text-white/70 hover:text-white'
+            }`}
+          >
+            <Monitor className="w-3.5 h-3.5" /> Desktop
+          </button>
+        </div>
+        <p className="text-xs text-white/50 flex-1 text-center">
+          Preview only — no changes are published
+        </p>
+        <button
+          onClick={onClose}
+          aria-label="Close preview"
+          className="p-2 rounded-lg text-white/60 hover:text-white hover:bg-white/10 transition focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+        >
+          <XIcon className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Preview frame */}
+      <div className="flex-1 overflow-hidden flex items-start justify-center py-6 px-4">
+        {viewport === 'phone' ? (
+          /* Phone: 390px frame with rounded corners like a device */
+          <div
+            className="w-[390px] flex-shrink-0 bg-white overflow-y-auto shadow-2xl"
+            style={{ height: '100%', maxHeight: 780, borderRadius: 24, border: '6px solid #333' }}
+          >
+            <PublicStudioView merchant={merchant} mode="preview" />
+          </div>
+        ) : (
+          /* Desktop: full-width scrollable content area */
+          <div
+            className="w-full max-w-5xl bg-white overflow-y-auto shadow-2xl flex-shrink-0"
+            style={{ height: '100%', borderRadius: 12, border: '1px solid rgba(255,255,255,0.15)' }}
+          >
+            <PublicStudioView merchant={merchant} mode="preview" />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Status badge helpers ───────────────────────────────────────────────────────
+
+function OfferStatusBadge({ active }: { active: boolean }) {
+  if (active) {
+    return (
+      <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-green-700 bg-green-50 border border-green-200 px-1.5 py-0.5 rounded-full flex-shrink-0 leading-none">
+        <span className="w-1.5 h-1.5 rounded-full bg-green-500 flex-shrink-0" />
+        Published
+      </span>
+    );
+  }
+  return (
+    <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-gray-500 bg-gray-100 border border-gray-200 px-1.5 py-0.5 rounded-full flex-shrink-0 leading-none">
+      <span className="w-1.5 h-1.5 rounded-full bg-gray-400 flex-shrink-0" />
+      Hidden
+    </span>
+  );
+}
+
+// ── Secondary action buttons ───────────────────────────────────────────────────
+
+function InfoTooltip({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="relative inline-block">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        onBlur={() => setOpen(false)}
+        aria-label="More information"
+        className="p-0.5 text-gray-400 hover:text-gray-600 transition focus-visible:ring-1 focus-visible:ring-[#F52B8C] focus-visible:outline-none rounded"
+      >
+        <Info className="w-3.5 h-3.5" />
+      </button>
+      {open && (
+        <div
+          role="tooltip"
+          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-30 w-56 bg-[#1A1A1A] text-white text-xs leading-snug rounded-xl px-3 py-2.5 shadow-xl pointer-events-none"
+        >
+          {text}
+          <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#1A1A1A]" />
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main component ─────────────────────────────────────────────────────────────
 
 export default function Preview({ profile }: { profile: Profile | null }) {
@@ -560,6 +685,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   const [editingService, setEditingService] = useState<DbService | null>(null);
   const [settingFeatured, setSettingFeatured] = useState<string | null>(null);
   const [savingDesign, setSavingDesign] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState(profile?.logo_url ?? '');
   const [savedDesign, setSavedDesign] = useState<DesignForm>({
     color_accent: profile?.color_accent ?? '#F52B8C',
@@ -692,6 +818,37 @@ export default function Preview({ profile }: { profile: Profile | null }) {
 
   const bgColor = THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
 
+  // Build a live merchant from real profile + services for preview
+  const liveMerchant: Merchant = {
+    id: profile?.id ?? '',
+    slug: profile?.slug ?? '',
+    salon_name: profile?.full_name ?? 'My Studio',
+    name: profile?.full_name ?? 'My Studio',
+    bio: profile?.bio ?? '',
+    logo_url: profile?.logo_url,
+    cover_url: profile?.cover_url,
+    specialty: profile?.specialty,
+    location: profile?.location,
+    instagram: profile?.instagram_url,
+    tiktok: profile?.tiktok_url,
+    theme_preset: designForm.theme_preset,
+    color_accent: designForm.color_accent,
+    services: services
+      .filter((s) => s.active)
+      .map((s) => ({
+        id: s.id,
+        name: s.name,
+        description: s.description ?? '',
+        price: parseFloat(String(s.price_total ?? s.price ?? 0)),
+        duration: s.duration_minutes ?? s.duration ?? 60,
+        deposit: parseFloat(String(s.deposit_amount ?? 0)),
+        category: s.category,
+        image_url: s.image_url,
+        is_featured: s.is_featured ?? false,
+        active: s.active,
+      })),
+  };
+
   // ── Render ───────────────────────────────────────────────────────
 
   return (
@@ -699,7 +856,8 @@ export default function Preview({ profile }: { profile: Profile | null }) {
 
       {/* Tab bar */}
       <div className="px-8 pt-6 pb-0">
-        <div className="inline-flex items-center">
+        <div className="flex items-center justify-between border-b border-gray-200">
+          <div className="inline-flex items-center">
           {TABS.map(({ id, label, Icon }) => (
             <button
               key={id}
@@ -714,8 +872,21 @@ export default function Preview({ profile }: { profile: Profile | null }) {
               {label}
             </button>
           ))}
+          </div>
+          {/* Preview button */}
+          <button
+            onClick={() => setShowPreview(true)}
+            className="flex items-center gap-1.5 px-3.5 py-1.5 mb-2 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-[#F52B8C] hover:text-[#F52B8C] transition focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none"
+          >
+            <Eye className="w-4 h-4" /> Preview
+          </button>
         </div>
       </div>
+
+      {/* Preview modal */}
+      {showPreview && (
+        <StudioPreviewModal merchant={liveMerchant} onClose={() => setShowPreview(false)} />
+      )}
 
       {/* ── STUDIO TAB ─────────────────────────────────────────────── */}
       {activeTab === 'studio' && (
@@ -834,27 +1005,31 @@ export default function Preview({ profile }: { profile: Profile | null }) {
               {/* Add offer */}
               <button
                 onClick={() => setStudioScreen('type-picker')}
-                className="w-full h-12 bg-[#F52B8C] text-white rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 hover:opacity-90 transition mb-3"
+                className="w-full h-12 bg-[#F52B8C] text-white rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 hover:opacity-90 transition mb-4"
               >
                 <Plus className="w-4 h-4" /> Add an offer
               </button>
 
-              {/* Add collection */}
-              <button
-                onClick={() => navigate('/dashboard/collection/new')}
-                className="w-full h-11 border border-[#F52B8C] text-[#F52B8C] rounded-full font-semibold text-[14px] flex items-center justify-center gap-2 hover:bg-[#F52B8C]/5 transition mb-4"
-              >
-                <Plus className="w-4 h-4" /> Add a service collection
-              </button>
-
-              {/* Add section */}
-              <div className="text-center">
-                <button
-                  onClick={() => showSuccess('Sections — available soon')}
-                  className="text-[15px] font-semibold text-[#F52B8C] hover:opacity-75 transition"
-                >
-                  Add a section
-                </button>
+              {/* Secondary organize actions */}
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 justify-center">
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => navigate('/dashboard/collection/new')}
+                    className="text-[13px] font-semibold text-gray-600 hover:text-[#F52B8C] transition flex items-center gap-1"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> Add a service collection
+                  </button>
+                  <InfoTooltip text="Group bookable services under one heading, like Nails or Lashes. Clients browse and book within the collection." />
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => showSuccess('Sections coming soon')}
+                    className="text-[13px] font-semibold text-gray-400 hover:text-gray-600 transition flex items-center gap-1"
+                  >
+                    <Plus className="w-3.5 h-3.5" /> Add a section
+                  </button>
+                  <InfoTooltip text="Add a heading to visually organize your studio page, like a divider between service groups." />
+                </div>
               </div>
             </div>
           )}
