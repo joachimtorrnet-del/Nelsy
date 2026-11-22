@@ -142,9 +142,9 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
     setBookingError(null);
 
     try {
-      const [hour, minute] = selectedTime.split(':').map(Number);
-      const dt = new Date(selectedDate);
-      dt.setHours(hour, minute, 0, 0);
+      // Send a naive local datetime string — the server interprets it in the pro's timezone.
+      // Using Date.setHours() would shift to the client's local timezone instead.
+      const bookingDatetime = `${selectedDate}T${selectedTime}:00`;
 
       if (isSupabaseConfigured && isStripeConfigured && supabase) {
         const { data: payData, error: payError } = await supabase.functions.invoke(
@@ -154,7 +154,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
               booking_data: {
                 profile_id: merchant.id,
                 service_id: selectedService.id,
-                booking_datetime: dt.toISOString(),
+                booking_datetime: bookingDatetime,
                 client_name: data.name,
                 client_email: data.email,
                 client_phone: data.phone,
@@ -167,7 +167,14 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
             },
           }
         );
-        if (payError) throw new Error(payError.message);
+        if (payError) {
+          let msg = payError.message;
+          try {
+            const body = await (payError as any).context?.json();
+            msg = body?.message ?? body?.error ?? msg;
+          } catch { /* ignore */ }
+          throw new Error(msg);
+        }
         const { client_secret, booking_id, booking_session_token, stripe_account_id } = payData as {
           client_secret: string;
           booking_id: string;
@@ -185,7 +192,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
         await createBooking({
           serviceId: selectedService.id,
           profileId: merchant.id,
-          datetime: dt,
+          datetime: new Date(bookingDatetime),
           clientName: data.name,
           clientEmail: data.email,
           clientPhone: data.phone,

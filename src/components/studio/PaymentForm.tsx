@@ -17,7 +17,7 @@ interface PaymentFormProps {
   onSuccess: () => void;
 }
 
-export default function PaymentForm({ amount, accent = '#F52B8C', onSuccess }: PaymentFormProps) {
+export default function PaymentForm({ amount, accent = '#F52B8C', bookingId, onSuccess }: PaymentFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -31,7 +31,7 @@ export default function PaymentForm({ amount, accent = '#F52B8C', onSuccess }: P
     try {
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
-        confirmParams: { return_url: `${window.location.origin}/booking-confirmed` },
+        confirmParams: { return_url: `${window.location.origin}/booking-confirmed${bookingId ? `?booking_id=${bookingId}` : ''}` },
         redirect: 'if_required',
       });
       if (error) {
@@ -55,7 +55,7 @@ export default function PaymentForm({ amount, accent = '#F52B8C', onSuccess }: P
     try {
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
-        confirmParams: { return_url: `${window.location.origin}/booking-confirmed` },
+        confirmParams: { return_url: `${window.location.origin}/booking-confirmed${bookingId ? `?booking_id=${bookingId}` : ''}` },
         redirect: 'if_required',
       });
       if (error) {
@@ -103,7 +103,7 @@ export default function PaymentForm({ amount, accent = '#F52B8C', onSuccess }: P
       {expressAvailable && (
         <div className="flex items-center gap-3">
           <div className="flex-1 h-px bg-gray-200" />
-          <span className="text-xs text-gray-400 font-medium">ou par carte</span>
+          <span className="text-xs text-gray-400 font-medium">or by card</span>
           <div className="flex-1 h-px bg-gray-200" />
         </div>
       )}
@@ -127,16 +127,16 @@ export default function PaymentForm({ amount, accent = '#F52B8C', onSuccess }: P
           {isProcessing ? (
             <>
               <Loader2 className="w-5 h-5 animate-spin" />
-              Traitement en cours…
+              Processing…
             </>
           ) : (
-            `Payer ${formatCurrency(amount)}`
+            `Pay ${formatCurrency(amount)}`
           )}
         </button>
       </form>
 
       <p className="text-xs text-gray-500 text-center">
-        Paiement sécurisé par Stripe
+        Secured by Stripe
       </p>
     </div>
   );

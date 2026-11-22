@@ -10,6 +10,7 @@ export default function BookingConfirmed() {
   const [loading, setLoading] = useState(true);
 
   const sessionId = searchParams.get('session_id');
+  const bookingId = searchParams.get('booking_id');
   const stripeAccountId = searchParams.get('account');
 
   useEffect(() => {
@@ -18,21 +19,42 @@ export default function BookingConfirmed() {
   }, []);
 
   const loadBookingDetails = async () => {
-    if (!sessionId || !supabase) {
-      navigate('/');
-      return;
-    }
+    if (!supabase) { navigate('/'); return; }
 
     try {
+      // PaymentIntent flow: booking_id passed directly in return_url
+      if (bookingId) {
+        const { data, error } = await supabase
+          .from('bookings')
+          .select(`
+            id, booking_datetime, client_name, client_email, price_total, status,
+            profiles!profile_id(timezone, business_currency),
+            services!service_id(name, duration)
+          `)
+          .eq('id', bookingId)
+          .single();
+        if (error) throw error;
+        const p = data.profiles as any;
+        const s = data.services as any;
+        setBooking({
+          ...data,
+          service_name: s?.name,
+          duration: s?.duration,
+          salon_timezone: p?.timezone,
+          salon_currency: p?.business_currency ?? 'eur',
+        });
+        return;
+      }
+
+      // Legacy Checkout Session flow
+      if (!sessionId) { navigate('/'); return; }
       const { data, error } = await supabase.functions.invoke('get-booking-from-session', {
         body: {
           session_id: sessionId,
           ...(stripeAccountId ? { stripe_account_id: stripeAccountId } : {}),
         },
       });
-
       if (error) throw error;
-
       setBooking(data.booking);
     } catch (error) {
       console.error('Error loading booking:', error);

@@ -34,3 +34,4 @@ dist-ssr
 .claude/worktrees/
 NELSY_*.md
 SEO_*.md
+.mcp.json

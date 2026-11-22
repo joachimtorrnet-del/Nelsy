@@ -163,8 +163,8 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
       })(),
       action: () => void handleSubscription(),
     },
-    { label: 'Paiements Stripe', desc: 'Compte connecté, versements, configuration', action: () => onNavigate ? onNavigate('stripe') : navigate('/onboarding-stripe') },
-    { label: 'Revenus', desc: 'Solde, historique, retrait des fonds', action: () => onNavigate ? onNavigate('revenue') : navigate('/dashboard') },
+    { label: 'Stripe Payments', desc: 'Connected account, payouts, configuration', action: () => onNavigate ? onNavigate('stripe') : navigate('/onboarding-stripe') },
+    { label: 'Income', desc: 'Balance, history, withdraw funds', action: () => onNavigate ? onNavigate('revenue') : navigate('/dashboard') },
     { label: 'Cancel subscription', desc: 'End your Nelsy plan at period end', action: () => setShowCancelModal(true), danger: true },
   ];
 
