@@ -124,6 +124,7 @@ export default function StripeSettings() {
       if (linkType === 'account_onboarding' && !accountStatus?.connected) {
         body.country = selectedCountry;
         body.timezone = selectedTimezone.trim();
+        if (selectedCurrency) body.currency = selectedCurrency;
       }
       const { data, error } = await supabase.functions.invoke('create-connect-account', { body });
       if (error) throw new Error(error.message);

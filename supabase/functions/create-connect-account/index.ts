@@ -107,12 +107,14 @@ serve(async (req) => {
       return_url,
       country,
       timezone: clientTimezone,
+      currency: clientCurrency,
       link_type = 'account_onboarding',
     } = await req.json() as {
       refresh_url: string
       return_url: string
       country?: string
       timezone?: string
+      currency?: string
       link_type?: 'account_onboarding' | 'account_update'
     }
     if (!refresh_url || !return_url) return jsonError('Missing refresh_url or return_url')
@@ -162,7 +164,11 @@ serve(async (req) => {
         return jsonError(`country must be a valid 2-letter ISO country code supported by Stripe Connect Express`)
       }
 
-      const { currency, timezone: countryTz } = COUNTRY_DATA[resolvedCountry]
+      const { currency: defaultCurrency, timezone: countryTz } = COUNTRY_DATA[resolvedCountry]
+      // Use client-selected currency if provided and valid for this country, otherwise fall back to default
+      const currency = (clientCurrency && typeof clientCurrency === 'string' && clientCurrency.length === 3)
+        ? clientCurrency.toLowerCase()
+        : defaultCurrency
 
       let account
       try {

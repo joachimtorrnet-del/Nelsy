@@ -211,7 +211,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
     { id: 'profile',  label: 'Complete your profile',  done: !!(profile.full_name && profile.bio),  action: () => onNavigate?.('settings') },
     { id: 'service',  label: 'Add your first service',  done: serviceCount > 0,                      action: () => onNavigate?.('preview') },
     { id: 'payments', label: 'Set up payments',          done: stripeReady,                           action: () => onNavigate?.('stripe') },
-    { id: 'publish',  label: 'Publish your studio',      done: isPublished,                           action: () => { window.location.href = '/onboarding?step=plan'; } },
+    { id: 'publish',  label: 'Publish your studio',      done: isPublished,                           action: () => onNavigate?.('stripe') },
   ];
   const allSetupDone = setupSteps.every((s) => s.done);
   const setupDoneCount = setupSteps.filter((s) => s.done).length;

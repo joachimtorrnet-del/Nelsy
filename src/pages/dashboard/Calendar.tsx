@@ -589,8 +589,8 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
                 onChange={(e) => setReschedule((r) => ({ ...r, time: e.target.value }))}
                 className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#F52B8C] focus:outline-none transition"
               >
-                {Array.from({ length: 19 }, (_, i) => {
-                  const h = Math.floor(i / 2) + 9;
+                {Array.from({ length: 32 }, (_, i) => {
+                  const h = Math.floor(i / 2) + 7;
                   const m = i % 2 === 0 ? '00' : '30';
                   const val = `${String(h).padStart(2, '0')}:${m}`;
                   return <option key={val} value={val}>{val}</option>;
