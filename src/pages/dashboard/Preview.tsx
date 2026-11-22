@@ -908,7 +908,10 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     { id: 'design' as MainTab,        label: 'Edit Design',   Icon: SlidersHorizontal },
   ];
 
-  const templateBg = THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
+  // Spotlight paints the page with the accent instead of the theme background
+  const templateBg = designForm.theme_preset === 'blush'
+    ? designForm.color_accent
+    : THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
   const bgColor = designForm.color_background ?? templateBg;
 
   // Build a live merchant from real profile + services for preview
