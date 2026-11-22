@@ -49,7 +49,7 @@ function fmt(n: number) {
 
 export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook }: Props) {
   // Full-page background IS the accent color
-  const bg = theme.defaultAccent;
+  const bg = theme.backgroundOverride ?? theme.defaultAccent;
 
   // Tonal surfaces over the saturated background
   const cardSurface = 'rgba(255,255,255,0.14)';
@@ -61,7 +61,7 @@ export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook }: 
   const textSoft    = 'rgba(255,255,255,0.72)';
   const divider     = 'rgba(255,255,255,0.15)';
 
-  const font = 'Inter, sans-serif'; // rounded sans, always — never serif for Spotlight
+  const font = theme.fontFamily ?? 'Inter, sans-serif';
 
   // Portrait: prefer logo (headshot) over cover/gallery
   const portraitUrl = merchant.logo_url ?? merchant.cover_url ?? photos[0]?.image_url;

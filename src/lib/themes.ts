@@ -17,6 +17,10 @@ export interface NelsyTheme {
   textSecondary: string;
   // Font
   fontClass: 'font-sans' | 'font-serif';
+  /** CSS font-family stack set when the pro picked a font; overrides fontClass. */
+  fontFamily?: string;
+  /** Background the pro picked; layouts that don't use pageBg honour it too. */
+  backgroundOverride?: string;
   // Accent
   defaultAccent: string;
   accentText: string; // text color drawn on top of accent (almost always #FFFFFF)
@@ -243,8 +247,47 @@ export const THEMES: Record<string, NelsyTheme> = {
 
 export const DEFAULT_THEME = THEMES.soft_pink;
 
-export function getTheme(preset?: string | null, accentOverride?: string | null): NelsyTheme {
-  const base = THEMES[preset ?? 'soft_pink'] ?? DEFAULT_THEME;
-  if (accentOverride) return { ...base, defaultAccent: accentOverride };
-  return base;
+function isDark(hex: string): boolean {
+  const m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex);
+  if (!m) return false;
+  const [r, g, b] = [m[1], m[2], m[3]].map((h) => parseInt(h, 16) / 255);
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45;
+}
+
+export function getTheme(
+  preset?: string | null,
+  accentOverride?: string | null,
+  overrides?: { background?: string | null; fontFamily?: string | null },
+): NelsyTheme {
+  let theme = THEMES[preset ?? 'soft_pink'] ?? DEFAULT_THEME;
+  if (accentOverride) theme = { ...theme, defaultAccent: accentOverride };
+  if (overrides?.background) {
+    const bg = overrides.background;
+    const templateWasDark = isDark(theme.pageBg);
+    theme = { ...theme, pageBg: bg, headerGradient: bg, backgroundOverride: bg };
+    // Keep text and cards readable whatever background the pro picks
+    if (isDark(bg)) {
+      theme = {
+        ...theme,
+        textPrimary: '#FFFFFF',
+        textSecondary: 'rgba(255,255,255,0.72)',
+        headerTextPrimary: '#FFFFFF',
+        headerTextSecondary: 'rgba(255,255,255,0.72)',
+        cardBg: 'rgba(255,255,255,0.08)',
+        cardBorder: 'rgba(255,255,255,0.16)',
+      };
+    } else if (templateWasDark) {
+      theme = {
+        ...theme,
+        textPrimary: '#1A1A1A',
+        textSecondary: '#6B7280',
+        headerTextPrimary: '#1A1A1A',
+        headerTextSecondary: '#6B7280',
+        cardBg: '#FFFFFF',
+        cardBorder: 'rgba(0,0,0,0.06)',
+      };
+    }
+  }
+  if (overrides?.fontFamily) theme = { ...theme, fontFamily: overrides.fontFamily };
+  return theme;
 }

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import type { Merchant } from '@/types';
 import { getTheme } from '@/lib/themes';
+import { getStudioFont, ensureStudioFontLoaded } from '@/lib/studioFonts';
 import { useStudioPublic } from '@/hooks/useStudioPublic';
 import { StudioHeroV2 } from './StudioHeroV2';
 import { FeaturedService } from './FeaturedService';
@@ -62,7 +63,12 @@ interface Props {
 }
 
 export function PublicStudioView({ merchant, mode = 'live' }: Props) {
-  const theme = getTheme(merchant.theme_preset, merchant.color_accent);
+  const studioFont = getStudioFont(merchant.font_family);
+  const theme = getTheme(merchant.theme_preset, merchant.color_accent, {
+    background: merchant.color_background,
+    fontFamily: studioFont?.stack,
+  });
+  useEffect(() => { ensureStudioFontLoaded(studioFont); }, [studioFont]);
   const accent = theme.defaultAccent;
   const isPreview = mode === 'preview';
 
@@ -123,8 +129,9 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
 
   return (
     <div
-      className={theme.fontClass}
+      className={theme.fontFamily ? undefined : theme.fontClass}
       style={{
+        fontFamily: theme.fontFamily,
         backgroundColor: theme.pageBg,
         minHeight: isPreview ? '100%' : '100dvh',
         display: 'flex',

@@ -19,6 +19,7 @@ import {
 } from '../../lib/supabase-queries';
 import { supabase } from '../../lib/supabase';
 import { buildLiveMerchant } from '../../lib/liveMerchant';
+import { STUDIO_FONTS, ensureStudioFontLoaded } from '../../lib/studioFonts';
 import { PublicStudioView } from '../../components/studio/PublicStudioView';
 import type { Merchant, Service } from '../../types';
 
@@ -37,6 +38,8 @@ interface Profile {
   tiktok_url?: string;
   color_accent?: string;
   theme_preset?: string;
+  color_background?: string | null;
+  font_family?: string | null;
   bio?: string;
   cover_url?: string;
   specialty?: string;
@@ -62,6 +65,9 @@ interface DbService {
 interface DesignForm {
   color_accent: string;
   theme_preset: string;
+  /** null = use the template's own background / font */
+  color_background: string | null;
+  font_family: string | null;
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -109,10 +115,18 @@ function getOfferTypeFromCategory(category?: string): OfferType {
 // ── Templates config ──────────────────────────────────────────────────────────
 
 const TEMPLATES = [
-  { id: 'split',     name: 'Split',     themeId: 'minimal_nude', accentColor: '#3D312E' },
-  { id: 'editorial', name: 'Editorial', themeId: 'editorial',    accentColor: '#0A0A0A' },
-  { id: 'spotlight', name: 'Spotlight', themeId: 'blush',        accentColor: '#F52B8C' },
+  { id: 'spotlight',  name: 'Spotlight',  themeId: 'blush',        accentColor: '#F52B8C' },
+  { id: 'split',      name: 'Split',      themeId: 'minimal_nude', accentColor: '#3D312E' },
+  { id: 'editorial',  name: 'Editorial',  themeId: 'editorial',    accentColor: '#0A0A0A' },
+  { id: 'soft-pink',  name: 'Soft Pink',  themeId: 'soft_pink',    accentColor: THEMES.soft_pink.defaultAccent },
+  { id: 'clean-luxe', name: 'Clean Luxe', themeId: 'clean_luxe',   accentColor: THEMES.clean_luxe.defaultAccent },
+  { id: 'chrome',     name: 'Chrome',     themeId: 'chrome',       accentColor: THEMES.chrome.defaultAccent },
+  { id: 'dark-luxe',  name: 'Dark Luxe',  themeId: 'dark_luxe',    accentColor: THEMES.dark_luxe.defaultAccent },
+  { id: 'rose',       name: 'Rose',       themeId: 'rose',         accentColor: THEMES.rose.defaultAccent },
+  { id: 'bold',       name: 'Bold',       themeId: 'bold',         accentColor: THEMES.bold.defaultAccent },
 ];
+
+const BACKGROUND_SWATCHES = ['#FFFFFF', '#FFF5F8', '#FFF8EB', '#F5F1EC', '#EEF2F7', '#F2F0FF', '#1A1A1A', '#2A1F2D'];
 
 // Demo merchant for template gallery — uses specific picsum.photos IDs (Unsplash CC0)
 // Gallery preview only — never applied to a user's published studio
@@ -164,7 +178,10 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
 interface TemplateCardProps {
   template: typeof TEMPLATES[number];
   accentOverride: string;
+  backgroundOverride?: string | null;
+  fontOverride?: string | null;
   selected: boolean;
+  scale?: number;
   onClick: () => void;
 }
 
@@ -174,11 +191,13 @@ const INNER_W = 390;
 const INNER_H = 750;
 const CARD_SCALE = CARD_W / INNER_W; // 0.6154…
 
-function TemplateCard({ template, accentOverride, selected, onClick }: TemplateCardProps) {
+function TemplateCard({ template, accentOverride, backgroundOverride, fontOverride, selected, scale = 1, onClick }: TemplateCardProps) {
   const demoMerchant: Merchant = {
     ...DEMO_MERCHANT_BASE,
     theme_preset: template.themeId,
     color_accent: accentOverride,
+    color_background: backgroundOverride ?? undefined,
+    font_family: fontOverride ?? undefined,
   };
 
   return (
@@ -195,7 +214,7 @@ function TemplateCard({ template, accentOverride, selected, onClick }: TemplateC
           ? '0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08)'
           : '0 2px 8px rgba(0,0,0,0.07)',
         opacity: selected ? 1 : 0.72,
-        transform: selected ? 'translateY(-2px)' : 'none',
+        transform: selected ? 'translateY(-2px)' : `scale(${scale})`,
       }}
     >
       {/* Mobile-width render clipped inside the card frame */}
@@ -744,6 +763,8 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   const [savedDesign, setSavedDesign] = useState<DesignForm>({
     color_accent: profile?.color_accent ?? '#F52B8C',
     theme_preset: profile?.theme_preset ?? 'soft_pink',
+    color_background: profile?.color_background ?? null,
+    font_family: profile?.font_family ?? null,
   });
   const [designForm, setDesignForm] = useState<DesignForm>(savedDesign);
 
@@ -760,12 +781,21 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   }>({ isOpen: false, title: '', message: '', onConfirm: () => {} });
 
   const { toast, showSuccess, showError, hideToast } = useToast();
+  // Font buttons render in their own typeface
+  useEffect(() => {
+    if (activeTab === 'design') STUDIO_FONTS.forEach(ensureStudioFontLoaded);
+  }, [activeTab]);
   useEffect(() => {
     setAvatarUrl(profile?.logo_url ?? '');
-    const d = { color_accent: profile?.color_accent ?? '#F52B8C', theme_preset: profile?.theme_preset ?? 'soft_pink' };
+    const d: DesignForm = {
+      color_accent: profile?.color_accent ?? '#F52B8C',
+      theme_preset: profile?.theme_preset ?? 'soft_pink',
+      color_background: profile?.color_background ?? null,
+      font_family: profile?.font_family ?? null,
+    };
     setSavedDesign(d);
     setDesignForm(d);
-  }, [profile?.logo_url, profile?.color_accent, profile?.theme_preset]);
+  }, [profile?.logo_url, profile?.color_accent, profile?.theme_preset, profile?.color_background, profile?.font_family]);
 
   const loadServices = useCallback(async () => {
     if (!profile?.id) { setLoading(false); return; }
@@ -847,7 +877,13 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     if (!profile?.id) return;
     setSavingDesign(true);
     try {
-      await updateProfile(profile.id, { color_accent: designForm.color_accent, theme_preset: designForm.theme_preset });
+      const { error } = await updateProfile(profile.id, {
+        color_accent: designForm.color_accent,
+        theme_preset: designForm.theme_preset,
+        color_background: designForm.color_background,
+        font_family: designForm.font_family,
+      });
+      if (error) throw error;
       setSavedDesign(designForm);
       showSuccess('Design saved!');
     } catch { showError('Failed'); }
@@ -856,10 +892,12 @@ export default function Preview({ profile }: { profile: Profile | null }) {
 
   const cancelDesign = () => setDesignForm(savedDesign);
 
+  // A new template starts from its own colors and font
+  const applyTemplate = (tpl: typeof TEMPLATES[number]) =>
+    setDesignForm((f) => ({ ...f, theme_preset: tpl.themeId, color_accent: tpl.accentColor, color_background: null, font_family: null }));
+
   const navigateTemplate = (dir: 1 | -1) => {
-    const newIdx = (currentTplIdx + dir + TEMPLATES.length) % TEMPLATES.length;
-    const tpl = TEMPLATES[newIdx];
-    setDesignForm((f) => ({ ...f, theme_preset: tpl.themeId, color_accent: tpl.accentColor }));
+    applyTemplate(TEMPLATES[(currentTplIdx + dir + TEMPLATES.length) % TEMPLATES.length]);
   };
 
   // ── Tab definitions ──────────────────────────────────────────────
@@ -870,12 +908,15 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     { id: 'design' as MainTab,        label: 'Edit Design',   Icon: SlidersHorizontal },
   ];
 
-  const bgColor = THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
+  const templateBg = THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
+  const bgColor = designForm.color_background ?? templateBg;
 
   // Build a live merchant from real profile + services for preview
   const liveMerchant: Merchant = buildLiveMerchant(profile, services, {
     theme_preset: designForm.theme_preset,
     color_accent: designForm.color_accent,
+    color_background: designForm.color_background,
+    font_family: designForm.font_family,
   });
 
   // ── Render ───────────────────────────────────────────────────────
@@ -1103,18 +1144,36 @@ export default function Preview({ profile }: { profile: Profile | null }) {
       {/* ── DESIGN TAB ─────────────────────────────────────────────── */}
       {activeTab === 'design' && (
         <div>
-          {/* Gallery — full width, cards centered */}
-          <div className="pt-6 pb-2">
-            <div className="flex items-start justify-center gap-5 px-8 overflow-x-auto pb-2">
-              {TEMPLATES.map((tpl, idx) => (
-                <TemplateCard
-                  key={tpl.id}
-                  template={tpl}
-                  accentOverride={currentTplIdx === idx ? designForm.color_accent : tpl.accentColor}
-                  selected={currentTplIdx === idx}
-                  onClick={() => setDesignForm((f) => ({ ...f, theme_preset: tpl.themeId, color_accent: tpl.accentColor }))}
-                />
-              ))}
+          {/* Gallery: carousel centered on the selected template */}
+          <div
+            className="pt-6 pb-2 outline-none"
+            tabIndex={0}
+            role="region"
+            aria-label="Template gallery"
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowLeft') { e.preventDefault(); navigateTemplate(-1); }
+              if (e.key === 'ArrowRight') { e.preventDefault(); navigateTemplate(1); }
+            }}
+          >
+            <div className="flex items-center justify-center gap-3 sm:gap-5 px-4 overflow-hidden" style={{ minHeight: CARD_H + 8 }}>
+              {[-2, -1, 0, 1, 2].map((offset) => {
+                const idx = (currentTplIdx + offset + TEMPLATES.length) % TEMPLATES.length;
+                const tpl = TEMPLATES[idx];
+                const selected = offset === 0;
+                return (
+                  <div key={`${offset}-${tpl.id}`} className={Math.abs(offset) === 2 ? 'hidden xl:block' : Math.abs(offset) === 1 ? 'hidden sm:block' : ''}>
+                    <TemplateCard
+                      template={tpl}
+                      accentOverride={selected ? designForm.color_accent : tpl.accentColor}
+                      backgroundOverride={selected ? designForm.color_background : null}
+                      fontOverride={selected ? designForm.font_family : null}
+                      selected={selected}
+                      scale={Math.abs(offset) === 2 ? 0.82 : 0.9}
+                      onClick={() => (selected ? undefined : applyTemplate(tpl))}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -1127,7 +1186,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <span className="text-[18px] font-bold text-[#1A1A1A] w-28 text-center">
+            <span className="text-[18px] font-bold text-[#1A1A1A] w-32 text-center">
               {TEMPLATES[currentTplIdx]?.name ?? ''}
             </span>
             <button
@@ -1138,48 +1197,58 @@ export default function Preview({ profile }: { profile: Profile | null }) {
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
-          <p className="text-center text-[13px] text-gray-400 pb-5">
-            Click a card or use the arrows to choose a template.
+          <p className="text-center text-[13px] text-gray-400 pb-5 px-4">
+            Use the arrows, your keyboard arrow keys, or click a card. {currentTplIdx + 1} of {TEMPLATES.length}.
           </p>
 
           {/* Settings panel */}
-          <div className="border-t border-gray-100 px-8 py-6 grid grid-cols-2 gap-10">
+          <div className="border-t border-gray-100 px-4 sm:px-8 py-6 grid md:grid-cols-2 gap-8 md:gap-10">
             {/* Colors */}
             <div>
               <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-5">Colors</p>
-              <div className="flex gap-8 mb-4">
+              <div className="grid grid-cols-2 gap-3 mb-4">
                 {/* Accent */}
-                <div>
-                  <p className="text-xs text-gray-400 mb-2">Accent</p>
-                  <label className="flex items-center gap-2.5 cursor-pointer group">
-                    <div className="w-10 h-10 rounded-xl shadow-sm border border-gray-200 overflow-hidden relative">
-                      <div className="w-full h-full" style={{ background: designForm.color_accent }} />
-                      <input
-                        type="color"
-                        value={designForm.color_accent}
-                        onChange={(e) => setDesignForm((f) => ({ ...f, color_accent: e.target.value }))}
-                        className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
-                      />
-                    </div>
-                    <code className="text-sm font-mono text-gray-700 group-hover:text-[#F52B8C] transition">
-                      {designForm.color_accent.toUpperCase()}
-                    </code>
-                  </label>
-                </div>
+                <label className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-gray-300 transition">
+                  <span className="relative w-8 h-8 rounded-full border border-gray-200 overflow-hidden flex-shrink-0" style={{ background: designForm.color_accent }}>
+                    <input
+                      type="color"
+                      aria-label="Accent color"
+                      value={designForm.color_accent}
+                      onChange={(e) => setDesignForm((f) => ({ ...f, color_accent: e.target.value }))}
+                      className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                    />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[11px] text-gray-400">Accent</span>
+                    <code className="block text-sm font-mono text-gray-700">{designForm.color_accent.toUpperCase()}</code>
+                  </span>
+                </label>
                 {/* Background */}
-                <div>
-                  <p className="text-xs text-gray-400 mb-2">Background</p>
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-10 h-10 rounded-xl shadow-sm border border-gray-200" style={{ background: bgColor }} />
-                    <code className="text-sm font-mono text-gray-700">{bgColor.toUpperCase()}</code>
-                  </div>
-                </div>
+                <label className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-gray-300 transition">
+                  <span className="relative w-8 h-8 rounded-full border border-gray-200 overflow-hidden flex-shrink-0" style={{ background: bgColor }}>
+                    <input
+                      type="color"
+                      aria-label="Background color"
+                      value={/^#[0-9a-f]{6}$/i.test(bgColor) ? bgColor : '#ffffff'}
+                      onChange={(e) => setDesignForm((f) => ({ ...f, color_background: e.target.value }))}
+                      className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+                    />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[11px] text-gray-400">Background</span>
+                    <code className="block text-sm font-mono text-gray-700 truncate">
+                      {designForm.color_background ? designForm.color_background.toUpperCase() : 'Template'}
+                    </code>
+                  </span>
+                </label>
               </div>
-              {/* Quick-pick color swatches */}
-              <div className="flex gap-2 flex-wrap">
+
+              <p className="text-xs text-gray-400 mb-2">Accent</p>
+              <div className="flex gap-2 flex-wrap mb-4">
                 {['#F52B8C', '#E8446E', '#0A0A0A', '#3B82F6', '#8B5CF6', '#059669', '#D97706'].map((c) => (
                   <button
                     key={c}
+                    aria-label={`Accent ${c}`}
                     onClick={() => setDesignForm((f) => ({ ...f, color_accent: c }))}
                     className="w-7 h-7 rounded-full transition hover:scale-110"
                     style={{
@@ -1189,51 +1258,52 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                     }}
                   />
                 ))}
-                <label className="w-7 h-7 rounded-full border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer hover:border-gray-400 transition overflow-hidden relative">
-                  <input
-                    type="color"
-                    value={designForm.color_accent}
-                    onChange={(e) => setDesignForm((f) => ({ ...f, color_accent: e.target.value }))}
-                    className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
+              </div>
+
+              <p className="text-xs text-gray-400 mb-2">Background</p>
+              <div className="flex gap-2 flex-wrap items-center">
+                {BACKGROUND_SWATCHES.map((c) => (
+                  <button
+                    key={c}
+                    aria-label={`Background ${c}`}
+                    onClick={() => setDesignForm((f) => ({ ...f, color_background: c }))}
+                    className="w-7 h-7 rounded-full border border-gray-200 transition hover:scale-110"
+                    style={{
+                      background: c,
+                      outline: designForm.color_background?.toLowerCase() === c.toLowerCase() ? '3px solid #F52B8C' : '3px solid transparent',
+                      outlineOffset: '2px',
+                    }}
                   />
-                  <span className="text-gray-400 text-xs font-bold pointer-events-none">+</span>
-                </label>
+                ))}
+                {designForm.color_background && (
+                  <button
+                    onClick={() => setDesignForm((f) => ({ ...f, color_background: null }))}
+                    className="ml-1 text-xs font-semibold text-[#F52B8C] hover:opacity-75 transition"
+                  >
+                    Use template background
+                  </button>
+                )}
               </div>
             </div>
 
             {/* Font */}
             <div>
               <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-5">Font</p>
-              <div className="space-y-2">
-                {[
-                  { label: 'Inter', value: 'sans', preview: 'Aa', className: 'font-sans' },
-                  { label: 'Playfair Display', value: 'serif', preview: 'Aa', className: 'font-serif' },
-                ].map((font) => {
-                  const currentFont = THEMES[designForm.theme_preset]?.fontClass ?? 'font-sans';
-                  const isActive = currentFont === `font-${font.value}`;
+              <div className="grid grid-cols-2 gap-2">
+                {[{ id: null as string | null, label: 'Template default', stack: undefined as string | undefined }, ...STUDIO_FONTS.map((f) => ({ id: f.id as string | null, label: f.label, stack: f.stack }))].map((font) => {
+                  const isActive = designForm.font_family === font.id;
                   return (
                     <button
-                      key={font.value}
-                      onClick={() => {
-                        if (isActive) return;
-                        // Switch to a theme that uses this font family
-                        const target = font.value === 'serif' ? 'editorial' : 'soft_pink';
-                        const tpl = TEMPLATES.find((t) => t.themeId === target);
-                        setDesignForm((f) => ({
-                          ...f,
-                          theme_preset: target,
-                          color_accent: tpl?.accentColor ?? f.color_accent,
-                        }));
-                      }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border text-left transition-all ${
-                        isActive ? 'border-[#F52B8C] bg-[#fff8fa]' : 'border-gray-200 hover:border-gray-300'
+                      key={font.id ?? 'default'}
+                      onClick={() => setDesignForm((f) => ({ ...f, font_family: font.id }))}
+                      aria-pressed={isActive}
+                      className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-left transition-all ${
+                        isActive ? 'border-[#F52B8C] bg-[#fff8fa]' : 'border-gray-200 bg-white hover:border-gray-300'
                       }`}
                     >
-                      <span className={`text-xl font-bold text-gray-700 w-8 text-center ${font.className}`}>
-                        {font.preview}
-                      </span>
-                      <span className="text-sm text-gray-700">{font.label}</span>
-                      {isActive && <Check className="w-4 h-4 text-[#F52B8C] ml-auto" />}
+                      <span className="text-lg font-semibold text-gray-800 w-7 text-center flex-shrink-0" style={{ fontFamily: font.stack }}>Aa</span>
+                      <span className="text-sm text-gray-700 truncate" style={{ fontFamily: font.stack }}>{font.label}</span>
+                      {isActive && <Check className="w-4 h-4 text-[#F52B8C] ml-auto flex-shrink-0" />}
                     </button>
                   );
                 })}

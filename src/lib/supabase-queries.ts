@@ -163,6 +163,7 @@ const PROFILE_SAFE_COLUMNS = new Set([
   'logo_url', 'color_accent', 'theme_preset',
   'slug', 'notification_preferences',
   'cover_url', 'specialty', 'location', 'pinterest_url', 'website_url',
+  'color_background', 'font_family',
 ]);
 
 export async function updateProfile(userId: string, updates: Record<string, unknown>) {

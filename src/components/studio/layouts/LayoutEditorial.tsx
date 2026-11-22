@@ -192,8 +192,8 @@ export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook }: 
   return (
     <div style={{
       minHeight: isPreview ? '100%' : '100dvh',
-      backgroundColor: '#F7F4F0',
-      fontFamily: 'Inter, sans-serif',
+      backgroundColor: theme.backgroundOverride ?? '#F7F4F0',
+      fontFamily: theme.fontFamily ?? 'Inter, sans-serif',
       WebkitFontSmoothing: 'antialiased',
     }}>
 
@@ -237,7 +237,7 @@ export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook }: 
         }}>
           <h1 style={{
             fontSize: 30, fontWeight: 800,
-            fontFamily: 'Playfair Display, Georgia, serif',
+            fontFamily: theme.fontFamily ?? 'Playfair Display, Georgia, serif',
             letterSpacing: '-0.01em',
             color: '#FFFFFF',
             margin: '0 0 14px',

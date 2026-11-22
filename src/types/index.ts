@@ -59,6 +59,8 @@ export interface Merchant {
   collections?: ServiceCollection[];
   theme_preset?: string;
   color_accent?: string;
+  color_background?: string;
+  font_family?: string;
   timezone?: string;
 }
 

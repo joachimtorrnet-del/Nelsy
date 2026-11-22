@@ -35,7 +35,7 @@ function fmt(n: number) {
 
 export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Props) {
   const accent = theme.defaultAccent;
-  const font = theme.fontClass === 'font-serif' ? 'Playfair Display, Georgia, serif' : 'Inter, sans-serif';
+  const font = theme.fontFamily ?? (theme.fontClass === 'font-serif' ? 'Playfair Display, Georgia, serif' : 'Inter, sans-serif');
 
   // Portrait photo: logo (headshot), then cover, then first gallery photo
   const portraitUrl = merchant.logo_url ?? merchant.cover_url ?? photos[0]?.image_url;

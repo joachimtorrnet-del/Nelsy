@@ -13,6 +13,8 @@ interface ProfileLike {
   tiktok_url?: string | null;
   theme_preset?: string | null;
   color_accent?: string | null;
+  color_background?: string | null;
+  font_family?: string | null;
   timezone?: string | null;
 }
 
@@ -35,7 +37,7 @@ interface ServiceLike {
 export function buildLiveMerchant(
   profile: ProfileLike | null | undefined,
   services: ServiceLike[],
-  design?: { theme_preset?: string; color_accent?: string },
+  design?: { theme_preset?: string; color_accent?: string; color_background?: string | null; font_family?: string | null },
 ): Merchant {
   return {
     id: profile?.id ?? '',
@@ -52,6 +54,9 @@ export function buildLiveMerchant(
     timezone: profile?.timezone ?? undefined,
     theme_preset: design?.theme_preset ?? profile?.theme_preset ?? undefined,
     color_accent: design?.color_accent ?? profile?.color_accent ?? undefined,
+    // undefined in `design` means "not edited"; null means "cleared back to the template"
+    color_background: (design && 'color_background' in design ? design.color_background : profile?.color_background) ?? undefined,
+    font_family: (design && 'font_family' in design ? design.font_family : profile?.font_family) ?? undefined,
     services: services
       .filter((s) => s.active !== false)
       .map((s) => ({

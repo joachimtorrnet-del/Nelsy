@@ -23,6 +23,8 @@ export interface DbProfileRow {
   location: string | null;
   color_accent: string | null;
   theme_preset: string | null;
+  color_background: string | null;
+  font_family: string | null;
   stripe_account_id: string | null;
   stripe_customer_id: string | null;
   stripe_onboarding_complete: boolean;
