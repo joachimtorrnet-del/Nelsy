@@ -15,6 +15,8 @@ import Revenue from './dashboard/Revenue';
 import Customers from './dashboard/Customers';
 import Help from './dashboard/Help';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
+import { ComingSoonPlaceholder } from '../components/dashboard/ComingSoonPlaceholder';
+import { ShoppingBag, Megaphone, Globe, Gift } from 'lucide-react';
 
 interface Profile {
   id: string;
@@ -28,7 +30,7 @@ interface Profile {
 
 const VALID_TABS = [
   'home', 'calendar', 'preview', 'analytics', 'revenue', 'stripe', 'settings',
-  'customers', 'help',
+  'orders', 'customers', 'marketing', 'community', 'referrals', 'help',
 ];
 
 function tabFromPath(pathname: string): string {
@@ -157,7 +159,35 @@ export default function Dashboard() {
       {activeTab === 'settings'  && (
         <Settings profile={profile as SettingsProfile | null} onNavigate={handleSetTab} />
       )}
+      {activeTab === 'orders' && (
+        <ComingSoonPlaceholder
+          title="Orders"
+          description="Track product purchases and digital downloads from your clients in one place."
+          icon={ShoppingBag}
+        />
+      )}
       {activeTab === 'customers' && <Customers profile={profile} />}
+      {activeTab === 'marketing' && (
+        <ComingSoonPlaceholder
+          title="Marketing"
+          description="Email campaigns, SMS, Auto DM, and discount codes to grow your bookings."
+          icon={Megaphone}
+        />
+      )}
+      {activeTab === 'community' && (
+        <ComingSoonPlaceholder
+          title="Community"
+          description="Build and manage your community of clients and followers."
+          icon={Globe}
+        />
+      )}
+      {activeTab === 'referrals' && (
+        <ComingSoonPlaceholder
+          title="Referrals"
+          description="Invite other beauty professionals to Nelsy and earn rewards."
+          icon={Gift}
+        />
+      )}
       {activeTab === 'help' && <Help onNavigate={handleSetTab} />}
     </DashboardLayout>
   );

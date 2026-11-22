@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Home, Sparkles, CalendarDays, Users, TrendingUp,
-  BarChart2, HelpCircle, Settings, LogOut,
+  Home, Sparkles, CalendarDays, ShoppingBag, Users, TrendingUp,
+  BarChart2, Megaphone, Globe, Gift, HelpCircle, Settings, LogOut,
   X, ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
@@ -15,20 +15,25 @@ interface NavItem {
   id: string;
   label: string;
   icon: LucideIcon;
+  live: boolean;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'home',       label: 'Home',            icon: Home },
-  { id: 'preview',    label: 'My Studio',       icon: Sparkles },
-  { id: 'calendar',   label: 'Bookings',        icon: CalendarDays },
-  { id: 'customers',  label: 'Customers',       icon: Users },
-  { id: 'revenue',    label: 'Income',          icon: TrendingUp },
-  { id: 'analytics',  label: 'Analytics',       icon: BarChart2 },
+  { id: 'home',       label: 'Home',            icon: Home,        live: true  },
+  { id: 'preview',    label: 'My Studio',       icon: Sparkles,    live: true  },
+  { id: 'calendar',   label: 'Bookings',        icon: CalendarDays,live: true  },
+  { id: 'orders',     label: 'Orders',          icon: ShoppingBag, live: false },
+  { id: 'customers',  label: 'Customers',       icon: Users,       live: true  },
+  { id: 'revenue',    label: 'Income',          icon: TrendingUp,  live: true  },
+  { id: 'analytics',  label: 'Analytics',       icon: BarChart2,   live: true  },
+  { id: 'marketing',  label: 'Marketing',       icon: Megaphone,   live: false },
+  { id: 'community',  label: 'Community',       icon: Globe,       live: false },
+  { id: 'referrals',  label: 'Referrals',       icon: Gift,        live: false },
 ];
 
 const BOTTOM_ITEMS: NavItem[] = [
-  { id: 'help',       label: 'Help & Tutorials',icon: HelpCircle },
-  { id: 'settings',   label: 'Settings',        icon: Settings },
+  { id: 'help',       label: 'Help & Tutorials',icon: HelpCircle,  live: true  },
+  { id: 'settings',   label: 'Settings',        icon: Settings,    live: true  },
 ];
 
 // ── Tooltip wrapper ────────────────────────────────────────────────────────────
@@ -62,7 +67,7 @@ interface NavRowProps {
 }
 
 function NavRow({ item, active, collapsed, badge, onClick }: NavRowProps) {
-  const { label, icon: Icon } = item;
+  const { label, icon: Icon, live } = item;
 
   const row = (
     <button
@@ -84,6 +89,11 @@ function NavRow({ item, active, collapsed, badge, onClick }: NavRowProps) {
       {!collapsed && (
         <>
           <span className="flex-1 min-w-0 truncate text-left">{label}</span>
+          {!live && (
+            <span className="flex-shrink-0 text-[10px] font-semibold text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded-md uppercase tracking-wide leading-none">
+              Soon
+            </span>
+          )}
           {badge !== undefined && (
             <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#F52B8C] text-white text-[10px] font-bold flex items-center justify-center">
               {badge}
@@ -95,7 +105,7 @@ function NavRow({ item, active, collapsed, badge, onClick }: NavRowProps) {
   );
 
   if (collapsed) {
-    return <Tooltip label={label}>{row}</Tooltip>;
+    return <Tooltip label={`${label}${!live ? ' · Coming soon' : ''}`}>{row}</Tooltip>;
   }
   return row;
 }
