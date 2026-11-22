@@ -5,7 +5,7 @@ import {
   ChevronLeft, ChevronRight, Camera, Loader2, Star, Sparkles, FileDown, Package,
   UserRound, BookOpen, Users, Gift, Link2, Instagram, Check, Copy,
   Layers, ArrowUpRight, SlidersHorizontal,
-  Eye, Monitor, Smartphone, X as XIcon, Info,
+  Eye, Monitor, Smartphone, X as XIcon, Info, Search,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { THEMES } from '../../lib/themes';
@@ -20,6 +20,7 @@ import {
 import { supabase } from '../../lib/supabase';
 import { buildLiveMerchant } from '../../lib/liveMerchant';
 import { STUDIO_FONTS, ensureStudioFontLoaded } from '../../lib/studioFonts';
+import { StudioPhonePreview } from '../../components/dashboard/StudioPhonePreview';
 import { PublicStudioView } from '../../components/studio/PublicStudioView';
 import type { Merchant, Service } from '../../types';
 
@@ -271,42 +272,39 @@ function OfferRow({
   return (
     <div
       {...dragRowProps}
-      className={`flex items-center gap-3 px-4 py-3.5 bg-white rounded-xl shadow-sm transition-all cursor-default ${
-        isDragOver ? 'ring-2 ring-[#F52B8C]/30' : ''
-      }`}
+      className={`group flex items-center gap-3 sm:gap-4 pl-2 pr-2 sm:pr-3 py-3 bg-white border rounded-2xl transition-all cursor-default ${
+        isDragOver ? 'border-[#F52B8C] ring-2 ring-[#F52B8C]/20' : 'border-gray-100 hover:border-gray-200'
+      } ${service.active ? '' : 'opacity-70'}`}
     >
       {/* Drag handle */}
       <div
-        className="cursor-grab text-gray-400 hover:text-gray-600 flex-shrink-0 active:cursor-grabbing touch-none"
+        className="cursor-grab text-gray-300 group-hover:text-gray-500 flex-shrink-0 active:cursor-grabbing touch-none px-1"
         onMouseDown={(e) => e.stopPropagation()}
+        aria-label="Drag to reorder"
       >
         <GripVertical className="w-4 h-4" />
       </div>
 
       {/* Thumbnail */}
-      <div className="w-[60px] h-[60px] rounded-lg overflow-hidden flex-shrink-0 bg-gray-100 flex items-center justify-center">
+      <button onClick={onEdit} className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0 bg-[#fff4f9] flex items-center justify-center" aria-label={`Edit ${service.name}`}>
         {service.image_url
-          ? <img src={service.image_url} alt={service.name} className="w-full h-full object-cover" />
-          : <TypeIcon className="w-5 h-5 text-gray-300" />}
-      </div>
+          ? <img src={service.image_url} alt="" className="w-full h-full object-cover" />
+          : <TypeIcon className="w-5 h-5 text-[#F52B8C]/50" />}
+      </button>
 
-      {/* Name + price + duration */}
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-1.5 flex-wrap">
-          <p className="font-semibold text-[#1A1A1A] text-[15px] leading-tight truncate">{service.name}</p>
-          {service.is_featured && <Star className="w-3 h-3 text-amber-500 fill-amber-500 flex-shrink-0" />}
-          {offerType.id !== 'beauty' && (
-            <TypeIcon className="w-3.5 h-3.5 text-gray-400 flex-shrink-0" />
-          )}
-          <OfferStatusBadge active={service.active} />
+      {/* Name + price */}
+      <button onClick={onEdit} className="flex-1 min-w-0 text-left">
+        <div className="flex items-center gap-1.5 min-w-0">
+          <p className="font-semibold text-[#1A1A1A] text-[15px] sm:text-base leading-tight truncate">{service.name}</p>
+          {service.is_featured && <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500 flex-shrink-0" aria-label="Featured" />}
+          {!service.active && <OfferStatusBadge active={false} />}
         </div>
-        <p className="text-[14px] font-normal text-gray-700 mt-0.5">
-          {fmt(price)}
-          {offerType.id === 'beauty' && (
-            <span className="text-gray-400"> · {getServiceDuration(service)} min</span>
-          )}
+        <p className="text-sm text-gray-500 mt-1">
+          <span className="font-medium text-gray-800">{fmt(price)}</span>
+          {offerType.id === 'beauty' && <span> · {getServiceDuration(service)} min</span>}
+          {Number(service.deposit_amount ?? 0) > 0 && <span> · {fmt(Number(service.deposit_amount))} deposit</span>}
         </p>
-      </div>
+      </button>
 
       {/* ⋮ menu — far right */}
       <div className="relative flex-shrink-0" ref={menuRef}>
@@ -752,6 +750,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<MainTab>('studio');
   const [studioScreen, setStudioScreen] = useState<StudioScreen>('list');
+  const [offerQuery, setOfferQuery] = useState('');
   const [services, setServices] = useState<DbService[]>([]);
   const [loading, setLoading] = useState(true);
   const [showServiceModal, setShowServiceModal] = useState(false);
@@ -900,6 +899,10 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     applyTemplate(TEMPLATES[(currentTplIdx + dir + TEMPLATES.length) % TEMPLATES.length]);
   };
 
+  const visibleServices = offerQuery.trim()
+    ? services.filter((sv) => sv.name.toLowerCase().includes(offerQuery.trim().toLowerCase()))
+    : services;
+
   // ── Tab definitions ──────────────────────────────────────────────
 
   const TABS = [
@@ -925,7 +928,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   // ── Render ───────────────────────────────────────────────────────
 
   return (
-    <div className="bg-[#f6f4f4] min-h-full">
+    <div className="bg-white min-h-full">
 
       {/* Tab bar */}
       <div className="px-4 sm:px-8 pt-6 pb-0">
@@ -979,131 +982,159 @@ export default function Preview({ profile }: { profile: Profile | null }) {
           )}
 
           {studioScreen === 'list' && (
-            <div className="px-8 pt-5 pb-8">
+            <div className="px-4 sm:px-8 pt-6 pb-10">
+              <div className="grid xl:grid-cols-[minmax(0,1fr)_320px] gap-8 xl:gap-12">
+                <div className="min-w-0 space-y-4">
+                  {/* Profile card */}
+                  <div className="flex items-start gap-4 sm:gap-5 p-4 sm:p-5 bg-white border border-gray-100 rounded-2xl">
+                    <button
+                      onClick={() => setStudioScreen('edit-profile')}
+                      className="relative flex-shrink-0 group w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden flex items-center justify-center"
+                      style={{ background: 'linear-gradient(135deg, #F52B8C, #E0167A)' }}
+                      aria-label="Change photo"
+                    >
+                      {avatarUrl
+                        ? <img src={avatarUrl} alt="" className="w-full h-full object-cover" />
+                        : <span className="text-white font-bold text-3xl">{(profile?.full_name ?? 'Y').charAt(0).toUpperCase()}</span>}
+                      <span className="absolute inset-0 bg-black/25 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
+                        <Camera className="w-5 h-5 text-white" />
+                      </span>
+                    </button>
 
-              {/* Profile card */}
-              <div className="flex items-center gap-4 p-5 bg-white rounded-xl shadow-sm mb-3">
-                {/* Avatar */}
-                <div className="relative flex-shrink-0 group cursor-pointer"
-                  onClick={() => setStudioScreen('edit-profile')}>
-                  <div
-                    className="w-[76px] h-[76px] rounded-lg overflow-hidden flex items-center justify-center"
-                    style={{ background: 'linear-gradient(135deg, #F52B8C, #E0167A)' }}
-                  >
-                    {avatarUrl
-                      ? <img src={avatarUrl} alt={profile?.full_name ?? ''} className="w-full h-full object-cover" />
-                      : <span className="text-white font-bold text-2xl">{(profile?.full_name ?? 'Y').charAt(0).toUpperCase()}</span>}
-                  </div>
-                  <div className="absolute inset-0 rounded-lg bg-black/25 opacity-0 group-hover:opacity-100 transition flex items-center justify-center">
-                    <Camera className="w-5 h-5 text-white" />
-                  </div>
-                </div>
-
-                {/* Info */}
-                <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-[#1A1A1A] text-[18px] leading-tight truncate">{profile?.full_name || 'Your Studio'}</p>
-                  {profile?.slug && (
-                    <p className="text-[13px] text-gray-500 mt-0.5">@{profile.slug}</p>
-                  )}
-                  {(profile?.instagram_url || profile?.tiktok_url || profile?.specialty || profile?.location) && (
-                    <div className="flex items-center gap-3 mt-1.5 flex-wrap">
-                      {profile?.instagram_url && (
-                        <div className="flex items-center gap-1.5">
-                          <div className="w-4 h-4 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center flex-shrink-0">
-                            <Instagram className="w-2 h-2 text-white" />
-                          </div>
-                          <span className="text-[13px] text-gray-500 truncate max-w-[120px]">{profile.instagram_url.replace('@', '')}</span>
+                    <div className="flex-1 min-w-0 pt-1">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="font-bold text-[#1A1A1A] text-lg sm:text-xl leading-tight truncate">{profile?.full_name || 'Your studio'}</p>
+                          {profile?.slug && <p className="text-sm text-gray-500 mt-0.5 truncate">@{profile.slug}</p>}
                         </div>
+                        <button
+                          onClick={() => setStudioScreen('edit-profile')}
+                          className="flex-shrink-0 flex items-center gap-1.5 text-sm font-semibold text-[#F52B8C] hover:opacity-75 transition"
+                        >
+                          <Pencil className="w-3.5 h-3.5" /> <span className="hidden sm:inline">Edit profile</span>
+                        </button>
+                      </div>
+                      {(profile?.specialty || profile?.location) && (
+                        <p className="text-sm text-gray-500 mt-1.5 truncate">{[profile?.specialty, profile?.location].filter(Boolean).join(' · ')}</p>
                       )}
-                      {profile?.specialty && (
-                        <span className="text-[13px] text-gray-500">{profile.specialty}</span>
-                      )}
-                      {profile?.location && (
-                        <span className="text-[13px] text-gray-500">{profile.location}</span>
-                      )}
+                      <div className="flex items-center gap-2 mt-3">
+                        {profile?.instagram_url && (
+                          <span className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center" title={`Instagram: ${profile.instagram_url}`}>
+                            <Instagram className="w-4 h-4 text-gray-700" />
+                          </span>
+                        )}
+                        {profile?.tiktok_url && (
+                          <span className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-[11px] font-bold text-gray-700" title={`TikTok: ${profile.tiktok_url}`}>
+                            TT
+                          </span>
+                        )}
+                        {!profile?.instagram_url && !profile?.tiktok_url && (
+                          <button onClick={() => setStudioScreen('edit-profile')} className="text-xs font-semibold text-gray-500 hover:text-[#F52B8C] transition">
+                            + Add your Instagram or TikTok
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Search */}
+                  {services.length > 3 && (
+                    <div className="relative">
+                      <Search className="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" />
+                      <input
+                        type="search"
+                        value={offerQuery}
+                        onChange={(e) => setOfferQuery(e.target.value)}
+                        placeholder="Search your offers"
+                        className="w-full pl-11 pr-4 py-3 bg-white border border-gray-200 rounded-2xl text-sm focus:border-[#F52B8C] focus:outline-none transition"
+                      />
                     </div>
                   )}
-                </div>
 
-                {/* Edit profile */}
-                <button
-                  onClick={() => setStudioScreen('edit-profile')}
-                  className="flex-shrink-0 flex items-center gap-1.5 text-[13px] font-semibold text-[#F52B8C] hover:opacity-75 transition self-start"
-                >
-                  <Pencil className="w-3 h-3" /> Edit profile
-                </button>
-              </div>
+                  {/* Offer list */}
+                  {loading ? (
+                    <div className="space-y-2.5">
+                      {[0, 1, 2].map((i) => (
+                        <div key={i} className="h-[82px] bg-gray-50 border border-gray-100 rounded-2xl animate-pulse" />
+                      ))}
+                    </div>
+                  ) : services.length === 0 ? (
+                    <button
+                      onClick={() => setStudioScreen('type-picker')}
+                      className="w-full border-2 border-dashed border-gray-200 hover:border-[#F52B8C] rounded-2xl py-12 px-6 text-center transition group"
+                    >
+                      <span className="w-12 h-12 rounded-2xl bg-[#fde8f3] flex items-center justify-center mx-auto mb-3">
+                        <Sparkles className="w-6 h-6 text-[#F52B8C]" />
+                      </span>
+                      <p className="font-semibold text-[#1A1A1A]">Add your first offer</p>
+                      <p className="text-sm text-gray-500 mt-1">A service with a price and a duration is all clients need to book you.</p>
+                    </button>
+                  ) : (
+                    <div className="space-y-2.5">
+                      {visibleServices.length === 0 && (
+                        <p className="text-sm text-gray-400 text-center py-6">No offer matches "{offerQuery}".</p>
+                      )}
+                      {visibleServices.map((service) => {
+                        const idx = services.indexOf(service);
+                        return (
+                          <OfferRow
+                            key={service.id}
+                            service={service}
+                            isDragOver={dragOverIdx === idx}
+                            dragRowProps={offerQuery ? {} : {
+                              draggable: true,
+                              onDragStart: () => { dragSrcIdx.current = idx; },
+                              onDragOver: (e) => { e.preventDefault(); setDragOverIdx(idx); },
+                              onDrop: (e) => {
+                                e.preventDefault();
+                                if (dragSrcIdx.current !== null) { void handleReorder(dragSrcIdx.current, idx); dragSrcIdx.current = null; }
+                                setDragOverIdx(null);
+                              },
+                              onDragEnd: () => { dragSrcIdx.current = null; setDragOverIdx(null); },
+                            }}
+                            onEdit={() => handleEdit(service)}
+                            onDuplicate={() => void handleDuplicate(service)}
+                            onToggleVisibility={() => void handleToggleVisibility(service)}
+                            onDelete={() => handleDelete(service)}
+                            onToggleFeatured={() => void handleToggleFeatured(service)}
+                            settingFeatured={settingFeatured === service.id}
+                          />
+                        );
+                      })}
+                    </div>
+                  )}
 
-              {/* Offer list */}
-              {loading ? (
-                <div className="space-y-2.5 mb-4">
-                  {[0, 1, 2].map((i) => (
-                    <div key={i} className="h-[80px] bg-white rounded-xl shadow-sm animate-pulse" />
-                  ))}
-                </div>
-              ) : services.length === 0 ? (
-                <div className="bg-white rounded-xl shadow-sm py-12 text-center mb-4">
-                  <p className="text-2xl mb-2">💅</p>
-                  <p className="font-semibold text-[#1A1A1A] mb-1 text-[15px]">No offers yet</p>
-                  <p className="text-[13px] text-gray-400">Add your first offer to start getting booked</p>
-                </div>
-              ) : (
-                <div className="space-y-2.5 mb-4">
-                  {services.map((service, idx) => (
-                    <OfferRow
-                      key={service.id}
-                      service={service}
-                      isDragOver={dragOverIdx === idx}
-                      dragRowProps={{
-                        draggable: true,
-                        onDragStart: () => { dragSrcIdx.current = idx; },
-                        onDragOver: (e) => { e.preventDefault(); setDragOverIdx(idx); },
-                        onDrop: (e) => {
-                          e.preventDefault();
-                          if (dragSrcIdx.current !== null) { void handleReorder(dragSrcIdx.current, idx); dragSrcIdx.current = null; }
-                          setDragOverIdx(null);
-                        },
-                        onDragEnd: () => { dragSrcIdx.current = null; setDragOverIdx(null); },
-                      }}
-                      onEdit={() => handleEdit(service)}
-                      onDuplicate={() => void handleDuplicate(service)}
-                      onToggleVisibility={() => void handleToggleVisibility(service)}
-                      onDelete={() => handleDelete(service)}
-                      onToggleFeatured={() => void handleToggleFeatured(service)}
-                      settingFeatured={settingFeatured === service.id}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {/* Add offer */}
-              <button
-                onClick={() => setStudioScreen('type-picker')}
-                className="w-full h-12 bg-[#F52B8C] text-white rounded-full font-semibold text-[15px] flex items-center justify-center gap-2 hover:opacity-90 transition mb-4"
-              >
-                <Plus className="w-4 h-4" /> Add an offer
-              </button>
-
-              {/* Secondary organize actions */}
-              <div className="flex flex-wrap items-center gap-x-6 gap-y-2 justify-center">
-                <div className="flex items-center gap-1.5">
+                  {/* Add offer */}
                   <button
-                    onClick={() => navigate('/dashboard/collection/new')}
-                    className="text-[13px] font-semibold text-gray-600 hover:text-[#F52B8C] transition flex items-center gap-1"
+                    onClick={() => setStudioScreen('type-picker')}
+                    className="w-full h-14 bg-[#F52B8C] text-white rounded-full font-bold text-base flex items-center justify-center gap-2 hover:opacity-90 transition shadow-[0_8px_24px_-8px_rgba(245,43,140,0.6)]"
                   >
-                    <Plus className="w-3.5 h-3.5" /> Add a service collection
+                    <Plus className="w-5 h-5" /> Add an offer
                   </button>
-                  <InfoTooltip text="Group bookable services under one heading, like Nails or Lashes. Clients browse and book within the collection." />
+
+                  <div className="flex items-center justify-center gap-1.5">
+                    <button
+                      onClick={() => navigate('/dashboard/collection/new')}
+                      className="text-sm font-semibold text-[#F52B8C] hover:opacity-75 transition flex items-center gap-1"
+                    >
+                      <Plus className="w-4 h-4" /> Add a service collection
+                    </button>
+                    <InfoTooltip text="Group bookable services under one heading, like Nails or Lashes. Clients browse and book within the collection." />
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={() => showSuccess('Sections coming soon')}
-                    className="text-[13px] font-semibold text-gray-400 hover:text-gray-600 transition flex items-center gap-1"
-                  >
-                    <Plus className="w-3.5 h-3.5" /> Add a section
-                  </button>
-                  <InfoTooltip text="Add a heading to visually organize your studio page, like a divider between service groups." />
-                </div>
+
+                {/* Live preview */}
+                <aside className="hidden xl:block">
+                  <div className="sticky top-6 flex flex-col items-center gap-4">
+                    <StudioPhonePreview merchant={liveMerchant} width={290} />
+                    <button
+                      onClick={() => setShowPreview(true)}
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#fde8f3] text-[#F52B8C] text-sm font-bold hover:bg-[#fbd9eb] transition"
+                    >
+                      <Eye className="w-4 h-4" /> Full preview
+                    </button>
+                  </div>
+                </aside>
               </div>
             </div>
           )}
