@@ -21,6 +21,8 @@ export interface NelsyTheme {
   fontFamily?: string;
   /** Background the pro picked; layouts that don't use pageBg honour it too. */
   backgroundOverride?: string;
+  /** Accent, or the text color when the accent would be illegible on the page background. */
+  accentOnBg?: string;
   // Accent
   defaultAccent: string;
   accentText: string; // text color drawn on top of accent (almost always #FFFFFF)
@@ -247,11 +249,25 @@ export const THEMES: Record<string, NelsyTheme> = {
 
 export const DEFAULT_THEME = THEMES.soft_pink;
 
-function isDark(hex: string): boolean {
+function luminance(hex: string): number | null {
   const m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(hex);
-  if (!m) return false;
-  const [r, g, b] = [m[1], m[2], m[3]].map((h) => parseInt(h, 16) / 255);
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b < 0.45;
+  if (!m) return null;
+  const [r, g, b] = [m[1], m[2], m[3]].map((h) => {
+    const c = parseInt(h, 16) / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+}
+
+function isDark(hex: string): boolean {
+  const l = luminance(hex);
+  return l !== null && l < 0.18;
+}
+
+function contrastRatio(a: string, b: string): number | null {
+  const la = luminance(a); const lb = luminance(b);
+  if (la === null || lb === null) return null;
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
 }
 
 export function getTheme(
@@ -289,5 +305,7 @@ export function getTheme(
     }
   }
   if (overrides?.fontFamily) theme = { ...theme, fontFamily: overrides.fontFamily };
+  const ratio = contrastRatio(theme.defaultAccent, theme.backgroundOverride ?? theme.pageBg);
+  theme = { ...theme, accentOnBg: ratio !== null && ratio < 2.2 ? theme.textPrimary : theme.defaultAccent };
   return theme;
 }

@@ -35,6 +35,7 @@ function fmt(n: number) {
 
 export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Props) {
   const accent = theme.defaultAccent;
+  const accentText = theme.accentOnBg ?? accent;
   const font = theme.fontFamily ?? (theme.fontClass === 'font-serif' ? 'Playfair Display, Georgia, serif' : 'Inter, sans-serif');
 
   // Portrait photo: logo (headshot), then cover, then first gallery photo
@@ -214,7 +215,7 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Prop
                   )}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
                     <div>
-                      <span style={{ fontSize: 15, fontWeight: 800, color: accent }}>{fmt(service.price)}</span>
+                      <span style={{ fontSize: 15, fontWeight: 800, color: accentText }}>{fmt(service.price)}</span>
                       {service.duration > 0 && <span style={{ fontSize: 12, color: theme.textSecondary, marginLeft: 6 }}>{service.duration} min</span>}
                     </div>
                     <button
@@ -260,7 +261,7 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Prop
                   {service.name}
                 </p>
                 <p style={{ fontSize: 13, margin: '3px 0 0' }}>
-                  <span style={{ color: accent, fontWeight: 700 }}>{fmt(service.price)}</span>
+                  <span style={{ color: accentText, fontWeight: 700 }}>{fmt(service.price)}</span>
                   {service.duration > 0 && <span style={{ color: theme.textSecondary, marginLeft: 8 }}>{service.duration} min</span>}
                 </p>
               </div>
@@ -270,8 +271,8 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Prop
                 style={{
                   flexShrink: 0, padding: '8px 13px', borderRadius: 10,
                   backgroundColor: theme.cardBg,
-                  border: `1.5px solid ${accent}`,
-                  color: accent, fontSize: 12, fontWeight: 700,
+                  border: `1.5px solid ${accentText}`,
+                  color: accentText, fontSize: 12, fontWeight: 700,
                   cursor: isPreview ? 'default' : 'pointer',
                 }}
               >
@@ -292,7 +293,7 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Prop
       {/* Footer */}
       <div style={{ textAlign: 'center', paddingBottom: 28 }}>
         <span style={{ fontSize: 11, color: theme.textSecondary }}>
-          Powered by <strong style={{ color: accent }}>Nelsy</strong>
+          Powered by <strong style={{ color: accentText }}>Nelsy</strong>
         </span>
       </div>
     </div>
