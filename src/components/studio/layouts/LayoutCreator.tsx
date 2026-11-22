@@ -206,6 +206,7 @@ export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onB
     boxShadow: variant.shadow ? '0 6px 24px -10px rgba(0,0,0,0.18)' : undefined,
     overflow: 'hidden',
     color: cardText,
+    textAlign: 'left',
   };
 
   const button = (s: Service, label: string, full = true) => {
@@ -245,9 +246,8 @@ export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onB
     </div>
   );
 
-  const renderCard = (s: Service, idx: number) => {
-    const featured = idx === 0 && !!s.is_featured;
-    const style = featured && variant.card !== 'image-top' ? 'image-top' : variant.card;
+  const renderCard = (s: Service) => {
+    const style = variant.card;
 
     if (style === 'image-top') {
       return (
