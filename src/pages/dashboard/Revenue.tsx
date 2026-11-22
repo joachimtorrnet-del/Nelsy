@@ -71,13 +71,13 @@ function fmtMajor(amount: number, currency: string): string {
 }
 
 function fmtDate(unix: number): string {
-  return new Date(unix * 1000).toLocaleDateString('fr-FR', {
+  return new Date(unix * 1000).toLocaleDateString('en-US', {
     day: '2-digit', month: 'short', year: 'numeric',
   });
 }
 
 function fmtDateStr(iso: string): string {
-  return new Date(iso).toLocaleDateString('fr-FR', {
+  return new Date(iso).toLocaleDateString('en-US', {
     day: '2-digit', month: 'short', year: 'numeric',
   });
 }
@@ -91,12 +91,12 @@ function txIcon(type: string) {
 
 function txLabel(type: string): string {
   const labels: Record<string, string> = {
-    payment: 'Paiement reçu',
-    charge: 'Paiement reçu',
-    payout: 'Versement bancaire',
-    refund: 'Remboursement',
-    payment_refund: 'Remboursement',
-    transfer: 'Transfert',
+    payment: 'Payment received',
+    charge: 'Payment received',
+    payout: 'Bank payout',
+    refund: 'Refund',
+    payment_refund: 'Refund',
+    transfer: 'Transfer',
   };
   return labels[type] ?? type;
 }
@@ -147,11 +147,11 @@ function summarizeTransactions(txs: StripeTransaction[]): Record<string, TxSumma
 
 function payoutStatusBadge(status: string) {
   const map: Record<string, { label: string; cls: string }> = {
-    pending: { label: 'En attente', cls: 'bg-amber-100 text-amber-700' },
-    in_transit: { label: 'En cours', cls: 'bg-blue-100 text-blue-700' },
-    paid: { label: 'Versé', cls: 'bg-emerald-100 text-emerald-700' },
-    failed: { label: 'Échoué', cls: 'bg-red-100 text-red-700' },
-    canceled: { label: 'Annulé', cls: 'bg-gray-100 text-gray-500' },
+    pending: { label: 'Pending', cls: 'bg-amber-100 text-amber-700' },
+    in_transit: { label: 'In transit', cls: 'bg-blue-100 text-blue-700' },
+    paid: { label: 'Paid', cls: 'bg-emerald-100 text-emerald-700' },
+    failed: { label: 'Failed', cls: 'bg-red-100 text-red-700' },
+    canceled: { label: 'Canceled', cls: 'bg-gray-100 text-gray-500' },
   };
   const s = map[status] ?? { label: status, cls: 'bg-gray-100 text-gray-500' };
   return (
@@ -183,30 +183,30 @@ function CashOutModal({ currency, amount, onConfirm, onCancel, loading }: CashOu
             <Banknote className="w-5 h-5 text-emerald-600" />
           </div>
           <div>
-            <h3 className="font-bold text-gray-900">Confirmer le retrait</h3>
-            <p className="text-xs text-gray-500">Versement vers votre compte bancaire</p>
+            <h3 className="font-bold text-gray-900">Confirm withdrawal</h3>
+            <p className="text-xs text-gray-500">Payout to your bank account</p>
           </div>
         </div>
 
         <div className="bg-gray-50 rounded-2xl p-4 mb-5 space-y-2 text-sm">
           <div className="flex justify-between">
-            <span className="text-gray-500">Montant disponible</span>
+            <span className="text-gray-500">Available amount</span>
             <span className="font-bold text-gray-900">{fmt(amount, currency)}</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-500">Frais Nelsy</span>
+            <span className="text-gray-500">Nelsy fee</span>
             <span className="font-semibold text-emerald-600">0%</span>
           </div>
           <div className="border-t border-gray-200 pt-2 flex justify-between">
-            <span className="font-semibold text-gray-700">Vous recevrez</span>
+            <span className="font-semibold text-gray-700">You will receive</span>
             <span className="font-black text-gray-900">{fmt(amount, currency)}</span>
           </div>
         </div>
 
         <p className="text-xs text-gray-400 mb-5 leading-relaxed">
-          Le versement sera initié immédiatement. L'arrivée sur votre compte bancaire prend
-          généralement 1 à 4 jours ouvrés selon votre pays et votre banque.
-          Aucune date garantie.
+          The payout starts immediately. It usually reaches your bank account within
+          1 to 4 business days, depending on your country and bank.
+          Arrival dates are not guaranteed.
         </p>
 
         <div className="flex gap-3">
@@ -215,7 +215,7 @@ function CashOutModal({ currency, amount, onConfirm, onCancel, loading }: CashOu
             disabled={loading}
             className="flex-1 py-3 rounded-xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50"
           >
-            Annuler
+            Cancel
           </button>
           <button
             onClick={onConfirm}
@@ -223,7 +223,7 @@ function CashOutModal({ currency, amount, onConfirm, onCancel, loading }: CashOu
             className="flex-1 py-3 rounded-xl bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white text-sm font-bold disabled:opacity-50 flex items-center justify-center gap-2"
           >
             {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
-            {loading ? 'Envoi...' : 'Confirmer'}
+            {loading ? 'Sending...' : 'Confirm'}
           </button>
         </div>
       </motion.div>
@@ -265,7 +265,7 @@ export default function Revenue() {
       if (error) throw new Error(error.message);
       setBalance(data as StripeBalance);
     } catch (e) {
-      setBalanceError(e instanceof Error ? e.message : 'Erreur inconnue');
+      setBalanceError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
       setBalanceLoading(false);
     }
@@ -285,7 +285,7 @@ export default function Revenue() {
       setTxHasMore(result.has_more);
       setTxLastId(result.last_id);
     } catch (e) {
-      setTxError(e instanceof Error ? e.message : 'Erreur inconnue');
+      setTxError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
       setTxLoading(false);
     }
@@ -307,7 +307,7 @@ export default function Revenue() {
       if (error) throw error;
       setPayouts((data ?? []) as Payout[]);
     } catch (e) {
-      setPayoutsError(e instanceof Error ? e.message : 'Erreur inconnue');
+      setPayoutsError(e instanceof Error ? e.message : 'Unknown error');
     } finally {
       setPayoutsLoading(false);
     }
@@ -342,13 +342,13 @@ export default function Revenue() {
         throw new Error(msg);
       }
       setShowCashOutModal(false);
-      setCashOutResult({ success: true, message: 'Versement initié. Arrivée en banque sous 1 à 4 jours ouvrés.' });
+      setCashOutResult({ success: true, message: 'Payout started. It should reach your bank within 1 to 4 business days.' });
       // Refresh balance and payouts
       await fetchBalance();
       void fetchPayouts();
     } catch (e) {
       setShowCashOutModal(false);
-      setCashOutResult({ success: false, message: e instanceof Error ? e.message : 'Erreur inconnue' });
+      setCashOutResult({ success: false, message: e instanceof Error ? e.message : 'Unknown error' });
     } finally {
       setCashOutLoading(false);
     }
@@ -359,12 +359,12 @@ export default function Revenue() {
   if (!balanceLoading && balance && !balance.connected) {
     return (
       <div className="max-w-2xl">
-        <h1 className="text-2xl font-black text-espresso mb-6">Revenus</h1>
+        <h1 className="text-2xl font-black text-espresso mb-6">Income</h1>
         <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm text-center">
           <AlertCircle className="w-10 h-10 text-amber-400 mx-auto mb-3" />
-          <h2 className="text-lg font-bold text-gray-900 mb-2">Connectez Stripe pour voir vos revenus</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-2">Connect Stripe to see your income</h2>
           <p className="text-gray-500 text-sm mb-5">
-            Activez les paiements depuis Paramètres &gt; Paiements Stripe.
+            Turn on payments from Settings &gt; Stripe Payments.
           </p>
         </div>
       </div>
@@ -374,19 +374,19 @@ export default function Revenue() {
   // ── Tabs ───────────────────────────────────────────────────────────────────
 
   const tabs: { id: TabId; label: string }[] = [
-    { id: 'overview', label: 'Solde' },
-    { id: 'transactions', label: 'Historique' },
-    { id: 'payouts', label: 'Versements' },
+    { id: 'overview', label: 'Balance' },
+    { id: 'transactions', label: 'History' },
+    { id: 'payouts', label: 'Payouts' },
   ];
 
   return (
     <div className="max-w-2xl">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-black text-espresso">Revenus</h1>
+        <h1 className="text-2xl font-black text-espresso">Income</h1>
         <button
           onClick={() => void fetchBalance()}
           className="p-2 rounded-xl hover:bg-gray-100 transition"
-          title="Actualiser"
+          title="Refresh"
         >
           <RefreshCw className={`w-4 h-4 text-gray-400 ${balanceLoading ? 'animate-spin' : ''}`} />
         </button>
@@ -438,7 +438,7 @@ export default function Revenue() {
           {balanceError && (
             <div className="bg-red-50 border border-red-200 rounded-2xl p-4 text-sm text-red-700">
               {balanceError}
-              <button onClick={() => void fetchBalance()} className="ml-2 underline">Réessayer</button>
+              <button onClick={() => void fetchBalance()} className="ml-2 underline">Try again</button>
             </div>
           )}
 
@@ -449,11 +449,11 @@ export default function Revenue() {
                 <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-sm">
                   <div className="flex items-center gap-2 mb-2">
                     <AlertCircle className="w-4 h-4 text-amber-600" />
-                    <span className="font-semibold text-amber-800">Action requise sur votre compte Stripe</span>
+                    <span className="font-semibold text-amber-800">Action required on your Stripe account</span>
                   </div>
                   <ul className="text-amber-700 space-y-1 text-xs ml-6 list-disc">
-                    {!balance.charges_enabled && <li>Encaissements non activés</li>}
-                    {!balance.payouts_enabled && <li>Versements bancaires non activés — vérification d'identité en cours ou requise</li>}
+                    {!balance.charges_enabled && <li>Card payments not enabled</li>}
+                    {!balance.payouts_enabled && <li>Bank payouts not enabled: identity verification is in progress or required</li>}
                   </ul>
                 </div>
               )}
@@ -468,7 +468,7 @@ export default function Revenue() {
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Disponible au retrait</p>
+                      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Available to withdraw</p>
                       <p className="text-3xl font-black text-gray-900">{fmt(entry.amount, entry.currency)}</p>
                     </div>
                     <div className="w-10 h-10 bg-emerald-100 rounded-2xl flex items-center justify-center">
@@ -482,13 +482,13 @@ export default function Revenue() {
                       className="w-full py-3 rounded-2xl bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-bold text-sm hover:opacity-90 transition flex items-center justify-center gap-2"
                     >
                       <ArrowDownToLine className="w-4 h-4" />
-                      Retirer mes fonds
+                      Withdraw my funds
                     </button>
                   ) : (
                     <div className="w-full py-3 rounded-2xl bg-gray-100 text-gray-400 font-semibold text-sm text-center">
                       {!balance.payouts_enabled
-                        ? 'Versements non activés — finalisez la configuration Stripe'
-                        : 'Aucun solde disponible'}
+                        ? 'Payouts not enabled. Finish setting up Stripe'
+                        : 'No balance available'}
                     </div>
                   )}
                 </motion.div>
@@ -502,7 +502,7 @@ export default function Revenue() {
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">En attente de disponibilité</p>
+                      <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-0.5">Pending availability</p>
                       <p className="text-2xl font-black text-gray-500">{fmt(entry.amount, entry.currency)}</p>
                     </div>
                     <div className="w-10 h-10 bg-amber-100 rounded-2xl flex items-center justify-center">
@@ -510,10 +510,10 @@ export default function Revenue() {
                     </div>
                   </div>
                   <p className="text-xs text-gray-400 mt-2">
-                    Fonds reçus en cours de traitement Stripe.
-                    {balance.payout_schedule?.interval === 'daily' && ' Disponibles en règle générale sous 1 à 2 jours ouvrés.'}
-                    {balance.payout_schedule?.interval === 'weekly' && ` Disponibles chaque ${balance.payout_schedule.weekly_anchor}.`}
-                    {!balance.payout_schedule && ' Délai selon le calendrier de versement Stripe.'}
+                    Funds received and being processed by Stripe.
+                    {balance.payout_schedule?.interval === 'daily' && ' Usually available within 1 to 2 business days.'}
+                    {balance.payout_schedule?.interval === 'weekly' && ` Available every ${balance.payout_schedule.weekly_anchor}.`}
+                    {!balance.payout_schedule && ' Timing depends on your Stripe payout schedule.'}
                   </p>
                 </div>
               ))}
@@ -522,7 +522,7 @@ export default function Revenue() {
               {balance.available.length === 0 && balance.pending.filter((e) => e.amount > 0).length === 0 && (
                 <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm text-center">
                   <TrendingUp className="w-8 h-8 text-gray-300 mx-auto mb-3" />
-                  <p className="text-gray-500 text-sm">Aucun solde pour le moment. Les paiements reçus apparaîtront ici.</p>
+                  <p className="text-gray-500 text-sm">No balance yet. Payments you receive will appear here.</p>
                 </div>
               )}
 
@@ -593,13 +593,13 @@ export default function Revenue() {
           {txError && (
             <div className="bg-red-50 border border-red-200 rounded-2xl p-4 text-sm text-red-700">
               {txError}
-              <button onClick={() => void fetchTransactions()} className="ml-2 underline">Réessayer</button>
+              <button onClick={() => void fetchTransactions()} className="ml-2 underline">Try again</button>
             </div>
           )}
 
           {transactions.length === 0 && !txLoading && !txError && (
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm text-center">
-              <p className="text-gray-400 text-sm">Aucune transaction pour le moment.</p>
+              <p className="text-gray-400 text-sm">No transactions yet.</p>
             </div>
           )}
 
@@ -617,7 +617,7 @@ export default function Revenue() {
                   {tx.net >= 0 ? '+' : ''}{fmt(tx.net, tx.currency)}
                 </p>
                 {tx.fee > 0 && (
-                  <p className="text-[10px] text-gray-400">frais {fmt(tx.fee, tx.currency)}</p>
+                  <p className="text-[10px] text-gray-400">fee {fmt(tx.fee, tx.currency)}</p>
                 )}
               </div>
             </div>
@@ -630,12 +630,12 @@ export default function Revenue() {
               className="w-full py-3 rounded-2xl border border-gray-200 text-sm font-semibold text-gray-600 hover:bg-gray-50 disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {txLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : <ChevronDown className="w-4 h-4" />}
-              Voir plus
+              Load more
             </button>
           )}
 
           <p className="text-xs text-gray-400 text-center">
-            Données directement depuis Stripe — frais et montants nets réels.
+            Data comes directly from Stripe: actual fees and net amounts.
           </p>
         </div>
       )}
@@ -658,7 +658,7 @@ export default function Revenue() {
           {payouts.length === 0 && !payoutsLoading && !payoutsError && (
             <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm text-center">
               <Banknote className="w-8 h-8 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-400 text-sm">Aucun versement encore initié.</p>
+              <p className="text-gray-400 text-sm">No payouts yet.</p>
             </div>
           )}
 
@@ -673,10 +673,10 @@ export default function Revenue() {
               </div>
 
               {p.status === 'paid' && p.paid_at && (
-                <p className="text-xs text-emerald-600">Versé le {fmtDateStr(p.paid_at)}</p>
+                <p className="text-xs text-emerald-600">Paid on {fmtDateStr(p.paid_at)}</p>
               )}
               {(p.status === 'pending' || p.status === 'in_transit') && p.estimated_arrival && (
-                <p className="text-xs text-gray-400">Arrivée estimée vers le {fmtDateStr(p.estimated_arrival)} (non garantie)</p>
+                <p className="text-xs text-gray-400">Estimated arrival around {fmtDateStr(p.estimated_arrival)} (not guaranteed)</p>
               )}
               {p.status === 'failed' && p.failure_message && (
                 <p className="text-xs text-red-600 mt-1">{p.failure_message}</p>
@@ -687,7 +687,7 @@ export default function Revenue() {
           ))}
 
           <p className="text-xs text-gray-400 text-center px-2">
-            Un versement peut regrouper plusieurs paiements. La date d'arrivée est une estimation Stripe.
+            A payout may group several payments. The arrival date is a Stripe estimate.
           </p>
         </div>
       )}
@@ -713,16 +713,16 @@ export default function Revenue() {
               if (!supabase) return;
               try {
                 const { data, error } = await supabase.functions.invoke('create-stripe-dashboard-link');
-                if (error || !data?.url) throw new Error('Impossible d\'ouvrir le tableau de bord Stripe');
+                if (error || !data?.url) throw new Error('Could not open the Stripe dashboard');
                 window.open(data.url as string, '_blank', 'noopener');
               } catch (e) {
-                alert(e instanceof Error ? e.message : 'Erreur');
+                alert(e instanceof Error ? e.message : 'Something went wrong');
               }
             }}
             className="inline-flex items-center gap-2 text-xs text-gray-400 hover:text-gray-600 transition"
           >
             <ExternalLink className="w-3.5 h-3.5" />
-            Voir le détail complet sur Stripe
+            See full details on Stripe
           </button>
         </div>
       )}

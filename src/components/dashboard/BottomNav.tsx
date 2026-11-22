@@ -18,8 +18,8 @@ const BASE_TABS: Tab[] = [
   { id: 'home',     label: 'Home',     Icon: Home },
   { id: 'calendar', label: 'Bookings', Icon: CalendarDays },
   { id: 'preview',  label: 'Studio',   Icon: Sparkles },
-  { id: 'revenue',  label: 'Revenus',  Icon: TrendingUp },
-  { id: 'settings', label: 'Plus',     Icon: Settings },
+  { id: 'revenue',  label: 'Income',   Icon: TrendingUp },
+  { id: 'settings', label: 'Settings', Icon: Settings },
 ];
 
 export default function BottomNav({ activeTab, setActiveTab, pendingCount }: BottomNavProps) {

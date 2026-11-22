@@ -99,7 +99,7 @@ export default function StripeSettings() {
       if (statusResult.error) throw new Error(statusResult.error.message);
       setAccountStatus(statusResult.data as StripeAccountStatus);
     } catch (e) {
-      setStatusError(e instanceof Error ? e.message : 'Erreur');
+      setStatusError(e instanceof Error ? e.message : 'Something went wrong');
     } finally {
       setLoading(false);
     }
@@ -110,8 +110,8 @@ export default function StripeSettings() {
   const handleConnectStripe = async (linkType: 'account_onboarding' | 'account_update' = 'account_onboarding') => {
     if (!isSupabaseConfigured || !supabase) return;
     if (linkType === 'account_onboarding') {
-      if (!selectedCountry) { setConnectError('Veuillez sélectionner le pays de votre établissement.'); return; }
-      if (!selectedTimezone.trim()) { setConnectError('Veuillez confirmer le fuseau horaire.'); return; }
+      if (!selectedCountry) { setConnectError('Please select the country of your business.'); return; }
+      if (!selectedTimezone.trim()) { setConnectError('Please confirm your timezone.'); return; }
     }
     setConnectLoading(true);
     setConnectError(null);
@@ -131,7 +131,7 @@ export default function StripeSettings() {
       const { url } = data as { url: string };
       window.location.href = url;
     } catch (e) {
-      setConnectError(e instanceof Error ? e.message : 'Erreur');
+      setConnectError(e instanceof Error ? e.message : 'Something went wrong');
     } finally {
       setConnectLoading(false);
     }
@@ -142,12 +142,12 @@ export default function StripeSettings() {
     setCurrencySaving(true);
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Non authentifié');
+      if (!user) throw new Error('Not signed in');
       await supabase.from('profiles').update({ business_currency: newCurrency }).eq('id', user.id);
       setProfile((prev) => prev ? { ...prev, business_currency: newCurrency } : prev);
       setCurrencyEditMode(false);
     } catch (e) {
-      setConnectError(e instanceof Error ? e.message : 'Erreur');
+      setConnectError(e instanceof Error ? e.message : 'Something went wrong');
     } finally {
       setCurrencySaving(false);
     }

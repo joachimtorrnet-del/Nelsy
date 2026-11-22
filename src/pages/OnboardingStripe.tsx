@@ -49,11 +49,11 @@ export default function OnboardingStripe() {
 
   const handleStart = async () => {
     if (!hasExistingAccount && !country) {
-      setError('Veuillez sélectionner le pays de votre établissement.');
+      setError('Please select the country of your business.');
       return;
     }
     if (!hasExistingAccount && !timezone.trim()) {
-      setError('Veuillez confirmer le fuseau horaire de votre établissement.');
+      setError('Please confirm the timezone of your business.');
       return;
     }
 
@@ -63,7 +63,7 @@ export default function OnboardingStripe() {
     try {
       await supabase!.auth.refreshSession();
       const { data: { user }, error: authError } = await supabase!.auth.getUser();
-      if (authError || !user) throw new Error('Non authentifié');
+      if (authError || !user) throw new Error('Not signed in');
 
       const body: Record<string, string> = {
         return_url: `${window.location.origin}/stripe/return`,
@@ -94,11 +94,11 @@ export default function OnboardingStripe() {
 
       const payload = data as { url?: string; error?: string };
       if (payload?.error) throw new Error(payload.error);
-      if (!payload?.url) throw new Error('Pas de lien retourné par Stripe');
+      if (!payload?.url) throw new Error('Stripe did not return a link');
 
       window.location.href = payload.url;
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur inconnue');
+      setError(err instanceof Error ? err.message : 'Unknown error');
       setLoading(false);
     }
   };
@@ -120,59 +120,59 @@ export default function OnboardingStripe() {
           </svg>
         </div>
 
-        <h1 className="text-2xl font-black text-gray-900 mb-2">Configurer les paiements</h1>
+        <h1 className="text-2xl font-black text-gray-900 mb-2">Set up payments</h1>
         <p className="text-gray-500 text-sm mb-8">
-          Connectez votre compte Stripe pour recevoir les acomptes de vos clients directement sur votre compte bancaire.
+          Connect your Stripe account to receive your clients' deposits directly in your bank account.
         </p>
 
         {!hasExistingAccount && (
           <>
             <div className="mb-4 text-left">
               <label className="block text-sm font-semibold text-gray-700 mb-1">
-                Pays de votre établissement
+                Country of your business
               </label>
               <select
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-purple-400"
               >
-                <option value="">Sélectionnez un pays</option>
-                <optgroup label="Disponible">
+                <option value="">Select a country</option>
+                <optgroup label="Available">
                   {STRIPE_COUNTRIES_VERIFIED.map((c) => (
                     <option key={c.code} value={c.code}>{c.label}</option>
                   ))}
                 </optgroup>
-                <optgroup label="Bêta (vérification en cours)">
+                <optgroup label="Beta (verification in progress)">
                   {STRIPE_COUNTRIES_PREVIEW.map((c) => (
-                    <option key={c.code} value={c.code}>{c.label} (bêta)</option>
+                    <option key={c.code} value={c.code}>{c.label} (beta)</option>
                   ))}
                 </optgroup>
               </select>
               <p className="text-xs text-gray-400 mt-1">
-                Ne peut pas être modifié après la création du compte Stripe.
+                Cannot be changed after your Stripe account is created.
               </p>
             </div>
 
             {country && STRIPE_COUNTRIES[country]?.preview && (
               <div className="mb-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-sm text-amber-800 text-left">
-                <strong>Pays en bêta</strong> — la compatibilité des virements Stripe pour ce pays est en cours de vérification. Des restrictions locales peuvent s'appliquer. Nous vous contacterons avant l'activation complète.
+                <strong>Beta country:</strong> Stripe payout support for this country is being verified. Local restrictions may apply. We'll contact you before full activation.
               </div>
             )}
 
             {country && (
               <div className="mb-5 text-left">
                 <label className="block text-sm font-semibold text-gray-700 mb-1">
-                  Fuseau horaire de votre établissement
+                  Timezone of your business
                 </label>
                 <input
                   type="text"
                   value={timezone}
                   onChange={(e) => setTimezone(e.target.value)}
-                  placeholder="ex : Europe/Paris"
+                  placeholder="e.g. Europe/Paris"
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-purple-400 font-mono"
                 />
                 <p className="text-xs text-gray-400 mt-1">
-                  Fuseau par défaut pour {STRIPE_COUNTRIES[country]?.label}. Modifiez si votre salon est dans une autre zone.
+                  Default for {STRIPE_COUNTRIES[country]?.label}. Change it if your studio is in a different timezone.
                 </p>
               </div>
             )}
@@ -181,7 +181,7 @@ export default function OnboardingStripe() {
 
         {hasExistingAccount && (
           <div className="mb-5 bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3 text-sm text-emerald-700 text-left">
-            Un compte Stripe existe déjà pour ce profil. Vous pouvez reprendre la configuration.
+            A Stripe account already exists for this profile. You can continue the setup.
           </div>
         )}
 
@@ -196,11 +196,11 @@ export default function OnboardingStripe() {
           disabled={loading || (!hasExistingAccount && (!country || !timezone.trim()))}
           className="w-full py-3 rounded-xl bg-gradient-to-r from-[#667eea] to-[#764ba2] text-white font-bold text-sm disabled:opacity-60 disabled:cursor-not-allowed hover:opacity-90 transition-opacity"
         >
-          {loading ? 'Redirection...' : 'Configurer mon compte Stripe'}
+          {loading ? 'Redirecting...' : 'Set up my Stripe account'}
         </button>
 
         <p className="text-xs text-gray-400 mt-4">
-          Vous serez redirigé vers Stripe pour finaliser la configuration.
+          You'll be redirected to Stripe to finish the setup.
         </p>
       </div>
     </div>

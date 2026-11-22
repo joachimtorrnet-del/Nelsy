@@ -15,12 +15,10 @@ const PAGE_TITLES: Record<string, string> = {
   home:      'Home',
   preview:   'My Studio',
   calendar:  'Bookings',
-  orders:    'Orders',
   revenue:   'Income',
   analytics: 'Analytics',
   customers: 'Customers',
-  marketing: 'Marketing',
-  referrals: 'Referrals',
+  help:      'Help & Tutorials',
   settings:  'Settings',
   stripe:    'Payments',
 };
