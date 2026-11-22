@@ -509,6 +509,7 @@ export default function OfferEditor() {
     try {
       const url = await uploadImage(file, 'services');
       setHeroUrl(url);
+      setThumbnailUrl(url); // hero and thumbnail share image_url until hero_url column is added
     } catch {
       setHeroUrl(prev);
       setErrors((p) => ({ ...p, hero: 'Upload failed. Please try again.' }));

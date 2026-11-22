@@ -56,13 +56,17 @@ export default function EditProfileModal({ isOpen, onClose, onSuccess, profile }
     setLoading(true);
 
     try {
+      const igVal = sanitizeInput(formData.instagram);
+      const ttVal = sanitizeInput(formData.tiktok);
       await updateProfile(profile.id as string, {
         full_name: sanitizeInput(formData.full_name),
         salon_name: sanitizeInput(formData.salon_name),
         bio: sanitizeInput(formData.bio),
         phone: formData.phone,
-        instagram: sanitizeInput(formData.instagram),
-        tiktok: sanitizeInput(formData.tiktok),
+        instagram: igVal,
+        tiktok: ttVal,
+        instagram_url: igVal,
+        tiktok_url: ttVal,
       });
 
       onSuccess();

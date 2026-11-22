@@ -244,7 +244,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
           <div>
             <p className="text-gray-500 text-sm mb-0.5">Total revenue</p>
             <p className="text-gray-900 text-4xl font-bold leading-none tracking-tight">
-              €{(stats?.totalRevenue ?? 0).toFixed(2)}
+              {fmt(stats?.totalRevenue ?? 0, currency)}
             </p>
             {growth !== 0 && (
               <div className={`flex items-center gap-1 mt-1.5 ${growth > 0 ? 'text-green-600' : 'text-red-500'}`}>
@@ -281,15 +281,15 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
             <div className="grid grid-cols-3 gap-2 mb-5">
               <div>
                 <p className="text-white/50 text-[10px] font-medium uppercase tracking-wider mb-1">Available</p>
-                <p className="text-white text-xl font-bold tracking-tight">€{availableBalance.toFixed(2)}</p>
+                <p className="text-white text-xl font-bold tracking-tight">{fmt(availableBalance, currency)}</p>
               </div>
               <div className="border-l border-white/10 pl-3">
                 <p className="text-white/50 text-[10px] font-medium uppercase tracking-wider mb-1">Pending</p>
-                <p className="text-white text-xl font-bold tracking-tight">€{(balance?.pending ?? 0).toFixed(2)}</p>
+                <p className="text-white text-xl font-bold tracking-tight">{fmt(balance?.pending ?? 0, currency)}</p>
               </div>
               <div className="border-l border-white/10 pl-3">
                 <p className="text-white/50 text-[10px] font-medium uppercase tracking-wider mb-1">This Month</p>
-                <p className="text-white text-xl font-bold tracking-tight">€{(balance?.thisMonth ?? 0).toFixed(2)}</p>
+                <p className="text-white text-xl font-bold tracking-tight">{fmt(balance?.thisMonth ?? 0, currency)}</p>
               </div>
             </div>
             <button
@@ -331,7 +331,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
             <div className="grid grid-cols-2 divide-x divide-gray-200">
               <div className="p-4">
                 <p className="text-gray-400 text-xs mb-1.5">Bookings</p>
-                <p className="text-gray-900 text-2xl font-bold">{stats?.todayBookings ?? 0}</p>
+                <p className="text-gray-900 text-2xl font-bold">{periodKpis.bookingCount}</p>
                 {growth !== 0 && (
                   <div className={`flex items-center gap-1 mt-1.5 ${growth > 0 ? 'text-green-600' : 'text-red-500'}`}>
                     <div className={`w-4 h-4 rounded-full flex items-center justify-center ${growth > 0 ? 'bg-green-100' : 'bg-red-50'}`}>
@@ -425,7 +425,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
                           <p className="font-semibold text-sm text-gray-900 truncate">{clientName}</p>
-                          <p className="font-bold text-sm text-[#F52B8C] flex-shrink-0">€{price.toFixed(2)}</p>
+                          <p className="font-bold text-sm text-[#F52B8C] flex-shrink-0">{fmt(price, currency)}</p>
                         </div>
                         <div className="flex items-center justify-between gap-2 mt-1">
                           <p className="text-xs text-gray-400 truncate">{serviceName} · {bookingTime}</p>

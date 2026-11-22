@@ -17,6 +17,7 @@ import {
   getServices, deleteService, toggleServiceActive, updateProfile, uploadImage,
   setFeaturedService, clearFeaturedService, reorderServices, createService,
 } from '../../lib/supabase-queries';
+import { supabase } from '../../lib/supabase';
 import { PublicStudioView } from '../../components/studio/PublicStudioView';
 import type { Merchant, Service } from '../../types';
 
@@ -386,12 +387,15 @@ function OfferTypePicker({ onSelect, onCancel }: {
 function EditProfilePanel({ profile, onBack }: { profile: Profile | null; onBack: () => void }) {
   const [form, setForm] = useState({
     full_name: profile?.full_name ?? '',
+    slug: profile?.slug ?? '',
     specialty: profile?.specialty ?? '',
     location: profile?.location ?? '',
     bio: profile?.bio ?? '',
     instagram_url: profile?.instagram_url ?? '',
     tiktok_url: profile?.tiktok_url ?? '',
   });
+  const [slugStatus, setSlugStatus] = useState<'idle' | 'checking' | 'available' | 'taken' | 'invalid'>('idle');
+  const slugTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [avatarUrl, setAvatarUrl] = useState(profile?.logo_url ?? '');
   const [coverUrl, setCoverUrl] = useState(profile?.cover_url ?? '');
   const [saving, setSaving] = useState(false);
@@ -400,6 +404,28 @@ function EditProfilePanel({ profile, onBack }: { profile: Profile | null; onBack
   const avatarRef = useRef<HTMLInputElement>(null);
   const coverRef = useRef<HTMLInputElement>(null);
   const { showSuccess, showError } = useToast();
+
+  const checkSlug = useCallback(async (value: string) => {
+    if (!value || value === profile?.slug) { setSlugStatus('idle'); return; }
+    if (!/^[a-z0-9-]{3,30}$/.test(value)) { setSlugStatus('invalid'); return; }
+    setSlugStatus('checking');
+    try {
+      const { count } = await supabase!
+        .from('profiles')
+        .select('id', { count: 'exact', head: true })
+        .eq('slug', value)
+        .neq('id', profile?.id ?? '');
+      setSlugStatus((count ?? 0) > 0 ? 'taken' : 'available');
+    } catch { setSlugStatus('idle'); }
+  }, [profile?.id, profile?.slug]);
+
+  const handleSlugChange = (value: string) => {
+    const clean = value.toLowerCase().replace(/[^a-z0-9-]/g, '');
+    setForm((f) => ({ ...f, slug: clean }));
+    setSlugStatus('idle');
+    if (slugTimer.current) clearTimeout(slugTimer.current);
+    slugTimer.current = setTimeout(() => void checkSlug(clean), 500);
+  };
 
   const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -429,13 +455,20 @@ function EditProfilePanel({ profile, onBack }: { profile: Profile | null; onBack
 
   const save = async () => {
     if (!profile?.id) return;
+    if (slugStatus === 'taken') { showError('This URL is already taken'); return; }
+    if (slugStatus === 'invalid') { showError('URL must be 3-30 characters, lowercase letters, numbers and hyphens only'); return; }
     setSaving(true);
     try {
-      await updateProfile(profile.id, {
+      const updates: Record<string, unknown> = {
         full_name: form.full_name, bio: form.bio,
         instagram_url: form.instagram_url, tiktok_url: form.tiktok_url,
+        instagram: form.instagram_url, tiktok: form.tiktok_url,
         specialty: form.specialty || null, location: form.location || null,
-      });
+      };
+      if (form.slug && form.slug !== profile?.slug && slugStatus === 'available') {
+        updates.slug = form.slug;
+      }
+      await updateProfile(profile.id, updates);
       showSuccess('Profile saved');
       onBack();
     } catch { showError('Failed to save'); }
@@ -498,6 +531,25 @@ function EditProfilePanel({ profile, onBack }: { profile: Profile | null; onBack
             <input type="text" value={form.full_name}
               onChange={(e) => setForm((f) => ({ ...f, full_name: e.target.value }))}
               className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl text-sm focus:border-[#F52B8C] focus:outline-none transition" placeholder="Your Studio Name" />
+          </div>
+          <div>
+            <label className="block text-xs font-semibold text-gray-500 mb-1.5">Studio URL</label>
+            <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden focus-within:border-[#F52B8C] transition bg-white">
+              <span className="px-3 py-3 text-sm text-gray-400 bg-gray-50 border-r border-gray-200 whitespace-nowrap flex-shrink-0">getnelsy.com/</span>
+              <input
+                type="text"
+                value={form.slug}
+                onChange={(e) => handleSlugChange(e.target.value)}
+                maxLength={30}
+                className="flex-1 px-3 py-3 text-sm focus:outline-none bg-transparent"
+                placeholder="your-studio"
+              />
+              {slugStatus === 'checking' && <span className="pr-3 text-xs text-gray-400">checking…</span>}
+              {slugStatus === 'available' && <span className="pr-3 text-xs text-green-600 font-semibold">✓ available</span>}
+              {slugStatus === 'taken' && <span className="pr-3 text-xs text-red-500 font-semibold">✗ taken</span>}
+              {slugStatus === 'invalid' && <span className="pr-3 text-xs text-red-500 font-semibold">✗ invalid</span>}
+            </div>
+            <p className="text-[11px] text-gray-400 mt-1">Lowercase letters, numbers and hyphens only. Min 3 characters.</p>
           </div>
           <div className="flex gap-3">
             <div className="flex-1">
@@ -1184,6 +1236,17 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                   return (
                     <button
                       key={font.value}
+                      onClick={() => {
+                        if (isActive) return;
+                        // Switch to a theme that uses this font family
+                        const target = font.value === 'serif' ? 'editorial' : 'soft_pink';
+                        const tpl = TEMPLATES.find((t) => t.themeId === target);
+                        setDesignForm((f) => ({
+                          ...f,
+                          theme_preset: target,
+                          color_accent: tpl?.accentColor ?? f.color_accent,
+                        }));
+                      }}
                       className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl border text-left transition-all ${
                         isActive ? 'border-[#F52B8C] bg-[#fff8fa]' : 'border-gray-200 hover:border-gray-300'
                       }`}
