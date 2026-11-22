@@ -3,6 +3,28 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CheckCircle, Calendar, Clock, Mail } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
+function downloadIcs(booking: { id: string; booking_datetime: string; duration?: number | null; service_name?: string }) {
+  const start = new Date(booking.booking_datetime);
+  const end = new Date(start.getTime() + (booking.duration ?? 60) * 60_000);
+  const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const ics = [
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Nelsy//Booking//EN',
+    'BEGIN:VEVENT',
+    `UID:${booking.id}@getnelsy.com`,
+    `DTSTAMP:${stamp(new Date())}`,
+    `DTSTART:${stamp(start)}`,
+    `DTEND:${stamp(end)}`,
+    `SUMMARY:${(booking.service_name ?? 'Appointment').replace(/[,;\n]/g, ' ')}`,
+    'END:VEVENT', 'END:VCALENDAR',
+  ].join('\r\n');
+  const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'appointment.ics';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function BookingConfirmed() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -11,7 +33,10 @@ export default function BookingConfirmed() {
 
   const sessionId = searchParams.get('session_id');
   const bookingId = searchParams.get('booking_id');
+  const paymentIntentId = searchParams.get('payment_intent');
+  const redirectStatus = searchParams.get('redirect_status');
   const stripeAccountId = searchParams.get('account');
+  const paymentFailed = redirectStatus === 'failed';
 
   useEffect(() => {
     loadBookingDetails();
@@ -20,40 +45,21 @@ export default function BookingConfirmed() {
 
   const loadBookingDetails = async () => {
     if (!supabase) { navigate('/'); return; }
+    if (paymentFailed) { setLoading(false); return; }
 
     try {
-      // PaymentIntent flow: booking_id passed directly in return_url
-      if (bookingId) {
-        const { data, error } = await supabase
-          .from('bookings')
-          .select(`
-            id, booking_datetime, client_name, client_email, price_total, status,
-            profiles!profile_id(timezone, business_currency),
-            services!service_id(name, duration)
-          `)
-          .eq('id', bookingId)
-          .single();
-        if (error) throw error;
-        const p = data.profiles as any;
-        const s = data.services as any;
-        setBooking({
-          ...data,
-          service_name: s?.name,
-          duration: s?.duration,
-          salon_timezone: p?.timezone,
-          salon_currency: p?.business_currency ?? 'eur',
-        });
+      // Visitors can't read bookings directly (RLS), so the lookup runs server-side.
+      // PaymentIntent flow: Stripe appends payment_intent to our return_url after 3D Secure.
+      let body: Record<string, string>;
+      if (bookingId && paymentIntentId) {
+        body = { booking_id: bookingId, payment_intent: paymentIntentId };
+      } else if (sessionId) {
+        body = { session_id: sessionId, ...(stripeAccountId ? { stripe_account_id: stripeAccountId } : {}) };
+      } else {
+        navigate('/');
         return;
       }
-
-      // Legacy Checkout Session flow
-      if (!sessionId) { navigate('/'); return; }
-      const { data, error } = await supabase.functions.invoke('get-booking-from-session', {
-        body: {
-          session_id: sessionId,
-          ...(stripeAccountId ? { stripe_account_id: stripeAccountId } : {}),
-        },
-      });
+      const { data, error } = await supabase.functions.invoke('get-booking-from-session', { body });
       if (error) throw error;
       setBooking(data.booking);
     } catch (error) {
@@ -67,6 +73,22 @@ export default function BookingConfirmed() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#F52B8C] border-t-transparent" />
+      </div>
+    );
+  }
+
+  if (paymentFailed) {
+    return (
+      <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
+        <div className="max-w-md w-full text-center bg-white rounded-2xl p-8 shadow-lg">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Payment not completed</h1>
+          <p className="text-gray-600 mb-6">
+            Your bank didn't approve the payment, so no booking was made and you were not charged. You can go back and try again.
+          </p>
+          <button onClick={() => window.history.go(-2)} className="w-full py-3 bg-[#F52B8C] text-white rounded-xl font-semibold hover:opacity-90 transition">
+            Try again
+          </button>
+        </div>
       </div>
     );
   }
@@ -139,13 +161,15 @@ export default function BookingConfirmed() {
           <div className="border-t border-gray-200" />
 
           <div className="flex items-center justify-between">
-            <span className="text-gray-600">Amount Paid</span>
+            <span className="text-gray-600">
+              {Number(booking.amount_paid ?? booking.price_total) < Number(booking.price_total) ? 'Deposit paid' : 'Amount paid'}
+            </span>
             <span className="text-2xl font-bold text-[#F52B8C]">
               {new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: (booking.salon_currency ?? 'eur').toUpperCase(),
                 minimumFractionDigits: ['jpy', 'krw'].includes(booking.salon_currency ?? '') ? 0 : 2,
-              }).format(Number(booking.price_total))}
+              }).format(Number(booking.amount_paid ?? booking.price_total))}
             </span>
           </div>
 
@@ -184,7 +208,7 @@ export default function BookingConfirmed() {
             Back to Home
           </button>
           <button
-            onClick={() => alert('Add to calendar feature coming soon!')}
+            onClick={() => downloadIcs(booking)}
             className="flex-1 py-3 bg-[#F52B8C] text-white rounded-xl font-semibold hover:opacity-90 transition"
           >
             📅 Add to Calendar

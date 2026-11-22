@@ -91,8 +91,9 @@ export default function AddBookingModal({
           profile_id: profileId,
           client_name: formData.clientName,
           client_email: formData.clientEmail,
-          client_phone: formData.clientPhone || null,
+          client_phone: formData.clientPhone,
           service_id: formData.serviceId,
+          duration_minutes: serviceDuration,
           booking_datetime: new Date(`${formData.date}T${formData.time}`).toISOString(),
           price_total: servicePrice,
           deposit_paid: 0,
@@ -101,6 +102,10 @@ export default function AddBookingModal({
           paid_at: new Date().toISOString(),
         });
 
+      if (error?.code === '23P01') {
+        setErrors({ submit: 'This time overlaps another appointment. Pick a different time.' });
+        return;
+      }
       if (error) throw error;
       onSuccess();
       onClose();

@@ -25,45 +25,49 @@ serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders })
 
   try {
-    const { session_id, stripe_account_id } = await req.json() as {
-      session_id: string
+    const { session_id, stripe_account_id, booking_id, payment_intent } = await req.json() as {
+      session_id?: string
       stripe_account_id?: string
+      booking_id?: string
+      payment_intent?: string
     }
 
-    if (!session_id) {
-      return new Response(JSON.stringify({ error: 'Missing session_id' }), {
+    const notFound = () => new Response(JSON.stringify({ error: 'Booking not found' }), {
+      status: 404,
+      headers: { 'Content-Type': 'application/json', ...corsHeaders },
+    })
+
+    let bookingId: string | undefined
+    let meta: Record<string, string> = {}
+
+    if (session_id) {
+      // Legacy Checkout Session flow. For direct charges the session lives on the
+      // connected account, passed from the success_url query param set by create-checkout.
+      const stripeOpts = stripe_account_id ? { stripeAccount: stripe_account_id } : {}
+      const session = await stripe.checkout.sessions.retrieve(session_id, {}, stripeOpts)
+      meta = (session.metadata ?? {}) as Record<string, string>
+      bookingId = meta.booking_id
+    } else if (booking_id && payment_intent) {
+      // PaymentIntent flow (return_url after 3D Secure): the PaymentIntent id Stripe appends
+      // to the URL proves the caller is the payer, so a guessed booking id alone reveals nothing.
+      bookingId = booking_id
+    } else {
+      return new Response(JSON.stringify({ error: 'Missing session_id or booking_id + payment_intent' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
     }
 
-    // For direct charges, the checkout session is on the connected account.
-    // stripe_account_id is passed from the success_url query param set by create-checkout.
-    const stripeOpts = stripe_account_id ? { stripeAccount: stripe_account_id } : {}
-    const session = await stripe.checkout.sessions.retrieve(session_id, {}, stripeOpts)
-    const meta = session.metadata ?? {}
-    const bookingId = meta.booking_id
+    if (!bookingId) return notFound()
 
-    if (!bookingId) {
-      return new Response(JSON.stringify({ error: 'No booking associated with this session' }), {
-        status: 404,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
-      })
-    }
-
-    // Fetch booking + service in one query
     const { data: booking, error: bookingError } = await supabase
       .from('bookings')
-      .select('id, profile_id, booking_datetime, client_name, client_email, client_phone, price_total, status, service_id, services(name, duration_minutes)')
+      .select('id, profile_id, booking_datetime, client_name, client_email, client_phone, price_total, deposit_paid, status, service_id, stripe_payment_intent_id, services(name, duration_minutes)')
       .eq('id', bookingId)
       .single()
 
-    if (bookingError || !booking) {
-      return new Response(JSON.stringify({ error: 'Booking not found' }), {
-        status: 404,
-        headers: { 'Content-Type': 'application/json', ...corsHeaders },
-      })
-    }
+    if (bookingError || !booking) return notFound()
+    if (!session_id && booking.stripe_payment_intent_id !== payment_intent) return notFound()
 
     const service = (booking.services as { name: string; duration_minutes: number } | null)
 
@@ -83,6 +87,8 @@ serve(async (req) => {
           client_email: booking.client_email,
           client_phone: booking.client_phone,
           price_total: booking.price_total,
+          // Mirrors create-payment-intent: the deposit is charged if set, otherwise the full price
+          amount_paid: Number(booking.deposit_paid) > 0 ? booking.deposit_paid : booking.price_total,
           status: booking.status,
           service_name: meta.service_name ?? service?.name ?? 'Service',
           duration: service?.duration_minutes ?? null,

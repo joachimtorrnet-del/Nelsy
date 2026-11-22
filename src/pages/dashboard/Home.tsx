@@ -82,7 +82,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
   const [stripeReady, setStripeReady] = useState(false);
   const [checklistCollapsed, setChecklistCollapsed] = useState(false);
 
-  const { toast, showSuccess, showError, hideToast } = useToast();
+  const { toast, showSuccess, hideToast } = useToast();
   const chartData = buildChartData(allBookings, RANGE_DAYS[chartRange]);
   const currency = (profile?.business_currency ?? 'EUR').toUpperCase();
 
@@ -278,6 +278,19 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
         {/* Balance Hero Card */}
         <div className="px-4 mb-5">
           <div className="rounded-2xl p-5" style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}>
+            {!stripeReady ? (
+              <>
+                <p className="text-white font-semibold text-sm mb-1">Payments not set up</p>
+                <p className="text-white/50 text-xs leading-relaxed mb-4">
+                  Connect Stripe to accept payments and receive payouts.
+                </p>
+                <button onClick={() => onNavigate?.('stripe')}
+                  className="w-full py-3 bg-white text-[#1A1A1A] rounded-xl font-bold text-sm hover:opacity-90 transition active:scale-[0.98]">
+                  Set up payments →
+                </button>
+              </>
+            ) : (
+            <>
             <div className="grid grid-cols-3 gap-2 mb-5">
               <div>
                 <p className="text-white/50 text-[10px] font-medium uppercase tracking-wider mb-1">Available</p>
@@ -293,25 +306,13 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
               </div>
             </div>
             <button
-              disabled={availableBalance < 20}
-              onClick={async () => {
-                if (!supabase || availableBalance < 20) return;
-                try {
-                  const { data, error } = await supabase.functions.invoke('create-stripe-dashboard-link');
-                  if (error || !data?.url) throw new Error(error?.message ?? 'No URL');
-                  window.open(data.url as string, '_blank');
-                } catch {
-                  showError('Connect your Stripe account in Settings to enable payouts.');
-                }
-              }}
-              className={`w-full py-3 rounded-xl font-bold text-sm transition-all active:scale-[0.98] ${
-                availableBalance >= 20
-                  ? 'bg-[#F52B8C] text-white hover:opacity-90 shadow-lg shadow-[#F52B8C]/30'
-                  : 'bg-white/10 text-white/40 cursor-not-allowed'
-              }`}
+              onClick={() => onNavigate?.('revenue')}
+              className="w-full py-3 rounded-xl font-bold text-sm transition-all active:scale-[0.98] bg-[#F52B8C] text-white hover:opacity-90 shadow-lg shadow-[#F52B8C]/30"
             >
-              {availableBalance >= 20 ? '+ Cash Out' : 'Cash Out (€20 min)'}
+              View income →
             </button>
+            </>
+            )}
           </div>
         </div>
 

@@ -908,14 +908,14 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     <div className="bg-[#f6f4f4] min-h-full">
 
       {/* Tab bar */}
-      <div className="px-8 pt-6 pb-0">
-        <div className="flex items-center justify-between border-b border-gray-200">
-          <div className="inline-flex items-center">
+      <div className="px-4 sm:px-8 pt-6 pb-0">
+        <div className="flex items-center justify-between gap-3 border-b border-gray-200">
+          <div className="flex items-center min-w-0 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {TABS.map(({ id, label, Icon }) => (
             <button
               key={id}
               onClick={() => { setActiveTab(id); setStudioScreen('list'); }}
-              className={`flex items-center gap-2 pb-3.5 px-0 mr-8 text-[15px] font-semibold transition-colors border-b-2 -mb-px ${
+              className={`flex items-center gap-1.5 sm:gap-2 pb-3.5 px-0 mr-5 sm:mr-8 text-sm sm:text-[15px] font-semibold whitespace-nowrap flex-shrink-0 transition-colors border-b-2 -mb-px ${
                 activeTab === id
                   ? 'text-[#F52B8C] border-[#F52B8C]'
                   : 'text-gray-700 border-transparent hover:text-gray-900'
@@ -929,9 +929,10 @@ export default function Preview({ profile }: { profile: Profile | null }) {
           {/* Preview button */}
           <button
             onClick={() => setShowPreview(true)}
-            className="flex items-center gap-1.5 px-3.5 py-1.5 mb-2 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-[#F52B8C] hover:text-[#F52B8C] transition focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none"
+            aria-label="Preview your studio"
+            className="flex flex-shrink-0 items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 mb-2 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-[#F52B8C] hover:text-[#F52B8C] transition focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none"
           >
-            <Eye className="w-4 h-4" /> Preview
+            <Eye className="w-4 h-4" /> <span className="hidden sm:inline">Preview</span>
           </button>
         </div>
       </div>

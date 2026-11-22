@@ -432,12 +432,13 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
     setCheckingEmail(true);
     try {
       const { data } = await supabase.from('profiles').select('id').eq('email', email).maybeSingle();
+      // RLS hides other users' profiles, so "not found" doesn't mean the email is free:
+      // only report a hit. Existing emails are caught for sure at signUp.
       if (data) {
         setEmailExists(true);
         setErrors((prev) => ({ ...prev, email: 'This email is already registered' }));
       } else {
-        setEmailExists(false);
-        setErrors((prev) => ({ ...prev, email: '' }));
+        setEmailExists(null);
       }
     } catch { /* ignore */ } finally {
       setCheckingEmail(false);
@@ -1103,6 +1104,11 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
             },
           },
         });
+        // With email confirmation on, Supabase answers an existing email with a user that has
+        // no identities instead of an error; without it, it returns "User already registered".
+        if (signUpError?.message?.toLowerCase().includes('already registered') || (user && user.identities?.length === 0)) {
+          throw new Error('This email already has a Nelsy account. Log in instead.');
+        }
         if (signUpError) throw new Error(`[signup] ${signUpError.message}`);
         if (!user) throw new Error('[signup] No user returned');
         identify(user.id);
