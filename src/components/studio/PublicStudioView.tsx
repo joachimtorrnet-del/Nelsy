@@ -15,6 +15,8 @@ import { PlgCTA } from './PlgCTA';
 import { LayoutSplit } from './layouts/LayoutSplit';
 import { LayoutEditorial } from './layouts/LayoutEditorial';
 import { LayoutSpotlight } from './layouts/LayoutSpotlight';
+import { LayoutCreator, CREATOR_VARIANTS } from './layouts/LayoutCreator';
+import { useBookingStore } from '@/store/bookingStore';
 
 // Theme presets that use a standalone layout component (no StudioHeroV2 sections)
 const LAYOUT_PRESETS: Record<string, 'split' | 'editorial' | 'spotlight'> = {
@@ -69,6 +71,12 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
     fontFamily: studioFont?.stack,
   });
   useEffect(() => { ensureStudioFontLoaded(studioFont); }, [studioFont]);
+  const { openModal } = useBookingStore();
+  const onBook = (serviceId: string) => {
+    const service = merchant.services.find((s) => s.id === serviceId)
+      ?? merchantWithCollections.collections?.flatMap((c) => c.members.map((m) => m.service)).find((s) => s.id === serviceId);
+    if (service) openModal(service);
+  };
   const accent = theme.defaultAccent;
   const isPreview = mode === 'preview';
 
@@ -97,10 +105,19 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   // Route to standalone layout components for new-generation templates
   const layoutVariant = LAYOUT_PRESETS[merchant.theme_preset ?? ''];
 
+  const creatorVariant = CREATOR_VARIANTS[merchant.theme_preset ?? ''];
+  if (creatorVariant) {
+    return (
+      <>
+        <LayoutCreator merchant={merchantWithCollections} theme={theme} variant={creatorVariant} isPreview={isPreview} photos={photos} onBook={onBook} />
+        {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
+      </>
+    );
+  }
   if (layoutVariant === 'split') {
     return (
       <>
-        <LayoutSplit merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} />
+        <LayoutSplit merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
       </>
     );
@@ -108,7 +125,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   if (layoutVariant === 'editorial') {
     return (
       <>
-        <LayoutEditorial merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} />
+        <LayoutEditorial merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
       </>
     );
@@ -116,7 +133,7 @@ export function PublicStudioView({ merchant, mode = 'live' }: Props) {
   if (layoutVariant === 'spotlight') {
     return (
       <>
-        <LayoutSpotlight merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} />
+        <LayoutSpotlight merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
       </>
     );

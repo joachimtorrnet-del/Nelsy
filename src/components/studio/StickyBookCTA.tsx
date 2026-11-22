@@ -8,12 +8,14 @@ interface Props {
 }
 
 export function StickyBookCTA({ merchant, show }: Props) {
-  const { isOpen } = useBookingStore();
+  const { isOpen, openModal } = useBookingStore();
   const accent = merchant.color_accent ?? '#F52B8C';
   const visible = show && !isOpen;
 
   const scrollToServices = () => {
-    document.getElementById('nelsy-services')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const list = document.getElementById('nelsy-services');
+    if (list) list.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    else if (merchant.services[0]) openModal(merchant.services[0]);
   };
 
   return (

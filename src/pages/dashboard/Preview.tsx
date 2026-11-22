@@ -116,15 +116,18 @@ function getOfferTypeFromCategory(category?: string): OfferType {
 // ── Templates config ──────────────────────────────────────────────────────────
 
 const TEMPLATES = [
-  { id: 'spotlight',  name: 'Spotlight',  themeId: 'blush',        accentColor: '#F52B8C' },
-  { id: 'split',      name: 'Split',      themeId: 'minimal_nude', accentColor: '#3D312E' },
-  { id: 'editorial',  name: 'Editorial',  themeId: 'editorial',    accentColor: '#0A0A0A' },
-  { id: 'soft-pink',  name: 'Soft Pink',  themeId: 'soft_pink',    accentColor: THEMES.soft_pink.defaultAccent },
-  { id: 'clean-luxe', name: 'Clean Luxe', themeId: 'clean_luxe',   accentColor: THEMES.clean_luxe.defaultAccent },
-  { id: 'chrome',     name: 'Chrome',     themeId: 'chrome',       accentColor: THEMES.chrome.defaultAccent },
-  { id: 'dark-luxe',  name: 'Dark Luxe',  themeId: 'dark_luxe',    accentColor: THEMES.dark_luxe.defaultAccent },
-  { id: 'rose',       name: 'Rose',       themeId: 'rose',         accentColor: THEMES.rose.defaultAccent },
-  { id: 'bold',       name: 'Bold',       themeId: 'bold',         accentColor: THEMES.bold.defaultAccent },
+  { id: 'classic',   name: 'Classic',   themeId: 'c_classic',    accentColor: '#F52B8C' },
+  { id: 'minimal',   name: 'Minimal',   themeId: 'c_minimal',    accentColor: '#F52B8C' },
+  { id: 'coach',     name: 'Coach',     themeId: 'c_coach',      accentColor: '#F52B8C' },
+  { id: 'blush',     name: 'Blush',     themeId: 'c_blush',      accentColor: '#1A1A1A' },
+  { id: 'atelier',   name: 'Atelier',   themeId: 'c_atelier',    accentColor: '#3A3330' },
+  { id: 'gallery',   name: 'Gallery',   themeId: 'c_gallery',    accentColor: '#1A1A1A' },
+  { id: 'muse',      name: 'Muse',      themeId: 'c_muse',       accentColor: '#F52B8C' },
+  { id: 'noir',      name: 'Noir',      themeId: 'c_noir',       accentColor: '#FFFFFF' },
+  { id: 'midnight',  name: 'Midnight',  themeId: 'c_midnight',   accentColor: '#2EF2C4' },
+  { id: 'split',     name: 'Split',     themeId: 'minimal_nude', accentColor: '#3D312E' },
+  { id: 'glow',      name: 'Glow',      themeId: 'blush',        accentColor: '#F52B8C' },
+  { id: 'editorial', name: 'Editorial', themeId: 'editorial',    accentColor: '#0A0A0A' },
 ];
 
 const BACKGROUND_SWATCHES = ['#FFFFFF', '#FFF5F8', '#FFF8EB', '#F5F1EC', '#EEF2F7', '#F2F0FF', '#1A1A1A', '#2A1F2D'];

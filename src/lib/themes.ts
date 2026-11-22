@@ -241,10 +241,41 @@ const LEGACY_THEMES: Record<string, NelsyTheme> = {
   },
 };
 
+
+// ── Creator templates (LayoutCreator) ─────────────────────────────────────────
+
+function creatorTheme(t: {
+  id: string; name: string; pageBg: string; cardBg: string; cardBorder: string;
+  text: string; muted: string; accent: string; accentText?: string; serif?: boolean;
+}): NelsyTheme {
+  return {
+    id: t.id, name: t.name, emoji: '',
+    pageBg: t.pageBg, headerGradient: t.pageBg,
+    headerTextPrimary: t.text, headerTextSecondary: t.muted,
+    cardBg: t.cardBg, cardBorder: t.cardBorder,
+    textPrimary: t.text, textSecondary: t.muted,
+    fontClass: t.serif ? 'font-serif' : 'font-sans',
+    defaultAccent: t.accent, accentText: t.accentText ?? '#FFFFFF',
+  };
+}
+
+const CREATOR_THEMES: Record<string, NelsyTheme> = {
+  c_classic:  creatorTheme({ id: 'c_classic',  name: 'Classic',  pageBg: '#FFFFFF', cardBg: '#FFFFFF', cardBorder: '#ECECEC', text: '#1A1A1A', muted: '#6B7280', accent: '#F52B8C' }),
+  c_gallery:  creatorTheme({ id: 'c_gallery',  name: 'Gallery',  pageBg: '#F7F7F7', cardBg: '#FFFFFF', cardBorder: '#EEEEEE', text: '#1A1A1A', muted: '#6B7280', accent: '#1A1A1A' }),
+  c_blush:    creatorTheme({ id: 'c_blush',    name: 'Blush',    pageBg: '#F6E6F2', cardBg: 'rgba(255,255,255,0.6)', cardBorder: 'rgba(26,26,26,0.06)', text: '#1A1A1A', muted: '#5F5560', accent: '#1A1A1A', serif: true }),
+  c_atelier:  creatorTheme({ id: 'c_atelier',  name: 'Atelier',  pageBg: '#FBF6F1', cardBg: '#EFE6DC', cardBorder: 'rgba(58,51,48,0.06)', text: '#2B2420', muted: '#6E625A', accent: '#3A3330', serif: true }),
+  c_noir:     creatorTheme({ id: 'c_noir',     name: 'Noir',     pageBg: '#0B0B0B', cardBg: '#1C1C1C', cardBorder: '#2A2A2A', text: '#FFFFFF', muted: 'rgba(255,255,255,0.65)', accent: '#FFFFFF', accentText: '#111111' }),
+  c_minimal:  creatorTheme({ id: 'c_minimal',  name: 'Minimal',  pageBg: '#FFFFFF', cardBg: '#FFFFFF', cardBorder: '#F1F1F1', text: '#1A1A1A', muted: '#6B7280', accent: '#F52B8C' }),
+  c_midnight: creatorTheme({ id: 'c_midnight', name: 'Midnight', pageBg: '#15142B', cardBg: '#21203D', cardBorder: 'rgba(255,255,255,0.08)', text: '#FFFFFF', muted: 'rgba(255,255,255,0.65)', accent: '#2EF2C4', accentText: '#0E1A24' }),
+  c_muse:     creatorTheme({ id: 'c_muse',     name: 'Muse',     pageBg: '#1A1A1A', cardBg: '#FFF8EE', cardBorder: 'rgba(0,0,0,0.04)', text: '#FFFFFF', muted: 'rgba(255,255,255,0.8)', accent: '#F52B8C', serif: true }),
+  c_coach:    creatorTheme({ id: 'c_coach',    name: 'Coach',    pageBg: '#FBE4EE', cardBg: '#FFFFFF', cardBorder: 'rgba(245,43,140,0.08)', text: '#1A1A1A', muted: '#6B5B63', accent: '#F52B8C', serif: true }),
+};
+
 export const THEMES: Record<string, NelsyTheme> = {
   ...SPEC_THEMES,
   ...COLLECTION_THEMES,
   ...LEGACY_THEMES,
+  ...CREATOR_THEMES,
 };
 
 export const DEFAULT_THEME = THEMES.soft_pink;
@@ -276,7 +307,11 @@ export function getTheme(
   overrides?: { background?: string | null; fontFamily?: string | null },
 ): NelsyTheme {
   let theme = THEMES[preset ?? 'soft_pink'] ?? DEFAULT_THEME;
-  if (accentOverride) theme = { ...theme, defaultAccent: accentOverride };
+  if (accentOverride) {
+    // White text unless the accent is genuinely light (keeps brand pink buttons white-on-pink)
+    const onWhite = contrastRatio(accentOverride, '#FFFFFF') ?? 21;
+    theme = { ...theme, defaultAccent: accentOverride, accentText: onWhite >= 2.2 ? '#FFFFFF' : '#111111' };
+  }
   if (overrides?.background) {
     const bg = overrides.background;
     const templateWasDark = isDark(theme.pageBg);
