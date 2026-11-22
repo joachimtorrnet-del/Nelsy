@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { ArrowRight, Globe, Clock } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import type { Merchant, Service } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { formatCurrency } from '@/lib/utils';
+import { getStudioFont, ensureStudioFontLoaded } from '@/lib/studioFonts';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 
 interface GalleryPhoto { image_url: string }
@@ -22,18 +24,21 @@ export interface CreatorVariant {
   /** Card text when cards sit on a background of the opposite tone (Muse). */
   cardText?: { primary: string; secondary: string };
   shadow?: boolean;
+  /** Template's own fonts (STUDIO_FONTS ids), used unless the pro picked one. */
+  nameFont: string;
+  bodyFont: string;
 }
 
 export const CREATOR_VARIANTS: Record<string, CreatorVariant> = {
-  c_classic:  { header: 'row',             card: 'compact',     button: 'solid',   social: 'square',         nameStyle: 'sans',         align: 'left' },
-  c_gallery:  { header: 'row',             card: 'image-top',   button: 'solid',   social: 'square',         nameStyle: 'sans',         align: 'left' },
-  c_blush:    { header: 'cover',           card: 'thumb-arrow', button: 'outline', social: 'plain',          nameStyle: 'serif',        align: 'left' },
-  c_atelier:  { header: 'cover',           card: 'stacked',     button: 'solid',   social: 'circle-outline', nameStyle: 'serif-italic', align: 'center' },
-  c_noir:     { header: 'cover-overlay',   card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'sans',         align: 'center' },
-  c_minimal:  { header: 'centered-round',  card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'sans',         align: 'center', shadow: true },
-  c_midnight: { header: 'centered-square', card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'sans',         align: 'center' },
-  c_muse:     { header: 'photo-bg',        card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'serif',        align: 'center', cardText: { primary: '#1A1A1A', secondary: '#6B6B6B' }, shadow: true },
-  c_coach:    { header: 'centered-round',  card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'serif',        align: 'center', shadow: true },
+  c_classic:  { header: 'row',             card: 'compact',     button: 'solid',   social: 'square',         nameStyle: 'sans',         align: 'left', nameFont: 'dm-sans', bodyFont: 'dm-sans' },
+  c_gallery:  { header: 'row',             card: 'image-top',   button: 'solid',   social: 'square',         nameStyle: 'sans',         align: 'left', nameFont: 'poppins', bodyFont: 'poppins' },
+  c_blush:    { header: 'cover',           card: 'thumb-arrow', button: 'outline', social: 'plain',          nameStyle: 'serif',        align: 'left', nameFont: 'fraunces', bodyFont: 'dm-sans' },
+  c_atelier:  { header: 'cover',           card: 'stacked',     button: 'solid',   social: 'circle-outline', nameStyle: 'serif-italic', align: 'center', nameFont: 'cormorant', bodyFont: 'inter' },
+  c_noir:     { header: 'cover-overlay',   card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'sans',         align: 'center', nameFont: 'space-grotesk', bodyFont: 'space-grotesk' },
+  c_minimal:  { header: 'centered-round',  card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'sans',         align: 'center', shadow: true, nameFont: 'inter', bodyFont: 'inter' },
+  c_midnight: { header: 'centered-square', card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'sans',         align: 'center', nameFont: 'montserrat', bodyFont: 'montserrat' },
+  c_muse:     { header: 'photo-bg',        card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'serif',        align: 'center', cardText: { primary: '#1A1A1A', secondary: '#6B6B6B' }, shadow: true, nameFont: 'fraunces', bodyFont: 'dm-sans' },
+  c_coach:    { header: 'centered-round',  card: 'stacked',     button: 'solid',   social: 'plain',          nameStyle: 'serif',        align: 'center', shadow: true, nameFont: 'lora', bodyFont: 'dm-sans' },
 };
 
 interface Props {
@@ -78,8 +83,14 @@ export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onB
   const name = merchant.salon_name || merchant.name;
   const avatar = merchant.logo_url;
   const cover = merchant.cover_url ?? photos[0]?.image_url ?? merchant.logo_url;
-  const baseFont = theme.fontFamily ?? "'Inter', system-ui, sans-serif";
-  const nameFont = theme.fontFamily ?? (variant.nameStyle === 'sans' ? baseFont : SERIF);
+  const nameFontDef = getStudioFont(variant.nameFont);
+  const bodyFontDef = getStudioFont(variant.bodyFont);
+  useEffect(() => {
+    ensureStudioFontLoaded(nameFontDef);
+    ensureStudioFontLoaded(bodyFontDef);
+  }, [nameFontDef, bodyFontDef]);
+  const baseFont = theme.fontFamily ?? bodyFontDef?.stack ?? "'Inter', system-ui, sans-serif";
+  const nameFont = theme.fontFamily ?? nameFontDef?.stack ?? (variant.nameStyle === 'sans' ? baseFont : SERIF);
   const center = variant.align === 'center';
 
   const services = [...merchant.services].sort((a, b) => Number(!!b.is_featured) - Number(!!a.is_featured));

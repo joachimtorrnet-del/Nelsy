@@ -21,6 +21,7 @@ import { supabase } from '../../lib/supabase';
 import { buildLiveMerchant } from '../../lib/liveMerchant';
 import { STUDIO_FONTS, ensureStudioFontLoaded } from '../../lib/studioFonts';
 import { StudioPhonePreview } from '../../components/dashboard/StudioPhonePreview';
+import { TEMPLATE_DEMOS } from '../../lib/templateDemos';
 import { PublicStudioView } from '../../components/studio/PublicStudioView';
 import type { Merchant, Service } from '../../types';
 
@@ -174,6 +175,62 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
   ] as Service[],
 };
 
+// ── Template coverflow ────────────────────────────────────────────────────────
+// Selected card centered and in front; neighbours fan out with a slight 3D turn.
+
+function TemplateCoverflow({ currentIdx, renderCard }: {
+  currentIdx: number;
+  renderCard: (idx: number, selected: boolean) => React.ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(1000);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const n = TEMPLATES.length;
+  const step = Math.max(70, Math.min(205, (width - CARD_W) / 4.2));
+  const visible = width < 640 ? 1 : 3;
+
+  return (
+    <div ref={ref} className="relative mx-auto overflow-hidden" style={{ height: CARD_H + 48, perspective: 1600 }}>
+      {TEMPLATES.map((tpl, idx) => {
+        // Shortest signed distance on the ring so wrapping animates the right way
+        let o = idx - currentIdx;
+        if (o > n / 2) o -= n;
+        if (o < -n / 2) o += n;
+        const d = Math.abs(o);
+        const hidden = d > visible;
+        return (
+          <div
+            key={tpl.id}
+            aria-hidden={o !== 0}
+            style={{
+              position: 'absolute',
+              left: '50%',
+              top: 20,
+              width: CARD_W,
+              marginLeft: -CARD_W / 2,
+              transform: `translateX(${o * step}px) translateZ(${-d * 90}px) rotateY(${o === 0 ? 0 : o > 0 ? -16 : 16}deg) scale(${1 - Math.min(d, 3) * 0.06})`,
+              zIndex: 20 - d,
+              opacity: hidden ? 0 : d === 0 ? 1 : d === 1 ? 0.92 : 0.7,
+              pointerEvents: hidden ? 'none' : 'auto',
+              transition: 'transform 450ms cubic-bezier(.2,.8,.2,1), opacity 300ms ease',
+            }}
+          >
+            {/* Far cards aren't mounted: each preview renders a full studio page */}
+            {d <= visible + 1 ? renderCard(idx, o === 0) : null}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ── Template gallery card ─────────────────────────────────────────────────────
 // Card frame: 240×462px
 // Inner render: 390×750px at scale(240/390 ≈ 0.615) — true mobile-width viewport
@@ -185,7 +242,6 @@ interface TemplateCardProps {
   backgroundOverride?: string | null;
   fontOverride?: string | null;
   selected: boolean;
-  scale?: number;
   onClick: () => void;
 }
 
@@ -195,9 +251,9 @@ const INNER_W = 390;
 const INNER_H = 750;
 const CARD_SCALE = CARD_W / INNER_W; // 0.6154…
 
-function TemplateCard({ template, accentOverride, backgroundOverride, fontOverride, selected, scale = 1, onClick }: TemplateCardProps) {
+function TemplateCard({ template, accentOverride, backgroundOverride, fontOverride, selected, onClick }: TemplateCardProps) {
   const demoMerchant: Merchant = {
-    ...DEMO_MERCHANT_BASE,
+    ...(TEMPLATE_DEMOS[template.id] ?? DEMO_MERCHANT_BASE),
     theme_preset: template.themeId,
     color_accent: accentOverride,
     color_background: backgroundOverride ?? undefined,
@@ -209,16 +265,14 @@ function TemplateCard({ template, accentOverride, backgroundOverride, fontOverri
       onClick={onClick}
       aria-pressed={selected}
       aria-label={`${template.name} template`}
-      className="flex-shrink-0 relative rounded-[20px] overflow-hidden transition-all duration-200 focus-visible:outline-2 focus-visible:outline-[#F52B8C] focus-visible:outline-offset-2 cursor-pointer"
+      className="flex-shrink-0 relative rounded-[22px] overflow-hidden bg-white focus-visible:outline-2 focus-visible:outline-[#F52B8C] focus-visible:outline-offset-2 cursor-pointer"
       style={{
         width: CARD_W,
         height: CARD_H,
-        // Selected: prominent shadow + full opacity; others: dimmed
         boxShadow: selected
-          ? '0 8px 32px rgba(0,0,0,0.18), 0 2px 8px rgba(0,0,0,0.08)'
-          : '0 2px 8px rgba(0,0,0,0.07)',
-        opacity: selected ? 1 : 0.72,
-        transform: selected ? 'translateY(-2px)' : `scale(${scale})`,
+          ? '0 24px 60px -18px rgba(26,26,26,0.35), 0 4px 14px rgba(26,26,26,0.08)'
+          : '0 12px 30px -16px rgba(26,26,26,0.25)',
+        transition: 'box-shadow 300ms ease',
       }}
     >
       {/* Mobile-width render clipped inside the card frame */}
@@ -1192,26 +1246,22 @@ export default function Preview({ profile }: { profile: Profile | null }) {
               if (e.key === 'ArrowRight') { e.preventDefault(); navigateTemplate(1); }
             }}
           >
-            <div className="flex items-center justify-center gap-3 sm:gap-5 px-4 overflow-hidden" style={{ minHeight: CARD_H + 8 }}>
-              {[-2, -1, 0, 1, 2].map((offset) => {
-                const idx = (currentTplIdx + offset + TEMPLATES.length) % TEMPLATES.length;
+            <TemplateCoverflow
+              currentIdx={currentTplIdx}
+              renderCard={(idx, selected) => {
                 const tpl = TEMPLATES[idx];
-                const selected = offset === 0;
                 return (
-                  <div key={`${offset}-${tpl.id}`} className={Math.abs(offset) === 2 ? 'hidden xl:block' : Math.abs(offset) === 1 ? 'hidden sm:block' : ''}>
-                    <TemplateCard
-                      template={tpl}
-                      accentOverride={selected ? designForm.color_accent : tpl.accentColor}
-                      backgroundOverride={selected ? designForm.color_background : null}
-                      fontOverride={selected ? designForm.font_family : null}
-                      selected={selected}
-                      scale={Math.abs(offset) === 2 ? 0.82 : 0.9}
-                      onClick={() => (selected ? undefined : applyTemplate(tpl))}
-                    />
-                  </div>
+                  <TemplateCard
+                    template={tpl}
+                    accentOverride={selected ? designForm.color_accent : tpl.accentColor}
+                    backgroundOverride={selected ? designForm.color_background : null}
+                    fontOverride={selected ? designForm.font_family : null}
+                    selected={selected}
+                    onClick={() => (selected ? undefined : applyTemplate(tpl))}
+                  />
                 );
-              })}
-            </div>
+              }}
+            />
           </div>
 
           {/* Template name + prev/next controls */}
