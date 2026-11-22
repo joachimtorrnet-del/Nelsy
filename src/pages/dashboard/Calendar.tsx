@@ -211,7 +211,7 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
     setReschedule({
       isOpen: true,
       appointment: apt,
-      date: dt.toISOString().split('T')[0],
+      date: `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, '0')}-${String(dt.getDate()).padStart(2, '0')}`,
       time: `${String(dt.getHours()).padStart(2, '0')}:${String(dt.getMinutes()).padStart(2, '0')}`,
     });
   };

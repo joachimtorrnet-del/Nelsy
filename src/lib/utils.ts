@@ -7,8 +7,15 @@ export function formatCurrency(amount: number): string {
   }).format(amount);
 }
 
+/** 'YYYY-MM-DD' for the calendar day a local Date falls on (toISOString would shift it to UTC). */
+export function toLocalDateStr(d: Date): string {
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+}
+
 export function formatDate(dateStr: string): string {
-  const date = new Date(dateStr);
+  // A bare 'YYYY-MM-DD' is a calendar day: build it at local midnight, not UTC midnight
+  const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateStr);
+  const date = m ? new Date(+m[1], +m[2] - 1, +m[3]) : new Date(dateStr);
   return new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     day: 'numeric',

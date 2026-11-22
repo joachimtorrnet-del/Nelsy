@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { useBookingStore } from '@/store/bookingStore';
 import type { Merchant } from '@/types';
-import { formatDate, formatCurrency, getDaysInMonth, isDateInPast, zonedTimeToUtcIso } from '@/lib/utils';
+import { formatDate, formatCurrency, getDaysInMonth, isDateInPast, toLocalDateStr, zonedTimeToUtcIso } from '@/lib/utils';
 import {
   trackBookingStarted,
   trackSlotSelected,
@@ -234,7 +234,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
   const days = getDaysInMonth(viewYear, viewMonth);
   const firstDayOfWeek = new Date(viewYear, viewMonth, 1).getDay();
   const offset = firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1;
-  const todayStr = today.toISOString().split('T')[0];
+  const todayStr = toLocalDateStr(today);
 
   if (!selectedService) return null;
 
@@ -394,7 +394,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     <div className="grid grid-cols-7 gap-y-1">
                       {Array.from({ length: offset }).map((_, i) => <div key={`e${i}`} />)}
                       {days.map((date) => {
-                        const dateStr = date.toISOString().split('T')[0];
+                        const dateStr = toLocalDateStr(date);
                         const past = isDateInPast(date);
                         const disabled = past;
                         const selected = selectedDate === dateStr;
