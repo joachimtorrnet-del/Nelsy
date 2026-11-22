@@ -48,11 +48,20 @@ WHERE b.service_id = s.id
 -- ── 4. Add booking_end_datetime generated column ──────────────────────────────
 -- Computed from booking_datetime + duration_minutes.
 -- STORED means it is persisted on disk and updated automatically.
--- make_interval is IMMUTABLE → valid in a generated column expression.
+-- timestamptz + interval is only STABLE (day/month intervals depend on the
+-- session timezone), so Postgres rejects it in a generated column. Adding a
+-- minutes-only interval is timezone-independent, hence this IMMUTABLE wrapper.
+CREATE OR REPLACE FUNCTION public.add_minutes(ts TIMESTAMP WITH TIME ZONE, mins INTEGER)
+RETURNS TIMESTAMP WITH TIME ZONE
+LANGUAGE sql
+IMMUTABLE
+PARALLEL SAFE
+AS $$ SELECT ts + make_interval(mins => mins) $$;
+
 ALTER TABLE bookings
   ADD COLUMN IF NOT EXISTS booking_end_datetime TIMESTAMP WITH TIME ZONE
   GENERATED ALWAYS AS (
-    booking_datetime + make_interval(mins => duration_minutes)
+    public.add_minutes(booking_datetime, duration_minutes)
   ) STORED;
 
 -- ── 5. EXCLUDE constraint using GiST on tstzrange ─────────────────────────────

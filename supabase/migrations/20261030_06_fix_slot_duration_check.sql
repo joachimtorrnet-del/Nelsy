@@ -104,14 +104,10 @@ BEGIN
     v_slot_ts    := (p_date::TEXT || ' ' || v_slot)::TIMESTAMP AT TIME ZONE p_timezone;
     v_slot_end_ts := v_slot_ts + make_interval(mins => p_duration_minutes);
 
-    -- Skip slots that have already started
-    IF v_slot_ts <= NOW() THEN
-      GOTO next_slot;
-    END IF;
 
     -- Check for conflicting bookings: does any active booking overlap [slot_start, slot_start+duration)?
     -- Previously checked only a 1-second point — this was wrong for durations > 30 min.
-    IF NOT EXISTS (
+    IF v_slot_ts > NOW() AND NOT EXISTS (
       SELECT 1 FROM public.bookings
       WHERE profile_id = p_profile_id
         AND status NOT IN ('cancelled', 'no_show', 'expired')
@@ -122,7 +118,6 @@ BEGIN
       RETURN NEXT;
     END IF;
 
-    <<next_slot>>
     v_m := v_m + 30;
     IF v_m >= 60 THEN v_m := v_m - 60; v_h := v_h + 1; END IF;
   END LOOP;

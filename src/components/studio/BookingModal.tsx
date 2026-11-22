@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import { useBookingStore } from '@/store/bookingStore';
 import type { Merchant } from '@/types';
-import { formatDate, formatCurrency, getDaysInMonth, isDateInPast } from '@/lib/utils';
+import { formatDate, formatCurrency, getDaysInMonth, isDateInPast, zonedTimeToUtcIso } from '@/lib/utils';
 import {
   trackBookingStarted,
   trackSlotSelected,
@@ -110,7 +110,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
     setAvailableSlots([]);
     // Fallback to Europe/Paris (primary market) when timezone not yet set on profile.
     // Timezone is set via create-connect-account at onboarding; existing accounts may lack it.
-    void getAvailableSlots(merchant.id, new Date(selectedDate), selectedService.duration, merchant.timezone ?? 'Europe/Paris').then((slots) => {
+    void getAvailableSlots(merchant.id, selectedDate, selectedService.duration, merchant.timezone ?? 'Europe/Paris').then((slots) => {
       if (!cancelled) { setAvailableSlots(slots); setSlotsLoading(false); }
     });
     return () => { cancelled = true; };
@@ -142,9 +142,8 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
     setBookingError(null);
 
     try {
-      // Send a naive local datetime string — the server interprets it in the pro's timezone.
-      // Using Date.setHours() would shift to the client's local timezone instead.
-      const bookingDatetime = `${selectedDate}T${selectedTime}:00`;
+      // Slots are wall-clock times in the pro's timezone, not the client's
+      const bookingDatetime = zonedTimeToUtcIso(selectedDate, selectedTime, merchant.timezone ?? 'Europe/Paris');
 
       if (isSupabaseConfigured && isStripeConfigured && supabase) {
         const { data: payData, error: payError } = await supabase.functions.invoke(

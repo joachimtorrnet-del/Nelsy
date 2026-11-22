@@ -410,8 +410,9 @@ function EditProfilePanel({ profile, onBack }: { profile: Profile | null; onBack
     if (!/^[a-z0-9-]{3,30}$/.test(value)) { setSlugStatus('invalid'); return; }
     setSlugStatus('checking');
     try {
+      // profiles RLS only exposes the caller's own row; the public view covers all slugs
       const { count } = await supabase!
-        .from('profiles')
+        .from('public_profiles')
         .select('id', { count: 'exact', head: true })
         .eq('slug', value)
         .neq('id', profile?.id ?? '');

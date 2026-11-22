@@ -188,15 +188,11 @@ BEGIN
     -- Convert local slot time to UTC timestamp for overlap check
     v_slot_ts := (p_date::TEXT || ' ' || v_slot)::TIMESTAMP AT TIME ZONE p_timezone;
 
-    -- Skip slots in the past
-    IF v_slot_ts <= NOW() THEN
-      GOTO next_slot;
-    END IF;
 
     -- Check for conflicting active bookings using the GiST range index
     -- We test whether ANY booking overlaps a 1-minute window at the slot start
     -- (the actual duration filter is applied on the frontend per service)
-    IF NOT EXISTS (
+    IF v_slot_ts > NOW() AND NOT EXISTS (
       SELECT 1 FROM public.bookings
       WHERE profile_id = p_profile_id
         AND status NOT IN ('cancelled', 'no_show', 'expired')
@@ -206,7 +202,6 @@ BEGIN
       RETURN NEXT;
     END IF;
 
-    <<next_slot>>
     v_m := v_m + 30;
     IF v_m >= 60 THEN v_m := v_m - 60; v_h := v_h + 1; END IF;
   END LOOP;

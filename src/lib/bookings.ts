@@ -1,6 +1,5 @@
 import { supabase, isSupabaseConfigured } from './supabase';
 import { TIME_SLOTS } from './mockData';
-import { isDateInPast } from './utils';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -99,12 +98,10 @@ const MOCK_TAKEN_TIMES = new Set(['10:00', '11:30', '15:00']);
 
 export async function getAvailableSlots(
   profileId: string,
-  date: Date,
+  dateStr: string, // 'YYYY-MM-DD', a calendar date in the salon's timezone
   serviceDurationMinutes = 60,
   timezone = 'Europe/Paris',
 ): Promise<string[]> {
-  if (isDateInPast(date)) return [];
-
   const client = supabase;
 
   if (!isSupabaseConfigured || !client) {
@@ -112,9 +109,7 @@ export async function getAvailableSlots(
   }
 
   try {
-    // Format date as YYYY-MM-DD in the salon's timezone (not UTC)
-    const dateStr = date.toLocaleDateString('sv-SE', { timeZone: timezone });
-
+    // Past dates and already-started slots are filtered out by the RPC.
     const { data, error } = await client.rpc('get_available_slots', {
       p_profile_id: profileId,
       p_date: dateStr,

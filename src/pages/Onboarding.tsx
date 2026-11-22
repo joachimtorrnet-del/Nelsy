@@ -412,7 +412,8 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
     if (!supabase) return;
     setCheckingUsername(true);
     try {
-      const { data } = await supabase.from('profiles').select('slug').eq('slug', username).maybeSingle();
+      // profiles is not readable by anon; the public view exposes slug
+      const { data } = await supabase.from('public_profiles').select('slug').eq('slug', username).maybeSingle();
       if (data) {
         setUsernameAvailable(false);
         setErrors((prev) => ({ ...prev, username: 'This username is already taken' }));

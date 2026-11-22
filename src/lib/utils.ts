@@ -34,6 +34,28 @@ export function getDaysInMonth(year: number, month: number): Date[] {
   return days;
 }
 
+/** UTC instant (ISO string) for a wall-clock date + time in an IANA timezone. */
+export function zonedTimeToUtcIso(dateStr: string, timeStr: string, timeZone: string): string {
+  const [y, mo, d] = dateStr.split('-').map(Number);
+  const [h, mi] = timeStr.split(':').map(Number);
+  const wallAsUtc = Date.UTC(y, mo - 1, d, h, mi);
+
+  const offsetAt = (ts: number) => {
+    const p = Object.fromEntries(
+      new Intl.DateTimeFormat('en-US', {
+        timeZone, hourCycle: 'h23',
+        year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit',
+      }).formatToParts(new Date(ts)).map((x) => [x.type, x.value]),
+    );
+    return Date.UTC(+p.year, +p.month - 1, +p.day, +p.hour, +p.minute, +p.second) - ts;
+  };
+
+  // Second pass corrects the offset when the first guess lands across a DST change
+  let ts = wallAsUtc - offsetAt(wallAsUtc);
+  ts = wallAsUtc - offsetAt(ts);
+  return new Date(ts).toISOString();
+}
+
 export function isDateInPast(date: Date): boolean {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
