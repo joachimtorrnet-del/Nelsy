@@ -18,6 +18,7 @@ import {
   setFeaturedService, clearFeaturedService, reorderServices, createService,
 } from '../../lib/supabase-queries';
 import { supabase } from '../../lib/supabase';
+import { buildLiveMerchant } from '../../lib/liveMerchant';
 import { PublicStudioView } from '../../components/studio/PublicStudioView';
 import type { Merchant, Service } from '../../types';
 
@@ -872,35 +873,10 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   const bgColor = THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
 
   // Build a live merchant from real profile + services for preview
-  const liveMerchant: Merchant = {
-    id: profile?.id ?? '',
-    slug: profile?.slug ?? '',
-    salon_name: profile?.full_name ?? 'My Studio',
-    name: profile?.full_name ?? 'My Studio',
-    bio: profile?.bio ?? '',
-    logo_url: profile?.logo_url,
-    cover_url: profile?.cover_url,
-    specialty: profile?.specialty,
-    location: profile?.location,
-    instagram: profile?.instagram_url,
-    tiktok: profile?.tiktok_url,
+  const liveMerchant: Merchant = buildLiveMerchant(profile, services, {
     theme_preset: designForm.theme_preset,
     color_accent: designForm.color_accent,
-    services: services
-      .filter((s) => s.active)
-      .map((s) => ({
-        id: s.id,
-        name: s.name,
-        description: s.description ?? '',
-        price: parseFloat(String(s.price_total ?? s.price ?? 0)),
-        duration: s.duration_minutes ?? s.duration ?? 60,
-        deposit: parseFloat(String(s.deposit_amount ?? 0)),
-        category: s.category,
-        image_url: s.image_url,
-        is_featured: s.is_featured ?? false,
-        active: s.active,
-      })),
-  };
+  });
 
   // ── Render ───────────────────────────────────────────────────────
 

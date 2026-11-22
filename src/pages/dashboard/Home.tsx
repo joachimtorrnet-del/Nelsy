@@ -1,14 +1,16 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import {
-  TrendingDown, TrendingUp, Plus, ChevronRight,
-  Eye, CalendarDays, Wallet,
-  AlertCircle, RefreshCw, CheckCircle2, Circle,
+  TrendingDown, TrendingUp, Plus, ArrowRight, Eye, CalendarDays, Wallet,
+  AlertCircle, RefreshCw, Lightbulb, Sparkles, Clock, UserRound, Share2, CalendarPlus, Pencil,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { supabase } from '../../lib/supabase';
 import type { DbProfileRow, DbBookingRow } from '../../lib/supabase';
-import { getBookings, calculateStats, getPageViewStats } from '../../lib/supabase-queries';
+import { getBookings } from '../../lib/supabase-queries';
+import { buildLiveMerchant } from '../../lib/liveMerchant';
 import { LoadingScreen } from '../../components/dashboard/SkeletonLoader';
+import { StudioPhonePreview } from '../../components/dashboard/StudioPhonePreview';
 import { useToast } from '../../hooks/useToast';
 import Toast from '../../components/dashboard/Toast';
 import AddBookingModal from '../../components/dashboard/AddBookingModal';
@@ -16,160 +18,113 @@ import AddBookingModal from '../../components/dashboard/AddBookingModal';
 interface Service {
   id: string;
   name: string;
+  description?: string | null;
   price_total?: number;
   price?: number;
   duration_minutes?: number;
   duration?: number;
   deposit_amount?: number;
+  category?: string | null;
+  image_url?: string | null;
+  is_featured?: boolean | null;
+  active?: boolean | null;
 }
 
-interface ChartPoint { day: string; revenue: number }
-type ChartRange = '7d' | '30d' | '90d';
+type Range = '7d' | '30d' | '90d';
+type Metric = 'visits' | 'revenue' | 'bookings';
 
-const STATUS_CONFIG: Record<string, { label: string; icon: string; bg: string; text: string; border: string; avatar: string }> = {
-  pending:   { label: 'Pending Payment', icon: '⏳', bg: 'bg-yellow-100', text: 'text-yellow-700', border: 'border-yellow-200', avatar: 'from-orange-400 to-amber-500' },
-  paid:      { label: 'Paid',            icon: '✅', bg: 'bg-green-100',  text: 'text-green-700',  border: 'border-green-200',  avatar: 'from-green-400 to-emerald-500' },
-  confirmed: { label: 'Paid',            icon: '✅', bg: 'bg-green-100',  text: 'text-green-700',  border: 'border-green-200',  avatar: 'from-green-400 to-emerald-500' },
-  completed: { label: 'Completed',       icon: '🎉', bg: 'bg-blue-100',   text: 'text-blue-700',   border: 'border-blue-200',   avatar: 'from-blue-400 to-indigo-500' },
-  cancelled: { label: 'Cancelled',       icon: '❌', bg: 'bg-gray-100',   text: 'text-gray-700',   border: 'border-gray-200',   avatar: 'from-gray-300 to-gray-400' },
-  refunded:  { label: 'Refunded',        icon: '↩️', bg: 'bg-red-100',    text: 'text-red-700',    border: 'border-red-200',    avatar: 'from-red-400 to-rose-500' },
-};
+interface Action {
+  id: string;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+  run: () => void;
+}
 
-const RANGE_DAYS: Record<ChartRange, number> = { '7d': 7, '30d': 30, '90d': 90 };
+const RANGE_DAYS: Record<Range, number> = { '7d': 7, '30d': 30, '90d': 90 };
+const RANGE_LABEL: Record<Range, string> = { '7d': '7D', '30d': '30D', '90d': '90D' };
 const PAID = new Set(['paid', 'confirmed', 'completed']);
+const UPCOMING = new Set(['pending', 'confirmed', 'paid']);
 
-function buildChartData(bookings: DbBookingRow[], days: number): ChartPoint[] {
-  const map = new Map<string, number>();
-  const now = new Date();
-  for (let i = days - 1; i >= 0; i--) {
-    const d = new Date(now);
-    d.setDate(d.getDate() - i);
-    map.set(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), 0);
-  }
-  const cutoff = new Date(now);
-  cutoff.setDate(cutoff.getDate() - days);
-  for (const b of bookings) {
-    if (!PAID.has(b.status ?? '')) continue;
-    const dt = new Date(b.booking_datetime);
-    if (dt < cutoff) continue;
-    const key = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    if (map.has(key)) map.set(key, (map.get(key) ?? 0) + Number(b.price_total ?? 0));
-  }
-  return Array.from(map.entries()).map(([day, revenue]) => ({ day, revenue }));
-}
+const STATUS_CONFIG: Record<string, { label: string; cls: string }> = {
+  pending:   { label: 'Awaiting payment', cls: 'bg-amber-50 text-amber-700 border-amber-200' },
+  confirmed: { label: 'Confirmed',        cls: 'bg-green-50 text-green-700 border-green-200' },
+  paid:      { label: 'Paid',             cls: 'bg-green-50 text-green-700 border-green-200' },
+};
 
 function fmt(amount: number, currency: string) {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency, minimumFractionDigits: 2 }).format(amount);
 }
 
+function dayKey(d: Date) {
+  return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+}
+
+function growthPct(current: number, previous: number) {
+  if (previous === 0) return current > 0 ? 100 : 0;
+  return Math.round(((current - previous) / previous) * 100);
+}
+
 export default function Home({ onNavigate }: { onNavigate?: (tab: string) => void }) {
-  // ── shared state ──────────────────────────────────────────────────────────
   const [profile, setProfile] = useState<DbProfileRow | null>(null);
-  const [stats, setStats] = useState<Awaited<ReturnType<typeof calculateStats>>>(null);
-  const [bookings, setBookings] = useState<DbBookingRow[]>([]);       // upcoming (shared)
-  const [allBookings, setAllBookings] = useState<DbBookingRow[]>([]);  // all paid, for chart
   const [services, setServices] = useState<Service[]>([]);
+  const [allBookings, setAllBookings] = useState<DbBookingRow[]>([]);
+  const [upcoming, setUpcoming] = useState<DbBookingRow[]>([]);
+  const [visitTimes, setVisitTimes] = useState<number[]>([]);
+  const [balance, setBalance] = useState<{ available: number; pending: number }>({ available: 0, pending: 0 });
+  const [hasHours, setHasHours] = useState(true);
   const [profileId, setProfileId] = useState('');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [showAddBooking, setShowAddBooking] = useState(false);
-  const [chartRange, setChartRange] = useState<ChartRange>('30d');
-  const [storeViews, setStoreViews] = useState<number | null>(null);
-  const [balance, setBalance] = useState<{ available: number; pending: number; thisMonth: number } | null>(null);
-  const [setupDone, setSetupDone] = useState(true);
-  // desktop-only extras
-  const [serviceCount, setServiceCount] = useState(0);
-  const [stripeReady, setStripeReady] = useState(false);
-  const [checklistCollapsed, setChecklistCollapsed] = useState(false);
+  const [range, setRange] = useState<Range>('30d');
+  const [metric, setMetric] = useState<Metric>('revenue');
 
-  const { toast, showSuccess, hideToast } = useToast();
-  const chartData = buildChartData(allBookings, RANGE_DAYS[chartRange]);
+  const { toast, showSuccess, showError, hideToast } = useToast();
   const currency = (profile?.business_currency ?? 'EUR').toUpperCase();
 
-  // ── desktop period KPIs ───────────────────────────────────────────────────
-  const periodKpis = useMemo(() => {
-    const days = RANGE_DAYS[chartRange];
-    const now = new Date();
-    const cutoff = new Date(now);
-    cutoff.setDate(cutoff.getDate() - days);
-    cutoff.setHours(0, 0, 0, 0);
-    const prevCutoff = new Date(cutoff);
-    prevCutoff.setDate(prevCutoff.getDate() - days);
-    const current = allBookings.filter((b) => PAID.has(b.status ?? '') && new Date(b.booking_datetime) >= cutoff);
-    const prev    = allBookings.filter((b) => PAID.has(b.status ?? '') && new Date(b.booking_datetime) >= prevCutoff && new Date(b.booking_datetime) < cutoff);
-    const periodRevenue = current.reduce((s, b) => s + Number(b.price_total ?? 0), 0);
-    const prevRevenue   = prev.reduce((s, b) => s + Number(b.price_total ?? 0), 0);
-    const revenueGrowth = prevRevenue === 0 ? (periodRevenue > 0 ? 100 : 0) : Math.round(((periodRevenue - prevRevenue) / prevRevenue) * 100);
-    const bookingCount  = current.length;
-    const prevCount     = prev.length;
-    const bookingGrowth = prevCount === 0 ? (bookingCount > 0 ? 100 : 0) : Math.round(((bookingCount - prevCount) / prevCount) * 100);
-    return { periodRevenue, revenueGrowth, bookingCount, bookingGrowth };
-  }, [allBookings, chartRange]);
-
-  // ── re-fetch studio views when period changes (desktop) ───────────────────
-  useEffect(() => {
-    if (!profileId) return;
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - RANGE_DAYS[chartRange]);
-    getPageViewStats(profileId, startDate).then((s) => setStoreViews(s.total)).catch(() => setStoreViews(null));
-  }, [profileId, chartRange]);
-
-  // ── data load ─────────────────────────────────────────────────────────────
   const loadData = useCallback(async () => {
     setLoadError(null);
     if (!supabase) return;
     try {
-      const { data: { user: authUser } } = await supabase.auth.getUser();
-      if (!authUser) return;
-      setProfileId(authUser.id);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      setProfileId(user.id);
+
+      // Two periods of visits so the KPI can show growth vs the previous period
+      const visitsSince = new Date();
+      visitsSince.setDate(visitsSince.getDate() - RANGE_DAYS['90d'] * 2);
+      const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
+      const in30Days = new Date(); in30Days.setDate(in30Days.getDate() + 30);
 
       const [
         { data: profileData },
-        statsData,
         { data: servicesData },
-        { data: allBookingsData },
+        { data: bookingsData },
         { data: balanceData },
-        { count: svcCount },
+        { count: hoursCount },
+        { data: viewsData },
+        { data: upcomingData },
       ] = await Promise.all([
-        supabase.from('profiles').select('*').eq('id', authUser.id).single(),
-        calculateStats(authUser.id),
-        supabase.from('services').select('*').eq('profile_id', authUser.id).eq('active', true),
-        supabase.from('bookings').select('*').eq('profile_id', authUser.id).order('booking_datetime', { ascending: true }),
-        supabase.from('pro_balance').select('available_balance, pending_balance, total_earnings').eq('profile_id', authUser.id).maybeSingle(),
-        supabase.from('services').select('id', { count: 'exact', head: true }).eq('profile_id', authUser.id).eq('active', true),
+        supabase.from('profiles').select('*').eq('id', user.id).single(),
+        supabase.from('services').select('*').eq('profile_id', user.id).eq('active', true).order('display_order', { ascending: true }),
+        supabase.from('bookings').select('*').eq('profile_id', user.id),
+        supabase.from('pro_balance').select('available_balance, pending_balance').eq('profile_id', user.id).maybeSingle(),
+        supabase.from('availabilities').select('id', { count: 'exact', head: true }).eq('profile_id', user.id).eq('active', true),
+        supabase.from('page_views').select('created_at').eq('profile_id', user.id).gte('created_at', visitsSince.toISOString()),
+        getBookings(user.id, todayStart, in30Days),
       ]);
 
       setProfile(profileData as DbProfileRow);
-      setStats(statsData);
       setServices((servicesData ?? []) as Service[]);
-      setAllBookings((allBookingsData ?? []) as DbBookingRow[]);
-      setServiceCount(svcCount ?? 0);
-      setStripeReady(!!(profileData as DbProfileRow)?.stripe_account_id && !!(profileData as DbProfileRow)?.stripe_onboarding_complete);
-
-      const now = new Date();
-      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-      const thisMonth = (allBookingsData ?? [])
-        .filter((b) => PAID.has(b.status ?? '') && new Date(b.booking_datetime) >= monthStart)
-        .reduce((sum, b) => sum + Number(b.price_total ?? 0), 0);
-
+      setAllBookings((bookingsData ?? []) as DbBookingRow[]);
       setBalance({
         available: Number(balanceData?.available_balance ?? 0),
-        pending:   Number(balanceData?.pending_balance ?? 0),
-        thisMonth,
+        pending: Number(balanceData?.pending_balance ?? 0),
       });
-
-      const { count: availCount } = await supabase
-        .from('availabilities').select('id', { count: 'exact', head: true })
-        .eq('profile_id', authUser.id).eq('active', true);
-      const { count: serviceCount2 } = await supabase
-        .from('services').select('id', { count: 'exact', head: true })
-        .eq('profile_id', authUser.id).eq('active', true);
-      setSetupDone((availCount ?? 0) > 0 && (serviceCount2 ?? 0) > 0);
-
-      const todayStart = new Date(); todayStart.setHours(0, 0, 0, 0);
-      const in30Days = new Date(); in30Days.setDate(in30Days.getDate() + 30); in30Days.setHours(23, 59, 59, 999);
-      const { data: bookingsData } = await getBookings(authUser.id, todayStart, in30Days);
-      setBookings((bookingsData ?? []) as DbBookingRow[]);
+      setHasHours((hoursCount ?? 0) > 0);
+      setVisitTimes((viewsData ?? []).map((v: { created_at: string }) => new Date(v.created_at).getTime()));
+      setUpcoming(((upcomingData ?? []) as DbBookingRow[]).filter((b) => UPCOMING.has(b.status)));
     } catch (err) {
       console.error('Home load error:', err);
       setLoadError('Failed to load your dashboard. Please try again.');
@@ -178,7 +133,49 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
     }
   }, []);
 
-  useEffect(() => { loadData(); }, [loadData]);
+  useEffect(() => { void loadData(); }, [loadData]);
+
+  // Per-day series for the selected range, plus totals for this and the previous period
+  const series = useMemo(() => {
+    const days = RANGE_DAYS[range];
+    const now = new Date();
+    const start = new Date(now); start.setHours(0, 0, 0, 0); start.setDate(start.getDate() - (days - 1));
+    const prevStart = new Date(start); prevStart.setDate(prevStart.getDate() - days);
+
+    const buckets = new Map<string, { label: string; visits: number; revenue: number; bookings: number }>();
+    for (let i = 0; i < days; i++) {
+      const d = new Date(start); d.setDate(start.getDate() + i);
+      buckets.set(dayKey(d), { label: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), visits: 0, revenue: 0, bookings: 0 });
+    }
+
+    const totals = { visits: 0, revenue: 0, bookings: 0 };
+    const prev = { visits: 0, revenue: 0, bookings: 0 };
+
+    for (const t of visitTimes) {
+      if (t >= start.getTime() && t <= now.getTime()) {
+        totals.visits++;
+        const b = buckets.get(dayKey(new Date(t)));
+        if (b) b.visits++;
+      } else if (t >= prevStart.getTime() && t < start.getTime()) prev.visits++;
+    }
+
+    for (const bk of allBookings) {
+      if (!PAID.has(bk.status)) continue;
+      const t = new Date(bk.booking_datetime).getTime();
+      const amount = Number(bk.price_total ?? 0);
+      if (t >= start.getTime() && t <= now.getTime()) {
+        totals.revenue += amount;
+        totals.bookings++;
+        const b = buckets.get(dayKey(new Date(t)));
+        if (b) { b.revenue += amount; b.bookings++; }
+      } else if (t >= prevStart.getTime() && t < start.getTime()) {
+        prev.revenue += amount;
+        prev.bookings++;
+      }
+    }
+
+    return { points: Array.from(buckets.values()), totals, prev };
+  }, [range, visitTimes, allBookings]);
 
   if (loading) return <LoadingScreen message="Loading your dashboard..." />;
 
@@ -187,7 +184,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
       <div className="flex flex-col items-center justify-center py-24 px-4 gap-4">
         <AlertCircle className="w-10 h-10 text-red-400" />
         <p className="text-gray-700 font-semibold">{loadError}</p>
-        <button onClick={() => { setLoading(true); loadData(); }}
+        <button onClick={() => { setLoading(true); void loadData(); }}
           className="flex items-center gap-2 px-5 py-2.5 bg-[#F52B8C] text-white rounded-xl text-sm font-semibold hover:opacity-90 transition">
           <RefreshCw className="w-4 h-4" /> Try again
         </button>
@@ -195,528 +192,270 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
     );
   }
 
-  if (!profile || !stats) return null;
+  if (!profile) return null;
 
-  const displayName = profile.full_name || profile.salon_name || 'Studio';
-  const displayFirstName = displayName.split(' ')[0];
-  const avatarUrl = profile.logo_url ?? undefined;
-  const initials = displayName.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2);
-  const growth = stats?.growth ?? 0;
-  const availableBalance = balance?.available ?? 0;
+  const firstName = (profile.full_name || profile.salon_name || 'there').split(' ')[0];
+  const stripeReady = !!profile.stripe_account_id && profile.stripe_onboarding_complete;
   const servicesMap = new Map(services.map((s) => [s.id, s]));
+  const studioUrl = `https://getnelsy.com/${profile.slug}`;
 
-  // desktop setup checklist
-  const isPublished = ['active', 'trialing', 'trial'].includes(profile.subscription_status ?? '');
-  const setupSteps = [
-    { id: 'profile',  label: 'Complete your profile',  done: !!(profile.full_name && profile.bio),  action: () => onNavigate?.('settings') },
-    { id: 'service',  label: 'Add your first service',  done: serviceCount > 0,                      action: () => onNavigate?.('preview') },
-    { id: 'payments', label: 'Set up payments',          done: stripeReady,                           action: () => onNavigate?.('stripe') },
-    { id: 'publish',  label: 'Publish your studio',      done: isPublished,                           action: () => onNavigate?.('stripe') },
+  const copyLink = () => {
+    navigator.clipboard.writeText(studioUrl)
+      .then(() => showSuccess('Studio link copied'))
+      .catch(() => showError('Could not copy the link'));
+  };
+
+  // Setup first, then everyday actions; only real features
+  const setup: (Action & { done: boolean })[] = [
+    { id: 'service', icon: Sparkles, title: 'Add your first service', description: 'Clients book from your services. Add one with a price and a duration.', run: () => onNavigate?.('preview'), done: services.length > 0 },
+    { id: 'hours', icon: Clock, title: 'Set your opening hours', description: 'Clients can only book inside the hours you choose.', run: () => onNavigate?.('settings'), done: hasHours },
+    { id: 'payments', icon: Wallet, title: 'Set up payments', description: 'Connect Stripe to take deposits when clients book.', run: () => onNavigate?.('stripe'), done: stripeReady },
+    { id: 'profile', icon: UserRound, title: 'Complete your profile', description: 'Add a photo and a short bio so clients know who you are.', run: () => onNavigate?.('preview'), done: !!(profile.bio && profile.logo_url) },
   ];
-  const allSetupDone = setupSteps.every((s) => s.done);
-  const setupDoneCount = setupSteps.filter((s) => s.done).length;
+  const everyday: Action[] = [
+    { id: 'share', icon: Share2, title: 'Share your studio link', description: 'Put it in your Instagram and TikTok bio so clients can book you.', run: copyLink },
+    { id: 'appointment', icon: CalendarPlus, title: 'Add an appointment', description: 'Booked a client by DM? Add it to your calendar.', run: () => setShowAddBooking(true) },
+    { id: 'edit', icon: Pencil, title: 'Refresh your studio', description: 'Try a new template or accent color.', run: () => onNavigate?.('preview') },
+  ];
+  const pendingSetup = setup.filter((s) => !s.done);
+  const actions: Action[] = [...pendingSetup, ...everyday].slice(0, 3);
+  const [hero, ...secondary] = actions;
+  const setupDoneCount = setup.length - pendingSetup.length;
 
-  // ── shared chart gradient id ──────────────────────────────────────────────
-  const chartGradient = (
-    <defs>
-      <linearGradient id="rGrad" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="5%"  stopColor="#F52B8C" stopOpacity={0.2} />
-        <stop offset="95%" stopColor="#F52B8C" stopOpacity={0} />
-      </linearGradient>
-    </defs>
-  );
+  const kpis: { id: Metric; label: string; icon: LucideIcon; value: string; growth: number }[] = [
+    { id: 'visits', label: 'Studio visits', icon: Eye, value: series.totals.visits.toLocaleString(), growth: growthPct(series.totals.visits, series.prev.visits) },
+    { id: 'revenue', label: 'Revenue', icon: Wallet, value: fmt(series.totals.revenue, currency), growth: growthPct(series.totals.revenue, series.prev.revenue) },
+    { id: 'bookings', label: 'Bookings', icon: CalendarDays, value: String(series.totals.bookings), growth: growthPct(series.totals.bookings, series.prev.bookings) },
+  ];
+  const chartEmpty = series.points.every((p) => p[metric] === 0);
+  const metricLabel = kpis.find((k) => k.id === metric)!.label;
+
+  const merchant = buildLiveMerchant(profile, services);
 
   return (
-    <>
-      {/* ════════════════════════════════════════════════════════════════
-          MOBILE  (< lg)  — exact original layout
-      ════════════════════════════════════════════════════════════════ */}
-      <div className="lg:hidden bg-white min-h-screen pb-24">
+    <div className="px-4 py-6 lg:px-8 lg:py-8 max-w-[1400px] mx-auto">
+      <div className="grid lg:grid-cols-[minmax(0,1fr)_330px] gap-8 xl:gap-12">
+        {/* ── Main column ─────────────────────────────────────────────── */}
+        <div className="min-w-0 space-y-6">
+          <h2 className="text-2xl lg:text-[32px] font-bold text-[#1A1A1A] tracking-tight leading-tight">
+            Hey {firstName}, welcome back!
+          </h2>
 
-        {/* Hero: Avatar + Total Revenue */}
-        <div className="px-5 pt-5 pb-4 flex items-center gap-4">
-          <div className="w-[72px] h-[72px] rounded-full border-2 border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden flex-shrink-0">
-            {avatarUrl
-              ? <img src={avatarUrl} alt={displayName} className="w-full h-full object-cover" />
-              : <span className="text-gray-700 font-bold text-3xl leading-none">{initials}</span>
-            }
-          </div>
-          <div>
-            <p className="text-gray-500 text-sm mb-0.5">Total revenue</p>
-            <p className="text-gray-900 text-4xl font-bold leading-none tracking-tight">
-              {fmt(stats?.totalRevenue ?? 0, currency)}
-            </p>
-            {growth !== 0 && (
-              <div className={`flex items-center gap-1 mt-1.5 ${growth > 0 ? 'text-green-600' : 'text-red-500'}`}>
-                {growth > 0 ? <TrendingUp className="w-3.5 h-3.5" /> : <TrendingDown className="w-3.5 h-3.5" />}
-                <span className="text-sm font-semibold">{growth > 0 ? '+' : ''}{growth}%</span>
+          {/* Recommended actions */}
+          <section>
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <div className="flex items-center gap-2">
+                <Lightbulb className="w-4 h-4 text-gray-500" />
+                <h3 className="text-[15px] font-semibold text-[#1A1A1A]">Recommended actions</h3>
               </div>
-            )}
-          </div>
-        </div>
-
-        {/* Setup Banner */}
-        {!setupDone && (
-          <div className="px-4 mb-4">
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4">
-              <p className="text-sm font-bold text-amber-900 mb-1">⚙️ Set up your studio before sharing your link</p>
-              <p className="text-xs text-amber-700 mb-3">Clients can't book if you haven't added services and availability hours.</p>
-              <div className="flex gap-2">
-                <button onClick={() => onNavigate?.('preview')}
-                  className="flex-1 py-2 bg-amber-500 text-white rounded-xl text-xs font-bold hover:opacity-90 transition-opacity">
-                  + Add a service
-                </button>
-                <button onClick={() => onNavigate?.('settings')}
-                  className="flex-1 py-2 bg-white border border-amber-300 text-amber-800 rounded-xl text-xs font-bold hover:bg-amber-50 transition-colors">
-                  Set hours
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Balance Hero Card */}
-        <div className="px-4 mb-5">
-          <div className="rounded-2xl p-5" style={{ background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}>
-            {!stripeReady ? (
-              <>
-                <p className="text-white font-semibold text-sm mb-1">Payments not set up</p>
-                <p className="text-white/50 text-xs leading-relaxed mb-4">
-                  Connect Stripe to accept payments and receive payouts.
-                </p>
-                <button onClick={() => onNavigate?.('stripe')}
-                  className="w-full py-3 bg-white text-[#1A1A1A] rounded-xl font-bold text-sm hover:opacity-90 transition active:scale-[0.98]">
-                  Set up payments →
-                </button>
-              </>
-            ) : (
-            <>
-            <div className="grid grid-cols-3 gap-2 mb-5">
-              <div>
-                <p className="text-white/50 text-[10px] font-medium uppercase tracking-wider mb-1">Available</p>
-                <p className="text-white text-xl font-bold tracking-tight">{fmt(availableBalance, currency)}</p>
-              </div>
-              <div className="border-l border-white/10 pl-3">
-                <p className="text-white/50 text-[10px] font-medium uppercase tracking-wider mb-1">Pending</p>
-                <p className="text-white text-xl font-bold tracking-tight">{fmt(balance?.pending ?? 0, currency)}</p>
-              </div>
-              <div className="border-l border-white/10 pl-3">
-                <p className="text-white/50 text-[10px] font-medium uppercase tracking-wider mb-1">This Month</p>
-                <p className="text-white text-xl font-bold tracking-tight">{fmt(balance?.thisMonth ?? 0, currency)}</p>
-              </div>
-            </div>
-            <button
-              onClick={() => onNavigate?.('revenue')}
-              className="w-full py-3 rounded-xl font-bold text-sm transition-all active:scale-[0.98] bg-[#F52B8C] text-white hover:opacity-90 shadow-lg shadow-[#F52B8C]/30"
-            >
-              View income →
-            </button>
-            </>
-            )}
-          </div>
-        </div>
-
-        {/* Stats */}
-        <div className="px-4 mb-5">
-          <div className="flex items-center justify-between mb-3">
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-base font-bold text-gray-900">Stats</span>
-              <span className="text-gray-400 text-xs">(last 30 days)</span>
-            </div>
-            <button onClick={() => onNavigate?.('analytics')}
-              className="flex items-center gap-0.5 text-[#F52B8C] text-sm font-semibold hover:opacity-75 transition-opacity">
-              View All <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="bg-gray-50 rounded-2xl overflow-hidden">
-            <div className="grid grid-cols-2 divide-x divide-gray-200">
-              <div className="p-4">
-                <p className="text-gray-400 text-xs mb-1.5">Bookings</p>
-                <p className="text-gray-900 text-2xl font-bold">{periodKpis.bookingCount}</p>
-                {growth !== 0 && (
-                  <div className={`flex items-center gap-1 mt-1.5 ${growth > 0 ? 'text-green-600' : 'text-red-500'}`}>
-                    <div className={`w-4 h-4 rounded-full flex items-center justify-center ${growth > 0 ? 'bg-green-100' : 'bg-red-50'}`}>
-                      {growth > 0 ? <TrendingUp className="w-2.5 h-2.5" /> : <TrendingDown className="w-2.5 h-2.5" />}
-                    </div>
-                    <span className="text-xs font-semibold">{growth > 0 ? '+' : ''}{growth}%</span>
+              {pendingSetup.length > 0 && (
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-gray-400">Setup {setupDoneCount}/{setup.length}</span>
+                  <div className="w-16 h-1.5 bg-pink-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-[#F52B8C] rounded-full" style={{ width: `${(setupDoneCount / setup.length) * 100}%` }} />
                   </div>
-                )}
-              </div>
-              <div className="p-4">
-                <p className="text-gray-400 text-xs mb-1.5">Studio visits</p>
-                <p className="text-gray-900 text-2xl font-bold">{storeViews !== null ? storeViews : '—'}</p>
-              </div>
+                </div>
+              )}
             </div>
-          </div>
-        </div>
-
-        {/* Revenue Chart */}
-        <div className="px-4 mb-5">
-          <div className="bg-gray-50 rounded-2xl p-4">
-            <div className="flex items-start justify-between mb-1">
-              <p className="text-gray-400 text-xs">Revenue</p>
-              <div className="flex gap-0.5">
-                {(['7d', '30d', '90d'] as ChartRange[]).map((r) => (
-                  <button key={r} onClick={() => setChartRange(r)}
-                    className={`px-2 py-0.5 rounded-full text-xs font-semibold transition-all ${chartRange === r ? 'bg-[#F52B8C] text-white' : 'text-gray-400'}`}>
-                    {r}
+            <div className="grid md:grid-cols-[1.35fr_1fr] gap-3">
+              <button onClick={hero.run}
+                className="group text-left bg-[#fde8f3] rounded-2xl p-5 lg:p-6 flex items-center gap-4 hover:bg-[#fbd9eb] transition focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none">
+                <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
+                  <hero.icon className="w-7 h-7 text-[#F52B8C]" strokeWidth={1.8} />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="font-bold text-[#1A1A1A] text-base lg:text-lg leading-snug">{hero.title}</p>
+                  <p className="text-sm text-gray-600 mt-0.5 leading-snug">{hero.description}</p>
+                </div>
+                <span className="w-10 h-10 rounded-full bg-[#F52B8C] text-white flex items-center justify-center flex-shrink-0 group-hover:translate-x-0.5 transition-transform">
+                  <ArrowRight className="w-5 h-5" />
+                </span>
+              </button>
+              <div className="grid gap-3">
+                {secondary.map((a) => (
+                  <button key={a.id} onClick={a.run}
+                    className="group text-left bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-3 hover:border-pink-200 transition focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none">
+                    <div className="w-10 h-10 rounded-xl bg-[#fff4f9] flex items-center justify-center flex-shrink-0">
+                      <a.icon className="w-5 h-5 text-[#F52B8C]" strokeWidth={1.8} />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-semibold text-sm text-[#1A1A1A]">{a.title}</p>
+                      <p className="text-xs text-gray-500 leading-snug">{a.description}</p>
+                    </div>
+                    <span className="w-8 h-8 rounded-full bg-[#fff4f9] text-[#F52B8C] flex items-center justify-center flex-shrink-0">
+                      <ArrowRight className="w-4 h-4" />
+                    </span>
                   </button>
                 ))}
               </div>
             </div>
-            <p className="text-gray-900 text-2xl font-bold mb-3 tracking-tight">
-              €{(stats?.totalRevenue ?? 0).toFixed(2)}
-            </p>
-            <ResponsiveContainer width="100%" height={130}>
-              <AreaChart data={chartData} margin={{ top: 4, right: 4, left: -32, bottom: 0 }}>
-                {chartGradient}
-                <XAxis dataKey="day" tick={{ fontSize: 9, fill: '#9ca3af' }} tickLine={false} axisLine={false}
-                  interval={chartRange === '7d' ? 1 : chartRange === '30d' ? 6 : 14} />
-                <YAxis tick={{ fontSize: 9, fill: '#9ca3af' }} tickLine={false} axisLine={false} tickFormatter={(v) => `€${v}`}
-                  domain={[0, (dataMax: number) => dataMax === 0 ? 10 : Math.ceil(dataMax * 1.2)]} />
-                <Tooltip contentStyle={{ background: '#fff', border: '1px solid #f3f4f6', borderRadius: '10px', fontSize: '11px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
-                  formatter={(value) => [`€${Number(value ?? 0).toFixed(2)}`, 'Revenue']} labelStyle={{ color: '#6b7280' }} />
-                <Area type="monotone" dataKey="revenue" stroke="#F52B8C" strokeWidth={2.5} fill="url(#rGrad)"
-                  dot={false} activeDot={{ r: 4, fill: '#F52B8C', stroke: '#fff', strokeWidth: 2 }} />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+          </section>
 
-        {/* Upcoming appointments */}
-        <div className="px-4">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-base font-bold text-gray-900">Upcoming appointments</span>
-            <button onClick={() => setShowAddBooking(true)}
-              className="flex items-center gap-1 text-[#F52B8C] text-sm font-semibold">
-              <Plus className="w-3.5 h-3.5" /> Add <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-          {bookings.length === 0 ? (
-            <div className="bg-gray-50 rounded-2xl p-6 text-center">
-              <div className="flex justify-center gap-2 mb-3">
-                <span className="text-2xl animate-bounce" style={{ animationDelay: '0s' }}>✨</span>
-                <span className="text-2xl animate-bounce" style={{ animationDelay: '0.15s' }}>💅</span>
-                <span className="text-2xl animate-bounce" style={{ animationDelay: '0.3s' }}>✨</span>
+          {/* Period + KPIs + chart */}
+          <section>
+            <div className="flex items-center justify-between gap-3 mb-3">
+              <div className="inline-flex gap-1 bg-gray-100 rounded-full p-1">
+                {(Object.keys(RANGE_DAYS) as Range[]).map((r) => (
+                  <button key={r} onClick={() => setRange(r)} aria-pressed={range === r}
+                    className={`px-3.5 py-1.5 rounded-full text-sm font-semibold transition ${range === r ? 'bg-white text-[#F52B8C] shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}>
+                    {RANGE_LABEL[r]}
+                  </button>
+                ))}
               </div>
-              <p className="text-gray-900 font-bold text-sm mb-1">No upcoming appointments</p>
-              <p className="text-gray-400 text-xs mb-4">Share your studio link to receive bookings</p>
-              <button onClick={() => setShowAddBooking(true)}
-                className="px-5 py-2.5 bg-[#F52B8C] text-white rounded-xl text-sm font-semibold hover:opacity-90 active:scale-95 transition-all shadow-md shadow-[#F52B8C]/25">
-                + Add appointment
+              <button onClick={() => onNavigate?.('analytics')} className="text-sm font-semibold text-[#F52B8C] hover:opacity-75 transition">
+                See full analytics
               </button>
             </div>
-          ) : (
-            <div className="space-y-2">
-              {bookings.map((booking, index) => {
-                const service = servicesMap.get(booking.service_id ?? '');
-                const serviceName = service?.name ?? 'Service';
-                const bookingTime = new Date(booking.booking_datetime).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-                const status = booking.status || 'pending';
-                const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.pending;
-                const clientName = booking.client_name ?? 'Client';
-                const clientInitials = clientName.split(' ').map((n: string) => n[0]).filter(Boolean).join('').toUpperCase().slice(0, 2) || '?';
-                const price = Number(booking.price_total ?? 0);
-                return (
-                  <div key={booking.id} className="bg-gray-50 rounded-xl p-3.5 transition-all" style={{ animationDelay: `${index * 0.06}s` }}>
-                    <div className="flex items-center gap-3">
-                      <div className={`w-9 h-9 rounded-full bg-gradient-to-br ${cfg.avatar} flex items-center justify-center flex-shrink-0`}>
-                        <span className="text-white text-xs font-bold">{clientInitials}</span>
+
+            <div className="bg-white border border-gray-100 rounded-2xl p-4 lg:p-6">
+              <div className="grid grid-cols-3 gap-2 lg:gap-4">
+                {kpis.map((k) => {
+                  const active = metric === k.id;
+                  return (
+                    <button key={k.id} onClick={() => setMetric(k.id)} aria-pressed={active}
+                      className={`text-left rounded-2xl border p-3 lg:p-4 transition focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none ${active ? 'border-[#F52B8C] bg-[#fff8fb]' : 'border-gray-100 hover:border-gray-200'}`}>
+                      <div className="flex items-center gap-1.5 text-gray-500">
+                        <k.icon className="w-3.5 h-3.5" />
+                        <span className="text-xs lg:text-sm font-medium truncate">{k.label}</span>
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2">
-                          <p className="font-semibold text-sm text-gray-900 truncate">{clientName}</p>
-                          <p className="font-bold text-sm text-[#F52B8C] flex-shrink-0">{fmt(price, currency)}</p>
-                        </div>
-                        <div className="flex items-center justify-between gap-2 mt-1">
-                          <p className="text-xs text-gray-400 truncate">{serviceName} · {bookingTime}</p>
-                          <span className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-medium border flex-shrink-0 ${cfg.bg} ${cfg.text} ${cfg.border}`}>
-                            <span>{cfg.icon}</span><span>{cfg.label}</span>
+                      <div className="flex flex-wrap items-baseline gap-x-2 mt-1.5">
+                        <span className="text-lg sm:text-2xl lg:text-3xl font-bold text-[#1A1A1A] tracking-tight truncate">{k.value}</span>
+                        {k.growth !== 0 && (
+                          <span className={`inline-flex items-center gap-0.5 text-xs font-semibold ${k.growth > 0 ? 'text-green-600' : 'text-red-500'}`}>
+                            {k.growth > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                            {Math.abs(k.growth)}%
                           </span>
-                        </div>
+                        )}
                       </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ════════════════════════════════════════════════════════════════
-          DESKTOP  (≥ lg)  — new layout
-      ════════════════════════════════════════════════════════════════ */}
-      <div className="hidden lg:block bg-white min-h-full pb-10">
-        <div className="w-full max-w-[1400px] mx-auto px-8 py-5">
-
-          {/* Greeting + period selector */}
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <div>
-              <h2 className="text-xl font-bold text-[#1A1A1A]">Hey {displayFirstName}, welcome back!</h2>
-              <p className="text-xs text-gray-400 mt-0.5">
-                {chartRange === '7d' ? 'Last 7 days' : chartRange === '30d' ? 'Last 30 days' : 'Last 90 days'}
-              </p>
-            </div>
-            <div className="flex gap-1 bg-gray-100 rounded-xl p-1">
-              {(['7d', '30d', '90d'] as ChartRange[]).map((r) => (
-                <button key={r} onClick={() => setChartRange(r)}
-                  className={`px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-all ${chartRange === r ? 'bg-white text-[#1A1A1A] shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
-                  {r === '7d' ? 'Last 7 days' : r === '30d' ? 'Last 30 days' : 'Last 90 days'}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Setup checklist — collapsible */}
-          {!allSetupDone && (
-            <div className="mb-4 bg-[#fff8fa] border border-pink-100 rounded-2xl overflow-hidden">
-              {/* Header — always visible */}
-              <button
-                onClick={() => setChecklistCollapsed((v) => !v)}
-                className="w-full flex items-center justify-between px-4 py-3 hover:bg-pink-50/50 transition"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="font-semibold text-[#1A1A1A] text-sm">
-                    Get your studio ready
-                  </span>
-                  <span className="text-xs text-gray-400">{setupDoneCount}/{setupSteps.length} done</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-20 h-1.5 bg-pink-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#F52B8C] rounded-full transition-all" style={{ width: `${(setupDoneCount / setupSteps.length) * 100}%` }} />
-                  </div>
-                  <ChevronRight className={`w-4 h-4 text-gray-400 transition-transform ${checklistCollapsed ? '' : 'rotate-90'}`} />
-                </div>
-              </button>
-              {/* Steps — hidden when collapsed */}
-              {!checklistCollapsed && (
-                <div className="px-4 pb-3 grid grid-cols-2 gap-2">
-                  {setupSteps.map(({ id, label, done, action }) => (
-                    <button key={id} onClick={() => !done && action()} disabled={done}
-                      className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm text-left transition-all ${done ? 'bg-white text-gray-400 cursor-default' : 'bg-white border border-pink-100 text-[#1A1A1A] hover:border-[#F52B8C]'}`}>
-                      {done ? <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" /> : <Circle className="w-4 h-4 text-gray-300 flex-shrink-0" />}
-                      <span className={done ? 'line-through text-xs' : 'font-medium text-sm'}>{label}</span>
-                      {!done && <ChevronRight className="w-3.5 h-3.5 text-[#F52B8C] ml-auto flex-shrink-0" />}
                     </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
+                  );
+                })}
+              </div>
 
-          {/* KPI cards */}
-          <div className="grid grid-cols-3 gap-3 mb-4">
-            {/* Studio visits */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col gap-1.5">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Studio visits</span>
-                <Eye className="w-3.5 h-3.5 text-gray-200" />
-              </div>
-              <p className="text-3xl font-bold text-[#1A1A1A] leading-none tracking-tight">
-                {storeViews !== null ? storeViews.toLocaleString() : '—'}
-              </p>
-              <button onClick={() => onNavigate?.('analytics')}
-                className="text-[11px] text-gray-400 hover:text-[#F52B8C] transition text-left mt-auto">
-                View analytics →
-              </button>
-            </div>
-            {/* Bookings */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-4 flex flex-col gap-1.5">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Bookings</span>
-                <CalendarDays className="w-3.5 h-3.5 text-gray-200" />
-              </div>
-              <div className="flex items-end gap-2">
-                <p className="text-3xl font-bold text-[#1A1A1A] leading-none tracking-tight">{periodKpis.bookingCount}</p>
-                {periodKpis.bookingGrowth !== 0 && (
-                  <span className={`text-xs font-semibold mb-0.5 flex items-center gap-0.5 ${periodKpis.bookingGrowth > 0 ? 'text-green-600' : 'text-red-500'}`}>
-                    {periodKpis.bookingGrowth > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                    {periodKpis.bookingGrowth > 0 ? '+' : ''}{periodKpis.bookingGrowth}%
-                  </span>
-                )}
-              </div>
-              <button onClick={() => onNavigate?.('calendar')}
-                className="text-[11px] text-gray-400 hover:text-[#F52B8C] transition text-left mt-auto">
-                View calendar →
-              </button>
-            </div>
-            {/* Revenue */}
-            <div className="bg-white border border-pink-100 rounded-2xl p-4 flex flex-col gap-1.5">
-              <div className="flex items-center justify-between">
-                <span className="text-[11px] font-medium text-gray-400 uppercase tracking-wide">Revenue</span>
-                <Wallet className="w-3.5 h-3.5 text-[#F52B8C]/30" />
-              </div>
-              <div className="flex items-end gap-2">
-                <p className="text-3xl font-bold text-[#F52B8C] leading-none tracking-tight">
-                  {fmt(periodKpis.periodRevenue, currency)}
-                </p>
-                {periodKpis.revenueGrowth !== 0 && (
-                  <span className={`text-xs font-semibold mb-0.5 flex items-center gap-0.5 ${periodKpis.revenueGrowth > 0 ? 'text-green-600' : 'text-red-500'}`}>
-                    {periodKpis.revenueGrowth > 0 ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                    {periodKpis.revenueGrowth > 0 ? '+' : ''}{periodKpis.revenueGrowth}%
-                  </span>
-                )}
-              </div>
-              <button onClick={() => onNavigate?.('revenue')}
-                className="text-[11px] text-gray-400 hover:text-[#F52B8C] transition text-left mt-auto">
-                View income →
-              </button>
-            </div>
-          </div>
-
-          {/* Chart + Balance — 2/3 + 1/3 grid */}
-          <div className="grid grid-cols-[2fr_1fr] gap-3 mb-4">
-            {/* Revenue chart */}
-            <div className="bg-white border border-gray-100 rounded-2xl p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div>
-                  <p className="text-[11px] text-gray-400 uppercase tracking-wide font-medium">Revenue · {currency}</p>
-                  <p className="text-lg font-bold text-[#1A1A1A] mt-0.5">{fmt(periodKpis.periodRevenue, currency)}</p>
-                </div>
-              </div>
-              {chartData.every((p) => p.revenue === 0) ? (
-                <div className="flex items-center gap-2 py-3 text-gray-400 text-sm">
-                  <span>No revenue recorded for this period.</span>
-                </div>
-              ) : (
-                <div className="h-[280px]">
+              <div className="h-[220px] lg:h-[280px] mt-5">
+                {chartEmpty ? (
+                  <div className="h-full flex items-center justify-center rounded-xl bg-gray-50 text-sm text-gray-400 text-center px-6">
+                    No {metricLabel.toLowerCase()} in this period yet.
+                  </div>
+                ) : (
                   <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData} margin={{ top: 4, right: 4, left: -20, bottom: 0 }}>
-                      {chartGradient}
-                      <XAxis dataKey="day" tick={{ fontSize: 10, fill: '#9ca3af' }} tickLine={false} axisLine={false}
-                        interval={chartRange === '7d' ? 1 : chartRange === '30d' ? 6 : 14} />
-                      <YAxis tick={{ fontSize: 10, fill: '#9ca3af' }} tickLine={false} axisLine={false} width={40}
-                        tickFormatter={(v) => `${v}`} domain={[0, (max: number) => max === 0 ? 10 : Math.ceil(max * 1.25)]} />
-                      <Tooltip contentStyle={{ background: '#fff', border: '1px solid #f3f4f6', borderRadius: '12px', fontSize: '12px', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
-                        formatter={(v) => [fmt(Number(v ?? 0), currency), 'Revenue']} labelStyle={{ color: '#6b7280', fontWeight: 500 }} />
-                      <Area type="monotone" dataKey="revenue" stroke="#F52B8C" strokeWidth={2} fill="url(#rGrad)"
+                    <AreaChart data={series.points} margin={{ top: 6, right: 6, left: -18, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="homeGrad" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#F52B8C" stopOpacity={0.18} />
+                          <stop offset="95%" stopColor="#F52B8C" stopOpacity={0} />
+                        </linearGradient>
+                      </defs>
+                      <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#9ca3af' }} tickLine={false} axisLine={false} minTickGap={24} />
+                      <YAxis tick={{ fontSize: 11, fill: '#9ca3af' }} tickLine={false} axisLine={false} width={44} allowDecimals={metric === 'revenue'} />
+                      <Tooltip
+                        contentStyle={{ background: '#fff', border: '1px solid #f3f4f6', borderRadius: 12, fontSize: 12, boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+                        formatter={(v) => [metric === 'revenue' ? fmt(Number(v ?? 0), currency) : String(v), metricLabel]}
+                        labelStyle={{ color: '#6b7280', fontWeight: 500 }} />
+                      <Area type="monotone" dataKey={metric} stroke="#F52B8C" strokeWidth={2.5} fill="url(#homeGrad)"
                         dot={false} activeDot={{ r: 4, fill: '#F52B8C', stroke: '#fff', strokeWidth: 2 }} />
                     </AreaChart>
                   </ResponsiveContainer>
-                </div>
-              )}
-            </div>
-
-            {/* Balance */}
-            <div className="bg-[#1A1A1A] rounded-2xl p-4 flex flex-col gap-3">
-              <p className="text-white/50 text-[11px] font-medium uppercase tracking-wider">Current balance</p>
-
-              {!stripeReady ? (
-                /* Stripe not connected */
-                <div className="flex-1 flex flex-col justify-between">
-                  <div>
-                    <p className="text-white font-semibold text-sm mb-1">Payments not set up</p>
-                    <p className="text-white/50 text-xs leading-relaxed">
-                      Connect Stripe to accept payments and receive payouts.
-                    </p>
-                  </div>
-                  <button onClick={() => onNavigate?.('stripe')}
-                    className="w-full py-2.5 bg-white text-[#1A1A1A] rounded-xl text-sm font-bold hover:opacity-90 transition mt-4">
-                    Set up payments →
-                  </button>
-                </div>
-              ) : (
-                /* Stripe connected */
-                <div className="flex-1 flex flex-col justify-between">
-                  <div className="space-y-3">
-                    <div>
-                      <p className="text-white/50 text-xs mb-0.5">Available</p>
-                      <p className="text-white text-2xl font-bold tracking-tight leading-none">
-                        {fmt(balance?.available ?? 0, currency)}
-                      </p>
-                    </div>
-                    <div className="border-t border-white/10 pt-3">
-                      <p className="text-white/50 text-xs mb-0.5">Pending</p>
-                      <p className="text-white text-xl font-bold tracking-tight leading-none">
-                        {fmt(balance?.pending ?? 0, currency)}
-                      </p>
-                    </div>
-                  </div>
-                  <button onClick={() => onNavigate?.('revenue')}
-                    className="w-full py-2.5 bg-[#F52B8C] text-white rounded-xl text-sm font-bold hover:opacity-90 transition mt-4">
-                    View income →
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Upcoming appointments */}
-          <div className="bg-white border border-gray-100 rounded-2xl p-4">
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-bold text-[#1A1A1A]">Upcoming appointments</span>
-              <div className="flex items-center gap-2">
-                <button onClick={() => onNavigate?.('calendar')}
-                  className="text-xs text-gray-400 font-medium hover:text-[#1A1A1A] transition">
-                  View calendar
-                </button>
-                <button onClick={() => setShowAddBooking(true)}
-                  className="flex items-center gap-1 px-3 py-1.5 bg-[#F52B8C] text-white rounded-lg text-xs font-bold hover:opacity-90 transition">
-                  <Plus className="w-3.5 h-3.5" /> Add
-                </button>
-              </div>
-            </div>
-            {bookings.length === 0 ? (
-              <div className="flex items-center justify-between py-3 px-1">
-                <p className="text-sm text-gray-400">No upcoming appointments. Share your link to get booked.</p>
-                <button onClick={() => setShowAddBooking(true)}
-                  className="flex-shrink-0 px-4 py-2 bg-[#F52B8C] text-white rounded-xl text-xs font-semibold hover:opacity-90 transition ml-4">
-                  + Add appointment
-                </button>
-              </div>
-            ) : (
-              <div className="space-y-1.5">
-                {bookings.slice(0, 6).map((booking) => {
-                  const service = servicesMap.get(booking.service_id ?? '');
-                  const dt = new Date(booking.booking_datetime);
-                  const dateStr = dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', timeZone: profile?.timezone ?? undefined });
-                  const timeStr = dt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false, timeZone: profile?.timezone ?? undefined });
-                  const status = booking.status ?? 'pending';
-                  const cfg = STATUS_CONFIG[status] ?? STATUS_CONFIG.pending;
-                  const clientName = booking.client_name ?? 'Client';
-                  const clientInitials = clientName.split(' ').map((n: string) => n[0]).filter(Boolean).join('').toUpperCase().slice(0, 2) || '?';
-                  const price = Number(booking.price_total ?? 0);
-                  return (
-                    <div key={booking.id} className="bg-gray-50 rounded-xl p-3 flex items-center gap-3">
-                      <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${cfg.avatar} flex items-center justify-center flex-shrink-0`}>
-                        <span className="text-white text-xs font-bold">{clientInitials}</span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between gap-2">
-                          <p className="font-semibold text-sm text-[#1A1A1A] truncate">{clientName}</p>
-                          <p className="font-bold text-sm text-[#F52B8C] flex-shrink-0">{fmt(price, currency)}</p>
-                        </div>
-                        <div className="flex items-center justify-between gap-2 mt-0.5">
-                          <p className="text-xs text-gray-400 truncate">{service?.name ?? 'Service'} · {dateStr} {timeStr}</p>
-                          <span className={`inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full text-[10px] font-medium border flex-shrink-0 ${cfg.bg} ${cfg.text} ${cfg.border}`}>
-                            <span>{cfg.icon}</span><span>{cfg.label}</span>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-                {bookings.length > 6 && (
-                  <button onClick={() => onNavigate?.('calendar')}
-                    className="w-full py-2 text-xs text-[#F52B8C] font-semibold hover:opacity-75 transition text-center">
-                    View {bookings.length - 6} more →
-                  </button>
                 )}
               </div>
-            )}
-          </div>
+            </div>
+          </section>
+
+          {/* Upcoming + balance */}
+          <section className="grid md:grid-cols-[minmax(0,1fr)_260px] gap-3">
+            <div className="bg-white border border-gray-100 rounded-2xl p-4 lg:p-5">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-semibold text-[#1A1A1A]">Upcoming appointments</h3>
+                <div className="flex items-center gap-3">
+                  <button onClick={() => onNavigate?.('calendar')} className="text-xs font-medium text-gray-500 hover:text-[#1A1A1A] transition">
+                    View calendar
+                  </button>
+                  <button onClick={() => setShowAddBooking(true)} aria-label="Add appointment"
+                    className="flex items-center gap-1 px-3 py-1.5 bg-[#F52B8C] text-white rounded-lg text-xs font-bold hover:opacity-90 transition">
+                    <Plus className="w-3.5 h-3.5" /> Add
+                  </button>
+                </div>
+              </div>
+              {upcoming.length === 0 ? (
+                <p className="text-sm text-gray-400 py-4">No upcoming appointments. Share your link to get booked.</p>
+              ) : (
+                <div className="space-y-1.5">
+                  {upcoming.slice(0, 5).map((b) => {
+                    const dt = new Date(b.booking_datetime);
+                    const when = dt.toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false, timeZone: profile.timezone ?? undefined });
+                    const cfg = STATUS_CONFIG[b.status] ?? STATUS_CONFIG.pending;
+                    const name = b.client_name || 'Client';
+                    return (
+                      <div key={b.id} className="flex items-center gap-3 rounded-xl bg-gray-50 p-3">
+                        <div className="w-9 h-9 rounded-full bg-[#fde8f3] text-[#F52B8C] flex items-center justify-center text-sm font-bold flex-shrink-0">
+                          {name.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2">
+                            <p className="font-semibold text-sm text-[#1A1A1A] truncate">{name}</p>
+                            <p className="font-semibold text-sm text-[#1A1A1A] flex-shrink-0">{fmt(Number(b.price_total ?? 0), currency)}</p>
+                          </div>
+                          <div className="flex items-center justify-between gap-2 mt-0.5">
+                            <p className="text-xs text-gray-500 truncate">{servicesMap.get(b.service_id ?? '')?.name ?? 'Service'} · {when}</p>
+                            <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium border flex-shrink-0 ${cfg.cls}`}>{cfg.label}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                  {upcoming.length > 5 && (
+                    <button onClick={() => onNavigate?.('calendar')} className="w-full pt-2 text-xs font-semibold text-[#F52B8C] hover:opacity-75 transition">
+                      View {upcoming.length - 5} more
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="bg-[#1A1A1A] rounded-2xl p-5 flex flex-col">
+              <p className="text-white/50 text-[11px] font-semibold uppercase tracking-wider">Balance</p>
+              {stripeReady ? (
+                <>
+                  <p className="text-white text-3xl font-bold tracking-tight mt-2">{fmt(balance.available, currency)}</p>
+                  <p className="text-white/50 text-xs mt-1">{fmt(balance.pending, currency)} pending</p>
+                  <button onClick={() => onNavigate?.('revenue')}
+                    className="mt-auto pt-4 w-full">
+                    <span className="block w-full py-2.5 bg-[#F52B8C] text-white rounded-xl text-sm font-bold hover:opacity-90 transition">View income</span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <p className="text-white font-semibold mt-2">Payments not set up</p>
+                  <p className="text-white/50 text-xs mt-1 leading-relaxed">Connect Stripe to accept deposits and receive payouts.</p>
+                  <button onClick={() => onNavigate?.('stripe')} className="mt-auto pt-4 w-full">
+                    <span className="block w-full py-2.5 bg-white text-[#1A1A1A] rounded-xl text-sm font-bold hover:opacity-90 transition">Set up payments</span>
+                  </button>
+                </>
+              )}
+            </div>
+          </section>
         </div>
+
+        {/* ── Live studio preview ─────────────────────────────────────── */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-6 flex flex-col items-center gap-4">
+            <StudioPhonePreview merchant={merchant} width={300} />
+            <button onClick={() => onNavigate?.('preview')}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#fde8f3] text-[#F52B8C] text-sm font-bold hover:bg-[#fbd9eb] transition">
+              <Pencil className="w-4 h-4" /> Edit studio
+            </button>
+          </div>
+        </aside>
       </div>
 
       <AddBookingModal
         isOpen={showAddBooking}
         onClose={() => setShowAddBooking(false)}
-        onSuccess={() => { loadData(); showSuccess('Booking added! 🎉'); }}
+        onSuccess={() => { void loadData(); showSuccess('Appointment added'); }}
         profileId={profileId}
         services={services}
       />
       {toast && <Toast type={toast.type} message={toast.message} onClose={hideToast} />}
-    </>
+    </div>
   );
 }
