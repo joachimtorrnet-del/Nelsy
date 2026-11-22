@@ -3,12 +3,23 @@ import Stripe from 'npm:stripe@13.11.0'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
 import { PostHog } from 'npm:posthog-node'
 
+// Analytics must never fail a webhook: a throw here returns non-2xx and Stripe retries forever.
 function createPostHogClient() {
-  return new PostHog(Deno.env.get('POSTHOG_API_KEY') ?? '', {
+  const key = Deno.env.get('POSTHOG_API_KEY')
+  if (!key) return { capture: (_e: Parameters<PostHog['capture']>[0]) => {}, shutdown: async () => {} }
+  const ph = new PostHog(key, {
     host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
     flushAt: 1,
     flushInterval: 0,
   })
+  return {
+    capture: (e: Parameters<PostHog['capture']>[0]) => {
+      try { ph.capture(e) } catch (err) { console.error('posthog capture failed:', err) }
+    },
+    shutdown: async () => {
+      try { await ph.shutdown() } catch (err) { console.error('posthog shutdown failed:', err) }
+    },
+  }
 }
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')

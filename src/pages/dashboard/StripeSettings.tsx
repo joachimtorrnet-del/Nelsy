@@ -141,9 +141,11 @@ export default function StripeSettings() {
     if (!supabase || !newCurrency) return;
     setCurrencySaving(true);
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error('Not signed in');
-      await supabase.from('profiles').update({ business_currency: newCurrency }).eq('id', user.id);
+      const { error } = await supabase.functions.invoke('update-business-currency', { body: { currency: newCurrency } });
+      if (error) {
+        const body = await (error as { context?: Response }).context?.json().catch(() => null);
+        throw new Error(body?.error ?? error.message);
+      }
       setProfile((prev) => prev ? { ...prev, business_currency: newCurrency } : prev);
       setCurrencyEditMode(false);
     } catch (e) {

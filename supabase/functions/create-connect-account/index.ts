@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import Stripe from 'npm:stripe@13.11.0'
 import { PostHog } from 'npm:posthog-node'
+import { isAllowedCurrency } from '../_shared/currencies.ts'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
 if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
@@ -165,9 +166,8 @@ serve(async (req) => {
       }
 
       const { currency: defaultCurrency, timezone: countryTz } = COUNTRY_DATA[resolvedCountry]
-      // Use client-selected currency if provided and valid for this country, otherwise fall back to default
-      const currency = (clientCurrency && typeof clientCurrency === 'string' && clientCurrency.length === 3)
-        ? clientCurrency.toLowerCase()
+      const currency = isAllowedCurrency(resolvedCountry, clientCurrency)
+        ? clientCurrency!.toLowerCase()
         : defaultCurrency
 
       let account
@@ -224,17 +224,25 @@ serve(async (req) => {
         throw new Error('Failed to save Stripe account ID')
       }
 
-      const posthog = new PostHog(Deno.env.get('POSTHOG_API_KEY') ?? '', {
-        host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
-        flushAt: 1,
-        flushInterval: 0,
-      })
-      posthog.capture({
-        distinctId: profile_id,
-        event: 'stripe connect account created',
-        properties: { stripe_account_id: accountId, country: resolvedCountry, currency },
-      })
-      await posthog.shutdown()
+      // Analytics is best-effort: failing here would leave the pro with an account but no onboarding link
+      const posthogKey = Deno.env.get('POSTHOG_API_KEY')
+      if (posthogKey) {
+        try {
+          const posthog = new PostHog(posthogKey, {
+            host: Deno.env.get('POSTHOG_HOST') ?? 'https://eu.i.posthog.com',
+            flushAt: 1,
+            flushInterval: 0,
+          })
+          posthog.capture({
+            distinctId: profile_id,
+            event: 'stripe connect account created',
+            properties: { stripe_account_id: accountId, country: resolvedCountry, currency },
+          })
+          await posthog.shutdown()
+        } catch (err) {
+          console.error('posthog failed:', err)
+        }
+      }
     }
 
     const accountLink = await stripe.accountLinks.create({
