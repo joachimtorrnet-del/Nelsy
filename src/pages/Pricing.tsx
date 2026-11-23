@@ -184,8 +184,8 @@ export default function Pricing() {
   return (
     <>
       <SEOMeta
-        title="Pricing — Nelsy | Simple beauty business platform"
-        description="One plan. Everything you need to take bookings, collect deposits, and grow your beauty business. Start free for 14 days."
+        title="Pricing: $29/month, 0% Booking Commission"
+        description="Nelsy pricing: one plan at $29/month or $25/month billed yearly, 0% booking commission, deposits and online payments included. Free for 14 days."
         canonical="/pricing"
         jsonLd={jsonLd}
       />

@@ -135,6 +135,11 @@ async function renderRoute(browser, PORT, route) {
         console.warn(`⚠️  h1 not found for ${route} — saving anyway`)
       })
 
+      // index.html ships a default <title>; keep only the page's own (react-helmet adds it first)
+      await page.evaluate(() => {
+        const titles = [...document.querySelectorAll('head title')]
+        if (titles.length > 1) titles.slice(1).forEach((t) => t.remove())
+      })
       const html = await page.content()
 
       const outPath =
