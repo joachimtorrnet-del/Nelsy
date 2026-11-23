@@ -9,7 +9,7 @@
 
 import puppeteer from 'puppeteer'
 import { createServer } from 'http'
-import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync } from 'fs'
+import { readFileSync, writeFileSync, mkdirSync, existsSync, statSync, copyFileSync } from 'fs'
 import { resolve, extname, dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -63,6 +63,11 @@ function startServer(port) {
 }
 
 async function prerender() {
+  // Keep the untouched SPA shell for every non-prerendered route (dashboard,
+  // studios, booking): '/' is prerendered last and overwrites index.html, and
+  // vercel.json rewrites unknown paths to app.html instead.
+  copyFileSync(resolve(DIST, 'index.html'), resolve(DIST, 'app.html'))
+
   const PORT = 7788
   const server = await startServer(PORT)
   console.log(`Static server listening on http://127.0.0.1:${PORT}`)
@@ -159,5 +164,7 @@ async function renderRoute(browser, PORT, route) {
 
 prerender().catch((err) => {
   console.error('Prerender failed, deploying without prerendered pages:', err)
+  // app.html must exist for the vercel.json fallback even when prerendering failed
+  try { if (!existsSync(resolve(DIST, 'app.html'))) copyFileSync(resolve(DIST, 'index.html'), resolve(DIST, 'app.html')) } catch { /* ignore */ }
   process.exit(0)
 })
