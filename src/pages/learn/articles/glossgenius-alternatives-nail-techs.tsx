@@ -14,6 +14,7 @@ registerArticle({
   heroImageAlt: 'GlossGenius alternatives for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-24',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'why-look', label: 'Why nail techs look for GlossGenius alternatives' },
@@ -23,14 +24,14 @@ registerArticle({
   ],
   relatedSlugs: ['glossgenius-vs-fresha-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'how-to-choose-booking-app-nail-business'],
   faq: [
-    { q: 'Is GlossGenius only available in the US?', a: 'GlossGenius has historically been US-focused. Nail techs outside the US typically cannot access GlossGenius — which makes alternatives especially relevant for UK, Australian, and European nail techs. Always check current availability on GlossGenius\'s website, as geographic availability can change.' },
+    { q: 'Is GlossGenius only available in the US?', a: 'GlossGenius publishes its prices in US dollars and its pricing page does not list other countries, so it is mainly used by US businesses. Nail techs in the UK, Europe or Australia usually compare Fresha, Booksy or a link-in-bio booking page such as Nelsy instead.' },
     { q: 'What\'s the main reason nail techs leave GlossGenius?', a: 'The most commonly cited reasons in nail tech communities are: the subscription fee feels high relative to their volume of bookings, geographic unavailability, or a desire for marketplace visibility (which GlossGenius doesn\'t offer — it\'s a direct booking tool, not a discovery platform). Fresha and Booksy both offer marketplace visibility alongside booking management.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="warning" title="Pricing and features change">
-        Booking platform pricing, features, and availability change frequently. This article describes positioning and use cases at time of writing. Always verify current pricing and features on each platform's website before making a decision.
+        Prices checked on the official pricing pages on 23 November 2026: GlossGenius from $24/month billed annually ($28 monthly); Fresha from €14.95/month plus a one-time fee on new marketplace clients; Booksy $29.99/month in the US plus 30% of a Boost client&apos;s first visit; Nelsy $29/month or $25/month billed yearly with 0% commission.
       </ArticleCallout>
 
       <section id="why-look">

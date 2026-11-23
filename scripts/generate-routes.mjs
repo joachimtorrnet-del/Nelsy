@@ -33,7 +33,7 @@ function loadEnv() {
 }
 
 // Top-level app routes a studio slug must never shadow
-const RESERVED = new Set(['blog', 'learn', 'tools', 'dashboard', 'login', 'onboarding', 'onboarding-stripe', 'pricing',
+const RESERVED = new Set(['blog', 'contact', 'about', 'learn', 'tools', 'dashboard', 'login', 'onboarding', 'onboarding-stripe', 'pricing',
   'privacy', 'terms', 'features', 'use-cases', 'studio', 'stripe', 'booking-confirmed', 'forgot-password', 'reset-password']);
 
 // Keep in sync with isStudioIndexable() in src/lib/studioSeo.ts
@@ -93,6 +93,7 @@ const STATIC_SEO_ROUTES = [
   { path: '/use-cases/reduce-no-shows', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/use-cases/turn-followers-into-bookings', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/use-cases/grow-your-beauty-business', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
+  { path: '/contact', priority: '0.4', changefreq: 'yearly', lastmod: '2026-11-24' },
   { path: '/privacy', priority: '0.2', changefreq: 'yearly', lastmod: '2026-11-23' },
   { path: '/terms', priority: '0.2', changefreq: 'yearly', lastmod: '2026-11-23' },
   { path: '/nail-tech-deposits',                             priority: '0.9', changefreq: 'monthly', lastmod: '2026-10-20' },

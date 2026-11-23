@@ -14,6 +14,7 @@ registerArticle({
   heroImageAlt: 'Is Booksy worth it for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-24',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'what-booksy-is', label: 'What Booksy is' },
@@ -24,15 +25,15 @@ registerArticle({
   ],
   relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'how-to-choose-booking-app-nail-business'],
   faq: [
-    { q: 'How much does Booksy cost for nail techs?', a: 'Booksy charges a monthly subscription for access to the platform. Exact pricing varies by market and plan — always check Booksy\'s current pricing page for your country before signing up. Pricing has changed over time, and the cost per booking depends heavily on how many clients you see per month.' },
+    { q: 'How much does Booksy cost for nail techs?', a: 'On Booksy\'s pricing pages (checked 23 November 2026): $29.99/month in the US plus $20 per extra team member, or £40/month in the UK plus £5 per extra team member, excluding tax. Boost charges a one-time 30% fee on a Boost client\'s first visit (max $100 in the US, min £5 in the UK). Mobile payments cost 2.69% + $0.30 in the US. Appointment reminders are free.' },
     { q: 'Can clients book through Booksy without the app?', a: 'Yes — clients can book through a web browser without downloading the Booksy app. However, Booksy\'s client-side mobile app is one of its strengths, and clients who regularly use Booksy already have it installed. This reduces friction for returning users.' },
     { q: 'Does Booksy integrate with Google booking?', a: 'Booksy does offer Google integration in some markets — this means your booking button can appear directly in Google Search and Google Maps, which is valuable for local visibility. Check current availability of this feature for your location.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
-      <ArticleCallout variant="warning" title="Verify current pricing">
-        Booksy's subscription pricing varies by market and changes over time. Verify current pricing on Booksy's website before committing.
+      <ArticleCallout variant="info" title="Booksy pricing in 2026">
+        US: $29.99/month + $20 per extra team member, 14-day trial. UK: £40/month + £5 per extra team member, 7-day trial. Boost: 30% of a new Boost client&apos;s first visit (max $100 US, min £5 UK), 0% from the second visit. Card fees (US): 2.69% + $0.30 mobile payments, 2.49% + $0.10 card reader. Source: <a href="https://biz.booksy.com/en-us/pricing" rel="nofollow noopener" target="_blank" className="underline text-[#F52B8C]">Booksy pricing</a>, checked 23 November 2026.
       </ArticleCallout>
 
       <section id="what-booksy-is">

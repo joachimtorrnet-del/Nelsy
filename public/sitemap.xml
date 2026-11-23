@@ -103,6 +103,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://getnelsy.com/contact</loc>
+    <lastmod>2026-11-24</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://getnelsy.com/privacy</loc>
     <lastmod>2026-11-23</lastmod>
     <changefreq>yearly</changefreq>
@@ -386,7 +392,7 @@
   </url>
   <url>
     <loc>https://getnelsy.com/blog/glossgenius-alternatives-nail-techs</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -398,7 +404,7 @@
   </url>
   <url>
     <loc>https://getnelsy.com/blog/glossgenius-vs-fresha-for-nail-techs</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -968,13 +974,13 @@
   </url>
   <url>
     <loc>https://getnelsy.com/blog/is-booksy-worth-it-nail-techs</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://getnelsy.com/blog/is-glossgenius-worth-it-nail-techs</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

@@ -34,6 +34,7 @@ import AudienceCapturePage from './pages/features/AudienceCapture';
 import CRMPage from './pages/features/CRM';
 import AnalyticsPage from './pages/features/Analytics';
 import Pricing from './pages/Pricing';
+import Contact from './pages/Contact';
 import NailTechsPage from './pages/use-cases/NailTechs';
 import LashTechsPage from './pages/use-cases/LashTechs';
 import GetMoreClientsPage from './pages/use-cases/GetMoreClients';
@@ -139,6 +140,7 @@ export default function App() {
 
             {/* ── Use case pages ─────────────────────────────────────────── */}
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/use-cases/nail-techs" element={<NailTechsPage />} />
             <Route path="/use-cases/lash-techs" element={<LashTechsPage />} />
             <Route path="/use-cases/get-more-clients" element={<GetMoreClientsPage />} />

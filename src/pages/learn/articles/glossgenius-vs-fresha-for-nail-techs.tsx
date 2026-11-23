@@ -1,101 +1,116 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleTable, ArticleComparison, ArticleTip } from '@/components/article/ArticleBodyComponents';
+
+const ext = 'underline text-[#F52B8C]';
 
 registerArticle({
   slug: 'glossgenius-vs-fresha-for-nail-techs',
-  title: 'GlossGenius vs Fresha for Nail Techs',
-  seoTitle: 'GlossGenius vs Fresha for Nail Techs: Which Should You Use?',
-  excerpt: 'GlossGenius and Fresha both serve nail techs and beauty professionals, but they take different approaches to booking, payments, and brand. Here\'s how to think about the choice.',
-  seoDescription: 'GlossGenius vs Fresha for nail techs. A balanced look at how these booking platforms differ and what to consider when choosing between them for your nail business.',
+  title: 'GlossGenius vs Fresha (2026): Prices, Fees and Which to Choose',
+  seoTitle: 'GlossGenius vs Fresha (2026): Prices, Fees & Differences',
+  excerpt: 'GlossGenius vs Fresha compared for nail techs and beauty pros: plan prices, card fees, marketplace fee on new clients, texts, payouts and who each one suits. Figures from the official pricing pages.',
+  seoDescription: 'GlossGenius vs Fresha: plans ($24 vs €14.95/month), card fees, Fresha marketplace fee, texts and payouts compared, with the differences that matter for nail techs.',
   category: 'comparisons',
-  tags: ['GlossGenius vs Fresha', 'nail tech booking software', 'GlossGenius nail tech', 'booking platform nail'],
+  tags: ['GlossGenius vs Fresha', 'Fresha vs GlossGenius', 'GlossGenius pricing', 'Fresha pricing', 'nail tech booking software'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FBCFE8 100%)',
-  heroImageAlt: 'GlossGenius vs Fresha for nail techs',
+  heroImageAlt: 'GlossGenius vs Fresha: prices and fees compared',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
   publishedAt: '2026-10-21',
+  updatedAt: '2026-11-24',
   toc: [
-    { id: 'what-each-is', label: 'What each platform is' },
-    { id: 'key-differences', label: 'Key differences' },
-    { id: 'glossgenius-strengths', label: 'Where GlossGenius tends to work well' },
-    { id: 'fresha-strengths', label: 'Where Fresha tends to work well' },
-    { id: 'geographic-context', label: 'Geographic context' },
-    { id: 'what-to-consider', label: 'What to consider when choosing' },
+    { id: 'short-answer', label: 'The short answer' },
+    { id: 'pricing', label: 'Monthly price' },
+    { id: 'new-clients', label: 'Fee on new clients' },
+    { id: 'card-fees', label: 'Card fees and payouts' },
+    { id: 'texts', label: 'Texts and extras' },
+    { id: 'which', label: 'Which one should you choose?' },
+    { id: 'alternative', label: 'An alternative for beauty creators' },
   ],
-  relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'best-scheduling-software-solo-nail-techs', 'how-to-get-booked-out-as-nail-tech'],
+  relatedSlugs: ['is-glossgenius-worth-it-nail-techs', 'should-nail-techs-use-fresha', 'glossgenius-vs-booksy-nail-techs', 'fresha-vs-booksy-for-nail-techs'],
   faq: [
-    { q: 'Is GlossGenius available outside the US?', a: 'GlossGenius has been primarily US-focused. If you\'re based outside the US, check whether GlossGenius currently supports your market — availability and features may differ by region. Fresha has broader international presence across UK, Europe, and elsewhere.' },
-    { q: 'Which platform has better branding for nail techs?', a: 'GlossGenius is known for emphasising the brand presentation layer — the booking page design and aesthetic. Fresha\'s client-facing pages are functional and clean. If you place high priority on a beautifully branded booking experience, GlossGenius\'s design focus may appeal. Ultimately, test both client-facing flows with a critical eye — what looks good in a demo may feel different in practice.' },
-    { q: 'Do both platforms handle deposits and cancellation fees?', a: 'Both platforms have deposit and cancellation policy features, though implementation details vary. Check each platform\'s current deposit and no-show policy tools specifically — these are critical for nail businesses where no-shows and late cancellations are a real cost.' },
+    { q: 'What is the difference between GlossGenius and Fresha?', a: 'Fresha combines booking software with a consumer marketplace and charges a one-time fee on brand new marketplace clients. GlossGenius is booking, website and payments software without a marketplace mentioned on its pricing pages. Fresha starts at €14.95/month; GlossGenius at $24/month billed annually.' },
+    { q: 'Is GlossGenius better than Fresha?', a: 'Neither is better for everyone. GlossGenius suits beauty pros who bring their own clients and want a polished booking site and fast US payouts. Fresha suits those who want a low entry price, low published card fees and a marketplace that can bring new clients.' },
+    { q: 'Which has lower card fees, GlossGenius or Fresha?', a: 'On their published rates, Fresha is lower: 0.59% + €0.15 in person and 1.29% + €0.15 online, versus 2.4% + $0.15 in person and 3.4% + $0.15 for online or card-on-file payments at GlossGenius. The two are priced in different currencies and markets, so compare in your own country.' },
+    { q: 'Do GlossGenius and Fresha offer free trials?', a: 'Yes: GlossGenius offers 14 days with no credit card required, and Fresha offers 7 days.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
-      <ArticleCallout variant="info" title="A note on this comparison">
-        This article describes each platform\'s general positioning and characteristics. Specific pricing, fees, and features change — always verify current information on each platform\'s website before committing. We don\'t fabricate pricing figures or feature lists.
+      <ArticleCallout variant="info" title="How we sourced these figures">
+        From the official pricing pages of <a href="https://glossgenius.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>GlossGenius</a> (US dollars) and <a href="https://www.fresha.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Fresha</a> (euros), checked on 23 November 2026, excluding tax. The two publish prices in different currencies, so we show each as published.
       </ArticleCallout>
 
-      <section id="what-each-is">
-        <h2 className="font-serif text-2xl font-bold mb-4">What each platform is</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>GlossGenius</strong> is a US-focused booking and business management platform built specifically for independent beauty professionals. Its positioning emphasises clean, branded booking pages and a client experience designed to feel premium — appealing particularly to nail techs and hairstylists who prioritise brand aesthetics. GlossGenius includes payment processing, client management, and reporting tools.</p>
-        <p className="text-gray-700 leading-relaxed"><strong>Fresha</strong> is a globally used booking platform for salons and beauty businesses. It operates both as a business management tool and a consumer marketplace where clients can discover and book services. Fresha has international presence and broad adoption across the UK, Europe, Australia, and other markets, targeting businesses from solo operators through to multi-location salons.</p>
-      </section>
-
-      <section id="key-differences">
-        <h2 className="font-serif text-2xl font-bold mb-4">Key differences in approach</h2>
-        <ArticleTable
-          headers={['Dimension', 'GlossGenius', 'Fresha']}
-          rows={[
-            ['Primary market', 'United States; primarily US-focused', 'Global; strong UK, Europe, Australia presence'],
-            ['Brand emphasis', 'Premium aesthetic; branded booking pages are a core differentiator', 'Functional clean design; marketplace visibility is a differentiator'],
-            ['Marketplace / discovery', 'Primarily direct booking (your own booking page); less marketplace-oriented', 'Consumer marketplace layer for new client discovery'],
-            ['Payment model', 'Subscription-based with integrated payments; check current pricing', 'Has offered free core + fees on marketplace new clients; check current pricing'],
-            ['Target user', 'Independent beauty professionals; solo operators', 'Salons, solo operators, teams of various sizes'],
+      <section id="short-answer">
+        <h2 className="font-serif text-2xl font-bold mb-4">The short answer</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">
+          <strong>Fresha</strong> is cheaper to start (€14.95/month) with lower published card fees, and adds a marketplace that charges a one-time fee on brand new clients it sends you. <strong>GlossGenius</strong> costs a bit more ($24 to $28/month), has no marketplace fee mentioned, and focuses on your own booking website and fast payouts.
+        </p>
+        <ArticleComparison
+          items={[
+            { label: 'GlossGenius', pros: ['No new-client marketplace fee mentioned', 'Free same-business-day payouts (Mon to Thu)', '14-day trial, no credit card'], cons: ['3.4% + $0.15 on online and card-on-file payments', 'Google Booking and text marketing from the Gold plan'] },
+            { label: 'Fresha', pros: ['From €14.95/month', 'Card fees from 0.59% + €0.15 in person', 'Marketplace that can bring new clients'], cons: ['One-time fee on new marketplace clients (rate not published)', 'Only 20 free texts a month, then €0.10'] },
           ]}
         />
-        <ArticleTip>Both platforms\' pricing structures have evolved over time. What was accurate when you read a review 12 months ago may not reflect current plans — check pricing directly before deciding.</ArticleTip>
       </section>
 
-      <section id="glossgenius-strengths">
-        <h2 className="font-serif text-2xl font-bold mb-4">Where GlossGenius tends to work well</h2>
-        <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>US-based nail techs:</strong> GlossGenius is built for the US market — its payment processing, tax handling, and support are designed for US professionals</li>
-          <li><strong>Brand-conscious nail techs:</strong> If a premium-looking, on-brand booking page matters to you — and you want your booking experience to reflect your visual brand — GlossGenius\'s design focus is a genuine differentiator</li>
-          <li><strong>Solo/independent operators:</strong> GlossGenius is specifically designed for independent professionals rather than multi-team salons</li>
-          <li><strong>Direct booking model:</strong> If you build your client base through Instagram, referrals, and direct channels rather than marketplace discovery, a platform that excels at direct booking presentation suits this model</li>
+      <section id="pricing">
+        <h2 className="font-serif text-2xl font-bold mb-4">Monthly price</h2>
+        <ArticleTable
+          headers={['', 'GlossGenius', 'Fresha']}
+          rows={[
+            ['Solo plan', 'Standard: $24/month billed annually, $28 monthly', 'Independent: €14.95/month'],
+            ['Team plan', 'Gold: $48 to $56/month (up to 9 staff)', 'Team: €9.95 per team member per month'],
+            ['Large team', 'Platinum: $148 to $168/month (10+, unlimited members)', 'Enterprise: custom (over 20 members)'],
+            ['Free trial', '14 days, no credit card', '7 days'],
+          ]}
+        />
+        <ArticleTip>For a team of 5, Fresha Team is 5 × €9.95 = €49.75/month, close to GlossGenius Gold at $48 to $56. The gap is mostly at the solo level.</ArticleTip>
+      </section>
+
+      <section id="new-clients">
+        <h2 className="font-serif text-2xl font-bold mb-4">Fee on new clients</h2>
+        <p className="text-gray-700 leading-relaxed">
+          Fresha charges a one-time fee on brand new clients who find you through the Fresha marketplace; returning clients and bookings from Instagram, Facebook or your own link are free. Its pricing page doesn&apos;t give the percentage. GlossGenius&apos;s pricing and payments pages don&apos;t mention a marketplace or a fee on new clients.
+        </p>
+      </section>
+
+      <section id="card-fees">
+        <h2 className="font-serif text-2xl font-bold mb-4">Card fees and payouts</h2>
+        <ArticleTable
+          headers={['', 'GlossGenius', 'Fresha']}
+          rows={[
+            ['In person', '2.4% + $0.15', '0.59% + €0.15 (+€0.10 Tap to Pay)'],
+            ['Online / card on file', '3.4% + $0.15', '1.29% + €0.15'],
+            ['Buy now, pay later', '6% + $0.30', 'Klarna 4.99% + €0.50'],
+            ['Payouts', 'Free same business day (Mon to Thu); instant +1.8%', 'Not stated on the pricing page'],
+            ['Card terminal', 'Card reader (price not on pricing page)', 'From €7.95/month or €119 upfront'],
+          ]}
+        />
+      </section>
+
+      <section id="texts">
+        <h2 className="font-serif text-2xl font-bold mb-4">Texts and extras</h2>
+        <ul className="list-disc list-inside space-y-2 text-gray-700">
+          <li><strong>GlossGenius:</strong> text marketing from Gold, 2,500 marketing texts on Platinum; Payroll $40/month + $6 per seat; Reception $50/month.</li>
+          <li><strong>Fresha:</strong> 20 free automated texts per month (per member on Team), then €0.10; marketing texts €0.14; add-ons such as Smart Website €13.95/month and Client Loyalty €59.95 per location.</li>
         </ul>
       </section>
 
-      <section id="fresha-strengths">
-        <h2 className="font-serif text-2xl font-bold mb-4">Where Fresha tends to work well</h2>
-        <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>UK and international nail techs:</strong> Fresha has widespread adoption outside the US — particularly in the UK, where it\'s a well-known name among beauty clients</li>
-          <li><strong>Wanting new client discovery:</strong> Fresha\'s marketplace layer means clients actively searching for a nail tech in your area can find you without Instagram or word of mouth</li>
-          <li><strong>Growing businesses:</strong> Fresha\'s toolset scales from solo to small team — if you plan to add staff, Fresha supports that transition</li>
-          <li><strong>Clients already on Fresha:</strong> In markets with strong Fresha consumer adoption, many clients already have the app — reducing friction for new bookings</li>
+      <section id="which">
+        <h2 className="font-serif text-2xl font-bold mb-4">Which one should you choose?</h2>
+        <ul className="list-disc list-inside space-y-2 text-gray-700">
+          <li><strong>Choose GlossGenius</strong> if you work in the US, already have clients, and want a polished booking site with fast payouts and no marketplace fee.</li>
+          <li><strong>Choose Fresha</strong> if you&apos;re in Europe or the UK, want the lowest entry price and card fees, and want a marketplace to bring new clients.</li>
         </ul>
+        <p className="text-gray-700 mt-4 leading-relaxed">Full reviews: <Link to="/blog/is-glossgenius-worth-it-nail-techs" className={ext}>Is GlossGenius worth it?</Link> and <Link to="/blog/should-nail-techs-use-fresha" className={ext}>Fresha review</Link>.</p>
       </section>
 
-      <section id="geographic-context">
-        <h2 className="font-serif text-2xl font-bold mb-4">Geographic context matters</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">The "best" platform in your market is influenced by where your clients are and which platforms they already use. A platform with 5 million registered clients in your city delivers more discovery value than a platform with better features but fewer local users.</p>
-        <p className="text-gray-700 leading-relaxed">Before committing, ask your existing clients which booking platforms they use. Ask other nail techs in your area what they use and what their client adoption has been like. Local market conditions matter as much as product features.</p>
-      </section>
-
-      <section id="what-to-consider">
-        <h2 className="font-serif text-2xl font-bold mb-4">What to consider when choosing</h2>
-        <ArticleTable
-          headers={['Question', 'Notes']}
-          rows={[
-            ['Where are you based?', 'GlossGenius is US-focused; Fresha has stronger international presence. This may settle the question immediately.'],
-            ['How important is brand presentation on your booking page?', 'GlossGenius emphasises premium booking aesthetics; both are clean and functional'],
-            ['Do you want marketplace discovery, or do you primarily book direct?', 'If Instagram/referral is your main channel, marketplace features matter less. If you want a discovery channel, compare each platform\'s presence in your city.'],
-            ['What does the client experience look like?', 'Test the client-facing flow yourself — book a test appointment to see what your clients would experience'],
-            ['What are the payment and no-show policy tools?', 'Compare deposit, cancellation fee, and no-show features specifically — these are practical day-to-day tools for nail techs'],
-          ]}
-        />
-        <p className="text-gray-700 mt-4 leading-relaxed">For a broader platform comparison: <Link to="/blog/best-scheduling-software-solo-nail-techs" className="underline text-[#F52B8C]">best scheduling software for solo nail techs</Link>.</p>
+      <section id="alternative">
+        <h2 className="font-serif text-2xl font-bold mb-4">An alternative for beauty creators</h2>
+        <p className="text-gray-700 leading-relaxed">
+          If your clients find you on Instagram and TikTok, Nelsy puts bookings, deposits, coaching and digital products on one link-in-bio page, with 0% Nelsy commission: $29/month or $25/month billed yearly, with a 14-day free trial. Compare all options in <Link to="/best-booking-app-for-nail-techs" className={ext}>the best booking apps for nail techs</Link>.
+        </p>
       </section>
     </div>
   ),

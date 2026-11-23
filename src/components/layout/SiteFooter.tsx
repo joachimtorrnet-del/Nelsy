@@ -54,6 +54,7 @@ export default function SiteFooter() {
           <div className="flex flex-wrap items-center justify-center gap-5 text-sm text-gray-500">
             <Link to="/privacy" className="hover:text-white transition">Privacy</Link>
             <Link to="/terms" className="hover:text-white transition">Terms</Link>
+            <Link to="/contact" className="hover:text-white transition">Contact</Link>
             <a href="mailto:support@getnelsy.com" className="hover:text-white transition">Contact</a>
           </div>
           <p className="text-xs text-gray-600">© {new Date().getFullYear()} Nelsy</p>
