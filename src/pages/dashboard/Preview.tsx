@@ -932,6 +932,8 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   // Template gallery carousel index
   const selectedTplIdx = TEMPLATES.findIndex((t) => t.themeId === designForm.theme_preset);
   const currentTplIdx = selectedTplIdx >= 0 ? selectedTplIdx : 0;
+  // Studio still on a template that is no longer offered in the gallery
+  const legacyTemplate = selectedTplIdx < 0;
 
   // Drag state
   const dragSrcIdx = useRef<number | null>(null);
@@ -1367,7 +1369,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                     backgroundOverride={selected ? designForm.color_background : null}
                     fontOverride={selected ? designForm.font_family : null}
                     selected={selected}
-                    onClick={() => (selected ? undefined : applyTemplate(tpl))}
+                    onClick={() => (selected && !legacyTemplate ? undefined : applyTemplate(tpl))}
                   />
                 );
               }}
@@ -1395,7 +1397,9 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             </button>
           </div>
           <p className="text-center text-[13px] text-gray-400 pb-5 px-4">
-            Use the arrows, your keyboard arrow keys, or click a card. {currentTplIdx + 1} of {TEMPLATES.length}.
+            {legacyTemplate
+              ? <>Your studio uses an older template. Click a card to pick a new one, then save.</>
+              : <>Use the arrows, your keyboard arrow keys, or click a card. {currentTplIdx + 1} of {TEMPLATES.length}.</>}
           </p>
 
           {/* Colors + font, one panel */}
