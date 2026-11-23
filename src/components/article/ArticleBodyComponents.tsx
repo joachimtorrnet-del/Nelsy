@@ -174,6 +174,9 @@ export function ArticleSteps({
 
 // ─── ArticleImage ────────────────────────────────────────────────────────────
 
+const UNSPLASH = 'https://images.unsplash.com/';
+
+/** Accepts a full URL, a local path, or an Unsplash photo id ("photo-…"), served responsive. */
 export function ArticleImage({
   src,
   alt,
@@ -185,14 +188,31 @@ export function ArticleImage({
   caption?: string;
   fullWidth?: boolean;
 }) {
+  const isUnsplash = src.startsWith('photo-');
+  const url = (w: number) => `${UNSPLASH}${src}?auto=format&fit=crop&w=${w}&h=${Math.round(w * 0.75)}&q=75`;
   return (
     <figure className={`my-8 ${fullWidth ? '-mx-4 sm:-mx-0' : ''}`}>
       <div className="rounded-2xl overflow-hidden bg-[#F7F3F3]">
-        <img src={src} alt={alt} className="w-full object-cover" loading="lazy" />
+        {isUnsplash ? (
+          <img
+            src={url(960)}
+            srcSet={`${url(480)} 480w, ${url(960)} 960w, ${url(1440)} 1440w`}
+            sizes="(max-width: 768px) 100vw, 720px"
+            width={960}
+            height={720}
+            alt={alt}
+            className="w-full h-auto object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <img src={src} alt={alt} className="w-full object-cover" loading="lazy" />
+        )}
       </div>
-      {caption && (
+      {(caption || isUnsplash) && (
         <figcaption className="mt-2 text-xs text-gray-500 text-center">
           {caption}
+          {isUnsplash && <span className="text-gray-400">{caption ? ' · ' : ''}Photo: Unsplash</span>}
         </figcaption>
       )}
     </figure>

@@ -1,5 +1,5 @@
 import { registerArticle } from '@/lib/articles';
-import { ArticleTip } from '@/components/article/ArticleBodyComponents';
+import { ArticleTip, ArticleImage } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'vacation-nail-ideas',
@@ -30,6 +30,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="beach-holiday">
         <h2 className="font-serif text-2xl font-bold mb-4">Beach and resort nails (ideas 1–12)</h2>
+        <ArticleImage src="photo-1652990337162-fa84a588d843" alt="White manicure photographed against a tropical palm leaf" />
         <ol className="list-decimal list-inside space-y-2 text-gray-700 mb-4">
           <li>Bright coral on short oval — the classic beach nail; warm, sun-ready</li>
           <li>Aqua blue — reminiscent of clear water; perfectly on-theme</li>
@@ -48,6 +49,7 @@ registerArticle({
 
       <section id="city-break">
         <h2 className="font-serif text-2xl font-bold mb-4">City break nails (ideas 13–22)</h2>
+        <ArticleImage src="photo-1754799670380-17640d939e32" alt="Manicured nails with rings, a polished look for a city break" />
         <ol start={13} className="list-decimal list-inside space-y-2 text-gray-700 mb-4">
           <li>Classic red — strong, chic, and works with everything</li>
           <li>Deep burgundy — sophisticated for colder city destinations (Paris, NYC, Amsterdam)</li>
@@ -64,6 +66,7 @@ registerArticle({
 
       <section id="bold-holiday">
         <h2 className="font-serif text-2xl font-bold mb-4">Bold holiday statements (ideas 23–32)</h2>
+        <ArticleImage src="photo-1771441580033-3979bc33627b" alt="Nails with abstract neon nail art" />
         <ol start={23} className="list-decimal list-inside space-y-2 text-gray-700 mb-4">
           <li>Full neon set — all nails in neon yellow, pink, or green for maximum impact</li>
           <li>Rainbow nails — each nail a different colour; playful and content-ready</li>
@@ -80,6 +83,7 @@ registerArticle({
 
       <section id="minimalist-holiday">
         <h2 className="font-serif text-2xl font-bold mb-4">Minimalist holiday nails (ideas 33–40)</h2>
+        <ArticleImage src="photo-1612887390768-fb02affea7a6" alt="Soft pink minimalist manicure" />
         <ol start={33} className="list-decimal list-inside space-y-2 text-gray-700 mb-4">
           <li>Glazed effect on short ovals — barely-there gloss over natural nail</li>
           <li>Warm white on short almond — clean and elegant; pairs with everything</li>

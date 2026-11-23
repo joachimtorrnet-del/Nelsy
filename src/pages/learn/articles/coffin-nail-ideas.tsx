@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleImage } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'coffin-nail-ideas',
@@ -33,6 +33,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="classic">
         <h2 className="font-serif text-2xl font-bold mb-4">Classic coffin styles (10)</h2>
+        <ArticleImage src="photo-1754799670410-b282791342c3" alt="Long coffin-shaped nails in white and soft pink" />
         <ol className="list-decimal list-inside space-y-2 text-gray-700">
           <li>All-white coffin — long, bright white, iconic</li>
           <li>Nude coffin with a glossy finish — clean and elegant</li>
@@ -49,6 +50,7 @@ registerArticle({
 
       <section id="ombre">
         <h2 className="font-serif text-2xl font-bold mb-4">Ombre and gradient coffin nails (10)</h2>
+        <ArticleImage src="photo-1772322586702-73125782bd99" alt="Long nails with a blue to white ombré gradient" />
         <ol start={11} className="list-decimal list-inside space-y-2 text-gray-700">
           <li>Pink-to-white ombre — classic, Kylie Jenner-era iconic</li>
           <li>Nude-to-nude ombre — subtle gradient within the same colour family</li>
@@ -65,6 +67,7 @@ registerArticle({
 
       <section id="chrome-metallic">
         <h2 className="font-serif text-2xl font-bold mb-4">Chrome and metallic styles (10)</h2>
+        <ArticleImage src="photo-1770210257340-dc2b0f44642a" alt="Hand with metallic gold manicure" />
         <ol start={21} className="list-decimal list-inside space-y-2 text-gray-700">
           <li>Full silver mirror chrome coffin — reflective, dramatic</li>
           <li>Rose gold chrome on nude base</li>
@@ -81,6 +84,7 @@ registerArticle({
 
       <section id="nail-art">
         <h2 className="font-serif text-2xl font-bold mb-4">Nail art on coffin nails (10)</h2>
+        <ArticleImage src="photo-1777287216954-2b4b22bb6bf2" alt="Long nails with metallic accents and hand-painted nail art" />
         <ol start={31} className="list-decimal list-inside space-y-2 text-gray-700">
           <li>Marble on nude coffin — white and grey veining on a beige base</li>
           <li>3D gel flowers on the ring finger</li>
@@ -100,6 +104,7 @@ registerArticle({
 
       <section id="seasonal-bold">
         <h2 className="font-serif text-2xl font-bold mb-4">Seasonal and bold ideas (10)</h2>
+        <ArticleImage src="photo-1519014816548-bf5fe059798b" alt="Pink manicure with red heart and love-letter nail art" />
         <ol start={41} className="list-decimal list-inside space-y-2 text-gray-700">
           <li><strong>Spring:</strong> Pastel rainbow coffin set — one colour per nail</li>
           <li><strong>Spring:</strong> White coffin with floral art — cherry blossom or daisy</li>

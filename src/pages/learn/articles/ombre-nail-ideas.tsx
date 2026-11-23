@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
+import { ArticleImage } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'ombre-nail-ideas',
@@ -30,6 +31,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="classic-ombre">
         <h2 className="font-serif text-2xl font-bold mb-4">Classic two-colour ombré</h2>
+        <ArticleImage src="photo-1772322586702-73125782bd99" alt="Blue and white ombré nails" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Baby pink to white — the softest, most classic ombré</li>
           <li>Pink to purple — romantic and versatile</li>
@@ -46,6 +48,7 @@ registerArticle({
 
       <section id="sunset-ombre">
         <h2 className="font-serif text-2xl font-bold mb-4">Sunset and multi-colour ombré</h2>
+        <ArticleImage src="photo-1754951661104-2a13d50d4741" alt="Nails with abstract blue and orange colour blocks" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Sunset ombré: yellow-orange-pink-purple across the nail</li>
           <li>Rainbow ombré: all colours of the spectrum across a full set</li>
@@ -62,6 +65,7 @@ registerArticle({
 
       <section id="dark-ombre">
         <h2 className="font-serif text-2xl font-bold mb-4">Dark and moody ombré</h2>
+        <ArticleImage src="photo-1587393794661-ef05657e10b9" alt="Dark manicure on short nails" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Black to deep red — dramatic and intense</li>
           <li>Black to burgundy — dark and sophisticated</li>
@@ -78,6 +82,7 @@ registerArticle({
 
       <section id="pastel-ombre">
         <h2 className="font-serif text-2xl font-bold mb-4">Pastel and soft ombré</h2>
+        <ArticleImage src="photo-1607779097040-26e80aa78e66" alt="Pastel lilac, white and glitter nails" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Pastel rainbow across a full set — each nail a different pastel step</li>
           <li>Lilac to pale pink — soft and feminine</li>
@@ -94,6 +99,7 @@ registerArticle({
 
       <section id="ombre-effects">
         <h2 className="font-serif text-2xl font-bold mb-4">Ombré with effects</h2>
+        <ArticleImage src="photo-1772322586785-3a34772cbc61" alt="White nails with marbled purple and black tips" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Ombré with chrome powder at the tip — gradient fading into a mirror finish</li>
           <li>Glitter ombré — fade from colour to glitter at the tip</li>
