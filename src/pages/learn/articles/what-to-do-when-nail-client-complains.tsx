@@ -89,7 +89,7 @@ registerArticle({
           "Thank you for your feedback, [name]. I'm sorry to hear you weren't happy with your experience — this is genuinely important to me. I'd love to discuss this further and make it right if I can. Please feel free to reach out directly at [email/DM]."
         </ArticleCallout>
         <p className="text-gray-700 mt-4 leading-relaxed">Never: argue publicly, call the client wrong, or be defensive in a review response. A calm, professional public response is read by every potential client who sees it. It speaks louder than the review itself.</p>
-        <p className="text-gray-700 leading-relaxed">For repair requests specifically: <Link to="/learn/how-to-handle-nail-repair-request" className="underline text-[#F52B8C]">how to handle a nail repair request</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For repair requests specifically: <Link to="/blog/how-to-handle-nail-repair-request" className="underline text-[#F52B8C]">how to handle a nail repair request</Link>.</p>
       </section>
 
       <section id="learning">

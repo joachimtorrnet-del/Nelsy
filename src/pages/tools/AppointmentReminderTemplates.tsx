@@ -520,7 +520,7 @@ export default function AppointmentReminderTemplates() {
             </p>
             <p className="text-gray-700">
               See our guide on{' '}
-              <Link to="/learn/nail-tech-deposit-policy" className="underline" style={{ color: PINK }}>
+              <Link to="/blog/nail-tech-deposit-policy" className="underline" style={{ color: PINK }}>
                 how to set a deposit policy as a nail tech
               </Link>{' '}
               for exact amounts, scripts for introducing deposits to existing clients, and how to handle objections.
@@ -566,9 +566,9 @@ export default function AppointmentReminderTemplates() {
             <ul className="space-y-2 text-sm">
               {[
                 ['/nail-tech-deposits', 'How to take deposits as a nail tech'],
-                ['/learn/nail-tech-deposit-policy', 'Setting a deposit policy: amounts, scripts, objections'],
+                ['/blog/nail-tech-deposit-policy', 'Setting a deposit policy: amounts, scripts, objections'],
                 ['/tools/nail-tech-cancellation-policy-generator', 'Free cancellation policy generator'],
-                ['/learn/how-to-get-more-nail-clients', 'How to get more nail clients'],
+                ['/blog/how-to-get-more-nail-clients', 'How to get more nail clients'],
                 ['/best-booking-app-for-nail-techs', 'Best booking apps for nail techs (2025 comparison)'],
               ].map(([href, label]) => (
                 <li key={href}>

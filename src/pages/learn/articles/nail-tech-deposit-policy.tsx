@@ -232,8 +232,8 @@ registerArticle({
             ['/nail-tech-deposits', 'How to take deposits as a nail tech — the full guide'],
             ['/tools/nail-tech-cancellation-policy-generator', 'Free cancellation policy generator'],
             ['/tools/nail-tech-appointment-reminder-templates', 'Appointment reminder templates — including post-appointment follow-up'],
-            ['/learn/how-to-get-more-nail-clients', 'How to get more nail clients'],
-            ['/learn/nail-tech-pricing-guide', 'Nail tech pricing guide'],
+            ['/blog/how-to-get-more-nail-clients', 'How to get more nail clients'],
+            ['/blog/nail-tech-pricing-guide', 'Nail tech pricing guide'],
           ].map(([href, label]) => (
             <li key={href}>
               <Link to={href} className="underline text-[#F52B8C] leading-relaxed">

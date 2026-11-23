@@ -101,7 +101,7 @@ registerArticle({
           <li>If you collect emails: add them to your list (with consent) and send a follow-up within 48 hours</li>
           <li>Photograph their nails for your portfolio (with their permission)</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For local partnerships that can host your pop-up: <Link to="/learn/how-to-work-with-local-businesses-nail-tech" className="underline text-[#F52B8C]">how to work with local businesses as a nail tech</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For local partnerships that can host your pop-up: <Link to="/blog/how-to-work-with-local-businesses-nail-tech" className="underline text-[#F52B8C]">how to work with local businesses as a nail tech</Link>.</p>
       </section>
     </div>
   ),

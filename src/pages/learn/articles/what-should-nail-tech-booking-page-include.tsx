@@ -24,7 +24,7 @@ registerArticle({
     { id: 'photos', label: 'Photos and portfolio' },
     { id: 'what-to-leave-out', label: 'What to leave out' },
   ],
-  relatedSlugs: ['how-to-move-from-instagram-dms-to-online-booking', 'best-booking-apps-for-nail-techs-2026', 'nail-tech-no-show-policy-examples'],
+  relatedSlugs: ['how-to-move-from-instagram-dms-to-online-booking', 'nail-tech-no-show-policy-examples'],
   faq: [
     { q: 'Should I list prices on my booking page?', a: 'Yes. Hiding prices creates friction and distrust. Clients who don\'t know your price often assume the worst. Listing prices upfront filters out clients who can\'t afford your services (saving you both time) and attracts clients who are comfortable with your rates.' },
     { q: 'Do I need a photo on my booking page?', a: 'A photo of your work is strongly recommended. Clients booking nails want to see what they\'re getting. Even one or two high-quality nail photos significantly improve booking conversion. A photo of you is a bonus — it adds trust, especially for clients booking for the first time.' },
@@ -99,7 +99,7 @@ registerArticle({
           <li>What happens to the deposit if they cancel within the notice period</li>
           <li>What happens for no-shows</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">For policy templates and examples: <Link to="/learn/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">Nail tech no-show policy examples</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For policy templates and examples: <Link to="/blog/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">Nail tech no-show policy examples</Link>.</p>
       </section>
 
       <section id="photos">

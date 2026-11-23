@@ -21,7 +21,7 @@ registerArticle({
     { id: 'comparison', label: 'Feature comparison' },
     { id: 'commission-vs-booth', label: 'Commission vs booth rental and booking' },
   ],
-  relatedSlugs: ['best-booking-apps-for-nail-techs-2026', 'independent-nail-tech-vs-nail-salon', 'booth-rental-vs-commission-nail-techs', 'nail-tech-booking-software-features'],
+  relatedSlugs: [ 'independent-nail-tech-vs-nail-salon', 'booth-rental-vs-commission-nail-techs', 'nail-tech-booking-software-features'],
   faq: [
     { q: 'Can each nail tech in a salon have their own booking page?', a: 'Most salon booking platforms allow individual tech profiles within the same salon account — clients can either book a specific tech or book with whoever has availability. This is a core feature to look for when evaluating salon booking software.' },
     { q: 'How do nail salons handle deposits for multiple techs?', a: 'Deposit settings in salon booking software typically apply at the business level (all bookings require a deposit) or per service type. Ideally, the platform lets each tech or the salon owner configure deposit rules centrally, with the funds going to the appropriate account. Check how each platform handles payout routing if your techs are booth-renters with separate payment setups.' },
@@ -52,7 +52,7 @@ registerArticle({
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich with payroll, POS, marketing, and scheduling in one. Better suited to larger salons that need management depth. Monthly subscription; US-focused.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> — Solid multi-staff scheduling; deep payment integration; POS hardware for salon till setups. Not beauty-specific but handles the operational side of larger nail businesses.</p>
         <ArticleCallout variant="info" title="For booth-rental models">
-          If your salon runs a booth-rental model (techs paying to rent space and operating independently), the booking software model is different — each tech typically manages their own booking independently rather than through a central salon account. Read: <Link to="/learn/booth-rental-vs-commission-nail-techs" className="underline text-[#F52B8C]">booth rental vs commission for nail techs</Link>.
+          If your salon runs a booth-rental model (techs paying to rent space and operating independently), the booking software model is different — each tech typically manages their own booking independently rather than through a central salon account. Read: <Link to="/blog/booth-rental-vs-commission-nail-techs" className="underline text-[#F52B8C]">booth rental vs commission for nail techs</Link>.
         </ArticleCallout>
       </section>
 

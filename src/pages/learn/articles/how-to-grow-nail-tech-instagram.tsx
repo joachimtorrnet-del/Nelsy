@@ -66,7 +66,7 @@ registerArticle({
           { title: 'Add captions and location', body: 'Add your city and booking CTA in the caption. Something like: "Gel full set | East London nail tech | Book via link in bio."' },
           { title: 'Post consistently', body: '1–2 Reels per week is enough to see growth. More is better but don\'t sacrifice quality for volume.' },
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">For specific Reel ideas: <Link to="/learn/50-instagram-reel-ideas-for-nail-techs" className="underline text-[#F52B8C]">50 Instagram Reel ideas for nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For specific Reel ideas: <Link to="/blog/50-instagram-reel-ideas-for-nail-techs" className="underline text-[#F52B8C]">50 Instagram Reel ideas for nail techs</Link>.</p>
       </section>
 
       <section id="hashtag-strategy">
@@ -99,7 +99,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Consistency over perfection</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">The number one thing holding nail techs back from Instagram growth is perfectionism. Waiting for the perfect photo, the perfect caption, the perfect time to post — and then posting nothing.</p>
         <p className="text-gray-700 mb-4 leading-relaxed">A good-enough photo posted today beats a perfect photo never posted. The algorithm rewards activity. Your followers are more likely to forgive an imperfect post than notice a gap in your posting schedule.</p>
-        <p className="text-gray-700 leading-relaxed">Content strategy for nail techs: <Link to="/learn/nail-content-that-gets-bookings" className="underline text-[#F52B8C]">Nail content that gets bookings</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Content strategy for nail techs: <Link to="/blog/nail-content-that-gets-bookings" className="underline text-[#F52B8C]">Nail content that gets bookings</Link>.</p>
       </section>
     </div>
   ),

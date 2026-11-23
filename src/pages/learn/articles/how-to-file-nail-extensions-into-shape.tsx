@@ -57,7 +57,7 @@ registerArticle({
           <li><strong>Use the same strokes on both hands:</strong> The same angle, the same number of strokes per side — consistency produces symmetry</li>
           <li><strong>Step back frequently:</strong> Hold the hand at arm's length and check the shape from a distance — problems are more visible from further away</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Specific shape guides: <a href="/learn/how-to-shape-almond-nails" className="underline text-[#F52B8C]">almond</a> · <a href="/learn/how-to-shape-square-nails" className="underline text-[#F52B8C]">square</a> · <a href="/learn/how-to-shape-coffin-nails" className="underline text-[#F52B8C]">coffin</a>.</p>
+        <p className="text-gray-700 leading-relaxed">Specific shape guides: <a href="/blog/how-to-shape-almond-nails" className="underline text-[#F52B8C]">almond</a> · <a href="/blog/how-to-shape-square-nails" className="underline text-[#F52B8C]">square</a> · <a href="/blog/how-to-shape-coffin-nails" className="underline text-[#F52B8C]">coffin</a>.</p>
       </section>
 
       <section id="surface">

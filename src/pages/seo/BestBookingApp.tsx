@@ -112,9 +112,18 @@ const COMPARISON_ROWS: {
     nelsy: true, fresha: true, booksy: true, glossgenius: true,
   },
   {
-    feature: 'Nelsy booking commission',
-    nelsy: '0%', fresha: 'Verify', booksy: 'Verify', glossgenius: 'Verify',
-    note: 'Nelsy charges 0% booking commission with a flat subscription. Verify current pricing directly with Fresha, Booksy and GlossGenius — pricing models change.',
+    feature: 'Monthly price (solo)',
+    nelsy: '$29 ($25 yearly)', fresha: '€14.95', booksy: '$29.99 US, £40 UK', glossgenius: 'From $24 yearly, $28 monthly',
+    note: 'Official pricing pages, checked 23 November 2026, excluding tax.',
+  },
+  {
+    feature: 'Fee on new clients',
+    nelsy: '0%', fresha: 'One-time marketplace fee (rate not published)', booksy: '30% of first visit with Boost (max $100 US)', glossgenius: 'None mentioned',
+    note: 'Fresha and Booksy only charge on new clients who find you through their marketplace.',
+  },
+  {
+    feature: 'Online card fee',
+    nelsy: 'Stripe standard', fresha: '1.29% + €0.15', booksy: '2.69% + $0.30 (US)', glossgenius: '3.4% + $0.15 (card on file / online)',
   },
 ];
 
@@ -315,14 +324,14 @@ export default function BestBookingApp() {
                 forWho="Salons, studios and businesses that want marketplace discovery"
                 strengths={[
                   'Marketplace exposure — clients can discover your business through Fresha\'s directory',
-                  'Free tier available for basic booking features',
+                  'Low entry price: €14.95/month for one person, 7-day trial',
                   'Widely used — clients may already be familiar with the platform',
                   'Broad feature set for salons with multiple staff and service categories',
                 ]}
                 considerations={[
                   'Booking experience is within the Fresha ecosystem, not your own branded page',
                   'Less suited for nail techs whose clients come primarily from Instagram',
-                  'Paid tiers unlock advanced features — verify current pricing on Fresha\'s site',
+                  'One-time fee on new marketplace clients; texts beyond 20/month and add-ons are paid',
                 ]}
               >
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
@@ -344,7 +353,7 @@ export default function BestBookingApp() {
                 ]}
                 considerations={[
                   'Not specifically built for nail techs — serves hair, nails, spa and wellness broadly',
-                  'Subscription pricing varies by tier — verify current plans on Booksy\'s site',
+                  '$29.99/month in the US (£40 in the UK), plus 30% of a Boost client\'s first visit',
                   'Booking experience is partly within Booksy\'s platform',
                 ]}
               >
@@ -362,17 +371,17 @@ export default function BestBookingApp() {
                 strengths={[
                   'Strong branding and customization features — your page looks polished',
                   'Built for independent beauty professionals (hair, nails, esthetics)',
-                  'Includes a client discovery platform (GlossGenius Discovery)',
+                  'Free same-business-day payouts (Monday to Thursday)',
                   'Integrated marketing tools including rebooking reminders and client messaging',
                 ]}
                 considerations={[
-                  'Higher price point than some alternatives — verify current pricing on GlossGenius\'s site',
+                  'From $24/month billed annually; Gold ($48 to $56) for Google Booking and text marketing',
                   'Not nail-tech-specific — serves a broad range of beauty professionals',
                   'Features are strong but the platform may include more than an independent nail tech needs',
                 ]}
               >
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  GlossGenius has a strong reputation for helping independent beauty professionals present their work professionally. Its branding tools and client management features are well-regarded. It's a credible option for nail techs who want a polished, all-in-one platform — though the pricing is generally at the higher end of the market.
+                  GlossGenius has a strong reputation for helping independent beauty professionals present their work professionally. Its branding tools and client management features are well-regarded. It's a credible option for nail techs who want a polished, all-in-one platform — with plans from $24/month billed annually up to $148 for large teams.
                 </p>
               </PlatformSection>
             </motion.div>
@@ -431,7 +440,7 @@ export default function BestBookingApp() {
                     },
                     {
                       q: 'How much do nail tech booking apps cost?',
-                      a: 'Pricing models vary widely: flat monthly subscriptions, per-booking fees, free tiers with paid upgrades, or marketplace commissions. Verify current pricing directly on each provider\'s website — this comparison reflects publicly available information as of October 2026 and may not reflect current offers.',
+                      a: 'On their official pricing pages (checked 23 November 2026): Nelsy costs $29/month or $25/month billed yearly with 0% commission; Fresha starts at €14.95/month plus a one-time fee on new marketplace clients; Booksy is $29.99/month in the US (£40 in the UK) plus 30% of a Boost client\'s first visit; GlossGenius starts at $24/month billed annually. Card processing fees apply on all of them.',
                     },
                     {
                       q: 'Does the booking app show on my clients\' side?',

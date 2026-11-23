@@ -25,7 +25,7 @@ registerArticle({
     { id: 'marketing', label: 'Step 6: Instagram and marketing' },
     { id: 'first-clients', label: 'Step 7: Getting your first clients' },
   ],
-  relatedSlugs: ['nail-tech-beginner-business-checklist', 'nail-tech-starter-kit', 'how-to-get-first-10-nail-clients', 'best-booking-apps-for-nail-techs-2026'],
+  relatedSlugs: ['nail-tech-beginner-business-checklist', 'nail-tech-starter-kit', 'how-to-get-first-10-nail-clients'],
   faq: [
     { q: 'How much does it cost to start a nail business?', a: 'A basic home nail setup costs £500–£1,500: essential tools, products, lamp, table, and insurance. A more comprehensive starter kit with a full product range and professional equipment runs £1,500–£3,000. You don\'t need to spend everything upfront — start with essentials and build your kit as income grows.' },
     { q: 'Do I need qualifications to do nails in the UK?', a: 'The UK doesn\'t legally require a specific nail tech qualification to practise, but qualifications from accredited training providers (VTCT, ITEC, or brand-specific courses) are strongly recommended. Insurance providers require evidence of training, and clients increasingly ask about qualifications.' },
@@ -63,14 +63,14 @@ registerArticle({
 
       <section id="setup">
         <h2 className="font-serif text-2xl font-bold mb-4">Step 3: Equipment and setup</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">You don't need a professional salon setup to start, but you need the right tools for safe, professional results. See the complete list: <Link to="/learn/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit — what you actually need</Link>.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">You don't need a professional salon setup to start, but you need the right tools for safe, professional results. See the complete list: <Link to="/blog/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit — what you actually need</Link>.</p>
         <p className="text-gray-700 leading-relaxed">For home setups: good lighting (a ring light or dedicated nail lamp), a stable table at the right height, adequate ventilation, and a clean professional environment are more important than expensive furniture.</p>
       </section>
 
       <section id="pricing">
         <h2 className="font-serif text-2xl font-bold mb-4">Step 4: Pricing your services</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Price based on what you need to earn, not just what others charge. Before setting prices, calculate your monthly costs, target income, and working hours to arrive at a minimum hourly rate. Then set service prices above that floor.</p>
-        <p className="text-gray-700 leading-relaxed">New nail techs often start 20–30% below their target price as they build confidence and clientele, with a plan to raise prices at a specific milestone. See: <Link to="/learn/how-much-should-nail-tech-charge" className="underline text-[#F52B8C]">how much should a nail tech charge?</Link></p>
+        <p className="text-gray-700 leading-relaxed">New nail techs often start 20–30% below their target price as they build confidence and clientele, with a plan to raise prices at a specific milestone. See: <Link to="/blog/how-much-should-nail-tech-charge" className="underline text-[#F52B8C]">how much should a nail tech charge?</Link></p>
       </section>
 
       <section id="booking">
@@ -79,13 +79,13 @@ registerArticle({
         <ArticleCallout variant="info" title="Set up booking before marketing">
           It's tempting to start posting on Instagram before your booking system is ready. Don't. If someone finds you and wants to book but there's no clear way to do it, you lose them. Set up booking first.
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/learn/best-booking-apps-for-nail-techs-2026" className="underline text-[#F52B8C]">best booking apps for nail techs in 2026</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/best-booking-app-for-nail-techs" className="underline text-[#F52B8C]">best booking apps for nail techs in 2026</Link>.</p>
       </section>
 
       <section id="marketing">
         <h2 className="font-serif text-2xl font-bold mb-4">Step 6: Instagram and marketing</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Instagram is the primary marketing channel for most nail techs. A dedicated nail account with your location in the name field, regular portfolio posts, and a booking link in your bio is the foundation.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed">You don't need a big following to get clients. You need a clear, professional profile that tells local visitors who you are and how to book. See: <Link to="/learn/how-to-get-nail-clients-from-instagram" className="underline text-[#F52B8C]">how to get nail clients from Instagram</Link>.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">You don't need a big following to get clients. You need a clear, professional profile that tells local visitors who you are and how to book. See: <Link to="/blog/how-to-get-nail-clients-from-instagram" className="underline text-[#F52B8C]">how to get nail clients from Instagram</Link>.</p>
       </section>
 
       <section id="first-clients">
@@ -97,7 +97,7 @@ registerArticle({
           { title: 'Post your booking link and announce availability', body: '"I\'m now taking bookings — link in bio." Simple, direct, no over-explanation.' },
           { title: 'Ask for referrals from first paying clients', body: '"I\'m building my client base — if you know anyone looking for a nail tech I\'d love a referral."' },
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">Full guide: <Link to="/learn/how-to-get-first-10-nail-clients" className="underline text-[#F52B8C]">how to get your first 10 nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Full guide: <Link to="/blog/how-to-get-first-10-nail-clients" className="underline text-[#F52B8C]">how to get your first 10 nail clients</Link>.</p>
       </section>
     </div>
   ),

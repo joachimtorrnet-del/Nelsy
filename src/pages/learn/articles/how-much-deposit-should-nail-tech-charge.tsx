@@ -71,7 +71,7 @@ registerArticle({
           <li><strong>PayPal:</strong> Similar to bank transfer — higher friction and manual process</li>
           <li><strong>Cash in advance:</strong> Only practical if the client comes to you before the appointment date — rarely viable</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">The strong recommendation: use a booking platform that collects the deposit automatically. See: <Link to="/learn/best-booking-apps-for-nail-techs-2026" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">The strong recommendation: use a booking platform that collects the deposit automatically. See: <Link to="/best-booking-app-for-nail-techs" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
       </section>
 
       <section id="what-happens-after">

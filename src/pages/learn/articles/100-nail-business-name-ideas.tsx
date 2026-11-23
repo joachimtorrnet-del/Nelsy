@@ -93,7 +93,7 @@ registerArticle({
           <li>Adapt your top 2–3: add your name, location, or a distinguishing word</li>
           <li>Say it out loud. Write it in your bio. How does it feel?</li>
         </ol>
-        <p className="text-gray-700 mt-6 leading-relaxed">More guidance on choosing: <Link to="/learn/how-to-name-your-nail-business" className="underline text-[#F52B8C]">how to name your nail business</Link>. Once you have a name, next step: <Link to="/learn/how-to-brand-your-nail-business" className="underline text-[#F52B8C]">how to brand your nail business</Link>.</p>
+        <p className="text-gray-700 mt-6 leading-relaxed">More guidance on choosing: <Link to="/blog/how-to-name-your-nail-business" className="underline text-[#F52B8C]">how to name your nail business</Link>. Once you have a name, next step: <Link to="/blog/how-to-brand-your-nail-business" className="underline text-[#F52B8C]">how to brand your nail business</Link>.</p>
       </section>
     </div>
   ),

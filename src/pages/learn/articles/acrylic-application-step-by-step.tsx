@@ -62,7 +62,7 @@ registerArticle({
           <li>Apply acid-free or acid primer according to your product manufacturer's instructions</li>
           <li>Allow primer to reach the correct stage (tacky/chalky) before proceeding</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Full prep guide: <Link to="/learn/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide for better retention</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full prep guide: <Link to="/blog/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide for better retention</Link>.</p>
       </section>
 
       <section id="tip-forms">
@@ -139,7 +139,7 @@ registerArticle({
             ['Rushing the whole service', 'Every problem above simultaneously', 'Acrylic is a slower technique than gel — allow appropriate time per client'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">See the dedicated guides: <Link to="/learn/common-acrylic-mistakes" className="underline text-[#F52B8C]">common acrylic mistakes</Link> | <Link to="/learn/acrylic-bead-ratio-explained" className="underline text-[#F52B8C]">acrylic bead ratio explained</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See the dedicated guides: <Link to="/blog/common-acrylic-mistakes" className="underline text-[#F52B8C]">common acrylic mistakes</Link> | <Link to="/blog/acrylic-bead-ratio-explained" className="underline text-[#F52B8C]">acrylic bead ratio explained</Link>.</p>
       </section>
     </div>
   ),

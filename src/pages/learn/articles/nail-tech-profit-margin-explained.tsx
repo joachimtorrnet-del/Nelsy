@@ -70,7 +70,7 @@ registerArticle({
           ]}
         />
         <ArticleTip>This example uses illustrative figures. Your costs will be different — calculate yours specifically. The categories are the same; the numbers are yours to input.</ArticleTip>
-        <p className="text-gray-700 mt-4 leading-relaxed">For a full expenses breakdown: <Link to="/learn/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list: what to track</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For a full expenses breakdown: <Link to="/blog/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list: what to track</Link>.</p>
       </section>
 
       <section id="improving-margin">
@@ -86,7 +86,7 @@ registerArticle({
             ['Fill your calendar', 'Fixed costs (rent, insurance) stay the same whether you do 15 or 25 clients per week — more clients per week = better fixed-cost coverage'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For calculating your hourly rate: <Link to="/learn/how-to-calculate-nail-tech-hourly-rate" className="underline text-[#F52B8C]">how to calculate your nail tech hourly rate</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For calculating your hourly rate: <Link to="/blog/how-to-calculate-nail-tech-hourly-rate" className="underline text-[#F52B8C]">how to calculate your nail tech hourly rate</Link>.</p>
       </section>
     </div>
   ),

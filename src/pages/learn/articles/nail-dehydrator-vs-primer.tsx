@@ -50,7 +50,7 @@ registerArticle({
             ['Non-acid (acid-free) primer', 'Creates adhesion through a different mechanism (surface chemistry); less aggressive; used with many gel systems'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For a deeper comparison of primer types: <Link to="/learn/acid-vs-acid-free-nail-primer" className="underline text-[#F52B8C]">acid vs acid-free nail primer — which to use</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For a deeper comparison of primer types: <Link to="/blog/acid-vs-acid-free-nail-primer" className="underline text-[#F52B8C]">acid vs acid-free nail primer — which to use</Link>.</p>
       </section>
 
       <section id="comparison">

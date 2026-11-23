@@ -99,7 +99,7 @@ registerArticle({
           <li>You're consistently fully booked</li>
           <li>You completed significant training that improved your skill level</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Full guide: <Link to="/learn/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link> | Pricing calculator: <Link to="/tools/nail-tech-pricing-calculator" className="underline text-[#F52B8C]">free nail tech pricing calculator</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Full guide: <Link to="/blog/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link> | Pricing calculator: <Link to="/tools/nail-tech-pricing-calculator" className="underline text-[#F52B8C]">free nail tech pricing calculator</Link>.</p>
       </section>
     </div>
   ),

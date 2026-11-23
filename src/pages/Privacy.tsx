@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import SEOMeta from '@/components/SEOMeta';
 
 export default function Privacy() {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <SEOMeta title="Privacy Policy" description="How Nelsy collects, uses and protects personal data for beauty professionals, creators and their clients." canonical="/privacy" />
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm p-8">
         <Link to="/" className="text-[#F52B8C] hover:opacity-80 mb-6 inline-block">
           ← Back to Home

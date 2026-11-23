@@ -112,7 +112,7 @@ registerArticle({
           <li>Holographic ombré — shifting shimmer embedded in the gradient</li>
           <li>Pigment powder ombré — pressed pigment dusted into the wet gel gradient</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/learn/chrome-nail-ideas" className="underline text-[#F52B8C]">chrome nail ideas</Link> · <Link to="/learn/abstract-nail-ideas" className="underline text-[#F52B8C]">abstract nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/blog/chrome-nail-ideas" className="underline text-[#F52B8C]">chrome nail ideas</Link> · <Link to="/blog/abstract-nail-ideas" className="underline text-[#F52B8C]">abstract nail ideas</Link>.</p>
       </section>
     </div>
   ),

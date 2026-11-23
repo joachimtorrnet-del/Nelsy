@@ -122,7 +122,7 @@ registerArticle({
           <li><strong>Instagram bio link:</strong> Link to your booking page where prices are visible</li>
           <li><strong>DMs:</strong> Never spend DM time explaining prices — point to your booking page instead: "All my prices are on my booking page — link in bio!"</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For building a full service menu: <Link to="/learn/how-to-create-nail-service-menu" className="underline text-[#F52B8C]">how to create a nail service menu</Link>. For pricing methodology: <Link to="/learn/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For building a full service menu: <Link to="/blog/how-to-create-nail-service-menu" className="underline text-[#F52B8C]">how to create a nail service menu</Link>. For pricing methodology: <Link to="/blog/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
       </section>
     </div>
   ),

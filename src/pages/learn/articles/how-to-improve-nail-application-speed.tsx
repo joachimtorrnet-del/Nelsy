@@ -94,7 +94,7 @@ registerArticle({
           <li>Indecision about service details (colour, shape) — resolve these before you start, not mid-appointment</li>
           <li>Inefficient removal — wrap too loosely, don't time correctly, then have to re-soak or file more</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Speed directly affects your income — more appointments per day at your current price equals more revenue. For the income calculation: <Link to="/learn/nail-tech-monthly-income-calculator" className="underline text-[#F52B8C]">nail tech monthly income: how to calculate what you actually make</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Speed directly affects your income — more appointments per day at your current price equals more revenue. For the income calculation: <Link to="/blog/nail-tech-monthly-income-calculator" className="underline text-[#F52B8C]">nail tech monthly income: how to calculate what you actually make</Link>.</p>
       </section>
     </div>
   ),

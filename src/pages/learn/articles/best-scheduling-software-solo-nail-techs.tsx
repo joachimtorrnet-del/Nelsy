@@ -5,7 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'best-scheduling-software-solo-nail-techs',
   title: 'Best Scheduling Software for Solo Nail Techs',
-  seoTitle: 'Best Scheduling Software for Solo Nail Techs (2025 Guide)',
+  seoTitle: "Best Scheduling Software for Solo Nail Techs (2026)",
   excerpt: 'The right scheduling software can save hours every week and make your business easier to run. Here\'s what matters when choosing, and how different tools approach the problem.',
   seoDescription: 'Best scheduling software for solo nail techs. What features matter, how to compare booking platforms, and how to choose the right tool for an independent nail business.',
   category: 'comparisons',
@@ -14,6 +14,7 @@ registerArticle({
   heroImageAlt: 'Best scheduling software for solo nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-24',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'what-you-actually-need', label: 'What solo nail techs actually need' },
@@ -112,7 +113,7 @@ registerArticle({
             <li>Lock-in without data export — ensure you can export your client list if you ever switch</li>
           </ul>
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For platform-specific comparisons: <Link to="/learn/fresha-vs-booksy-for-nail-techs" className="underline text-[#F52B8C]">Fresha vs Booksy</Link> | <Link to="/learn/glossgenius-vs-fresha-for-nail-techs" className="underline text-[#F52B8C]">GlossGenius vs Fresha</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For platform-specific comparisons: <Link to="/blog/fresha-vs-booksy-for-nail-techs" className="underline text-[#F52B8C]">Fresha vs Booksy</Link> | <Link to="/blog/glossgenius-vs-fresha-for-nail-techs" className="underline text-[#F52B8C]">GlossGenius vs Fresha</Link>.</p>
         <p className="text-gray-700 mt-4 leading-relaxed">Nelsy is built for independent nail techs — online booking, deposits, client profiles, and nail-specific service management. <Link to="/" className="underline text-[#F52B8C]">Start free →</Link></p>
       </section>
     </div>

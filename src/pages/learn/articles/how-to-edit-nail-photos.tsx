@@ -101,7 +101,7 @@ registerArticle({
           <li>A saved preset or "recipe" in your editing app that you apply to all photos</li>
           <li>Consistent decisions about what to include in frame</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For building an intentional feed aesthetic beyond editing: <Link to="/learn/how-to-create-consistent-instagram-feed-nail-tech" className="underline text-[#F52B8C]">how to create a consistent nail tech Instagram feed</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For building an intentional feed aesthetic beyond editing: <Link to="/blog/how-to-create-consistent-instagram-feed-nail-tech" className="underline text-[#F52B8C]">how to create a consistent nail tech Instagram feed</Link>.</p>
       </section>
     </div>
   ),

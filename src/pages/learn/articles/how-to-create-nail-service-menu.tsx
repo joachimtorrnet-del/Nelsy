@@ -103,7 +103,7 @@ registerArticle({
             ['Glitter overlay', '£5–£10'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For detailed add-on pricing strategy: <Link to="/learn/how-to-price-nail-art-add-ons" className="underline text-[#F52B8C]">how to price nail art add-ons</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For detailed add-on pricing strategy: <Link to="/blog/how-to-price-nail-art-add-ons" className="underline text-[#F52B8C]">how to price nail art add-ons</Link>.</p>
       </section>
 
       <section id="where-to-publish">
@@ -115,7 +115,7 @@ registerArticle({
           'In the FAQ section of your booking page (for common questions like "does X include removal?")',
           'In your booking confirmation message (summarised)',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">For pricing examples: <Link to="/learn/nail-tech-price-list-examples" className="underline text-[#F52B8C]">nail tech price list examples</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For pricing examples: <Link to="/blog/nail-tech-price-list-examples" className="underline text-[#F52B8C]">nail tech price list examples</Link>.</p>
       </section>
     </div>
   ),

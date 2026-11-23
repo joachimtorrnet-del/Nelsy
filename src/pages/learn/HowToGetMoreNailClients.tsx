@@ -83,7 +83,7 @@ export default function HowToGetMoreNailClients() {
       <SEOMeta
         title="How to Get More Nail Clients: A Practical Guide for Nail Techs | Nelsy"
         description="Practical strategies to grow your nail tech client base — Instagram, photography, booking friction, deposits, referrals, retention and more. Written specifically for nail techs."
-        canonical="/learn/how-to-get-more-nail-clients"
+        canonical="/blog/how-to-get-more-nail-clients"
         jsonLd={JSON_LD}
       />
       <SiteNav />
@@ -337,7 +337,7 @@ export default function HowToGetMoreNailClients() {
               <p>
                 Practical pricing clarity means: showing each service with its price and duration, being upfront about add-on costs (nail art, length changes, repairs), and having a consistent approach to same-day add-ons.
               </p>
-              <Link to="/learn/nail-tech-pricing-guide" className="inline-flex items-center gap-1.5 text-sm font-bold underline underline-offset-2" style={{ color: PINK }}>
+              <Link to="/blog/nail-tech-pricing-guide" className="inline-flex items-center gap-1.5 text-sm font-bold underline underline-offset-2" style={{ color: PINK }}>
                 Read the nail tech pricing guide →
               </Link>
             </Section>
@@ -372,7 +372,7 @@ export default function HowToGetMoreNailClients() {
               {[
                 { to: '/instagram-booking-for-nail-techs', label: 'Instagram Booking for Nail Techs' },
                 { to: '/nail-tech-deposits', label: 'How to Collect Deposits' },
-                { to: '/learn/nail-tech-pricing-guide', label: 'Nail Tech Pricing Guide' },
+                { to: '/blog/nail-tech-pricing-guide', label: 'Nail Tech Pricing Guide' },
                 { to: '/best-booking-app-for-nail-techs', label: 'Best Booking App for Nail Techs' },
               ].map((link, i) => (
                 <>

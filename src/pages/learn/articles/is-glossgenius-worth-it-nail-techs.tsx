@@ -22,7 +22,7 @@ registerArticle({
     { id: 'worth-it', label: 'Is the subscription worth it?' },
     { id: 'verdict', label: 'Verdict' },
   ],
-  relatedSlugs: ['glossgenius-vs-fresha-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'glossgenius-alternatives-nail-techs', 'best-booking-apps-for-nail-techs-2026'],
+  relatedSlugs: ['glossgenius-vs-fresha-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'glossgenius-alternatives-nail-techs'],
   faq: [
     { q: 'What does GlossGenius actually cost?', a: 'GlossGenius charges a monthly subscription. Exact pricing changes — check GlossGenius\'s current pricing page for the latest. They have historically offered a single subscription tier that includes all core features, rather than multiple tiers.' },
     { q: 'Can I use GlossGenius outside the United States?', a: 'GlossGenius has been US-only. If you\'re outside the US, GlossGenius typically isn\'t available to you. Check their current website for any expansion to new markets, but historically international nail techs need to look at alternatives like Fresha or Booksy.' },
@@ -77,7 +77,7 @@ registerArticle({
       <section id="verdict">
         <h2 className="font-serif text-2xl font-bold mb-4">Verdict</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">GlossGenius is a genuinely good product — but it's right for a specific type of nail tech: US-based, established, values design, manages an existing client base. It's not the right choice for nail techs who need marketplace discovery, are outside the US, or are at a stage where the monthly subscription is a significant fraction of their revenue.</p>
-        <p className="text-gray-700 leading-relaxed">For US nail techs who want marketplace visibility alongside polished tools: consider <Link to="/learn/glossgenius-vs-booksy-nail-techs" className="underline text-[#F52B8C]">GlossGenius vs Booksy</Link>. For alternatives: <Link to="/learn/glossgenius-alternatives-nail-techs" className="underline text-[#F52B8C]">GlossGenius alternatives for nail techs</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For US nail techs who want marketplace visibility alongside polished tools: consider <Link to="/blog/glossgenius-vs-booksy-nail-techs" className="underline text-[#F52B8C]">GlossGenius vs Booksy</Link>. For alternatives: <Link to="/blog/glossgenius-alternatives-nail-techs" className="underline text-[#F52B8C]">GlossGenius alternatives for nail techs</Link>.</p>
       </section>
     </div>
   ),

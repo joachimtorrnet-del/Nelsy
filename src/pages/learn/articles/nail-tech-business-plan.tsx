@@ -24,7 +24,7 @@ registerArticle({
     { id: 'marketing-plan', label: '5. Your marketing plan' },
     { id: 'goals', label: '6. 90-day goals' },
   ],
-  relatedSlugs: ['how-to-start-a-nail-business-2026', 'how-to-price-nail-services-for-profit', 'how-to-get-more-nail-clients', 'best-booking-apps-for-nail-techs-2026'],
+  relatedSlugs: ['how-to-start-a-nail-business-2026', 'how-to-price-nail-services-for-profit', 'how-to-get-more-nail-clients'],
   faq: [
     { q: 'Do nail techs need a formal business plan?', a: 'Not a formal one — you\'re not applying for a bank loan. But a clear, written picture of your business, costs, revenue, and marketing strategy is genuinely useful. It forces you to think through assumptions you might otherwise gloss over, and gives you a reference point to measure against.' },
     { q: 'How much should a nail tech expect to earn in year one?', a: 'Highly variable. A part-time nail tech (2–3 days per week) might earn £15,000–£25,000. A full-time nail tech with a full book earns £25,000–£50,000+. These figures depend heavily on pricing, location, efficiency, and how quickly you build your clientele. The business plan calculator below helps you model your specific scenario.' },
@@ -80,7 +80,7 @@ registerArticle({
           ]}
           caption="Example projections — use your actual prices and working hours"
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">From monthly revenue, subtract costs to get profit. Model multiple scenarios: what happens if you have a quiet month? What's your minimum viable client count? See: <Link to="/learn/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">From monthly revenue, subtract costs to get profit. Model multiple scenarios: what happens if you have a quiet month? What's your minimum viable client count? See: <Link to="/blog/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
       </section>
 
       <section id="costs">
@@ -111,7 +111,7 @@ registerArticle({
           <li><strong>Google Business Profile:</strong> Set up and maintain to capture local searches</li>
           <li><strong>Model posts:</strong> Ask models to post and tag you after each practice set</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/learn/how-to-get-more-nail-clients" className="underline text-[#F52B8C]">how to get more nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/blog/how-to-get-more-nail-clients" className="underline text-[#F52B8C]">how to get more nail clients</Link>.</p>
       </section>
 
       <section id="goals">

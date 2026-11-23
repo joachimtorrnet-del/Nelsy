@@ -114,7 +114,7 @@ registerArticle({
           <li>Rewrite your confirmation message to sound personal and include your address</li>
           <li>Add your cancellation policy to your booking page if it isn't there</li>
         </ol>
-        <p className="text-gray-700 mt-4 leading-relaxed">Total cost: zero. Impact: significant. See: <Link to="/learn/how-to-brand-your-nail-business" className="underline text-[#F52B8C]">how to brand your nail business</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Total cost: zero. Impact: significant. See: <Link to="/blog/how-to-brand-your-nail-business" className="underline text-[#F52B8C]">how to brand your nail business</Link>.</p>
       </section>
     </div>
   ),

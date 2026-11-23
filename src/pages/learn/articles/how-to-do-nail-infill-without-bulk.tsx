@@ -93,7 +93,7 @@ registerArticle({
             ['Time typical', 'Longer than BIAB due to setting time and more extensive shaping', 'Generally quicker if the existing product base is in good condition'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For builder gel application technique and specific errors: <Link to="/learn/common-builder-gel-mistakes" className="underline text-[#F52B8C]">common builder gel mistakes and how to fix them</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For builder gel application technique and specific errors: <Link to="/blog/common-builder-gel-mistakes" className="underline text-[#F52B8C]">common builder gel mistakes and how to fix them</Link>.</p>
       </section>
     </div>
   ),

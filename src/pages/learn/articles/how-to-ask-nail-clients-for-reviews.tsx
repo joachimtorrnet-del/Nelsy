@@ -87,7 +87,7 @@ registerArticle({
           <li><strong>Booking page:</strong> Add testimonials to your booking page — a few client quotes under your services build trust at the decision moment</li>
           <li><strong>Instagram captions:</strong> Include brief client feedback in nail photo captions: "Client told me these lasted 4 full weeks 🙌"</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For Google Business Profile strategy: <Link to="/learn/how-to-get-nail-clients-from-google-business-profile" className="underline text-[#F52B8C]">how to get nail clients from Google Business Profile</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For Google Business Profile strategy: <Link to="/blog/how-to-get-nail-clients-from-google-business-profile" className="underline text-[#F52B8C]">how to get nail clients from Google Business Profile</Link>.</p>
       </section>
     </div>
   ),

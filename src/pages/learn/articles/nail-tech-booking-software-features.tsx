@@ -5,7 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'nail-tech-booking-software-features',
   title: 'Best Booking Software for Nail Techs: What to Look For',
-  seoTitle: 'Best Booking Software for Nail Techs: What Features Actually Matter',
+  seoTitle: "Nail Tech Booking Software: Which Features Actually Matter",
   excerpt: 'Before you sign up for any booking platform, know which features actually matter for a nail business — and which ones you can safely ignore.',
   seoDescription: 'What features should nail tech booking software have? A practical checklist covering deposits, service menus, reminders, payments, and what to avoid.',
   category: 'booking-software',
@@ -14,6 +14,7 @@ registerArticle({
   heroImageAlt: 'Nail tech booking software features guide',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-24',
   publishedAt: '2026-10-20',
   toc: [
     { id: 'must-have', label: 'Must-have features' },
@@ -25,7 +26,7 @@ registerArticle({
     { id: 'red-flags', label: 'Red flags to avoid' },
     { id: 'useful-resources', label: 'Useful resources' },
   ],
-  relatedSlugs: ['best-booking-apps-for-nail-techs-2026', 'how-to-choose-booking-app-nail-business', 'why-booking-through-dms-costs-nail-techs-clients'],
+  relatedSlugs: [ 'how-to-choose-booking-app-nail-business', 'why-booking-through-dms-costs-nail-techs-clients'],
   faq: [
     { q: 'Does nail tech booking software need to handle nail art pricing?', a: 'Yes — look for platforms that let you add add-ons or extras to services. Nail art is typically an add-on to a base service. If the platform only lets you list flat services without add-ons, you\'ll end up with a service menu that either undercharges for nail art or confuses clients.' },
     { q: 'Should my booking software integrate with Instagram?', a: 'It should at minimum give you a clean booking link to put in your Instagram bio. Some platforms offer a native Instagram integration (a "Book" button on your profile). This is a nice feature but not essential if you have a good bio link.' },
@@ -134,8 +135,8 @@ registerArticle({
         <ul className="space-y-2 text-sm">
           {[
             ['/best-booking-app-for-nail-techs', 'Best booking app for nail techs — full comparison'],
-            ['/learn/best-booking-apps-for-nail-techs-2026', 'Best booking apps for nail techs in 2026'],
-            ['/learn/how-to-choose-booking-app-nail-business', 'How to choose a booking app for your nail business'],
+            ['/best-booking-app-for-nail-techs', 'Best booking apps for nail techs in 2026'],
+            ['/blog/how-to-choose-booking-app-nail-business', 'How to choose a booking app for your nail business'],
             ['/nail-tech-deposits', 'How to take deposits as a nail tech'],
             ['/tools/nail-tech-appointment-reminder-templates', 'Free appointment reminder templates'],
           ].map(([href, label]) => <li key={href}><Link to={href} className="underline text-[#F52B8C]">{label}</Link></li>)}

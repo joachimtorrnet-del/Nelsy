@@ -467,9 +467,9 @@ export default function CancellationPolicyGenerator() {
             <div className="flex flex-wrap gap-3 items-center">
               {[
                 { to: '/nail-tech-deposits', label: 'How to Collect Deposits' },
-                { to: '/learn/nail-tech-deposit-policy', label: 'Deposit Policy Guide' },
-                { to: '/learn/nail-tech-pricing-guide', label: 'Nail Tech Pricing Guide' },
-                { to: '/learn/how-to-get-more-nail-clients', label: 'How to Get More Nail Clients' },
+                { to: '/blog/nail-tech-deposit-policy', label: 'Deposit Policy Guide' },
+                { to: '/blog/nail-tech-pricing-guide', label: 'Nail Tech Pricing Guide' },
+                { to: '/blog/how-to-get-more-nail-clients', label: 'How to Get More Nail Clients' },
                 { to: '/tools/nail-tech-appointment-reminder-templates', label: 'Appointment Reminder Templates' },
               ].map((link, i) => (
                 <>

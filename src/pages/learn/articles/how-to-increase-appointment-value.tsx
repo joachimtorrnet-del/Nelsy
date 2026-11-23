@@ -98,7 +98,7 @@ registerArticle({
           <li>For extension clients: "Your infill will be ready in about 2–3 weeks — want to lock in a slot now?"</li>
           <li>For gel polish clients: "This colour usually lasts about 3 weeks — shall I book you in for then?"</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For the full rebooking strategy: <Link to="/learn/how-to-get-more-nail-client-rebookings" className="underline text-[#F52B8C]">how to get more nail client rebookings</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For the full rebooking strategy: <Link to="/blog/how-to-get-more-nail-client-rebookings" className="underline text-[#F52B8C]">how to get more nail client rebookings</Link>.</p>
       </section>
     </div>
   ),

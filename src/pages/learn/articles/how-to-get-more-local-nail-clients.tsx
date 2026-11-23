@@ -98,7 +98,7 @@ registerArticle({
           <li>Make the nails photo-worthy: clean finish, good shape, something worth photographing. A client who's excited about their nails naturally shows people.</li>
           <li>Make it easy for clients to share: "Would you mind posting these on Instagram and tagging me?"</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/learn/how-to-get-more-nail-clients" className="underline text-[#F52B8C]">How to get more nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-to-get-more-nail-clients" className="underline text-[#F52B8C]">How to get more nail clients</Link>.</p>
       </section>
     </div>
   ),

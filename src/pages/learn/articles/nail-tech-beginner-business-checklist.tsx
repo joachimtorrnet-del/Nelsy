@@ -23,7 +23,7 @@ registerArticle({
     { id: 'first-month', label: 'First month milestones' },
     { id: 'ongoing', label: 'Ongoing habits' },
   ],
-  relatedSlugs: ['how-to-start-a-nail-business-2026', 'nail-tech-starter-kit', 'nail-tech-beginner-mistakes', 'best-booking-apps-for-nail-techs-2026'],
+  relatedSlugs: ['how-to-start-a-nail-business-2026', 'nail-tech-starter-kit', 'nail-tech-beginner-mistakes'],
   faq: [
     { q: 'What do I need to do first when starting a nail business?', a: 'Training and insurance, in that order. Training gives you the skills and credibility; insurance protects you before you take a single paying client. Everything else (equipment, Instagram, booking page) can follow.' },
     { q: 'How do I register a nail business in the UK?', a: 'Most new nail techs register as self-employed sole traders with HMRC — this is the simplest structure. Do it online via the HMRC website before you start earning. You don\'t need to register a company unless you want to trade as a limited company (more complex, more protection, more admin).' },
@@ -63,7 +63,7 @@ registerArticle({
           'Ring light',
           'Ventilation (fan or open window)',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">Full equipment list: <Link to="/learn/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit — what you actually need</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Full equipment list: <Link to="/blog/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit — what you actually need</Link>.</p>
       </section>
 
       <section id="booking-admin">
@@ -78,7 +78,7 @@ registerArticle({
           'Test the full booking flow on your phone as a client',
           'Get your shareable booking link ready',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/learn/best-booking-apps-for-nail-techs-2026" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/best-booking-app-for-nail-techs" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
       </section>
 
       <section id="instagram-marketing">
@@ -123,7 +123,7 @@ registerArticle({
           'Photograph every set you\'re proud of',
           'Review and update your cancellation policy if issues arise',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/learn/nail-tech-beginner-mistakes" className="underline text-[#F52B8C]">nail tech beginner mistakes to avoid</Link> and <Link to="/learn/how-to-get-first-10-nail-clients" className="underline text-[#F52B8C]">how to get your first 10 nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/nail-tech-beginner-mistakes" className="underline text-[#F52B8C]">nail tech beginner mistakes to avoid</Link> and <Link to="/blog/how-to-get-first-10-nail-clients" className="underline text-[#F52B8C]">how to get your first 10 nail clients</Link>.</p>
       </section>
     </div>
   ),

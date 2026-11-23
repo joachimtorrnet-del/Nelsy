@@ -99,7 +99,7 @@ registerArticle({
         <ArticleCallout variant="tip" title="Professional ending message">
           "Hi [name], I've given this thought and I think we might not be the best fit going forward. I wish you all the best finding a nail tech who's better suited to what you're looking for."
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">You don't owe an extensive explanation. A brief, professional message is sufficient. For setting firm boundaries with clients more broadly: <Link to="/learn/how-to-set-boundaries-with-nail-clients" className="underline text-[#F52B8C]">how to set boundaries with nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">You don't owe an extensive explanation. A brief, professional message is sufficient. For setting firm boundaries with clients more broadly: <Link to="/blog/how-to-set-boundaries-with-nail-clients" className="underline text-[#F52B8C]">how to set boundaries with nail clients</Link>.</p>
       </section>
     </div>
   ),

@@ -107,7 +107,7 @@ registerArticle({
       <section id="exceptions">
         <h2 className="font-serif text-2xl font-bold mb-4">When to make exceptions</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Exceptions for genuine emergencies are reasonable — serious illness, bereavement, accidents. What constitutes an exception is your discretion. A clear principle: make it the exception, not the rule. The moment clients know you'll always make an exception, the policy stops working.</p>
-        <p className="text-gray-700 leading-relaxed">For long-standing loyal clients with an impeccable record, a first-time exception is a goodwill gesture. For a client who's already late-cancelled twice, an exception continues a pattern. See: <Link to="/learn/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">no-show policy examples</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For long-standing loyal clients with an impeccable record, a first-time exception is a goodwill gesture. For a client who's already late-cancelled twice, an exception continues a pattern. See: <Link to="/blog/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">no-show policy examples</Link>.</p>
       </section>
     </div>
   ),

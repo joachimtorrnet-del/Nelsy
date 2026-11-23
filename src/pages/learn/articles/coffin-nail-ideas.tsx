@@ -123,7 +123,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Why the coffin shape is so popular</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Coffin nails became mainstream in the early 2010s and have remained one of the most requested shapes. The combination of length (which looks luxurious), tapered sides (which elongate the finger), and flat tip (which is more practical than a sharp stiletto point) hits a sweet spot of dramatic but wearable.</p>
         <p className="text-gray-700 leading-relaxed">The shape works particularly well for ombre, chrome, and nail art — three of the most shareable styles on social media — which has kept it consistently popular in nail content.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more shape inspo: <Link to="/learn/square-nail-ideas" className="underline text-[#F52B8C]">50 square nail ideas for every style</Link>. For seasonal colour ideas: <Link to="/learn/summer-nail-ideas" className="underline text-[#F52B8C]">summer nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more shape inspo: <Link to="/blog/square-nail-ideas" className="underline text-[#F52B8C]">50 square nail ideas for every style</Link>. For seasonal colour ideas: <Link to="/blog/summer-nail-ideas" className="underline text-[#F52B8C]">summer nail ideas</Link>.</p>
       </section>
     </div>
   ),

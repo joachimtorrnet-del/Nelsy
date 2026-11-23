@@ -71,7 +71,7 @@ registerArticle({
           <li><strong>Mention your location in captions</strong> — "Nail tech in [area]" in the first line of captions</li>
           <li><strong>Collaborate with local businesses</strong> — tag local coffee shops, boutiques, salons in your area when you create content featuring their products or spaces</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For more content strategy: <Link to="/learn/nail-content-that-gets-bookings" className="underline text-[#F52B8C]">Nail content that gets bookings</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For more content strategy: <Link to="/blog/nail-content-that-gets-bookings" className="underline text-[#F52B8C]">Nail content that gets bookings</Link>.</p>
       </section>
 
       <section id="non-local-followers">

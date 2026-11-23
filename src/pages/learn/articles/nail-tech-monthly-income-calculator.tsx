@@ -56,7 +56,7 @@ registerArticle({
           <li>Marketing costs</li>
           <li>Any other business costs</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Full expense categories: <Link to="/learn/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full expense categories: <Link to="/blog/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list</Link>.</p>
       </section>
 
       <section id="tax-provision">
@@ -102,7 +102,7 @@ registerArticle({
           <li><strong>Reduce product waste</strong> — improving product efficiency reduces a significant variable cost</li>
           <li><strong>Reduce overheads</strong> — audit what you pay for and whether it generates value</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For setting income targets: <Link to="/learn/nail-tech-revenue-goals" className="underline text-[#F52B8C]">nail tech revenue goals: how to set them</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For setting income targets: <Link to="/blog/nail-tech-revenue-goals" className="underline text-[#F52B8C]">nail tech revenue goals: how to set them</Link>.</p>
       </section>
     </div>
   ),

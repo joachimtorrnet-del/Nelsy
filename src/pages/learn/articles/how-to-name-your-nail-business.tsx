@@ -68,7 +68,7 @@ registerArticle({
           </li>
         </ol>
         <ArticleTip>Write down 10 names across these frameworks. Sleep on them. Show them to 3 people outside the beauty industry and ask which they remember the next day. The one they remember is usually the right one.</ArticleTip>
-        <p className="text-gray-700 mt-4 leading-relaxed">For 100 name ideas to get you started: <Link to="/learn/100-nail-business-name-ideas" className="underline text-[#F52B8C]">100 nail business name ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For 100 name ideas to get you started: <Link to="/blog/100-nail-business-name-ideas" className="underline text-[#F52B8C]">100 nail business name ideas</Link>.</p>
       </section>
 
       <section id="checking-availability">
@@ -104,7 +104,7 @@ registerArticle({
           <li>Does it sound professional when I say "Hi, I'm booking you in at [name]"?</li>
           <li>Will it still make sense in 5 years?</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">If the answer to all four is yes, you have your name. See: <Link to="/learn/how-to-brand-your-nail-business" className="underline text-[#F52B8C]">how to brand your nail business</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">If the answer to all four is yes, you have your name. See: <Link to="/blog/how-to-brand-your-nail-business" className="underline text-[#F52B8C]">how to brand your nail business</Link>.</p>
       </section>
     </div>
   ),

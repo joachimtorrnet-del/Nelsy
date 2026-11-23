@@ -88,7 +88,7 @@ registerArticle({
           <li><strong>Reduce your expenses</strong> — audit what you spend; are all costs necessary?</li>
           <li><strong>Improve your efficiency</strong> — reducing appointment time for the same quality improves your effective hourly rate</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For when and how to raise prices: <Link to="/learn/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">when should a nail tech raise prices</Link> | <Link to="/learn/how-to-stop-undercharging-nail-tech" className="underline text-[#F52B8C]">how to stop undercharging as a nail tech</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For when and how to raise prices: <Link to="/blog/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">when should a nail tech raise prices</Link> | <Link to="/blog/how-to-stop-undercharging-nail-tech" className="underline text-[#F52B8C]">how to stop undercharging as a nail tech</Link>.</p>
       </section>
     </div>
   ),

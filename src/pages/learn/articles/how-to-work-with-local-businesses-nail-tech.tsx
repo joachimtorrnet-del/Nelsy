@@ -84,7 +84,7 @@ registerArticle({
         <ArticleCallout variant="tip" title="Opening message / approach">
           "Hi — I'm [name], a nail tech based in [area]. I noticed we serve similar clients and I think we could help each other — I regularly have clients asking for hair/lash recommendations and I'd love to refer them to you. In return, if any of your clients mention wanting their nails done, I'd really appreciate the recommendation. I'd happily come in to meet you and show you my work — would that be worth 10 minutes?"
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For pop-up events with local partner businesses: <Link to="/learn/how-to-run-nail-tech-popup-events" className="underline text-[#F52B8C]">how to run nail tech pop-up events</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For pop-up events with local partner businesses: <Link to="/blog/how-to-run-nail-tech-popup-events" className="underline text-[#F52B8C]">how to run nail tech pop-up events</Link>.</p>
       </section>
     </div>
   ),

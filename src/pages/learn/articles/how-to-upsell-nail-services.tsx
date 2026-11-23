@@ -85,7 +85,7 @@ registerArticle({
           <li>Track average appointment value monthly — if it's flat despite offering add-ons, review what you're offering and when</li>
           <li>The goal isn't to maximise every appointment; it's to ensure clients consistently know what's available and feel free to say yes or no</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/learn/how-to-increase-appointment-value" className="underline text-[#F52B8C]">how to increase appointment value</Link> · <Link to="/learn/how-to-offer-nail-gift-cards" className="underline text-[#F52B8C]">offering nail gift cards</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/blog/how-to-increase-appointment-value" className="underline text-[#F52B8C]">how to increase appointment value</Link> · <Link to="/blog/how-to-offer-nail-gift-cards" className="underline text-[#F52B8C]">offering nail gift cards</Link>.</p>
       </section>
     </div>
   ),

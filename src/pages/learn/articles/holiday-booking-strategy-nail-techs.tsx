@@ -91,7 +91,7 @@ registerArticle({
           <li>Take a rest day after your last pre-Christmas client before family commitments</li>
           <li>Don't let clients book the day after a physically demanding day back-to-back without a buffer</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Managing the operational side of a full schedule: <Link to="/learn/how-to-manage-fully-booked-nail-schedule" className="underline text-[#F52B8C]">how to manage a fully booked nail schedule</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Managing the operational side of a full schedule: <Link to="/blog/how-to-manage-fully-booked-nail-schedule" className="underline text-[#F52B8C]">how to manage a fully booked nail schedule</Link>.</p>
       </section>
     </div>
   ),

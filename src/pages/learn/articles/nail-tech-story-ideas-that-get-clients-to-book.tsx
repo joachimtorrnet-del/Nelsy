@@ -109,7 +109,7 @@ registerArticle({
           <li>"What's in my nail lamp recommendation and why it matters for home removal"</li>
           <li>"Signs you need to let your nails breathe" — genuine help, not sales</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">For content ideas across all formats: <Link to="/learn/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For content ideas across all formats: <Link to="/blog/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas</Link>.</p>
       </section>
 
       <section id="quick-tips">
@@ -124,7 +124,7 @@ registerArticle({
             ['Reply to every story reply within a few hours', 'Story replies are warm leads — reply fast'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For content planning across posts and Stories: <Link to="/learn/nail-tech-content-pillars" className="underline text-[#F52B8C]">nail tech content pillars</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For content planning across posts and Stories: <Link to="/blog/nail-tech-content-pillars" className="underline text-[#F52B8C]">nail tech content pillars</Link>.</p>
       </section>
     </div>
   ),

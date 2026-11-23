@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import SEOMeta from '@/components/SEOMeta';
 
 export default function Terms() {
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <SEOMeta title="Terms of Service" description="The terms that govern the use of Nelsy, the booking and online store platform for beauty creators." canonical="/terms" />
       <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-sm p-8">
         <Link to="/" className="text-[#F52B8C] hover:opacity-80 mb-6 inline-block">
           ← Back to Home

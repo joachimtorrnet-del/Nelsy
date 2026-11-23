@@ -22,7 +22,7 @@ registerArticle({
     { id: 'worth-it', label: 'Is the subscription worth it?' },
     { id: 'verdict', label: 'Verdict' },
   ],
-  relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'best-booking-apps-for-nail-techs-2026', 'how-to-choose-booking-app-nail-business'],
+  relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'how-to-choose-booking-app-nail-business'],
   faq: [
     { q: 'How much does Booksy cost for nail techs?', a: 'Booksy charges a monthly subscription for access to the platform. Exact pricing varies by market and plan — always check Booksy\'s current pricing page for your country before signing up. Pricing has changed over time, and the cost per booking depends heavily on how many clients you see per month.' },
     { q: 'Can clients book through Booksy without the app?', a: 'Yes — clients can book through a web browser without downloading the Booksy app. However, Booksy\'s client-side mobile app is one of its strengths, and clients who regularly use Booksy already have it installed. This reduces friction for returning users.' },
@@ -77,7 +77,7 @@ registerArticle({
       <section id="verdict">
         <h2 className="font-serif text-2xl font-bold mb-4">Verdict</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Booksy is worth it in markets where its client marketplace is active and you can realistically expect discovery-driven bookings. It's less clearly worth it when you're paying a monthly subscription primarily for tools that free alternatives (Fresha, Nelsy) also provide.</p>
-        <p className="text-gray-700 leading-relaxed">The honest question is: will the Booksy marketplace generate enough new clients to justify the subscription? Research whether Booksy has strong client presence in your specific city/area before committing. For UK nail techs: <Link to="/learn/fresha-vs-booksy-for-nail-techs" className="underline text-[#F52B8C]">Fresha vs Booksy comparison</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">The honest question is: will the Booksy marketplace generate enough new clients to justify the subscription? Research whether Booksy has strong client presence in your specific city/area before committing. For UK nail techs: <Link to="/blog/fresha-vs-booksy-for-nail-techs" className="underline text-[#F52B8C]">Fresha vs Booksy comparison</Link>.</p>
       </section>
     </div>
   ),

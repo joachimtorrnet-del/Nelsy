@@ -103,7 +103,7 @@ registerArticle({
           <li>"New slots just opened for [month] — grab yours before they go"</li>
           <li>"Cancellation: slot available [day] at [time] — first to book gets it"</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/learn/how-to-get-booked-out-as-nail-tech" className="underline text-[#F52B8C]">How to get booked out as a nail tech</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-to-get-booked-out-as-nail-tech" className="underline text-[#F52B8C]">How to get booked out as a nail tech</Link>.</p>
       </section>
     </div>
   ),

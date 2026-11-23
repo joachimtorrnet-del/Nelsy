@@ -87,7 +87,7 @@ registerArticle({
           <li>Require full payment upfront for a client's third booking (after two rescheduled appointments)</li>
           <li>Stop accepting bookings from the client — you're allowed to decline bookings</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/learn/how-to-set-boundaries-with-nail-clients" className="underline text-[#F52B8C]">how to set boundaries with nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/blog/how-to-set-boundaries-with-nail-clients" className="underline text-[#F52B8C]">how to set boundaries with nail clients</Link>.</p>
       </section>
     </div>
   ),

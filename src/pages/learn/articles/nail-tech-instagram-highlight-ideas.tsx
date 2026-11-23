@@ -122,7 +122,7 @@ registerArticle({
           <li><strong>Initials</strong> of the Highlight name (W for Work, P for Prices)</li>
           <li><strong>Consistent background colour</strong> from your brand palette — the consistency matters more than any individual design</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Detailed illustrations, complex graphics, and multi-colour designs are invisible at this size. Create covers in Canva using the "Instagram Story" format (1080×1920), design centrally, then the small circle crop will catch the right part. For more Instagram bio and profile advice: <Link to="/learn/best-instagram-bio-ideas-for-nail-techs" className="underline text-[#F52B8C]">best Instagram bio ideas for nail techs</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Detailed illustrations, complex graphics, and multi-colour designs are invisible at this size. Create covers in Canva using the "Instagram Story" format (1080×1920), design centrally, then the small circle crop will catch the right part. For more Instagram bio and profile advice: <Link to="/blog/best-instagram-bio-ideas-for-nail-techs" className="underline text-[#F52B8C]">best Instagram bio ideas for nail techs</Link>.</p>
       </section>
     </div>
   ),

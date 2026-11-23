@@ -42,7 +42,7 @@ registerArticle({
             ['Google Contacts / Notes', 'Basic client records if not using a dedicated CRM', 'Free'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For the full comparison: <Link to="/learn/best-booking-apps-for-nail-techs-2026" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For the full comparison: <Link to="/best-booking-app-for-nail-techs" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
       </section>
 
       <section id="payment-tools">
@@ -99,7 +99,7 @@ registerArticle({
             ['Cash float', 'For clients who prefer cash (still common in some markets)'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For the full list of physical nail tech equipment: <Link to="/learn/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit</Link>. For managing everything from your phone: <Link to="/learn/how-to-organize-nail-business-from-phone" className="underline text-[#F52B8C]">how to organise your nail business from your phone</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For the full list of physical nail tech equipment: <Link to="/blog/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit</Link>. For managing everything from your phone: <Link to="/blog/how-to-organize-nail-business-from-phone" className="underline text-[#F52B8C]">how to organise your nail business from your phone</Link>.</p>
       </section>
     </div>
   ),

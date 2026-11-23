@@ -134,7 +134,7 @@ registerArticle({
           <li>Categorise expenses monthly using the categories above</li>
           <li>Compare monthly spending to your budget — are products costing more than expected? Is a specific category growing?</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For calculating per-service product costs: <Link to="/learn/how-to-calculate-product-cost" className="underline text-[#F52B8C]">how to calculate your nail product cost</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For calculating per-service product costs: <Link to="/blog/how-to-calculate-product-cost" className="underline text-[#F52B8C]">how to calculate your nail product cost</Link>.</p>
       </section>
     </div>
   ),

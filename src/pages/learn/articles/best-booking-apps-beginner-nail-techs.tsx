@@ -21,7 +21,7 @@ registerArticle({
     { id: 'top-picks', label: 'Best options for beginners' },
     { id: 'starting-simple', label: 'Starting simple and growing' },
   ],
-  relatedSlugs: ['how-to-get-first-10-nail-clients', 'nail-tech-beginner-business-checklist', 'how-to-set-up-online-booking-nail-business', 'best-booking-apps-for-nail-techs-2026'],
+  relatedSlugs: ['how-to-get-first-10-nail-clients', 'nail-tech-beginner-business-checklist', 'how-to-set-up-online-booking-nail-business'],
   faq: [
     { q: 'Do I need a booking app when I\'m just starting out?', a: 'Yes — even as a beginner with a small number of clients. Setting up a booking app from the start does several things: it looks professional, it reduces the back-and-forth of booking through DMs, and it creates the habit of running your business systematically from the beginning. Starting with good systems is much easier than retrofitting them after you\'re busy.' },
     { q: 'Is it okay to start with a free booking app?', a: 'Absolutely. Most nail techs start with a free trial or a platform with a low entry price (for example, Fresha\'s Independent plan is listed at €14.95/month). There\'s no advantage to paying more before your volume justifies it. Start free; upgrade or switch when a specific paid feature becomes worth its cost.' },
@@ -74,7 +74,7 @@ registerArticle({
           <li>Automatic appointment reminders enabled</li>
           <li>Your booking link shared in your Instagram bio</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Those four things are enough to run a professional nail booking operation as a beginner. Everything else — waitlists, packages, reporting, marketing tools — you can add when you need it. For the first client steps: <Link to="/learn/how-to-get-first-10-nail-clients" className="underline text-[#F52B8C]">how to get your first 10 nail clients</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Those four things are enough to run a professional nail booking operation as a beginner. Everything else — waitlists, packages, reporting, marketing tools — you can add when you need it. For the first client steps: <Link to="/blog/how-to-get-first-10-nail-clients" className="underline text-[#F52B8C]">how to get your first 10 nail clients</Link>.</p>
       </section>
     </div>
   ),

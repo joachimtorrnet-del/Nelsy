@@ -94,7 +94,7 @@ registerArticle({
           <li>Send the timed reminder message (2–3 weeks after) as described above</li>
           <li>Accept that some clients are irregular by nature — they book when they want nails, not on a schedule. That's okay; just make booking easy for when they do.</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">For broader retention strategies: <Link to="/learn/how-to-increase-nail-client-retention" className="underline text-[#F52B8C]">how to increase nail client retention</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For broader retention strategies: <Link to="/blog/how-to-increase-nail-client-retention" className="underline text-[#F52B8C]">how to increase nail client retention</Link>.</p>
       </section>
     </div>
   ),

@@ -88,7 +88,7 @@ registerArticle({
           <li>Give clear aftercare instructions at the end of every appointment (and send them by message)</li>
           <li>Track which clients have repeated repair requests and investigate your approach with them specifically</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Retention and prep guides: <Link to="/learn/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link> | <Link to="/learn/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Retention and prep guides: <Link to="/blog/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link> | <Link to="/blog/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide</Link>.</p>
       </section>
     </div>
   ),

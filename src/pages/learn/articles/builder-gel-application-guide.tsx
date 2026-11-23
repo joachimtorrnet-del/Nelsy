@@ -117,7 +117,7 @@ registerArticle({
           <li>Apply colour and finish as usual</li>
         </ol>
         <p className="text-gray-700 leading-relaxed">Infill frequency: most clients rebook every 2–3 weeks, similar to standard gel appointments.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more on retention: <Link to="/learn/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link> | <Link to="/learn/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more on retention: <Link to="/blog/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link> | <Link to="/blog/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide</Link>.</p>
       </section>
 
       <section id="common-issues">

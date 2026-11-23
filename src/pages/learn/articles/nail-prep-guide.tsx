@@ -119,7 +119,7 @@ registerArticle({
           'Push back cuticles gently the night before if they have a pusher',
           'Don\'t soak nails (bath, swimming) immediately before appointment — hydrated nails can affect adhesion',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">For more on preventing lifting from a client care perspective: <Link to="/learn/how-to-prevent-nail-lifting" className="underline text-[#F52B8C]">how to prevent nail lifting</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more on preventing lifting from a client care perspective: <Link to="/blog/how-to-prevent-nail-lifting" className="underline text-[#F52B8C]">how to prevent nail lifting</Link>.</p>
       </section>
     </div>
   ),

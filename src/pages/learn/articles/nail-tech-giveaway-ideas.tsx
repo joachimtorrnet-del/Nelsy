@@ -104,7 +104,7 @@ registerArticle({
           <li>Running giveaways when fully booked — you can't capitalise on the interest</li>
           <li>Too many entry requirements — people drop off with each additional step</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more on attracting clients in slow periods: <Link to="/learn/how-to-get-nail-clients-slow-season" className="underline text-[#F52B8C]">how to get nail clients during slow season</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more on attracting clients in slow periods: <Link to="/blog/how-to-get-nail-clients-slow-season" className="underline text-[#F52B8C]">how to get nail clients during slow season</Link>.</p>
       </section>
     </div>
   ),

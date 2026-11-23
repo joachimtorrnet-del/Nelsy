@@ -21,7 +21,7 @@ registerArticle({
     { id: 'deposit-priority', label: 'Why deposits matter more at home' },
     { id: 'privacy', label: 'Privacy considerations' },
   ],
-  relatedSlugs: ['best-booking-apps-for-nail-techs-2026', 'how-to-start-nail-business-from-home', 'nail-tech-deposit-policy', 'how-to-set-up-online-booking-nail-business'],
+  relatedSlugs: [ 'how-to-start-nail-business-from-home', 'nail-tech-deposit-policy', 'how-to-set-up-online-booking-nail-business'],
   faq: [
     { q: 'Do I need to share my home address on a booking app?', a: 'Not necessarily. Many booking platforms allow you to display a general area (neighbourhood, town) rather than a full address, with the exact address sent only to confirmed clients. Check your platform\'s privacy settings. For home-based nail techs, it\'s sensible practice to share your full address only with confirmed bookings rather than making it publicly visible.' },
     { q: 'Should home-based nail techs require deposits?', a: 'Yes — deposits are especially important for home-based nail techs. No-shows at a home nail business affect your personal time and space. A deposit creates commitment and provides financial cover if a client cancels late or doesn\'t show. Most home-based nail techs charge 20–50% deposit at booking.' },
@@ -58,7 +58,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Why deposits matter more at home</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">A no-show at a commercial salon means a lost revenue slot. A no-show at your home means the same lost revenue, plus you've given a stranger your home address and prepared your personal space for a client who didn't arrive.</p>
         <p className="text-gray-700 leading-relaxed">Deposits create commitment. A client who's paid a £20 deposit to secure a slot is far more likely to show up or give you advance notice than one who booked with no financial commitment. Choose a platform that makes deposit collection easy and mandatory at the point of booking, not optional.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">Deposit policy guidance: <Link to="/learn/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Deposit policy guidance: <Link to="/blog/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy</Link>.</p>
       </section>
 
       <section id="privacy">

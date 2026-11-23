@@ -92,7 +92,7 @@ registerArticle({
           <li>At each appointment, ask "anything changed since we last spoke? Any new allergies or sensitivities?"</li>
           <li>Re-confirm health information annually or after a significant gap in appointments</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For creating a positive client experience around this data: <Link to="/learn/how-to-create-nail-client-experience" className="underline text-[#F52B8C]">how to create a better nail client experience</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For creating a positive client experience around this data: <Link to="/blog/how-to-create-nail-client-experience" className="underline text-[#F52B8C]">how to create a better nail client experience</Link>.</p>
       </section>
     </div>
   ),

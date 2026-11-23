@@ -23,7 +23,7 @@ registerArticle({
     { id: 'objections', label: 'Common objections to switching' },
     { id: 'how-to-switch', label: 'How to switch without losing warmth' },
   ],
-  relatedSlugs: ['how-to-move-from-instagram-dms-to-online-booking', 'best-booking-apps-for-nail-techs-2026', 'how-to-choose-booking-app-nail-business'],
+  relatedSlugs: ['how-to-move-from-instagram-dms-to-online-booking', 'how-to-choose-booking-app-nail-business'],
   faq: [
     { q: 'Do clients prefer DM booking over online booking?', a: 'Most clients prefer the path of least friction. If your DM flow requires multiple messages back and forth over several hours, clients who find online booking easier will choose that. Existing loyal clients will adapt to whatever system you use; it\'s new clients who are most likely to drop off in a slow DM flow.' },
     { q: 'Will switching to online booking feel less personal?', a: 'Not if you keep the personal elements that matter. A warm confirmation message, a personalised reminder, and a good in-person experience are what make clients feel valued. The booking mechanism itself is administrative — clients don\'t feel more connected to their nail tech because they had to send 4 DMs to confirm an appointment.' },
@@ -100,7 +100,7 @@ registerArticle({
           <li><strong>Redirect DM enquiries.</strong> When clients DM you to book, reply: "Great! The easiest way to grab a slot is through my booking link in bio — you can see my availability and pay your deposit there." Do this consistently and most clients will switch within a few weeks.</li>
           <li><strong>Keep the warmth post-booking.</strong> Customise your confirmation and reminder messages to sound like you. The booking mechanism is administrative; the relationship happens before, during, and after the appointment.</li>
         </ol>
-        <p className="text-gray-700 mt-6 leading-relaxed">For a full guide to the switch: <Link to="/learn/how-to-move-from-instagram-dms-to-online-booking" className="underline text-[#F52B8C]">How to move from Instagram DMs to online booking</Link>.</p>
+        <p className="text-gray-700 mt-6 leading-relaxed">For a full guide to the switch: <Link to="/blog/how-to-move-from-instagram-dms-to-online-booking" className="underline text-[#F52B8C]">How to move from Instagram DMs to online booking</Link>.</p>
       </section>
     </div>
   ),

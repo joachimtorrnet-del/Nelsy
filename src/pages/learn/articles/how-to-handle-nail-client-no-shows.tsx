@@ -65,7 +65,7 @@ registerArticle({
           <li>Require clients to accept the policy before their booking is confirmed</li>
           <li>A deposit system enforces itself — no-show = deposit forfeit, no awkward conversation required</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For policy templates: <Link to="/learn/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">nail tech no-show policy examples</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For policy templates: <Link to="/blog/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">nail tech no-show policy examples</Link>.</p>
       </section>
 
       <section id="repeat-no-shows">
@@ -85,7 +85,7 @@ registerArticle({
           <li><strong>Automated reminders:</strong> A 48-hour reminder significantly reduces no-shows. Clients who need to cancel do so earlier when reminded — giving you time to fill the slot.</li>
           <li><strong>SMS reminders:</strong> More likely to be seen immediately than email — especially for same-day or next-day appointments</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Deposit strategy: <Link to="/learn/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy guide</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Deposit strategy: <Link to="/blog/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy guide</Link>.</p>
       </section>
     </div>
   ),

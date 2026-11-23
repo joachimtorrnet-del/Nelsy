@@ -88,7 +88,7 @@ registerArticle({
             ['Visible late policy', 'Published on booking page: clients who know lateness means a shorter service are more likely to be on time'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For late policy templates: <Link to="/learn/nail-tech-late-policy" className="underline text-[#F52B8C]">nail tech late policy examples</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For late policy templates: <Link to="/blog/nail-tech-late-policy" className="underline text-[#F52B8C]">nail tech late policy examples</Link>.</p>
       </section>
 
       <section id="chronic-latecomers">
@@ -98,7 +98,7 @@ registerArticle({
           <li><strong>Buffer booking:</strong> When they book, internally block an extra 15 minutes after their slot so late arrival doesn't cascade into the next client's time.</li>
           <li><strong>Direct conversation:</strong> "I've noticed you often run a few minutes late — I want to make sure we have enough time for your full service. Could you aim to arrive 5–10 minutes before your time?"</li>
           <li><strong>Stop booking them in back-to-back slots:</strong> Give them a slot with natural buffer before your next client.</li>
-          <li><strong>Stop booking them:</strong> If it's creating ongoing problems, it's okay to stop. See: <Link to="/learn/how-to-set-boundaries-with-nail-clients" className="underline text-[#F52B8C]">how to set boundaries with nail clients</Link>.</li>
+          <li><strong>Stop booking them:</strong> If it's creating ongoing problems, it's okay to stop. See: <Link to="/blog/how-to-set-boundaries-with-nail-clients" className="underline text-[#F52B8C]">how to set boundaries with nail clients</Link>.</li>
         </ul>
         <ArticleTip>Many nail techs find that enforcing the shortened-service policy once resolves chronic lateness permanently. The experience of arriving at 5:20 and leaving at 5:45 with half their nail art done is usually enough of an incentive to be punctual.</ArticleTip>
       </section>

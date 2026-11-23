@@ -97,7 +97,7 @@ registerArticle({
             ['Gel polish on natural nails', 'Dehydrator + base coat (often no separate primer needed — check your system)'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">These are general tendencies, not universal rules — your specific product system's training is the authority. For more on prep products: <Link to="/learn/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer — what's the difference</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">These are general tendencies, not universal rules — your specific product system's training is the authority. For more on prep products: <Link to="/blog/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer — what's the difference</Link>.</p>
       </section>
     </div>
   ),

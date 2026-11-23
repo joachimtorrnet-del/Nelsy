@@ -124,7 +124,7 @@ registerArticle({
             ['Nail art specialist', 'Nail artist | Glasgow\nCustom nail art & gel extensions\nEvery set is unique\nBook your design: link below'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/learn/how-to-grow-nail-tech-instagram" className="underline text-[#F52B8C]">How to grow your nail tech Instagram</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-to-grow-nail-tech-instagram" className="underline text-[#F52B8C]">How to grow your nail tech Instagram</Link>.</p>
       </section>
     </div>
   ),

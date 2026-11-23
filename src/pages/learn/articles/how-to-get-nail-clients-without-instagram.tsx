@@ -36,7 +36,7 @@ registerArticle({
       <section id="google">
         <h2 className="font-serif text-2xl font-bold mb-4">Google Business Profile</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">When someone searches "nail tech near me", they're actively looking to book — this is higher purchase intent than most Instagram discovery. A well-optimised Google Business Profile with genuine reviews positions you at the top of these searches for free.</p>
-        <p className="text-gray-700 leading-relaxed">This is typically the highest-ROI marketing channel available to a nail tech who isn't on Instagram. Full guide: <Link to="/learn/how-to-get-nail-clients-from-google-business-profile" className="underline text-[#F52B8C]">how to get more nail clients through Google Business Profile</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">This is typically the highest-ROI marketing channel available to a nail tech who isn't on Instagram. Full guide: <Link to="/blog/how-to-get-nail-clients-from-google-business-profile" className="underline text-[#F52B8C]">how to get more nail clients through Google Business Profile</Link>.</p>
       </section>
 
       <section id="referrals">
@@ -47,12 +47,12 @@ registerArticle({
           <li>Ask at the end of appointments when clients are most satisfied</li>
           <li>Send a follow-up message 1–2 days later when clients are showing off their nails</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Full guide: <Link to="/learn/how-to-build-nail-client-referral-program" className="underline text-[#F52B8C]">how to build a nail client referral program</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full guide: <Link to="/blog/how-to-build-nail-client-referral-program" className="underline text-[#F52B8C]">how to build a nail client referral program</Link>.</p>
       </section>
 
       <section id="email">
         <h2 className="font-serif text-2xl font-bold mb-4">Email list</h2>
-        <p className="text-gray-700 leading-relaxed">A small email list of existing clients who have consented to hear from you is more powerful than a large Instagram following for filling last-minute slots. When you need to fill gaps in your calendar, a direct email to past clients converts immediately. Guide: <Link to="/learn/how-to-build-email-list-nail-tech" className="underline text-[#F52B8C]">how to build an email list as a nail tech</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">A small email list of existing clients who have consented to hear from you is more powerful than a large Instagram following for filling last-minute slots. When you need to fill gaps in your calendar, a direct email to past clients converts immediately. Guide: <Link to="/blog/how-to-build-email-list-nail-tech" className="underline text-[#F52B8C]">how to build an email list as a nail tech</Link>.</p>
       </section>
 
       <section id="marketplaces">
@@ -78,7 +78,7 @@ registerArticle({
           <li><strong>Wedding vendors:</strong> Wedding planners, bridal boutiques, florists — bridal nail packages are high value and often referred by wedding vendors</li>
           <li><strong>Gyms and wellness studios:</strong> Leave business cards or flyers; cross-promote with the business owner</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">More on local partnership: <Link to="/learn/how-to-work-with-local-businesses-nail-tech" className="underline text-[#F52B8C]">how to work with local businesses as a nail tech</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">More on local partnership: <Link to="/blog/how-to-work-with-local-businesses-nail-tech" className="underline text-[#F52B8C]">how to work with local businesses as a nail tech</Link>.</p>
       </section>
 
       <section id="google-ads">

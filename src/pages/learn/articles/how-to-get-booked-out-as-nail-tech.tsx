@@ -73,7 +73,7 @@ registerArticle({
         <ArticleCallout variant="info" title="The pricing signal">
           Consistently full = raise prices. Empty slots despite marketing = pricing or visibility problem. Both signals are useful — act on them.
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For pricing guidance: <Link to="/learn/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link></p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For pricing guidance: <Link to="/blog/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link></p>
       </section>
 
       <section id="marketing-that-scales">
@@ -97,7 +97,7 @@ registerArticle({
           <li><strong>Get selective:</strong> Prioritise clients who are reliable, appreciative, and fit your niche</li>
           <li><strong>Consider expansion:</strong> A second day, a second location, or training another nail tech</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Being booked out is the goal — and it's also the starting point for the next phase of your business. See: <Link to="/learn/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link></p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Being booked out is the goal — and it's also the starting point for the next phase of your business. See: <Link to="/blog/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link></p>
       </section>
     </div>
   ),

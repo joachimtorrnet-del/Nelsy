@@ -52,7 +52,7 @@ registerArticle({
       <section id="square">
         <h2 className="font-serif text-2xl font-bold mb-4">Square</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Square nails have straight sidewalls and a completely flat, straight top edge. The corners are sharp and defined. This is one of the most popular shapes for gel extensions and gel polish because it's strong, modern, and suits most nail lengths.</p>
-        <p className="text-gray-700 leading-relaxed"><strong>Works best on:</strong> Most hand shapes; particularly good on longer nail beds. <strong>Length:</strong> Short to long. <Link to="/learn/how-to-shape-square-nails" className="underline text-[#F52B8C]">How to shape square nails.</Link></p>
+        <p className="text-gray-700 leading-relaxed"><strong>Works best on:</strong> Most hand shapes; particularly good on longer nail beds. <strong>Length:</strong> Short to long. <Link to="/blog/how-to-shape-square-nails" className="underline text-[#F52B8C]">How to shape square nails.</Link></p>
       </section>
 
       <section id="round">
@@ -76,13 +76,13 @@ registerArticle({
       <section id="almond">
         <h2 className="font-serif text-2xl font-bold mb-4">Almond</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Almond nails taper at the sides and finish in a soft, rounded point — like the shape of an almond. They're elongating, elegant, and one of the most popular shapes for nail extensions. On natural nails, they require some length to work.</p>
-        <p className="text-gray-700 leading-relaxed"><strong>Works best on:</strong> Medium to long nail beds; elegant on most hand shapes. <strong>Length:</strong> Medium to long. <Link to="/learn/how-to-shape-almond-nails" className="underline text-[#F52B8C]">How to shape almond nails.</Link></p>
+        <p className="text-gray-700 leading-relaxed"><strong>Works best on:</strong> Medium to long nail beds; elegant on most hand shapes. <strong>Length:</strong> Medium to long. <Link to="/blog/how-to-shape-almond-nails" className="underline text-[#F52B8C]">How to shape almond nails.</Link></p>
       </section>
 
       <section id="coffin">
         <h2 className="font-serif text-2xl font-bold mb-4">Coffin / ballerina</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Coffin nails (also called ballerina nails) taper at the sides like stiletto but finish with a flat, square tip instead of a point. Named for their resemblance to a coffin shape. Bold and trendy, they require length to read correctly — best achieved with extensions.</p>
-        <p className="text-gray-700 leading-relaxed"><strong>Works best on:</strong> Longer nail beds or extensions; statement looks. <strong>Length:</strong> Medium to very long. <Link to="/learn/how-to-shape-coffin-nails" className="underline text-[#F52B8C]">How to shape coffin nails.</Link></p>
+        <p className="text-gray-700 leading-relaxed"><strong>Works best on:</strong> Longer nail beds or extensions; statement looks. <strong>Length:</strong> Medium to very long. <Link to="/blog/how-to-shape-coffin-nails" className="underline text-[#F52B8C]">How to shape coffin nails.</Link></p>
       </section>
 
       <section id="stiletto">

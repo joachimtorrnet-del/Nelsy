@@ -112,7 +112,7 @@ registerArticle({
             ['Hands look stiff / tense', 'Ask client to relax hand before posing; reshoot if it looks unnatural'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">Once you have great photos, editing makes them even better — without making them look fake. Guide to editing: <Link to="/learn/how-to-edit-nail-photos" className="underline text-[#F52B8C]">how to edit nail photos without making them look fake</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Once you have great photos, editing makes them even better — without making them look fake. Guide to editing: <Link to="/blog/how-to-edit-nail-photos" className="underline text-[#F52B8C]">how to edit nail photos without making them look fake</Link>.</p>
       </section>
     </div>
   ),

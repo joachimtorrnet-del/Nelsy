@@ -75,7 +75,7 @@ registerArticle({
           <li>Batch your CTAs too: decide which posts get booking CTAs vs save/share vs comment prompts</li>
           <li>Draft in Notes or a Google Doc and copy to Instagram — easier to write and edit without the app</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Caption templates and CTA examples: <Link to="/learn/nail-tech-call-to-action-examples" className="underline text-[#F52B8C]">nail tech call-to-action examples</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Caption templates and CTA examples: <Link to="/blog/nail-tech-call-to-action-examples" className="underline text-[#F52B8C]">nail tech call-to-action examples</Link>.</p>
       </section>
 
       <section id="scheduling">
@@ -94,7 +94,7 @@ registerArticle({
         <p className="text-gray-700 mb-4 leading-relaxed">At the start of each month (or end of the prior month), sit down for a 60–90 minute content planning session:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Review last month: what performed well? What got bookings?</li>
-          <li>Map out the month's content calendar — categories for each week (see the <Link to="/learn/nail-tech-content-calendar-30-day" className="underline text-[#F52B8C]">30-day content calendar guide</Link>)</li>
+          <li>Map out the month's content calendar — categories for each week (see the <Link to="/blog/nail-tech-content-calendar-30-day" className="underline text-[#F52B8C]">30-day content calendar guide</Link>)</li>
           <li>Note any key dates: holidays, seasonal trends, your availability opening dates</li>
           <li>Decide which services you want to push this month</li>
           <li>Plan which weeks you'll prioritise shooting video</li>

@@ -54,7 +54,7 @@ registerArticle({
           <li>Frame it as a treat, not a discount: "You deserve a January glow-up — here's my link"</li>
           <li>A personal message to your top 10 most regular clients converts better than any broadcast</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Full win-back guide: <Link to="/learn/how-to-bring-back-old-nail-clients" className="underline text-[#F52B8C]">how to bring back old nail clients</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full win-back guide: <Link to="/blog/how-to-bring-back-old-nail-clients" className="underline text-[#F52B8C]">how to bring back old nail clients</Link>.</p>
       </section>
 
       <section id="content-strategy">

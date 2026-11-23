@@ -89,7 +89,7 @@ registerArticle({
           <li><strong>Lifting on only one hand:</strong> Often the dominant hand — more mechanical stress; check product thickness and structure</li>
           <li><strong>Lifting on every client:</strong> Product or prep issue — check primer, dehydrator, and your prep process systematically</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Full retention guide: <Link to="/learn/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full retention guide: <Link to="/blog/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link>.</p>
       </section>
     </div>
   ),

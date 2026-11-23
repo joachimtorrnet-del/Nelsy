@@ -92,7 +92,7 @@ registerArticle({
           <li>Apply the referrer\'s discount at the next appointment (a note on their booking: "£8 off — referred [new client name]")</li>
           <li>For high volume, a simple spreadsheet or a column in your booking system notes field is enough — you don\'t need specialist software</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For more client growth strategies: <Link to="/learn/how-to-ask-nail-clients-for-reviews" className="underline text-[#F52B8C]">how to ask nail clients for reviews</Link> | <Link to="/learn/how-to-get-more-local-nail-clients" className="underline text-[#F52B8C]">how to get more local nail clients</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For more client growth strategies: <Link to="/blog/how-to-ask-nail-clients-for-reviews" className="underline text-[#F52B8C]">how to ask nail clients for reviews</Link> | <Link to="/blog/how-to-get-more-local-nail-clients" className="underline text-[#F52B8C]">how to get more local nail clients</Link>.</p>
       </section>
     </div>
   ),

@@ -99,7 +99,7 @@ registerArticle({
             ['Skin staining', 'Pigmented product contacting skin during application'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For improving your overall speed without sacrificing cleanliness: <Link to="/learn/how-to-improve-nail-application-speed" className="underline text-[#F52B8C]">how to improve your nail application speed</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For improving your overall speed without sacrificing cleanliness: <Link to="/blog/how-to-improve-nail-application-speed" className="underline text-[#F52B8C]">how to improve your nail application speed</Link>.</p>
       </section>
     </div>
   ),

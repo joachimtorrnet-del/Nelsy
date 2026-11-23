@@ -169,7 +169,7 @@ registerArticle({
           ]}
         />
         <ArticleTip>Short nail clients often don\'t realise how much the shape contributes to the final look. Spending 2 minutes on shape consultation — showing square vs squoval vs round on their hand — elevates the result and the client\'s appreciation of your expertise.</ArticleTip>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more ideas: <Link to="/learn/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link> | <Link to="/learn/french-tip-nail-ideas" className="underline text-[#F52B8C]">French tip nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more ideas: <Link to="/blog/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link> | <Link to="/blog/french-tip-nail-ideas" className="underline text-[#F52B8C]">French tip nail ideas</Link>.</p>
       </section>
     </div>
   ),

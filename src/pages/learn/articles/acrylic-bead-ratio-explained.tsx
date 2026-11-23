@@ -95,7 +95,7 @@ registerArticle({
           <li>Self-levelling systems are formulated to be slightly wetter and require less brush work</li>
           <li>Temperature affects working time — cold environments extend it; warm rooms speed it up</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">When learning a new product: practice bead pick-up and placement extensively before using it on clients. Bead ratio is intuitive once you know your specific product's behaviour — but it requires time with that specific system to develop. See: <Link to="/learn/acrylic-application-step-by-step" className="underline text-[#F52B8C]">acrylic application step-by-step</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">When learning a new product: practice bead pick-up and placement extensively before using it on clients. Bead ratio is intuitive once you know your specific product's behaviour — but it requires time with that specific system to develop. See: <Link to="/blog/acrylic-application-step-by-step" className="underline text-[#F52B8C]">acrylic application step-by-step</Link>.</p>
       </section>
     </div>
   ),

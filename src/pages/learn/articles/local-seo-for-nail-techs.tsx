@@ -55,7 +55,7 @@ registerArticle({
             ['Hours', 'Accurate hours including holiday closures'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For a full setup and optimisation walkthrough: <Link to="/learn/how-to-get-nail-clients-from-google-business-profile" className="underline text-[#F52B8C]">how to get more nail clients through Google Business Profile</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For a full setup and optimisation walkthrough: <Link to="/blog/how-to-get-nail-clients-from-google-business-profile" className="underline text-[#F52B8C]">how to get more nail clients through Google Business Profile</Link>.</p>
       </section>
 
       <section id="reviews">
@@ -67,7 +67,7 @@ registerArticle({
           <li>Aim for specific, detailed reviews ("4-week retention, perfect French tip") — they carry more weight than one-word reviews</li>
           <li>Never buy or incentivise reviews — this violates Google's terms and risks profile removal</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Full review strategy: <Link to="/learn/how-to-ask-nail-clients-for-reviews" className="underline text-[#F52B8C]">how to ask nail clients for reviews</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full review strategy: <Link to="/blog/how-to-ask-nail-clients-for-reviews" className="underline text-[#F52B8C]">how to ask nail clients for reviews</Link>.</p>
       </section>
 
       <section id="nap-consistency">
@@ -116,7 +116,7 @@ registerArticle({
           'NAP consistent across Google, website, Instagram, and booking platform',
           'Google Posts updated monthly',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">For getting new clients through other channels: <Link to="/learn/how-to-get-more-local-nail-clients" className="underline text-[#F52B8C]">how to get more local nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For getting new clients through other channels: <Link to="/blog/how-to-get-more-local-nail-clients" className="underline text-[#F52B8C]">how to get more local nail clients</Link>.</p>
       </section>
     </div>
   ),

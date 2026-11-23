@@ -108,7 +108,7 @@ export default function NailTechPricingGuide() {
       <SEOMeta
         title="Nail Tech Pricing Guide: How to Set Your Rates and Charge What You're Worth | Nelsy"
         description="A practical nail tech pricing guide — cost-based pricing, market positioning, nail art pricing, how to raise rates, and how to display prices on your booking page."
-        canonical="/learn/nail-tech-pricing-guide"
+        canonical="/blog/nail-tech-pricing-guide"
         jsonLd={JSON_LD}
       />
       <SiteNav />
@@ -433,7 +433,7 @@ export default function NailTechPricingGuide() {
                 { to: '/tools/nail-tech-pricing-calculator', label: 'Pricing Calculator' },
                 { to: '/nail-tech-deposits', label: 'How to Collect Deposits' },
                 { to: '/tools/nail-tech-cancellation-policy-generator', label: 'Cancellation Policy Generator' },
-                { to: '/learn/how-to-get-more-nail-clients', label: 'How to Get More Nail Clients' },
+                { to: '/blog/how-to-get-more-nail-clients', label: 'How to Get More Nail Clients' },
               ].map((link, i) => (
                 <>
                   {i > 0 && <span key={`dot-${i}`} className="text-gray-300">·</span>}

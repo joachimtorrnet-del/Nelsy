@@ -105,7 +105,7 @@ registerArticle({
         <ArticleCallout variant="info" title="How to end a client relationship">
           You don't owe an explanation. If they try to book: "I'm afraid I'm not taking new bookings at the moment" or simply don't respond to booking requests. If you'd prefer to be direct: "I don't think I'm the right fit for you going forward — I'd suggest trying [other local nail tech]." Keep it brief and don't engage with pushback.
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For policy templates to back all of this up: <Link to="/learn/nail-tech-booking-policy-template" className="underline text-[#F52B8C]">nail tech booking policy template</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For policy templates to back all of this up: <Link to="/blog/nail-tech-booking-policy-template" className="underline text-[#F52B8C]">nail tech booking policy template</Link>.</p>
       </section>
     </div>
   ),

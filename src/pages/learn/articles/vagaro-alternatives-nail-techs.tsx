@@ -21,7 +21,7 @@ registerArticle({
     { id: 'alternatives', label: 'Vagaro alternatives' },
     { id: 'switching', label: 'Switching considerations' },
   ],
-  relatedSlugs: ['best-booking-apps-for-nail-techs-2026', 'how-to-choose-booking-app-nail-business', 'glossgenius-alternatives-nail-techs', 'how-to-switch-nail-booking-software'],
+  relatedSlugs: [ 'how-to-choose-booking-app-nail-business', 'glossgenius-alternatives-nail-techs', 'how-to-switch-nail-booking-software'],
   faq: [
     { q: 'Is Vagaro only available in the US?', a: 'Vagaro is primarily US-focused, though it has expanded to some other markets. Nail techs outside the US often find that platforms with stronger international presence (Fresha in particular) are better alternatives. Check current Vagaro availability for your location on their website.' },
     { q: 'What is Vagaro\'s pricing model?', a: 'Vagaro typically charges a monthly subscription with pricing that varies based on the number of bookable staff. Exact pricing changes — always verify current rates on Vagaro\'s pricing page before committing.' },
@@ -77,7 +77,7 @@ registerArticle({
           <li>Update all booking links — social media bio, website, email signatures — when you switch</li>
           <li>Run the overlap period as short as practical; clients adapting to two booking systems causes confusion</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Full switching guide: <Link to="/learn/how-to-switch-nail-booking-software" className="underline text-[#F52B8C]">how to switch nail booking software without losing clients</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full switching guide: <Link to="/blog/how-to-switch-nail-booking-software" className="underline text-[#F52B8C]">how to switch nail booking software without losing clients</Link>.</p>
       </section>
     </div>
   ),

@@ -21,7 +21,7 @@ registerArticle({
     { id: 'alternatives', label: 'Alternatives' },
     { id: 'decision', label: 'Making the decision' },
   ],
-  relatedSlugs: ['best-booking-apps-for-nail-techs-2026', 'how-to-choose-booking-app-nail-business', 'booking-app-vs-booking-website-nail-techs', 'how-to-set-up-online-booking-nail-business'],
+  relatedSlugs: [ 'how-to-choose-booking-app-nail-business', 'booking-app-vs-booking-website-nail-techs', 'how-to-set-up-online-booking-nail-business'],
   faq: [
     { q: 'Why do nail techs use Acuity Scheduling?', a: 'Acuity is often used by nail techs who come from a general freelance or service-business background and know the tool from other contexts, or who were recommended it without awareness of beauty-specific alternatives. It\'s also used by nail techs who want extensive customisation over their booking page — Acuity offers significant flexibility for intake forms and availability rules.' },
     { q: 'Is Acuity Scheduling good for taking deposits?', a: 'Acuity can handle deposits through Stripe or PayPal integration. However, the deposit setup is not as streamlined as platforms built specifically for beauty services. Beauty-specific booking tools typically handle deposits with less configuration.' },
@@ -77,7 +77,7 @@ registerArticle({
           <li>You want marketplace discovery that Acuity doesn't provide</li>
           <li>You want more nail-specific client management tools</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For the full comparison framework: <Link to="/learn/how-to-choose-booking-app-nail-business" className="underline text-[#F52B8C]">how to choose a booking app for your nail business</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For the full comparison framework: <Link to="/blog/how-to-choose-booking-app-nail-business" className="underline text-[#F52B8C]">how to choose a booking app for your nail business</Link>.</p>
       </section>
     </div>
   ),

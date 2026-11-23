@@ -428,7 +428,7 @@ export default function PricingCalculator() {
           <div className="max-w-3xl mx-auto">
             <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4">RELATED RESOURCES</p>
             <div className="flex flex-wrap gap-3">
-              <Link to="/learn/nail-tech-pricing-guide" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
+              <Link to="/blog/nail-tech-pricing-guide" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
                 Nail Tech Pricing Guide
               </Link>
               <span className="text-gray-300">·</span>

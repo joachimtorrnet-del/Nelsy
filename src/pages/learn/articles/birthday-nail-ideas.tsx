@@ -145,7 +145,7 @@ registerArticle({
           ]}
         />
         <ArticleTip>Birthday nail posts on Instagram consistently receive more saves than regular nail content — the intent behind the save is "bookmark for my birthday." These saved posts generate bookings weeks or months later.</ArticleTip>
-        <p className="text-gray-700 mt-4 leading-relaxed">For client retention strategies: <Link to="/learn/how-to-get-more-nail-client-rebookings" className="underline text-[#F52B8C]">how to get more nail client rebookings</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For client retention strategies: <Link to="/blog/how-to-get-more-nail-client-rebookings" className="underline text-[#F52B8C]">how to get more nail client rebookings</Link>.</p>
       </section>
     </div>
   ),

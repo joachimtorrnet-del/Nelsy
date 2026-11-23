@@ -89,7 +89,7 @@ registerArticle({
           <li>Choosing a location that doesn't suit your clients</li>
           <li>Expecting the studio to drive new clients — you still need to market</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">For the transition process: <Link to="/learn/how-to-transition-home-nail-tech-to-studio" className="underline text-[#F52B8C]">how to transition from home nail tech to a studio</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For the transition process: <Link to="/blog/how-to-transition-home-nail-tech-to-studio" className="underline text-[#F52B8C]">how to transition from home nail tech to a studio</Link>.</p>
       </section>
     </div>
   ),

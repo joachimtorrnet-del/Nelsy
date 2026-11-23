@@ -21,7 +21,7 @@ registerArticle({
     { id: 'alternatives', label: 'Alternatives to consider' },
     { id: 'comparison', label: 'Comparison' },
   ],
-  relatedSlugs: ['square-vs-fresha-nail-techs', 'best-booking-apps-for-nail-techs-2026', 'how-to-choose-booking-app-nail-business', 'best-booking-apps-nail-salons'],
+  relatedSlugs: ['square-vs-fresha-nail-techs', 'how-to-choose-booking-app-nail-business', 'best-booking-apps-nail-salons'],
   faq: [
     { q: 'Is Square Appointments good for solo nail techs?', a: 'Square Appointments works for solo nail techs who are already embedded in the Square ecosystem — using Square for payments, potentially with a card reader. For nail techs who aren\'t already using Square, the added complexity of setting up the broader Square system to use Appointments may not be worth it compared to booking-specialist alternatives. It\'s most valuable when you need POS integration.' },
     { q: 'Does Square Appointments have a marketplace for client discovery?', a: 'Square Appointments is primarily a direct booking tool — it doesn\'t have the same client marketplace as Fresha or Booksy where potential new clients browse and discover providers. For discovery-led client acquisition, marketplace platforms have an advantage.' },
@@ -56,7 +56,7 @@ registerArticle({
 
       <section id="alternatives">
         <h2 className="font-serif text-2xl font-bold mb-4">Alternatives to consider</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month; client marketplace; strong globally. Better for nail techs who want discovery alongside booking. <Link to="/learn/square-vs-fresha-nail-techs" className="underline text-[#F52B8C]">Square vs Fresha comparison →</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month; client marketplace; strong globally. Better for nail techs who want discovery alongside booking. <Link to="/blog/square-vs-fresha-nail-techs" className="underline text-[#F52B8C]">Square vs Fresha comparison →</Link></p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Subscription with marketplace; strong client-side app. Good where Booksy has client adoption in your area.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich; marketplace and management in one. US-focused. More comparable to Square in scope but beauty-specific.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Built for nail techs. Booking page, deposits, payments. Simpler than Square for solo nail techs who don't need POS hardware. <Link to="/" className="underline text-[#F52B8C]">See Nelsy →</Link></p>
@@ -74,7 +74,7 @@ registerArticle({
             ['Nelsy', 'Solo nail techs; direct booking + deposits', 'No (direct)', 'Yes'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For the broader booking app comparison: <Link to="/learn/best-booking-apps-for-nail-techs-2026" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For the broader booking app comparison: <Link to="/best-booking-app-for-nail-techs" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
       </section>
     </div>
   ),

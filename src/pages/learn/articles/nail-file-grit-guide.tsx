@@ -104,7 +104,7 @@ registerArticle({
         <ArticleCallout variant="tip" title="Hygiene regulation note">
           In the UK, disposable tools (emery boards, buffers) used on clients must be disposed of after each client. Reusable metal tools must be cleaned, disinfected, and sterilised to local hygiene standards. Check your council/insurance requirements for specifics if you work in a registered salon space.
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For e-file/drill bit equivalents: <Link to="/learn/nail-drill-bits-explained" className="underline text-[#F52B8C]">nail drill bits explained</Link>. For how file choice affects prep quality: <Link to="/learn/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide for better retention</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For e-file/drill bit equivalents: <Link to="/blog/nail-drill-bits-explained" className="underline text-[#F52B8C]">nail drill bits explained</Link>. For how file choice affects prep quality: <Link to="/blog/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide for better retention</Link>.</p>
       </section>
     </div>
   ),

@@ -112,7 +112,7 @@ registerArticle({
           <li><strong>Too early:</strong> BIAB and gel extensions done 2+ weeks before will show noticeable growth and may need infilling</li>
           <li><strong>Prep nails:</strong> Advise the bride to avoid gel removal or harsh chemicals in the 2 weeks before — protect the nail plate</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more inspo: <Link to="/learn/luxury-nail-ideas" className="underline text-[#F52B8C]">luxury nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more inspo: <Link to="/blog/luxury-nail-ideas" className="underline text-[#F52B8C]">luxury nail ideas</Link>.</p>
       </section>
     </div>
   ),

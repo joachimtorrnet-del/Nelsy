@@ -23,7 +23,7 @@ registerArticle({
     { id: 'switching', label: 'Switching from one platform to another' },
     { id: 'useful-resources', label: 'Useful resources' },
   ],
-  relatedSlugs: ['best-booking-apps-for-nail-techs-2026', 'nail-tech-booking-software-features', 'how-to-move-from-instagram-dms-to-online-booking'],
+  relatedSlugs: [ 'nail-tech-booking-software-features', 'how-to-move-from-instagram-dms-to-online-booking'],
   faq: [
     { q: 'How long does it take to set up a nail tech booking app?', a: 'Most platforms take 1–3 hours to set up properly: creating your service menu, writing service descriptions, adding prices, setting your availability, and configuring deposit settings. Some platforms have more complex setups. If it\'s taking longer than an afternoon, that complexity will affect your day-to-day use.' },
     { q: 'Should I choose a platform with a marketplace or a standalone booking page?', a: 'Depends on where you are in your business. If you need new clients and don\'t have a strong Instagram presence, marketplace visibility helps. If you have an established following and primarily want to manage bookings, a clean standalone booking page is better — and avoids marketplace commission fees.' },
@@ -108,9 +108,9 @@ registerArticle({
         <ul className="space-y-2 text-sm">
           {[
             ['/best-booking-app-for-nail-techs', 'Best booking app for nail techs — feature comparison'],
-            ['/learn/best-booking-apps-for-nail-techs-2026', 'Best booking apps for nail techs in 2026'],
-            ['/learn/nail-tech-booking-software-features', 'What features to look for in nail tech booking software'],
-            ['/learn/why-booking-through-dms-costs-nail-techs-clients', 'Why booking through DMs costs nail techs clients'],
+            ['/best-booking-app-for-nail-techs', 'Best booking apps for nail techs in 2026'],
+            ['/blog/nail-tech-booking-software-features', 'What features to look for in nail tech booking software'],
+            ['/blog/why-booking-through-dms-costs-nail-techs-clients', 'Why booking through DMs costs nail techs clients'],
           ].map(([href, label]) => <li key={href}><Link to={href} className="underline text-[#F52B8C]">{label}</Link></li>)}
         </ul>
       </section>

@@ -23,7 +23,7 @@ registerArticle({
     { id: 'cutover', label: 'The cutover process' },
     { id: 'after', label: 'After switching' },
   ],
-  relatedSlugs: ['best-booking-apps-for-nail-techs-2026', 'how-to-choose-booking-app-nail-business', 'how-to-set-up-online-booking-nail-business', 'glossgenius-alternatives-nail-techs'],
+  relatedSlugs: [ 'how-to-choose-booking-app-nail-business', 'how-to-set-up-online-booking-nail-business', 'glossgenius-alternatives-nail-techs'],
   faq: [
     { q: 'When is the best time to switch booking software?', a: 'The least disruptive time is during a relatively quiet period — a gap between busy seasons (e.g. January after the Christmas rush, or late summer before autumn). Avoid switching during your busiest periods, the two weeks before Christmas, or if you have a large volume of future bookings that need to be migrated manually. Give yourself at least 2 weeks of overlap between platforms.' },
     { q: 'What happens to bookings already on my old platform?', a: 'Existing bookings on your old platform don\'t automatically transfer to the new one. You have two options: manually re-enter future bookings on the new platform, or continue using the old platform until those existing appointments pass and only use the new one for new bookings going forward. The latter is usually simpler.' },
@@ -69,7 +69,7 @@ registerArticle({
           <li>Profile photo and description</li>
           <li>Payment setup tested and working</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Guide to setup: <Link to="/learn/how-to-set-up-online-booking-nail-business" className="underline text-[#F52B8C]">how to set up online booking for your nail business</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Guide to setup: <Link to="/blog/how-to-set-up-online-booking-nail-business" className="underline text-[#F52B8C]">how to set up online booking for your nail business</Link>.</p>
       </section>
 
       <section id="communicating">

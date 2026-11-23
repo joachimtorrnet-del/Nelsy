@@ -87,7 +87,7 @@ registerArticle({
           <li><strong>Update your Instagram bio to reference the link:</strong> "Book below 👇" or "Availability in bio link" — remind people it's there</li>
           <li><strong>Make sure the page loads quickly on mobile:</strong> Test it on your own phone before sending anyone there</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For what to put in your Instagram captions to drive clicks: <Link to="/learn/nail-tech-call-to-action-examples" className="underline text-[#F52B8C]">nail tech call-to-action examples</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For what to put in your Instagram captions to drive clicks: <Link to="/blog/nail-tech-call-to-action-examples" className="underline text-[#F52B8C]">nail tech call-to-action examples</Link>.</p>
       </section>
     </div>
   ),

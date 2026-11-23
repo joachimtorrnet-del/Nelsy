@@ -98,7 +98,7 @@ registerArticle({
             ['"I feel guilty charging more"', 'Your skills are worth money. Undercharging doesn\'t help clients — it prevents you from running a sustainable business.'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">More on pricing: <Link to="/learn/how-much-should-nail-tech-charge" className="underline text-[#F52B8C]">How much should a nail tech charge?</Link> | <Link to="/learn/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">How to price nail services for profit</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More on pricing: <Link to="/blog/how-much-should-nail-tech-charge" className="underline text-[#F52B8C]">How much should a nail tech charge?</Link> | <Link to="/blog/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">How to price nail services for profit</Link>.</p>
       </section>
     </div>
   ),

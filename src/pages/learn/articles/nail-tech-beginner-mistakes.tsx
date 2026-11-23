@@ -42,7 +42,7 @@ registerArticle({
           </div>
           <div>
             <p className="font-semibold text-gray-900 mb-1">Pricing based on what others charge, not what you need</p>
-            <p className="text-gray-700 leading-relaxed">Your prices should cover your costs and generate your target income — not just be slightly below whoever showed up first in a Google search. Do the maths before you decide. See: <Link to="/learn/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
+            <p className="text-gray-700 leading-relaxed">Your prices should cover your costs and generate your target income — not just be slightly below whoever showed up first in a Google search. Do the maths before you decide. See: <Link to="/blog/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
           </div>
           <div>
             <p className="font-semibold text-gray-900 mb-1">Not charging for nail art</p>
@@ -64,7 +64,7 @@ registerArticle({
             ['Overbooking by accident', 'Set up your calendar properly before sharing your booking link'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/learn/why-booking-through-dms-costs-nail-techs-clients" className="underline text-[#F52B8C]">why booking through DMs costs nail techs clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/blog/why-booking-through-dms-costs-nail-techs-clients" className="underline text-[#F52B8C]">why booking through DMs costs nail techs clients</Link>.</p>
       </section>
 
       <section id="instagram-mistakes">

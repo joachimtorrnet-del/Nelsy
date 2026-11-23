@@ -104,7 +104,7 @@ registerArticle({
           <li>Any packaging or nail mats if you use branded ones</li>
           <li>How you describe your services on your booking page</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/learn/how-to-make-nail-business-look-professional" className="underline text-[#F52B8C]">how to make your nail business look more professional</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-to-make-nail-business-look-professional" className="underline text-[#F52B8C]">how to make your nail business look more professional</Link>.</p>
       </section>
     </div>
   ),

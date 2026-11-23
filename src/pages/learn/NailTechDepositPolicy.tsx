@@ -107,7 +107,7 @@ export default function NailTechDepositPolicy() {
       <SEOMeta
         title="Nail Tech Deposit Policy: How to Write and Enforce One | Nelsy"
         description="How to write and enforce a nail tech deposit policy — how much to charge, refund rules, how to communicate it, and how to handle client objections."
-        canonical="/learn/nail-tech-deposit-policy"
+        canonical="/blog/nail-tech-deposit-policy"
         jsonLd={JSON_LD}
       />
       <SiteNav />
@@ -389,8 +389,8 @@ export default function NailTechDepositPolicy() {
               {[
                 { to: '/nail-tech-deposits', label: 'How to Collect Deposits' },
                 { to: '/tools/nail-tech-cancellation-policy-generator', label: 'Cancellation Policy Generator' },
-                { to: '/learn/nail-tech-pricing-guide', label: 'Nail Tech Pricing Guide' },
-                { to: '/learn/how-to-get-more-nail-clients', label: 'How to Get More Nail Clients' },
+                { to: '/blog/nail-tech-pricing-guide', label: 'Nail Tech Pricing Guide' },
+                { to: '/blog/how-to-get-more-nail-clients', label: 'How to Get More Nail Clients' },
               ].map((link, i) => (
                 <>
                   {i > 0 && <span key={`dot-${i}`} className="text-gray-300">·</span>}

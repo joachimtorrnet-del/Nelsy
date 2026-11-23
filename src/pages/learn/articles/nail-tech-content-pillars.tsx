@@ -102,7 +102,7 @@ registerArticle({
             ['Ignoring Stories', 'Only posts, no Stories', 'Stories convert warmer followers; post availability there especially'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For specific post ideas across each pillar: <Link to="/learn/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas</Link>. For caption help: <Link to="/learn/nail-tech-caption-ideas" className="underline text-[#F52B8C]">nail tech caption ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For specific post ideas across each pillar: <Link to="/blog/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas</Link>. For caption help: <Link to="/blog/nail-tech-caption-ideas" className="underline text-[#F52B8C]">nail tech caption ideas</Link>.</p>
       </section>
     </div>
   ),

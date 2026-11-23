@@ -95,7 +95,7 @@ registerArticle({
             ['What are the payment and no-show policy tools?', 'Compare deposit, cancellation fee, and no-show features specifically — these are practical day-to-day tools for nail techs'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For a broader platform comparison: <Link to="/learn/best-scheduling-software-solo-nail-techs" className="underline text-[#F52B8C]">best scheduling software for solo nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For a broader platform comparison: <Link to="/blog/best-scheduling-software-solo-nail-techs" className="underline text-[#F52B8C]">best scheduling software for solo nail techs</Link>.</p>
       </section>
     </div>
   ),

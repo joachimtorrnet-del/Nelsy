@@ -108,7 +108,7 @@ registerArticle({
         <ArticleCallout variant="tip" title="Storage">
           Store drill bits in a holder or roll that keeps them separate. Loose bits in a drawer chip each other's flutes and lose effectiveness faster. Label new bits with their purchase date so you can track usage.
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For a guide to nail files — the manual equivalent: <Link to="/learn/nail-file-grit-guide" className="underline text-[#F52B8C]">nail file grit guide for beginners</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For a guide to nail files — the manual equivalent: <Link to="/blog/nail-file-grit-guide" className="underline text-[#F52B8C]">nail file grit guide for beginners</Link>.</p>
       </section>
     </div>
   ),

@@ -106,7 +106,7 @@ registerArticle({
           <li>You feel anxious about posting rather than excited</li>
           <li>You've posted content you knew wasn't your best "just to get something out"</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Three great posts a week, with strong photos, genuine captions, and clear CTAs, will grow your account and bookings faster than seven mediocre ones. For content planning: <Link to="/learn/nail-tech-content-pillars" className="underline text-[#F52B8C]">nail tech content pillars</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Three great posts a week, with strong photos, genuine captions, and clear CTAs, will grow your account and bookings faster than seven mediocre ones. For content planning: <Link to="/blog/nail-tech-content-pillars" className="underline text-[#F52B8C]">nail tech content pillars</Link>.</p>
       </section>
     </div>
   ),

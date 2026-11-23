@@ -100,7 +100,7 @@ registerArticle({
           <li><strong>Spring:</strong> Black with white florals, black and pastels colour block</li>
           <li><strong>Summer:</strong> Black with neon accent, matte black with chrome accent</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/learn/red-nail-ideas" className="underline text-[#F52B8C]">red nail ideas</Link> · <Link to="/learn/white-nail-ideas" className="underline text-[#F52B8C]">white nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/blog/red-nail-ideas" className="underline text-[#F52B8C]">red nail ideas</Link> · <Link to="/blog/white-nail-ideas" className="underline text-[#F52B8C]">white nail ideas</Link>.</p>
       </section>
     </div>
   ),

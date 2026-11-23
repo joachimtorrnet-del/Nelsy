@@ -91,7 +91,7 @@ registerArticle({
           <li><strong>Using incorrect remover:</strong> Gel-X uses a specific remover system (usually acetone-based); your product's removal instructions specify the correct product and technique</li>
           <li><strong>Rushing removal time:</strong> Insufficient soak time means the adhesive hasn't released — don't force it; re-wrap and continue soaking</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For understanding the difference between dehydrators and primers: <Link to="/learn/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer — what's the difference</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For understanding the difference between dehydrators and primers: <Link to="/blog/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer — what's the difference</Link>.</p>
       </section>
     </div>
   ),

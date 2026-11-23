@@ -76,7 +76,7 @@ registerArticle({
           Strong: "Check my availability and book your slot in the link in my bio — slots go fast at the start of each month."
         </ArticleCallout>
         <p className="text-gray-700 mt-4 leading-relaxed">Add context to the link in bio reference: what will they find there, why should they click now? The additional specificity converts more than the generic instruction.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">For setting up your link in bio page effectively: <Link to="/learn/how-to-set-up-nail-tech-link-in-bio" className="underline text-[#F52B8C]">how to set up a nail tech link in bio page</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For setting up your link in bio page effectively: <Link to="/blog/how-to-set-up-nail-tech-link-in-bio" className="underline text-[#F52B8C]">how to set up a nail tech link in bio page</Link>.</p>
       </section>
 
       <section id="story-ctas">

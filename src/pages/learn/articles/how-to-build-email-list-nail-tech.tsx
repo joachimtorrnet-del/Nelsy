@@ -87,7 +87,7 @@ registerArticle({
           <li>Send a simple "opening bookings for next month" email to all of them with a direct booking link</li>
         </ol>
         <p className="text-gray-700 leading-relaxed">That's it. An email list doesn't need to be complicated to be effective — it needs to be consistent. Even one targeted email per month to your existing client list will fill gaps in your calendar faster than most other strategies.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">For reaching clients who've stopped booking: <Link to="/learn/how-to-bring-back-old-nail-clients" className="underline text-[#F52B8C]">how to bring back old nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For reaching clients who've stopped booking: <Link to="/blog/how-to-bring-back-old-nail-clients" className="underline text-[#F52B8C]">how to bring back old nail clients</Link>.</p>
       </section>
     </div>
   ),

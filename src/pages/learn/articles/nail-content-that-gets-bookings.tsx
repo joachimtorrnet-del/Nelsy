@@ -105,7 +105,7 @@ registerArticle({
           ]}
         />
         <p className="text-gray-700 mt-4 leading-relaxed">Adjust for your actual schedule. The important thing is the CTA-to-content ratio — at least one booking CTA for every 3 pieces of pure portfolio content.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/learn/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas</Link> for more.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See: <Link to="/blog/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas</Link> for more.</p>
       </section>
     </div>
   ),

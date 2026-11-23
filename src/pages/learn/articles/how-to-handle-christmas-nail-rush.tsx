@@ -82,7 +82,7 @@ registerArticle({
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
           Hi [Name]! I'm fully booked for December — I'm so sorry. I do have a cancellation waitlist if you'd like to be added? Otherwise, January is already open for bookings: [link]. Hope you have a wonderful Christmas! 🎄
         </blockquote>
-        <p className="text-gray-700 leading-relaxed">Planning the full holiday period strategically: <Link to="/learn/holiday-booking-strategy-nail-techs" className="underline text-[#F52B8C]">holiday booking strategy for nail techs</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Planning the full holiday period strategically: <Link to="/blog/holiday-booking-strategy-nail-techs" className="underline text-[#F52B8C]">holiday booking strategy for nail techs</Link>.</p>
       </section>
     </div>
   ),

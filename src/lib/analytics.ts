@@ -92,9 +92,9 @@ const PAGE_META: Record<string, { page_type: PageType; seo_cluster: SeoCluster }
   '/tools/nail-tech-cancellation-policy-generator': { page_type: 'tool', seo_cluster: 'deposits_policies' },
   '/tools/nail-tech-appointment-reminder-templates': { page_type: 'tool', seo_cluster: 'policies_clients' },
   '/tools': { page_type: 'tool', seo_cluster: 'core_booking' },
-  '/learn/how-to-get-more-nail-clients': { page_type: 'how_to', seo_cluster: 'instagram_growth' },
-  '/learn/nail-tech-pricing-guide': { page_type: 'how_to', seo_cluster: 'pricing' },
-  '/learn/nail-tech-deposit-policy': { page_type: 'policy_guide', seo_cluster: 'deposits_policies' },
+  '/blog/how-to-get-more-nail-clients': { page_type: 'how_to', seo_cluster: 'instagram_growth' },
+  '/blog/nail-tech-pricing-guide': { page_type: 'how_to', seo_cluster: 'pricing' },
+  '/blog/nail-tech-deposit-policy': { page_type: 'policy_guide', seo_cluster: 'deposits_policies' },
 };
 
 function getSeoPageMeta(pathname: string): { page_type: PageType; seo_cluster: SeoCluster } | null {

@@ -74,7 +74,7 @@ registerArticle({
             ['Flexible policy', 'Deposit refunded or moved', 'First time: grace, second time: forfeit', 'Deposit forfeit'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For deposit amount guidance: <Link to="/learn/how-much-deposit-should-nail-tech-charge" className="underline text-[#F52B8C]">How much deposit should a nail tech charge?</Link></p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For deposit amount guidance: <Link to="/blog/how-much-deposit-should-nail-tech-charge" className="underline text-[#F52B8C]">How much deposit should a nail tech charge?</Link></p>
       </section>
 
       <section id="where-to-put-it">

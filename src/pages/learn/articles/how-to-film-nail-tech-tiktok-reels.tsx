@@ -94,7 +94,7 @@ registerArticle({
           <li><strong>Colour grading:</strong> A slight brightness boost and minor contrast adjustment is usually enough — don't over-filter nail video</li>
           <li><strong>Captions:</strong> Add auto-captions in TikTok or Instagram for accessibility</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For photo editing specifically: <Link to="/learn/how-to-edit-nail-photos" className="underline text-[#F52B8C]">how to edit nail photos without making them look fake</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For photo editing specifically: <Link to="/blog/how-to-edit-nail-photos" className="underline text-[#F52B8C]">how to edit nail photos without making them look fake</Link>.</p>
       </section>
 
       <section id="filming-mistakes">

@@ -23,7 +23,7 @@ registerArticle({
     { id: 'setup-deposits', label: 'Step 5: Configure deposits and policies' },
     { id: 'launch', label: 'Step 6: Launch and share your link' },
   ],
-  relatedSlugs: ['how-online-booking-works-nail-techs', 'best-booking-apps-for-nail-techs-2026', 'nail-tech-deposit-policy', 'how-to-move-from-instagram-dms-to-online-booking'],
+  relatedSlugs: ['how-online-booking-works-nail-techs', 'nail-tech-deposit-policy', 'how-to-move-from-instagram-dms-to-online-booking'],
   faq: [
     { q: 'How long does it take to set up online booking?', a: 'Most nail techs can set up a complete booking page in 2–4 hours: 30 minutes choosing and signing up for a platform, 30–60 minutes setting up services and availability, 30 minutes configuring deposits and policies, and 30 minutes on the profile. Allow extra time for testing the client experience and setting up payment.' },
     { q: 'Should I set up online booking before or after I have clients?', a: 'Before — even if you have zero clients, launching with online booking from the start is much easier than migrating clients from DM booking later. Share your booking link in your first Instagram post about your nail business.' },
@@ -40,7 +40,7 @@ registerArticle({
           <li><strong>What country are you in?</strong> GlossGenius is US-only; Fresha and Booksy have international presence</li>
           <li><strong>What's your budget?</strong> All the main apps now charge monthly: Fresha from €14.95, GlossGenius from $24, Booksy from $29.99 in the US</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Full comparison: <Link to="/learn/best-booking-apps-for-nail-techs-2026" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full comparison: <Link to="/best-booking-app-for-nail-techs" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
       </section>
 
       <section id="setup-profile">
@@ -85,7 +85,7 @@ registerArticle({
           <li>Set your cancellation window (e.g. deposit non-refundable if cancelling within 48 hours)</li>
           <li>Add your policies to the booking page description or in the platform's policy field</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Deposit policy guide: <Link to="/learn/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Deposit policy guide: <Link to="/blog/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy</Link>.</p>
       </section>
 
       <section id="launch">

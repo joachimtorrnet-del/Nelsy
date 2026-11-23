@@ -81,7 +81,7 @@ registerArticle({
           <li>Use location-specific hashtags: #BristolNailTech #BristolNails</li>
           <li>TikTok has a "nearby" feature in some markets — tag your location when available</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">TikTok's local discovery is less precise than Google's — for pure local search, your Google Business Profile outperforms TikTok. Use TikTok for reach and brand building; use Google for intent-based local discovery. Full guide: <Link to="/learn/local-seo-for-nail-techs" className="underline text-[#F52B8C]">local SEO for nail techs</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">TikTok's local discovery is less precise than Google's — for pure local search, your Google Business Profile outperforms TikTok. Use TikTok for reach and brand building; use Google for intent-based local discovery. Full guide: <Link to="/blog/local-seo-for-nail-techs" className="underline text-[#F52B8C]">local SEO for nail techs</Link>.</p>
       </section>
 
       <section id="consistency">
@@ -93,7 +93,7 @@ registerArticle({
           <li>Repurpose your TikTok videos as Instagram Reels — double the reach for the same content</li>
           <li>TikTok bookings often take weeks to materialise — a viewer watches multiple videos before becoming a client</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For TikTok content ideas: <Link to="/learn/tiktok-ideas-nail-techs" className="underline text-[#F52B8C]">50 TikTok ideas for nail techs</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For TikTok content ideas: <Link to="/blog/tiktok-ideas-nail-techs" className="underline text-[#F52B8C]">50 TikTok ideas for nail techs</Link>.</p>
       </section>
     </div>
   ),

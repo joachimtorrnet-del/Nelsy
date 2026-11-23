@@ -92,7 +92,7 @@ registerArticle({
       <section id="review">
         <h2 className="font-serif text-2xl font-bold mb-4">Monthly and quarterly review</h2>
         <p className="text-gray-700 leading-relaxed">At the end of each month: compare actual to target, identify what drove the difference (above or below), and decide what to adjust. Once per quarter: review your annual goal — are you on track? Does the goal still reflect what you need? Adjust up or down with the context of your updated business situation. A goal you set in January may need recalibrating in April.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">For the income calculation that feeds into goals: <Link to="/learn/nail-tech-monthly-income-calculator" className="underline text-[#F52B8C]">nail tech monthly income: how to calculate what you actually make</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For the income calculation that feeds into goals: <Link to="/blog/nail-tech-monthly-income-calculator" className="underline text-[#F52B8C]">nail tech monthly income: how to calculate what you actually make</Link>.</p>
       </section>
     </div>
   ),

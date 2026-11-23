@@ -54,7 +54,7 @@ registerArticle({
         <ArticleCallout variant="warning" title="Check this right now">
           Go to Instagram Insights → Audience → Top Cities. If your top cities are places you don't serve, your content is reaching the wrong people. This isn't your content's fault — it's a distribution problem.
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">Fix: location tags on every post, location in your name field and bio, and local hashtags. These make your content more likely to reach people in your area. See: <Link to="/learn/how-to-get-nail-clients-from-instagram" className="underline text-[#F52B8C]">How to get nail clients from Instagram</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Fix: location tags on every post, location in your name field and bio, and local hashtags. These make your content more likely to reach people in your area. See: <Link to="/blog/how-to-get-nail-clients-from-instagram" className="underline text-[#F52B8C]">How to get nail clients from Instagram</Link>.</p>
       </section>
 
       <section id="unclear-booking">

@@ -84,7 +84,7 @@ registerArticle({
             ['The Pre-Pay Bundle', '4 × gel manicure appointments (standard service)', 'Sum of 4 × price − 10%'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For increasing average appointment value beyond packages: <Link to="/learn/how-to-increase-appointment-value" className="underline text-[#F52B8C]">how to increase your average nail appointment value</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For increasing average appointment value beyond packages: <Link to="/blog/how-to-increase-appointment-value" className="underline text-[#F52B8C]">how to increase your average nail appointment value</Link>.</p>
       </section>
     </div>
   ),

@@ -85,7 +85,7 @@ registerArticle({
           <li>Not coming back for infills on time — very grown-out nails create mechanical stress that causes lifting</li>
           <li>Oil-based hand products applied too soon after the appointment</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Builder gel application technique: <Link to="/learn/builder-gel-application-guide" className="underline text-[#F52B8C]">builder gel application guide</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Builder gel application technique: <Link to="/blog/builder-gel-application-guide" className="underline text-[#F52B8C]">builder gel application guide</Link>.</p>
       </section>
     </div>
   ),

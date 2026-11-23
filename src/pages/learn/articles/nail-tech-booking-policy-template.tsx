@@ -99,7 +99,7 @@ registerArticle({
           'Add any service-specific policies (e.g. different notice for long bookings)',
           'Review annually — update if your policies change',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">Generate a customised version automatically: <Link to="/tools/nail-tech-cancellation-policy-generator" className="underline text-[#F52B8C]">nail tech cancellation policy generator</Link>. For individual policy guides: <Link to="/learn/nail-tech-cancellation-policy" className="underline text-[#F52B8C]">cancellation policy guide</Link> | <Link to="/learn/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">no-show policy examples</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Generate a customised version automatically: <Link to="/tools/nail-tech-cancellation-policy-generator" className="underline text-[#F52B8C]">nail tech cancellation policy generator</Link>. For individual policy guides: <Link to="/blog/nail-tech-cancellation-policy" className="underline text-[#F52B8C]">cancellation policy guide</Link> | <Link to="/blog/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">no-show policy examples</Link>.</p>
       </section>
     </div>
   ),

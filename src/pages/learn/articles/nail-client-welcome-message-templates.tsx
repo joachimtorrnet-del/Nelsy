@@ -76,7 +76,7 @@ registerArticle({
         <ArticleCallout variant="tip" title="Adding someone to your waitlist">
           "Hi [name]! I've added you to my waitlist 🤍 When a slot opens up that matches your usual appointment time, I'll message you first — usually with a few days' notice. Keep an eye on your messages!{'\n\n'}In the meantime, if you see availability open up on my booking page, feel free to grab it: [link]"
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For rebooking message templates (returning clients): <Link to="/learn/nail-client-rebooking-message-templates" className="underline text-[#F52B8C]">nail client rebooking message templates</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For rebooking message templates (returning clients): <Link to="/blog/nail-client-rebooking-message-templates" className="underline text-[#F52B8C]">nail client rebooking message templates</Link>.</p>
       </section>
     </div>
   ),

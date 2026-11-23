@@ -124,7 +124,7 @@ registerArticle({
           <li><strong>Multiple gel systems:</strong> Learn one system well. Mixing brands confuses troubleshooting and increases compatibility issues.</li>
           <li><strong>Professional-grade tools before you can use them:</strong> A beginner with a £150 drill will get the same results as with a £60 drill — skill matters more than equipment at this stage.</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/learn/how-much-does-it-cost-to-start-nail-business" className="underline text-[#F52B8C]">how much does it cost to start a nail business?</Link></p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-much-does-it-cost-to-start-nail-business" className="underline text-[#F52B8C]">how much does it cost to start a nail business?</Link></p>
       </section>
     </div>
   ),

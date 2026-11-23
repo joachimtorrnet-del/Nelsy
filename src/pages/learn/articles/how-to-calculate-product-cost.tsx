@@ -99,7 +99,7 @@ registerArticle({
           Overhead allocation: your monthly costs (rent/space, insurance, equipment, marketing) ÷ monthly client count{'\n\n'}
           Your minimum price = Total cost + desired profit margin
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">Use the <Link to="/tools/nail-tech-pricing-calculator" className="underline text-[#F52B8C]">nail tech pricing calculator</Link> to run this calculation for each service. See also: <Link to="/learn/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Use the <Link to="/tools/nail-tech-pricing-calculator" className="underline text-[#F52B8C]">nail tech pricing calculator</Link> to run this calculation for each service. See also: <Link to="/blog/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
       </section>
     </div>
   ),

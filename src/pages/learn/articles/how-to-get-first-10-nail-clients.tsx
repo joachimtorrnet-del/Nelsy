@@ -75,7 +75,7 @@ registerArticle({
           <li>Regular posting — 3x per week minimum while you're building</li>
           <li>Reply to every comment and DM promptly</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">For a full guide to Instagram growth: <Link to="/learn/how-to-grow-nail-tech-instagram" className="underline text-[#F52B8C]">How to grow your nail tech Instagram</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For a full guide to Instagram growth: <Link to="/blog/how-to-grow-nail-tech-instagram" className="underline text-[#F52B8C]">How to grow your nail tech Instagram</Link>.</p>
       </section>
 
       <section id="word-of-mouth">
@@ -97,7 +97,7 @@ registerArticle({
           <li>Make rebooking easy — have your booking page ready to show them on your phone</li>
           <li>Follow up after 2 weeks: "How are your nails holding up? Booking for an infill yet?"</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">A client who books three times is a regular. Regulars are the foundation of a stable nail business. See: <Link to="/learn/how-to-fill-nail-appointment-book" className="underline text-[#F52B8C]">How to fill your nail appointment book</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">A client who books three times is a regular. Regulars are the foundation of a stable nail business. See: <Link to="/blog/how-to-fill-nail-appointment-book" className="underline text-[#F52B8C]">How to fill your nail appointment book</Link>.</p>
       </section>
     </div>
   ),

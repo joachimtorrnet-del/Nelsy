@@ -101,7 +101,7 @@ registerArticle({
           <li>Note what's included (e.g. "gel colour included" or "add a gel colour from £X")</li>
           <li>List length upgrades if you price by length</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For full price list examples: <Link to="/learn/nail-tech-price-list-examples" className="underline text-[#F52B8C]">nail tech price list examples</Link>. For calculating exact product costs: <Link to="/learn/how-to-calculate-product-cost" className="underline text-[#F52B8C]">how to calculate your nail product cost</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For full price list examples: <Link to="/blog/nail-tech-price-list-examples" className="underline text-[#F52B8C]">nail tech price list examples</Link>. For calculating exact product costs: <Link to="/blog/how-to-calculate-product-cost" className="underline text-[#F52B8C]">how to calculate your nail product cost</Link>.</p>
       </section>
     </div>
   ),

@@ -89,7 +89,7 @@ registerArticle({
           4. Can I actually afford this discount at my current margins?
         </ArticleCallout>
         <p className="text-gray-700 mt-4 leading-relaxed">If a discount passes this filter — it's strategic, time-limited, affordable, and attracts the right kind of client — it can be a useful tool. If it doesn't pass the filter, you're probably better off with a different approach.</p>
-        <p className="text-gray-700 leading-relaxed">For the related question of when to raise prices instead: <Link to="/learn/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">when should a nail tech raise prices</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For the related question of when to raise prices instead: <Link to="/blog/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">when should a nail tech raise prices</Link>.</p>
       </section>
     </div>
   ),

@@ -89,7 +89,7 @@ registerArticle({
             ['Creative studio', 'Bold, distinctive, personality-led', 'nail art that makes people look twice 🔥\nEast London · book via link'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">More bio templates: <Link to="/learn/best-instagram-bio-ideas-for-nail-techs" className="underline text-[#F52B8C]">best Instagram bio ideas for nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More bio templates: <Link to="/blog/best-instagram-bio-ideas-for-nail-techs" className="underline text-[#F52B8C]">best Instagram bio ideas for nail techs</Link>.</p>
       </section>
 
       <section id="communication-details">
@@ -107,7 +107,7 @@ registerArticle({
       <section id="name-and-logo">
         <h2 className="font-serif text-2xl font-bold mb-4">Name and logo considerations</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">A good business name doesn't need a complex logo. A simple wordmark (your business name in your chosen font) works better than an overcomplicated icon at small sizes. For Highlights covers: a simple shape or initial in your brand colours is cleaner than a detailed graphic.</p>
-        <p className="text-gray-700 leading-relaxed">See: <Link to="/learn/how-to-name-your-nail-business" className="underline text-[#F52B8C]">how to name your nail business</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">See: <Link to="/blog/how-to-name-your-nail-business" className="underline text-[#F52B8C]">how to name your nail business</Link>.</p>
       </section>
     </div>
   ),

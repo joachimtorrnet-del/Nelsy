@@ -85,7 +85,7 @@ registerArticle({
       <section id="peeling-vs-lifting">
         <h2 className="font-serif text-2xl font-bold mb-4">Peeling vs lifting — what's the difference?</h2>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Peeling</strong> — gel coming off in a sheet or chunk, often from the free edge or suddenly — usually caused by prep failure (oil, no dehydrator) or curing issues. The product never bonded properly.</p>
-        <p className="text-gray-700 leading-relaxed"><strong>Lifting</strong> — product separating from the nail plate gradually, usually at the cuticle or sidewalls — usually caused by flooded cuticle, incomplete prep, or product touching skin. For more: <Link to="/learn/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link>.</p>
+        <p className="text-gray-700 leading-relaxed"><strong>Lifting</strong> — product separating from the nail plate gradually, usually at the cuticle or sidewalls — usually caused by flooded cuticle, incomplete prep, or product touching skin. For more: <Link to="/blog/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link>.</p>
       </section>
     </div>
   ),

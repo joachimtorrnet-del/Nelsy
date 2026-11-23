@@ -70,7 +70,7 @@ registerArticle({
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
           Hi [Name]! Happy new year 🎉 Hope you had a wonderful Christmas! I'm back to normal bookings in January and would love to see you for a fresh set. I have some great availability coming up — book at [link] or let me know what works for you! 💕
         </blockquote>
-        <p className="text-gray-700 leading-relaxed">More re-engagement templates: <Link to="/learn/nail-tech-client-follow-up-templates" className="underline text-[#F52B8C]">nail tech client follow-up templates</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">More re-engagement templates: <Link to="/blog/nail-tech-client-follow-up-templates" className="underline text-[#F52B8C]">nail tech client follow-up templates</Link>.</p>
       </section>
 
       <section id="offers">

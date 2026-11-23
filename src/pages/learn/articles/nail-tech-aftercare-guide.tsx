@@ -98,7 +98,7 @@ registerArticle({
             ['Book on schedule', 'Leaving extensions too long creates a lever effect that damages the natural nail'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For improving overall nail retention: <Link to="/learn/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For improving overall nail retention: <Link to="/blog/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link>.</p>
       </section>
     </div>
   ),

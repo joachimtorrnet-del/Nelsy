@@ -91,7 +91,7 @@ registerArticle({
           <li>For negative reviews, respond calmly and offer to resolve — a handled negative review often increases trust</li>
           <li>Aim for specific, detailed reviews ("4-week retention, great nail art, easy to book") rather than generic ones — they rank better and convert better</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For detailed review request scripts: <Link to="/learn/how-to-ask-nail-clients-for-reviews" className="underline text-[#F52B8C]">how to ask nail clients for reviews</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For detailed review request scripts: <Link to="/blog/how-to-ask-nail-clients-for-reviews" className="underline text-[#F52B8C]">how to ask nail clients for reviews</Link>.</p>
       </section>
 
       <section id="posts">

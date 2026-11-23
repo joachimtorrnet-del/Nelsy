@@ -81,7 +81,7 @@ registerArticle({
           <li>The remaining time isn't enough to complete a meaningful service safely</li>
           <li>They've been habitually late across multiple appointments</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Apply your no-show policy in this case — deposit forfeit. See: <Link to="/learn/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">nail tech no-show policy examples</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Apply your no-show policy in this case — deposit forfeit. See: <Link to="/blog/nail-tech-no-show-policy-examples" className="underline text-[#F52B8C]">nail tech no-show policy examples</Link>.</p>
       </section>
 
       <section id="scripts">
@@ -92,7 +92,7 @@ registerArticle({
         <ArticleCallout variant="tip" title="When you need to turn a client away">
           "I'm really sorry — I've had you booked for [time] and I've got a client straight after. I'm not able to run the full service in the time we have left. I'll apply my late cancellation policy to today's booking, and I'd love to rebook you for another slot when we have the full time."
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more on handling difficult client situations: <Link to="/learn/how-to-handle-late-nail-clients" className="underline text-[#F52B8C]">how to handle late nail clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more on handling difficult client situations: <Link to="/blog/how-to-handle-late-nail-clients" className="underline text-[#F52B8C]">how to handle late nail clients</Link>.</p>
       </section>
     </div>
   ),

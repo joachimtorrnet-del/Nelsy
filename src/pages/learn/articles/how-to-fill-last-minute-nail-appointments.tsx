@@ -86,7 +86,7 @@ registerArticle({
           <li><strong>Deposits:</strong> Clients with a paid deposit cancel far less frequently than those without. Even a small deposit of £10–£20 creates enough skin in the game to prevent casual cancellations</li>
           <li><strong>Reminders:</strong> An automated reminder 48 hours before the appointment significantly reduces no-shows and late cancellations — clients who need to cancel do so earlier when reminded</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For deposit policy setup: <Link to="/learn/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy guide</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For deposit policy setup: <Link to="/blog/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy guide</Link>.</p>
       </section>
     </div>
   ),

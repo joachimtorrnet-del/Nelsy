@@ -119,7 +119,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Why square nails are so popular</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Square nails hold their shape well and show nail art cleanly — the flat tip surface is a natural canvas. They suit short and long lengths equally, look neat at all widths, and work across age groups and personal styles.</p>
         <p className="text-gray-700 leading-relaxed">From a nail tech perspective, squares are efficient to file and shape — consistent straight sides with a flat top. They're one of the most requested shapes across all client types. If a client asks for "a clean, classic nail," square is usually the answer they're looking for.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more nail shape inspo: <Link to="/learn/coffin-nail-ideas" className="underline text-[#F52B8C]">50 coffin nail ideas to save for your next set</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more nail shape inspo: <Link to="/blog/coffin-nail-ideas" className="underline text-[#F52B8C]">50 coffin nail ideas to save for your next set</Link>.</p>
       </section>
     </div>
   ),

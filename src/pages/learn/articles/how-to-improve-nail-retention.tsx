@@ -70,7 +70,7 @@ registerArticle({
           'Are you applying primer to the natural nail only — not cuticles or skin?',
           'Are you allowing primer to dry/reach tacky stage before applying base coat?',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">For the full step-by-step prep sequence: <Link to="/learn/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide for better retention</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For the full step-by-step prep sequence: <Link to="/blog/nail-prep-guide" className="underline text-[#F52B8C]">nail prep guide for better retention</Link>.</p>
       </section>
 
       <section id="application">
@@ -127,7 +127,7 @@ registerArticle({
             ['One specific client', 'Oily nail bed — try a stronger primer; review their aftercare compliance'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/learn/how-to-prevent-nail-lifting" className="underline text-[#F52B8C]">how to prevent nail lifting</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-to-prevent-nail-lifting" className="underline text-[#F52B8C]">how to prevent nail lifting</Link>.</p>
       </section>
     </div>
   ),

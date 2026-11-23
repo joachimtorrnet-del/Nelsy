@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "postbuild": "node scripts/generate-routes.mjs && node scripts/generate-sitemap.mjs && cp dist/index.html dist/app.html && node scripts/prerender.mjs",
+    "postbuild": "node scripts/generate-routes.mjs && node scripts/generate-sitemap.mjs && cp dist/index.html dist/app.html && node scripts/prerender.mjs && node scripts/seo-audit.mjs",
     "generate:covers": "node scripts/generate-blog-covers.mjs",
     "generate:covers:force": "node scripts/generate-blog-covers.mjs --force",
     "lint": "eslint .",

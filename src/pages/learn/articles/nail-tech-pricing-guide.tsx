@@ -240,7 +240,7 @@ registerArticle({
             ['/tools/nail-tech-pricing-calculator', 'Free nail tech pricing calculator — work out your minimum viable price'],
             ['/nail-tech-deposits', 'How to take deposits as a nail tech'],
             ['/tools/nail-tech-cancellation-policy-generator', 'Free cancellation policy generator'],
-            ['/learn/how-to-get-more-nail-clients', 'How to get more nail clients'],
+            ['/blog/how-to-get-more-nail-clients', 'How to get more nail clients'],
           ].map(([href, label]) => (
             <li key={href}>
               <Link to={href} className="underline text-[#F52B8C] leading-relaxed">

@@ -227,7 +227,7 @@ registerArticle({
         <ul className="space-y-2 text-sm">
           {[
             ['/nail-tech-deposits', 'How to take deposits as a nail tech — amounts, scripts, objections'],
-            ['/learn/nail-tech-pricing-guide', 'Nail tech pricing guide — how to set your rates and charge what you\'re worth'],
+            ['/blog/nail-tech-pricing-guide', 'Nail tech pricing guide — how to set your rates and charge what you\'re worth'],
             ['/tools/nail-tech-appointment-reminder-templates', 'Free appointment reminder templates — confirmation, 24-hour reminder, follow-up'],
             ['/tools/nail-tech-cancellation-policy-generator', 'Free cancellation policy generator for nail techs'],
             ['/instagram-booking-for-nail-techs', 'How to get bookings from Instagram — set up, link in bio, converting followers'],

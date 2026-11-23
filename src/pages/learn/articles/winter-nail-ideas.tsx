@@ -107,7 +107,7 @@ registerArticle({
           <li>Glitter ombré from base to tip</li>
           <li>Full glitter set — gel with glitter particles throughout for maximum sparkle</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/learn/how-to-handle-christmas-nail-rush" className="underline text-[#F52B8C]">how to handle the Christmas nail rush</Link> · <Link to="/learn/fall-nail-ideas" className="underline text-[#F52B8C]">fall nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/blog/how-to-handle-christmas-nail-rush" className="underline text-[#F52B8C]">how to handle the Christmas nail rush</Link> · <Link to="/blog/fall-nail-ideas" className="underline text-[#F52B8C]">fall nail ideas</Link>.</p>
       </section>
     </div>
   ),

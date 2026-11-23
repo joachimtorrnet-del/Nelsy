@@ -96,7 +96,7 @@ registerArticle({
           <li><strong>Reduce fixed costs:</strong> Negotiate rent, switch to a lower-cost insurance provider, audit subscriptions</li>
           <li><strong>Reduce product waste:</strong> Every pound of unnecessary waste adds to your per-appointment variable cost</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For the revenue goal side of the equation: <Link to="/learn/nail-tech-revenue-goals" className="underline text-[#F52B8C]">nail tech revenue goals: how to set them</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For the revenue goal side of the equation: <Link to="/blog/nail-tech-revenue-goals" className="underline text-[#F52B8C]">nail tech revenue goals: how to set them</Link>.</p>
       </section>
     </div>
   ),

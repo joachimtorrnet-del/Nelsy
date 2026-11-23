@@ -22,7 +22,7 @@ registerArticle({
     { id: 'when-need-both', label: 'When you need both' },
     { id: 'recommendation', label: 'Recommendation by business stage' },
   ],
-  relatedSlugs: ['how-to-build-nail-tech-website', 'best-booking-apps-for-nail-techs-2026', 'how-to-set-up-online-booking-nail-business', 'how-to-move-from-instagram-dms-to-online-booking'],
+  relatedSlugs: ['how-to-build-nail-tech-website', 'how-to-set-up-online-booking-nail-business', 'how-to-move-from-instagram-dms-to-online-booking'],
   faq: [
     { q: 'Can a booking app replace a website for a nail tech?', a: 'For most solo nail techs, yes — at least in the early stages. A booking app with a shareable profile page (your booking URL) covers the same functions as a basic nail tech website: showing your services, prices, and accepting bookings. A dedicated website becomes more valuable as your brand grows, if you want SEO traffic from Google, or if you want more control over how your brand appears than a booking app allows.' },
     { q: 'How much does a nail tech website cost?', a: 'A basic nail tech website can be built on Squarespace, Wix, or similar platforms for around £10–£20/month. A custom-designed site costs more. A booking app costs little to start: most offer a free trial, then a monthly plan (Fresha from €14.95, Nelsy $29). The cost comparison favours booking apps heavily at the start of a nail business.' },
@@ -89,7 +89,7 @@ registerArticle({
             ['Salon or multi-tech', 'Booking app (Fresha/Booksy handle multi-staff); website for brand'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For building a nail tech website: <Link to="/learn/how-to-build-nail-tech-website" className="underline text-[#F52B8C]">how to build a nail tech website</Link>. For choosing the right booking app: <Link to="/learn/how-to-choose-booking-app-nail-business" className="underline text-[#F52B8C]">how to choose a booking app for your nail business</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For building a nail tech website: <Link to="/blog/how-to-build-nail-tech-website" className="underline text-[#F52B8C]">how to build a nail tech website</Link>. For choosing the right booking app: <Link to="/blog/how-to-choose-booking-app-nail-business" className="underline text-[#F52B8C]">how to choose a booking app for your nail business</Link>.</p>
       </section>
     </div>
   ),

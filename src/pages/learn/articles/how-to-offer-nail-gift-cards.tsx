@@ -85,7 +85,7 @@ registerArticle({
           <li>Follow up after their first appointment: "great to meet you — would you like to get your next appointment in the calendar?"</li>
           <li>A gift card client who enjoys their first experience and rebooks is worth the same lifetime value as any regular client — treat the acquisition cost (the gift card discount, if any) as a marketing investment</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/learn/how-to-upsell-nail-services" className="underline text-[#F52B8C]">how to upsell nail services</Link> · <Link to="/learn/christmas-marketing-ideas-nail-techs" className="underline text-[#F52B8C]">Christmas marketing ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/blog/how-to-upsell-nail-services" className="underline text-[#F52B8C]">how to upsell nail services</Link> · <Link to="/blog/christmas-marketing-ideas-nail-techs" className="underline text-[#F52B8C]">Christmas marketing ideas</Link>.</p>
       </section>
     </div>
   ),

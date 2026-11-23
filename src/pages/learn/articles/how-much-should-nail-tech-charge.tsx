@@ -101,7 +101,7 @@ registerArticle({
           <li>Your hourly rate (time in chair + set-up/clean-down) works out below £30/hour</li>
           <li>You've never raised prices in 12+ months</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">See: <Link to="/learn/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link></p>
+        <p className="text-gray-700 leading-relaxed">See: <Link to="/blog/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link></p>
       </section>
 
       <section id="raising-prices">
@@ -113,7 +113,7 @@ registerArticle({
           <li>Update your booking page and pricing highlights at the same time</li>
           <li>Stick to the new prices — inconsistency creates confusion and resentment</li>
         </ol>
-        <p className="text-gray-700 mt-4 leading-relaxed">Most loyal clients stay. Some budget clients leave — and that's usually fine, because they're replaced by clients who value your work at the new price. Full guide: <Link to="/learn/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link></p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Most loyal clients stay. Some budget clients leave — and that's usually fine, because they're replaced by clients who value your work at the new price. Full guide: <Link to="/blog/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">When should a nail tech raise prices?</Link></p>
       </section>
     </div>
   ),

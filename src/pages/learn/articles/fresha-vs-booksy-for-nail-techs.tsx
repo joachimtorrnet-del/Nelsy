@@ -7,7 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'fresha-vs-booksy-for-nail-techs',
   title: 'Fresha vs Booksy for Nail Techs (2026): Prices, Fees and Verdict',
-  seoTitle: 'Fresha vs Booksy (2026): Prices, Fees & Which Is Better for Nail Techs',
+  seoTitle: 'Fresha vs Booksy (2026): Prices, Fees & Which Is Better',
   excerpt: 'Fresha vs Booksy compared on what nail techs actually pay: monthly plans, marketplace commission on new clients, card fees, text messages and deposits. Figures taken from each official pricing page.',
   seoDescription: 'Fresha vs Booksy for nail techs: monthly price, new-client commission, card fees, SMS and deposits compared side by side, with a cost example and a clear verdict.',
   category: 'comparisons',

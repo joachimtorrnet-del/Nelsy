@@ -107,7 +107,7 @@ registerArticle({
           <li>Chrome with a velvet matte accent nail — contrast of finishes</li>
           <li>Chrome with botanical nail art on a contrasting nail</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Technique guide: <Link to="/learn/how-to-make-chrome-nails-last-longer" className="underline text-[#F52B8C]">how to make chrome nails last longer</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Technique guide: <Link to="/blog/how-to-make-chrome-nails-last-longer" className="underline text-[#F52B8C]">how to make chrome nails last longer</Link>.</p>
       </section>
     </div>
   ),

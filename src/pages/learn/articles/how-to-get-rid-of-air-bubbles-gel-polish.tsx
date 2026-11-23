@@ -86,7 +86,7 @@ registerArticle({
           <li><strong>For widespread bubbles:</strong> Wipe off the coat completely (with appropriate cleaner), allow the base to dry, and reapply more carefully</li>
           <li><strong>Check before curing:</strong> Develop the habit of checking each nail briefly in good light before putting hands under the lamp — it's much faster than removing a cured coat</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For general nail set quality: <Link to="/learn/how-to-make-nail-sets-look-cleaner" className="underline text-[#F52B8C]">how to make nail sets look cleaner</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For general nail set quality: <Link to="/blog/how-to-make-nail-sets-look-cleaner" className="underline text-[#F52B8C]">how to make nail sets look cleaner</Link>.</p>
       </section>
     </div>
   ),

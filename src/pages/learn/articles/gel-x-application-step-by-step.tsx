@@ -138,7 +138,7 @@ registerArticle({
             ['Tip sizing consistently wrong', 'Working from tip size numbers that don\'t match this brand\'s system', 'Size fresh for every new brand — numbers are not universal'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For retention across all extension systems: <Link to="/learn/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For retention across all extension systems: <Link to="/blog/how-to-improve-nail-retention" className="underline text-[#F52B8C]">how to improve nail retention</Link>.</p>
       </section>
     </div>
   ),

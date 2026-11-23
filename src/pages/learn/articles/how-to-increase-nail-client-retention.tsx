@@ -100,7 +100,7 @@ registerArticle({
         <ArticleCallout variant="info" title="Loyalty scheme">
           A simple stamp-card or points system (e.g. every 10th appointment gets a free add-on) gives clients a structural reason to stay with you specifically rather than spreading appointments across multiple techs. Keep it simple — a card or a note in your booking system is enough.
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For turning loyal clients into referrers: <Link to="/learn/how-to-build-nail-client-referral-program" className="underline text-[#F52B8C]">how to build a nail client referral program</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For turning loyal clients into referrers: <Link to="/blog/how-to-build-nail-client-referral-program" className="underline text-[#F52B8C]">how to build a nail client referral program</Link>.</p>
       </section>
     </div>
   ),

@@ -74,7 +74,7 @@ registerArticle({
             ['Behind-the-scenes', 'Low-medium', 'Good for brand; less direct conversion'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For 100 content ideas: <Link to="/learn/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For 100 content ideas: <Link to="/blog/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas</Link>.</p>
       </section>
 
       <section id="location-strategy">
@@ -110,7 +110,7 @@ registerArticle({
         <ArticleCallout variant="tip" title="DM reply template">
           "Hey! So glad you like my work 🙏 The easiest way to book is through my online booking page — you can see my availability and secure your slot with a deposit right there. Link in bio! Let me know if you have any questions."
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more: <Link to="/learn/why-booking-through-dms-costs-nail-techs-clients" className="underline text-[#F52B8C]">Why booking through DMs costs nail techs clients</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more: <Link to="/blog/why-booking-through-dms-costs-nail-techs-clients" className="underline text-[#F52B8C]">Why booking through DMs costs nail techs clients</Link>.</p>
       </section>
     </div>
   ),

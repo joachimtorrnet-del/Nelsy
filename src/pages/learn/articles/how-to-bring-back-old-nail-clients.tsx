@@ -82,7 +82,7 @@ registerArticle({
       <section id="prevention">
         <h2 className="font-serif text-2xl font-bold mb-4">Preventing the drift in the first place</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">The easiest win-back is a rebook at the end of the appointment — before the client leaves. A client who books their next appointment before leaving almost never becomes a win-back target. Win-back is the recovery; rebooking is the prevention.</p>
-        <p className="text-gray-700 leading-relaxed">Full rebooking strategy: <Link to="/learn/how-to-get-more-nail-client-rebookings" className="underline text-[#F52B8C]">how to get more nail client rebookings</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full rebooking strategy: <Link to="/blog/how-to-get-more-nail-client-rebookings" className="underline text-[#F52B8C]">how to get more nail client rebookings</Link>.</p>
       </section>
     </div>
   ),

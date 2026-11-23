@@ -24,7 +24,7 @@ registerArticle({
     { id: 'handling-dm-enquiries', label: 'Handling DM enquiries during transition' },
     { id: 'troubleshooting', label: 'Common issues' },
   ],
-  relatedSlugs: ['why-booking-through-dms-costs-nail-techs-clients', 'best-booking-apps-for-nail-techs-2026', 'what-should-nail-tech-booking-page-include'],
+  relatedSlugs: ['why-booking-through-dms-costs-nail-techs-clients', 'what-should-nail-tech-booking-page-include'],
   faq: [
     { q: 'How long does it take to transition from DM to online booking?', a: 'Most nail techs complete the switch within 2–4 weeks. The technical setup takes a few hours. The transition period is the time it takes for existing clients to use the new link and for the habit of redirecting DMs to become automatic.' },
     { q: 'What if clients don\'t want to use online booking?', a: 'Most clients are fine with online booking once they\'ve used it once. A small number of long-term loyal clients may prefer DMs — you can choose whether to accommodate them individually. What you don\'t want is maintaining a DM booking system for everyone because a small minority prefer it.' },
@@ -97,7 +97,7 @@ registerArticle({
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>"Clients say they can't find availability"</strong> — check your calendar settings and make sure your working hours are set correctly. If you blocked out time for something but forgot to unblock it, you'll show as unavailable.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>"Clients complain about the deposit"</strong> — some will. Explain it simply: the deposit secures their slot and comes off the final price. Most clients accept this quickly, especially if they've been waiting for last-minute cancellations in the past.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>"I'm still getting DMs from people wanting to book"</strong> — this is normal for the first 2–3 weeks. Redirect consistently. If you accommodate DM bookings during the transition, the transition takes longer.</p>
-        <p className="text-gray-700 leading-relaxed">See also: <Link to="/learn/what-should-nail-tech-booking-page-include" className="underline text-[#F52B8C]">What your nail tech booking page should include</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">See also: <Link to="/blog/what-should-nail-tech-booking-page-include" className="underline text-[#F52B8C]">What your nail tech booking page should include</Link>.</p>
       </section>
     </div>
   ),

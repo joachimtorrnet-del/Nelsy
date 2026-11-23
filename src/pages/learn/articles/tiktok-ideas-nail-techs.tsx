@@ -112,7 +112,7 @@ registerArticle({
           <li>GRWM (get ready with me) — including doing your nails as part of prep</li>
           <li>Speed art challenge — the fastest nail art you can do in X seconds</li>
         </ol>
-        <p className="text-gray-700 mt-6 leading-relaxed">For how to turn TikTok views into bookings: <Link to="/learn/how-to-get-nail-clients-from-tiktok" className="underline text-[#F52B8C]">how to get nail clients from TikTok</Link>.</p>
+        <p className="text-gray-700 mt-6 leading-relaxed">For how to turn TikTok views into bookings: <Link to="/blog/how-to-get-nail-clients-from-tiktok" className="underline text-[#F52B8C]">how to get nail clients from TikTok</Link>.</p>
       </section>
     </div>
   ),

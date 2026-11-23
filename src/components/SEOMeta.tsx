@@ -23,7 +23,9 @@ export default function SEOMeta({
   ogType = 'website',
   jsonLd,
 }: SEOMetaProps) {
-  const fullTitle = title.includes(SITE_NAME) ? title : `${title} | ${SITE_NAME}`;
+  // Brand suffix only when it fits: Google truncates titles around 60 characters
+  const suffixed = `${title} | ${SITE_NAME}`;
+  const fullTitle = title.includes(SITE_NAME) || suffixed.length > 62 ? title : suffixed;
   const canonicalUrl = canonical
     ? `${CANONICAL_ORIGIN}${canonical}`
     : undefined;

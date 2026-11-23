@@ -1,142 +1,125 @@
+#!/usr/bin/env node
 /**
- * npm run seo:audit
+ * SEO audit of the prerendered build (dist/). Runs after prerender in postbuild.
  *
- * Reads prerendered HTML files from dist/ and reports SEO health.
- * Detects: missing title, duplicate title, missing description,
- * duplicate description, missing canonical, duplicate canonical,
- * missing H1, multiple H1, missing article dates, missing JSON-LD,
- * noindex inconsistencies.
+ * Critical errors fail the build (exit 1) so a broken page never ships:
+ *   - page without <title>, or with several <title> tags
+ *   - two pages with the same title
+ *   - prerendered page without exactly one <h1>
+ *   - internal link to a route that doesn't exist
+ *   - sitemap and prerendered pages out of sync
+ * Everything else is reported as a warning, with a score out of 100.
+ *
+ * SEO_AUDIT_STRICT=0 turns critical errors into warnings (emergency deploys).
  */
-
-import { readdirSync, readFileSync, existsSync } from 'fs';
-import { resolve, dirname } from 'path';
+import { readFileSync, readdirSync, statSync, existsSync } from 'fs';
+import { join, resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DIST = resolve(__dirname, '../dist');
+const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const DIST = join(ROOT, 'dist');
+const STRICT = process.env.SEO_AUDIT_STRICT !== '0';
 
-// ── Collect all HTML files ────────────────────────────────────────────────────
-
-function collectHtml(dir, base = '') {
-  const results = [];
-  for (const entry of readdirSync(dir, { withFileTypes: true })) {
-    if (entry.isDirectory()) {
-      results.push(...collectHtml(resolve(dir, entry.name), `${base}/${entry.name}`));
-    } else if (entry.name === 'index.html') {
-      results.push({ file: resolve(dir, entry.name), route: base || '/' });
-    }
-  }
-  return results;
+if (!existsSync(join(DIST, 'sitemap.xml'))) {
+  console.warn('⚠️  seo-audit: dist/sitemap.xml missing, skipped');
+  process.exit(0);
 }
 
-const pages = collectHtml(DIST);
+// ── Pages ────────────────────────────────────────────────────────────────────
+const files = [];
+(function walk(d) {
+  for (const f of readdirSync(d)) {
+    const p = join(d, f);
+    if (statSync(p).isDirectory()) { if (f !== 'assets') walk(p); } else if (f === 'index.html') files.push(p);
+  }
+})(DIST);
+const routeOf = (p) => '/' + p.slice(DIST.length + 1).replace(/\/?index\.html$/, '');
+const dec = (s) => s.replace(/&amp;/g, '&').replace(/&#x27;|&#39;/g, "'").replace(/&quot;/g, '"');
 
-// ── Parse helpers ─────────────────────────────────────────────────────────────
-
-function extract(html, re, group = 1) {
-  const m = html.match(re);
-  return m ? m[group].trim() : null;
+const pages = {};
+for (const f of files) {
+  const h = readFileSync(f, 'utf8');
+  const body = h.split('<body')[1] ?? '';
+  pages[routeOf(f)] = {
+    titles: [...h.matchAll(/<title[^>]*>([^<]*)<\/title>/g)].map((m) => dec(m[1])),
+    desc: dec(h.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? ''),
+    canonical: h.match(/<link rel="canonical" href="([^"]*)"/)?.[1] ?? '',
+    noindex: /<meta name="robots" content="[^"]*noindex/.test(h),
+    h1: (body.match(/<h1[\s>]/g) ?? []).length,
+    links: [...new Set([...body.matchAll(/href="(\/[^"#?]*)/g)].map((m) => m[1].replace(/\/$/, '') || '/'))],
+    imgsNoAlt: [...body.matchAll(/<img\b[^>]*>/g)].filter((m) => !/alt="[^"]+"/.test(m[0])).length,
+    jsonLd: h.includes('application/ld+json'),
+    dated: h.includes('datePublished'),
+  };
 }
+const routes = Object.keys(pages);
 
-function extractAll(html, re, group = 1) {
-  const results = [];
-  let m;
-  const g = new RegExp(re.source, re.flags.includes('g') ? re.flags : re.flags + 'g');
-  while ((m = g.exec(html)) !== null) results.push(m[group].trim());
-  return results;
-}
+// ── Valid link targets: prerendered pages + app routes ──────────────────────
+// The root catch-all (/:slug, studios) and /blog/:slug are excluded on purpose:
+// links to them must point at a page that was actually prerendered.
+const app = readFileSync(join(ROOT, 'src/App.tsx'), 'utf8');
+const appRoutes = [...app.matchAll(/path="([^"]+)"/g)].map((m) => m[1])
+  .filter((p) => p !== '*' && p !== '/:slug' && !/^\/(blog|learn)\/:/.test(p));
+const routeRe = appRoutes.map((p) => new RegExp('^' + p.replace(/:[^/]+/g, '[^/]+').replace(/\*$/, '.*') + '$'));
+const IGNORED = /^\/(assets|blog-covers|favicon|site\.webmanifest|og-|apple-touch|sitemap|robots|llms)|\.\w{2,5}$/;
+const isValid = (l) => pages[l] || IGNORED.test(l) || routeRe.some((r) => r.test(l));
 
-// ── Audit ────────────────────────────────────────────────────────────────────
+// ── Checks ───────────────────────────────────────────────────────────────────
+const critical = [];
+const warnings = [];
+const byTitle = {};
+const byDesc = {};
+const byCanonical = {};
+const inbound = Object.fromEntries(routes.map((r) => [r, 0]));
 
-const ISSUES = [];
-const seenTitles = new Map();
-const seenDescs = new Map();
-const seenCanonicals = new Map();
-
-let checked = 0;
-
-for (const { file, route } of pages) {
-  const html = readFileSync(file, 'utf8');
-  checked++;
-
-  const title = extract(html, /<title>([^<]+)<\/title>/);
-  const desc = extract(html, /<meta name="description" content="([^"]+)"/);
-  const canonical = extract(html, /<link rel="canonical" href="([^"]+)"/);
-  // Match h1 tags including those with nested elements (strip inner tags for text)
-  const h1RawMatches = extractAll(html, /<h1[^>]*>([\s\S]*?)<\/h1>/);
-  const h1s = h1RawMatches.map(s => s.replace(/<[^>]+>/g, '').trim()).filter(Boolean);
-  const hasJsonLd = html.includes('application/ld+json');
-  const robots = extract(html, /<meta name="robots" content="([^"]+)"/);
-  const isNoindex = robots?.includes('noindex');
-  const hasDate = html.includes('datePublished') || html.includes('publishedAt');
-
-  function warn(sev, msg) {
-    ISSUES.push({ route, severity: sev, message: msg });
-  }
-
-  // Title
-  if (!title) warn('CRITICAL', 'Missing <title>');
-  else {
-    if (seenTitles.has(title)) warn('HIGH', `Duplicate title: "${title}" (also on ${seenTitles.get(title)})`);
-    else seenTitles.set(title, route);
-  }
-
-  // Description
-  if (!desc) warn('HIGH', 'Missing meta description');
-  else {
-    if (seenDescs.has(desc)) warn('MEDIUM', `Duplicate description (also on ${seenDescs.get(desc)})`);
-    else seenDescs.set(desc, route);
-  }
-
-  // Canonical
-  if (!canonical) warn('HIGH', 'Missing canonical link');
-  else {
-    if (seenCanonicals.has(canonical)) warn('MEDIUM', `Duplicate canonical: "${canonical}" (also on ${seenCanonicals.get(canonical)})`);
-    else seenCanonicals.set(canonical, route);
-  }
-
-  // H1
-  if (h1s.length === 0) warn('HIGH', 'Missing H1');
-  else if (h1s.length > 1) warn('MEDIUM', `Multiple H1 tags (${h1s.length}): ${h1s.slice(0, 2).join(' | ')}`);
-
-  // JSON-LD
-  if (!hasJsonLd) warn('MEDIUM', 'Missing JSON-LD structured data');
-
-  // Blog articles should have dates in JSON-LD
-  if (route.startsWith('/blog/') && !hasDate) warn('MEDIUM', 'Blog article missing datePublished in structured data');
-
-  // Noindex on public routes that should be indexed
-  const SHOULD_INDEX_PREFIXES = ['/', '/blog', '/tools', '/nail-tech', '/instagram', '/fresha', '/booksy', '/best-booking'];
-  if (isNoindex && SHOULD_INDEX_PREFIXES.some(p => route === p || route.startsWith(p + '/'))) {
-    warn('CRITICAL', 'Public page is noindex — verify this is intentional');
+for (const [r, p] of Object.entries(pages)) {
+  const t = p.titles[0];
+  if (!t) critical.push(`no <title>: ${r}`);
+  if (p.noindex) critical.push(`public page is noindex: ${r}`);
+  if (!p.canonical) warnings.push(`no canonical: ${r}`);
+  else (byCanonical[p.canonical] ??= []).push(r);
+  if (p.desc) (byDesc[p.desc] ??= []).push(r);
+  if (!p.jsonLd) warnings.push(`no JSON-LD: ${r}`);
+  if (r.startsWith('/blog/') && !p.dated) warnings.push(`article without datePublished: ${r}`);
+  if (p.titles.length > 1) critical.push(`${p.titles.length} <title> tags: ${r}`);
+  if (p.h1 !== 1) critical.push(`${p.h1} <h1> on ${r}`);
+  if (t) (byTitle[t] ??= []).push(r);
+  if (t && t.length > 65) warnings.push(`title ${t.length} chars (>65): ${r}`);
+  if (!p.desc) warnings.push(`no meta description: ${r}`);
+  else if (p.desc.length > 165) warnings.push(`description ${p.desc.length} chars (>165): ${r}`);
+  if (p.imgsNoAlt) warnings.push(`${p.imgsNoAlt} image(s) without alt: ${r}`);
+  for (const l of p.links) {
+    if (l === r) continue;
+    if (inbound[l] !== undefined) inbound[l]++;
+    if (!isValid(l)) critical.push(`broken link ${l} on ${r}`);
   }
 }
+for (const [t, rs] of Object.entries(byTitle)) if (rs.length > 1) critical.push(`duplicate title "${t}": ${rs.join(', ')}`);
+for (const [c, rs] of Object.entries(byCanonical)) if (rs.length > 1) critical.push(`duplicate canonical ${c}: ${rs.join(', ')}`);
+for (const rs of Object.values(byDesc)) if (rs.length > 1) warnings.push(`duplicate description: ${rs.join(', ')}`);
 
-// ── Report ────────────────────────────────────────────────────────────────────
+const sitemap = [...readFileSync(join(DIST, 'sitemap.xml'), 'utf8').matchAll(/<loc>https:\/\/getnelsy\.com([^<]*)<\/loc>/g)]
+  .map((m) => m[1].replace(/\/$/, '') || '/');
+for (const s of sitemap) if (!pages[s]) critical.push(`in sitemap but not prerendered: ${s}`);
+for (const r of routes) if (!sitemap.includes(r)) warnings.push(`prerendered but not in sitemap: ${r}`);
+for (const [r, n] of Object.entries(inbound)) if (n === 0 && r !== '/') warnings.push(`orphan page (no internal link): ${r}`);
 
-const bySeverity = { CRITICAL: [], HIGH: [], MEDIUM: [], LOW: [] };
-for (const issue of ISSUES) {
-  (bySeverity[issue.severity] || bySeverity.LOW).push(issue);
-}
+// Collapse repeated broken links into one line each
+const collapse = (list) => {
+  const counts = {};
+  for (const c of list) { const k = c.replace(/ on \/.*$/, ''); counts[k] = (counts[k] ?? 0) + 1; }
+  return Object.entries(counts).map(([k, n]) => (n > 1 ? `${k} (${n} pages)` : k));
+};
+const crit = collapse(critical);
+const warn = collapse(warnings);
 
-console.log(`\n📋 SEO Audit — ${checked} pages checked\n`);
+const score = Math.max(0, Math.round(100 - crit.length * 5 - Math.min(warn.length, 100) * 0.2));
+console.log(`\n🔎 SEO audit: ${routes.length} pages · score ${score}/100 · ${crit.length} critical · ${warn.length} warnings`);
+for (const c of crit) console.log(`  ❌ ${c}`);
+for (const w of warn.slice(0, 15)) console.log(`  ⚠️  ${w}`);
+if (warn.length > 15) console.log(`  … and ${warn.length - 15} more warnings`);
 
-let total = 0;
-for (const sev of ['CRITICAL', 'HIGH', 'MEDIUM', 'LOW']) {
-  const items = bySeverity[sev];
-  if (!items.length) continue;
-  total += items.length;
-  const emoji = sev === 'CRITICAL' ? '🔴' : sev === 'HIGH' ? '🟠' : sev === 'MEDIUM' ? '🟡' : '🔵';
-  console.log(`${emoji} ${sev} (${items.length})`);
-  for (const { route, message } of items.slice(0, 20)) {
-    console.log(`   ${route.padEnd(55)} ${message}`);
-  }
-  if (items.length > 20) console.log(`   … and ${items.length - 20} more`);
-  console.log();
-}
-
-if (total === 0) {
-  console.log('✅ No issues found.\n');
-} else {
-  console.log(`Total issues: ${total}\n`);
+if (crit.length && STRICT) {
+  console.error('\nSEO audit failed: fix the critical errors above (or set SEO_AUDIT_STRICT=0 for an emergency deploy).');
+  process.exit(1);
 }

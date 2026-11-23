@@ -85,7 +85,7 @@ registerArticle({
           <li>Using nails as tools (opening cans, packages) levers the tip at the cuticle zone</li>
           <li>Picking at the cuticle area — if a tip starts to lift slightly, clients picking at it will pop it off entirely</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Full Gel-X application guide: <Link to="/learn/gel-x-application-step-by-step" className="underline text-[#F52B8C]">Gel-X application step by step</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Full Gel-X application guide: <Link to="/blog/gel-x-application-step-by-step" className="underline text-[#F52B8C]">Gel-X application step by step</Link>.</p>
       </section>
     </div>
   ),

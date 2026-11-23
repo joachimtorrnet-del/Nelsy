@@ -170,7 +170,7 @@ registerArticle({
             ['"French for my wedding"', 'Discuss nail shape alongside tip style. Bridal French on the wrong shape can date the photos.'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For shape ideas: <Link to="/learn/almond-nail-ideas" className="underline text-[#F52B8C]">almond nail ideas</Link> | <Link to="/learn/short-nail-ideas" className="underline text-[#F52B8C]">short nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For shape ideas: <Link to="/blog/almond-nail-ideas" className="underline text-[#F52B8C]">almond nail ideas</Link> | <Link to="/blog/short-nail-ideas" className="underline text-[#F52B8C]">short nail ideas</Link>.</p>
       </section>
     </div>
   ),

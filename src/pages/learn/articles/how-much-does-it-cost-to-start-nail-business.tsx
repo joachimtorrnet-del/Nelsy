@@ -92,7 +92,7 @@ registerArticle({
             ['Storage (acrylic organiser)', '£20–40', '£40–80', 'Helpful'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">The lamp is the most critical equipment purchase. Buy one specifically designed for your gel system — a cheap lamp that doesn\'t fully cure your gel will cause lifting and client complaints. See: <Link to="/learn/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit guide</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">The lamp is the most critical equipment purchase. Buy one specifically designed for your gel system — a cheap lamp that doesn\'t fully cure your gel will cause lifting and client complaints. See: <Link to="/blog/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit guide</Link>.</p>
       </section>
 
       <section id="products-costs">

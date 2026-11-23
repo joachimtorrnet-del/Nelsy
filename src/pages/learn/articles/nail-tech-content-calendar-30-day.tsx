@@ -107,7 +107,7 @@ registerArticle({
           <li>Film process videos for multiple sets back-to-back while a tripod is set up</li>
           <li>Schedule posts in advance using Instagram's native scheduler or a third-party tool</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For a full guide to batching a month of content: <Link to="/learn/how-to-batch-nail-content" className="underline text-[#F52B8C]">how to batch nail content for a whole month</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For a full guide to batching a month of content: <Link to="/blog/how-to-batch-nail-content" className="underline text-[#F52B8C]">how to batch nail content for a whole month</Link>.</p>
       </section>
     </div>
   ),

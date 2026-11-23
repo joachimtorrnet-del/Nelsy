@@ -102,7 +102,7 @@ registerArticle({
       <section id="pricing">
         <h2 className="font-serif text-2xl font-bold mb-4">Pricing for a home studio</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Home nail techs often undercharge because they feel they "should" charge less than a salon. You shouldn't — your skill, time, and products cost the same. Your overhead is lower, but that's your benefit, not your client's discount.</p>
-        <p className="text-gray-700 leading-relaxed">Price based on your skill level, local market, and cost calculation. Being home-based is a convenience advantage (easier parking, personal atmosphere) — not a reason to underprice. See: <Link to="/learn/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Price based on your skill level, local market, and cost calculation. Being home-based is a convenience advantage (easier parking, personal atmosphere) — not a reason to underprice. See: <Link to="/blog/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
       </section>
     </div>
   ),

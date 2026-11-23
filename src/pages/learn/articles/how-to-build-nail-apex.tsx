@@ -98,7 +98,7 @@ registerArticle({
             ['Bumpy surface at apex after filing', 'Apex built unevenly; filing removed too much product', 'Build more consistently; develop the eye for lateral profile assessment'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For more on acrylic technique: <Link to="/learn/acrylic-application-step-by-step" className="underline text-[#F52B8C]">acrylic application step-by-step</Link> | <Link to="/learn/builder-gel-application-guide" className="underline text-[#F52B8C]">builder gel application guide</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more on acrylic technique: <Link to="/blog/acrylic-application-step-by-step" className="underline text-[#F52B8C]">acrylic application step-by-step</Link> | <Link to="/blog/builder-gel-application-guide" className="underline text-[#F52B8C]">builder gel application guide</Link>.</p>
       </section>
     </div>
   ),

@@ -22,7 +22,7 @@ registerArticle({
     { id: 'communication-apps', label: 'Client communication apps' },
     { id: 'organisation-apps', label: 'Organisation and productivity' },
   ],
-  relatedSlugs: ['best-tools-running-nail-business', 'how-to-organize-nail-business-from-phone', 'best-booking-apps-for-nail-techs-2026', 'nail-tech-expense-list'],
+  relatedSlugs: ['best-tools-running-nail-business', 'how-to-organize-nail-business-from-phone', 'nail-tech-expense-list'],
   faq: [
     { q: 'Do I need to pay for business apps as a nail tech?', a: 'Most nail techs can run their business efficiently with a mix of free and low-cost apps. The only app category where paying typically makes sense early is booking software (for deposit collection and professional booking pages). Photo editing, organisation, and basic finance tracking have strong free options. Invest in paid apps when a specific feature you need isn\'t available free.' },
     { q: 'What\'s the minimum number of apps a nail tech needs?', a: 'You can run a nail business with just two apps: a booking app and Instagram. Everything else adds efficiency but isn\'t essential. Most experienced nail techs end up with 4–6 apps they rely on regularly: booking, photo editing, accounting/income tracking, and a content planning tool.' },
@@ -42,7 +42,7 @@ registerArticle({
             ['Google Calendar', 'Simple free scheduling alongside other tools'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">Full comparison: <Link to="/learn/best-booking-apps-for-nail-techs-2026" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Full comparison: <Link to="/best-booking-app-for-nail-techs" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
       </section>
 
       <section id="finance-apps">
@@ -57,7 +57,7 @@ registerArticle({
             ['Receipt Bank / Dext', 'Receipt scanning and expense categorisation', 'Paid'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">See the full expense list for what to track: <Link to="/learn/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">See the full expense list for what to track: <Link to="/blog/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list</Link>.</p>
       </section>
 
       <section id="content-apps">
@@ -97,7 +97,7 @@ registerArticle({
             ['Google Forms', 'Client consultation forms; free; links directly from booking confirmation'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For managing your whole business from your phone: <Link to="/learn/how-to-organize-nail-business-from-phone" className="underline text-[#F52B8C]">how to organise your nail business from your phone</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For managing your whole business from your phone: <Link to="/blog/how-to-organize-nail-business-from-phone" className="underline text-[#F52B8C]">how to organise your nail business from your phone</Link>.</p>
       </section>
     </div>
   ),

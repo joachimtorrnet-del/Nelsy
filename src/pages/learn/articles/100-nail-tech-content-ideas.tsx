@@ -86,7 +86,7 @@ registerArticle({
           <li>A client's nail journey over 6 months</li>
           <li>"Things that happen at every nail appointment"</li>
         </ol>
-        <p className="text-gray-700 mt-4 leading-relaxed">For 50 more Reel-specific ideas: <Link to="/learn/50-instagram-reel-ideas-for-nail-techs" className="underline text-[#F52B8C]">50 Instagram Reel ideas for nail techs</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For 50 more Reel-specific ideas: <Link to="/blog/50-instagram-reel-ideas-for-nail-techs" className="underline text-[#F52B8C]">50 Instagram Reel ideas for nail techs</Link>.</p>
       </section>
 
       <section id="educational">
@@ -172,7 +172,7 @@ registerArticle({
           <li>A thank-you to your regulars</li>
           <li>"This is why I love my job"</li>
         </ol>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more on Instagram growth strategy: <Link to="/learn/how-to-grow-nail-tech-instagram" className="underline text-[#F52B8C]">How to grow your nail tech Instagram</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more on Instagram growth strategy: <Link to="/blog/how-to-grow-nail-tech-instagram" className="underline text-[#F52B8C]">How to grow your nail tech Instagram</Link>.</p>
       </section>
     </div>
   ),

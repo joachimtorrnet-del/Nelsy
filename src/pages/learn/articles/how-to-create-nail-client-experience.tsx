@@ -95,7 +95,7 @@ registerArticle({
           "Hey [name]! Just checking in — how are you getting on with your nails? Hope they're settling in beautifully 🤍"
         </ArticleCallout>
         <p className="text-gray-700 mt-4 leading-relaxed">This message also creates a natural opening for the client to mention any issues early — a potential lifting problem addressed at day 3 is a small fix; the same problem at week 3 is a disappointed client.</p>
-        <p className="text-gray-700 leading-relaxed">For message templates across the client journey: <Link to="/learn/nail-client-welcome-message-templates" className="underline text-[#F52B8C]">nail client welcome message templates</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For message templates across the client journey: <Link to="/blog/nail-client-welcome-message-templates" className="underline text-[#F52B8C]">nail client welcome message templates</Link>.</p>
       </section>
     </div>
   ),

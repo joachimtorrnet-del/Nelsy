@@ -96,7 +96,7 @@ registerArticle({
           <li><strong>Applying the same amount of product as a full set:</strong> Infills need less — you're filling the regrowth zone, not rebuilding the entire nail</li>
           <li><strong>Not rebalancing the apex:</strong> As the nail grows, the stress point moves; the apex needs to be repositioned for the nail to remain balanced</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For a detailed guide to infills without bulk: <Link to="/learn/how-to-do-nail-infill-without-bulk" className="underline text-[#F52B8C]">how to do a nail infill without making it look thick</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For a detailed guide to infills without bulk: <Link to="/blog/how-to-do-nail-infill-without-bulk" className="underline text-[#F52B8C]">how to do a nail infill without making it look thick</Link>.</p>
       </section>
     </div>
   ),

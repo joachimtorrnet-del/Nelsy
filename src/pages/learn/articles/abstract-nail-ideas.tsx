@@ -106,7 +106,7 @@ registerArticle({
           <li>Moon and tip in negative space</li>
           <li>Scattered negative space spots — gaps in colour creating a pattern</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/learn/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link> · <Link to="/learn/how-to-create-clean-nail-art-lines" className="underline text-[#F52B8C]">how to create clean nail art lines</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/blog/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link> · <Link to="/blog/how-to-create-clean-nail-art-lines" className="underline text-[#F52B8C]">how to create clean nail art lines</Link>.</p>
       </section>
     </div>
   ),

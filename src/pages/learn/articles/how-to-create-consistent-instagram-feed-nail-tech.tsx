@@ -100,7 +100,7 @@ registerArticle({
           <li>Composition (flat lay, angle, close-up, lifestyle)</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">The consistency is in the frame — the photography style and editing tone. The variety is in what's inside the frame. Both together make a feed that's recognisable and interesting to follow.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">For planning what types of content to post and when: <Link to="/learn/nail-tech-content-calendar-30-day" className="underline text-[#F52B8C]">how to create a 30-day nail tech content calendar</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For planning what types of content to post and when: <Link to="/blog/nail-tech-content-calendar-30-day" className="underline text-[#F52B8C]">how to create a 30-day nail tech content calendar</Link>.</p>
       </section>
     </div>
   ),

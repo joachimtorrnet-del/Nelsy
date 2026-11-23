@@ -21,7 +21,7 @@ registerArticle({
     { id: 'travel-time', label: 'Managing travel time in your schedule' },
     { id: 'payment-on-the-go', label: 'Taking payment on the go' },
   ],
-  relatedSlugs: ['best-booking-apps-for-nail-techs-2026', 'best-booking-apps-home-based-nail-techs', 'nail-tech-deposit-policy', 'how-to-organize-nail-business-from-phone'],
+  relatedSlugs: [ 'best-booking-apps-home-based-nail-techs', 'nail-tech-deposit-policy', 'how-to-organize-nail-business-from-phone'],
   faq: [
     { q: 'How should mobile nail techs block travel time between appointments?', a: 'Most booking apps allow you to add "buffer time" before or after services. This blocks that time in your calendar so it can\'t be booked. Set your travel buffer as an automatic buffer added after each appointment. If your travel time varies significantly by location, some nail techs manually block travel time after each booking or build a longer standard buffer.' },
     { q: 'Should mobile nail techs charge a travel fee?', a: 'Many mobile nail techs charge a travel fee beyond a certain radius to cover fuel, time, and wear on their vehicle. If you do, your booking system should show this clearly at the time of booking — either as a service surcharge or a separate travel fee service. Clients should see the full cost before confirming.' },
@@ -74,7 +74,7 @@ registerArticle({
           <li><strong>Card reader:</strong> Square, SumUp, or iZettle card readers are small, portable, and work via phone — good for taking card payments at client locations</li>
           <li><strong>Bank transfer:</strong> Some mobile nail techs take the balance via bank transfer — simple, but slower than card processing</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For managing your whole nail business from your phone: <Link to="/learn/how-to-organize-nail-business-from-phone" className="underline text-[#F52B8C]">how to organise your nail business from your phone</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For managing your whole nail business from your phone: <Link to="/blog/how-to-organize-nail-business-from-phone" className="underline text-[#F52B8C]">how to organise your nail business from your phone</Link>.</p>
       </section>
     </div>
   ),

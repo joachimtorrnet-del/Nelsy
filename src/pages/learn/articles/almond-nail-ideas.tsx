@@ -171,7 +171,7 @@ registerArticle({
           ]}
         />
         <ArticleTip>Save a client-facing inspo folder on your phone for consultation — 5–10 real photos of almond sets you\'ve done across different lengths and finishes. Showing real work from your own portfolio is more trustworthy than generic stock images.</ArticleTip>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more nail shape and design ideas: <Link to="/learn/french-tip-nail-ideas" className="underline text-[#F52B8C]">French tip nail ideas</Link> | <Link to="/learn/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more nail shape and design ideas: <Link to="/blog/french-tip-nail-ideas" className="underline text-[#F52B8C]">French tip nail ideas</Link> | <Link to="/blog/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link>.</p>
       </section>
     </div>
   ),

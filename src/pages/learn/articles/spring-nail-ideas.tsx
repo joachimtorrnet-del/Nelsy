@@ -107,7 +107,7 @@ registerArticle({
           <li>Cat eye gel in a pastel tone</li>
           <li>Iridescent top coat over a neutral pastel</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/learn/summer-nail-ideas" className="underline text-[#F52B8C]">summer nail ideas</Link> · <Link to="/learn/pink-nail-ideas" className="underline text-[#F52B8C]">pink nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/blog/summer-nail-ideas" className="underline text-[#F52B8C]">summer nail ideas</Link> · <Link to="/blog/pink-nail-ideas" className="underline text-[#F52B8C]">pink nail ideas</Link>.</p>
       </section>
     </div>
   ),

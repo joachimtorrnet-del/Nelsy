@@ -58,7 +58,7 @@ registerArticle({
             ['Check earnings against goal', 'Monthly income calculation in a spreadsheet or notes app'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For what to track: <Link to="/learn/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For what to track: <Link to="/blog/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list</Link>.</p>
       </section>
 
       <section id="content-phone">
@@ -70,7 +70,7 @@ registerArticle({
           <li><strong>Caption drafts:</strong> Keep a Notes document with caption drafts — write them in a quiet moment and paste when posting</li>
           <li><strong>Schedule from Instagram:</strong> Instagram's native scheduler lets you prepare posts in advance from your phone</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Batching guide: <Link to="/learn/how-to-batch-nail-content" className="underline text-[#F52B8C]">how to batch nail content for a whole month</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Batching guide: <Link to="/blog/how-to-batch-nail-content" className="underline text-[#F52B8C]">how to batch nail content for a whole month</Link>.</p>
       </section>
 
       <section id="communication">
@@ -93,7 +93,7 @@ registerArticle({
           <li>Consistent pricing on your booking page = eliminates "how much do you charge?" DMs</li>
           <li>Clear policy on your booking page = eliminates policy negotiation messages</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Good systems mean your phone is for quality work and client relationships, not constant admin. For all the tools that help: <Link to="/learn/best-business-apps-nail-techs" className="underline text-[#F52B8C]">best business apps for nail techs</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Good systems mean your phone is for quality work and client relationships, not constant admin. For all the tools that help: <Link to="/blog/best-business-apps-nail-techs" className="underline text-[#F52B8C]">best business apps for nail techs</Link>.</p>
       </section>
     </div>
   ),

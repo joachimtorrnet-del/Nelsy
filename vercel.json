@@ -1,6 +1,16 @@
 {
   "redirects": [
     {
+      "source": "/blog/best-booking-apps-for-nail-techs-2026",
+      "destination": "/best-booking-app-for-nail-techs",
+      "permanent": true
+    },
+    {
+      "source": "/learn/best-booking-apps-for-nail-techs-2026",
+      "destination": "/best-booking-app-for-nail-techs",
+      "permanent": true
+    },
+    {
       "source": "/:path+/",
       "destination": "/:path+",
       "permanent": true
@@ -22,6 +32,9 @@
     }
   ],
   "rewrites": [
-    { "source": "/((?!api/.*).*)", "destination": "/app.html" }
+    {
+      "source": "/((?!api/.*).*)",
+      "destination": "/app.html"
+    }
   ]
 }

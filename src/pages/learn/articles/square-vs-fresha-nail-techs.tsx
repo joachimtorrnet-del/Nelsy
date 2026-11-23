@@ -21,7 +21,7 @@ registerArticle({
     { id: 'who-wins', label: 'Who each is right for' },
     { id: 'verdict', label: 'Our take' },
   ],
-  relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'square-appointments-alternatives-nail-techs', 'should-nail-techs-use-fresha', 'best-booking-apps-for-nail-techs-2026'],
+  relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'square-appointments-alternatives-nail-techs', 'should-nail-techs-use-fresha'],
   faq: [
     { q: 'Is Fresha really free for nail techs?', a: 'No. Fresha no longer has a free plan: its pricing page lists the Independent plan at €14.95/month and the Team plan at €9.95 per team member per month, after a 7-day trial. Fresha also charges a one-time fee on brand new clients who find you through its marketplace (the percentage is not shown on the pricing page), while returning clients and bookings from your own link are free. Card payments cost 1.29% + €0.15 online and 0.59% + €0.15 in person.' },
     { q: 'Does Square Appointments have a beauty marketplace?', a: 'No. Square Appointments is a scheduling and payments tool — it doesn\'t have a client-facing beauty marketplace where new clients discover providers. All your bookings come from clients you direct to your booking link.' },
@@ -76,7 +76,7 @@ registerArticle({
       <section id="verdict">
         <h2 className="font-serif text-2xl font-bold mb-4">Our take</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">For most solo nail techs, Fresha is the stronger choice — it's built for beauty, has marketplace visibility, and doesn't charge a monthly subscription. Square Appointments serves a specific use case (existing Square ecosystem, POS hardware needs) well, but that use case is narrower.</p>
-        <p className="text-gray-700 leading-relaxed">For nail techs who want something built specifically for nail tech businesses: <Link to="/" className="underline text-[#F52B8C]">Nelsy →</Link>. For the full Fresha review: <Link to="/learn/should-nail-techs-use-fresha" className="underline text-[#F52B8C]">should nail techs use Fresha?</Link></p>
+        <p className="text-gray-700 leading-relaxed">For nail techs who want something built specifically for nail tech businesses: <Link to="/" className="underline text-[#F52B8C]">Nelsy →</Link>. For the full Fresha review: <Link to="/blog/should-nail-techs-use-fresha" className="underline text-[#F52B8C]">should nail techs use Fresha?</Link></p>
       </section>
     </div>
   ),

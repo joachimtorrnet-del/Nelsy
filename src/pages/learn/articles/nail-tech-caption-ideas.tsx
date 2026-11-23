@@ -120,7 +120,7 @@ registerArticle({
             ['"Let me know if you\'re interested"', '"Comment INTERESTED and I\'ll DM you the details"'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For more on creating content that actually converts: <Link to="/learn/nail-content-that-gets-bookings" className="underline text-[#F52B8C]">nail content that gets bookings</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more on creating content that actually converts: <Link to="/blog/nail-content-that-gets-bookings" className="underline text-[#F52B8C]">nail content that gets bookings</Link>.</p>
       </section>
     </div>
   ),

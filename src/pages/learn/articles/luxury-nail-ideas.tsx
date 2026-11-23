@@ -108,7 +108,7 @@ registerArticle({
           <li>Burnt copper on short square — rich, warm, and current</li>
           <li>Sage green with a soft waxy finish — understated and grown-up</li>
         </ol>
-        <p className="text-gray-700 mt-4 leading-relaxed">For more inspo: <Link to="/learn/bridal-nail-ideas" className="underline text-[#F52B8C]">bridal nail ideas</Link> and <Link to="/learn/nail-trends-2027" className="underline text-[#F52B8C]">nail trends 2027</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For more inspo: <Link to="/blog/bridal-nail-ideas" className="underline text-[#F52B8C]">bridal nail ideas</Link> and <Link to="/blog/nail-trends-2027" className="underline text-[#F52B8C]">nail trends 2027</Link>.</p>
       </section>
     </div>
   ),

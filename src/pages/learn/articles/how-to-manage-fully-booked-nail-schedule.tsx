@@ -55,7 +55,7 @@ registerArticle({
             ['Repeat canceller', 'Require full prepayment for future bookings or decline to rebook'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">Message templates: <Link to="/learn/nail-tech-no-show-message-templates" className="underline text-[#F52B8C]">no-show message templates</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Message templates: <Link to="/blog/nail-tech-no-show-message-templates" className="underline text-[#F52B8C]">no-show message templates</Link>.</p>
       </section>
 
       <section id="pricing-up">
@@ -89,7 +89,7 @@ registerArticle({
           <li>Give waitlist clients a time window to respond before moving to the next person</li>
           <li>Post cancellation slots on your Instagram Story as well — this creates urgency and often fills gaps within the hour</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Waitlist message templates: <Link to="/learn/nail-tech-waitlist-message-templates" className="underline text-[#F52B8C]">nail tech waitlist message templates</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Waitlist message templates: <Link to="/blog/nail-tech-waitlist-message-templates" className="underline text-[#F52B8C]">nail tech waitlist message templates</Link>.</p>
       </section>
     </div>
   ),

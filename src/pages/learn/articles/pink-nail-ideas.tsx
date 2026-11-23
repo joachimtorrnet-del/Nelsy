@@ -103,7 +103,7 @@ registerArticle({
           <li><strong>Winter:</strong> Deep dusty rose, blush with silver glitter, pink and red combination</li>
           <li><strong>Valentine\'s Day:</strong> Hot pink, pink hearts, pink and white with gold</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/learn/bridal-nail-ideas" className="underline text-[#F52B8C]">bridal nail ideas</Link> · <Link to="/learn/nail-colors-for-skin-undertone" className="underline text-[#F52B8C]">nail colours by skin tone</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/blog/bridal-nail-ideas" className="underline text-[#F52B8C]">bridal nail ideas</Link> · <Link to="/blog/nail-colors-for-skin-undertone" className="underline text-[#F52B8C]">nail colours by skin tone</Link>.</p>
       </section>
     </div>
   ),

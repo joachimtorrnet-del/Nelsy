@@ -123,7 +123,7 @@ registerArticle({
           <li>Apex too far back: creates a thick nail near the cuticle, thin in the stress zone</li>
           <li>Uneven apex: different height on each nail, creating inconsistent side profiles</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">The solution is consistent lateral profile assessment during application. See: <Link to="/learn/how-to-build-nail-apex" className="underline text-[#F52B8C]">how to build a nail apex correctly</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">The solution is consistent lateral profile assessment during application. See: <Link to="/blog/how-to-build-nail-apex" className="underline text-[#F52B8C]">how to build a nail apex correctly</Link>.</p>
       </section>
     </div>
   ),

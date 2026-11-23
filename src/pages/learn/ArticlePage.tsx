@@ -15,7 +15,7 @@ export default function ArticlePage() {
   const { pathname } = useLocation();
   const article = getArticle(slug);
 
-  if (!article) return <Navigate to="/learn" replace />;
+  if (!article) return <Navigate to="/blog" replace />;
 
   const related = getRelatedArticles(slug, 3);
   const cat = CATEGORY_COLORS[article.category];
@@ -98,7 +98,7 @@ export default function ArticlePage() {
               <div>
                 {/* Breadcrumb + category */}
                 <div className="flex items-center gap-2 flex-wrap mb-5">
-                  <a href="/learn" className="text-xs text-gray-400 hover:text-gray-600 transition">Learn</a>
+                  <a href="/blog" className="text-xs text-gray-400 hover:text-gray-600 transition">Learn</a>
                   <span className="text-gray-300 text-xs">›</span>
                   <span
                     className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"

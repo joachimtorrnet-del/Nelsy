@@ -99,7 +99,7 @@ registerArticle({
             ['Pricing add-ons so low they seem like a gift', 'Clients don\'t perceive the value', 'A confident £12 chrome add-on feels professional; a £3 add-on feels like an afterthought'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For overall appointment value: <Link to="/learn/how-to-increase-appointment-value" className="underline text-[#F52B8C]">how to increase your average nail appointment value</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For overall appointment value: <Link to="/blog/how-to-increase-appointment-value" className="underline text-[#F52B8C]">how to increase your average nail appointment value</Link>.</p>
       </section>
     </div>
   ),

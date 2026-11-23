@@ -107,7 +107,7 @@ registerArticle({
           <li>Dark duochrome — shifts between two dark colours</li>
           <li>Textured pumpkin nail (3D textured design for seasonal clients)</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/learn/winter-nail-ideas" className="underline text-[#F52B8C]">winter nail ideas</Link> · <Link to="/learn/best-nail-colors-every-season" className="underline text-[#F52B8C]">best nail colours for every season</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/blog/winter-nail-ideas" className="underline text-[#F52B8C]">winter nail ideas</Link> · <Link to="/blog/best-nail-colors-every-season" className="underline text-[#F52B8C]">best nail colours for every season</Link>.</p>
       </section>
     </div>
   ),

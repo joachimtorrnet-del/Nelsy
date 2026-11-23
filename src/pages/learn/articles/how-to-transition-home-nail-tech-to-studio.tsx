@@ -67,7 +67,7 @@ registerArticle({
             ['Booking page update', 'Update address in your booking system before the move date'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">Message templates: <Link to="/learn/nail-tech-client-follow-up-templates" className="underline text-[#F52B8C]">nail tech client follow-up templates</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Message templates: <Link to="/blog/nail-tech-client-follow-up-templates" className="underline text-[#F52B8C]">nail tech client follow-up templates</Link>.</p>
       </section>
 
       <section id="setting-up">

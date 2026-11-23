@@ -81,7 +81,7 @@ registerArticle({
       <section id="practical-steps">
         <h2 className="font-serif text-2xl font-bold mb-4">Practical steps</h2>
         <ol className="list-decimal list-inside space-y-2 text-gray-700 mb-4">
-          <li>Calculate your required hourly rate — this tells you what you need to charge (see: <Link to="/learn/how-to-calculate-nail-tech-hourly-rate" className="underline text-[#F52B8C]">how to calculate your nail tech hourly rate</Link>)</li>
+          <li>Calculate your required hourly rate — this tells you what you need to charge (see: <Link to="/blog/how-to-calculate-nail-tech-hourly-rate" className="underline text-[#F52B8C]">how to calculate your nail tech hourly rate</Link>)</li>
           <li>Compare your current effective rates to your required rates — find the gaps</li>
           <li>Set a new price list and an effective date (give 4–6 weeks notice to existing clients)</li>
           <li>Communicate the change directly and confidently — see the script below</li>
@@ -95,7 +95,7 @@ registerArticle({
           "Hi [name]! Just a heads up — from [date], my prices will be updating to better reflect my current costs and experience. Your [service] will be [new price] from that date. I wanted to give you plenty of notice. I appreciate your support so much — and I look forward to continuing to take care of your nails 🤍"
         </ArticleCallout>
         <p className="text-gray-700 mt-4 leading-relaxed">You don't need to justify the increase at length — a brief, warm notice is all that's needed. Clients who respect your work will stay. Those who don't were not the right fit for your business long-term.</p>
-        <p className="text-gray-700 leading-relaxed">Full guide to raising prices: <Link to="/learn/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">when should a nail tech raise prices</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Full guide to raising prices: <Link to="/blog/when-should-nail-tech-raise-prices" className="underline text-[#F52B8C]">when should a nail tech raise prices</Link>.</p>
       </section>
     </div>
   ),

@@ -107,7 +107,7 @@ registerArticle({
           <li>Holographic shimmer on a warm nude</li>
           <li>UV-reactive neon under regular gel — glows under UV light</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/learn/vacation-nail-ideas" className="underline text-[#F52B8C]">vacation nail ideas</Link> · <Link to="/learn/spring-nail-ideas" className="underline text-[#F52B8C]">spring nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/blog/vacation-nail-ideas" className="underline text-[#F52B8C]">vacation nail ideas</Link> · <Link to="/blog/spring-nail-ideas" className="underline text-[#F52B8C]">spring nail ideas</Link>.</p>
       </section>
     </div>
   ),

@@ -131,7 +131,7 @@ registerArticle({
           <li>Batch editing: edit 3–5 Reels at once while you're in the flow</li>
           <li>Add text to every Reel — many viewers watch without sound</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">More content ideas: <Link to="/learn/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas for Instagram</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More content ideas: <Link to="/blog/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas for Instagram</Link>.</p>
       </section>
     </div>
   ),

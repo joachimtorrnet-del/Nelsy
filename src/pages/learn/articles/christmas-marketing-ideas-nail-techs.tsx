@@ -92,7 +92,7 @@ registerArticle({
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-4">
           Hi [Name]! Christmas bookings are now open 🎄 As a regular client, I'm giving you first access before I announce publicly. Slots fill fast in December — you can book at [link]. Let me know if you have any questions! ✨
         </blockquote>
-        <p className="text-gray-700 leading-relaxed">For managing the full holiday rush: <Link to="/learn/how-to-handle-christmas-nail-rush" className="underline text-[#F52B8C]">how to handle the Christmas nail rush</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For managing the full holiday rush: <Link to="/blog/how-to-handle-christmas-nail-rush" className="underline text-[#F52B8C]">how to handle the Christmas nail rush</Link>.</p>
       </section>
     </div>
   ),

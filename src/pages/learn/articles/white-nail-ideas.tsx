@@ -107,7 +107,7 @@ registerArticle({
           <li>White and nude mix — understated and polished</li>
           <li>White with a neon accent nail — graphic contrast</li>
         </ul>
-        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/learn/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link> · <Link to="/learn/black-nail-ideas" className="underline text-[#F52B8C]">black nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/blog/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link> · <Link to="/blog/black-nail-ideas" className="underline text-[#F52B8C]">black nail ideas</Link>.</p>
       </section>
     </div>
   ),

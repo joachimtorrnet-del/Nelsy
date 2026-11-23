@@ -23,7 +23,7 @@ registerArticle({
     { id: 'reminders', label: 'How reminders work' },
     { id: 'getting-started', label: 'Getting started' },
   ],
-  relatedSlugs: ['how-to-set-up-online-booking-nail-business', 'how-to-move-from-instagram-dms-to-online-booking', 'best-booking-apps-for-nail-techs-2026', 'why-booking-through-dms-costs-nail-techs-clients'],
+  relatedSlugs: ['how-to-set-up-online-booking-nail-business', 'how-to-move-from-instagram-dms-to-online-booking', 'why-booking-through-dms-costs-nail-techs-clients'],
   faq: [
     { q: 'Do clients have to create an account to book online?', a: 'It depends on the platform. Some booking platforms require clients to create an account before booking; others allow guest checkout with just a name and phone number. Platforms requiring account creation add friction — clients who don\'t want to sign up may abandon the booking. When evaluating a booking platform, test the client experience yourself to see how many steps it takes.' },
     { q: 'What happens if a client books a time I\'m not available?', a: 'Your booking system only shows available times based on your working hours and existing appointments. Clients can only select from available slots — they can\'t book times marked as unavailable. Make sure your working hours and any blocked-off time are set correctly to prevent unwanted bookings.' },
@@ -79,7 +79,7 @@ registerArticle({
           <li>If a client cancels within your cancellation window, the deposit policy dictates whether they're refunded</li>
           <li>The remaining balance is paid at the appointment (cash, card, or link)</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Deposit policy guide: <Link to="/learn/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Deposit policy guide: <Link to="/blog/nail-tech-deposit-policy" className="underline text-[#F52B8C]">nail tech deposit policy</Link>.</p>
       </section>
 
       <section id="reminders">
@@ -90,7 +90,7 @@ registerArticle({
 
       <section id="getting-started">
         <h2 className="font-serif text-2xl font-bold mb-4">Getting started</h2>
-        <p className="text-gray-700 leading-relaxed">Setting up online booking typically takes a few hours: choose a platform, create your service menu, set your working hours and availability, configure your deposit requirements, and share your booking link in your Instagram bio. Full setup guide: <Link to="/learn/how-to-set-up-online-booking-nail-business" className="underline text-[#F52B8C]">how to set up online booking for your nail business</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">Setting up online booking typically takes a few hours: choose a platform, create your service menu, set your working hours and availability, configure your deposit requirements, and share your booking link in your Instagram bio. Full setup guide: <Link to="/blog/how-to-set-up-online-booking-nail-business" className="underline text-[#F52B8C]">how to set up online booking for your nail business</Link>.</p>
       </section>
     </div>
   ),

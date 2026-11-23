@@ -91,7 +91,7 @@ registerArticle({
           <li>Only one reward per card — keep it clean. Don't create a complicated multi-tier points table</li>
           <li>Communicate the scheme simply: "Every 10th appointment earns a free chrome. I'll keep track."</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For the broader retention picture: <Link to="/learn/how-to-increase-nail-client-retention" className="underline text-[#F52B8C]">how to increase nail client retention</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For the broader retention picture: <Link to="/blog/how-to-increase-nail-client-retention" className="underline text-[#F52B8C]">how to increase nail client retention</Link>.</p>
       </section>
     </div>
   ),

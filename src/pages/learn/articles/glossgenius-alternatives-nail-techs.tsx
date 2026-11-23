@@ -21,7 +21,7 @@ registerArticle({
     { id: 'comparison', label: 'Side-by-side comparison' },
     { id: 'switching', label: 'Switching from GlossGenius' },
   ],
-  relatedSlugs: ['glossgenius-vs-fresha-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'best-booking-apps-for-nail-techs-2026', 'how-to-choose-booking-app-nail-business'],
+  relatedSlugs: ['glossgenius-vs-fresha-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'how-to-choose-booking-app-nail-business'],
   faq: [
     { q: 'Is GlossGenius only available in the US?', a: 'GlossGenius has historically been US-focused. Nail techs outside the US typically cannot access GlossGenius — which makes alternatives especially relevant for UK, Australian, and European nail techs. Always check current availability on GlossGenius\'s website, as geographic availability can change.' },
     { q: 'What\'s the main reason nail techs leave GlossGenius?', a: 'The most commonly cited reasons in nail tech communities are: the subscription fee feels high relative to their volume of bookings, geographic unavailability, or a desire for marketplace visibility (which GlossGenius doesn\'t offer — it\'s a direct booking tool, not a discovery platform). Fresha and Booksy both offer marketplace visibility alongside booking management.' },
@@ -46,10 +46,10 @@ registerArticle({
 
       <section id="alternatives">
         <h2 className="font-serif text-2xl font-bold mb-4">The main alternatives</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month (one-time fee on new marketplace clients); strong in UK, Australia, globally. Best for nail techs who want marketplace discovery alongside booking management. Read: <Link to="/learn/should-nail-techs-use-fresha" className="underline text-[#F52B8C]">should nail techs use Fresha?</Link></p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Subscription model with marketplace; strong client-side app. Good for nail techs in areas with strong Booksy client adoption. Read: <Link to="/learn/is-booksy-worth-it-nail-techs" className="underline text-[#F52B8C]">is Booksy worth it for nail techs?</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month (one-time fee on new marketplace clients); strong in UK, Australia, globally. Best for nail techs who want marketplace discovery alongside booking management. Read: <Link to="/blog/should-nail-techs-use-fresha" className="underline text-[#F52B8C]">should nail techs use Fresha?</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Subscription model with marketplace; strong client-side app. Good for nail techs in areas with strong Booksy client adoption. Read: <Link to="/blog/is-booksy-worth-it-nail-techs" className="underline text-[#F52B8C]">is Booksy worth it for nail techs?</Link></p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> — Strong if you already use Square for payments; integrates well with POS hardware. Better suited to salon settings than solo home-based techs.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich platform with marketplace and management tools; monthly subscription. Popular in the US. Read: <Link to="/learn/vagaro-alternatives-nail-techs" className="underline text-[#F52B8C]">Vagaro alternatives</Link> if Vagaro doesn't fit either.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich platform with marketplace and management tools; monthly subscription. Popular in the US. Read: <Link to="/blog/vagaro-alternatives-nail-techs" className="underline text-[#F52B8C]">Vagaro alternatives</Link> if Vagaro doesn't fit either.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Built specifically for nail techs. Direct booking page with deposit collection, client management, and payment processing — without a marketplace commission model. <Link to="/" className="underline text-[#F52B8C]">See how Nelsy works →</Link></p>
       </section>
 
@@ -75,7 +75,7 @@ registerArticle({
           <li>Run both systems briefly if possible while clients migrate</li>
           <li>Update your Instagram bio, link in bio page, and any website booking links simultaneously</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For a guide to the switching process: <Link to="/learn/how-to-switch-nail-booking-software" className="underline text-[#F52B8C]">how to switch nail booking software without losing clients</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For a guide to the switching process: <Link to="/blog/how-to-switch-nail-booking-software" className="underline text-[#F52B8C]">how to switch nail booking software without losing clients</Link>.</p>
       </section>
     </div>
   ),

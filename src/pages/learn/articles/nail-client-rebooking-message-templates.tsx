@@ -95,7 +95,7 @@ registerArticle({
         <ArticleCallout variant="tip" title="Waitlist slot opening">
           "Hey [name]! A slot has just opened up — [day] at [time] for [service]. I thought of you first 💅 If you'd like it, reply or click here to book: [link]. First come first served — going to post it more widely in [X hours] if unclaimed!"
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For welcome messages to new clients: <Link to="/learn/nail-client-welcome-message-templates" className="underline text-[#F52B8C]">nail client welcome message templates</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For welcome messages to new clients: <Link to="/blog/nail-client-welcome-message-templates" className="underline text-[#F52B8C]">nail client welcome message templates</Link>.</p>
       </section>
     </div>
   ),

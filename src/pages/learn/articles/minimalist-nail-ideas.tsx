@@ -157,7 +157,7 @@ registerArticle({
             ['"Something different but not crazy"', 'Point of difference within restraint', 'Negative space half-moon or single chrome detail'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">More nail ideas: <Link to="/learn/short-nail-ideas" className="underline text-[#F52B8C]">short nail ideas</Link> | <Link to="/learn/almond-nail-ideas" className="underline text-[#F52B8C]">almond nail ideas</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">More nail ideas: <Link to="/blog/short-nail-ideas" className="underline text-[#F52B8C]">short nail ideas</Link> | <Link to="/blog/almond-nail-ideas" className="underline text-[#F52B8C]">almond nail ideas</Link>.</p>
       </section>
     </div>
   ),

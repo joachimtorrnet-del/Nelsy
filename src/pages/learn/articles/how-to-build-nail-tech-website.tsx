@@ -99,7 +99,7 @@ registerArticle({
           <li><strong>Image alt text:</strong> Describe your nail photos — "almond gel nails with chrome finish" rather than "IMG_4821"</li>
           <li><strong>Location mentioned in body text:</strong> Mention your city/area naturally in your about and services copy</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For local search visibility: <Link to="/learn/local-seo-for-nail-techs" className="underline text-[#F52B8C]">local SEO for nail techs: complete guide</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For local search visibility: <Link to="/blog/local-seo-for-nail-techs" className="underline text-[#F52B8C]">local SEO for nail techs: complete guide</Link>.</p>
       </section>
 
       <section id="website-checklist">
