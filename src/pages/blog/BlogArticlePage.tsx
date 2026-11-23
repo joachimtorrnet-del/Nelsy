@@ -1,6 +1,6 @@
 import { useParams, Navigate, Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { getArticle, getRelatedArticles, CATEGORY_LABELS, CATEGORY_COLORS } from '@/lib/articleRegistry';
+import { getArticle, getRelatedArticles, getMoreInCategory, isProArticle, PRO_GUIDES, CATEGORY_LABELS, CATEGORY_COLORS } from '@/lib/articleRegistry';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
@@ -26,6 +26,7 @@ export default function BlogArticlePage() {
   if (!article) return <Navigate to="/blog" replace />;
 
   const related = getRelatedArticles(slug, 3);
+  const moreInCategory = getMoreInCategory(slug, related.map((a) => a.slug), 6);
   const cat = CATEGORY_COLORS[article.category];
   const catLabel = CATEGORY_LABELS[article.category];
 
@@ -236,6 +237,22 @@ export default function BlogArticlePage() {
                   </div>
                 </section>
               ) : null}
+
+              {/* Guides for nail techs (money pages) */}
+              {isProArticle(article) && (
+                <nav aria-label="Guides for nail techs" className="mt-12 rounded-2xl border border-[#F4C2C2]/40 bg-[#FFFBFB] p-6">
+                  <h2 className="font-serif text-xl font-bold text-[#1A1A1A] mb-4">Guides for nail techs</h2>
+                  <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+                    {PRO_GUIDES.map((g) => (
+                      <li key={g.path}>
+                        <Link to={g.path} className="text-sm font-medium text-[#1A1A1A] hover:text-[#F52B8C] transition">
+                          {g.label} →
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              )}
             </main>
           </div>
         </div>
@@ -253,6 +270,20 @@ export default function BlogArticlePage() {
                   <ArticleCard key={a.slug} article={a} size="spotlight" />
                 ))}
               </div>
+              {moreInCategory.length > 0 && (
+                <nav aria-label={`More in ${catLabel}`} className="mt-12">
+                  <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4">More in {catLabel}</h3>
+                  <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
+                    {moreInCategory.map((a) => (
+                      <li key={a.slug}>
+                        <Link to={`/blog/${a.slug}`} className="text-[15px] text-[#1A1A1A] hover:text-[#F52B8C] transition leading-snug">
+                          {a.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              )}
             </div>
           </section>
         )}

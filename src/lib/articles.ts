@@ -110,20 +110,68 @@ export function getSpotlightArticles(): Article[] {
   return getAllArticles().filter((a) => a.spotlight).slice(0, 3);
 }
 
+// Deterministic pseudo-random order so links spread evenly across a category
+function linkHash(a: string, b: string): number {
+  let h = 2166136261;
+  for (const ch of `${a}|${b}`) h = Math.imul(h ^ ch.charCodeAt(0), 16777619);
+  return h >>> 0;
+}
+
+function keywords(a: Article): Set<string> {
+  return new Set(
+    [a.title, ...a.tags].join(' ').toLowerCase().split(/[^a-z0-9]+/).filter((w) => w.length > 3),
+  );
+}
+
+/** Hand-picked related slugs first, then the closest articles of the same category. */
 export function getRelatedArticles(slug: string, limit = 3): Article[] {
   const article = getArticle(slug);
   if (!article) return [];
-  // First use explicit related slugs
-  if (article.relatedSlugs?.length) {
-    return article.relatedSlugs
-      .map((s) => getArticle(s))
-      .filter((a): a is Article => !!a)
-      .slice(0, limit);
-  }
-  // Fallback: same category, excluding self
+  const picked = (article.relatedSlugs ?? [])
+    .map((s) => getArticle(s))
+    .filter((a): a is Article => !!a && a.slug !== slug);
+  if (picked.length >= limit) return picked.slice(0, limit);
+
+  const own = keywords(article);
+  const taken = new Set([slug, ...picked.map((a) => a.slug)]);
+  const fill = getAllArticles()
+    .filter((a) => !taken.has(a.slug) && a.category === article.category)
+    .map((a) => {
+      let overlap = 0;
+      for (const w of keywords(a)) if (own.has(w)) overlap++;
+      return { a, overlap, h: linkHash(slug, a.slug) };
+    })
+    .sort((x, y) => y.overlap - x.overlap || x.h - y.h)
+    .map((x) => x.a);
+  return [...picked, ...fill].slice(0, limit);
+}
+
+/** More articles of the same category, spread so every article receives inbound links. */
+export function getMoreInCategory(slug: string, exclude: string[] = [], limit = 6): Article[] {
+  const article = getArticle(slug);
+  if (!article) return [];
+  const skip = new Set([slug, ...exclude]);
   return getAllArticles()
-    .filter((a) => a.slug !== slug && a.category === article.category)
+    .filter((a) => !skip.has(a.slug) && a.category === article.category)
+    .sort((x, y) => linkHash(slug, x.slug) - linkHash(slug, y.slug))
     .slice(0, limit);
+}
+
+// Pages that convert nail techs: linked from every article written for pros
+export const PRO_GUIDES: { path: string; label: string }[] = [
+  { path: '/best-booking-app-for-nail-techs', label: 'Best booking app for nail techs' },
+  { path: '/fresha-alternative-nail-techs', label: 'Fresha alternative for nail techs' },
+  { path: '/booksy-alternative-nail-techs', label: 'Booksy alternative for nail techs' },
+  { path: '/nail-tech-deposits', label: 'How to take deposits as a nail tech' },
+  { path: '/instagram-booking-for-nail-techs', label: 'Instagram booking for nail techs' },
+  { path: '/tools/nail-tech-pricing-calculator', label: 'Nail tech pricing calculator' },
+  { path: '/tools/nail-tech-cancellation-policy-generator', label: 'Cancellation policy generator' },
+  { path: '/tools/nail-tech-appointment-reminder-templates', label: 'Appointment reminder templates' },
+];
+
+/** Client-facing inspiration content doesn't get the pro guides block. */
+export function isProArticle(article: Article): boolean {
+  return article.category !== 'nail-inspo';
 }
 
 export function searchArticles(query: string): Article[] {
