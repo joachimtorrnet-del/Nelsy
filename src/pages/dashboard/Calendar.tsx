@@ -3,6 +3,7 @@ import Modal from '../../components/dashboard/Modal';
 import Toast from '../../components/dashboard/Toast';
 import ConfirmDialog from '../../components/dashboard/ConfirmDialog';
 import AddBookingModal from '../../components/dashboard/AddBookingModal';
+import BookingPaymentPanel from '../../components/dashboard/BookingPaymentPanel';
 import { CalendarSkeleton, BookingCardSkeleton } from '../../components/dashboard/SkeletonLoader';
 import { useToast } from '../../hooks/useToast';
 import { supabase } from '../../lib/supabase';
@@ -501,6 +502,14 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
                 {getStatusBadge(selectedAppointment.status)}
               </div>
             </div>
+
+            {profile?.id && !['cancelled', 'refunded'].includes(selectedAppointment.status) && (
+              <BookingPaymentPanel
+                bookingId={selectedAppointment.id}
+                profileId={profile.id}
+                price={selectedAppointment.price}
+              />
+            )}
 
             {selectedAppointment.notes && (
               <div className="bg-blue-50 rounded-2xl p-4">

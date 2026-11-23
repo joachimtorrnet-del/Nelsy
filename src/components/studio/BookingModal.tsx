@@ -174,12 +174,22 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
           } catch { /* ignore */ }
           throw new Error(msg);
         }
-        const { client_secret, booking_id, booking_session_token, stripe_account_id } = payData as {
-          client_secret: string;
+        const { client_secret, booking_id, booking_session_token, stripe_account_id, payment_required } = payData as {
+          client_secret?: string;
           booking_id: string;
           booking_session_token: string;
           stripe_account_id?: string;
+          payment_required?: boolean;
         };
+        if (payment_required === false) {
+          // Pay-on-arrival offer: the server already confirmed the appointment
+          setPaymentBookingId(booking_id);
+          trackBookingDetailsCompleted(merchant.id);
+          trackBookingCompleted(merchant.id);
+          goTo(5);
+          return;
+        }
+        if (!client_secret) throw new Error('Payment could not be started. Please try again.');
         setPaymentClientSecret(client_secret);
         setPaymentBookingId(booking_id);
         setBookingSessionToken(booking_session_token);
@@ -238,9 +248,13 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
   if (!selectedService) return null;
 
-  // Deposit-aware charge amount for display (matches server logic in create-payment-intent)
-  const chargeAmount = selectedService.deposit > 0 ? selectedService.deposit : selectedService.price;
-  const hasDeposit = selectedService.deposit > 0;
+  // Mirrors create-payment-intent: the offer's payment mode decides what is charged online
+  const paymentMode = selectedService.payment_mode ?? (selectedService.deposit > 0 ? 'deposit' : 'full');
+  const payOnArrival = paymentMode === 'on_arrival';
+  const hasDeposit = paymentMode === 'deposit' && selectedService.deposit > 0;
+  const chargeAmount = hasDeposit ? selectedService.deposit : selectedService.price;
+  const methods = selectedService.on_arrival_methods ?? ['cash', 'card'];
+  const onSiteLabel = methods.length === 1 ? (methods[0] === 'cash' ? 'Cash' : 'Card') : 'Cash or card';
 
   const stepLabels = ['Date', 'Time', 'Details', 'Payment'];
 
@@ -293,6 +307,9 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     <p className="text-xl font-extrabold text-gray-900">{formatCurrency(selectedService.price)}</p>
                     {hasDeposit && (
                       <p className="text-xs text-gray-400 mt-0.5">Deposit {formatCurrency(chargeAmount)}</p>
+                    )}
+                    {payOnArrival && (
+                      <p className="text-xs text-gray-400 mt-0.5">Pay on arrival</p>
                     )}
                   </div>
                   <button
@@ -592,7 +609,15 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
                       {/* Payment summary */}
                       <div className="rounded-2xl border border-gray-100 p-4 mt-5 space-y-2">
-                        {hasDeposit ? (
+                        {payOnArrival ? (
+                          <>
+                            <div className="flex justify-between text-sm pt-0.5">
+                              <span className="font-bold text-gray-900">Total</span>
+                              <span className="font-bold" style={{ color: accent }}>{formatCurrency(selectedService.price)}</span>
+                            </div>
+                            <p className="text-xs text-gray-400">Nothing to pay now. {onSiteLabel} at the studio.</p>
+                          </>
+                        ) : hasDeposit ? (
                           <>
                             <div className="flex justify-between text-sm text-gray-500">
                               <span>Service total</span>
@@ -605,7 +630,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                               </span>
                             </div>
                             <p className="text-xs text-gray-400">
-                              Balance {formatCurrency(selectedService.price - chargeAmount)} due on the day
+                              Balance {formatCurrency(selectedService.price - chargeAmount)} due on the day ({onSiteLabel.toLowerCase()})
                             </p>
                           </>
                         ) : (
@@ -628,7 +653,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                         {isSubmitting ? (
                           <><Loader2 className="w-5 h-5 animate-spin" /> Processing…</>
                         ) : (
-                          `Pay ${formatCurrency(chargeAmount)} →`
+                          payOnArrival ? 'Confirm booking →' : `Pay ${formatCurrency(chargeAmount)} →`
                         )}
                       </button>
                     </form>
@@ -733,7 +758,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     >
                       <h2 className="text-2xl font-extrabold text-gray-900 mb-1">You're booked!</h2>
                       <p className="text-gray-500 text-sm mb-6">
-                        A confirmation email has been sent.
+                        {payOnArrival ? `See you soon. ${onSiteLabel} at the studio.` : 'A confirmation email has been sent.'}
                       </p>
 
                       <div className="bg-gray-50 rounded-2xl p-4 text-sm text-left space-y-2.5 mb-6">
@@ -755,6 +780,14 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                           <span className="text-gray-400">Time</span>
                           <span className="font-semibold text-gray-900">{selectedTime}</span>
                         </div>
+                        {(payOnArrival || hasDeposit) && (
+                          <div className="flex justify-between border-t border-gray-100 pt-2.5">
+                            <span className="text-gray-400">To pay at the studio</span>
+                            <span className="font-semibold text-gray-900">
+                              {formatCurrency(payOnArrival ? selectedService.price : selectedService.price - chargeAmount)}
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       <motion.a

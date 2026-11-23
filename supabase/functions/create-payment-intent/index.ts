@@ -117,7 +117,7 @@ serve(async (req) => {
     // ── 4. Validate service (existence + ownership + active) ──────────────────
     const { data: service, error: serviceErr } = await supabase
       .from('services')
-      .select('price_total, deposit_amount, duration_minutes, active')
+      .select('price_total, deposit_amount, duration_minutes, active, payment_mode')
       .eq('id', serviceId)
       .eq('profile_id', profileId)
       .single()
@@ -138,9 +138,14 @@ serve(async (req) => {
       console.error(`Invalid duration for service ${serviceId}: ${service.duration_minutes}`)
       return jsonResponse({ error: 'Service duration is invalid' }, 500)
     }
-    // Charge deposit if one exists, otherwise charge full price
-    const chargeAmount = dbDeposit > 0 ? dbDeposit : dbPrice
-    if (!Number.isFinite(chargeAmount) || chargeAmount <= 0) {
+    // Payment mode is set per offer. A deposit offer with no deposit amount
+    // falls back to full payment (previous behaviour).
+    const rawMode = (service.payment_mode as string | null) ?? (dbDeposit > 0 ? 'deposit' : 'full')
+    const paymentMode: 'on_arrival' | 'deposit' | 'full' =
+      rawMode === 'on_arrival' ? 'on_arrival' : rawMode === 'deposit' && dbDeposit > 0 ? 'deposit' : 'full'
+    const payOnArrival = paymentMode === 'on_arrival'
+    const chargeAmount = paymentMode === 'deposit' ? dbDeposit : dbPrice
+    if (!payOnArrival && (!Number.isFinite(chargeAmount) || chargeAmount <= 0)) {
       return jsonResponse({ error: 'Charge amount is invalid' }, 500)
     }
 
@@ -157,7 +162,7 @@ serve(async (req) => {
       usd: 0.50, aed: 2.00,
     }
     const minimum = MINIMUMS[currency] ?? 0.50
-    if (chargeAmount < minimum) {
+    if (!payOnArrival && chargeAmount < minimum) {
       return jsonResponse(
         { error: `Minimum charge for ${currency.toUpperCase()} is ${minimum}. Please set a higher deposit or price.` },
         400,
@@ -291,11 +296,14 @@ serve(async (req) => {
         client_email: String(bd.client_email).trim().toLowerCase().slice(0, 254),
         client_phone: String(bd.client_phone ?? '').trim().slice(0, 30),
         price_total: dbPrice,
-        deposit_paid: dbDeposit,
+        // deposit_paid holds the amount charged online for deposit offers only
+        deposit_paid: paymentMode === 'deposit' ? dbDeposit : 0,
         nelsy_fee: 0,
         currency,
-        status: 'pending',
-        expires_at: expiresAt,
+        payment_mode: paymentMode,
+        // Nothing to pay online: the appointment is confirmed straight away
+        status: payOnArrival ? 'confirmed' : 'pending',
+        expires_at: payOnArrival ? null : expiresAt,
         booking_session_token: newSessionToken,
       })
       .select('id')
@@ -311,6 +319,14 @@ serve(async (req) => {
         )
       }
       throw bookingErr
+    }
+
+    if (payOnArrival) {
+      return jsonResponse({
+        booking_id: booking.id,
+        booking_session_token: newSessionToken,
+        payment_required: false,
+      })
     }
 
     // ── 9. Guard: require Stripe Connect to be set up ─────────────────────────
@@ -400,6 +416,7 @@ serve(async (req) => {
       payment_intent_id: paymentIntent.id,
       booking_id: booking.id,
       booking_session_token: newSessionToken,
+      payment_required: true,
       // Caller must pass this to Stripe.js (loadStripe stripeAccount option) so
       // stripe.confirmPayment() targets the connected account, not the platform.
       stripe_account_id: profile.stripe_account_id,

@@ -13,6 +13,8 @@ export interface Service {
   card_style?: 'button' | 'callout' | 'preview';
   card_subtitle?: string;
   card_cta_text?: string;
+  payment_mode?: 'on_arrival' | 'deposit' | 'full';
+  on_arrival_methods?: ('cash' | 'card')[];
 }
 
 export interface CollectionSubcategory {

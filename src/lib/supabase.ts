@@ -61,6 +61,8 @@ export interface DbServiceRow {
   card_style: 'button' | 'callout' | 'preview' | null;
   card_subtitle: string | null;
   card_cta_text: string | null;
+  payment_mode: 'on_arrival' | 'deposit' | 'full';
+  on_arrival_methods: ('cash' | 'card')[];
   created_at: string;
   updated_at: string;
 }

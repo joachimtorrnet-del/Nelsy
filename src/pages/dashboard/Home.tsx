@@ -47,7 +47,8 @@ interface Action {
 
 const RANGE_DAYS: Record<Range, number> = { '7d': 7, '30d': 30, '90d': 90 };
 const RANGE_LABEL: Record<Range, string> = { '7d': '7D', '30d': '30D', '90d': '90D' };
-const PAID = new Set(['paid', 'confirmed', 'completed']);
+// Appointments that happened or will happen (paid or not)
+const BOOKED = new Set(['paid', 'confirmed', 'completed']);
 const UPCOMING = new Set(['pending', 'confirmed', 'paid']);
 
 const STATUS_CONFIG: Record<string, { label: string; cls: string }> = {
@@ -82,6 +83,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
   const [allBookings, setAllBookings] = useState<DbBookingRow[]>([]);
   const [upcoming, setUpcoming] = useState<DbBookingRow[]>([]);
   const [visitTimes, setVisitTimes] = useState<number[]>([]);
+  const [payments, setPayments] = useState<{ t: number; amount: number; online: boolean }[]>([]);
   const [balance, setBalance] = useState<{ available: number; pending: number }>({ available: 0, pending: 0 });
   const [hasHours, setHasHours] = useState(true);
   const [profileId, setProfileId] = useState('');
@@ -116,6 +118,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
         { count: hoursCount },
         { data: viewsData },
         { data: upcomingData },
+        { data: paymentsData },
       ] = await Promise.all([
         supabase.from('profiles').select('*').eq('id', user.id).single(),
         supabase.from('services').select('*').eq('profile_id', user.id).eq('active', true).order('display_order', { ascending: true }),
@@ -124,6 +127,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
         supabase.from('availabilities').select('id', { count: 'exact', head: true }).eq('profile_id', user.id).eq('active', true),
         supabase.from('page_views').select('created_at').eq('profile_id', user.id).gte('created_at', visitsSince.toISOString()),
         getBookings(user.id, todayStart, in30Days),
+        supabase.from('booking_payments').select('amount, method, created_at').eq('profile_id', user.id).gte('created_at', visitsSince.toISOString()),
       ]);
 
       setProfile(profileData as DbProfileRow);
@@ -136,6 +140,9 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
       setHasHours((hoursCount ?? 0) > 0);
       setVisitTimes((viewsData ?? []).map((v: { created_at: string }) => new Date(v.created_at).getTime()));
       setUpcoming(((upcomingData ?? []) as DbBookingRow[]).filter((b) => UPCOMING.has(b.status)));
+      setPayments(((paymentsData ?? []) as { amount: number; method: string; created_at: string }[]).map((p) => ({
+        t: new Date(p.created_at).getTime(), amount: Number(p.amount), online: p.method === 'stripe',
+      })));
     } catch (err) {
       console.error('Home load error:', err);
       setLoadError('Failed to load your dashboard. Please try again.');
@@ -170,23 +177,29 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
       } else if (t >= prevStart.getTime() && t < start.getTime()) prev.visits++;
     }
 
-    for (const bk of allBookings) {
-      if (!PAID.has(bk.status)) continue;
-      const t = new Date(bk.booking_datetime).getTime();
-      const amount = Number(bk.price_total ?? 0);
-      if (t >= start.getTime() && t <= now.getTime()) {
-        totals.revenue += amount;
-        totals.bookings++;
-        const b = buckets.get(dayKey(new Date(t)));
-        if (b) { b.revenue += amount; b.bookings++; }
-      } else if (t >= prevStart.getTime() && t < start.getTime()) {
-        prev.revenue += amount;
-        prev.bookings++;
-      }
+    // Revenue = money actually received (online + at the studio), dated when received
+    let online = 0;
+    for (const p of payments) {
+      if (p.t >= start.getTime() && p.t <= now.getTime()) {
+        totals.revenue += p.amount;
+        if (p.online) online += p.amount;
+        const b = buckets.get(dayKey(new Date(p.t)));
+        if (b) b.revenue += p.amount;
+      } else if (p.t >= prevStart.getTime() && p.t < start.getTime()) prev.revenue += p.amount;
     }
 
-    return { points: Array.from(buckets.values()), totals, prev };
-  }, [range, visitTimes, allBookings]);
+    for (const bk of allBookings) {
+      if (!BOOKED.has(bk.status)) continue;
+      const t = new Date(bk.booking_datetime).getTime();
+      if (t >= start.getTime() && t <= now.getTime()) {
+        totals.bookings++;
+        const b = buckets.get(dayKey(new Date(t)));
+        if (b) b.bookings++;
+      } else if (t >= prevStart.getTime() && t < start.getTime()) prev.bookings++;
+    }
+
+    return { points: Array.from(buckets.values()), totals, prev, online, onSite: totals.revenue - online };
+  }, [range, visitTimes, allBookings, payments]);
 
   if (loading) return <LoadingScreen message="Loading your dashboard..." />;
 
@@ -233,9 +246,10 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
   const [hero, ...secondary] = actions;
   const setupDoneCount = setup.length - pendingSetup.length;
 
-  const kpis: { id: Metric; label: string; icon: LucideIcon; value: string; growth: number }[] = [
+  const kpis: { id: Metric; label: string; icon: LucideIcon; value: string; growth: number; sub?: string }[] = [
     { id: 'visits', label: 'Studio visits', icon: Eye, value: series.totals.visits.toLocaleString(), growth: growthPct(series.totals.visits, series.prev.visits) },
-    { id: 'revenue', label: 'Revenue', icon: Wallet, value: fmt(series.totals.revenue, currency), growth: growthPct(series.totals.revenue, series.prev.revenue) },
+    { id: 'revenue', label: 'Revenue', icon: Wallet, value: fmt(series.totals.revenue, currency), growth: growthPct(series.totals.revenue, series.prev.revenue),
+      sub: series.totals.revenue > 0 ? `${fmt(series.online, currency)} online · ${fmt(series.onSite, currency)} at studio` : undefined },
     { id: 'bookings', label: 'Bookings', icon: CalendarDays, value: String(series.totals.bookings), growth: growthPct(series.totals.bookings, series.prev.bookings) },
   ];
   const chartEmpty = series.points.every((p) => p[metric] === 0);
@@ -338,6 +352,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                           </span>
                         )}
                       </div>
+                      {k.sub && <p className="hidden sm:block text-[11px] text-gray-400 mt-1 truncate">{k.sub}</p>}
                     </button>
                   );
                 })}

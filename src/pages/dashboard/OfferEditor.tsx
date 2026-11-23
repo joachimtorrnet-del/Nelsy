@@ -31,7 +31,18 @@ interface ServiceRow {
   card_style: 'button' | 'callout' | 'preview' | null;
   card_subtitle: string | null;
   card_cta_text: string | null;
+  payment_mode: PaymentMode | null;
+  on_arrival_methods: OnSiteMethod[] | null;
 }
+
+type PaymentMode = 'on_arrival' | 'deposit' | 'full';
+type OnSiteMethod = 'cash' | 'card';
+
+const PAYMENT_MODES: { id: PaymentMode; title: string; desc: string }[] = [
+  { id: 'deposit', title: 'Require a deposit', desc: 'Clients pay a deposit to book, the rest at the studio. Protects you from no-shows.' },
+  { id: 'full', title: 'Full payment upfront', desc: 'Clients pay the full price online when they book.' },
+  { id: 'on_arrival', title: 'Pay on arrival', desc: 'Nothing to pay online. Clients pay the full price at the studio.' },
+];
 
 interface ProfileRow {
   id: string;
@@ -398,6 +409,8 @@ export default function OfferEditor() {
   const [uploadingHero, setUploadingHero] = useState(false);
   const [priceTotal, setPriceTotal] = useState('');
   const [depositAmount, setDepositAmount] = useState('');
+  const [paymentMode, setPaymentMode] = useState<PaymentMode>('deposit');
+  const [onSiteMethods, setOnSiteMethods] = useState<OnSiteMethod[]>(['cash', 'card']);
   const [durationMinutes, setDurationMinutes] = useState(60);
   const [category, setCategory] = useState('Nails');
 
@@ -441,6 +454,8 @@ export default function OfferEditor() {
       setHeroUrl(row.image_url ?? '');
       setPriceTotal(row.price_total?.toString() ?? '');
       setDepositAmount(row.deposit_amount > 0 ? row.deposit_amount.toString() : '');
+      setPaymentMode(row.payment_mode ?? (row.deposit_amount > 0 ? 'deposit' : 'full'));
+      setOnSiteMethods(row.on_arrival_methods?.length ? row.on_arrival_methods : ['cash', 'card']);
       setDurationMinutes(row.duration_minutes ?? 60);
       setCategory(row.category ?? 'Nails');
       setIsActive(row.active ?? true);
@@ -472,7 +487,7 @@ export default function OfferEditor() {
     if (!loadedRef.current) return;
     setDirty(true);
   }, [name, description, thumbnailUrl, heroUrl, priceTotal, depositAmount, durationMinutes,
-      category, isActive, isFeatured, cardStyle, cardSubtitle, cardCta]);
+      category, isActive, isFeatured, cardStyle, cardSubtitle, cardCta, paymentMode, onSiteMethods]);
 
   // Warn on unload with unsaved changes
   useEffect(() => {
@@ -528,8 +543,11 @@ export default function OfferEditor() {
       e.price = 'Enter a valid price greater than 0.';
     }
     const dep = parseFloat(depositAmount);
-    if (depositAmount.trim() !== '' && (!isNaN(dep) && (dep < 0 || dep > price))) {
-      e.deposit = 'Deposit must be between 0 and the total price.';
+    if (paymentMode === 'deposit' && (isNaN(dep) || dep <= 0 || dep >= price)) {
+      e.deposit = 'Enter a deposit above 0 and below the price.';
+    }
+    if (paymentMode !== 'full' && onSiteMethods.length === 0) {
+      e.methods = 'Pick at least one way to pay at the studio.';
     }
     if (uploadingThumb || uploadingHero) {
       e.upload = 'Please wait for uploads to complete.';
@@ -538,7 +556,7 @@ export default function OfferEditor() {
 
     // Navigate to the tab that has the first error
     if (switchToTab && Object.keys(e).length > 0) {
-      if (e.name || e.price || e.deposit || e.upload) switchToTab('checkout');
+      if (e.name || e.price || e.deposit || e.methods || e.upload) switchToTab('checkout');
     }
     return Object.keys(e).length === 0;
   };
@@ -555,7 +573,9 @@ export default function OfferEditor() {
       description: description.trim(),
       image_url: thumbnailUrl || null,
       price_total: parseFloat(priceTotal),
-      deposit_amount: depositAmount.trim() !== '' ? parseFloat(depositAmount) : 0,
+      deposit_amount: paymentMode === 'deposit' ? parseFloat(depositAmount) : 0,
+      payment_mode: paymentMode,
+      on_arrival_methods: onSiteMethods,
       duration_minutes: durationMinutes,
       category,
       active: publish,
@@ -629,7 +649,7 @@ export default function OfferEditor() {
       description,
       price: parseFloat(priceTotal) || 0,
       duration: durationMinutes,
-      deposit: parseFloat(depositAmount) || 0,
+      deposit: paymentMode === 'deposit' ? parseFloat(depositAmount) || 0 : 0,
       category,
       image_url: thumbnailUrl || undefined,
       is_featured: isFeatured,
@@ -643,7 +663,7 @@ export default function OfferEditor() {
     previewMode === 'phone' ? (
       <PhoneMockup>
         <CheckoutPagePreview name={name} description={description} heroUrl={heroUrl}
-          price={priceTotal} deposit={depositAmount} duration={durationMinutes} accent={accent} cta={cardCta} />
+          price={priceTotal} deposit={paymentMode === 'deposit' ? depositAmount : ''} duration={durationMinutes} accent={accent} cta={cardCta} />
       </PhoneMockup>
     ) : (
       // Desktop: render at 1024px viewport, scaled to fit the 240px preview column
@@ -699,7 +719,7 @@ export default function OfferEditor() {
                   <div key={f} style={{ border: '1px solid #e5e7eb', borderRadius: 10, padding: '12px 14px',
                     marginBottom: 10, fontSize: 14, color: '#9ca3af' }}>{f}</div>
                 ))}
-                {parseFloat(depositAmount) > 0 && priceTotal && (
+                {paymentMode === 'deposit' && parseFloat(depositAmount) > 0 && priceTotal && (
                   <div style={{ background: '#f9fafb', border: '1px solid #e5e7eb', borderRadius: 10,
                     padding: '12px 14px', marginBottom: 10, fontSize: 13 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
@@ -975,30 +995,74 @@ export default function OfferEditor() {
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">3</span>
                         Price
                       </p>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div>
-                          <label className="text-sm font-medium text-gray-700 block mb-1.5">Price (€) <span className="text-red-500">*</span></label>
-                          <div className="relative">
-                            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
-                            <input type="number" value={priceTotal} step="0.01" min="0.01"
-                              onChange={(e) => setPriceTotal(e.target.value)} placeholder="65"
-                              className={`w-full pl-7 pr-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.price ? 'border-red-400' : 'border-gray-200'}`}
-                            />
-                          </div>
-                          {errors.price && <p className="text-red-500 text-xs mt-1">{errors.price}</p>}
+                      <div className="max-w-[220px]">
+                        <label className="text-sm font-medium text-gray-700 block mb-1.5">Price (€) <span className="text-red-500">*</span></label>
+                        <div className="relative">
+                          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
+                          <input type="number" value={priceTotal} step="0.01" min="0.01"
+                            onChange={(e) => setPriceTotal(e.target.value)} placeholder="65"
+                            className={`w-full pl-7 pr-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.price ? 'border-red-400' : 'border-gray-200'}`}
+                          />
                         </div>
-                        <div>
-                          <label className="text-sm font-medium text-gray-700 block mb-1.5">Deposit (€)</label>
+                        {errors.price && <p className="text-red-500 text-xs mt-1">{errors.price}</p>}
+                      </div>
+
+                      <p className="text-sm font-medium text-gray-700 mt-6 mb-2">Payment</p>
+                      <div className="space-y-2" role="radiogroup" aria-label="Payment">
+                        {PAYMENT_MODES.map((m) => {
+                          const selected = paymentMode === m.id;
+                          return (
+                            <button key={m.id} type="button" role="radio" aria-checked={selected} onClick={() => setPaymentMode(m.id)}
+                              className={`w-full flex items-start gap-3 p-3.5 rounded-xl border text-left transition ${selected ? 'border-[#F52B8C] bg-[#fff8fb]' : 'border-gray-200 hover:border-gray-300'}`}>
+                              <span className={`mt-0.5 w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${selected ? 'border-[#F52B8C]' : 'border-gray-300'}`}>
+                                {selected && <span className="w-2 h-2 rounded-full bg-[#F52B8C]" />}
+                              </span>
+                              <span>
+                                <span className="block text-sm font-semibold text-[#1A1A1A]">{m.title}</span>
+                                <span className="block text-xs text-gray-500 mt-0.5 leading-relaxed">{m.desc}</span>
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {paymentMode === 'deposit' && (
+                        <div className="max-w-[220px] mt-4">
+                          <label className="text-sm font-medium text-gray-700 block mb-1.5">Deposit (€) <span className="text-red-500">*</span></label>
                           <div className="relative">
                             <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
-                            <input type="number" value={depositAmount} step="0.01" min="0"
-                              onChange={(e) => setDepositAmount(e.target.value)} placeholder="0"
+                            <input type="number" value={depositAmount} step="0.01" min="0.5"
+                              onChange={(e) => setDepositAmount(e.target.value)} placeholder="15"
                               className={`w-full pl-7 pr-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.deposit ? 'border-red-400' : 'border-gray-200'}`}
                             />
                           </div>
                           {errors.deposit && <p className="text-red-500 text-xs mt-1">{errors.deposit}</p>}
+                          {parseFloat(priceTotal) > 0 && parseFloat(depositAmount) > 0 && parseFloat(depositAmount) < parseFloat(priceTotal) && (
+                            <p className="text-xs text-gray-500 mt-1.5">
+                              Balance at the studio: €{(parseFloat(priceTotal) - parseFloat(depositAmount)).toFixed(2)}
+                            </p>
+                          )}
                         </div>
-                      </div>
+                      )}
+
+                      {paymentMode !== 'full' && (
+                        <div className="mt-4">
+                          <p className="text-sm font-medium text-gray-700 mb-2">Accepted at the studio</p>
+                          <div className="flex gap-2">
+                            {(['cash', 'card'] as OnSiteMethod[]).map((m) => {
+                              const on = onSiteMethods.includes(m);
+                              return (
+                                <button key={m} type="button" aria-pressed={on}
+                                  onClick={() => setOnSiteMethods((cur) => (on ? cur.filter((x) => x !== m) : [...cur, m]))}
+                                  className={`px-4 py-2 rounded-full border text-sm font-semibold transition ${on ? 'border-[#F52B8C] bg-[#fff8fb] text-[#C2186F]' : 'border-gray-200 text-gray-500 hover:border-gray-300'}`}>
+                                  {m === 'cash' ? 'Cash' : 'Card'}
+                                </button>
+                              );
+                            })}
+                          </div>
+                          {errors.methods && <p className="text-red-500 text-xs mt-1">{errors.methods}</p>}
+                        </div>
+                      )}
                     </section>
 
                     <section>

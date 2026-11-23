@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { formatAmount } from '@/lib/stripe-countries';
+import CollectedSummary from '../../components/dashboard/CollectedSummary';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -360,12 +361,16 @@ export default function Revenue() {
     return (
       <div className="max-w-2xl">
         <h1 className="text-2xl font-black text-espresso mb-6">Income</h1>
+        <CollectedSummary />
         <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm text-center">
           <AlertCircle className="w-10 h-10 text-amber-400 mx-auto mb-3" />
-          <h2 className="text-lg font-bold text-gray-900 mb-2">Connect Stripe to see your income</h2>
+          <h2 className="text-lg font-bold text-gray-900 mb-2">Take deposits online</h2>
           <p className="text-gray-500 text-sm mb-5">
-            Turn on payments from Settings &gt; Stripe Payments.
+            Connect Stripe so clients can pay a deposit or the full price when they book. Your online balance and payouts will show here.
           </p>
+          <a href="/dashboard/stripe" className="inline-flex px-5 py-2.5 rounded-xl bg-[#F52B8C] text-white text-sm font-bold hover:opacity-90 transition">
+            Set up payments
+          </a>
         </div>
       </div>
     );
@@ -391,6 +396,8 @@ export default function Revenue() {
           <RefreshCw className={`w-4 h-4 text-gray-400 ${balanceLoading ? 'animate-spin' : ''}`} />
         </button>
       </div>
+
+      <CollectedSummary />
 
       {/* Cash-out result banner */}
       {cashOutResult && (
