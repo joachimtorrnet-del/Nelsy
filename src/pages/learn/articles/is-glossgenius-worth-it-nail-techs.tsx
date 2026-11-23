@@ -5,9 +5,9 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'is-glossgenius-worth-it-nail-techs',
   title: 'Is GlossGenius Worth It for Nail Techs?',
-  seoTitle: 'Is GlossGenius Worth It for Nail Techs? Honest Review',
+  seoTitle: 'Is GlossGenius Good for Nail Techs and Salons? Honest Review',
   excerpt: 'GlossGenius has a strong following among US nail techs. But is the subscription worth it? Here\'s an honest assessment of what GlossGenius offers and who it genuinely suits.',
-  seoDescription: 'Is GlossGenius worth it for nail techs? Honest review of GlossGenius — what you get for the subscription, strengths, limitations, and whether it\'s the right tool for your nail business.',
+  seoDescription: 'Is GlossGenius good for nail techs and nail salons? An honest review: what the subscription includes, strengths, limitations, and who it suits best.',
   category: 'comparisons',
   tags: ['is GlossGenius worth it nail tech', 'GlossGenius review nail tech', 'GlossGenius nail tech booking'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',

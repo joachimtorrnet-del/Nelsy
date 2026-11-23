@@ -4,9 +4,9 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'vacation-nail-ideas',
   title: '40 Vacation Nail Ideas',
-  seoTitle: '40 Vacation Nail Ideas to Take on Holiday',
+  seoTitle: '40 Vacation Nail Ideas: Beach, Tropical & Holiday Nails',
   excerpt: 'Holiday nails should be as exciting as the trip itself. Here are 40 vacation nail ideas — from beach-ready brights to resort-chic nudes — with durability tips for travel.',
-  seoDescription: '40 vacation nail ideas. Beach nails, resort nails, city break nails — holiday nail inspiration with colour, design, and durability advice for nail techs and clients.',
+  seoDescription: '40 vacation nail ideas for your next trip: beach and tropical nails, resort designs and city break sets, with tips to make your nails last the whole holiday.',
   category: 'nail-inspo',
   tags: ['vacation nail ideas', 'holiday nail ideas', 'beach nail ideas'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
