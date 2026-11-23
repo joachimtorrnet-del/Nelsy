@@ -48,7 +48,7 @@ registerArticle({
       <section id="top-picks">
         <h2 className="font-serif text-2xl font-bold mb-4">Top platform picks for home-based nail techs</h2>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Built for nail techs, including home-based. Booking page with deposits, client management, and no marketplace exposure of your address. <Link to="/" className="underline text-[#F52B8C]">See how Nelsy works →</Link></p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Free subscription; strong globally. Privacy settings allow area-level display rather than full address on the marketplace. Good for home-based techs who want new client discovery without broadcasting their home location publicly.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month; strong globally. Privacy settings allow area-level display rather than full address on the marketplace. Good for home-based techs who want new client discovery without broadcasting their home location publicly.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>GlossGenius (US)</strong> — Clean, simple booking experience for solo techs. Not a marketplace, so no address exposed publicly. US only.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Marketplace with privacy options; strong automated reminders. Subscription required.</p>
         <ArticleTip>For home-based nail techs, the most critical booking app feature isn't aesthetics or reporting — it's deposit collection and automatic reminders. Prioritise those over any other feature.</ArticleTip>

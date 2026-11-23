@@ -5,15 +5,16 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-dehydrator-vs-primer',
   title: 'Nail Dehydrator vs Primer: What\'s the Difference?',
-  seoTitle: 'Nail Dehydrator vs Primer: What\'s the Difference?',
+  seoTitle: "Nail Dehydrator vs Primer: Are They the Same Thing?",
   excerpt: 'Dehydrator and primer are both used in nail prep — but they do different things. Here\'s what each one does, when you need them, and why the difference matters for adhesion.',
-  seoDescription: 'Nail dehydrator vs primer — what\'s the difference? What each product does, when to use them, whether you need both, and how they contribute to nail extension adhesion.',
+  seoDescription: "Nail dehydrator vs primer: no, they are not the same. What each one does, the right order to apply them, and whether you need both for gel or acrylic.",
   category: 'nail-education',
   tags: ['nail dehydrator vs primer', 'nail prep products', 'nail primer explained', 'nail dehydrator explained'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'Nail dehydrator vs primer — what\'s the difference',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'what-dehydrator', label: 'What a dehydrator does' },

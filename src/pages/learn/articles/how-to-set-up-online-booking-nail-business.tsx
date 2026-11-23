@@ -38,7 +38,7 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li><strong>Do you want marketplace discovery?</strong> Fresha and Booksy have marketplaces; Nelsy and GlossGenius are direct booking only</li>
           <li><strong>What country are you in?</strong> GlossGenius is US-only; Fresha and Booksy have international presence</li>
-          <li><strong>What's your budget?</strong> Fresha is free subscription; Booksy and GlossGenius require monthly payment</li>
+          <li><strong>What's your budget?</strong> All the main apps now charge monthly: Fresha from €14.95, GlossGenius from $24, Booksy from $29.99 in the US</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">Full comparison: <Link to="/learn/best-booking-apps-for-nail-techs-2026" className="underline text-[#F52B8C]">best booking apps for nail techs</Link>.</p>
       </section>

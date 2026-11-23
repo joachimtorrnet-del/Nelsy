@@ -4,15 +4,16 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'white-nail-ideas',
   title: '50 White Nail Ideas for a Clean Look',
-  seoTitle: '50 White Nail Ideas for a Clean Look',
+  seoTitle: "50 White Nail Ideas: Milky, French, Chrome & Nail Art",
   excerpt: 'White nails are crisp, modern, and endlessly versatile. From clean minimalist to detailed nail art, here are 50 white nail ideas to save for your next set.',
-  seoDescription: '50 white nail ideas for a clean look. Bright white, milk white, off-white, white nail art, and white chrome — every take on white nails.',
+  seoDescription: "50 white nail ideas and inspo: milky white, off-white, white French tips, white chrome and simple white nail art for short and long nails.",
   category: 'nail-inspo',
   tags: ['white nail ideas', 'white nails', 'white nail designs'],
   heroImage: 'linear-gradient(135deg, #FAFAFA 0%, #F4F4F5 100%)',
   heroImageAlt: '50 white nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'classic-white', label: 'Classic and minimal white' },

@@ -24,7 +24,7 @@ registerArticle({
   relatedSlugs: ['how-to-get-first-10-nail-clients', 'nail-tech-beginner-business-checklist', 'how-to-set-up-online-booking-nail-business', 'best-booking-apps-for-nail-techs-2026'],
   faq: [
     { q: 'Do I need a booking app when I\'m just starting out?', a: 'Yes — even as a beginner with a small number of clients. Setting up a booking app from the start does several things: it looks professional, it reduces the back-and-forth of booking through DMs, and it creates the habit of running your business systematically from the beginning. Starting with good systems is much easier than retrofitting them after you\'re busy.' },
-    { q: 'Is it okay to start with a free booking app?', a: 'Absolutely. Most nail techs start with either a free platform (Fresha\'s free subscription is the most commonly used) or a platform with a low entry price. There\'s no advantage to paying more before your volume justifies it. Start free; upgrade or switch when a specific paid feature becomes worth its cost.' },
+    { q: 'Is it okay to start with a free booking app?', a: 'Absolutely. Most nail techs start with a free trial or a platform with a low entry price (for example, Fresha\'s Independent plan is listed at €14.95/month). There\'s no advantage to paying more before your volume justifies it. Start free; upgrade or switch when a specific paid feature becomes worth its cost.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
@@ -60,7 +60,7 @@ registerArticle({
 
       <section id="top-picks">
         <h2 className="font-serif text-2xl font-bold mb-4">Best options for beginners</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Free subscription model; easy to set up; marketplace gives you a chance of being found by new local clients even with zero existing audience. The combination of free entry and marketplace visibility makes it a strong starting point for most beginners.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: Independent plan from €14.95/month, 7-day trial; easy to set up; marketplace gives you a chance of being found by new local clients even with zero existing audience. The combination of free entry and marketplace visibility makes it a strong starting point for most beginners.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Built for nail techs; quick to set up with a professional booking page; includes deposit collection from day one. Good for beginners who want nail-specific tools without complexity. <Link to="/" className="underline text-[#F52B8C]">Start free on Nelsy →</Link></p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Marketplace visibility; well-known client-side app. Monthly subscription is a cost to consider before bookings are established.</p>
       </section>

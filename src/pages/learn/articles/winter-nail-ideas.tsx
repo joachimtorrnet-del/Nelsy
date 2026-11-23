@@ -4,15 +4,16 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'winter-nail-ideas',
   title: '50 Winter Nail Ideas',
-  seoTitle: '50 Winter Nail Ideas',
+  seoTitle: "50 Winter Nail Ideas: Red, Dark Green, Chrome & Glitter",
   excerpt: 'Winter is the most booked nail season of the year. Here are 50 winter nail ideas — from festive reds to icy blues and everything elegant in between.',
-  seoDescription: '50 winter nail ideas. Festive red, dark green, midnight blue, silver chrome, and glitter winter nail designs — inspiration for the busiest nail season.',
+  seoDescription: "50 winter nail ideas: festive red, dark green, midnight blue, silver chrome and glitter winter nail designs for short and long nails.",
   category: 'nail-inspo',
   tags: ['winter nail ideas', 'winter nails', 'winter nail designs'],
   heroImage: 'linear-gradient(135deg, #F8F9FF 0%, #E0E7FF 100%)',
   heroImageAlt: '50 winter nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'festive', label: 'Festive Christmas nails' },

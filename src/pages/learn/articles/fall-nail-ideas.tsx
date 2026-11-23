@@ -4,15 +4,16 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'fall-nail-ideas',
   title: '50 Fall Nail Ideas',
-  seoTitle: '50 Fall Nail Ideas',
+  seoTitle: "50 Fall Nail Ideas: Burgundy, Brown & Autumn Nail Art",
   excerpt: 'Autumn brings the best nail colours of the year — rich, warm, and moody. Here are 50 fall nail ideas from earthy neutrals to deep dramatic hues.',
-  seoDescription: '50 fall nail ideas. Burgundy, rust, chocolate, forest green, and autumn nail art — inspiration for the richest nail season of the year.',
+  seoDescription: "50 fall nail ideas: burgundy, chocolate, rust, forest green and autumn nail art, from simple fall nails to cozy seasonal designs.",
   category: 'nail-inspo',
   tags: ['fall nail ideas', 'autumn nails', 'fall nail designs'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 100%)',
   heroImageAlt: '50 fall nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'warm-autumnal', label: 'Warm and earthy autumnal colours' },

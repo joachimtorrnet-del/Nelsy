@@ -37,7 +37,7 @@ registerArticle({
           headers={['Tool', 'What it does', 'Cost model']}
           rows={[
             ['Nelsy', 'Nail-tech specific booking, deposits, client notes', 'Direct booking model'],
-            ['Fresha', 'Booking + marketplace + client management', 'Free subscription + marketplace commission'],
+            ['Fresha', 'Booking + marketplace + client management', 'From €14.95/month + new-client marketplace fee'],
             ['Booksy', 'Booking + marketplace + client management', 'Monthly subscription'],
             ['Google Contacts / Notes', 'Basic client records if not using a dedicated CRM', 'Free'],
           ]}

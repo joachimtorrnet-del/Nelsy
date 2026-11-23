@@ -4,15 +4,16 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'summer-nail-ideas',
   title: '50 Summer Nail Ideas',
-  seoTitle: '50 Summer Nail Ideas',
+  seoTitle: "50 Summer Nail Ideas: Bright, Neon & Tropical Designs",
   excerpt: 'Summer nails are bright, fun, and unapologetically colourful. Here are 50 summer nail ideas — from resort-ready neutrals to full neon statement sets.',
-  seoDescription: '50 summer nail ideas. Neon, tropical, bright colour, and resort-inspired summer nail designs — inspiration for the warmest months.',
+  seoDescription: "50 summer nail ideas: neon and bright colors, tropical and resort-inspired designs, and summer nail inspo for short and long nails.",
   category: 'nail-inspo',
   tags: ['summer nail ideas', 'summer nails', 'summer nail designs'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: '50 summer nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'bright-summer', label: 'Bright and neon summer' },

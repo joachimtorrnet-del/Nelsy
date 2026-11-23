@@ -46,7 +46,7 @@ registerArticle({
 
       <section id="alternatives">
         <h2 className="font-serif text-2xl font-bold mb-4">The main alternatives</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Free subscription model (commission on marketplace bookings); strong in UK, Australia, globally. Best for nail techs who want marketplace discovery alongside booking management. Read: <Link to="/learn/should-nail-techs-use-fresha" className="underline text-[#F52B8C]">should nail techs use Fresha?</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month (one-time fee on new marketplace clients); strong in UK, Australia, globally. Best for nail techs who want marketplace discovery alongside booking management. Read: <Link to="/learn/should-nail-techs-use-fresha" className="underline text-[#F52B8C]">should nail techs use Fresha?</Link></p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Subscription model with marketplace; strong client-side app. Good for nail techs in areas with strong Booksy client adoption. Read: <Link to="/learn/is-booksy-worth-it-nail-techs" className="underline text-[#F52B8C]">is Booksy worth it for nail techs?</Link></p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> — Strong if you already use Square for payments; integrates well with POS hardware. Better suited to salon settings than solo home-based techs.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich platform with marketplace and management tools; monthly subscription. Popular in the US. Read: <Link to="/learn/vagaro-alternatives-nail-techs" className="underline text-[#F52B8C]">Vagaro alternatives</Link> if Vagaro doesn't fit either.</p>
@@ -59,7 +59,7 @@ registerArticle({
           headers={['Platform', 'Best for', 'Key strength', 'Main limitation']}
           rows={[
             ['GlossGenius', 'US-based nail techs who want polish and simplicity', 'Beautiful client-facing design; strong business tools', 'US-only; subscription fee; no marketplace discovery'],
-            ['Fresha', 'Global nail techs wanting marketplace visibility', 'Free subscription; large client marketplace', 'Commission on marketplace bookings; less design control'],
+            ['Fresha', 'Global nail techs wanting marketplace visibility', 'From €14.95/month; large client marketplace', 'Commission on marketplace bookings; less design control'],
             ['Booksy', 'Nail techs in Booksy-popular markets', 'Strong client app; marketplace reach', 'Subscription cost; less control over cancellation policies'],
             ['Square Appointments', 'Salons already using Square POS', 'Deep payment integration; hardware ecosystem', 'Less beauty-specific; not solo-tech focused'],
             ['Nelsy', 'Solo nail techs wanting direct booking + deposits', 'Built for nail techs; no marketplace commission', 'Newer platform; smaller existing client marketplace'],

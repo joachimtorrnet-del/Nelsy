@@ -4,15 +4,16 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-prevent-flooded-cuticles',
   title: 'How to Prevent Flooded Cuticles',
-  seoTitle: 'How to Prevent Flooded Cuticles When Applying Nail Products',
+  seoTitle: "Flooded Cuticles: Causes, How to Prevent and Fix Them",
   excerpt: 'Flooded cuticles are one of the most common technique issues for nail techs — and one of the most fixable. Here\'s why it happens and exactly how to stop it.',
-  seoDescription: 'How to prevent flooded cuticles when applying gel polish, builder gel, and nail extensions. Technique fixes, product loading advice, and how to correct flooding before it cures.',
+  seoDescription: "What causes flooded cuticles with gel polish, builder gel and extensions, how to avoid flooding the cuticle, and how to fix it before curing.",
   category: 'nail-education',
   tags: ['how to prevent flooded cuticles', 'flooded cuticles fix', 'nail product flooding cuticle'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'How to prevent flooded cuticles',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Education Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'why-it-happens', label: 'Why cuticles get flooded' },

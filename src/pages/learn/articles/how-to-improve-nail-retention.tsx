@@ -5,17 +5,19 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'how-to-improve-nail-retention',
   title: 'How to Improve Nail Retention',
-  seoTitle: 'How to Improve Nail Retention: Complete Guide for Nail Techs',
+  seoTitle: "Nail Retention: What It Means and How to Improve It",
   excerpt: 'Poor retention frustrates both nail techs and clients. This guide covers every factor that affects how long gel and acrylic stays on — from prep through aftercare.',
-  seoDescription: 'How to improve nail retention. A complete guide for nail techs — prep, product application, client aftercare, troubleshooting lifting and peeling, and common mistakes.',
+  seoDescription: "What nail retention means, why gel and acrylic lift or pop off early, and how to improve retention with better prep, product application and client aftercare.",
   category: 'nail-education',
   tags: ['nail retention', 'improve nail retention', 'gel lifting', 'nail prep'],
   heroImage: 'linear-gradient(135deg, #ECFDF5 0%, #6EE7B7 100%)',
   heroImageAlt: 'How to improve nail retention guide for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
+    { id: 'what-is-nail-retention', label: 'What is nail retention?' },
     { id: 'what-affects-retention', label: 'What affects nail retention' },
     { id: 'prep', label: 'The prep factor' },
     { id: 'application', label: 'Application factors' },
@@ -25,12 +27,19 @@ registerArticle({
   ],
   relatedSlugs: ['nail-prep-guide', 'how-to-prevent-nail-lifting', 'nail-file-grit-guide', 'nail-drill-bits-explained'],
   faq: [
+    { q: 'What does nail retention mean?', a: 'Nail retention is how long a nail enhancement (gel polish, builder gel, Gel-X or acrylic) stays fully attached to the natural nail without lifting, chipping or popping off. Good retention means the set lasts its full cycle, usually two to four weeks, until the client\'s next fill or removal.' },
     { q: 'My clients always get lifting after a week — is it my product?', a: 'Product is rarely the cause of consistent lifting. Before switching products, systematically check: (1) your prep sequence — is the nail plate truly oil and moisture-free before application? (2) your base coat application — is it thin, fully covering the free edge, not touching cuticles? (3) your curing — is your lamp appropriate for your specific product? Consistent lifting across multiple clients almost always points to prep.' },
     { q: 'Some clients get lifting and others don\'t — why?', a: 'Client-specific factors: oily nail beds, wet work (regular dishwashing, nursing, hairdressing), thin or ridged natural nails, or not following aftercare. If a specific client consistently lifts while others don\'t, it\'s worth using a stronger primer with them, advising cuticle oil daily, and discussing their daily hand activities.' },
     { q: 'Does cuticle oil actually improve retention?', a: 'Yes, when used correctly. Cuticle oil applied daily to the cuticle area (not the product surface) keeps the surrounding skin flexible and prevents it from lifting the product at the edges. A dehydrated cuticle can pull on the product. Cuticle oil on the product surface over the top coat can cause lifting — timing and placement matter.' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
+      <section id="what-is-nail-retention">
+        <h2 className="font-serif text-2xl font-bold mb-4">What is nail retention?</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nail retention is how long a nail enhancement stays fully attached to the natural nail</strong> without lifting, chipping or popping off. It applies to gel polish, builder gel, Gel-X tips and acrylic. A set with good retention lasts its full cycle, usually two to four weeks, until the next fill or removal. Poor retention shows up as lifting at the cuticle or sidewalls, tips popping off, or product peeling in one piece.</p>
+        <p className="text-gray-700 leading-relaxed">For nail techs, retention is what clients judge your work on after they leave the chair, so it directly affects rebookings and reviews.</p>
+      </section>
+
       <section id="what-affects-retention">
         <h2 className="font-serif text-2xl font-bold mb-4">What affects nail retention</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Nail retention is the result of multiple factors working together. A failure in any one of them can cause premature lifting or peeling. Understanding all the factors means you can systematically diagnose the cause when something goes wrong — rather than guessing or changing everything at once.</p>

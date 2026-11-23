@@ -4,15 +4,16 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'chrome-nail-ideas',
   title: '50 Chrome Nail Ideas to Save',
-  seoTitle: '50 Chrome Nail Ideas to Save',
+  seoTitle: "50 Chrome Nail Ideas: Silver, Gold, Rose Gold & Holo",
   excerpt: 'Chrome nails are one of the most eye-catching effects you can offer — a mirror-like finish that turns heads. Here are 50 chrome nail ideas across every colour and style.',
-  seoDescription: '50 chrome nail ideas. Silver, gold, rose gold, holographic, and colour-shifting chrome nails — inspiration for mirror-finish nail designs in every style.',
+  seoDescription: "50 chrome nail ideas and inspo: silver, gold, rose gold, holographic and color-shifting chrome nails, from minimalist looks to bold designs.",
   category: 'nail-inspo',
   tags: ['chrome nail ideas', 'chrome nails', 'mirror nail designs'],
   heroImage: 'linear-gradient(135deg, #F8F9FF 0%, #E0E7FF 100%)',
   heroImageAlt: '50 chrome nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'silver-chrome', label: 'Silver and white chrome' },

@@ -5,15 +5,16 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'french-tip-nail-ideas',
   title: '50 French Tip Nail Ideas for Nail Techs',
-  seoTitle: '50 French Tip Nail Ideas for Nail Techs to Offer Clients',
+  seoTitle: "50 French Tip Nail Ideas: Classic, Colored & Short French",
   excerpt: 'The French manicure has completely reinvented itself. Beyond the classic white tip, there are now dozens of variations nail techs should know — here are 50.',
-  seoDescription: 'French tip nail ideas for nail techs. 50 French manicure variations — classic, coloured, reverse French, modern takes — with client consultation guidance.',
+  seoDescription: "50 French tip nail ideas: classic white, micro, colored, chrome and reverse French tips for short, square, almond and coffin nails.",
   category: 'nail-inspo',
   tags: ['french tip nail ideas', 'French manicure', 'nail inspo', 'nail designs'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: '50 French tip nail ideas for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'french-reinvented', label: 'The French manicure: reinvented' },

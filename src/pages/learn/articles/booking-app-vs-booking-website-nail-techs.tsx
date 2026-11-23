@@ -25,7 +25,7 @@ registerArticle({
   relatedSlugs: ['how-to-build-nail-tech-website', 'best-booking-apps-for-nail-techs-2026', 'how-to-set-up-online-booking-nail-business', 'how-to-move-from-instagram-dms-to-online-booking'],
   faq: [
     { q: 'Can a booking app replace a website for a nail tech?', a: 'For most solo nail techs, yes — at least in the early stages. A booking app with a shareable profile page (your booking URL) covers the same functions as a basic nail tech website: showing your services, prices, and accepting bookings. A dedicated website becomes more valuable as your brand grows, if you want SEO traffic from Google, or if you want more control over how your brand appears than a booking app allows.' },
-    { q: 'How much does a nail tech website cost?', a: 'A basic nail tech website can be built on Squarespace, Wix, or similar platforms for around £10–£20/month. A custom-designed site costs more. A booking app (Fresha free tier, Nelsy) costs nothing or near-nothing to start. The cost comparison favours booking apps heavily at the start of a nail business.' },
+    { q: 'How much does a nail tech website cost?', a: 'A basic nail tech website can be built on Squarespace, Wix, or similar platforms for around £10–£20/month. A custom-designed site costs more. A booking app costs little to start: most offer a free trial, then a monthly plan (Fresha from €14.95, Nelsy $29). The cost comparison favours booking apps heavily at the start of a nail business.' },
   ],
   relatedFeatureSlugs: ['bookings', 'link-in-bio'],
   content: () => (

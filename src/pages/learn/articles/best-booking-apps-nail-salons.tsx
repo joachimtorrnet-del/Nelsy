@@ -47,7 +47,7 @@ registerArticle({
 
       <section id="top-picks">
         <h2 className="font-serif text-2xl font-bold mb-4">Best platforms for nail salons</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Multi-staff scheduling; individual tech profiles within a salon account; marketplace visibility; free subscription (with commission on marketplace bookings). One of the most widely used salon-scale platforms globally.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Multi-staff scheduling; individual tech profiles within a salon account; marketplace visibility; Team plan at €9.95 per team member per month, plus a one-time fee on new marketplace clients. One of the most widely used salon-scale platforms globally.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Multi-tech scheduling; marketplace; strong client-side app. Subscription scales with team size. Well-known to clients in major markets.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich with payroll, POS, marketing, and scheduling in one. Better suited to larger salons that need management depth. Monthly subscription; US-focused.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> — Solid multi-staff scheduling; deep payment integration; POS hardware for salon till setups. Not beauty-specific but handles the operational side of larger nail businesses.</p>

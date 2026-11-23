@@ -4,15 +4,16 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'spring-nail-ideas',
   title: '50 Spring Nail Ideas',
-  seoTitle: '50 Spring Nail Ideas',
+  seoTitle: "50 Spring Nail Ideas: Pastel, Floral & Light Pink Designs",
   excerpt: 'Spring nails are soft, fresh, and full of possibility. Here are 50 spring nail ideas — from delicate florals to pale pastels and bright early-season colours.',
-  seoDescription: '50 spring nail ideas. Pastel, floral, light pink, mint, lavender, and fresh spring nail designs — inspiration for the new season.',
+  seoDescription: "50 spring nail ideas: pastel colors, floral nail art, light pink, mint, lavender and fresh spring nail designs for short and long nails.",
   category: 'nail-inspo',
   tags: ['spring nail ideas', 'spring nails', 'spring nail designs'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)',
   heroImageAlt: '50 spring nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'spring-pastels', label: 'Spring pastels' },

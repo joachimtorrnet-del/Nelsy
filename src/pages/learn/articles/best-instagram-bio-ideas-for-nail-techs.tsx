@@ -5,15 +5,16 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'best-instagram-bio-ideas-for-nail-techs',
   title: 'Best Instagram Bio Ideas for Nail Techs',
-  seoTitle: 'Best Instagram Bio Ideas for Nail Techs (Copy & Paste)',
+  seoTitle: "30+ Instagram Bio Ideas for Nail Techs (Copy & Paste)",
   excerpt: '30+ ready-to-use Instagram bio ideas for nail techs — from minimal to detailed, with tips on what every booking-focused bio needs to include.',
-  seoDescription: '30+ Instagram bio ideas for nail techs you can copy and edit. What to include, what to avoid, and how to write a bio that converts profile visitors into bookings.',
+  seoDescription: "Instagram bio ideas for nail techs and nail artists you can copy: examples by style, what to include, and how to turn your bio into bookings.",
   category: 'instagram-content',
   tags: ['Instagram bio', 'Instagram', 'nail tech branding', 'profile setup'],
   heroImage: 'linear-gradient(135deg, #F0FDFA 0%, #99F6E4 100%)',
   heroImageAlt: 'Best Instagram bio ideas for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-20',
   toc: [
     { id: 'what-every-bio-needs', label: 'What every nail tech bio needs' },

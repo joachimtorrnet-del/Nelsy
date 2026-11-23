@@ -54,7 +54,7 @@ registerArticle({
       <section id="limitations">
         <h2 className="font-serif text-2xl font-bold mb-4">Where Booksy falls short</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Monthly subscription cost:</strong> Unlike Fresha's free subscription model, Booksy requires a monthly payment. For lower-volume nail techs, this cost per booking can be high.</li>
+          <li><strong>Monthly subscription cost:</strong> Booksy costs $29.99/month in the US (£40 in the UK), compared with €14.95/month for Fresha&apos;s Independent plan. For lower-volume nail techs, this cost per booking can be high.</li>
           <li><strong>Policy control limitations:</strong> Some nail techs find Booksy's deposit and cancellation policy settings less flexible than desired — worth testing before committing</li>
           <li><strong>Marketplace value varies by location:</strong> Booksy is worth more where Booksy client adoption is high. In areas where most nail tech bookings happen through Instagram, the marketplace advantage is smaller</li>
           <li><strong>Less design-forward:</strong> Booksy's aesthetics are functional but less polished than GlossGenius</li>
@@ -69,7 +69,7 @@ registerArticle({
             ['You\'re in a city where Booksy has strong client adoption and marketplace traffic', 'Likely yes — marketplace discovery value may justify the subscription'],
             ['You book primarily through Instagram, not discovery platforms', 'Less clear — you\'re paying for marketplace exposure you might not use'],
             ['You want Google integration for local search visibility', 'Worth considering if Google feature is available in your market'],
-            ['You\'re comparing Booksy to Fresha on cost', 'Fresha\'s free subscription is a genuine advantage unless Booksy\'s marketplace is significantly stronger in your area'],
+            ['You\'re comparing Booksy to Fresha on cost', 'Fresha\'s lower plan price (€14.95/month) is an advantage unless Booksy\'s marketplace is significantly stronger in your area'],
           ]}
         />
       </section>

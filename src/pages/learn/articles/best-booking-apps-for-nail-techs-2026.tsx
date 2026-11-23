@@ -30,7 +30,7 @@ registerArticle({
   relatedSlugs: ['how-to-choose-booking-app-nail-business', 'nail-tech-booking-software-features', 'why-booking-through-dms-costs-nail-techs-clients'],
   faq: [
     { q: 'Do I need a booking app as a nail tech?', a: 'Not strictly — many nail techs manage bookings through DMs or WhatsApp. But a booking app saves significant admin time, reduces no-shows (especially with deposits), and makes it easier for new clients to find and book you without back-and-forth messages.' },
-    { q: 'What is the best free booking app for nail techs?', a: "Fresha has a genuinely free tier with no monthly subscription. Nelsy offers a free trial. Square Appointments has a free plan for solo use. The catch with 'free' platforms is usually transaction fees or commission on bookings." },
+    { q: 'What is the best free booking app for nail techs?', a: "Fresha no longer has a free plan: its Independent plan is listed at €14.95/month after a 7-day trial. Nelsy offers a 14-day free trial. Square Appointments has a free plan for solo use. The catch with 'free' platforms is usually transaction fees or commission on bookings." },
     { q: 'Can I take deposits through a booking app?', a: 'Yes — most modern booking apps support deposits. Nelsy, Fresha, and Booksy all let you collect a deposit at the time of booking. This is one of the most valuable features for nail techs, as it significantly reduces no-shows.' },
     { q: 'What booking app do most nail techs use in the UK?', a: "Fresha has strong UK adoption. Booksy is growing. Nelsy is newer but built specifically for nail techs. Many nail techs use Treatwell or Vagaro if they also want marketplace visibility, though these come with commission on bookings." },
   ],
@@ -73,7 +73,7 @@ registerArticle({
           headers={['App', 'Best for', 'Deposits', 'Key watch-out']}
           rows={[
             ['Nelsy', 'Nail techs wanting a clean, dedicated booking page', '✓', 'Newer platform — smaller support community'],
-            ['Fresha', 'Nail techs wanting a free plan + marketplace exposure', '✓', 'Transaction fees on some features; large salon focus'],
+            ['Fresha', 'Nail techs wanting a low monthly price + marketplace exposure', '✓', 'Transaction fees on some features; large salon focus'],
             ['Booksy', 'Growing nail techs who want marketplace visibility', '✓', 'Monthly subscription required; commission structure'],
             ['Square Appointments', 'Nail techs who also use Square for payments', '✓', 'Not beauty-specific; less suited to nail art pricing complexity'],
             ['Vagaro', 'Established nail techs with larger client bases', '✓', 'More complex setup; monthly cost'],
@@ -92,7 +92,7 @@ registerArticle({
 
       <section id="fresha">
         <h2 className="font-serif text-2xl font-bold mb-4">Fresha</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Fresha is one of the most popular booking platforms in the UK beauty industry. Its genuinely free subscription tier (no monthly cost) makes it attractive for nail techs starting out. It also has marketplace listings, so clients searching "nail tech near me" on the Fresha app may find you.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Fresha is one of the most popular booking platforms in the UK beauty industry. Its Independent plan (€14.95/month on its pricing page) is one of the lower entry prices, which makes it attractive for nail techs starting out. It also has marketplace listings, so clients searching "nail tech near me" on the Fresha app may find you.</p>
         <p className="text-gray-700 leading-relaxed">The main consideration: Fresha earns revenue through transaction fees on new clients booked via their marketplace, and some features (like marketing tools) carry costs. For nail techs who primarily want to manage existing clients rather than acquire new ones through the marketplace, the fee structure needs careful evaluation. See: <Link to="/fresha-alternative-nail-techs" className="underline text-[#F52B8C]">Fresha alternatives for nail techs</Link>.</p>
       </section>
 
@@ -114,7 +114,7 @@ registerArticle({
         <ArticleTable
           headers={['Situation', 'Recommendation']}
           rows={[
-            ['Just starting out, tight budget', 'Try Nelsy free trial or Fresha free plan'],
+            ['Just starting out, tight budget', 'Try the Nelsy or Fresha free trial'],
             ['Want marketplace visibility to find new clients', 'Fresha or Booksy (factor in their commission)'],
             ['Already using Square for payments', 'Square Appointments makes sense'],
             ['Want a dedicated nail-tech-first booking page', 'Nelsy'],

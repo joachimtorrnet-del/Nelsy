@@ -46,7 +46,7 @@ registerArticle({
 
       <section id="top-picks">
         <h2 className="font-serif text-2xl font-bold mb-4">Best platforms for mobile nail techs</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Allows mobile service listing; strong client-facing app; deposit collection; marketplace visibility for "mobile" searches in your area. Free subscription model works well for mobile nail techs who may have variable booking volumes.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Allows mobile service listing; strong client-facing app; deposit collection; marketplace visibility for "mobile" searches in your area. A low entry plan (€14.95/month for one person) suits mobile nail techs with variable booking volumes.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Has mobile service listing options; strong automated reminders cut down on wasted travel; client app is good. Subscription model.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Direct booking page with deposit collection; works for mobile nail techs who bring their own clients rather than relying on marketplace discovery. <Link to="/" className="underline text-[#F52B8C]">See Nelsy →</Link></p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> — Strong if you want integrated card payment via Square's hardware (card readers for mobile payments at client homes); less suited to beauty-specific client management.</p>

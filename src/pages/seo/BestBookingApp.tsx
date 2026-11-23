@@ -391,7 +391,7 @@ export default function BestBookingApp() {
                     {
                       type: 'New nail tech without a built-in audience',
                       recommendation: 'Fresha or Booksy',
-                      reason: 'Marketplace discovery helps when you can\'t yet drive your own traffic. Fresha\'s free tier is a low-risk starting point. As your Instagram grows, you may find you outgrow the need for a marketplace.',
+                      reason: 'Marketplace discovery helps when you can\'t yet drive your own traffic. Fresha\'s entry plan (€14.95/month, 7-day trial) is a low-risk starting point. As your Instagram grows, you may find you outgrow the need for a marketplace.',
                     },
                     {
                       type: 'Independent nail tech focused on premium client experience',

@@ -37,7 +37,7 @@ registerArticle({
           headers={['App', 'Best for']}
           rows={[
             ['Nelsy', 'Nail-tech specific booking, deposits, client management'],
-            ['Fresha', 'Free subscription + marketplace discovery'],
+            ['Fresha', 'From €14.95/month + marketplace discovery'],
             ['Booksy', 'Client-side app quality; marketplace'],
             ['Google Calendar', 'Simple free scheduling alongside other tools'],
           ]}

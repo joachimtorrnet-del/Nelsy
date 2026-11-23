@@ -5,15 +5,16 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-caption-ideas',
   title: 'Nail Tech Caption Ideas for Instagram (50+ Examples)',
-  seoTitle: 'Nail Tech Caption Ideas for Instagram (50+ Copy-Paste Examples)',
+  seoTitle: "50+ Nail Tech Caption Ideas for Instagram (Copy & Paste)",
   excerpt: 'Caption ideas for every type of nail tech Instagram post — portfolio posts, booking prompts, behind the scenes, educational, and seasonal content.',
-  seoDescription: 'Nail tech caption ideas for Instagram. 50+ caption examples for nail photos, booking posts, behind the scenes, seasonal content — with CTA formulas that get responses.',
+  seoDescription: "Copy-and-paste Instagram captions for nail techs: nail photo captions, booking posts, new set reveals and seasonal captions that get clients to book.",
   category: 'instagram-content',
   tags: ['instagram captions', 'nail tech captions', 'instagram content', 'nail tech social media'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
   heroImageAlt: 'Nail tech Instagram caption ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-20',
   toc: [
     { id: 'portfolio-captions', label: 'Portfolio / nail photo captions' },

@@ -23,7 +23,7 @@ registerArticle({
   ],
   relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'square-appointments-alternatives-nail-techs', 'should-nail-techs-use-fresha', 'best-booking-apps-for-nail-techs-2026'],
   faq: [
-    { q: 'Is Fresha really free for nail techs?', a: 'Fresha has a free subscription — no monthly fee. They charge a commission on bookings made through the Fresha marketplace. If you direct your existing clients to book through your Fresha link, and those clients don\'t come through the Fresha marketplace, there\'s no commission. The free model suits nail techs who primarily book their own existing clients; the commission applies when Fresha generates the new client for you.' },
+    { q: 'Is Fresha really free for nail techs?', a: 'No. Fresha no longer has a free plan: its pricing page lists the Independent plan at €14.95/month and the Team plan at €9.95 per team member per month, after a 7-day trial. Fresha also charges a one-time fee on brand new clients who find you through its marketplace (the percentage is not shown on the pricing page), while returning clients and bookings from your own link are free. Card payments cost 1.29% + €0.15 online and 0.59% + €0.15 in person.' },
     { q: 'Does Square Appointments have a beauty marketplace?', a: 'No. Square Appointments is a scheduling and payments tool — it doesn\'t have a client-facing beauty marketplace where new clients discover providers. All your bookings come from clients you direct to your booking link.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],

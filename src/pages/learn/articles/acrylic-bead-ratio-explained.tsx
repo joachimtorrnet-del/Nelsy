@@ -5,15 +5,16 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'acrylic-bead-ratio-explained',
   title: 'Acrylic Bead Ratio Explained',
-  seoTitle: 'Acrylic Bead Ratio Explained for Nail Techs',
+  seoTitle: "Acrylic Bead Ratio: Wet, Medium and Dry Beads Explained",
   excerpt: 'The bead ratio — the amount of liquid monomer relative to acrylic powder in your bead — affects everything from workability to finished strength. Here\'s how to get it right.',
-  seoDescription: 'Acrylic bead ratio explained for nail techs. What wet, medium, and dry beads look like, when to use each, how to pick up consistent beads, and how ratio affects the finished nail.',
+  seoDescription: "Acrylic bead ratio explained: what a wet, medium and dry bead look like, the ideal liquid and powder mix, and how to pick up a consistent bead.",
   category: 'nail-education',
   tags: ['acrylic bead ratio', 'acrylic consistency', 'acrylic technique', 'nail tech education'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #DDD6FE 100%)',
   heroImageAlt: 'Acrylic bead ratio explained for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'what-is-bead-ratio', label: 'What bead ratio means' },

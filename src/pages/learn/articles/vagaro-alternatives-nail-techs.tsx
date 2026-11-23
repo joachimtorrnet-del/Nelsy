@@ -58,14 +58,14 @@ registerArticle({
         <ArticleTable
           headers={['Platform', 'Best suited to', 'Pricing model', 'Geographic strength']}
           rows={[
-            ['Fresha', 'Solo and salon nail techs globally', 'Free subscription + marketplace commission', 'UK, Australia, global'],
+            ['Fresha', 'Solo and salon nail techs globally', 'From €14.95/month + new-client marketplace fee', 'UK, Australia, global'],
             ['Booksy', 'Nail techs wanting marketplace visibility', 'Monthly subscription', 'US, UK, Europe'],
             ['GlossGenius', 'US nail techs wanting polish and simplicity', 'Monthly subscription', 'US only'],
             ['Square Appointments', 'Salons using Square POS', 'Free/paid tiers', 'US, UK, AU, CA'],
             ['Nelsy', 'Solo nail techs; direct booking focus', 'Direct booking model', 'UK-focused, growing'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For UK and internationally-based nail techs, <strong>Fresha</strong> is often the most practical Vagaro alternative given its geographic coverage and free subscription model.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For UK and internationally-based nail techs, <strong>Fresha</strong> is often the most practical Vagaro alternative given its geographic coverage and low entry price.</p>
         <p className="text-gray-700 leading-relaxed">For US solo nail techs, <strong>GlossGenius</strong> offers a cleaner, more focused experience than Vagaro's full suite.</p>
       </section>
 

@@ -56,7 +56,7 @@ registerArticle({
 
       <section id="alternatives">
         <h2 className="font-serif text-2xl font-bold mb-4">Alternatives to consider</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Free subscription; client marketplace; strong globally. Better for nail techs who want discovery alongside booking. <Link to="/learn/square-vs-fresha-nail-techs" className="underline text-[#F52B8C]">Square vs Fresha comparison →</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month; client marketplace; strong globally. Better for nail techs who want discovery alongside booking. <Link to="/learn/square-vs-fresha-nail-techs" className="underline text-[#F52B8C]">Square vs Fresha comparison →</Link></p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Subscription with marketplace; strong client-side app. Good where Booksy has client adoption in your area.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich; marketplace and management in one. US-focused. More comparable to Square in scope but beauty-specific.</p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Built for nail techs. Booking page, deposits, payments. Simpler than Square for solo nail techs who don't need POS hardware. <Link to="/" className="underline text-[#F52B8C]">See Nelsy →</Link></p>

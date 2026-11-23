@@ -5,15 +5,16 @@ import { ArticleCallout } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'square-nail-ideas',
   title: '50 Square Nail Ideas for Every Style',
-  seoTitle: '50 Square Nail Ideas for Every Style',
+  seoTitle: "50 Square Nail Ideas: Short, French, Basic & Cute Designs",
   excerpt: 'Square nails are a classic shape that works with any style — from minimalist to bold nail art. Here are 50 square nail ideas to inspire your next set.',
-  seoDescription: '50 square nail ideas for every style. Minimalist, French, nail art, seasonal, and maximalist square nail designs for gel, acrylic, and natural nail sets.',
+  seoDescription: "50 square nail ideas to save: basic and short square nails, French tips, white, chrome and nail art designs for gel or acrylic.",
   category: 'nail-inspo',
   tags: ['square nail ideas', 'square nail designs', 'square nail art', 'square nail inspo'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FCE4F5 100%)',
   heroImageAlt: '50 square nail ideas for every style',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
   toc: [
     { id: 'minimalist', label: 'Minimalist square nail ideas' },

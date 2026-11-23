@@ -5,15 +5,16 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'nail-file-grit-guide',
   title: 'Nail File Grit Guide for Nail Techs',
-  seoTitle: 'Nail File Grit Guide: Which Grit to Use When (Nail Tech)',
+  seoTitle: "Nail File Grit Chart: Which Grit to Use (80, 100, 180, 240)",
   excerpt: 'Understanding nail file grit numbers is one of the first things to get right as a nail tech. The wrong grit damages nails or won\'t do the job. Here\'s the complete guide.',
-  seoDescription: 'Nail file grit guide for nail techs. What grit numbers mean, which grit to use for natural nails vs. gel vs. acrylic, and when to replace your files.',
+  seoDescription: "Nail file grit chart: what 80, 100, 180 and 240 grit are for, which grit to use on natural nails, gel and acrylic, and how to avoid damage.",
   category: 'nail-education',
   tags: ['nail file grit', 'nail files', 'nail tech tools', 'nail file guide'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'Nail file grit guide for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-23',
   publishedAt: '2026-10-20',
   toc: [
     { id: 'what-grit-means', label: 'What grit numbers mean' },
