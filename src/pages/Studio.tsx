@@ -5,6 +5,8 @@ import { BookingModal } from '@/components/studio/BookingModal';
 import { PublicStudioView, PreviewSkeleton } from '@/components/studio/PublicStudioView';
 import { getTheme } from '@/lib/themes';
 import { recordPageView } from '@/lib/supabase-queries';
+import SEOMeta from '@/components/SEOMeta';
+import { buildStudioSeo, isStudioIndexable } from '@/lib/studioSeo';
 
 function NotFound({ accent }: { accent: string }) {
   return (
@@ -39,15 +41,23 @@ export default function Studio() {
     void recordPageView(merchant.id);
   }, [merchant?.id]);
 
-  useEffect(() => {
-    if (merchant) document.title = `${merchant.salon_name} — Book on Nelsy`;
-    return () => { document.title = 'Nelsy'; };
-  }, [merchant?.salon_name]);
-
   const theme = getTheme(merchant?.theme_preset, merchant?.color_accent);
+  const seo = merchant ? buildStudioSeo(merchant) : null;
 
   return (
     <div className={`min-h-dvh ${theme.fontClass}`} style={{ backgroundColor: '#E8E8E8' }}>
+      {merchant && seo ? (
+        <SEOMeta
+          title={seo.title}
+          description={seo.description}
+          canonical={`/${merchant.slug}`}
+          noindex={!isStudioIndexable(merchant)}
+          ogImage={seo.ogImage}
+          jsonLd={seo.jsonLd}
+        />
+      ) : !loading ? (
+        <SEOMeta title="Studio not found" description="This studio doesn't exist on Nelsy yet." noindex />
+      ) : null}
       <div className="w-full max-w-[480px] md:max-w-[560px] mx-auto min-h-dvh relative">
         {loading ? (
           <PreviewSkeleton bgColor={theme.pageBg} />
