@@ -17,6 +17,8 @@ import FreshaAlternative from './pages/seo/FreshaAlternative';
 import BookcyAlternative from './pages/seo/BookcyAlternative';
 import BestBookingApp from './pages/seo/BestBookingApp';
 import PricingCalculator from './pages/tools/PricingCalculator';
+import InstagramEngagementCalculator from './pages/tools/InstagramEngagementCalculator';
+import CreatorRateCalculator from './pages/tools/CreatorRateCalculator';
 import CancellationPolicyGenerator from './pages/tools/CancellationPolicyGenerator';
 import AppointmentReminderTemplates from './pages/tools/AppointmentReminderTemplates';
 import ToolsIndex from './pages/tools/ToolsIndex';
@@ -121,6 +123,8 @@ export default function App() {
             <Route path="/best-booking-app-for-nail-techs" element={<BestBookingApp />} />
             <Route path="/tools" element={<ToolsIndex />} />
             <Route path="/tools/nail-tech-pricing-calculator" element={<PricingCalculator />} />
+            <Route path="/tools/instagram-engagement-calculator" element={<InstagramEngagementCalculator />} />
+            <Route path="/tools/creator-rate-calculator" element={<CreatorRateCalculator />} />
 
             {/* ── Feature landing pages ──────────────────────────────────── */}
             <Route path="/features/bookings" element={<BookingsPage />} />

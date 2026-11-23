@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Calculator, ShieldCheck, BellRing } from 'lucide-react';
+import { Calculator, ShieldCheck, BellRing, Heart, BadgeDollarSign } from 'lucide-react';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
@@ -25,6 +25,18 @@ const TOOLS = [
     description: 'Copy-paste reminder messages that reduce no-shows and keep clients informed.',
     href: '/tools/nail-tech-appointment-reminder-templates',
   },
+  {
+    Icon: Heart,
+    title: 'Instagram Engagement Rate Calculator',
+    description: 'Check your engagement rate by followers and by reach before pitching brands.',
+    href: '/tools/instagram-engagement-calculator',
+  },
+  {
+    Icon: BadgeDollarSign,
+    title: 'Creator Rate Calculator',
+    description: 'Price sponsored posts and UGC from your views, CPM and production time.',
+    href: '/tools/creator-rate-calculator',
+  },
 ];
 
 export default function ToolsIndex() {
@@ -32,7 +44,7 @@ export default function ToolsIndex() {
     <>
       <SEOMeta
         title="Free Tools for Beauty Professionals | Nelsy"
-        description="Free calculators, generators and templates to help you run a better beauty business."
+        description="Free tools for beauty pros and creators: pricing, engagement rate and creator rate calculators, cancellation policy generator and reminder templates."
         canonical="/tools"
       />
       <SiteNav />

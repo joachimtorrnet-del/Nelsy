@@ -78,6 +78,8 @@ const TODAY = new Date().toISOString().slice(0, 10);
 // falsely signal to Google that these pages were updated.
 const STATIC_SEO_ROUTES = [
   { path: '/blog',                                           priority: '0.9', changefreq: 'weekly',  lastmod: TODAY },
+  { path: '/tools/instagram-engagement-calculator', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-24' },
+  { path: '/tools/creator-rate-calculator', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-24' },
   { path: '/pricing',                                        priority: '0.9', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/features/bookings', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/features/deposits', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },

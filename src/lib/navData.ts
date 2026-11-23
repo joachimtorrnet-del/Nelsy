@@ -93,8 +93,8 @@ export const TOOLS: NavTool[] = [
   { slug: 'profit-calculator',                   title: 'Beauty Business Profit Calculator',   category: 'calculator', route: '/tools/profit-calculator',           status: 'coming-soon' },
   { slug: 'deposit-calculator',                  title: 'Deposit Calculator',                  category: 'calculator', route: '/tools/deposit-calculator',          status: 'coming-soon' },
   { slug: 'no-show-cost-calculator',             title: 'No-Show Cost Calculator',             category: 'calculator', route: '/tools/no-show-cost-calculator',     status: 'coming-soon' },
-  { slug: 'instagram-engagement-calculator',     title: 'Instagram Engagement Rate Calculator',category: 'calculator', route: '/tools/instagram-engagement-calculator', status: 'coming-soon' },
-  { slug: 'creator-rate-calculator',             title: 'Creator Rate Calculator',             category: 'calculator', route: '/tools/creator-rate-calculator',     status: 'coming-soon' },
+  { slug: 'instagram-engagement-calculator',     title: 'Instagram Engagement Rate Calculator',category: 'calculator', route: '/tools/instagram-engagement-calculator', },
+  { slug: 'creator-rate-calculator',             title: 'Creator Rate Calculator',             category: 'calculator', route: '/tools/creator-rate-calculator', },
   // Generators
   { slug: 'nail-tech-cancellation-policy-generator', title: 'Cancellation Policy Generator',  category: 'generator',  route: '/tools/nail-tech-cancellation-policy-generator' },
   { slug: 'beauty-business-name-generator',      title: 'Beauty Business Name Generator',      category: 'generator',  route: '/tools/beauty-business-name-generator', status: 'coming-soon' },
