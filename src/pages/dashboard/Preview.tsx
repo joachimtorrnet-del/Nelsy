@@ -5,7 +5,7 @@ import {
   ChevronLeft, ChevronRight, Camera, Loader2, Star, Sparkles, FileDown, Package,
   UserRound, BookOpen, Users, Gift, Link2, Instagram, Check, Copy,
   Layers, ArrowUpRight, SlidersHorizontal,
-  Eye, Monitor, Smartphone, X as XIcon, Info, Search,
+  Eye, Monitor, Smartphone, X as XIcon, Info, Search, ChevronDown,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { THEMES } from '../../lib/themes';
@@ -19,7 +19,9 @@ import {
 } from '../../lib/supabase-queries';
 import { supabase } from '../../lib/supabase';
 import { buildLiveMerchant } from '../../lib/liveMerchant';
-import { STUDIO_FONTS, ensureStudioFontLoaded } from '../../lib/studioFonts';
+import { STUDIO_FONTS, ensureStudioFontLoaded, getStudioFont } from '../../lib/studioFonts';
+import { CREATOR_VARIANTS } from '../../components/studio/layouts/LayoutCreator';
+import { AnimatePresence, motion } from 'framer-motion';
 import { StudioPhonePreview } from '../../components/dashboard/StudioPhonePreview';
 import { TEMPLATE_DEMOS } from '../../lib/templateDemos';
 import { PublicStudioView } from '../../components/studio/PublicStudioView';
@@ -133,7 +135,6 @@ const TEMPLATES = [
   { id: 'coach',    name: 'Coach',    themeId: 'c_coach',    accentColor: '#F52B8C' },
 ];
 
-const BACKGROUND_SWATCHES = ['#FFFFFF', '#FFF5F8', '#FFF8EB', '#F5F1EC', '#EEF2F7', '#F2F0FF', '#1A1A1A', '#2A1F2D'];
 
 // Demo merchant for template gallery — uses specific picsum.photos IDs (Unsplash CC0)
 // Gallery preview only — never applied to a user's published studio
@@ -176,6 +177,108 @@ const DEMO_MERCHANT_BASE: Omit<Merchant, 'theme_preset' | 'color_accent'> = {
     },
   ] as Service[],
 };
+
+// ── Design controls ───────────────────────────────────────────────────────────
+
+function ColorField({ label, value, onChange, isDefault, onReset }: {
+  label: string; value: string; onChange: (v: string) => void; isDefault?: boolean; onReset?: () => void;
+}) {
+  const [text, setText] = useState(value.toUpperCase());
+  useEffect(() => { setText(value.toUpperCase()); }, [value]);
+  const commit = () => {
+    const v = text.trim().startsWith('#') ? text.trim() : `#${text.trim()}`;
+    if (/^#[0-9a-f]{6}$/i.test(v)) onChange(v.toLowerCase());
+    else setText(value.toUpperCase());
+  };
+  const swatch = /^#[0-9a-f]{6}$/i.test(value) ? value : '#ffffff';
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-1.5">
+        <span className="text-xs text-gray-500">{label}</span>
+        {onReset && !isDefault && (
+          <button onClick={onReset} className="text-[11px] font-semibold text-[#F52B8C] hover:opacity-75 transition">Reset</button>
+        )}
+      </div>
+      <div className="flex items-center gap-2.5 px-3 py-2.5 border border-gray-200 rounded-xl bg-white focus-within:border-[#F52B8C] transition">
+        <label className="relative w-7 h-7 rounded-full border border-black/10 flex-shrink-0 cursor-pointer overflow-hidden" style={{ background: swatch }}>
+          <input type="color" value={swatch} onChange={(e) => onChange(e.target.value)} aria-label={`${label} color`}
+            className="absolute inset-0 opacity-0 cursor-pointer" />
+        </label>
+        <input
+          value={isDefault ? 'Template' : text}
+          onFocus={() => { if (isDefault) setText(value.toUpperCase()); }}
+          onChange={(e) => setText(e.target.value)}
+          onBlur={commit}
+          onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }}
+          aria-label={`${label} hex code`}
+          spellCheck={false}
+          className={`w-full min-w-0 text-sm font-mono outline-none bg-transparent ${isDefault ? 'text-gray-400' : 'text-gray-800'}`}
+        />
+      </div>
+    </div>
+  );
+}
+
+function FontSelect({ value, templateFont, onChange }: {
+  value: string | null; templateFont: string; onChange: (id: string | null) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false); };
+    const esc = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('mousedown', close);
+    document.addEventListener('keydown', esc);
+    return () => { document.removeEventListener('mousedown', close); document.removeEventListener('keydown', esc); };
+  }, [open]);
+
+  const options = [
+    { id: null as string | null, label: `Template default (${templateFont})`, stack: undefined as string | undefined },
+    ...STUDIO_FONTS.map((f) => ({ id: f.id as string | null, label: f.label, stack: f.stack })),
+  ];
+  const current = options.find((o) => o.id === value) ?? options[0];
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className="w-full flex items-center justify-between gap-3 px-4 py-3 border border-gray-200 rounded-xl bg-white hover:border-gray-300 transition text-left"
+      >
+        <span className="text-[15px] text-gray-800 truncate" style={{ fontFamily: current.stack }}>{current.label}</span>
+        <ChevronDown className={`w-4 h-4 text-gray-400 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      <AnimatePresence>
+        {open && (
+          <motion.ul
+            role="listbox"
+            initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ duration: 0.14 }}
+            className="absolute z-30 left-0 right-0 mt-2 max-h-72 overflow-y-auto bg-white border border-gray-100 rounded-2xl shadow-xl py-1.5"
+          >
+            {options.map((o) => {
+              const selected = o.id === value;
+              return (
+                <li key={o.id ?? 'default'}>
+                  <button
+                    role="option"
+                    aria-selected={selected}
+                    onClick={() => { onChange(o.id); setOpen(false); }}
+                    className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 text-left hover:bg-gray-50 transition ${selected ? 'bg-[#fff4f9]' : ''}`}
+                  >
+                    <span className="text-[15px] text-gray-800 truncate" style={{ fontFamily: o.stack }}>{o.label}</span>
+                    {selected && <Check className="w-4 h-4 text-[#F52B8C] flex-shrink-0" />}
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 // ── Template coverflow ────────────────────────────────────────────────────────
 // Selected card centered and in front; neighbours fan out with a slight 3D turn.
@@ -331,7 +434,7 @@ function OfferRow({
   return (
     <div
       {...dragRowProps}
-      className={`group flex items-center gap-3 sm:gap-4 pl-2 pr-2 sm:pr-3 py-3 bg-white border rounded-2xl transition-all cursor-default ${
+      className={`group flex items-center gap-3 sm:gap-4 pl-2 pr-2 sm:pr-3 py-3 bg-white border rounded-2xl transition-all duration-200 cursor-default hover:-translate-y-px hover:shadow-[0_8px_24px_-14px_rgba(26,26,26,0.25)] ${
         isDragOver ? 'border-[#F52B8C] ring-2 ring-[#F52B8C]/20' : 'border-gray-100 hover:border-gray-200'
       } ${service.active ? '' : 'opacity-70'}`}
     >
@@ -971,6 +1074,12 @@ export default function Preview({ profile }: { profile: Profile | null }) {
   ];
 
   const templateBg = THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
+  const templateFontLabel = getStudioFont(CREATOR_VARIANTS[designForm.theme_preset]?.nameFont)?.label
+    ?? (THEMES[designForm.theme_preset]?.fontClass === 'font-serif' ? 'Playfair Display' : 'Inter');
+  const designDirty = designForm.theme_preset !== savedDesign.theme_preset
+    || designForm.color_accent !== savedDesign.color_accent
+    || designForm.color_background !== savedDesign.color_background
+    || designForm.font_family !== savedDesign.font_family;
   const bgColor = designForm.color_background ?? templateBg;
 
   // Build a live merchant from real profile + services for preview
@@ -994,14 +1103,16 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             <button
               key={id}
               onClick={() => { setActiveTab(id); setStudioScreen('list'); }}
-              className={`flex items-center gap-1.5 sm:gap-2 pb-3.5 px-0 mr-5 sm:mr-8 text-sm sm:text-[15px] font-semibold whitespace-nowrap flex-shrink-0 transition-colors border-b-2 -mb-px ${
-                activeTab === id
-                  ? 'text-[#F52B8C] border-[#F52B8C]'
-                  : 'text-gray-700 border-transparent hover:text-gray-900'
+              className={`relative flex items-center gap-1.5 sm:gap-2 pb-3.5 px-0 mr-5 sm:mr-8 text-sm sm:text-[15px] font-semibold whitespace-nowrap flex-shrink-0 transition-colors ${
+                activeTab === id ? 'text-[#F52B8C]' : 'text-gray-600 hover:text-gray-900'
               }`}
             >
               <Icon className="w-4 h-4" />
               {label}
+              {activeTab === id && (
+                <motion.span layoutId="studio-tab-underline" className="absolute left-0 right-0 -bottom-px h-[2px] rounded-full bg-[#F52B8C]"
+                  transition={{ type: 'spring', stiffness: 500, damping: 40 }} />
+              )}
             </button>
           ))}
           </div>
@@ -1163,7 +1274,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
                   {/* Add offer */}
                   <button
                     onClick={() => setStudioScreen('type-picker')}
-                    className="w-full h-14 bg-[#F52B8C] text-white rounded-full font-bold text-base flex items-center justify-center gap-2 hover:opacity-90 transition shadow-[0_8px_24px_-8px_rgba(245,43,140,0.6)]"
+                    className="w-full h-14 bg-[#F52B8C] text-white rounded-full font-bold text-base flex items-center justify-center gap-2 hover:opacity-90 transition active:scale-[0.99] shadow-[0_8px_24px_-8px_rgba(245,43,140,0.6)]"
                   >
                     <Plus className="w-5 h-5" /> Add an offer
                   </button>
@@ -1287,128 +1398,57 @@ export default function Preview({ profile }: { profile: Profile | null }) {
             Use the arrows, your keyboard arrow keys, or click a card. {currentTplIdx + 1} of {TEMPLATES.length}.
           </p>
 
-          {/* Settings panel */}
-          <div className="border-t border-gray-100 px-4 sm:px-8 py-6 grid md:grid-cols-2 gap-8 md:gap-10">
-            {/* Colors */}
-            <div>
-              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-5">Colors</p>
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                {/* Accent */}
-                <label className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-gray-300 transition">
-                  <span className="relative w-8 h-8 rounded-full border border-gray-200 overflow-hidden flex-shrink-0" style={{ background: designForm.color_accent }}>
-                    <input
-                      type="color"
-                      aria-label="Accent color"
-                      value={designForm.color_accent}
-                      onChange={(e) => setDesignForm((f) => ({ ...f, color_accent: e.target.value }))}
-                      className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
-                    />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[11px] text-gray-400">Accent</span>
-                    <code className="block text-sm font-mono text-gray-700">{designForm.color_accent.toUpperCase()}</code>
-                  </span>
-                </label>
-                {/* Background */}
-                <label className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl border border-gray-200 bg-white cursor-pointer hover:border-gray-300 transition">
-                  <span className="relative w-8 h-8 rounded-full border border-gray-200 overflow-hidden flex-shrink-0" style={{ background: bgColor }}>
-                    <input
-                      type="color"
-                      aria-label="Background color"
-                      value={/^#[0-9a-f]{6}$/i.test(bgColor) ? bgColor : '#ffffff'}
-                      onChange={(e) => setDesignForm((f) => ({ ...f, color_background: e.target.value }))}
-                      className="opacity-0 absolute inset-0 w-full h-full cursor-pointer"
-                    />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[11px] text-gray-400">Background</span>
-                    <code className="block text-sm font-mono text-gray-700 truncate">
-                      {designForm.color_background ? designForm.color_background.toUpperCase() : 'Template'}
-                    </code>
-                  </span>
-                </label>
-              </div>
-
-              <p className="text-xs text-gray-400 mb-2">Accent</p>
-              <div className="flex gap-2 flex-wrap mb-4">
-                {['#F52B8C', '#E8446E', '#0A0A0A', '#3B82F6', '#8B5CF6', '#059669', '#D97706'].map((c) => (
-                  <button
-                    key={c}
-                    aria-label={`Accent ${c}`}
-                    onClick={() => setDesignForm((f) => ({ ...f, color_accent: c }))}
-                    className="w-7 h-7 rounded-full transition hover:scale-110"
-                    style={{
-                      background: c,
-                      outline: designForm.color_accent === c ? `3px solid ${c}` : '3px solid transparent',
-                      outlineOffset: '2px',
-                    }}
+          {/* Colors + font, one panel */}
+          <div className="px-4 sm:px-8 pb-2">
+            <div className="border border-gray-200 rounded-2xl p-5 sm:p-6 grid md:grid-cols-2 gap-6 md:gap-10 bg-white">
+              <div>
+                <p className="text-[15px] font-semibold text-[#1A1A1A] mb-3">Colors</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <ColorField
+                    label="Accent"
+                    value={designForm.color_accent}
+                    onChange={(v) => setDesignForm((f) => ({ ...f, color_accent: v }))}
                   />
-                ))}
-              </div>
-
-              <p className="text-xs text-gray-400 mb-2">Background</p>
-              <div className="flex gap-2 flex-wrap items-center">
-                {BACKGROUND_SWATCHES.map((c) => (
-                  <button
-                    key={c}
-                    aria-label={`Background ${c}`}
-                    onClick={() => setDesignForm((f) => ({ ...f, color_background: c }))}
-                    className="w-7 h-7 rounded-full border border-gray-200 transition hover:scale-110"
-                    style={{
-                      background: c,
-                      outline: designForm.color_background?.toLowerCase() === c.toLowerCase() ? '3px solid #F52B8C' : '3px solid transparent',
-                      outlineOffset: '2px',
-                    }}
+                  <ColorField
+                    label="Background"
+                    value={bgColor}
+                    isDefault={!designForm.color_background}
+                    onChange={(v) => setDesignForm((f) => ({ ...f, color_background: v }))}
+                    onReset={() => setDesignForm((f) => ({ ...f, color_background: null }))}
                   />
-                ))}
-                {designForm.color_background && (
-                  <button
-                    onClick={() => setDesignForm((f) => ({ ...f, color_background: null }))}
-                    className="ml-1 text-xs font-semibold text-[#F52B8C] hover:opacity-75 transition"
-                  >
-                    Use template background
-                  </button>
-                )}
+                </div>
               </div>
-            </div>
-
-            {/* Font */}
-            <div>
-              <p className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-5">Font</p>
-              <div className="grid grid-cols-2 gap-2">
-                {[{ id: null as string | null, label: 'Template default', stack: undefined as string | undefined }, ...STUDIO_FONTS.map((f) => ({ id: f.id as string | null, label: f.label, stack: f.stack }))].map((font) => {
-                  const isActive = designForm.font_family === font.id;
-                  return (
-                    <button
-                      key={font.id ?? 'default'}
-                      onClick={() => setDesignForm((f) => ({ ...f, font_family: font.id }))}
-                      aria-pressed={isActive}
-                      className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl border text-left transition-all ${
-                        isActive ? 'border-[#F52B8C] bg-[#fff8fa]' : 'border-gray-200 bg-white hover:border-gray-300'
-                      }`}
-                    >
-                      <span className="text-lg font-semibold text-gray-800 w-7 text-center flex-shrink-0" style={{ fontFamily: font.stack }}>Aa</span>
-                      <span className="text-sm text-gray-700 truncate" style={{ fontFamily: font.stack }}>{font.label}</span>
-                      {isActive && <Check className="w-4 h-4 text-[#F52B8C] ml-auto flex-shrink-0" />}
-                    </button>
-                  );
-                })}
+              <div>
+                <p className="text-[15px] font-semibold text-[#1A1A1A] mb-3">Font</p>
+                <FontSelect
+                  value={designForm.font_family}
+                  templateFont={templateFontLabel}
+                  onChange={(id) => setDesignForm((f) => ({ ...f, font_family: id }))}
+                />
               </div>
             </div>
           </div>
 
           {/* Cancel / Save */}
-          <div className="border-t border-gray-100 px-8 py-4 flex items-center justify-end gap-3">
+          <div className="px-4 sm:px-8 py-5 flex items-center justify-end gap-3">
+            <AnimatePresence>
+              {designDirty && (
+                <motion.span initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="mr-auto text-sm text-gray-500 flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#F52B8C]" /> Unsaved changes
+                </motion.span>
+              )}
+            </AnimatePresence>
             <button
               onClick={cancelDesign}
-              className="px-5 py-2.5 text-sm font-semibold text-gray-600 border border-gray-200 rounded-xl hover:border-gray-300 transition"
+              disabled={!designDirty || savingDesign}
+              className="px-6 py-2.5 text-sm font-semibold text-gray-700 border border-gray-300 rounded-full hover:border-gray-400 transition active:scale-[0.98] disabled:opacity-40"
             >
               Cancel
             </button>
             <button
               onClick={saveDesign}
-              disabled={savingDesign}
-              className="px-5 py-2.5 text-sm font-semibold text-white bg-[#F52B8C] rounded-xl hover:opacity-90 transition disabled:opacity-50"
+              disabled={!designDirty || savingDesign}
+              className="px-7 py-2.5 text-sm font-bold text-white bg-[#F52B8C] rounded-full hover:opacity-90 transition active:scale-[0.98] disabled:opacity-40 shadow-[0_8px_20px_-8px_rgba(245,43,140,0.6)]"
             >
               {savingDesign ? 'Saving…' : 'Save'}
             </button>

@@ -4,6 +4,7 @@ import {
   AlertCircle, RefreshCw, Lightbulb, Sparkles, Clock, UserRound, Share2, CalendarPlus, Pencil,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { supabase } from '../../lib/supabase';
 import type { DbProfileRow, DbBookingRow } from '../../lib/supabase';
@@ -67,6 +68,13 @@ function growthPct(current: number, previous: number) {
   if (previous === 0) return current > 0 ? 100 : 0;
   return Math.round(((current - previous) / previous) * 100);
 }
+
+// Staggered entrance for the page's blocks
+const rise = (i: number) => ({
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.35, delay: 0.05 + i * 0.06, ease: [0.2, 0.8, 0.2, 1] as const },
+});
 
 export default function Home({ onNavigate }: { onNavigate?: (tab: string) => void }) {
   const [profile, setProfile] = useState<DbProfileRow | null>(null);
@@ -240,12 +248,12 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
       <div className="grid lg:grid-cols-[minmax(0,1fr)_330px] gap-8 xl:gap-12">
         {/* ── Main column ─────────────────────────────────────────────── */}
         <div className="min-w-0 space-y-6">
-          <h2 className="text-2xl lg:text-[32px] font-bold text-[#1A1A1A] tracking-tight leading-tight">
+          <motion.h2 {...rise(0)} className="text-2xl lg:text-[32px] font-bold text-[#1A1A1A] tracking-tight leading-tight">
             Hey {firstName}, welcome back!
-          </h2>
+          </motion.h2>
 
           {/* Recommended actions */}
-          <section>
+          <motion.section {...rise(1)}>
             <div className="flex items-center justify-between gap-3 mb-3">
               <div className="flex items-center gap-2">
                 <Lightbulb className="w-4 h-4 text-gray-500" />
@@ -262,7 +270,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
             </div>
             <div className="grid md:grid-cols-[1.35fr_1fr] gap-3">
               <button onClick={hero.run}
-                className="group text-left bg-[#fde8f3] rounded-2xl p-5 lg:p-6 flex items-center gap-4 hover:bg-[#fbd9eb] transition focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none">
+                className="group text-left bg-[#fde8f3] rounded-2xl p-5 lg:p-6 flex items-center gap-4 hover:bg-[#fbd9eb] hover:-translate-y-0.5 active:scale-[0.99] transition duration-200 focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none">
                 <div className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl bg-white flex items-center justify-center flex-shrink-0 shadow-sm">
                   <hero.icon className="w-7 h-7 text-[#F52B8C]" strokeWidth={1.8} />
                 </div>
@@ -277,7 +285,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
               <div className="grid gap-3">
                 {secondary.map((a) => (
                   <button key={a.id} onClick={a.run}
-                    className="group text-left bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-3 hover:border-pink-200 transition focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none">
+                    className="group text-left bg-white border border-gray-100 rounded-2xl p-4 flex items-center gap-3 hover:border-pink-200 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_-16px_rgba(26,26,26,0.3)] active:scale-[0.99] transition duration-200 focus-visible:ring-2 focus-visible:ring-[#F52B8C] focus-visible:outline-none">
                     <div className="w-10 h-10 rounded-xl bg-[#fff4f9] flex items-center justify-center flex-shrink-0">
                       <a.icon className="w-5 h-5 text-[#F52B8C]" strokeWidth={1.8} />
                     </div>
@@ -292,10 +300,10 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                 ))}
               </div>
             </div>
-          </section>
+          </motion.section>
 
           {/* Period + KPIs + chart */}
-          <section>
+          <motion.section {...rise(2)}>
             <div className="flex items-center justify-between gap-3 mb-3">
               <div className="inline-flex gap-1 bg-gray-100 rounded-full p-1">
                 {(Object.keys(RANGE_DAYS) as Range[]).map((r) => (
@@ -362,10 +370,10 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                 )}
               </div>
             </div>
-          </section>
+          </motion.section>
 
           {/* Upcoming + balance */}
-          <section className="grid md:grid-cols-[minmax(0,1fr)_260px] gap-3">
+          <motion.section {...rise(3)} className="grid md:grid-cols-[minmax(0,1fr)_260px] gap-3">
             <div className="bg-white border border-gray-100 rounded-2xl p-4 lg:p-5">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="font-semibold text-[#1A1A1A]">Upcoming appointments</h3>
@@ -436,11 +444,11 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                 </>
               )}
             </div>
-          </section>
+          </motion.section>
         </div>
 
         {/* ── Live studio preview ─────────────────────────────────────── */}
-        <aside className="hidden lg:block">
+        <motion.aside {...rise(2)} className="hidden lg:block">
           <div className="sticky top-6 flex flex-col items-center gap-4">
             <StudioPhonePreview merchant={merchant} width={300} />
             <button onClick={() => onNavigate?.('preview')}
@@ -448,7 +456,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
               <Pencil className="w-4 h-4" /> Edit studio
             </button>
           </div>
-        </aside>
+        </motion.aside>
       </div>
 
       <AddBookingModal
