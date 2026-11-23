@@ -50,7 +50,7 @@ export default function GetMoreClients() {
         },
       ]}
       relatedFeatures={['link-in-bio', 'instagram-autodm', 'bookings', 'audience-capture']}
-      relatedUseCases={['nail-techs', 'lash-techs', 'turn-followers-into-bookings', 'grow-your-audience']}
+      relatedUseCases={['nail-techs', 'lash-techs', 'turn-followers-into-bookings', 'reduce-no-shows']}
       relatedPostSlugs={[
         'how-to-get-more-nail-clients',
         'how-to-get-nail-clients-from-instagram',

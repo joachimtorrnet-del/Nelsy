@@ -50,7 +50,7 @@ export default function LashTechs() {
         },
       ]}
       relatedFeatures={['bookings', 'deposits', 'crm', 'email-newsletters', 'payments']}
-      relatedUseCases={['reduce-no-shows', 'manage-clients', 'get-more-clients']}
+      relatedUseCases={['reduce-no-shows', 'nail-techs', 'get-more-clients']}
       relatedPostSlugs={[
         'how-to-get-more-nail-client-rebookings',
         'how-to-handle-nail-client-no-shows',

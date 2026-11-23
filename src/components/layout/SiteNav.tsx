@@ -408,8 +408,8 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
           <Link to="/pricing" onClick={onClose} className="flex items-center px-3 py-2.5 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
             Pricing
           </Link>
-          <Link to="/affiliate" onClick={onClose} className="flex items-center px-3 py-2.5 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-            Affiliate
+          <Link to="/tools" onClick={onClose} className="flex items-center px-3 py-2.5 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
+            Free tools
           </Link>
           <Link to="/blog" onClick={onClose} className="flex items-center px-3 py-2.5 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
             Blog
@@ -518,8 +518,8 @@ export default function SiteNav() {
             <Link to="/pricing" className="px-2 py-1.5 text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-150 rounded focus-visible:outline-2 focus-visible:outline-[#F52B8C]">
               Pricing
             </Link>
-            <Link to="/affiliate" className="px-2 py-1.5 text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-150 rounded focus-visible:outline-2 focus-visible:outline-[#F52B8C]">
-              Affiliate
+            <Link to="/tools" className="px-2 py-1.5 text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-150 rounded focus-visible:outline-2 focus-visible:outline-[#F52B8C]">
+              Free tools
             </Link>
             <Link
               to="/blog"

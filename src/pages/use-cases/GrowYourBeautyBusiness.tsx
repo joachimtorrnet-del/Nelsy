@@ -50,7 +50,7 @@ export default function GrowYourBeautyBusiness() {
         },
       ]}
       relatedFeatures={['analytics', 'crm', 'bookings', 'email-newsletters', 'instagram-autodm']}
-      relatedUseCases={['get-more-clients', 'reduce-no-shows', 'turn-followers-into-bookings', 'manage-clients']}
+      relatedUseCases={['get-more-clients', 'reduce-no-shows', 'turn-followers-into-bookings', 'nail-techs']}
       relatedPostSlugs={[
         'how-to-get-more-nail-clients',
         'best-business-apps-nail-techs',

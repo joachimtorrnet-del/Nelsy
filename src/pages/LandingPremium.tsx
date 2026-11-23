@@ -119,7 +119,7 @@ function Hero() {
       <div className="hidden lg:flex max-w-6xl mx-auto px-10 pt-14 pb-0 items-center gap-12">
         {/* Left: text + CTA */}
         <div className="flex-1" style={{ maxWidth: 520 }}>
-          <motion.h1
+          <motion.p
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, delay: 0.05 }}
@@ -134,7 +134,7 @@ function Hero() {
           >
             Meet Your All-in-One{' '}
             <span style={{ color: PINK }}>Beauty Creator Store</span>
-          </motion.h1>
+          </motion.p>
 
           <motion.p
             initial={{ opacity: 0, y: 10 }}

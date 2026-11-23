@@ -50,7 +50,7 @@ export default function TurnFollowersIntoBookings() {
         },
       ]}
       relatedFeatures={['instagram-autodm', 'link-in-bio', 'bookings', 'audience-capture']}
-      relatedUseCases={['get-more-clients', 'grow-your-audience', 'nail-techs']}
+      relatedUseCases={['get-more-clients', 'reduce-no-shows', 'nail-techs']}
       relatedPostSlugs={[
         'how-to-get-nail-clients-from-instagram',
         'how-to-grow-nail-tech-instagram',

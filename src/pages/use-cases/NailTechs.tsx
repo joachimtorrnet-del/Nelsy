@@ -58,7 +58,7 @@ export default function NailTechs() {
         },
       ]}
       relatedFeatures={['bookings', 'deposits', 'payments', 'link-in-bio', 'instagram-autodm', 'crm']}
-      relatedUseCases={['get-more-clients', 'reduce-no-shows', 'turn-followers-into-bookings']}
+      relatedUseCases={['get-more-clients', 'reduce-no-shows', 'turn-followers-into-bookings', 'grow-your-beauty-business']}
       relatedPostSlugs={[
         'how-to-get-more-nail-clients',
         'how-to-handle-nail-client-no-shows',

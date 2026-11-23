@@ -32,6 +32,7 @@ export default function SiteFooter() {
               <li><Link to="/tools/nail-tech-pricing-calculator" className="hover:text-white transition">Pricing calculator</Link></li>
               <li><Link to="/tools/nail-tech-cancellation-policy-generator" className="hover:text-white transition">Cancellation policy</Link></li>
               <li><Link to="/tools/nail-tech-appointment-reminder-templates" className="hover:text-white transition">Reminder templates</Link></li>
+              <li><Link to="/tools" className="hover:text-white transition">All free tools</Link></li>
             </ul>
           </div>
           <div>
