@@ -6,6 +6,7 @@ import { PublicStudioView, PreviewSkeleton } from '@/components/studio/PublicStu
 import { getTheme } from '@/lib/themes';
 import { recordPageView } from '@/lib/supabase-queries';
 import SEOMeta from '@/components/SEOMeta';
+import { CurrencyProvider } from '@/lib/currency';
 import { buildStudioSeo, isStudioIndexable } from '@/lib/studioSeo';
 
 function NotFound({ accent }: { accent: string }) {
@@ -68,7 +69,11 @@ export default function Studio() {
         )}
       </div>
 
-      {merchant && <BookingModal merchant={merchant} />}
+      {merchant && (
+        <CurrencyProvider currency={merchant.currency}>
+          <BookingModal merchant={merchant} />
+        </CurrencyProvider>
+      )}
     </div>
   );
 }

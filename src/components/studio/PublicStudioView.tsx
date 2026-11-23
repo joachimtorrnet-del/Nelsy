@@ -17,6 +17,7 @@ import { LayoutEditorial } from './layouts/LayoutEditorial';
 import { LayoutSpotlight } from './layouts/LayoutSpotlight';
 import { LayoutCreator, CREATOR_VARIANTS } from './layouts/LayoutCreator';
 import { useBookingStore } from '@/store/bookingStore';
+import { CurrencyProvider } from '@/lib/currency';
 
 // Theme presets that use a standalone layout component (no StudioHeroV2 sections)
 const LAYOUT_PRESETS: Record<string, 'split' | 'editorial' | 'spotlight'> = {
@@ -64,7 +65,15 @@ interface Props {
   mode?: StudioMode;
 }
 
-export function PublicStudioView({ merchant, mode = 'live' }: Props) {
+export function PublicStudioView(props: Props) {
+  return (
+    <CurrencyProvider currency={props.merchant.currency}>
+      <PublicStudioViewInner {...props} />
+    </CurrencyProvider>
+  );
+}
+
+function PublicStudioViewInner({ merchant, mode = 'live' }: Props) {
   const studioFont = getStudioFont(merchant.font_family);
   const theme = getTheme(merchant.theme_preset, merchant.color_accent, {
     background: merchant.color_background,

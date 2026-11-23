@@ -4,7 +4,7 @@
  */
 import { useState, useMemo, useId } from 'react';
 import { ChevronRight, ChevronDown, Search, Clock, ArrowRight } from 'lucide-react';
-import { formatCurrency } from '@/lib/utils';
+import { useMoney } from '@/lib/currency';
 import type { ServiceCollection } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 
@@ -19,6 +19,7 @@ interface Props {
 const VISIBLE_INITIAL = 8;
 
 export function ServiceCollectionCard({ collection, theme, isPreview = false, onBook, defaultOpen = false }: Props) {
+  const formatCurrency = useMoney();
   const uid = useId();
   const [open, setOpen] = useState(defaultOpen);
   const [activeSub, setActiveSub] = useState<string | null>(null); // null = "All"

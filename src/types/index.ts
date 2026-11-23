@@ -44,6 +44,8 @@ export interface ServiceCollection {
 export interface Merchant {
   id: string;
   slug: string;
+  /** ISO code of the pro's business currency (prices are shown in it). */
+  currency?: string;
   salon_name: string;
   name: string;
   bio: string;

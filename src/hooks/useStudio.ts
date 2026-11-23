@@ -31,6 +31,7 @@ function dbProfileToMerchant(profile: DbProfile, services: DbService[]): Merchan
   return {
     id: profile.id,
     slug: profile.slug,
+    currency: (profile.business_currency ?? 'EUR').toUpperCase(),
     salon_name: profile.salon_name,
     name: profile.full_name,
     bio: profile.bio ?? '',

@@ -15,9 +15,10 @@ import {
   CalendarDays,
   X,
 } from 'lucide-react';
+import { useMoney } from '@/lib/currency';
 import { useBookingStore } from '@/store/bookingStore';
 import type { Merchant } from '@/types';
-import { formatDate, formatCurrency, getDaysInMonth, isDateInPast, toLocalDateStr, zonedTimeToUtcIso } from '@/lib/utils';
+import { formatDate, getDaysInMonth, isDateInPast, toLocalDateStr, zonedTimeToUtcIso } from '@/lib/utils';
 import {
   trackBookingStarted,
   trackSlotSelected,
@@ -58,6 +59,7 @@ const slideVariants = {
 // ── Main component ────────────────────────────────────────────────────────────
 
 export function BookingModal({ merchant }: { merchant: Merchant }) {
+  const formatCurrency = useMoney();
   const {
     isOpen, selectedService, step,
     selectedDate, selectedTime,

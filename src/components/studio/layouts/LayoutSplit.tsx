@@ -2,6 +2,7 @@ import { Globe } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
+import { useMoney } from '@/lib/currency';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -29,11 +30,9 @@ function TikTokIcon() {
   );
 }
 
-function fmt(n: number) {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
-}
 
 export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Props) {
+  const fmt = useMoney();
   const accent = theme.defaultAccent;
   const accentText = theme.accentOnBg ?? accent;
   const font = theme.fontFamily ?? (theme.fontClass === 'font-serif' ? 'Playfair Display, Georgia, serif' : 'Inter, sans-serif');

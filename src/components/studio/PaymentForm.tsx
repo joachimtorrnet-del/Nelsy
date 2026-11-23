@@ -8,7 +8,7 @@ import {
 import type { FormEvent } from 'react';
 import type { StripeExpressCheckoutElementConfirmEvent } from '@stripe/stripe-js';
 import { Loader2 } from 'lucide-react';
-import { formatCurrency } from '@/lib/utils';
+import { useMoney } from '@/lib/currency';
 
 interface PaymentFormProps {
   amount: number;
@@ -18,6 +18,7 @@ interface PaymentFormProps {
 }
 
 export default function PaymentForm({ amount, accent = '#F52B8C', bookingId, onSuccess }: PaymentFormProps) {
+  const formatCurrency = useMoney();
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);

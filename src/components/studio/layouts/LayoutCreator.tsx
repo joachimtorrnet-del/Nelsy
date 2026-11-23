@@ -3,7 +3,7 @@ import { ArrowRight, Globe } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import type { Merchant, Service } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
-import { formatCurrency } from '@/lib/utils';
+import { useMoney } from '@/lib/currency';
 import { getStudioFont, ensureStudioFontLoaded } from '@/lib/studioFonts';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 
@@ -90,6 +90,7 @@ function onDark(hex: string) {
 }
 
 export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onBook }: Props) {
+  const formatCurrency = useMoney();
   const nameFontDef = getStudioFont(variant.nameFont);
   const bodyFontDef = getStudioFont(variant.bodyFont);
   useEffect(() => {

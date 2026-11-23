@@ -2,6 +2,7 @@ import { ArrowRight, Globe } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
+import { useMoney } from '@/lib/currency';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -29,9 +30,6 @@ function TikTokIcon() {
   );
 }
 
-function fmt(n: number) {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
-}
 
 // ── Card components ────────────────────────────────────────────────────────────
 
@@ -46,6 +44,7 @@ interface CardProps {
 }
 
 function OverlapCard({ service, thumb, accent, accentText, isPreview, onBook, isFirst }: CardProps) {
+  const fmt = useMoney();
   return (
     <div style={{
       margin: '0 16px',
@@ -115,6 +114,7 @@ function OverlapCard({ service, thumb, accent, accentText, isPreview, onBook, is
 }
 
 function ImageLedCard({ service, thumb, accent, accentText, isPreview, onBook }: CardProps) {
+  const fmt = useMoney();
   return (
     <div style={{
       margin: '10px 16px 0',

@@ -1,4 +1,5 @@
 import type { Merchant } from '../types';
+import { formatMoney } from './currency';
 
 // Keep in sync with isIndexableStudio() in scripts/generate-routes.mjs (sitemap + prerender).
 export const STUDIO_MIN_BIO = 40;
@@ -38,9 +39,10 @@ export function buildStudioSeo(m: Merchant) {
     158,
   );
 
+  const currency = m.currency || 'EUR';
   const prices = m.services.map((s) => s.price).filter((p) => p > 0);
   const priceRange = prices.length
-    ? `€${Math.min(...prices)}${Math.max(...prices) !== Math.min(...prices) ? `–€${Math.max(...prices)}` : ''}`
+    ? `${formatMoney(Math.min(...prices), currency)}${Math.max(...prices) !== Math.min(...prices) ? `–${formatMoney(Math.max(...prices), currency)}` : ''}`
     : undefined;
 
   const sameAs = [
@@ -64,7 +66,7 @@ export function buildStudioSeo(m: Merchant) {
     makesOffer: m.services.slice(0, 20).map((s) => ({
       '@type': 'Offer',
       price: s.price,
-      priceCurrency: 'EUR',
+      priceCurrency: currency,
       itemOffered: { '@type': 'Service', name: s.name, ...(s.description && { description: s.description }) },
     })),
   };

@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Clock } from 'lucide-react';
 import type { Service } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
-import { formatCurrency } from '@/lib/utils';
+import { useMoney } from '@/lib/currency';
 import { useBookingStore } from '@/store/bookingStore';
 
 interface Props {
@@ -17,6 +17,7 @@ const IMG_H = 118;
 const CARD_PAD = 12;
 
 export function FeaturedService({ service, theme, isPreview = false }: Props) {
+  const formatCurrency = useMoney();
   const { openModal } = useBookingStore();
   const accent = theme.defaultAccent;
   const accentText = theme.accentText;

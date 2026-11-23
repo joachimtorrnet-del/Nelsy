@@ -3,6 +3,7 @@ import type { Merchant } from '../types';
 interface ProfileLike {
   id?: string | null;
   slug?: string | null;
+  business_currency?: string | null;
   full_name?: string | null;
   bio?: string | null;
   logo_url?: string | null;
@@ -47,6 +48,7 @@ export function buildLiveMerchant(
   return {
     id: profile?.id ?? '',
     slug: profile?.slug ?? '',
+    currency: (profile?.business_currency ?? 'EUR').toUpperCase(),
     salon_name: profile?.full_name ?? 'My Studio',
     name: profile?.full_name ?? 'My Studio',
     bio: profile?.bio ?? '',

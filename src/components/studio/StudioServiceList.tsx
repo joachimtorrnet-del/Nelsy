@@ -3,7 +3,7 @@ import type { Variants } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import type { Service } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
-import { formatCurrency } from '@/lib/utils';
+import { useMoney } from '@/lib/currency';
 import { useBookingStore } from '@/store/bookingStore';
 
 interface CardProps {
@@ -13,6 +13,7 @@ interface CardProps {
 }
 
 function ServiceCard({ service, theme, isPreview }: CardProps) {
+  const formatCurrency = useMoney();
   const { openModal } = useBookingStore();
   const accent = theme.defaultAccent;
 

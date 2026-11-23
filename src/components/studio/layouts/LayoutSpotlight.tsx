@@ -2,6 +2,7 @@ import { Globe, ArrowRight } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
+import { useMoney } from '@/lib/currency';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -41,13 +42,11 @@ function PinterestIcon() {
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-function fmt(n: number) {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
-}
 
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook }: Props) {
+  const fmt = useMoney();
   // Full-page background IS the accent color
   const bg = theme.backgroundOverride ?? theme.defaultAccent;
 
