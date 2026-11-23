@@ -268,6 +268,8 @@ const CREATOR_THEMES: Record<string, NelsyTheme> = {
   c_minimal:  creatorTheme({ id: 'c_minimal',  name: 'Minimal',  pageBg: '#FFFFFF', cardBg: '#FFFFFF', cardBorder: '#F1F1F1', text: '#1A1A1A', muted: '#6B7280', accent: '#F52B8C' }),
   c_midnight: creatorTheme({ id: 'c_midnight', name: 'Midnight', pageBg: '#15142B', cardBg: '#21203D', cardBorder: 'rgba(255,255,255,0.08)', text: '#FFFFFF', muted: 'rgba(255,255,255,0.65)', accent: '#2EF2C4', accentText: '#0E1A24' }),
   c_muse:     creatorTheme({ id: 'c_muse',     name: 'Muse',     pageBg: '#1A1A1A', cardBg: '#FFF8EE', cardBorder: 'rgba(0,0,0,0.04)', text: '#FFFFFF', muted: 'rgba(255,255,255,0.8)', accent: '#F52B8C', serif: true }),
+  c_split:    creatorTheme({ id: 'c_split',    name: 'Split',    pageBg: '#FFF1F7', cardBg: '#F65AA6', cardBorder: 'rgba(0,0,0,0)', text: '#1A1A1A', muted: '#6B5B63', accent: '#F65AA6' }),
+  c_glow:     creatorTheme({ id: 'c_glow',     name: 'Glow',     pageBg: '#D61A7A', cardBg: 'rgba(255,255,255,0.16)', cardBorder: 'rgba(255,255,255,0.18)', text: '#FFFFFF', muted: 'rgba(255,255,255,0.8)', accent: '#FFE3F1', accentText: '#9E0F57' }),
   c_coach:    creatorTheme({ id: 'c_coach',    name: 'Coach',    pageBg: '#FBE4EE', cardBg: '#FFFFFF', cardBorder: 'rgba(245,43,140,0.08)', text: '#1A1A1A', muted: '#6B5B63', accent: '#F52B8C', serif: true }),
 };
 

@@ -28,6 +28,9 @@ interface Service {
   image_url?: string | null;
   is_featured?: boolean | null;
   active?: boolean | null;
+  card_style?: 'button' | 'callout' | 'preview' | null;
+  card_subtitle?: string | null;
+  card_cta_text?: string | null;
 }
 
 type Range = '7d' | '30d' | '90d';

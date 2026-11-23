@@ -58,6 +58,9 @@ export interface DbServiceRow {
   active: boolean;
   is_featured: boolean;
   image_url: string | null;
+  card_style: 'button' | 'callout' | 'preview' | null;
+  card_subtitle: string | null;
+  card_cta_text: string | null;
   created_at: string;
   updated_at: string;
 }

@@ -19,6 +19,9 @@ function dbServiceToService(s: DbService): Service {
     category: s.category ?? undefined,
     image_url: s.image_url ?? undefined,
     is_featured: s.is_featured,
+    card_style: s.card_style ?? undefined,
+    card_subtitle: s.card_subtitle ?? undefined,
+    card_cta_text: s.card_cta_text ?? undefined,
   };
 }
 

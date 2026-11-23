@@ -62,6 +62,9 @@ interface DbService {
   image_url?: string;
   is_featured?: boolean;
   display_order?: number;
+  card_style?: 'button' | 'callout' | 'preview' | null;
+  card_subtitle?: string | null;
+  card_cta_text?: string | null;
 }
 
 interface DesignForm {
@@ -117,18 +120,17 @@ function getOfferTypeFromCategory(category?: string): OfferType {
 // ── Templates config ──────────────────────────────────────────────────────────
 
 const TEMPLATES = [
-  { id: 'classic',   name: 'Classic',   themeId: 'c_classic',    accentColor: '#F52B8C' },
-  { id: 'minimal',   name: 'Minimal',   themeId: 'c_minimal',    accentColor: '#F52B8C' },
-  { id: 'coach',     name: 'Coach',     themeId: 'c_coach',      accentColor: '#F52B8C' },
-  { id: 'blush',     name: 'Blush',     themeId: 'c_blush',      accentColor: '#1A1A1A' },
-  { id: 'atelier',   name: 'Atelier',   themeId: 'c_atelier',    accentColor: '#3A3330' },
-  { id: 'gallery',   name: 'Gallery',   themeId: 'c_gallery',    accentColor: '#1A1A1A' },
-  { id: 'muse',      name: 'Muse',      themeId: 'c_muse',       accentColor: '#F52B8C' },
-  { id: 'noir',      name: 'Noir',      themeId: 'c_noir',       accentColor: '#FFFFFF' },
-  { id: 'midnight',  name: 'Midnight',  themeId: 'c_midnight',   accentColor: '#2EF2C4' },
-  { id: 'split',     name: 'Split',     themeId: 'minimal_nude', accentColor: '#3D312E' },
-  { id: 'glow',      name: 'Glow',      themeId: 'blush',        accentColor: '#F52B8C' },
-  { id: 'editorial', name: 'Editorial', themeId: 'editorial',    accentColor: '#0A0A0A' },
+  { id: 'classic',  name: 'Classic',  themeId: 'c_classic',  accentColor: '#F52B8C' },
+  { id: 'gallery',  name: 'Gallery',  themeId: 'c_gallery',  accentColor: '#1A1A1A' },
+  { id: 'blush',    name: 'Blush',    themeId: 'c_blush',    accentColor: '#1A1A1A' },
+  { id: 'atelier',  name: 'Atelier',  themeId: 'c_atelier',  accentColor: '#3A3330' },
+  { id: 'noir',     name: 'Noir',     themeId: 'c_noir',     accentColor: '#FFFFFF' },
+  { id: 'minimal',  name: 'Minimal',  themeId: 'c_minimal',  accentColor: '#F52B8C' },
+  { id: 'midnight', name: 'Midnight', themeId: 'c_midnight', accentColor: '#2EF2C4' },
+  { id: 'split',    name: 'Split',    themeId: 'c_split',    accentColor: '#F65AA6' },
+  { id: 'muse',     name: 'Muse',     themeId: 'c_muse',     accentColor: '#F52B8C' },
+  { id: 'glow',     name: 'Glow',     themeId: 'c_glow',     accentColor: '#FFE3F1' },
+  { id: 'coach',    name: 'Coach',    themeId: 'c_coach',    accentColor: '#F52B8C' },
 ];
 
 const BACKGROUND_SWATCHES = ['#FFFFFF', '#FFF5F8', '#FFF8EB', '#F5F1EC', '#EEF2F7', '#F2F0FF', '#1A1A1A', '#2A1F2D'];
@@ -968,10 +970,7 @@ export default function Preview({ profile }: { profile: Profile | null }) {
     { id: 'design' as MainTab,        label: 'Edit Design',   Icon: SlidersHorizontal },
   ];
 
-  // Spotlight paints the page with the accent instead of the theme background
-  const templateBg = designForm.theme_preset === 'blush'
-    ? designForm.color_accent
-    : THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
+  const templateBg = THEMES[designForm.theme_preset]?.pageBg ?? '#FFFFFF';
   const bgColor = designForm.color_background ?? templateBg;
 
   // Build a live merchant from real profile + services for preview

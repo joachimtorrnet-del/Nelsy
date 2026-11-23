@@ -31,6 +31,9 @@ interface ServiceLike {
   image_url?: string | null;
   is_featured?: boolean | null;
   active?: boolean | null;
+  card_style?: 'button' | 'callout' | 'preview' | null;
+  card_subtitle?: string | null;
+  card_cta_text?: string | null;
 }
 
 /** The pro's studio as clients would see it, built from dashboard data (draft-safe: no fetch). */
@@ -70,6 +73,9 @@ export function buildLiveMerchant(
         image_url: s.image_url ?? undefined,
         is_featured: s.is_featured ?? false,
         active: s.active ?? true,
+        card_style: s.card_style ?? undefined,
+        card_subtitle: s.card_subtitle ?? undefined,
+        card_cta_text: s.card_cta_text ?? undefined,
       })),
   } as Merchant;
 }
