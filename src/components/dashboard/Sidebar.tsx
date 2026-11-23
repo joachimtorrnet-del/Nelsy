@@ -211,7 +211,7 @@ export function Sidebar({ profile, activeTab, setActiveTab, mobileOpen, onMobile
 
       <AnimatePresence>
         {mobileOpen && (
-          <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div className="lg:hidden fixed inset-0 z-[55] flex">
             <motion.div key="backdrop" className="absolute inset-0 bg-black/40"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={onMobileClose} />
             <motion.aside key="panel" aria-label="Main navigation"
