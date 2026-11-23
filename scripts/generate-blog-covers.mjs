@@ -39,6 +39,7 @@ const CATEGORY_STYLES = {
   'nail-inspo':          { bg: '#FDF5E8', accent: '#905400' },
   comparisons:           { bg: '#EAF8F6', accent: '#0A6E68' },
   'branding-growth':     { bg: '#FDEEE8', accent: '#B03808' },
+  'beauty-creators':     { bg: '#F1EBFD', accent: '#6D28D9' },
 };
 const FALLBACK_STYLE = { bg: '#FCEEF5', accent: '#B83070' };
 
@@ -54,6 +55,7 @@ const CATEGORY_LABELS = {
   'nail-inspo':          'Nail Inspiration',
   comparisons:           'Comparisons',
   'branding-growth':     'Branding & Growth',
+  'beauty-creators':     'Beauty Creators',
 };
 
 // ── Fonts ─────────────────────────────────────────────────────────────────────

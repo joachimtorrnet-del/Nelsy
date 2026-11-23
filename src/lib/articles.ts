@@ -12,7 +12,8 @@ export type ArticleCategory =
   | 'nail-education'
   | 'nail-inspo'
   | 'comparisons'
-  | 'branding-growth';
+  | 'branding-growth'
+  | 'beauty-creators';
 
 export const CATEGORY_LABELS: Record<ArticleCategory, string> = {
   'get-clients': 'Get Clients',
@@ -25,6 +26,7 @@ export const CATEGORY_LABELS: Record<ArticleCategory, string> = {
   'nail-inspo': 'Nail Inspo',
   comparisons: 'Comparisons',
   'branding-growth': 'Branding & Growth',
+  'beauty-creators': 'Beauty Creators',
 };
 
 export const CATEGORY_COLORS: Record<ArticleCategory, { bg: string; text: string }> = {
@@ -38,6 +40,7 @@ export const CATEGORY_COLORS: Record<ArticleCategory, { bg: string; text: string
   'nail-inspo':         { bg: '#FFF9F0', text: '#92400E' },
   comparisons:          { bg: '#F0FFFE', text: '#0D6E6E' },
   'branding-growth':    { bg: '#FFF8F0', text: '#9A3412' },
+  'beauty-creators':    { bg: '#F5F0FF', text: '#6D28D9' },
 };
 
 // ─── TOC section ─────────────────────────────────────────────────────────────

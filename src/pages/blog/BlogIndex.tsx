@@ -34,6 +34,7 @@ const NAV_CATEGORIES: ArticleCategory[] = [
   'booking-software',
   'nail-education',
   'nail-inspo',
+  'beauty-creators',
 ];
 
 // Editorial sections on the homepage
@@ -44,6 +45,7 @@ const EDITORIAL_SECTIONS: { category: ArticleCategory; emoji: string; desc: stri
   { category: 'nail-education',      emoji: '💅', desc: 'Technique guides and product deep-dives.' },
   { category: 'nail-inspo',          emoji: '✨', desc: 'Seasonal looks and colour inspiration.' },
   { category: 'start-your-business', emoji: '🚀', desc: 'Everything you need to launch and grow.' },
+  { category: 'beauty-creators',     emoji: '🎥', desc: 'Sell courses, digital products and brand deals.' },
 ];
 
 const CATEGORIES = Object.entries(CATEGORY_LABELS) as [ArticleCategory, string][];

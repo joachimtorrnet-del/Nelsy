@@ -20,6 +20,7 @@ const GRADIENT_FALLBACK: Record<string, string> = {
   'nail-inspo':          'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
   comparisons:           'linear-gradient(135deg, #F0FDFA 0%, #99F6E4 100%)',
   'branding-growth':     'linear-gradient(135deg, #FFF8F0 0%, #FED7AA 100%)',
+  'beauty-creators':     'linear-gradient(135deg, #F5F0FF 0%, #DDD6FE 100%)',
 };
 
 // Generated cover image — falls back to gradient on error
