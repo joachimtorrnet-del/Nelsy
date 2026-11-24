@@ -72,7 +72,10 @@ export default function Onboarding() {
     password: '',
     instagram: '',
     tiktok: '',
-    plan: 'monthly',
+    // Plan picked on the landing pricing section (?plan=monthly|yearly); step 3 then just confirms it
+    plan: (() => {
+      try { return new URLSearchParams(window.location.search).get('plan') === 'yearly' ? 'yearly' : 'monthly'; } catch { return 'monthly'; }
+    })(),
     cardNumber: '',
     cardExpiry: '',
     cardCVC: '',
