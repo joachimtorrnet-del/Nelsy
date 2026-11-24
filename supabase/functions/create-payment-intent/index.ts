@@ -2,6 +2,7 @@ import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import Stripe from 'npm:stripe@13.11.0'
 import { PostHog } from 'npm:posthog-node'
+import { sendEmail, esc, row, layout } from '../_shared/email.ts'
 
 // ── Stripe client ─────────────────────────────────────────────────────────────
 
@@ -322,6 +323,50 @@ serve(async (req) => {
     }
 
     if (payOnArrival) {
+      // No Stripe payment means no webhook: send the confirmation emails here.
+      // Email failures must never fail a booking that is already confirmed.
+      try {
+        const [{ data: pro }, { data: svc }] = await Promise.all([
+          supabase.from('profiles').select('email, full_name, salon_name, slug').eq('id', profileId).single(),
+          supabase.from('services').select('name, on_arrival_methods').eq('id', serviceId).single(),
+        ])
+        const when = new Intl.DateTimeFormat('en-US', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: tz }).format(bookingDt)
+        const amount = new Intl.NumberFormat('en-US', { style: 'currency', currency: currency.toUpperCase(), minimumFractionDigits: isZeroDecimal ? 0 : 2 }).format(dbPrice)
+        const methods = Array.isArray(svc?.on_arrival_methods) && svc.on_arrival_methods.length
+          ? svc.on_arrival_methods.map((m: string) => (m === 'cash' ? 'Cash' : m === 'card' ? 'Card' : m)).join(' or ')
+          : 'At the studio'
+        const proName = esc(pro?.salon_name || pro?.full_name || 'your beauty pro')
+        const serviceName = esc(svc?.name ?? 'Your appointment')
+        const clientName = esc(bd.client_name)
+
+        await Promise.all([
+          sendEmail(
+            String(bd.client_email).trim(),
+            `Booking confirmed: ${svc?.name ?? 'your appointment'} with ${pro?.salon_name || pro?.full_name || 'your beauty pro'}`,
+            layout(
+              'Your booking is confirmed',
+              `With ${proName}. Nothing to pay now: you pay at the appointment.`,
+              row('Service', serviceName) + row('When', esc(when)) + row('To pay at the studio', esc(amount)) + row('Payment', esc(methods), true),
+              pro?.slug ? `<div style="text-align:center"><a href="https://getnelsy.com/${encodeURIComponent(pro.slug)}" style="color:#F52B8C;font-weight:600">View ${proName}&rsquo;s page</a></div>` : '',
+            ),
+          ),
+          pro?.email
+            ? sendEmail(
+                pro.email,
+                `New booking: ${String(bd.client_name).trim().slice(0, 60)}, ${svc?.name ?? 'appointment'}`,
+                layout(
+                  'New booking',
+                  'Pay on arrival: collect the payment at the appointment and record it in Nelsy.',
+                  row('Client', clientName) + row('Service', serviceName) + row('When', esc(when)) + row('To collect', esc(amount)) + row('Client phone', esc(bd.client_phone || 'Not given'), true),
+                  `<div style="text-align:center"><a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">View in dashboard</a></div>`,
+                ),
+              )
+            : Promise.resolve(),
+        ])
+      } catch (emailErr) {
+        console.error('[on_arrival] confirmation emails failed', emailErr)
+      }
+
       return jsonResponse({
         booking_id: booking.id,
         booking_session_token: newSessionToken,
