@@ -486,7 +486,7 @@ export default function SiteNav() {
       >
         {/* Pill — position:relative anchors mega menus so left:50% centers against the pill */}
         <div
-          className="relative max-w-6xl mx-auto px-5 h-[52px] flex items-center gap-5 pointer-events-auto bg-white/92 backdrop-blur-md rounded-2xl"
+          className="relative max-w-6xl mx-auto px-5 h-[52px] flex items-center gap-5 pointer-events-auto bg-white/95 shadow-[0_8px_24px_-12px_rgba(26,26,26,0.25)] backdrop-blur-md rounded-2xl"
           style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.08)' }}
         >
           {/* Logo */}

@@ -62,34 +62,54 @@ function scrollToPricing(position: string, variant: Variant) {
 function Hero({ variant }: { variant: Variant }) {
   const copy = HERO[variant];
   return (
-    <section className="relative overflow-hidden" style={{ background: 'linear-gradient(160deg, #FFF1F7 0%, #FFFFFF 70%)' }}>
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 pt-28 lg:pt-36 pb-12 lg:pb-20 grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+    <section
+      className="relative overflow-hidden"
+      style={{
+        background: [
+          'radial-gradient(900px 520px at 88% 12%, rgba(255,255,255,0.22), transparent 62%)',
+          'radial-gradient(760px 520px at 6% 100%, rgba(255,140,200,0.45), transparent 60%)',
+          'linear-gradient(135deg, #F52B8C 0%, #E0167A 52%, #B30F5C 100%)',
+        ].join(', '),
+      }}
+    >
+      {/* Soft dot texture, fading out towards the bottom */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1.2px)',
+          backgroundSize: '22px 22px',
+          maskImage: 'linear-gradient(to bottom, black 0%, transparent 85%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 85%)',
+        }}
+      />
+      <div className="relative max-w-6xl mx-auto px-5 sm:px-8 pt-28 lg:pt-36 pb-14 lg:pb-24 grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
         <div>
-          <p className="text-sm font-bold mb-4" style={{ color: PINK }}>The Beauty Creator Store</p>
-          <h1 className="font-bold tracking-tight leading-[1.04] mb-5" style={{ color: INK, fontSize: 'clamp(2.4rem, 6vw, 4.2rem)', letterSpacing: '-0.035em' }}>
+          <p className="text-sm font-bold mb-4" style={{ color: '#FFD3E8' }}>The Beauty Creator Store</p>
+          <h1 className="font-bold tracking-tight leading-[1.04] mb-5 text-white" style={{ fontSize: 'clamp(2.4rem, 6vw, 4.2rem)', letterSpacing: '-0.035em' }}>
             {copy.title}
           </h1>
-          <p className="text-lg text-gray-600 leading-relaxed mb-7 max-w-xl">{copy.sub}</p>
+          <p className="text-lg leading-relaxed mb-7 max-w-xl" style={{ color: 'rgba(255,255,255,0.88)' }}>{copy.sub}</p>
 
           <div className="flex items-center gap-4 mb-8">
-            <span className="relative inline-flex items-center justify-center w-[74px] h-[56px] text-3xl font-black" style={{ color: INK }}>
+            <span className="relative inline-flex items-center justify-center w-[74px] h-[56px] text-3xl font-black text-white">
               <svg viewBox="0 0 100 70" className="absolute inset-0 w-full h-full" aria-hidden="true">
-                <ellipse cx="50" cy="35" rx="46" ry="30" fill="none" stroke={PINK} strokeWidth="4" transform="rotate(-6 50 35)" />
+                <ellipse cx="50" cy="35" rx="46" ry="30" fill="none" stroke="#FFE066" strokeWidth="4" transform="rotate(-6 50 35)" />
               </svg>
               0%
             </span>
-            <p className="text-base sm:text-lg font-semibold text-gray-800">Nelsy commission, <span style={{ color: PINK }}>always.</span></p>
+            <p className="text-base sm:text-lg font-semibold text-white">Nelsy commission, <span style={{ color: '#FFE066' }}>always.</span></p>
           </div>
 
           <button
             type="button"
             onClick={() => scrollToPricing('hero', variant)}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 text-white font-bold text-lg rounded-full px-9 py-4 transition hover:opacity-90 active:scale-[0.98]"
-            style={{ background: PINK, boxShadow: '0 10px 30px -8px rgba(245,43,140,0.55)' }}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-3 font-bold text-lg rounded-full px-9 py-4 transition hover:-translate-y-0.5 active:scale-[0.98]"
+            style={{ background: '#FFFFFF', color: INK, boxShadow: '0 14px 34px -10px rgba(80,0,40,0.55)' }}
           >
             Get started <ArrowDown className="w-5 h-5" aria-hidden="true" />
           </button>
-          <p className="mt-3 text-sm text-gray-500 text-center sm:text-left">14-day free trial · $0 today · Cancel anytime</p>
+          <p className="mt-3 text-sm text-center sm:text-left" style={{ color: 'rgba(255,255,255,0.8)' }}>14-day free trial · $0 today · Cancel anytime</p>
         </div>
 
         <div className="flex justify-center">
@@ -102,6 +122,7 @@ function Hero({ variant }: { variant: Variant }) {
             fetchPriority="high"
             alt="A Nelsy beauty creator page with bookings, a coaching session and a downloadable guide"
             className="w-full max-w-[420px] lg:max-w-[540px] h-auto"
+            style={{ filter: "drop-shadow(0 30px 40px rgba(90,0,45,0.35))" }}
           />
         </div>
       </div>
