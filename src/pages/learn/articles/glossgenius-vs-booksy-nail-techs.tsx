@@ -18,6 +18,15 @@ registerArticle({
   authorRole: 'Nail Tech Business Guide',
   publishedAt: '2026-10-21',
   updatedAt: '2026-11-23',
+  tldr: {
+    answer: "Without marketplace clients, they cost almost the same.",
+    detail: "GlossGenius starts at $24/month billed annually and has no marketplace fee mentioned; Booksy is $29.99/month and charges 30% of a Boost client's first visit, up to $100. The real choice is whether you want the Booksy app to send you new clients.",
+    points: [
+      { label: "GlossGenius", text: "Best for US nail techs with their own clients who want a polished booking site and fast payouts." },
+      { label: "Booksy", text: "Best for nail techs who want marketplace discovery and accept a first-visit fee." },
+      { label: "Nelsy", text: "Best for beauty creators booking from Instagram and TikTok, with 0% commission." },
+    ],
+  },
   toc: [
     { id: 'short-answer', label: 'The short answer' },
     { id: 'pricing', label: 'Monthly price' },

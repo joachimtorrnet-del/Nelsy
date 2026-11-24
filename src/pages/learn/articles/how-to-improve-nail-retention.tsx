@@ -16,6 +16,15 @@ registerArticle({
   authorRole: 'Nail Tech Business Guide',
   updatedAt: '2026-11-23',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "Nail retention is how long a set stays attached without lifting.",
+    detail: "Good retention means gel, builder gel, Gel-X or acrylic lasts its full two-to-four-week cycle. Most retention problems come from prep, product application and curing, before client aftercare.",
+    points: [
+      { label: "First check", text: "Your prep sequence: cuticle work, etch, dehydrate, prime." },
+      { label: "Then", text: "Product thickness near the cuticle and sidewalls, and full cure time." },
+      { label: "Finally", text: "Client habits: oil, wet work, picking." },
+    ],
+  },
   toc: [
     { id: 'what-is-nail-retention', label: 'What is nail retention?' },
     { id: 'what-affects-retention', label: 'What affects nail retention' },

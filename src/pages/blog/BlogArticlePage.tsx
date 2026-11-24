@@ -6,10 +6,10 @@ import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
 import ArticleTOC from '@/components/article/ArticleTOC';
 import ArticleCard from '@/components/article/ArticleCard';
-import { ArticleCTABlock } from '@/components/article/ArticleBodyComponents';
+import { ArticleCTABlock, ArticleTLDR, SummarizeWithAI } from '@/components/article/ArticleBodyComponents';
 import RelatedFeatures from '@/components/article/RelatedFeatures';
 import { useEffect } from 'react';
-import { trackArticleLandingView, trackArticleCTAClicked } from '@/lib/analytics';
+import { trackArticleLandingView, trackArticleCTAClicked, track } from '@/lib/analytics';
 
 const ORIGIN = 'https://getnelsy.com';
 
@@ -31,10 +31,10 @@ export default function BlogArticlePage() {
   const catLabel = CATEGORY_LABELS[article.category];
 
   const publishDate = new Date(article.publishedAt).toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric',
+    timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric',
   });
   const updateDate = article.updatedAt
-    ? new Date(article.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    ? new Date(article.updatedAt).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' })
     : null;
 
   const canonicalPath = `/blog/${article.slug}`;
@@ -153,6 +153,11 @@ export default function BlogArticlePage() {
                     {updateDate && <span className="ml-2">· Updated {updateDate}</span>}
                   </div>
                 </div>
+                <SummarizeWithAI
+                  url={`https://getnelsy.com/blog/${article.slug}`}
+                  title={article.title}
+                  onClick={(tool) => track('article_summarize_clicked', { slug: article.slug, tool })}
+                />
               </div>
 
               {/* Right: hero visual */}
@@ -199,6 +204,7 @@ export default function BlogArticlePage() {
             {/* Main content */}
             <main className="min-w-0">
               <div className="prose-article max-w-[720px]">
+                {article.tldr && <ArticleTLDR {...article.tldr} />}
                 {article.content()}
               </div>
 

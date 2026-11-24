@@ -110,7 +110,7 @@ export default function ArticleCard({ article, size = 'grid' }: Props) {
             <div className="flex items-center gap-3 text-xs text-gray-400">
               <span>{article.author}</span>
               <span>·</span>
-              <span>{new Date(article.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
+              <span>{new Date(article.publishedAt).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' })}</span>
             </div>
           </div>
         </div>
@@ -150,7 +150,7 @@ export default function ArticleCard({ article, size = 'grid' }: Props) {
         </h3>
         <p className="text-gray-500 text-xs leading-relaxed line-clamp-2 mb-3">{article.excerpt}</p>
         <span className="text-xs text-gray-400">
-          {new Date(article.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+          {new Date(article.publishedAt).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' })}
         </span>
       </div>
     </Link>

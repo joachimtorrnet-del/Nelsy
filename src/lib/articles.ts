@@ -74,6 +74,8 @@ export interface ArticleMeta {
   /** Nelsy feature slugs to show in the RelatedFeatures block at the bottom of the article */
   relatedFeatureSlugs?: string[];
   faq?: Array<{ q: string; a: string }>;
+  /** Short answer shown at the top of the article (Stan-style TL;DR): one-sentence answer, optional "best for" list. */
+  tldr?: { answer: string; detail?: string; points?: Array<{ label: string; text: string }> };
 }
 
 // Content is a React render function — keeps it in TSX, no MDX needed

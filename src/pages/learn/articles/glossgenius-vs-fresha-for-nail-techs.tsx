@@ -18,6 +18,15 @@ registerArticle({
   authorRole: 'Nail Tech Business Guide',
   publishedAt: '2026-10-21',
   updatedAt: '2026-11-24',
+  tldr: {
+    answer: "Fresha is cheaper to start; GlossGenius has no marketplace fee.",
+    detail: "Fresha starts at €14.95/month with low published card fees and a one-time fee on new marketplace clients. GlossGenius starts at $24 to $28/month and focuses on your own booking website and fast US payouts.",
+    points: [
+      { label: "Fresha", text: "Best for Europe and the UK, lowest entry price, marketplace discovery." },
+      { label: "GlossGenius", text: "Best for US pros with an existing client base who want a polished site." },
+      { label: "Nelsy", text: "Best for creators who book from social media and sell courses or guides too." },
+    ],
+  },
   toc: [
     { id: 'short-answer', label: 'The short answer' },
     { id: 'pricing', label: 'Monthly price' },

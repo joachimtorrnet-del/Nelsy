@@ -17,6 +17,15 @@ registerArticle({
   author: 'Nelsy Editorial',
   authorRole: 'Beauty Creator Business Guide',
   publishedAt: '2026-11-24',
+  tldr: {
+    answer: "Start with bookings, then sell what you know.",
+    detail: "Beauty creators earn from client services, courses, digital products, coaching, brand deals, UGC, affiliate links, physical products, memberships and events. Most combine two or three.",
+    points: [
+      { label: "No big audience needed", text: "Services, coaching, digital products and UGC sell on skill and trust." },
+      { label: "Scales beyond your time", text: "Courses, digital products and memberships." },
+      { label: "Needs a large or engaged audience", text: "Brand deals and affiliate links." },
+    ],
+  },
   toc: [
     { id: 'overview', label: 'The 10 income streams at a glance' },
     { id: 'services', label: '1. Client bookings' },

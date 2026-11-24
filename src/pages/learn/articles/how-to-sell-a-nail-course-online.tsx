@@ -17,6 +17,15 @@ registerArticle({
   author: 'Nelsy Editorial',
   authorRole: 'Beauty Creator Business Guide',
   publishedAt: '2026-11-24',
+  tldr: {
+    answer: "Pick one technique, record it with your phone, sell it from your bio link.",
+    detail: "A first course solves one specific problem other techs already ask you about. Price it on the result and support included, not on its length, and launch it to the audience you already have.",
+    points: [
+      { label: "Format to start", text: "A 3 to 6 video mini-course on one technique." },
+      { label: "Equipment", text: "A recent phone, an overhead mount and soft light." },
+      { label: "Where to sell", text: "On the same link-in-bio page your clients use to book." },
+    ],
+  },
   toc: [
     { id: 'topic', label: '1. Pick a topic people will pay for' },
     { id: 'format', label: '2. Choose the format' },

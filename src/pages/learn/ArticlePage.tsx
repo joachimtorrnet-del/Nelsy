@@ -22,10 +22,10 @@ export default function ArticlePage() {
   const catLabel = CATEGORY_LABELS[article.category];
 
   const publishDate = new Date(article.publishedAt).toLocaleDateString('en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric',
+    timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric',
   });
   const updateDate = article.updatedAt
-    ? new Date(article.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })
+    ? new Date(article.updatedAt).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' })
     : null;
 
   const ORIGIN = 'https://getnelsy.com';

@@ -18,6 +18,15 @@ registerArticle({
   authorRole: 'Nail Tech Business Guide',
   publishedAt: '2026-10-21',
   updatedAt: '2026-11-24',
+  tldr: {
+    answer: "Yes, if you already have clients and work in the US.",
+    detail: "GlossGenius costs $24 to $28/month for Standard, $48 to $56 for Gold (up to 9 staff) and $148 to $168 for Platinum. It suits pros who want a clean booking site and fast payouts without a marketplace fee; it is less worth it if you need an app that sends you new clients.",
+    points: [
+      { label: "Solo nail tech or esthetician", text: "Standard covers booking, deposits and card payments." },
+      { label: "Small salon", text: "Gold is built for up to 9 staff, with Google Booking and text marketing." },
+      { label: "Need new clients from an app", text: "Compare Booksy or Fresha, which have marketplaces." },
+    ],
+  },
   toc: [
     { id: 'short-answer', label: 'Is GlossGenius worth it? Short answer' },
     { id: 'pricing', label: 'GlossGenius pricing in 2026' },

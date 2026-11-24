@@ -320,3 +320,60 @@ export function ArticleCTABlock({
     </div>
   );
 }
+
+// ─── ArticleTLDR ─────────────────────────────────────────────────────────────
+// Short answer at the top of an article: readers (and AI assistants) get the
+// conclusion first, then the detail.
+
+export function ArticleTLDR({ answer, detail, points }: { answer: string; detail?: string; points?: Array<{ label: string; text: string }> }) {
+  return (
+    <section aria-label="TL;DR" className="not-prose mb-12 rounded-3xl border-2 border-[#1A1A1A] bg-[#FBF7F8] p-6 sm:p-8">
+      <span className="inline-block text-xs font-bold text-white bg-[#F52B8C] rounded-full px-3 py-1 mb-4">TL;DR</span>
+      <p className="font-bold text-[#1A1A1A] text-2xl sm:text-3xl leading-tight tracking-tight mb-3">{answer}</p>
+      {detail && <p className="text-gray-700 leading-relaxed">{detail}</p>}
+      {points?.length ? (
+        <dl className="mt-5 border-t-2 border-[#1A1A1A] divide-y divide-gray-200">
+          {points.map((p) => (
+            <div key={p.label} className="py-3">
+              <dt className="font-bold text-[#1A1A1A]">{p.label}</dt>
+              <dd className="text-sm text-gray-600 leading-relaxed">{p.text}</dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
+    </section>
+  );
+}
+
+// ─── SummarizeWithAI ─────────────────────────────────────────────────────────
+// "Summarize with" links: open the reader's AI assistant with a prompt that cites
+// the article URL (also a signal for AI search visibility).
+
+const AI_TOOLS: { name: string; url: (q: string) => string }[] = [
+  { name: 'ChatGPT', url: (q) => `https://chatgpt.com/?q=${q}` },
+  { name: 'Perplexity', url: (q) => `https://www.perplexity.ai/search/new?q=${q}` },
+  { name: 'Claude', url: (q) => `https://claude.ai/new?q=${q}` },
+];
+
+export function SummarizeWithAI({ url, title, onClick }: { url: string; title: string; onClick?: (tool: string) => void }) {
+  const q = encodeURIComponent(`Summarize the key takeaways of "${title}" for a beauty professional, from this article by Nelsy: ${url}`);
+  return (
+    <div className="mt-5">
+      <p className="text-xs text-gray-400 mb-2">Summarize with:</p>
+      <div className="flex flex-wrap gap-2">
+        {AI_TOOLS.map((t) => (
+          <a
+            key={t.name}
+            href={t.url(q)}
+            target="_blank"
+            rel="noopener nofollow"
+            onClick={() => onClick?.(t.name)}
+            className="text-xs font-semibold text-gray-700 bg-white border border-gray-200 rounded-full px-3 py-1.5 hover:border-gray-400 transition"
+          >
+            {t.name}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}

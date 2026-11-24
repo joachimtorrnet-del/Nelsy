@@ -18,6 +18,15 @@ registerArticle({
   authorRole: 'Nail Tech Business Guide',
   publishedAt: '2026-10-21',
   updatedAt: '2026-11-23',
+  tldr: {
+    answer: "Fresha is cheaper to run; Booksy is simpler to price.",
+    detail: "For a solo nail tech, Fresha starts at €14.95/month with low card fees but charges extras and a fee on new marketplace clients. Booksy is $29.99/month in the US (£40 in the UK) with everything included and a published 30% fee on Boost clients' first visit.",
+    points: [
+      { label: "Fresha", text: "Best for nail techs in Europe or the UK who want the lowest subscription and card fees." },
+      { label: "Booksy", text: "Best for nail techs in cities where clients book through the Booksy app." },
+      { label: "Nelsy", text: "Best for nail techs who get clients from Instagram and TikTok and want 0% commission." },
+    ],
+  },
   toc: [
     { id: 'short-answer', label: 'The short answer' },
     { id: 'pricing', label: 'Monthly price' },

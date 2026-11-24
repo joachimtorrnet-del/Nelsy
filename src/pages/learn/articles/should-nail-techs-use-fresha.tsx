@@ -18,6 +18,15 @@ registerArticle({
   authorRole: 'Nail Tech Business Guide',
   publishedAt: '2026-10-21',
   updatedAt: '2026-11-23',
+  tldr: {
+    answer: "Fresha is solid and low-cost, but no longer free.",
+    detail: "Expect €14.95/month for a solo nail tech, paid texts beyond 20 a month and paid add-ons. Its card fees are among the lowest published, and its marketplace can bring new clients for a one-time fee.",
+    points: [
+      { label: "Good fit", text: "Pros in Europe or the UK who take card payments and want marketplace discovery." },
+      { label: "Less suited", text: "Pros whose clients come from Instagram and TikTok and who want a branded page." },
+      { label: "Alternative", text: "Nelsy: a link-in-bio booking page with 0% commission." },
+    ],
+  },
   toc: [
     { id: 'verdict', label: 'Our verdict in short' },
     { id: 'what-is-fresha', label: 'What is Fresha?' },
