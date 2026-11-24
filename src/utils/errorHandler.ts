@@ -1,3 +1,4 @@
+import posthog from 'posthog-js';
 export class AppError extends Error {
   code?: string;
   statusCode?: number;
@@ -45,6 +46,7 @@ export function logError(error: Error, context?: unknown) {
     timestamp: new Date().toISOString(),
   });
 
-  // TODO: Send to error tracking service
-  // Sentry.captureException(error, { extra: context });
+  try {
+    posthog.captureException(error, { context: context as Record<string, unknown> | undefined, source: 'logError' });
+  } catch { /* analytics disabled */ }
 }

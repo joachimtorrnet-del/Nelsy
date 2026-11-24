@@ -16,6 +16,8 @@ if (import.meta.env.VITE_PUBLIC_POSTHOG_KEY) {
     person_profiles: 'identified_only',
     // Europe: nothing stored on the device until the visitor accepts the cookie banner
     persistence: analyticsPersistence(),
+    // Error tracking: uncaught errors and unhandled promise rejections show up in PostHog > Error tracking
+    capture_exceptions: true,
     loaded: (ph) => {
       // Expose as global for debugging; suppress dev events.
       (window as typeof window & { posthog: typeof ph }).posthog = ph;
