@@ -96,6 +96,8 @@ const STATIC_SEO_ROUTES = [
   { path: '/features/instagram-autodm', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-24' },
   { path: '/features/email-newsletters', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-24' },
   { path: '/features/audience-capture', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-24' },
+  { path: '/use-cases/beauty-creators', priority: '0.9', changefreq: 'monthly', lastmod: '2026-11-24' },
+  { path: '/use-cases/independent-beauty-pros', priority: '0.9', changefreq: 'monthly', lastmod: '2026-11-24' },
   { path: '/use-cases/nail-techs', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/use-cases/lash-techs', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/use-cases/reduce-no-shows', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },

@@ -125,6 +125,8 @@ export type UseCasePersona = {
   icon: LucideIcon;
   route: string;
   live: boolean;
+  /** 'segment' = who Nelsy is for (top of the menu); 'craft' = a specific profession */
+  group: 'segment' | 'craft';
 };
 
 export type UseCaseGoal = {
@@ -135,7 +137,35 @@ export type UseCaseGoal = {
 
 export const USE_CASE_PERSONAS: UseCasePersona[] = [
   {
+    slug: 'independent-beauty-pros',
+    group: 'segment',
+    title: 'Independent Beauty Pros',
+    subtitle: 'Get booked and paid from your link in bio, your way.',
+    icon: Sparkles,
+    route: '/use-cases/independent-beauty-pros',
+    live: true,
+  },
+  {
+    slug: 'beauty-creators',
+    group: 'segment',
+    title: 'Beauty Creators',
+    subtitle: 'Monetize your audience with bookings, products, and content.',
+    icon: Sparkles,
+    route: '/use-cases/beauty-creators',
+    live: true,
+  },
+  {
+    slug: 'salons',
+    group: 'segment',
+    title: 'Salons',
+    subtitle: 'Manage your team, clients, bookings, and payments.',
+    icon: Store,
+    route: '/use-cases/salons',
+    live: false,
+  },
+  {
     slug: 'nail-techs',
+    group: 'craft',
     title: 'Nail Techs',
     subtitle: 'Get booked, take deposits, and turn followers into clients.',
     icon: Paintbrush,
@@ -144,6 +174,7 @@ export const USE_CASE_PERSONAS: UseCasePersona[] = [
   },
   {
     slug: 'lash-techs',
+    group: 'craft',
     title: 'Lash Techs',
     subtitle: 'Fill your calendar, reduce no-shows, and manage clients.',
     icon: Eye,
@@ -152,6 +183,7 @@ export const USE_CASE_PERSONAS: UseCasePersona[] = [
   },
   {
     slug: 'brow-artists',
+    group: 'craft',
     title: 'Brow Artists',
     subtitle: 'Make booking easier and grow your beauty business.',
     icon: ScanFace,
@@ -160,6 +192,7 @@ export const USE_CASE_PERSONAS: UseCasePersona[] = [
   },
   {
     slug: 'hair-stylists',
+    group: 'craft',
     title: 'Hair Stylists',
     subtitle: 'Manage appointments, clients, and payments in one place.',
     icon: Scissors,
@@ -168,6 +201,7 @@ export const USE_CASE_PERSONAS: UseCasePersona[] = [
   },
   {
     slug: 'makeup-artists',
+    group: 'craft',
     title: 'Makeup Artists',
     subtitle: 'Turn inquiries into paid bookings with less back-and-forth.',
     icon: Palette,
@@ -176,26 +210,11 @@ export const USE_CASE_PERSONAS: UseCasePersona[] = [
   },
   {
     slug: 'estheticians',
+    group: 'craft',
     title: 'Estheticians',
     subtitle: 'Build repeat business and simplify your client experience.',
     icon: Droplets,
     route: '/use-cases/estheticians',
-    live: false,
-  },
-  {
-    slug: 'salons',
-    title: 'Salons',
-    subtitle: 'Manage your team, clients, bookings, and payments.',
-    icon: Store,
-    route: '/use-cases/salons',
-    live: false,
-  },
-  {
-    slug: 'beauty-creators',
-    title: 'Beauty Creators',
-    subtitle: 'Monetize your audience with bookings, products, and content.',
-    icon: Sparkles,
-    route: '/use-cases/beauty-creators',
     live: false,
   },
 ];

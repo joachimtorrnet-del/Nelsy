@@ -41,6 +41,8 @@ import MembershipsPage from './pages/features/Memberships';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
 import NailTechsPage from './pages/use-cases/NailTechs';
+import BeautyCreatorsPage from './pages/use-cases/BeautyCreators';
+import IndependentBeautyProsPage from './pages/use-cases/IndependentBeautyPros';
 import LashTechsPage from './pages/use-cases/LashTechs';
 import ReduceNoShowsPage from './pages/use-cases/ReduceNoShows';
 import TurnFollowersPage from './pages/use-cases/TurnFollowersIntoBookings';
@@ -149,6 +151,8 @@ export default function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/use-cases/nail-techs" element={<NailTechsPage />} />
+            <Route path="/use-cases/beauty-creators" element={<BeautyCreatorsPage />} />
+            <Route path="/use-cases/independent-beauty-pros" element={<IndependentBeautyProsPage />} />
             <Route path="/use-cases/lash-techs" element={<LashTechsPage />} />
             <Route path="/use-cases/reduce-no-shows" element={<ReduceNoShowsPage />} />
             <Route path="/use-cases/turn-followers-into-bookings" element={<TurnFollowersPage />} />

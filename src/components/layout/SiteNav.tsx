@@ -12,6 +12,7 @@ import SeoCTA from '@/components/SeoCTA';
 import {
   FEATURES, NAV_FEATURE_CATEGORIES, TOOLS, TOOL_CATEGORIES,
   USE_CASE_PERSONAS,
+  USE_CASE_GOALS,
   type NavFeature, type NavTool,
 } from '@/lib/navData';
 
@@ -165,54 +166,62 @@ function ProductMenu() {
 
 // ─── Use Cases mega menu ─────────────────────────────────────────────────────
 
+function PersonaItem({ p }: { p: (typeof USE_CASE_PERSONAS)[number] }) {
+  const Icon = p.icon;
+  const inner = (
+    <>
+      <span className="shrink-0 flex items-center justify-center rounded-[8px] w-[34px] h-[34px]" style={{ background: '#F5F5F5' }}>
+        <Icon size={15} strokeWidth={1.75} color={INK} />
+      </span>
+      <div className="min-w-0 pt-0.5">
+        <p className="text-[13.5px] font-semibold leading-tight text-gray-900">{p.title}</p>
+        <p className="mt-0.5 text-[11.5px] leading-snug text-gray-400 line-clamp-1">{p.subtitle}</p>
+      </div>
+    </>
+  );
+  if (!p.live) {
+    return <div className="flex items-start gap-2.5 rounded-xl px-2 py-1.5 opacity-50 pointer-events-none cursor-default">{inner}</div>;
+  }
+  return (
+    <Link
+      to={p.route}
+      role="menuitem"
+      className="flex items-start gap-2.5 rounded-xl px-2 py-1.5 transition-colors duration-150 hover:bg-[#FFF5F9] focus-visible:outline-2 focus-visible:outline-[#F52B8C]"
+    >
+      {inner}
+    </Link>
+  );
+}
+
 function UseCasesMenu() {
+  const segments = USE_CASE_PERSONAS.filter((p) => p.group === 'segment');
+  const crafts = USE_CASE_PERSONAS.filter((p) => p.group === 'craft');
   return (
     <MenuPanel
       className="left-1/2 -translate-x-1/2 p-5"
-      style={{ width: 'min(calc(100vw - 40px), 680px)' }}
+      style={{ width: 'min(calc(100vw - 40px), 720px)' }}
     >
-      <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
-        {USE_CASE_PERSONAS.map(p => {
-          const Icon = p.icon;
-          if (!p.live) {
-            return (
-              <div
-                key={p.slug}
-                className="flex items-start gap-2.5 rounded-xl px-2 py-1.5 opacity-50 pointer-events-none cursor-default"
-              >
-                <span
-                  className="shrink-0 flex items-center justify-center rounded-[8px] w-[34px] h-[34px]"
-                  style={{ background: '#F5F5F5' }}
-                >
-                  <Icon size={15} strokeWidth={1.75} color={INK} />
-                </span>
-                <div className="min-w-0 pt-0.5">
-                  <p className="text-[13.5px] font-semibold leading-tight text-gray-900">{p.title}</p>
-                  <p className="mt-0.5 text-[11.5px] leading-snug text-gray-400 line-clamp-1">{p.subtitle}</p>
-                </div>
-              </div>
-            );
-          }
-          return (
-            <Link
-              key={p.slug}
-              to={p.route}
-              role="menuitem"
-              className="flex items-start gap-2.5 rounded-xl px-2 py-1.5 transition-colors duration-150 hover:bg-[#FFF5F9] focus-visible:outline-2 focus-visible:outline-[#F52B8C]"
-            >
-              <span
-                className="shrink-0 flex items-center justify-center rounded-[8px] w-[34px] h-[34px]"
-                style={{ background: '#F5F5F5' }}
-              >
-                <Icon size={15} strokeWidth={1.75} color={INK} />
-              </span>
-              <div className="min-w-0 pt-0.5">
-                <p className="text-[13.5px] font-semibold leading-tight text-gray-900">{p.title}</p>
-                <p className="mt-0.5 text-[11.5px] leading-snug text-gray-400 line-clamp-1">{p.subtitle}</p>
-              </div>
-            </Link>
-          );
-        })}
+      <p className="mb-2 px-2 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">Who it&apos;s for</p>
+      <div className="grid grid-cols-3 gap-x-3 gap-y-0.5 mb-4">
+        {segments.map((p) => <PersonaItem key={p.slug} p={p} />)}
+      </div>
+      <div className="grid grid-cols-3 gap-x-3 border-t border-gray-100 pt-4">
+        <div className="col-span-2">
+          <p className="mb-2 px-2 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">By craft</p>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+            {crafts.map((p) => <PersonaItem key={p.slug} p={p} />)}
+          </div>
+        </div>
+        <div>
+          <p className="mb-2 px-2 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">Goals</p>
+          <div className="space-y-0.5">
+            {USE_CASE_GOALS.map((g) => (
+              <Link key={g.slug} to={g.route} role="menuitem" className="block rounded-xl px-2 py-2 text-[13.5px] font-semibold text-gray-900 hover:bg-[#FFF5F9] transition-colors">
+                {g.title}
+              </Link>
+            ))}
+          </div>
+        </div>
       </div>
     </MenuPanel>
   );
