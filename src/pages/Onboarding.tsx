@@ -4,6 +4,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Elements, PaymentElement, ExpressCheckoutElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { supabase } from '../lib/supabase';
 import { validatePassword } from '../utils/validation';
+import { isReservedSlug } from '@/lib/reservedSlugs';
 import { track, identify } from '../lib/analytics';
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
@@ -176,7 +177,6 @@ const COUNTRY_CODES = [
   { code: '+257', flag: '🇧🇮', name: 'Burundi' },
   { code: '+855', flag: '🇰🇭', name: 'Cambodia' },
   { code: '+237', flag: '🇨🇲', name: 'Cameroon' },
-  { code: '+1', flag: '🇨🇦', name: 'Canada' },
   { code: '+238', flag: '🇨🇻', name: 'Cape Verde' },
   { code: '+236', flag: '🇨🇫', name: 'Central African Rep.' },
   { code: '+235', flag: '🇹🇩', name: 'Chad' },
@@ -313,6 +313,7 @@ const COUNTRY_CODES = [
   { code: '+971', flag: '🇦🇪', name: 'UAE' },
   { code: '+44', flag: '🇬🇧', name: 'United Kingdom' },
   { code: '+1', flag: '🇺🇸', name: 'United States' },
+  { code: '+1', flag: '🇨🇦', name: 'Canada' },
   { code: '+598', flag: '🇺🇾', name: 'Uruguay' },
   { code: '+998', flag: '🇺🇿', name: 'Uzbekistan' },
   { code: '+58', flag: '🇻🇪', name: 'Venezuela' },
@@ -397,18 +398,49 @@ function CountryCodePicker({ value, onChange }: { value: string; onChange: (code
   );
 }
 
+const DIAL_BY_REGION: Record<string, string> = {
+  US: '+1', CA: '+1', GB: '+44', IE: '+353', AU: '+61', NZ: '+64', FR: '+33', BE: '+32', CH: '+41',
+  DE: '+49', ES: '+34', IT: '+39', NL: '+31', PT: '+351', LU: '+352', MA: '+212', DZ: '+213', TN: '+216',
+};
+
+function defaultDialCode(): string {
+  try {
+    for (const lang of navigator.languages ?? [navigator.language]) {
+      const region = lang.split('-')[1]?.toUpperCase();
+      if (region && DIAL_BY_REGION[region]) return DIAL_BY_REGION[region];
+    }
+    if (navigator.language?.toLowerCase().startsWith('fr')) return '+33';
+  } catch { /* SSR / prerender */ }
+  return '+1';
+}
+
+const PASSWORD_RULES: { label: string; test: (p: string) => boolean }[] = [
+  { label: '8+ characters', test: (p) => p.length >= 8 },
+  { label: 'One uppercase letter', test: (p) => /[A-Z]/.test(p) },
+  { label: 'One lowercase letter', test: (p) => /[a-z]/.test(p) },
+  { label: 'One number', test: (p) => /[0-9]/.test(p) },
+];
+
 function Step1({ formData, setFormData, nextStep }: StepProps) {
   const [errors, setErrors] = useState({ username: '', fullName: '', email: '', phone: '', password: '' });
   const [checkingUsername, setCheckingUsername] = useState(false);
   const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null);
   const [checkingEmail, setCheckingEmail] = useState(false);
   const [emailExists, setEmailExists] = useState<boolean | null>(null);
-  const [countryCode, setCountryCode] = useState('+33');
+  const [countryCode, setCountryCode] = useState(() => formData.phone.match(/^\+\d+/)?.[0] ?? defaultDialCode());
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordFocused, setPasswordFocused] = useState(false);
+  const clearError = (field: keyof typeof errors) => setErrors((prev) => (prev[field] ? { ...prev, [field]: '' } : prev));
 
   const validateEmailFormat = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const checkUsernameAvailability = async (username: string) => {
     if (!username || username.length < 3) { setUsernameAvailable(null); return; }
+    if (isReservedSlug(username)) {
+      setUsernameAvailable(false);
+      setErrors((prev) => ({ ...prev, username: 'This name is reserved, please choose another one' }));
+      return;
+    }
     if (!supabase) return;
     setCheckingUsername(true);
     try {
@@ -469,6 +501,8 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
 
     if (!formData.username || formData.username.length < 3) {
       newErrors.username = 'Username must be at least 3 characters'; isValid = false;
+    } else if (isReservedSlug(formData.username)) {
+      newErrors.username = 'This name is reserved, please choose another one'; isValid = false;
     } else if (usernameAvailable === false) {
       newErrors.username = 'This username is already taken'; isValid = false;
     }
@@ -482,8 +516,9 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
     } else if (emailExists === true) {
       newErrors.email = 'This email is already registered'; isValid = false;
     }
-    if (!formData.phone || formData.phone.length < 8) {
-      newErrors.phone = 'Please enter a valid phone number'; isValid = false;
+    const nationalDigits = formData.phone.replace(/^\+\d+\s?/, '').replace(/\D/g, '');
+    if (nationalDigits.length < 6) {
+      newErrors.phone = nationalDigits ? 'This number looks too short. Enter it without the country code.' : 'Enter your phone number (we only use it for account security)'; isValid = false;
     }
     if (!formData.password) {
       newErrors.password = 'Password is required'; isValid = false;
@@ -497,7 +532,7 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
     if (!isValid) {
       if (newErrors.username) track('onboarding_validation_error', {
         step: 'account_info', field: 'username',
-        error_type: usernameAvailable === false ? 'already_taken' : 'too_short',
+        error_type: isReservedSlug(formData.username) ? 'reserved' : usernameAvailable === false ? 'already_taken' : 'too_short',
       });
       if (newErrors.fullName) track('onboarding_validation_error', {
         step: 'account_info', field: 'full_name', error_type: 'too_short',
@@ -561,6 +596,7 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
                 onChange={(e) => {
                   const value = e.target.value.toLowerCase().replace(/\s/g, '-').replace(/[^a-z0-9-_]/g, '');
                   setFormData({ ...formData, username: value });
+                  if (value.length >= 3) clearError('username');
                 }}
                 className={`w-full pl-24 pr-10 py-4 text-base ${inputClass(errors.username, usernameAvailable === true)}`}
               />
@@ -595,7 +631,7 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
               type="text"
               placeholder="Full Name"
               value={formData.fullName}
-              onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+              onChange={(e) => { setFormData({ ...formData, fullName: e.target.value }); clearError('fullName'); }}
               className={`w-full px-4 py-4 text-base ${inputClass(errors.fullName)}`}
             />
             {errors.fullName && <p className="text-xs text-red-600">{errors.fullName}</p>}
@@ -612,6 +648,7 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
                   setEmailExists(null);
                   setErrors((prev) => ({ ...prev, email: '' }));
                   setFormData({ ...formData, email: e.target.value });
+                  clearError('email');
                 }}
                 className={`w-full px-4 pr-10 py-4 text-base ${inputClass(errors.email, emailExists === false)}`}
               />
@@ -650,11 +687,14 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
               />
               <input
                 type="tel"
+                inputMode="tel"
+                autoComplete="tel-national"
                 placeholder="Phone number"
                 value={formData.phone.replace(/^\+\d+\s?/, '')}
                 onChange={(e) => {
                   const digits = e.target.value.replace(/\D/g, '');
                   setFormData({ ...formData, phone: `${countryCode} ${digits}`.trim() });
+                  clearError('phone');
                 }}
                 className={`flex-1 px-4 py-4 text-base ${inputClass(errors.phone)}`}
               />
@@ -663,17 +703,37 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
           </div>
 
           {/* Password */}
-          <div className="space-y-1">
-            <input
-              type="password"
-              placeholder="Password (min 8 chars, uppercase, number)"
-              value={formData.password}
-              onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className={`w-full px-4 py-4 text-base ${inputClass(errors.password)}`}
-            />
-            {errors.password && <p className="text-xs text-red-600">{errors.password}</p>}
-            {formData.password && !errors.password && validatePassword(formData.password).valid && (
-              <p className="text-xs text-green-600">✓ Strong password</p>
+          <div className="space-y-2">
+            <div className="relative">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                placeholder="Create a password"
+                autoComplete="new-password"
+                value={formData.password}
+                onFocus={() => setPasswordFocused(true)}
+                onChange={(e) => { setFormData({ ...formData, password: e.target.value }); clearError('password'); }}
+                className={`w-full pl-4 pr-16 py-4 text-base ${inputClass(errors.password, !!formData.password && validatePassword(formData.password).valid)}`}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((v) => !v)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 px-2 py-1 text-xs font-semibold text-gray-500 hover:text-gray-800"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? 'Hide' : 'Show'}
+              </button>
+            </div>
+            {(passwordFocused || formData.password || errors.password) && (
+              <ul className="grid grid-cols-2 gap-x-3 gap-y-1" aria-live="polite">
+                {PASSWORD_RULES.map((rule) => {
+                  const ok = rule.test(formData.password);
+                  return (
+                    <li key={rule.label} className={`flex items-center gap-1.5 text-xs ${ok ? 'text-green-600' : errors.password ? 'text-red-600' : 'text-gray-500'}`}>
+                      <span aria-hidden="true">{ok ? '✓' : '○'}</span>{rule.label}
+                    </li>
+                  );
+                })}
+              </ul>
             )}
           </div>
         </div>
@@ -1067,6 +1127,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [accountCreated, setAccountCreated] = useState(false);
+  const [termsNudge, setTermsNudge] = useState(false);
 
   const trialEndDate = new Date();
   trialEndDate.setDate(trialEndDate.getDate() + 14);
@@ -1253,11 +1314,11 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
         </div>
 
         {/* Terms */}
-        <label className="flex items-start gap-2 cursor-pointer mb-4">
+        <label className={`flex items-start gap-2 cursor-pointer mb-4 rounded-xl transition ${termsNudge && !formData.agreedToTerms ? 'p-3 bg-red-50 ring-2 ring-red-300' : ''}`}>
           <input
             type="checkbox"
             checked={formData.agreedToTerms}
-            onChange={(e) => setFormData({ ...formData, agreedToTerms: e.target.checked })}
+            onChange={(e) => { setFormData({ ...formData, agreedToTerms: e.target.checked }); if (e.target.checked) setTermsNudge(false); }}
             className="mt-0.5 w-4 h-4 rounded border-2 border-gray-300 accent-[#F52B8C]"
           />
           <span className="text-xs text-gray-600">
@@ -1266,6 +1327,9 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
             and{' '}
             <a href="/privacy" className="underline" style={{ color: '#F52B8C' }}>Privacy Policy</a>.
             GDPR compliant.
+            {termsNudge && !formData.agreedToTerms && (
+              <span className="block mt-1 font-semibold text-red-600">Tick this box to start your free trial.</span>
+            )}
           </span>
         </label>
 
@@ -1282,8 +1346,15 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
 
       <div className="space-y-3">
         <button
-          onClick={handleCreateAccountAndFetchIntent}
-          disabled={!formData.agreedToTerms || loading}
+          onClick={() => {
+            if (!formData.agreedToTerms) {
+              setTermsNudge(true);
+              track('onboarding_validation_error', { step: 'trial_confirmation', field: 'terms', error_type: 'not_accepted' });
+              return;
+            }
+            void handleCreateAccountAndFetchIntent();
+          }}
+          disabled={loading}
           className="w-full py-4 text-white rounded-2xl font-bold text-base hover:opacity-90 transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           style={{ backgroundColor: '#F52B8C' }}
         >

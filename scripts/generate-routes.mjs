@@ -33,8 +33,10 @@ function loadEnv() {
 }
 
 // Top-level app routes a studio slug must never shadow
-const RESERVED = new Set(['blog', 'contact', 'about', 'learn', 'tools', 'dashboard', 'login', 'onboarding', 'onboarding-stripe', 'pricing',
-  'privacy', 'terms', 'features', 'use-cases', 'studio', 'stripe', 'booking-confirmed', 'forgot-password', 'reset-password']);
+const RESERVED = new Set(['about', 'admin', 'affiliate', 'alternatives', 'api', 'app', 'assets', 'blog', 'booking-confirmed',
+  'compare', 'contact', 'dashboard', 'features', 'for', 'forgot-password', 'glossary', 'help', 'learn', 'login', 'nelsy',
+  'onboarding', 'onboarding-stripe', 'pricing', 'privacy', 'reset-password', 'settings', 'signup', 'stripe', 'studio',
+  'support', 'terms', 'tools', 'use-cases', 'www']); // keep in sync with src/lib/reservedSlugs.ts
 
 // Keep in sync with isStudioIndexable() in src/lib/studioSeo.ts
 const STUDIO_MIN_BIO = 40;
