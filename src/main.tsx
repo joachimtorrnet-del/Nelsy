@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import posthog from 'posthog-js'
+import { analyticsPersistence } from './lib/consent'
 import './index.css'
 import App from './App.tsx'
 import ErrorBoundary from './components/ErrorBoundary.tsx'
@@ -13,6 +14,8 @@ if (import.meta.env.VITE_PUBLIC_POSTHOG_KEY) {
     // enabling 'history_change' here would double-count every route change.
     capture_pageview: false,
     person_profiles: 'identified_only',
+    // Europe: nothing stored on the device until the visitor accepts the cookie banner
+    persistence: analyticsPersistence(),
     loaded: (ph) => {
       // Expose as global for debugging; suppress dev events.
       (window as typeof window & { posthog: typeof ph }).posthog = ph;

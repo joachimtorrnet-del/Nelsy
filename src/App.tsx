@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom';
+import CookieBanner from './components/CookieBanner';
 import { Elements } from '@stripe/react-stripe-js';
 import { getStripe } from '@/lib/stripe';
 import { useEffect, lazy, Suspense } from 'react';
@@ -33,14 +34,16 @@ import EmailNewslettersPage from './pages/features/EmailNewsletters';
 import AudienceCapturePage from './pages/features/AudienceCapture';
 import CRMPage from './pages/features/CRM';
 import AnalyticsPage from './pages/features/Analytics';
+import CoursesPage from './pages/features/Courses';
+import DigitalProductsPage from './pages/features/DigitalProducts';
+import CoachingPage from './pages/features/Coaching';
+import MembershipsPage from './pages/features/Memberships';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
 import NailTechsPage from './pages/use-cases/NailTechs';
 import LashTechsPage from './pages/use-cases/LashTechs';
-import GetMoreClientsPage from './pages/use-cases/GetMoreClients';
 import ReduceNoShowsPage from './pages/use-cases/ReduceNoShows';
 import TurnFollowersPage from './pages/use-cases/TurnFollowersIntoBookings';
-import GrowYourBeautyBusinessPage from './pages/use-cases/GrowYourBeautyBusiness';
 
 // App routes — lazy loaded (kept out of the marketing bundle)
 const OfferEditor = lazy(() => import('./pages/dashboard/OfferEditor'));
@@ -137,16 +140,18 @@ export default function App() {
             <Route path="/features/audience-capture" element={<AudienceCapturePage />} />
             <Route path="/features/crm" element={<CRMPage />} />
             <Route path="/features/analytics" element={<AnalyticsPage />} />
+            <Route path="/features/courses" element={<CoursesPage />} />
+            <Route path="/features/digital-products" element={<DigitalProductsPage />} />
+            <Route path="/features/coaching" element={<CoachingPage />} />
+            <Route path="/features/memberships" element={<MembershipsPage />} />
 
             {/* ── Use case pages ─────────────────────────────────────────── */}
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/use-cases/nail-techs" element={<NailTechsPage />} />
             <Route path="/use-cases/lash-techs" element={<LashTechsPage />} />
-            <Route path="/use-cases/get-more-clients" element={<GetMoreClientsPage />} />
             <Route path="/use-cases/reduce-no-shows" element={<ReduceNoShowsPage />} />
             <Route path="/use-cases/turn-followers-into-bookings" element={<TurnFollowersPage />} />
-            <Route path="/use-cases/grow-your-beauty-business" element={<GrowYourBeautyBusinessPage />} />
 
             {/* ── Blog / editorial hub (/blog is canonical; /learn redirects) */}
             <Route path="/blog" element={<BlogIndex />} />
@@ -268,6 +273,7 @@ export default function App() {
             <Route path="/:slug" element={<Studio />} />
           </Routes>
         </Suspense>
+        <CookieBanner />
       </BrowserRouter>
     </Elements>
   );

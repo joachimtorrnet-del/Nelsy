@@ -54,7 +54,7 @@ export default function ReduceNoShows() {
         },
       ]}
       relatedFeatures={['deposits', 'bookings', 'payments', 'crm']}
-      relatedUseCases={['nail-techs', 'lash-techs', 'get-more-clients', 'grow-your-beauty-business']}
+      relatedUseCases={['nail-techs', 'lash-techs', 'turn-followers-into-bookings']}
       relatedPostSlugs={[
         'how-to-handle-nail-client-no-shows',
         'nail-tech-deposit-policy',

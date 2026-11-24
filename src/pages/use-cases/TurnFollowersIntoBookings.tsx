@@ -4,12 +4,12 @@ export default function TurnFollowersIntoBookings() {
   return (
     <UseCasePage
       seo={{
-        title: 'Turn Instagram Followers Into Bookings — Nelsy',
+        title: 'Get Booked from Instagram: Turn Followers into Clients',
         description: 'Turn your Instagram followers into paying clients. Nelsy AutoDM and link in bio convert social media attention into real bookings.',
         canonical: '/use-cases/turn-followers-into-bookings',
       }}
       hero={{
-        headline: 'Turn your Instagram followers into paying clients',
+        headline: 'Get booked from Instagram, not just liked',
         subheadline: 'You have built an audience. Now convert that attention into appointments and revenue with tools designed for beauty professionals.',
       }}
       sections={[
@@ -48,9 +48,13 @@ export default function TurnFollowersIntoBookings() {
           q: 'What is the difference between link in bio and just a Linktree?',
           a: 'A Linktree is a list of links. Nelsy link in bio is a complete booking and business page with your services, prices, and a booking form. It is designed to convert visitors into clients, not just send them somewhere else.',
         },
+        {
+          q: 'What is audience capture and why does it matter?',
+          a: 'Audience capture lets you collect client emails and contacts, so you can reach them directly without relying on social media algorithms. It protects your business from platform changes.',
+        },
       ]}
       relatedFeatures={['instagram-autodm', 'link-in-bio', 'bookings', 'audience-capture']}
-      relatedUseCases={['get-more-clients', 'reduce-no-shows', 'nail-techs']}
+      relatedUseCases={['reduce-no-shows', 'nail-techs', 'lash-techs']}
       relatedPostSlugs={[
         'how-to-get-nail-clients-from-instagram',
         'how-to-grow-nail-tech-instagram',

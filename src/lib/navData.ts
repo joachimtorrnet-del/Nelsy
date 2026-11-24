@@ -40,7 +40,7 @@ export const FEATURES: NavFeature[] = [
   { slug: 'digital-products', title: 'Digital Products', desc: 'Sell guides, templates and downloadable files.',         icon: '📄', route: '/features/digital-products', category: 'sell' },
   { slug: 'memberships',      title: 'Memberships',      desc: 'Create recurring paid memberships.',                     icon: '💎', route: '/features/memberships',      category: 'sell' },
   { slug: 'coaching',         title: 'Coaching',         desc: 'Sell 1:1 sessions and consultations.',                   icon: '👤', route: '/features/coaching',         category: 'sell' },
-  { slug: 'custom-products',  title: 'Custom Products',  desc: 'Sell personalized and custom offers.',                   icon: '✨', route: '/features/custom-products',  category: 'sell' },
+  { slug: 'custom-products',  title: 'Custom Products',  desc: 'Sell personalized and custom offers.',                   icon: '✨', route: '/features/custom-products',  category: 'sell', status: 'coming-soon' },
   // BOOK & GET PAID
   { slug: 'bookings',         title: 'Bookings',         desc: 'Let clients book services 24/7.',                        icon: '📅', route: '/features/bookings',         category: 'book' },
   { slug: 'deposits',         title: 'Deposits',         desc: 'Collect deposits before appointments.',                  icon: '💰', route: '/features/deposits',         category: 'book' },
@@ -201,12 +201,6 @@ export const USE_CASE_PERSONAS: UseCasePersona[] = [
 ];
 
 export const USE_CASE_GOALS: UseCaseGoal[] = [
-  { slug: 'get-more-clients',             title: 'Get More Clients',             route: '/use-cases/get-more-clients' },
-  { slug: 'reduce-no-shows',              title: 'Reduce No-Shows',              route: '/use-cases/reduce-no-shows' },
-  { slug: 'turn-followers-into-bookings', title: 'Turn Followers Into Bookings', route: '/use-cases/turn-followers-into-bookings' },
-  { slug: 'manage-clients',               title: 'Manage Your Clients',          route: '/use-cases/manage-clients' },
-  { slug: 'grow-your-audience',           title: 'Grow Your Audience',           route: '/use-cases/grow-your-audience' },
-  { slug: 'get-paid-online',              title: 'Get Paid Online',              route: '/use-cases/get-paid-online' },
-  { slug: 'grow-your-beauty-business',    title: 'Grow Your Beauty Business',    route: '/use-cases/grow-your-beauty-business' },
-  { slug: 'sell-digital-products',        title: 'Sell Digital Products',        route: '/use-cases/sell-digital-products' },
+  { slug: 'turn-followers-into-bookings', title: 'Get Booked from Instagram', route: '/use-cases/turn-followers-into-bookings' },
+  { slug: 'reduce-no-shows',              title: 'Reduce No-Shows',           route: '/use-cases/reduce-no-shows' },
 ];
