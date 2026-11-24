@@ -102,7 +102,7 @@ export default function ValueStackSection() {
               <p className="mt-[2px] text-[10px] leading-none text-neutral-500 sm:text-[10.5px]">Everything above, in one place</p>
             </div>
             <span className="shrink-0 text-[18px] font-extrabold tabular-nums sm:text-[20px]" style={{ color: PINK }}>
-              $29.99<span className="text-[10px] font-semibold text-neutral-400">/mo</span>
+              $29<span className="text-[10px] font-semibold text-neutral-400">/mo</span>
             </span>
           </div>
         </motion.div>

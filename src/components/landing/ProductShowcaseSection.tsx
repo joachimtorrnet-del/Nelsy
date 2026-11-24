@@ -138,7 +138,7 @@ function LaptopMockup() {
                   style={{ gap: "0.8cqw", borderRadius: "99cqw", border: "0.15cqw solid #e5e7eb", padding: "0.5cqw 1.2cqw" }}
                 >
                   <div className="rounded-full bg-emerald-400" style={{ width: "0.9cqw", height: "0.9cqw" }} />
-                  <p className="text-neutral-500" style={{ fontSize: "1.4cqw", whiteSpace: "nowrap" }}>nelsy.com/glossstudio</p>
+                  <p className="text-neutral-500" style={{ fontSize: "1.4cqw", whiteSpace: "nowrap" }}>getnelsy.com/glossstudio</p>
                 </div>
                 <div
                   className="font-bold text-white"

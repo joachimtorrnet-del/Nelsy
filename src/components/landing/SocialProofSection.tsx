@@ -20,7 +20,7 @@ type Testimonial = {
 };
 
 // Flip to false to hide the section until real testimonials are confirmed.
-const SHOW_SOCIAL_PROOF = true;
+const SHOW_SOCIAL_PROOF = false;
 
 const TESTIMONIALS: Testimonial[] = [
   {

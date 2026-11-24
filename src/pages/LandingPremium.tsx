@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
+import SiteFooter from '@/components/layout/SiteFooter';
 import { trackSeoCTAClicked, track } from '@/lib/analytics';
 import FeaturesSection from '../components/landing/FeaturesSection';
 import ProductShowcaseSection from '../components/landing/ProductShowcaseSection';
@@ -108,8 +109,13 @@ function Hero() {
           className="flex justify-center"
         >
           <img
-            src="/hero-mockup.png"
-            alt="Nelsy beauty creator storefront — bookings, courses and digital products in one link"
+            src="/hero-mockup-540.webp"
+            srcSet="/hero-mockup-540.webp 540w, /hero-mockup.webp 900w"
+            sizes="(max-width: 440px) 100vw, 400px"
+            width={900}
+            height={962}
+            fetchPriority="high"
+            alt="Nelsy beauty creator store: bookings, courses and digital products in one link"
             style={{ width: '100%', maxWidth: 400, height: 'auto', display: 'block' }}
           />
         </motion.div>
@@ -185,8 +191,12 @@ function Hero() {
           style={{ width: '50%', maxWidth: 540 }}
         >
           <img
-            src="/hero-mockup.png"
-            alt="Nelsy beauty creator storefront — bookings, courses and digital products in one link"
+            src="/hero-mockup.webp"
+            srcSet="/hero-mockup-540.webp 540w, /hero-mockup.webp 900w"
+            sizes="540px"
+            width={900}
+            height={962}
+            alt="Nelsy beauty creator store: bookings, courses and digital products in one link"
             style={{ width: '100%', height: 'auto', display: 'block' }}
           />
         </motion.div>
@@ -262,26 +272,6 @@ function FinalCTA() {
 
 // ─── 13. FOOTER ───────────────────────────────────────────────────────────────
 
-function Footer() {
-  return (
-    <footer className="bg-gray-950 border-t border-gray-800 py-10 px-4">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-md" style={{ backgroundColor: PINK }} />
-          <span className="font-bold text-white">Nelsy</span>
-        </div>
-        <div className="flex flex-wrap items-center justify-center gap-5 text-sm text-gray-500">
-          <Link to="/privacy" className="hover:text-white transition">Privacy</Link>
-          <Link to="/terms" className="hover:text-white transition">Terms</Link>
-          <a href="mailto:support@getnelsy.com" className="hover:text-white transition">Contact</a>
-          <Link to="/studio/maya" className="hover:text-white transition">Demo</Link>
-        </div>
-        <p className="text-xs text-gray-600">© {new Date().getFullYear()} Nelsy</p>
-      </div>
-    </footer>
-  );
-}
-
 // ─── PAGE ─────────────────────────────────────────────────────────────────────
 
 export default function LandingPremium() {
@@ -292,7 +282,7 @@ export default function LandingPremium() {
   return (
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
-        title="Nelsy | The All-In-One Platform For Beauty Creators"
+        title="Nelsy: Link in Bio Store & Booking App for Beauty Creators"
         description="Book clients, sell online courses & digital products. One link, 0% commission. The easiest way for beauty creators to make money. Try free for 14 days."
         canonical="/"
         jsonLd={[
@@ -345,7 +335,7 @@ export default function LandingPremium() {
       <ValueStackSection />
       <SocialProofSection />
       <FinalCTA />
-      <Footer />
+      <SiteFooter />
     </div>
   );
 }
