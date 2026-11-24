@@ -158,3 +158,18 @@ const PERSONAS: Record<string, Persona> = {
 export const TEMPLATE_DEMOS: Record<string, Omit<Merchant, 'theme_preset' | 'color_accent'>> = Object.fromEntries(
   Object.entries(PERSONAS).map(([id, p]) => [id, toMerchant(id, p)]),
 );
+
+/** Studio templates shown in My Studio and on the public /demo page. */
+export const STUDIO_TEMPLATES = [
+  { id: 'classic',  name: 'Classic',  themeId: 'c_classic',  accentColor: '#F52B8C' },
+  { id: 'gallery',  name: 'Gallery',  themeId: 'c_gallery',  accentColor: '#1A1A1A' },
+  { id: 'blush',    name: 'Blush',    themeId: 'c_blush',    accentColor: '#1A1A1A' },
+  { id: 'atelier',  name: 'Atelier',  themeId: 'c_atelier',  accentColor: '#3A3330' },
+  { id: 'noir',     name: 'Noir',     themeId: 'c_noir',     accentColor: '#FFFFFF' },
+  { id: 'minimal',  name: 'Minimal',  themeId: 'c_minimal',  accentColor: '#F52B8C' },
+  { id: 'midnight', name: 'Midnight', themeId: 'c_midnight', accentColor: '#2EF2C4' },
+  { id: 'split',    name: 'Split',    themeId: 'c_split',    accentColor: '#F65AA6' },
+  { id: 'muse',     name: 'Muse',     themeId: 'c_muse',     accentColor: '#F52B8C' },
+  { id: 'glow',     name: 'Glow',     themeId: 'c_glow',     accentColor: '#FFE3F1' },
+  { id: 'coach',    name: 'Coach',    themeId: 'c_coach',    accentColor: '#F52B8C' },
+] as const;

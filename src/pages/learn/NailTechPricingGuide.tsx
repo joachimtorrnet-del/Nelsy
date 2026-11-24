@@ -361,7 +361,7 @@ export default function NailTechPricingGuide() {
                 <p className="text-sm text-gray-500 leading-relaxed">
                   Nelsy gives you a branded booking page where you list your services with prices and durations. Clients self-book, pick a time from your real availability, and pay a deposit to confirm — all without DMs. Your page is your public price list and your booking system in one place.
                 </p>
-                <Link to="/studio/maya" className="inline-block mt-3 text-sm font-bold underline underline-offset-2" style={{ color: PINK }}>
+                <Link to="/demo" className="inline-block mt-3 text-sm font-bold underline underline-offset-2" style={{ color: PINK }}>
                   See an example booking page →
                 </Link>
               </div>
@@ -414,7 +414,7 @@ export default function NailTechPricingGuide() {
             </motion.p>
             <motion.div {...fadeUp(0.12)} className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />
-              <Link to="/studio/maya" className="text-sm text-white/70 hover:text-white underline underline-offset-2 transition">
+              <Link to="/demo" className="text-sm text-white/70 hover:text-white underline underline-offset-2 transition">
                 See example booking page
               </Link>
             </motion.div>

@@ -3,6 +3,7 @@ import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { useMoney } from '@/lib/currency';
+import { PoweredByNelsy } from '../PlgCTA';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -291,9 +292,7 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Prop
 
       {/* Footer */}
       <div style={{ textAlign: 'center', paddingBottom: 28 }}>
-        <span style={{ fontSize: 11, color: theme.textSecondary }}>
-          Powered by <strong style={{ color: accentText }}>Nelsy</strong>
-        </span>
+        <PoweredByNelsy profileId={merchant.id} isPreview={isPreview} color={theme.textSecondary} brandColor={accentText} />
       </div>
     </div>
   );

@@ -54,7 +54,7 @@ const COLUMNS: { title: string; links: FooterLink[] }[] = [
     title: 'Company',
     links: [
       { label: 'Pricing', to: '/pricing' },
-      { label: 'Live demo', to: '/studio/maya' },
+      { label: 'Live demo', to: '/demo' },
       { label: 'Start free trial', to: '/onboarding' },
       { label: 'Contact', to: '/contact' },
     ],

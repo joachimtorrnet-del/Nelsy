@@ -6,6 +6,7 @@ import type { NelsyTheme } from '@/lib/themes';
 import { useMoney } from '@/lib/currency';
 import { getStudioFont, ensureStudioFontLoaded } from '@/lib/studioFonts';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
+import { PoweredByNelsy } from '../PlgCTA';
 
 interface GalleryPhoto { image_url: string }
 
@@ -405,8 +406,8 @@ export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onB
           ))}
         </div>
 
-        <p style={{ textAlign: 'center', fontSize: 11, marginTop: 28, color: footerColor }}>
-          Powered by <strong style={{ color: variant.header === 'photo-bg' ? '#FFFFFF' : (theme.accentOnBg ?? accent) }}>Nelsy</strong>
+        <p style={{ textAlign: 'center', marginTop: 28 }}>
+          <PoweredByNelsy profileId={merchant.id} isPreview={isPreview} color={footerColor} brandColor={variant.header === 'photo-bg' ? '#FFFFFF' : (theme.accentOnBg ?? accent)} />
         </p>
       </div>
     </div>

@@ -50,3 +50,47 @@ export function PlgCTA({ profileId, theme }: Props) {
     </div>
   );
 }
+
+/**
+ * "Powered by Nelsy" footer for studio templates. On live pages it's a tracked link to signup
+ * (every studio page is an acquisition channel); in dashboard previews it stays plain text.
+ */
+export function PoweredByNelsy({ profileId, isPreview, color, brandColor, fontSize = 11 }: {
+  profileId: string;
+  isPreview?: boolean;
+  color: string;
+  brandColor: string;
+  fontSize?: number;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const viewTracked = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || isPreview) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !viewTracked.current) {
+        viewTracked.current = true;
+        trackPlgCtaView(profileId);
+      }
+    }, { threshold: 0.5 });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [profileId, isPreview]);
+
+  const label = <>Powered by <strong style={{ color: brandColor }}>Nelsy</strong></>;
+  if (isPreview) return <span style={{ fontSize, color }}>{label}</span>;
+
+  return (
+    <a
+      ref={ref}
+      href={`https://getnelsy.com/?utm_source=studio_plg&utm_medium=powered_by&ref=${encodeURIComponent(profileId)}`}
+      target="_blank"
+      rel="noopener"
+      onClick={() => trackPlgCtaClick(profileId)}
+      style={{ fontSize, color, textDecoration: 'none' }}
+    >
+      {label}
+    </a>
+  );
+}

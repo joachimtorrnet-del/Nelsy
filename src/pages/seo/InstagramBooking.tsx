@@ -225,7 +225,7 @@ export default function InstagramBooking() {
             <motion.p {...fadeUp()} className="text-gray-600 text-base mb-3">
               Want to see what a Nelsy booking page looks like to your clients?
             </motion.p>
-            <Link to="/studio/maya" className="text-base font-bold underline underline-offset-2" style={{ color: PINK }}>
+            <Link to="/demo" className="text-base font-bold underline underline-offset-2" style={{ color: PINK }}>
               View the demo booking page →
             </Link>
           </div>
@@ -265,7 +265,7 @@ export default function InstagramBooking() {
                 How to Collect Deposits as a Nail Tech
               </Link>
               <span className="text-gray-300">·</span>
-              <Link to="/studio/maya" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
+              <Link to="/demo" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
                 View demo booking page
               </Link>
             </div>

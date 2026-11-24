@@ -24,6 +24,7 @@ import { CREATOR_VARIANTS } from '../../components/studio/layouts/LayoutCreator'
 import { AnimatePresence, motion } from 'framer-motion';
 import { StudioPhonePreview } from '../../components/dashboard/StudioPhonePreview';
 import { TEMPLATE_DEMOS } from '../../lib/templateDemos';
+import { STUDIO_TEMPLATES } from '@/lib/templateDemos';
 import { PublicStudioView } from '../../components/studio/PublicStudioView';
 import type { Merchant, Service } from '../../types';
 
@@ -121,19 +122,8 @@ function getOfferTypeFromCategory(category?: string): OfferType {
 
 // ── Templates config ──────────────────────────────────────────────────────────
 
-const TEMPLATES = [
-  { id: 'classic',  name: 'Classic',  themeId: 'c_classic',  accentColor: '#F52B8C' },
-  { id: 'gallery',  name: 'Gallery',  themeId: 'c_gallery',  accentColor: '#1A1A1A' },
-  { id: 'blush',    name: 'Blush',    themeId: 'c_blush',    accentColor: '#1A1A1A' },
-  { id: 'atelier',  name: 'Atelier',  themeId: 'c_atelier',  accentColor: '#3A3330' },
-  { id: 'noir',     name: 'Noir',     themeId: 'c_noir',     accentColor: '#FFFFFF' },
-  { id: 'minimal',  name: 'Minimal',  themeId: 'c_minimal',  accentColor: '#F52B8C' },
-  { id: 'midnight', name: 'Midnight', themeId: 'c_midnight', accentColor: '#2EF2C4' },
-  { id: 'split',    name: 'Split',    themeId: 'c_split',    accentColor: '#F65AA6' },
-  { id: 'muse',     name: 'Muse',     themeId: 'c_muse',     accentColor: '#F52B8C' },
-  { id: 'glow',     name: 'Glow',     themeId: 'c_glow',     accentColor: '#FFE3F1' },
-  { id: 'coach',    name: 'Coach',    themeId: 'c_coach',    accentColor: '#F52B8C' },
-];
+// Template list shared with the public /demo page
+const TEMPLATES = STUDIO_TEMPLATES;
 
 
 // Demo merchant for template gallery — uses specific picsum.photos IDs (Unsplash CC0)

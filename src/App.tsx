@@ -40,6 +40,7 @@ import CoachingPage from './pages/features/Coaching';
 import MembershipsPage from './pages/features/Memberships';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
+import Demo from './pages/Demo';
 import NailTechsPage from './pages/use-cases/NailTechs';
 import BeautyCreatorsPage from './pages/use-cases/BeautyCreators';
 import IndependentBeautyProsPage from './pages/use-cases/IndependentBeautyPros';
@@ -150,6 +151,7 @@ export default function App() {
             {/* ── Use case pages ─────────────────────────────────────────── */}
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/demo" element={<Demo />} />
             <Route path="/use-cases/nail-techs" element={<NailTechsPage />} />
             <Route path="/use-cases/beauty-creators" element={<BeautyCreatorsPage />} />
             <Route path="/use-cases/independent-beauty-pros" element={<IndependentBeautyProsPage />} />

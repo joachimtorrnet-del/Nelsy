@@ -3,6 +3,7 @@ import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { useMoney } from '@/lib/currency';
+import { PoweredByNelsy } from '../PlgCTA';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -348,9 +349,7 @@ export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook }: 
 
       {/* Footer */}
       <div style={{ textAlign: 'center', paddingBottom: 32 }}>
-        <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.45)' }}>
-          Powered by <strong style={{ color: 'rgba(255,255,255,0.75)' }}>Nelsy</strong>
-        </span>
+        <PoweredByNelsy profileId={merchant.id} isPreview={isPreview} color="rgba(255,255,255,0.45)" brandColor="rgba(255,255,255,0.75)" />
       </div>
     </div>
   );

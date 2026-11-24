@@ -34,7 +34,7 @@ function loadEnv() {
 
 // Top-level app routes a studio slug must never shadow
 const RESERVED = new Set(['about', 'admin', 'affiliate', 'alternatives', 'api', 'app', 'assets', 'blog', 'booking-confirmed',
-  'compare', 'contact', 'dashboard', 'features', 'for', 'forgot-password', 'glossary', 'help', 'learn', 'login', 'nelsy',
+  'compare', 'contact', 'dashboard', 'demo', 'features', 'for', 'forgot-password', 'glossary', 'help', 'learn', 'login', 'nelsy',
   'onboarding', 'onboarding-stripe', 'pricing', 'privacy', 'reset-password', 'settings', 'signup', 'stripe', 'studio',
   'support', 'terms', 'tools', 'use-cases', 'www']); // keep in sync with src/lib/reservedSlugs.ts
 
@@ -102,6 +102,7 @@ const STATIC_SEO_ROUTES = [
   { path: '/use-cases/lash-techs', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/use-cases/reduce-no-shows', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/use-cases/turn-followers-into-bookings', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
+  { path: '/demo', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-24' },
   { path: '/contact', priority: '0.4', changefreq: 'yearly', lastmod: '2026-11-24' },
   { path: '/privacy', priority: '0.2', changefreq: 'yearly', lastmod: '2026-11-23' },
   { path: '/terms', priority: '0.2', changefreq: 'yearly', lastmod: '2026-11-23' },
