@@ -23,6 +23,8 @@ function createPostHogClient() {
 }
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
+import { esc, row, layout } from '../_shared/email.ts'
+
 const FROM_EMAIL = 'Nelsy <hello@getnelsy.com>'
 
 async function sendEmail(to: string, subject: string, html: string) {
@@ -387,11 +389,27 @@ serve(async (req) => {
 
         const { data: profile } = await supabase
           .from('profiles')
-          .select('id')
+          .select('id, email, full_name')
           .eq('stripe_customer_id', customerId)
           .single()
 
         if (!profile) break
+
+        if (profile.email) {
+          try {
+            const due = new Intl.NumberFormat('en-US', { style: 'currency', currency: (invoice.currency ?? 'usd').toUpperCase() }).format((invoice.amount_due ?? 0) / 100)
+            await sendEmail(
+              profile.email,
+              'Action needed: your Nelsy payment didn\u2019t go through',
+              layout(
+                'We couldn\u2019t process your payment',
+                `Hi ${esc((profile.full_name ?? '').split(' ')[0] || 'there')}, the payment for your Nelsy plan failed. Update your card to keep your page and bookings running.`,
+                row('Amount', esc(due), true),
+                `<div style="text-align:center"><a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Update my card</a></div>`,
+              ),
+            )
+          } catch (e) { console.error('[payment_failed email]', e) }
+        }
 
         // Update subscription status to past_due
         const { error } = await supabase
@@ -415,6 +433,43 @@ serve(async (req) => {
           },
         })
         await posthogFailed.shutdown()
+        break
+      }
+
+      // ── Trial ending in 3 days: remind the pro before the first charge ──
+      // Requires the event to be enabled on the Stripe webhook endpoint.
+      case 'customer.subscription.trial_will_end': {
+        const subscription = event.data.object as Stripe.Subscription
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('id, email, full_name')
+          .eq('stripe_customer_id', subscription.customer as string)
+          .single()
+        if (!profile?.email || !subscription.trial_end) break
+
+        const price = subscription.items?.data?.[0]?.price
+        const amount = price?.unit_amount != null
+          ? new Intl.NumberFormat('en-US', { style: 'currency', currency: (price.currency ?? 'usd').toUpperCase() }).format(price.unit_amount / 100)
+          : null
+        const interval = price?.recurring?.interval === 'year' ? 'year' : 'month'
+        const endDate = new Date(subscription.trial_end * 1000).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+
+        try {
+          await sendEmail(
+            profile.email,
+            `Your Nelsy free trial ends on ${endDate}`,
+            layout(
+              'Your free trial ends in 3 days',
+              `Hi ${esc((profile.full_name ?? '').split(' ')[0] || 'there')}, your plan starts automatically on ${esc(endDate)}. You can cancel anytime before then from your dashboard.`,
+              row('Trial ends', esc(endDate)) + (amount ? row('Then', esc(`${amount} per ${interval}`), true) : ''),
+              `<div style="text-align:center"><a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Manage my plan</a></div>`,
+            ),
+          )
+        } catch (e) { console.error('[trial_will_end email]', e) }
+
+        const posthogTrial = createPostHogClient()
+        posthogTrial.capture({ distinctId: profile.id, event: 'trial ending reminder sent', properties: { trial_end: subscription.trial_end } })
+        await posthogTrial.shutdown()
         break
       }
 
