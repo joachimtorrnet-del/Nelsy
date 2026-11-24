@@ -8,6 +8,7 @@ import { motion } from 'framer-motion';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { supabase } from '../../lib/supabase';
 import type { DbProfileRow, DbBookingRow } from '../../lib/supabase';
+import { track } from '../../lib/analytics';
 import { getBookings } from '../../lib/supabase-queries';
 import { buildLiveMerchant } from '../../lib/liveMerchant';
 import { LoadingScreen } from '../../components/dashboard/SkeletonLoader';
@@ -152,6 +153,25 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
   }, []);
 
   useEffect(() => { void loadData(); }, [loadData]);
+
+  // Activation metric: fires once per account when the 4 setup steps are done
+  // (PostHog: studio_setup_completed, minutes_since_signup → goal: page live in under 10 minutes)
+  useEffect(() => {
+    if (loading || !profile) return;
+    const complete = services.length > 0 && hasHours
+      && !!profile.stripe_account_id && profile.stripe_onboarding_complete
+      && !!(profile.bio && profile.logo_url);
+    if (!complete) return;
+    const key = `nelsy_setup_tracked_${profile.id}`;
+    try {
+      if (localStorage.getItem(key)) return;
+      localStorage.setItem(key, '1');
+    } catch { /* storage unavailable: may track again, harmless */ }
+    track('studio_setup_completed', {
+      minutes_since_signup: Math.round((Date.now() - new Date(profile.created_at).getTime()) / 60000),
+      services: services.length,
+    });
+  }, [loading, profile, services, hasHours]);
 
   // Per-day series for the selected range, plus totals for this and the previous period
   const series = useMemo(() => {
