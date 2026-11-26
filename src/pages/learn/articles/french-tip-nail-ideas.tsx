@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleTable, ArticleImage, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'french-tip-nail-ideas',
@@ -14,8 +14,17 @@ registerArticle({
   heroImageAlt: '50 French tip nail ideas for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The best French tip nail ideas are the micro French for short nails, a coloured or chrome tip for something modern, and the classic white smile line for weddings.",
+    detail: "Almost every French variation comes down to three choices: tip width, tip colour and finish. Match the tip width to the nail length and the look stays balanced.",
+    points: [
+      { label: "Best for short nails", text: "Micro French or baby French with a 1 to 2 mm line." },
+      { label: "Best for a modern look", text: "Coloured tips, chrome tips or a reverse French." },
+      { label: "Best for weddings", text: "Classic or micro French on almond or squoval." },
+    ],
+  },
   toc: [
     { id: 'french-reinvented', label: 'The French manicure: reinvented' },
     { id: 'classic-refined', label: 'Classic & refined French (1–10)' },
@@ -41,6 +50,7 @@ registerArticle({
 
       <section id="classic-refined">
         <h2 className="font-serif text-2xl font-bold mb-4">Classic & refined French (1–10)</h2>
+        <ArticleImage src="photo-1612887390768-fb02affea7a6" alt="Soft pink minimal manicure, the kind of sheer base a classic French tip is painted over" />
         <div className="space-y-3">
           {[
             { n: 1, idea: 'Classic white tip on sheer pink', desc: 'The original. Execute it with precision — clean smile line, consistent tip width, high-shine topcoat. Perfect application of a classic is its own skill.' },
@@ -64,7 +74,8 @@ registerArticle({
 
       <section id="coloured-tips">
         <h2 className="font-serif text-2xl font-bold mb-4">Coloured tip variations (11–20)</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">The French silhouette with a non-white tip — one of the most versatile nail categories, applicable across all seasons.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">The French silhouette with a non-white tip is one of the most versatile nail categories, and it works in every season.</p>
+        <ArticleImage src="photo-1772322586785-3a34772cbc61" alt="White nails with marbled purple and black tips" caption="Contrasting tips on a light base: the same idea as a coloured French, with a marble effect." />
         <div className="space-y-3">
           {[
             { n: 11, idea: 'Black French', desc: 'Black tip on a nude or sheer pink base. The "rock French." Edgier than classic, surprisingly wearable. Strong in autumn/winter.' },
@@ -112,6 +123,7 @@ registerArticle({
 
       <section id="textured-chrome">
         <h2 className="font-serif text-2xl font-bold mb-4">Textured & chrome French (31–40)</h2>
+        <ArticleImage src="photo-1770210257340-dc2b0f44642a" alt="Hand with a metallic gold manicure on almond nails" caption="Gold metallic finish, the shade used for gold chrome or foil French tips." />
         <div className="space-y-3">
           {[
             { n: 31, idea: 'Silver chrome tip', desc: 'Mirror silver chrome powder applied in the French tip position. Sharp, reflective, looks extraordinary in photographs.' },
@@ -135,6 +147,7 @@ registerArticle({
 
       <section id="seasonal-occasion">
         <h2 className="font-serif text-2xl font-bold mb-4">Seasonal & occasion French (41–50)</h2>
+        <ArticleImage src="photo-1519014816548-bf5fe059798b" alt="Pink manicure with red heart and love-letter nail art" caption="Valentine's details like hearts pair well with a pink French base." />
         <div className="space-y-3">
           {[
             { n: 41, idea: 'Bridal French', desc: 'Classic or micro French on almond or squoval — the most requested bridal nail across all demographics. Offer as a named service.' },
@@ -170,6 +183,22 @@ registerArticle({
             ['"French for my wedding"', 'Discuss nail shape alongside tip style. Bridal French on the wrong shape can date the photos.'],
           ]}
         />
+        <h3 className="font-semibold text-lg mt-8 mb-3">Tip width by nail length</h3>
+        <ArticleTable
+          headers={['Nail length', 'Tip width that looks balanced', 'Best French styles']}
+          rows={[
+            ['Short natural nails', 'A very thin line, roughly 1 to 2 mm', 'Micro French, baby French, coloured micro tip'],
+            ['Medium', 'About a quarter of the visible nail length', 'Classic white, coloured French, glitter French'],
+            ['Long extensions', 'Up to a third of the nail length', 'Deep smile line, chrome French, double French, ombre French'],
+          ]}
+        />
+        <ArticleChecklist title="Common French tip mistakes" items={[
+          'Smile line too flat: the curve should follow the natural free edge, deeper on the sidewalls than in the centre.',
+          'Uneven tip heights across the hand: check all ten nails side by side before curing the white.',
+          'White too thick in one coat: build opacity with two thin layers so the line stays sharp and cures fully.',
+          'Tip too wide on short nails: on short nails a thick tip makes the nail bed look shorter.',
+          'Forgetting to cap the free edge: the tip is the part that chips first.',
+        ]} />
         <p className="text-gray-700 mt-4 leading-relaxed">For shape ideas: <Link to="/blog/almond-nail-ideas" className="underline text-[#F52B8C]">almond nail ideas</Link> | <Link to="/blog/short-nail-ideas" className="underline text-[#F52B8C]">short nail ideas</Link>.</p>
       </section>
     </div>

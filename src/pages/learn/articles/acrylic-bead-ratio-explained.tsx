@@ -14,8 +14,17 @@ registerArticle({
   heroImageAlt: 'Acrylic bead ratio explained for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The ideal acrylic bead for most work is a medium bead: glossy, dome-shaped, holding its shape on the brush but melting slightly when pressed onto the nail.",
+    detail: "Bead ratio is the amount of liquid monomer to acrylic powder in each bead. Too wet runs and can stay soft; too dry is lumpy, porous and weak.",
+    points: [
+      { label: "Free edge", text: "Medium bead that holds its shape." },
+      { label: "Apex", text: "Medium to slightly wet, so it flows smooth." },
+      { label: "Cuticle zone", text: "Medium to slightly dry, for control near the skin." },
+    ],
+  },
   toc: [
     { id: 'what-is-bead-ratio', label: 'What bead ratio means' },
     { id: 'bead-types', label: 'Wet, medium, and dry beads' },
@@ -23,6 +32,7 @@ registerArticle({
     { id: 'which-ratio-when', label: 'Which ratio to use when' },
     { id: 'effects-on-nail', label: 'How ratio affects the finished nail' },
     { id: 'product-variation', label: 'Product variation' },
+    { id: 'troubleshooting', label: 'Bead troubleshooting' },
   ],
   relatedSlugs: ['acrylic-application-step-by-step', 'how-to-build-nail-apex', 'common-acrylic-mistakes'],
   faq: [
@@ -35,6 +45,7 @@ registerArticle({
       <section id="what-is-bead-ratio">
         <h2 className="font-serif text-2xl font-bold mb-4">What bead ratio means</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">When you dip an acrylic brush into liquid monomer and then into powder, the amount of monomer carried by the brush relative to the powder it picks up determines the "ratio" of your bead. A wetter bead has more monomer relative to powder; a drier bead has less.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">A medium bead is often described as roughly one and a half parts liquid to one part powder, but nobody measures it in practice: you judge it by how the bead looks and moves. Your brand's guidance always comes first.</p>
         <p className="text-gray-700 leading-relaxed">This ratio affects: how easy the bead is to work with, how long it remains workable, the finished surface quality, the clarity of the cured product, and ultimately the strength and longevity of the nail.</p>
       </section>
 
@@ -96,6 +107,21 @@ registerArticle({
           <li>Temperature affects working time — cold environments extend it; warm rooms speed it up</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">When learning a new product: practice bead pick-up and placement extensively before using it on clients. Bead ratio is intuitive once you know your specific product's behaviour — but it requires time with that specific system to develop. See: <Link to="/blog/acrylic-application-step-by-step" className="underline text-[#F52B8C]">acrylic application step-by-step</Link>.</p>
+      </section>
+
+      <section id="troubleshooting">
+        <h2 className="font-serif text-2xl font-bold mb-4">Bead troubleshooting</h2>
+        <ArticleTable
+          headers={['What you see', 'Likely ratio problem', 'What to change']}
+          rows={[
+            ['Bead slides off the brush or runs into the cuticle', 'Too wet', 'Wipe more liquid off the brush before picking up powder'],
+            ['Bead sits on the nail like a ball and will not press out', 'Too dry', 'Load more liquid, or hold the brush in the powder for less time'],
+            ['Bead size changes every time', 'Inconsistent brush saturation', 'Wipe the brush the same way, on the same side of the dish, every time'],
+            ['Surface looks grainy or has small holes', 'Too dry, or bead overworked', 'Use a slightly wetter bead and press it into place with fewer strokes'],
+            ['Product stays soft or sticky longer than usual', 'Too wet', 'Use a drier bead, and check the room temperature'],
+          ]}
+        />
+        <p className="text-gray-700 leading-relaxed">Clean your brush with monomer between beads and reshape the tip. Dried product in the belly of the brush changes how much liquid it holds, which makes ratio harder to control.</p>
       </section>
     </div>
   ),

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
+import { ArticleImage, ArticleTable, ArticleTip } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'summer-nail-ideas',
@@ -13,14 +14,24 @@ registerArticle({
   heroImageAlt: '50 summer nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The best summer nail ideas are neon and coral brights, tropical fruit or flower art, pastel skittles sets and glazed finishes that glow against a tan.",
+    detail: "Summer is the season clients go brightest. Short nails suit one strong colour or a single accent, while longer nails can carry ombrés and full nail art.",
+    points: [
+      { label: "Best for short nails", text: "Neon coral, hot pink or a single fruit accent nail." },
+      { label: "Best for long nails", text: "Sunset ombré or a full tropical art set." },
+      { label: "Best for a soft look", text: "Peach nude, mint or a glazed sheer white." },
+    ],
+  },
   toc: [
     { id: 'bright-summer', label: 'Bright and neon summer' },
     { id: 'tropical', label: 'Tropical and resort' },
     { id: 'pastel-summer', label: 'Pastel and soft summer' },
     { id: 'summer-nail-art', label: 'Summer nail art designs' },
     { id: 'summer-effects', label: 'Summer effects and finishes' },
+    { id: 'summer-by-skin-and-length', label: 'Choosing a summer set' },
   ],
   relatedSlugs: ['spring-nail-ideas', 'vacation-nail-ideas', 'pink-nail-ideas', 'summer-nail-business-marketing-ideas'],
   faq: [
@@ -31,6 +42,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="bright-summer">
         <h2 className="font-serif text-2xl font-bold mb-4">Bright and neon summer</h2>
+        <ArticleImage src="photo-1771441580126-748bff7a9565" alt="Hand with bright yellow nail polish" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Neon orange — high-energy, UV-reactive; pops on a tan</li>
           <li>Neon pink — electric, bold, summer statement</li>
@@ -47,6 +59,7 @@ registerArticle({
 
       <section id="tropical">
         <h2 className="font-serif text-2xl font-bold mb-4">Tropical and resort</h2>
+        <ArticleImage src="photo-1652990337162-fa84a588d843" alt="White manicure photographed against a tropical palm leaf" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Watermelon nails — pink with a green accent</li>
           <li>Tropical flower nail art — hibiscus or plumeria designs</li>
@@ -63,6 +76,7 @@ registerArticle({
 
       <section id="pastel-summer">
         <h2 className="font-serif text-2xl font-bold mb-4">Pastel and soft summer</h2>
+        <ArticleImage src="photo-1607779097040-26e80aa78e66" alt="Pastel lilac, white and glitter nails" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Peach nude — warm and skin-flattering; works all summer</li>
           <li>Pastel coral — soft and tropical without being neon</li>
@@ -79,6 +93,7 @@ registerArticle({
 
       <section id="summer-nail-art">
         <h2 className="font-serif text-2xl font-bold mb-4">Summer nail art designs</h2>
+        <ArticleImage src="photo-1754951661104-2a13d50d4741" alt="Nails with abstract blue and orange colour-block nail art" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Sunflower nail art — yellow and brown on nude</li>
           <li>Cherry nail art — classic summer fruit motif</li>
@@ -107,6 +122,21 @@ registerArticle({
           <li>Holographic shimmer on a warm nude</li>
           <li>UV-reactive neon under regular gel — glows under UV light</li>
         </ul>
+      </section>
+
+      <section id="summer-by-skin-and-length">
+        <h2 className="font-serif text-2xl font-bold mb-4">Choosing a summer set</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">Use the list above as a menu, then narrow it down with two questions: how long are the nails, and how bold does the client want to go?</p>
+        <ArticleTable
+          headers={['If you want…', 'Short nails', 'Medium to long nails']}
+          rows={[
+            ['Bold but easy', 'One neon shade on every nail', 'Multi-neon skittles set'],
+            ['Soft and wearable', 'Peach nude or sheer melon', 'Pastel ombré or glazed finish'],
+            ['Nail art', 'One accent nail with a cherry, lemon or daisy', 'Full tropical or abstract set'],
+            ['Holiday-proof', 'Builder gel in coral or aqua', 'Gel-X or hard gel in a sheer or nude shade'],
+          ]}
+        />
+        <ArticleTip>Neon gel polishes are often sheer on their own. Many techs paint a white base first, then the neon on top, to get a bright, even colour in fewer coats.</ArticleTip>
         <p className="text-gray-700 mt-4 leading-relaxed">Related: <Link to="/blog/vacation-nail-ideas" className="underline text-[#F52B8C]">vacation nail ideas</Link> · <Link to="/blog/spring-nail-ideas" className="underline text-[#F52B8C]">spring nail ideas</Link>.</p>
       </section>
     </div>

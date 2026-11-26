@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleImage } from '@/components/article/ArticleBodyComponents';
+import { ArticleImage, ArticleTable, ArticleSteps, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'ombre-nail-ideas',
@@ -14,18 +14,32 @@ registerArticle({
   heroImageAlt: '50 ombré nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The most popular ombré nails are baby pink to white, nude to pink and sunset gradients, with dark-to-light ombré for autumn and winter.",
+    detail: "An ombré blends two or more colours across the nail, usually with a sponge or a brush. Colours from the same family blend most smoothly.",
+    points: [
+      { label: "Best for everyday", text: "Baby pink to white or nude to pink." },
+      { label: "Best for summer", text: "Sunset ombré: yellow to orange to pink." },
+      { label: "Best for winter", text: "Black to burgundy or dark plum to nude." },
+    ],
+  },
   toc: [
     { id: 'classic-ombre', label: 'Classic two-colour ombré' },
     { id: 'sunset-ombre', label: 'Sunset and multi-colour ombré' },
     { id: 'dark-ombre', label: 'Dark and moody ombré' },
     { id: 'pastel-ombre', label: 'Pastel and soft ombré' },
     { id: 'ombre-effects', label: 'Ombré with effects' },
+    { id: 'how-to-ombre', label: 'How to do ombré nails' },
+    { id: 'ombre-mistakes', label: 'Common ombré mistakes' },
   ],
   relatedSlugs: ['pink-nail-ideas', 'chrome-nail-ideas', 'summer-nail-ideas', 'abstract-nail-ideas'],
   faq: [
-    { q: 'What technique is used for ombré nails?', a: 'The most common technique uses a makeup sponge — gel colour is applied to the sponge and dabbed onto the nail in the blend zone, blending the two colours together. For gel systems, this is done in thin layers and cured between each layer. A dry brush blending technique is also used with some products.' },
-    { q: 'Which colour combinations look best for ombré?', a: 'The easiest ombré to blend are adjacent colours on the colour wheel — pink to purple, blue to teal, peach to pink. High-contrast combinations (black to white, dark navy to gold) require more layers to blend smoothly. Start with colours that share an undertone for the most seamless result.' },
+    { q: "What technique is used for ombré nails?", a: "The most common technique uses a makeup sponge: gel colour is dabbed onto the nail in the blend zone in thin layers, curing between each layer. Some techs blend two uncured gels with a brush instead, and acrylic or dip ombrés are done by overlapping two powder colours." },
+    { q: "Which colour combinations look best for ombré?", a: "Colours that sit next to each other on the colour wheel blend most easily: pink to purple, blue to teal, peach to pink. High-contrast pairs such as black to white need more layers to blend smoothly, and opposite colours can turn muddy where they meet. Test a new pair on a nail tip first." },
+    { q: "What is baby boomer ombré?", a: "Baby boomer is the name for a soft pink-to-white ombré: a sheer pink at the cuticle fading into white at the tip. It is a softer, blended alternative to the classic French manicure." },
+    { q: "Can you do ombré on short nails?", a: "Yes. On short nails, keep to two colours and a wide, soft blend zone so the gradient has room to show. Nude to pink and pink to white work especially well at short lengths." },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
@@ -112,6 +126,37 @@ registerArticle({
           <li>Holographic ombré — shifting shimmer embedded in the gradient</li>
           <li>Pigment powder ombré — pressed pigment dusted into the wet gel gradient</li>
         </ul>
+      </section>
+
+      <section id="how-to-ombre">
+        <h2 className="font-serif text-2xl font-bold mb-4">How to do ombré nails</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">There are three common ways to blend an ombré. Which one you use depends on the product and the look you want.</p>
+        <ArticleTable
+          headers={['Method', 'How it works', 'Best for']}
+          rows={[
+            ['Sponge', 'Gel colours dabbed onto the nail with a makeup sponge, in thin layers, curing between layers', 'Pink-to-white "baby boomer" ombré, high-contrast gradients'],
+            ['Brush blend', 'Two uncured gel colours placed side by side and blended in the middle with a lightly loaded brush', 'Soft gradients in colours from the same family'],
+            ['Powder (acrylic or dip)', 'Two powder colours layered so they overlap in the middle of the nail', 'Acrylic and dip sets, especially pink-and-white'],
+          ]}
+        />
+        <ArticleSteps steps={[
+          { title: 'Apply the base colour', body: 'Paint the lighter or main colour over the whole nail and cure it. This is the colour that will show at the cuticle end.' },
+          { title: 'Load the sponge or brush lightly', body: 'Too much product on the sponge gives a heavy, blotchy edge. Dab off the excess on a palette first.' },
+          { title: 'Build the gradient in thin passes', body: 'Start at the free edge and dab or blend upwards, stopping a little further from the tip each time. Cure between passes.' },
+          { title: 'Clean the skin before curing', body: 'Sponging puts colour on the skin around the nail. Remove it with a brush dipped in cleanser, or use a liquid latex barrier before you start.' },
+          { title: 'Seal with top coat', body: 'A glossy top coat smooths out the sponge texture and makes the blend look seamless.' },
+        ]} />
+      </section>
+
+      <section id="ombre-mistakes">
+        <h2 className="font-serif text-2xl font-bold mb-4">Common ombré mistakes</h2>
+        <ArticleChecklist title="What makes an ombré look patchy" items={[
+          'A visible line between colours: the blend zone is too narrow, so add another light pass higher up the nail.',
+          'Thick, uneven texture: too much gel on the sponge or too many layers without thinning.',
+          'Colour on the cuticles after curing: clean or protect the skin before every cure, not at the end.',
+          'Colours that turn muddy in the middle: opposite colours on the colour wheel can mix into brown or grey, so test the blend first.',
+          'Gradient at different heights on each nail: pick a stopping point, such as one third of the nail, and keep it the same on all ten.',
+        ]} />
         <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/blog/chrome-nail-ideas" className="underline text-[#F52B8C]">chrome nail ideas</Link> · <Link to="/blog/abstract-nail-ideas" className="underline text-[#F52B8C]">abstract nail ideas</Link>.</p>
       </section>
     </div>

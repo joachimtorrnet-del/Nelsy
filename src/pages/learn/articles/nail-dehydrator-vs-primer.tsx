@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'nail-dehydrator-vs-primer',
@@ -14,14 +14,24 @@ registerArticle({
   heroImageAlt: 'Nail dehydrator vs primer — what\'s the difference',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "No, nail dehydrator and primer are not the same: dehydrator removes oil and moisture from the nail plate, and primer helps the next product stick to it.",
+    detail: "In systems that use both, dehydrator always goes on first and primer second. Some gel systems only need dehydrator and a base or bonder, so follow your brand's sequence.",
+    points: [
+      { label: "Dehydrator", text: "Cleans and dries the nail surface, then evaporates." },
+      { label: "Primer", text: "Adds a bonding layer between nail and product." },
+      { label: "Order", text: "Dehydrator first, primer second, product third." },
+    ],
+  },
   toc: [
     { id: 'what-dehydrator', label: 'What a dehydrator does' },
     { id: 'what-primer', label: 'What a primer does' },
     { id: 'comparison', label: 'Comparing them' },
     { id: 'when-use', label: 'When to use each one' },
     { id: 'do-you-need-both', label: 'Do you need both?' },
+    { id: 'order', label: 'The right order in your prep' },
   ],
   relatedSlugs: ['acid-vs-acid-free-nail-primer', 'common-gel-x-mistakes', 'common-builder-gel-mistakes', 'acrylic-application-step-by-step'],
   faq: [
@@ -86,6 +96,19 @@ registerArticle({
           <li>Some systems combine the function into a single product (e.g. a pH-balancing prep that acts as both)</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">The answer is always in your product's recommended application sequence. Follow it; don't mix protocols from different systems without checking compatibility.</p>
+      </section>
+
+      <section id="order">
+        <h2 className="font-serif text-2xl font-bold mb-4">The right order in your prep</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">When a system uses both, dehydrator always goes first and primer second. A typical sequence looks like this:</p>
+        <ArticleSteps steps={[
+          { title: 'Cuticle work and removing shine', body: 'Clear non-living tissue from the nail plate and remove shine with a fine file or buffer.' },
+          { title: 'Remove dust', body: 'Brush off all filing dust. Dust left on the nail stops products from bonding properly.' },
+          { title: 'Dehydrator', body: 'Apply to the whole nail plate and let it evaporate. It cleans the surface of oil and moisture.' },
+          { title: 'Primer', body: 'Apply a thin layer to the nail plate only, avoiding skin, and let it dry.' },
+          { title: 'Base coat, builder gel, tip or acrylic', body: 'Apply your product straight away, without touching the prepped nail plate with your fingers.' },
+        ]} />
+        <ArticleTip>A simple way to remember it: dehydrator cleans, primer connects. Clean first, then connect.</ArticleTip>
       </section>
     </div>
   ),

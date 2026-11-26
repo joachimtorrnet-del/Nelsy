@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTip, ArticleSteps, ArticleTable } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleTip, ArticleSteps, ArticleTable, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'builder-gel-application-guide',
@@ -14,21 +14,34 @@ registerArticle({
   heroImageAlt: 'Builder gel BIAB application guide',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "To apply builder gel, prep and dehydrate the nail, apply a thin base layer, float a bead of builder gel into the apex zone, let it self-level, cure, then refine and finish.",
+    detail: "The two skills that make the biggest difference are keeping a small gap at the cuticle and placing the apex correctly. Thin layers and full cures prevent most other problems.",
+    points: [
+      { label: "Best for", text: "Weak, bendy or bitten nails that need strength at natural length." },
+      { label: "Key technique", text: "Floating the bead instead of brushing product around." },
+      { label: "Infill cycle", text: "Most clients rebook every two to three weeks." },
+    ],
+  },
   toc: [
     { id: 'what-is-biab', label: 'What builder gel / BIAB is' },
     { id: 'when-to-use', label: 'When to use builder gel' },
     { id: 'application-steps', label: 'Application steps' },
     { id: 'self-levelling', label: 'Self-levelling technique' },
+    { id: 'floating', label: 'The floating technique' },
     { id: 'filing-finishing', label: 'Filing and finishing' },
     { id: 'infills', label: 'Infills and maintenance' },
     { id: 'common-issues', label: 'Common issues' },
+    { id: 'checklist', label: 'Builder gel checklist' },
   ],
   relatedSlugs: ['gel-x-application-step-by-step', 'how-to-build-nail-apex', 'nail-prep-guide', 'how-to-improve-nail-retention'],
   faq: [
-    { q: 'What\'s the difference between builder gel and regular gel polish?', a: 'Regular gel polish is a thin, pigmented gel applied in multiple coats like regular nail polish. It adds no significant structural strength to the nail. Builder gel is a thicker, structured gel designed to add strength, overlay the nail, or extend it. BIAB (Builder in a Bottle) is a builder gel in a gel-polish-style bottle, making it easier to apply than traditional builder gel in a pot.' },
-    { q: 'How many layers of builder gel should I apply?', a: 'Typically 1–2 layers for a natural nail overlay, or 2–3 layers for extensions or significant nail strengthening. The goal is enough product to create strength without creating a rigid structure so thick it can\'t flex with the natural nail. Always follow your product manufacturer\'s guidance.' },
-    { q: 'Does BIAB work for nail extensions?', a: 'Yes — builder gel can be applied over nail forms or tips to create extensions, though the technique is different from gel-X tips or acrylic. Building length with BIAB requires more skill than a flat overlay application, as you need to create and maintain a structural apex without it running off the form.' },
+    { q: "What's the difference between builder gel and regular gel polish?", a: "Gel polish is a thin, pigmented gel that adds colour but little strength. Builder gel is thicker and designed to add structure, overlay the natural nail or create length. BIAB, short for Builder in a Bottle, is builder gel packaged in a polish-style bottle so it is easier to apply than pot builder gel." },
+    { q: "How many layers of builder gel should I apply?", a: "Most natural nail overlays use a thin base layer plus one structure layer. Weaker nails or extensions may need an extra thin layer. The goal is enough product for strength without a thick, rigid layer. Always follow your product's guidance." },
+    { q: "Does BIAB work for nail extensions?", a: "Yes. Builder gel can be applied over forms or tips to create length, but it takes more skill than an overlay because you need to build and hold an apex without the product running off the form. Many techs learn overlays first, then move on to extensions." },
+    { q: "Do you need primer with builder gel?", a: "It depends on the brand. Some builder gels are designed to go straight onto a dehydrated nail, while others ask for an acid-free primer or bonder first. Check your product's instructions." },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
@@ -93,6 +106,19 @@ registerArticle({
         <ArticleTip>The key with self-levelling: apply and guide, then leave it. Overworking builder gel creates streaks and brush marks. Trust the product.</ArticleTip>
       </section>
 
+      <section id="floating">
+        <h2 className="font-serif text-2xl font-bold mb-4">The floating technique</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">Floating is a common way to build structure with BIAB without dragging product into the cuticle:</p>
+        <ArticleSteps steps={[
+          { title: 'Apply a thin base layer and cure', body: 'Some brands want this layer cured, others leave it uncured as a slip layer. Follow your product.' },
+          { title: 'Pick up a bead of builder gel', body: 'Let a bead form at the tip of the bottle brush, or pick one up from the pot.' },
+          { title: 'Drop the bead into the apex zone', body: 'Place it in the centre of the nail, slightly toward the cuticle, without pressing the brush onto the nail.' },
+          { title: 'Float it into place', body: 'Hover the brush just above the gel and guide it toward the cuticle and sidewalls, keeping the small gap. The brush should barely touch the nail plate.' },
+          { title: 'Turn the finger upside down for a few seconds', body: 'Many techs flip the hand briefly so gravity pulls the gel into a smooth arch, then turn it back and check before curing.' },
+        ]} />
+        <ArticleTip>Do one nail at a time when you are learning. Builder gel keeps moving until it is cured, so leaving several nails uncured makes it hard to keep the apex in place.</ArticleTip>
+      </section>
+
       <section id="filing-finishing">
         <h2 className="font-serif text-2xl font-bold mb-4">Filing and finishing</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">After cure:</p>
@@ -131,6 +157,18 @@ registerArticle({
             ['Uneven surface requiring extensive filing', 'Too much product in some areas', 'Apply thinner layers; the first layer is a base, not the structure'],
           ]}
         />
+      </section>
+
+      <section id="checklist">
+        <h2 className="font-serif text-2xl font-bold mb-4">Builder gel checklist</h2>
+        <ArticleChecklist title="Check each nail before the final top coat" items={[
+          'Side view: one smooth curve with the highest point in the apex zone, not at the cuticle or tip.',
+          'Front view: an even C-curve, with no flat spots or dips.',
+          'Cuticle and sidewalls: thin, smooth edges with no ledge you can feel.',
+          'Free edge: capped and not thicker than the rest of the nail.',
+          'Surface: no brush marks or dents left that the top coat will magnify.',
+        ]} />
+        <p className="text-gray-700 leading-relaxed">For apex placement in more detail, see <Link to="/blog/how-to-build-nail-apex" className="underline text-[#F52B8C]">how to build a nail apex</Link>, and for the mistakes that cause lifting, <Link to="/blog/common-builder-gel-mistakes" className="underline text-[#F52B8C]">common builder gel mistakes</Link>.</p>
       </section>
     </div>
   ),

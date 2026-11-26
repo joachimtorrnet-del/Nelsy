@@ -1,5 +1,5 @@
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'how-to-prevent-flooded-cuticles',
@@ -13,19 +13,30 @@ registerArticle({
   heroImageAlt: 'How to prevent flooded cuticles',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Education Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "To prevent flooded cuticles, use less product on the brush, start about 1 mm away from the cuticle and sidewalls, and check every nail before it goes under the lamp.",
+    detail: "Flooding happens when product touches the skin around the nail. Once it is cured on skin it will lift, so fixing it before curing is the only reliable fix.",
+    points: [
+      { label: "Main cause", text: "An overloaded brush in the cuticle area." },
+      { label: "Quick fix", text: "Remove product from the skin with a clean brush or orange wood stick before curing." },
+      { label: "Highest risk", text: "Gel polish and top coat, because they are the most fluid." },
+    ],
+  },
   toc: [
     { id: 'why-it-happens', label: 'Why cuticles get flooded' },
     { id: 'brush-loading', label: 'Brush loading technique' },
     { id: 'application-technique', label: 'Application technique' },
     { id: 'fixing-before-cure', label: 'Fixing flooding before it cures' },
     { id: 'product-types', label: 'Product-specific notes' },
+    { id: 'checklist', label: 'Flood-free checklist' },
   ],
   relatedSlugs: ['why-does-gel-polish-peel-off', 'why-do-acrylic-nails-lift', 'how-to-apply-gel-polish-without-streaks', 'nail-prep-guide'],
   faq: [
-    { q: 'How close to the cuticle should I apply nail product?', a: 'The standard guidance is approximately 0.5–1mm from the cuticle and sidewall skin. This gap is small enough to look neat and professional but far enough to avoid flooding. With experience, you\'ll naturally stay within this zone.' },
-    { q: 'Will flooded cuticles always cause lifting?', a: 'Yes — product on skin always eventually lifts because skin cells shed constantly. Even if flooding isn\'t immediately visible as a problem, the lifted edge will become apparent within days and can spread.' },
+    { q: "How close to the cuticle should I apply nail product?", a: "A common guideline is roughly 0.5 to 1 mm away from the cuticle and sidewall skin. The gap is small enough to look neat and far enough to avoid flooding. Most products will settle slightly toward the skin after placement, which is why starting a little away from it works." },
+    { q: "Will flooded cuticles always cause lifting?", a: "In most cases, yes. Product does not bond to skin, and skin keeps growing and shedding, so a flooded edge usually lifts within days and can let water and debris in underneath. That is why it is worth fixing flooding before curing rather than hoping it holds." },
+    { q: "Can I fix a flooded cuticle after curing?", a: "Only by carefully filing the cured product back off the skin and the edge, which risks damaging the skin and leaves a weak edge. If the flood is large, it is usually better to remove that nail and redo it." },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
@@ -53,6 +64,13 @@ registerArticle({
 
       <section id="application-technique">
         <h2 className="font-serif text-2xl font-bold mb-4">Application technique</h2>
+        <ArticleSteps steps={[
+          { title: 'Wipe the brush on one side', body: 'Take a small amount of product. A brush that holds a bead at the tip is overloaded for the cuticle area.' },
+          { title: 'Place the brush about 1 mm from the cuticle', body: 'Touch down in the centre of the nail just below the cuticle line, pause, and let the product settle toward the skin on its own.' },
+          { title: 'Pull toward the free edge', body: 'Stroke down the centre, then do each sidewall, keeping the same small gap along the sides.' },
+          { title: 'Check the margins under good light', body: 'Look at the nail from the side and from above before curing. This takes seconds and saves a redo.' },
+          { title: 'Flash cure if the product moves', body: 'If a product keeps creeping, a short flash cure after each nail stops it from travelling while you work on the next one.' },
+        ]} />
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li><strong>Place, don't drag:</strong> Place the brush approximately 1mm from the cuticle and press gently, then stroke toward the free edge. Don't start at the cuticle and drag — the initial contact zone is where flooding is most likely</li>
           <li><strong>Use a stop-and-place motion at the cuticle area:</strong> Place the brush near the cuticle, pause, and let the product settle before stroking. This gives you a fraction of a second to check your placement before committing</li>
@@ -82,6 +100,28 @@ registerArticle({
           <li><strong>Acrylic:</strong> Flooding risk is highest with a wet bead; keep your ratio appropriately dry and place the bead away from the cuticle, then press toward it</li>
           <li><strong>Top coat:</strong> Top coat is often where techs flood after being careful through the other layers — keep top coat application as disciplined as base coat</li>
         </ul>
+        <ArticleTable
+          headers={['Product', 'Flood risk', 'Main habit to fix']}
+          rows={[
+            ['Gel polish base and colour', 'High', 'Wipe the brush more and keep coats thin'],
+            ['Top coat', 'High', 'Use the same gap as the base coat'],
+            ['Builder gel / BIAB', 'Medium', 'Place the bead in the centre and let it float toward the cuticle'],
+            ['Acrylic', 'Medium', 'Use a slightly drier bead in the cuticle zone'],
+            ['Gel-X adhesive gel', 'Medium', 'Use less adhesive so it does not squeeze out when the tip is pressed on'],
+          ]}
+        />
+      </section>
+
+      <section id="checklist">
+        <h2 className="font-serif text-2xl font-bold mb-4">Flood-free checklist</h2>
+        <ArticleChecklist title="Before every cure" items={[
+          'There is a visible thin gap between product and skin all around the nail.',
+          'No product is sitting in the sidewall grooves.',
+          'The free edge is capped.',
+          'The finger is held level, not tilted toward the cuticle.',
+          'Any product on the skin has been removed with a clean brush or orange wood stick.',
+        ]} />
+        <p className="text-gray-700 leading-relaxed">If flooding is a recurring problem, slow down only on the cuticle area. Most techs do not need to work slower overall, just more carefully in the first 2 mm of the nail.</p>
       </section>
     </div>
   ),

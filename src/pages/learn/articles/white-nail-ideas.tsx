@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
+import { ArticleImage, ArticleTable, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'white-nail-ideas',
@@ -13,14 +14,25 @@ registerArticle({
   heroImageAlt: '50 white nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The best white nail ideas are milky white for a soft everyday look, bright opaque white for contrast, a white French for classic sets and white chrome for something modern.",
+    detail: "White works on every length and shape, but the shade matters: warm ivory, cool chalk and sheer milky white look very different on the hand.",
+    points: [
+      { label: "Best for short nails", text: "Milky white or sheer glass white on short square or oval." },
+      { label: "Best for contrast", text: "Bright opaque white, especially on deeper skin tones." },
+      { label: "Best for a modern twist", text: "White chrome or a glazed donut finish." },
+    ],
+  },
   toc: [
     { id: 'classic-white', label: 'Classic and minimal white' },
     { id: 'soft-white', label: 'Soft and off-white shades' },
     { id: 'white-nail-art', label: 'White nail art designs' },
     { id: 'white-effects', label: 'White with effects' },
     { id: 'white-mixed', label: 'White mixed with colour' },
+    { id: 'which-white', label: 'Which white suits which skin tone' },
+    { id: 'white-mistakes', label: 'Getting white nails right' },
   ],
   relatedSlugs: ['black-nail-ideas', 'pink-nail-ideas', 'minimalist-nail-ideas', 'nail-colors-for-skin-undertone'],
   faq: [
@@ -31,6 +43,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="classic-white">
         <h2 className="font-serif text-2xl font-bold mb-4">Classic and minimal white</h2>
+        <ArticleImage src="photo-1633955726992-2b7c0d2d2a69" alt="Bright white nail polish on dark skin hands" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Bright opaque white — clean, crisp, graphic</li>
           <li>White on short square nails — the most modern minimalist white look</li>
@@ -47,6 +60,7 @@ registerArticle({
 
       <section id="soft-white">
         <h2 className="font-serif text-2xl font-bold mb-4">Soft and off-white shades</h2>
+        <ArticleImage src="photo-1754799670410-b282791342c3" alt="Long coffin-shaped nails in white and soft pink" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Milk white — slightly warm, creamy, softer than pure white</li>
           <li>Ivory — warm off-white; flattering on warm undertones</li>
@@ -63,6 +77,7 @@ registerArticle({
 
       <section id="white-nail-art">
         <h2 className="font-serif text-2xl font-bold mb-4">White nail art designs</h2>
+        <ArticleImage src="photo-1772322586785-3a34772cbc61" alt="White nails with marbled purple and black tips" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>White with black abstract lines</li>
           <li>White with gold geometric detailing</li>
@@ -95,6 +110,7 @@ registerArticle({
 
       <section id="white-mixed">
         <h2 className="font-serif text-2xl font-bold mb-4">White mixed with colour</h2>
+        <ArticleImage src="photo-1772322586702-73125782bd99" alt="Long nails with a blue to white ombré gradient" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>White and black — graphic, high-contrast, editorial</li>
           <li>White and pastel ombré — soft gradient from white to any pastel</li>
@@ -107,6 +123,32 @@ registerArticle({
           <li>White and nude mix — understated and polished</li>
           <li>White with a neon accent nail — graphic contrast</li>
         </ul>
+      </section>
+
+      <section id="which-white">
+        <h2 className="font-serif text-2xl font-bold mb-4">Which white suits which skin tone</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">White is not one colour. The undertone of the white changes how it looks against the skin, so it is worth swatching two or three at consultation.</p>
+        <ArticleTable
+          headers={['White shade', 'Undertone', 'Often flattering on']}
+          rows={[
+            ['Bright opaque white', 'Neutral to cool', 'Deep and medium skin tones, for strong contrast'],
+            ['Milky or sheer white', 'Soft, slightly pink', 'Most skin tones; the most forgiving choice'],
+            ['Ivory, vanilla, coconut', 'Warm', 'Warm and olive undertones'],
+            ['Chalk or cloud white', 'Cool, slightly grey', 'Cool and pink undertones'],
+          ]}
+        />
+        <p className="text-gray-700 leading-relaxed">These are starting points, not rules. More on undertones in <Link to="/blog/nail-colors-for-skin-undertone" className="underline text-[#F52B8C]">nail colours for every skin undertone</Link>.</p>
+      </section>
+
+      <section id="white-mistakes">
+        <h2 className="font-serif text-2xl font-bold mb-4">Getting white nails right</h2>
+        <ArticleChecklist title="Tips for a clean white set" items={[
+          'Use thin coats: white is heavily pigmented, and thick coats can cure poorly and wrinkle.',
+          'Expect the first coat to look streaky: opacity comes with the second or third thin coat.',
+          'Keep the cuticle line very neat: white shows every flood and wobble.',
+          'Clean brushes well: a trace of a darker colour in the brush shows up straight away in white.',
+          'Use a non-yellowing top coat if your brand offers one, and tell clients that turmeric, hair dye and self tan can stain white.',
+        ]} />
         <p className="text-gray-700 mt-4 leading-relaxed">More inspo: <Link to="/blog/minimalist-nail-ideas" className="underline text-[#F52B8C]">minimalist nail ideas</Link> · <Link to="/blog/black-nail-ideas" className="underline text-[#F52B8C]">black nail ideas</Link>.</p>
       </section>
     </div>
