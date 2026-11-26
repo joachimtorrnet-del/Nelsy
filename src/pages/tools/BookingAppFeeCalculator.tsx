@@ -61,8 +61,9 @@ export default function BookingAppFeeCalculator() {
     },
     {
       name: 'Nelsy', plan: yearly ? 'Billed yearly' : 'Billed monthly', cur: '$', subscription: yearly ? 25 : 29,
-      online: fee(online, stripePct, stripeFixed), inPerson: fee(inPerson, stripePct, stripeFixed), marketplace: 0,
-      rates: `${yearly ? '$25/month billed yearly' : '$29/month'} · 0% Nelsy commission · your Stripe rate ${stripePct}% + $${stripeFixed.toFixed(2)}`,
+      // In person = pay on arrival: paid at the studio (cash or your own card reader), not processed by Nelsy
+      online: fee(online, stripePct, stripeFixed), inPerson: 0, marketplace: 0,
+      rates: `${yearly ? '$25/month billed yearly' : '$29/month'} · 0% Nelsy commission · online: your Stripe rate ${stripePct}% + $${stripeFixed.toFixed(2)} · in person: paid at the studio, nothing charged by Nelsy`,
       marketplaceNote: 'No marketplace fee: clients book from your own page.',
     },
   ];
@@ -104,7 +105,7 @@ export default function BookingAppFeeCalculator() {
             </div>
           </div>
           <p className="text-xs text-gray-400 leading-relaxed">
-            For Nelsy, your Stripe rate is applied to every appointment, online and in person, to keep the estimate conservative. Payments you take in cash would cost less.
+            For Nelsy, your Stripe rate applies to online payments. In-person payments use pay on arrival: clients pay you at the studio in cash or with your own card reader, and Nelsy charges nothing on them (your card reader&apos;s own fees, if you use one, are not included).
           </p>
         </div>
       </div>
@@ -183,7 +184,7 @@ export default function BookingAppFeeCalculator() {
     >
       <Prose id="formula" title="How the cost is calculated">
         <p><strong>Online fees = online appointments × (average price × online rate + fixed fee).</strong> <strong>In-person fees = in-person appointments × (average price × in-person rate + fixed fee).</strong></p>
-        <p><strong>Marketplace fees</strong> apply to first visits from new marketplace clients, where a rate is published. <strong>Monthly cost = subscription + online fees + in-person fees + marketplace fees.</strong> For Nelsy, the Stripe rate you enter is applied to every appointment.</p>
+        <p><strong>Marketplace fees</strong> apply to first visits from new marketplace clients, where a rate is published. <strong>Monthly cost = subscription + online fees + in-person fees + marketplace fees.</strong> For Nelsy, the Stripe rate you enter applies to online payments; in-person payments are paid at the studio and not processed by Nelsy.</p>
       </Prose>
 
       <Prose id="examples" title="Two worked examples">
@@ -194,7 +195,7 @@ export default function BookingAppFeeCalculator() {
             <li><strong>Fresha:</strong> €14.95 subscription + online 40 × (€60 × 1.29% + €0.15) = €36.96 + in person 40 × (€60 × 0.59% + €0.15) = €20.16. Total <strong>€72.07</strong>, plus marketplace fees (rate not published).</li>
             <li><strong>Booksy US:</strong> $29.99 subscription + online 40 × ($60 × 2.69% + $0.30) = $76.56 + in person 40 × ($60 × 2.49% + $0.10) = $63.76 + Boost 8 × ($60 × 30%) = $144.00. Total <strong>$314.31</strong>.</li>
             <li><strong>GlossGenius Standard:</strong> $24 subscription + online 40 × ($60 × 3.4% + $0.15) = $87.60 + in person 40 × ($60 × 2.4% + $0.15) = $63.60. Total <strong>$175.20</strong>.</li>
-            <li><strong>Nelsy (monthly):</strong> $29 subscription + Stripe 80 × ($60 × 2.9% + $0.30) = $163.20. Total <strong>$192.20</strong>, or $188.20 billed yearly.</li>
+            <li><strong>Nelsy (monthly):</strong> $29 subscription + Stripe online 40 × ($60 × 2.9% + $0.30) = $81.60; the 40 in-person payments are paid at the studio, nothing charged by Nelsy. Total <strong>$110.60</strong>, or $106.60 billed yearly.</li>
           </ul>
         </div>
         <div className="bg-white rounded-xl border border-gray-200 p-5 space-y-2">
