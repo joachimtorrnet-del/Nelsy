@@ -28,6 +28,7 @@ function toMerchant(id: string, p: Persona): Omit<Merchant, 'theme_preset' | 'co
     bio: p.bio,
     specialty: p.specialty,
     location: p.location,
+    currency: 'USD',
     instagram: p.slug,
     tiktok: p.slug,
     logo_url: u(p.avatar, 400, 400),
@@ -44,7 +45,7 @@ function toMerchant(id: string, p: Persona): Omit<Merchant, 'theme_preset' | 'co
 // Nails, Lashes, Brows, Makeup, Hair, Skin Care, Massage.
 const PERSONAS: Record<string, Persona> = {
   classic: {
-    name: 'Inès Nails', slug: 'inesnails', specialty: 'Nail artist', location: 'Paris 11e',
+    name: 'Inès Nails', slug: 'inesnails', specialty: 'Nail artist', location: 'Brooklyn, NY',
     bio: 'Soft gel sets and hand-painted details.',
     avatar: '1534528741775-53994a69daeb',
     services: [
@@ -54,7 +55,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   gallery: {
-    name: 'The Lash Lab', slug: 'thelashlab', specialty: 'Lash artist', location: 'Nice',
+    name: 'The Lash Lab', slug: 'thelashlab', specialty: 'Lash artist', location: 'Miami, FL',
     bio: 'Lashes mapped to your eye shape.',
     avatar: '1534751516642-a1af1ef26a56',
     services: [
@@ -64,7 +65,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   blush: {
-    name: 'Glow Skin', slug: 'glowskin', specialty: 'Esthetician', location: 'Bordeaux',
+    name: 'Glow Skin', slug: 'glowskin', specialty: 'Esthetician', location: 'Austin, TX',
     bio: 'Facials and skin rituals for a calm, healthy glow.',
     avatar: '1672794776762-18dddc72982e',
     services: [
@@ -74,7 +75,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   atelier: {
-    name: 'Atelier Awa', slug: 'atelierawa', specialty: 'Hair stylist', location: 'Paris 18e',
+    name: 'Atelier Awa', slug: 'atelierawa', specialty: 'Hair stylist', location: 'Atlanta, GA',
     bio: 'Cuts, blowouts and colour for every texture.',
     avatar: '1632765854612-9b02b6ec2b15',
     services: [
@@ -84,7 +85,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   noir: {
-    name: 'Noir Nail Club', slug: 'noirnailclub', specialty: 'Nail artist', location: 'Lyon',
+    name: 'Noir Nail Club', slug: 'noirnailclub', specialty: 'Nail artist', location: 'Chicago, IL',
     bio: 'Bold sets, chrome and statement nail art.',
     avatar: '1506863530036-1efeddceb993',
     services: [
@@ -94,7 +95,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   minimal: {
-    name: 'Lina Brows', slug: 'linabrows', specialty: 'Brow artist', location: 'Lyon',
+    name: 'Lina Brows', slug: 'linabrows', specialty: 'Brow artist', location: 'Dallas, TX',
     bio: 'Natural brows that frame your face.',
     avatar: '1551184451-76b762941ad6',
     services: [
@@ -104,7 +105,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   midnight: {
-    name: 'Clara Beauty', slug: 'clarabeauty', specialty: 'Makeup artist', location: 'Paris 6e',
+    name: 'Clara Beauty', slug: 'clarabeauty', specialty: 'Makeup artist', location: 'Los Angeles, CA',
     bio: 'Editorial and bridal makeup, skin first.',
     avatar: '1568038479111-87bf80659645',
     services: [
@@ -114,7 +115,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   split: {
-    name: 'Studio Nacre', slug: 'studionacre', specialty: 'Nail technician', location: 'Nantes',
+    name: 'Studio Nacre', slug: 'studionacre', specialty: 'Nail technician', location: 'Seattle, WA',
     bio: 'Soft, natural nails in a calm studio.',
     avatar: '1531123897727-8f129e1688ce',
     services: [
@@ -124,7 +125,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   muse: {
-    name: 'Maison Sérénité', slug: 'maisonserenite', specialty: 'Massage therapist', location: 'Annecy',
+    name: 'Maison Sérénité', slug: 'maisonserenite', specialty: 'Massage therapist', location: 'Denver, CO',
     bio: 'Slow, restorative massages in a quiet studio.',
     avatar: '1589525231707-f2de2428f59c', cover: '1600334089648-b0d9d3028eb2',
     services: [
@@ -134,7 +135,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   glow: {
-    name: 'Glow by Amara', slug: 'glowbyamara', specialty: 'Lash and brow artist', location: 'Paris 9e',
+    name: 'Glow by Amara', slug: 'glowbyamara', specialty: 'Lash and brow artist', location: 'New York, NY',
     bio: 'Lashes, brows and soft glam.',
     avatar: '1589156191108-c762ff4b96ab',
     services: [
@@ -144,7 +145,7 @@ const PERSONAS: Record<string, Persona> = {
     ],
   },
   coach: {
-    name: 'Maya Glam', slug: 'mayaglam', specialty: 'Makeup artist', location: 'Marseille',
+    name: 'Maya Glam', slug: 'mayaglam', specialty: 'Makeup artist', location: 'Houston, TX',
     bio: 'Bridal and event makeup that lasts all night.',
     avatar: '1594465919760-441fe5908ab0',
     services: [

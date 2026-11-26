@@ -407,7 +407,7 @@ export default function LandingPremium() {
             name: 'Nelsy',
             url: 'https://getnelsy.com',
             logo: 'https://getnelsy.com/og-image.png',
-            sameAs: ['https://www.instagram.com/getnelsy'],
+            sameAs: ['https://www.instagram.com/nelsy.app'],
           },
           {
             '@context': 'https://schema.org',
