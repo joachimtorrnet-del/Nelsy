@@ -74,6 +74,11 @@ async function fetchIndexableStudios() {
 const studioRoutes = await fetchIndexableStudios();
 const TODAY = new Date().toISOString().slice(0, 10);
 
+// Glossary term pages: slugs read from src/lib/glossary.ts (one `slug: '...'` per term)
+const GLOSSARY_FILE = resolve(__dirname, '../src/lib/glossary.ts');
+const GLOSSARY_ROUTES = [...readFileSync(GLOSSARY_FILE, 'utf8').matchAll(/^\s*slug:\s*'([a-z0-9-]+)'/gm)]
+  .map((m) => ({ path: `/glossary/${m[1]}`, priority: '0.6', changefreq: 'monthly', lastmod: '2026-11-26' }));
+
 // SEO pages and tool pages that are always prerendered / in the sitemap.
 // These don't need to be article files — they're standalone pages.
 // lastmod for static pages: use a known stable date so rebuilds don't
@@ -82,6 +87,11 @@ const STATIC_SEO_ROUTES = [
   { path: '/blog',                                           priority: '0.9', changefreq: 'weekly',  lastmod: TODAY },
   { path: '/tools/instagram-engagement-calculator', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-24' },
   { path: '/tools/creator-rate-calculator', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-24' },
+  { path: '/tools/deposit-calculator', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-26' },
+  { path: '/tools/no-show-cost-calculator', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-26' },
+  { path: '/tools/booking-app-fee-calculator', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-26' },
+  { path: '/glossary', priority: '0.7', changefreq: 'monthly', lastmod: '2026-11-26' },
+  ...GLOSSARY_ROUTES,
   { path: '/pricing',                                        priority: '0.9', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/features/bookings', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/features/deposits', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
