@@ -14,13 +14,23 @@ registerArticle({
   heroImageAlt: 'Nail file grit guide for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-20',
+  tldr: {
+    answer: "Use 180 to 240 grit on natural nails, 100 to 180 grit for shaping acrylic and hard gel, and 240 grit or finer for smoothing and finishing.",
+    detail: "The lower the grit number, the coarser the file. Coarse grits remove product quickly; fine grits shape and smooth without damaging the natural nail.",
+    points: [
+      { label: "Natural nails", text: "180 to 240 grit, or a glass file." },
+      { label: "Acrylic and hard gel", text: "100 to 180 grit for shaping." },
+      { label: "Finishing", text: "240 grit and above, then a buffer if you want shine." },
+    ],
+  },
   toc: [
     { id: 'what-grit-means', label: 'What grit numbers mean' },
     { id: 'grit-chart', label: 'Nail file grit chart' },
     { id: 'file-types', label: 'File types explained' },
     { id: 'which-grit-when', label: 'Which grit to use for each task' },
+    { id: 'grit-mistakes', label: 'Common grit mistakes' },
     { id: 'hygiene', label: 'File hygiene and replacement' },
   ],
   relatedSlugs: ['nail-drill-bits-explained', 'nail-prep-guide', 'how-to-prevent-nail-lifting'],
@@ -88,6 +98,18 @@ registerArticle({
             ['Remove shine from gel for infill', '180 grit lightly over existing product'],
           ]}
         />
+      </section>
+
+      <section id="grit-mistakes">
+        <h2 className="font-serif text-2xl font-bold mb-4">Common grit mistakes</h2>
+        <ArticleChecklist title="Avoid these" items={[
+          'Using 100 grit on natural nails: it is too coarse and can thin and damage the nail plate.',
+          'Buffing the natural nail more than needed before gel: you only need to remove the shine, not thin the nail.',
+          'Filing natural nails in a fast back-and-forth sawing motion: file in one direction, from the side toward the centre, to reduce splitting.',
+          'Going straight from a coarse file to top coat: work down through finer grits so scratches do not show under the finish.',
+          'Keeping a file in use after it has gone smooth: you press harder to compensate, which creates heat and uneven shaping.',
+        ]} />
+        <ArticleTip>If you only keep three grits at your desk, make them 100/180 for product, 180/240 for natural nails and a fine buffer for finishing.</ArticleTip>
       </section>
 
       <section id="hygiene">

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
+import { ArticleImage, ArticleTable, ArticleSteps, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'chrome-nail-ideas',
@@ -13,14 +14,25 @@ registerArticle({
   heroImageAlt: '50 chrome nail ideas',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Inspo Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The best chrome nail ideas are mirror silver for maximum impact, rose gold or gold chrome for a warm glam look, chrome French tips for subtle shine and glazed chrome for a soft finish.",
+    detail: "Chrome powder is rubbed onto a cured gel layer to create a mirror finish. The base colour underneath changes the result, so the same powder can look bold or soft.",
+    points: [
+      { label: "Best for short nails", text: "Chrome French tips or glazed white chrome." },
+      { label: "Best for long nails", text: "Full mirror silver or gold chrome on coffin or almond." },
+      { label: "Best for a subtle look", text: "Rose gold or champagne chrome over a nude base." },
+    ],
+  },
   toc: [
     { id: 'silver-chrome', label: 'Silver and white chrome' },
     { id: 'gold-chrome', label: 'Gold and rose gold chrome' },
     { id: 'colour-chrome', label: 'Colour chrome' },
     { id: 'chrome-nail-art', label: 'Chrome with nail art' },
     { id: 'chrome-effects', label: 'Chrome with other effects' },
+    { id: 'chrome-vs', label: 'Chrome vs aurora vs cat eye' },
+    { id: 'how-to-chrome', label: 'How to apply chrome powder' },
   ],
   relatedSlugs: ['how-to-make-chrome-nails-last-longer', 'ombre-nail-ideas', 'nail-trends-2027', 'luxury-nail-ideas'],
   faq: [
@@ -47,6 +59,7 @@ registerArticle({
 
       <section id="gold-chrome">
         <h2 className="font-serif text-2xl font-bold mb-4">Gold and rose gold chrome</h2>
+        <ArticleImage src="photo-1770210257340-dc2b0f44642a" alt="Hand with a metallic gold manicure on almond nails" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Gold mirror chrome — warm, luxurious, summer to winter</li>
           <li>Rose gold chrome — warm-pink metallic; perennially popular</li>
@@ -79,6 +92,7 @@ registerArticle({
 
       <section id="chrome-nail-art">
         <h2 className="font-serif text-2xl font-bold mb-4">Chrome with nail art</h2>
+        <ArticleImage src="photo-1777287216954-2b4b22bb6bf2" alt="Long nails with metallic accents and hand-painted nail art" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Chrome base with black abstract line art over the top</li>
           <li>Chrome accent nail on a coordinated colour set</li>
@@ -107,6 +121,37 @@ registerArticle({
           <li>Chrome with a velvet matte accent nail — contrast of finishes</li>
           <li>Chrome with botanical nail art on a contrasting nail</li>
         </ul>
+      </section>
+
+      <section id="chrome-vs">
+        <h2 className="font-serif text-2xl font-bold mb-4">Chrome vs aurora vs cat eye</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">Clients often use "chrome" for any shiny metallic nail. These are the three effects they usually mean:</p>
+        <ArticleTable
+          headers={['Effect', 'What it looks like', 'How it is made']}
+          rows={[
+            ['Chrome', 'Solid mirror finish in one colour', 'Chrome powder rubbed onto a cured no-wipe top coat or a cured gel layer'],
+            ['Aurora / glazed', 'Soft, shifting pearl or rainbow sheen', 'Aurora or pearl powder rubbed onto the same kind of surface'],
+            ['Cat eye', 'A band of light that moves when the hand moves', 'Magnetic gel with metal particles, pulled into shape with a magnet before curing'],
+          ]}
+        />
+      </section>
+
+      <section id="how-to-chrome">
+        <h2 className="font-serif text-2xl font-bold mb-4">How to apply chrome powder</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">Exact steps vary by brand, so follow your powder's instructions. The general process looks like this:</p>
+        <ArticleSteps steps={[
+          { title: 'Apply and cure your colour', body: 'The base colour changes the result: black gives the most mirror-like silver, nude or white gives a softer, lighter chrome.' },
+          { title: 'Apply the top coat the brand recommends', body: 'Most chrome powders are rubbed onto a cured no-wipe top coat. Cure fully.' },
+          { title: 'Rub in the powder', body: 'Use a silicone tool or sponge applicator and buff the powder in with light pressure until the surface turns reflective.' },
+          { title: 'Remove loose powder and seal the edges', body: 'Brush off excess, then cap the free edge with top coat. Unsealed edges are where chrome wears first.' },
+          { title: 'Apply a final top coat and cure', body: 'One or two thin layers protect the chrome. Gloss keeps the mirror effect; matte gives a satin metal look.' },
+        ]} />
+        <ArticleChecklist title="Why chrome looks dull or patchy" items={[
+          'The surface under the powder was tacky or not fully cured.',
+          'Too little rubbing: the mirror effect needs firm, even buffing.',
+          'Dust or fingerprints on the nail before the powder went on.',
+          'Top coat applied too thick, which can wrinkle or blur the mirror finish.',
+        ]} />
         <p className="text-gray-700 mt-4 leading-relaxed">Technique guide: <Link to="/blog/how-to-make-chrome-nails-last-longer" className="underline text-[#F52B8C]">how to make chrome nails last longer</Link>.</p>
       </section>
     </div>

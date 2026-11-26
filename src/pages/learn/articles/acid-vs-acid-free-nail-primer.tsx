@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'acid-vs-acid-free-nail-primer',
@@ -14,14 +14,25 @@ registerArticle({
   heroImageAlt: 'Acid vs acid-free nail primer',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "Use acid primer mainly for traditional acrylic when your system calls for it, and acid-free primer for most gel, builder gel and Gel-X systems.",
+    detail: "Acid primer uses methacrylic acid and must be kept off the skin. Acid-free primer is gentler and is the standard in most gel systems. The right choice is always the one your product brand specifies.",
+    points: [
+      { label: "Acrylic", text: "Usually acid primer, or acid-free if your brand recommends it." },
+      { label: "Gel, BIAB, Gel-X", text: "Acid-free primer or the brand's own bonder." },
+      { label: "Both", text: "Thin layer, nail plate only, fully dry before the next step." },
+    ],
+  },
   toc: [
     { id: 'acid-primer', label: 'Acid primer (methacrylic acid)' },
     { id: 'non-acid-primer', label: 'Non-acid / acid-free primer' },
     { id: 'comparison', label: 'Side-by-side comparison' },
     { id: 'safety', label: 'Safety considerations' },
     { id: 'which-to-use', label: 'Which to use for your system' },
+    { id: 'how-to-apply', label: 'How to apply primer' },
+    { id: 'mistakes', label: 'Common primer mistakes' },
   ],
   relatedSlugs: ['nail-dehydrator-vs-primer', 'common-gel-x-mistakes', 'common-builder-gel-mistakes', 'acrylic-application-step-by-step'],
   faq: [
@@ -98,6 +109,29 @@ registerArticle({
           ]}
         />
         <p className="text-gray-700 mt-4 leading-relaxed">These are general tendencies, not universal rules — your specific product system's training is the authority. For more on prep products: <Link to="/blog/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer — what's the difference</Link>.</p>
+      </section>
+
+      <section id="how-to-apply">
+        <h2 className="font-serif text-2xl font-bold mb-4">How to apply primer</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">Always follow your brand's instructions. The general order for most systems is:</p>
+        <ArticleSteps steps={[
+          { title: 'Finish prep first', body: 'Push back and remove cuticle from the nail plate, remove shine with a fine file, and brush away all dust.' },
+          { title: 'Apply dehydrator', body: 'Dehydrator goes on before primer, and lets the primer reach a clean, dry nail plate.' },
+          { title: 'Wipe excess primer off the brush', body: 'You need very little. A brush that is too wet makes it easy to touch skin.' },
+          { title: 'Apply a thin layer to the nail plate only', body: 'Dab or stroke it on, staying clear of the cuticle and sidewalls. Acid primer usually looks chalky white as it dries.' },
+          { title: 'Let it dry fully', body: 'Wait until the primer has dried, or reached the tacky stage your product describes, before applying the next product.' },
+        ]} />
+      </section>
+
+      <section id="mistakes">
+        <h2 className="font-serif text-2xl font-bold mb-4">Common primer mistakes</h2>
+        <ArticleChecklist title="Avoid these" items={[
+          'Using more primer to fix lifting: extra layers do not add adhesion and can cause problems of their own.',
+          'Mixing primers and systems from different brands without checking compatibility.',
+          'Touching the nail plate after priming, which puts skin oils back on the surface.',
+          'Applying product before the primer is dry.',
+          'Leaving the primer bottle open, which can let it evaporate and change how it performs.',
+        ]} />
       </section>
     </div>
   ),

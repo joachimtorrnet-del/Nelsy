@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleImage } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleImage, ArticleTable, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'coffin-nail-ideas',
@@ -14,20 +14,32 @@ registerArticle({
   heroImageAlt: '50 coffin nail ideas to save for your next set',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The best coffin nail ideas right now are milky white, nude French, chrome tips and soft ombre on a medium to long tapered shape.",
+    detail: "Coffin nails need some length to show the taper, so most designs below are built on gel extensions, Gel-X or acrylic. Pick the design by length first, then by finish.",
+    points: [
+      { label: "Best for short coffin", text: "Nude pink gel, milky white jelly or a thin micro French." },
+      { label: "Best for long coffin", text: "Pink-to-white ombre, mirror chrome or detailed nail art on the flat tip." },
+      { label: "Best for a first set", text: "Nude coffin with a glossy finish: clean, easy to wear and easy to change next time." },
+    ],
+  },
   toc: [
     { id: 'classic', label: 'Classic coffin styles' },
     { id: 'ombre', label: 'Ombre and gradient coffin nails' },
     { id: 'chrome-metallic', label: 'Chrome and metallic styles' },
     { id: 'nail-art', label: 'Nail art on coffin nails' },
     { id: 'seasonal-bold', label: 'Seasonal and bold ideas' },
+    { id: 'length-guide', label: 'Coffin length and product guide' },
+    { id: 'mistakes', label: 'Common coffin nail mistakes' },
     { id: 'why-coffin', label: 'Why the coffin shape is so popular' },
   ],
   relatedSlugs: ['square-nail-ideas', 'french-tip-nail-ideas', 'summer-nail-ideas', 'trendy-nail-designs'],
   faq: [
-    { q: 'What\'s the difference between coffin and ballerina nails?', a: 'Coffin and ballerina are the same shape — tapered sides with a flat, squared-off tip. "Coffin" is the more commonly used name internationally; "ballerina" refers to the shape\'s resemblance to a ballet pointe shoe. Both terms describe the same shape.' },
-    { q: 'How long do coffin nails need to be?', a: 'Coffin nails work best at medium-to-long lengths — the tapered shape needs enough length to show the full silhouette. Very short coffin nails lose the characteristic shape and may not look like coffin at all. Most clients asking for coffin nails want medium-long or long length. Discuss this at consultation.' },
-    { q: 'Are coffin nails more likely to break than other shapes?', a: 'The tapered sides of coffin nails (compared to square\'s straight sides) create slightly different stress points. As an extension shape, acrylics and gel extensions can be built to appropriate strength for the length. The flat tip — unlike the pointed tip of stiletto — is less vulnerable than very pointed shapes. Clients should still be advised on aftercare and lifestyle considerations for wearing long extensions.' },
+    { q: 'What\'s the difference between coffin and ballerina nails?', a: 'They are the same shape: tapered sides with a flat, squared-off tip. "Coffin" is the more common name, while "ballerina" refers to the resemblance to a ballet pointe shoe. Some techs use "ballerina" for a slightly softer, more rounded corner, but there is no strict industry distinction.' },
+    { q: 'How long do coffin nails need to be?', a: 'Coffin nails look best from medium length upwards, because the taper needs space to show. On very short nails the shape tends to read as square. If a client wants short nails, a short coffin is possible with a gentle taper, but set expectations at consultation by showing photos at different lengths.' },
+    { q: 'Are coffin nails more likely to break than other shapes?', a: 'They can be more fragile than square or oval because the taper removes material at the sides. A well-placed apex, a tip that is not filed too narrow, and a sensible length for the client\'s lifestyle all reduce breakage. Compared with stiletto, the flat tip is less vulnerable than a sharp point.' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
@@ -117,6 +129,32 @@ registerArticle({
           <li><strong>Year-round bold:</strong> Red with black zebra print accent nail</li>
           <li><strong>Year-round bold:</strong> Electric blue coffin — unexpected and striking</li>
         </ol>
+      </section>
+
+      <section id="length-guide">
+        <h2 className="font-serif text-2xl font-bold mb-4">Coffin length and product guide</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">The same design reads very differently at different lengths. Use this as a quick way to match an idea from the list above to the length and product a client can actually wear.</p>
+        <ArticleTable
+          headers={['Length', 'Designs that work best', 'Usual product']}
+          rows={[
+            ['Short (just past the fingertip)', 'Solid nudes, milky white, micro French, single accent nail', 'Builder gel overlay or short Gel-X tips'],
+            ['Medium', 'Classic French, soft ombre, chrome tips, cat eye', 'Gel-X, hard gel or acrylic'],
+            ['Long', 'Full ombre, mirror chrome, 3D art, detailed hand-painted designs', 'Acrylic, hard gel or long Gel-X tips'],
+          ]}
+        />
+        <p className="text-gray-700 leading-relaxed">If a client is new to extensions, start one step shorter than their inspo photo. It is easier to go longer at the next appointment than to deal with breaks in the first week.</p>
+      </section>
+
+      <section id="mistakes">
+        <h2 className="font-serif text-2xl font-bold mb-4">Common coffin nail mistakes</h2>
+        <ArticleChecklist title="Check these before you finish the set" items={[
+          'Taper starts too high: the sides should narrow gradually from the stress area, not right at the cuticle.',
+          'Tip too narrow: a very thin flat tip snaps easily and starts to look like a stiletto with the point cut off.',
+          'Uneven tip width across the hand: compare all ten nails from above before you seal.',
+          'No apex: long coffin nails need structure at the stress area to resist breaking.',
+          'Sidewalls filed unevenly: one side straighter than the other makes the whole set look crooked.',
+        ]} />
+        <p className="text-gray-700 leading-relaxed">For a full filing walkthrough, see <Link to="/blog/how-to-shape-coffin-nails" className="underline text-[#F52B8C]">how to shape coffin nails</Link>.</p>
       </section>
 
       <section id="why-coffin">

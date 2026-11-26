@@ -1,20 +1,30 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleTable } from '@/components/article/ArticleBodyComponents';
+import { ArticleTable, ArticleImage } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'nail-shapes-explained',
   title: 'Nail Shapes Explained: Almond, Square, Coffin, Oval and More',
   seoTitle: 'Nail Shapes Explained: Almond, Square, Coffin, Oval and More',
   excerpt: 'Not sure which nail shape is right for you — or how to describe what you want? Here\'s a complete guide to every nail shape, what makes each distinct, and who it suits.',
-  seoDescription: 'Nail shapes explained. Almond, square, coffin, oval, round, stiletto, ballerina, squoval — what each nail shape looks like, who it suits, and which is easiest to maintain.',
+  seoDescription: 'Nail shapes explained: almond, square, coffin, oval, round, stiletto and squoval. What each shape looks like, who it suits and which is easiest to maintain.',
   category: 'nail-education',
   tags: ['nail shapes explained', 'nail shape guide', 'different nail shapes'],
   heroImage: 'linear-gradient(135deg, #FFF9FB 0%, #FCE4F5 100%)',
   heroImageAlt: 'Nail shapes explained',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Education Guide',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The main nail shapes are square, round, oval, squoval, almond, coffin (ballerina) and stiletto, and squoval is the safest all-round choice.",
+    detail: "Shapes differ in two places: the sidewalls (straight or tapered) and the tip (flat, curved or pointed). Straight sides and soft tips are strongest; tapered sides and points need length and usually extensions.",
+    points: [
+      { label: "Strongest", text: "Round, oval and squoval." },
+      { label: "Most elongating", text: "Almond and oval." },
+      { label: "Most dramatic", text: "Coffin and stiletto, usually on extensions." },
+    ],
+  },
   toc: [
     { id: 'shape-overview', label: 'Quick reference: all shapes' },
     { id: 'square', label: 'Square' },
@@ -28,8 +38,10 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-shape-almond-nails', 'how-to-shape-square-nails', 'how-to-shape-coffin-nails', 'how-to-file-nail-extensions-into-shape'],
   faq: [
-    { q: 'Which nail shape is the strongest?', a: 'Round and oval shapes are the strongest because there are no corners to catch and break. Square shapes have corners that can chip on the edges. Coffin and stiletto are the most fragile due to their tapered tip — they\'re best suited to extensions rather than natural nails.' },
-    { q: 'Which nail shape makes fingers look longer?', a: 'Oval and almond shapes are the most elongating. Their tapered sides and rounded or pointed tips create the visual illusion of length. Round and square shapes tend to look wider. Very long stiletto nails are also elongating but impractical for most clients.' },
+    { q: "Which nail shape is the strongest?", a: "Round, oval and squoval are generally the strongest because there are no sharp corners to catch. Square corners can chip at the edges. Coffin and stiletto are the most fragile because their taper removes material at the sides, so they are usually done on extensions rather than natural nails." },
+    { q: "Which nail shape makes fingers look longer?", a: "Oval and almond are the most elongating, because their tapered sides draw the eye toward the tip. Round and square shapes tend to make the nail look wider. Long stiletto nails also elongate, but they are impractical for most people day to day." },
+    { q: "What is the difference between squoval and square?", a: "Square has straight sides and sharp, 90-degree corners. Squoval has the same straight sides and flat tip, but the corners are rounded off. Squoval snags less and suits more nail beds, which is why many clients who ask for square are happiest with squoval." },
+    { q: "Are coffin and ballerina nails the same shape?", a: "Yes. Both names describe tapered sides with a flat tip. Coffin is the more common name; ballerina refers to the resemblance to a ballet pointe shoe." },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
@@ -75,12 +87,14 @@ registerArticle({
 
       <section id="almond">
         <h2 className="font-serif text-2xl font-bold mb-4">Almond</h2>
+        <ArticleImage src="photo-1770210257340-dc2b0f44642a" alt="Almond-shaped nails with a metallic gold manicure" />
         <p className="text-gray-700 mb-4 leading-relaxed">Almond nails taper at the sides and finish in a soft, rounded point — like the shape of an almond. They're elongating, elegant, and one of the most popular shapes for nail extensions. On natural nails, they require some length to work.</p>
         <p className="text-gray-700 leading-relaxed"><strong>Works best on:</strong> Medium to long nail beds; elegant on most hand shapes. <strong>Length:</strong> Medium to long. <Link to="/blog/how-to-shape-almond-nails" className="underline text-[#F52B8C]">How to shape almond nails.</Link></p>
       </section>
 
       <section id="coffin">
         <h2 className="font-serif text-2xl font-bold mb-4">Coffin / ballerina</h2>
+        <ArticleImage src="photo-1754799670410-b282791342c3" alt="Long coffin-shaped nails in white and soft pink" />
         <p className="text-gray-700 mb-4 leading-relaxed">Coffin nails (also called ballerina nails) taper at the sides like stiletto but finish with a flat, square tip instead of a point. Named for their resemblance to a coffin shape. Bold and trendy, they require length to read correctly — best achieved with extensions.</p>
         <p className="text-gray-700 leading-relaxed"><strong>Works best on:</strong> Longer nail beds or extensions; statement looks. <strong>Length:</strong> Medium to very long. <Link to="/blog/how-to-shape-coffin-nails" className="underline text-[#F52B8C]">How to shape coffin nails.</Link></p>
       </section>
@@ -101,6 +115,19 @@ registerArticle({
           <li><strong>For clients with wide nail beds:</strong> Oval or almond (the taper narrows the appearance)</li>
           <li><strong>For very short nails:</strong> Round or squoval — other shapes require length to be visible</li>
         </ul>
+        <h3 className="font-semibold text-lg mt-8 mb-3">Which shapes work at which length</h3>
+        <ArticleTable
+          headers={['Shape', 'Short', 'Medium', 'Long']}
+          rows={[
+            ['Round', 'Yes', 'Yes', 'Rarely chosen'],
+            ['Square / squoval', 'Yes', 'Yes', 'Yes'],
+            ['Oval', 'Possible', 'Yes', 'Yes'],
+            ['Almond', 'Soft version only', 'Yes', 'Yes'],
+            ['Coffin', 'Reads as square', 'Yes', 'Yes'],
+            ['Stiletto', 'No', 'Possible', 'Yes'],
+          ]}
+        />
+        <p className="text-gray-700 leading-relaxed">At consultation, ask clients what they do with their hands every day. Keyboard work, childcare and wet work all point toward shorter, softer shapes, whatever the inspo photo shows.</p>
       </section>
     </div>
   ),

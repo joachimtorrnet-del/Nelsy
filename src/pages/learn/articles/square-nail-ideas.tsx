@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleImage, ArticleTable } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'square-nail-ideas',
@@ -14,14 +14,24 @@ registerArticle({
   heroImageAlt: '50 square nail ideas for every style',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: "The best square nail ideas are a short square French, milky white, a soft pink BIAB overlay and simple line art, because the flat tip shows clean lines so well.",
+    detail: "Square nails work at almost any length, which makes them one of the most practical shapes for natural nails and extensions. Many clients asking for square actually want a soft square with slightly rounded corners.",
+    points: [
+      { label: "Best for short nails", text: "Baby French, milky white jelly or a sheer nude." },
+      { label: "Best for nail art", text: "Checkerboard, line art or marble: the flat tip is a clean canvas." },
+      { label: "Best for everyday wear", text: "A soft square in a soft pink overlay, which snags less than sharp corners." },
+    ],
+  },
   toc: [
     { id: 'minimalist', label: 'Minimalist square nail ideas' },
     { id: 'french-variations', label: 'French tip variations' },
     { id: 'colour-blocks', label: 'Colour and texture ideas' },
     { id: 'nail-art', label: 'Nail art on square nails' },
     { id: 'seasonal', label: 'Seasonal square nail ideas' },
+    { id: 'square-vs-squoval', label: 'Square, soft square or squoval?' },
     { id: 'why-square', label: 'Why square nails are so popular' },
   ],
   relatedSlugs: ['coffin-nail-ideas', 'french-tip-nail-ideas', 'summer-nail-ideas', 'trendy-nail-designs'],
@@ -34,6 +44,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="minimalist">
         <h2 className="font-serif text-2xl font-bold mb-4">Minimalist square nail ideas (10)</h2>
+        <ArticleImage src="photo-1612887390768-fb02affea7a6" alt="Soft pink minimal manicure" caption="A soft pink, minimal finish like this is one of the easiest looks to wear on short square nails." />
         <ol className="list-decimal list-inside space-y-2 text-gray-700">
           <li>Classic white square tips — clean, fresh, timeless</li>
           <li>Sheer nude gel with a high-gloss finish</li>
@@ -66,6 +77,7 @@ registerArticle({
 
       <section id="colour-blocks">
         <h2 className="font-serif text-2xl font-bold mb-4">Colour and texture ideas (10)</h2>
+        <ArticleImage src="photo-1587393794661-ef05657e10b9" alt="Dark manicure on short nails" />
         <ol start={21} className="list-decimal list-inside space-y-2 text-gray-700">
           <li>Full-cover chrome in rose gold</li>
           <li>Dark emerald green with a glossy finish</li>
@@ -85,6 +97,7 @@ registerArticle({
 
       <section id="nail-art">
         <h2 className="font-serif text-2xl font-bold mb-4">Nail art on square nails (10)</h2>
+        <ArticleImage src="photo-1771441580033-3979bc33627b" alt="Nails with abstract neon nail art" />
         <ol start={31} className="list-decimal list-inside space-y-2 text-gray-700">
           <li>Abstract line art in black on a nude base</li>
           <li>Minimalist florals — single fine-line flower on accent nail</li>
@@ -101,6 +114,7 @@ registerArticle({
 
       <section id="seasonal">
         <h2 className="font-serif text-2xl font-bold mb-4">Seasonal square nail ideas (10)</h2>
+        <ArticleImage src="photo-1519014816548-bf5fe059798b" alt="Pink manicure with red heart and love-letter nail art" caption="Heart details for a Valentine's set." />
         <ol start={41} className="list-decimal list-inside space-y-2 text-gray-700">
           <li><strong>Spring:</strong> Pastel rainbow — one colour per nail across the set</li>
           <li><strong>Spring:</strong> Cherry blossom freehand art on soft pink</li>
@@ -113,6 +127,20 @@ registerArticle({
           <li><strong>Winter:</strong> Midnight black with fine glitter top coat</li>
           <li><strong>Year-round:</strong> Nude base with seasonal charm or foil accent for a subtle update</li>
         </ol>
+      </section>
+
+      <section id="square-vs-squoval">
+        <h2 className="font-serif text-2xl font-bold mb-4">Square, soft square or squoval?</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">Clients often say "square" when they mean one of three slightly different shapes. Showing all three at consultation avoids a set that feels too sharp or too round.</p>
+        <ArticleTable
+          headers={['Shape', 'Corners', 'Best for']}
+          rows={[
+            ['Square', 'Sharp, 90-degree corners', 'Long nail beds, graphic French tips, a crisp modern look'],
+            ['Soft square', 'Very slightly rounded corners', 'Most clients: keeps the flat tip but snags less'],
+            ['Squoval', 'Clearly rounded corners', 'Wider nail beds, short natural nails, clients who work with their hands'],
+          ]}
+        />
+        <p className="text-gray-700 leading-relaxed">For a full breakdown of every shape, see <Link to="/blog/nail-shapes-explained" className="underline text-[#F52B8C]">nail shapes explained</Link>.</p>
       </section>
 
       <section id="why-square">

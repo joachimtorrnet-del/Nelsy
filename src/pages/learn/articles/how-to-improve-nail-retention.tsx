@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
+import { ArticleTip, ArticleTable, ArticleChecklist } from '@/components/article/ArticleBodyComponents';
 
 registerArticle({
   slug: 'how-to-improve-nail-retention',
@@ -14,7 +14,7 @@ registerArticle({
   heroImageAlt: 'How to improve nail retention guide for nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
-  updatedAt: '2026-11-23',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
   tldr: {
     answer: "Nail retention is how long a set stays attached without lifting.",
@@ -113,13 +113,14 @@ registerArticle({
       <section id="client-aftercare">
         <h2 className="font-serif text-2xl font-bold mb-4">Client aftercare</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Client behaviour after the appointment significantly affects retention — especially for clients who do frequent wet work. Provide these instructions with every appointment confirmation or verbally at the end of the service:</p>
-        <ArticleCallout variant="info" title="Aftercare instructions to give every client">
-          — Avoid prolonged water exposure for the first 24 hours (no long baths or swimming).{'\n'}
-          — Wear gloves for cleaning, washing up, and heavy-duty wet work.{'\n'}
-          — Apply cuticle oil daily to the cuticle area (not on the nail plate itself — on the skin around the nail).{'\n'}
-          — Don\'t pick or peel your nails — if a nail lifts, come back to have it fixed rather than peeling it off.{'\n'}
-          — Use your hands carefully for the first few hours — avoid using nails as tools.
-        </ArticleCallout>
+        <ArticleChecklist title="Aftercare instructions to give every client" items={[
+          'Avoid long soaks, baths and swimming for the first 24 hours where possible.',
+          'Wear gloves for cleaning, washing up and other heavy wet work.',
+          'Apply cuticle oil daily to the skin around the nail.',
+          'Do not pick or peel: if a nail lifts, book a repair instead of pulling it off.',
+          'Do not use nails as tools to open cans, scrape labels or prise things open.',
+        ]} />
+        <p className="text-gray-700 leading-relaxed">Send these in writing, not only verbally. A short aftercare message in the booking confirmation means clients have it when they need it.</p>
       </section>
 
       <section id="troubleshooting">
@@ -136,6 +137,16 @@ registerArticle({
             ['One specific client', 'Oily nail bed — try a stronger primer; review their aftercare compliance'],
           ]}
         />
+        <h3 className="font-semibold text-lg mt-8 mb-3">When does it lift?</h3>
+        <ArticleTable
+          headers={['Timing', 'Most likely cause']}
+          rows={[
+            ['Within 1 to 3 days', 'Prep or application: oil or dust left on the plate, product on the skin, under-cured layers'],
+            ['After about a week', 'Edges not sealed, product too thin at the free edge, or a lot of wet work'],
+            ['Near the end of the cycle', 'Normal growth and wear: the client may need a shorter gap between appointments'],
+          ]}
+        />
+        <ArticleTip>Change one thing at a time. If you switch prep, product and lamp all at once, you will not know which change fixed the problem.</ArticleTip>
         <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-to-prevent-nail-lifting" className="underline text-[#F52B8C]">how to prevent nail lifting</Link>.</p>
       </section>
     </div>
