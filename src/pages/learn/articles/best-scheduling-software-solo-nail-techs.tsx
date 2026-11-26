@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/components/article/ArticleBodyComponents';
+
+const link = 'underline text-[#F52B8C]';
 
 registerArticle({
   slug: 'best-scheduling-software-solo-nail-techs',
@@ -14,36 +16,47 @@ registerArticle({
   heroImageAlt: 'Best scheduling software for solo nail techs',
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
-  updatedAt: '2026-11-24',
+  updatedAt: '2026-11-26',
   publishedAt: '2026-10-21',
+  tldr: {
+    answer: 'The best scheduling software for a solo nail tech is the one that takes bookings and deposits on its own, sends reminders, and costs the least at your real monthly volume once card fees are included.',
+    detail: 'Solo techs don\'t need staff rotas or multi-location reports. Compare apps on four things: deposits, reminders, the client booking flow on a phone, and total monthly cost (subscription + card fees + any new-client fees).',
+    points: [
+      { label: 'Must have', text: 'Live availability, automatic deposits, reminders, client notes, a fast mobile booking flow.' },
+      { label: 'Compare cost', text: 'Subscription + (card payments × fee) + marketplace fees, worked out below.' },
+      { label: 'Test it', text: 'Book yourself a test appointment on your phone during the free trial.' },
+    ],
+  },
   toc: [
     { id: 'what-you-actually-need', label: 'What solo nail techs actually need' },
     { id: 'must-have-features', label: 'Must-have features' },
     { id: 'nice-to-have', label: 'Nice-to-have features' },
     { id: 'platform-types', label: 'Types of platforms to consider' },
+    { id: 'real-cost', label: 'Work out the real monthly cost' },
     { id: 'how-to-evaluate', label: 'How to evaluate before committing' },
     { id: 'red-flags', label: 'Red flags to watch for' },
   ],
   relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'glossgenius-vs-fresha-for-nail-techs', 'how-to-get-booked-out-as-nail-tech', 'nail-tech-booking-policy-template'],
   faq: [
-    { q: 'Do I need scheduling software, or can I take bookings by DM?', a: 'You can take bookings by DM, and many nail techs start this way. But DM bookings don\'t enforce deposits, can be forgotten or double-booked, give you no client history, and require you to be available at all hours to confirm bookings. Scheduling software automates confirmation, deposits, reminders, and client records — freeing you to focus on the work. Most nail techs find that the hours saved and the deposit protection alone justify the switch.' },
-    { q: 'How much should scheduling software cost a solo nail tech?', a: 'Options range from free (with trade-offs like marketplace fees on new clients or limited features) to paid subscriptions typically in the range of £20–£50+/month depending on features and platform. Calculate what you actually need and what you\'d pay at your volume — a free platform with high per-transaction fees can cost more than a subscription for a busy nail tech.' },
-    { q: 'Can I try scheduling software before committing?', a: 'Yes — most platforms offer a free trial, and many have a free tier with basic features. Use the trial to test the client-facing booking flow by booking a test appointment yourself. What matters isn\'t how the dashboard looks to you — it\'s how booking feels to your clients.' },
+    { q: 'Do I need scheduling software, or can I take bookings by DM?', a: 'You can start with DMs, but they don\'t collect deposits, they can be forgotten or double-booked, they keep no client history, and they need you to reply at all hours. Scheduling software confirms bookings, takes deposits, sends reminders and stores client notes automatically. Example: if each DM booking takes 10 minutes of back-and-forth and you take 60 bookings a month, that is 600 minutes, or 10 hours a month.' },
+    { q: 'How much should scheduling software cost a solo nail tech?', a: 'Published 2026 prices: Fresha Independent €14.95/month, Booksy US $29.99/month (UK £40), GlossGenius Standard $24/month billed annually or $28 monthly. On top of that you pay card processing and, on marketplaces, fees on new clients. Work out the total at your own volume using the formula in this article.' },
+    { q: 'Can I try scheduling software before committing?', a: 'Yes. Fresha offers a 7-day trial, Booksy 14 days in the US and 7 days in the UK, and GlossGenius 14 days. Use the trial to book a test appointment yourself on your phone and to take a test deposit. How booking feels to your clients matters more than how the dashboard looks to you.' },
+    { q: 'Is Fresha still free?', a: 'No. Fresha\'s pricing page lists the Independent plan at €14.95/month and the Team plan at €9.95 per team member per month, after a 7-day trial.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'crm'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="what-you-actually-need">
         <h2 className="font-serif text-2xl font-bold mb-4">What solo nail techs actually need</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Solo nail techs have different needs from salons. You don\'t need staff scheduling, complex inventory management, or multi-location reporting. What you need is a system that:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Solo nail techs have different needs from salons. You don&apos;t need staff scheduling, complex inventory or multi-location reporting. You need a system that:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Shows your real-time availability and takes bookings without requiring you to be online</li>
+          <li>Shows your real-time availability and takes bookings while you are working</li>
           <li>Collects deposits automatically, before the appointment</li>
           <li>Sends reminders to reduce no-shows</li>
           <li>Stores client history so you remember what they had last time</li>
-          <li>Makes the booking experience smooth for your clients — so they actually use it</li>
+          <li>Makes booking quick for your clients on a phone, so they actually use it</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">Everything beyond this is optional — useful in some cases, but not core.</p>
+        <p className="text-gray-700 leading-relaxed">Everything beyond this is optional.</p>
       </section>
 
       <section id="must-have-features">
@@ -51,12 +64,12 @@ registerArticle({
         <ArticleTable
           headers={['Feature', 'Why it matters for nail techs']}
           rows={[
-            ['Online booking with real-time availability', 'Clients can book without messaging you; you don\'t get double-booked'],
-            ['Deposit collection', 'The most important feature for reducing no-shows. Without it, you carry all the risk.'],
-            ['Automated reminders', 'Reduces no-shows and late cancellations meaningfully — without manual effort'],
-            ['Cancellation policy enforcement', 'Clients should see and agree to your policy at booking; system should enforce deposit forfeiture on short-notice cancellations'],
-            ['Client profiles', 'Name, booking history, notes (nail shape, preferences, sensitivities) — reduces the time you spend re-consulting each visit'],
-            ['Mobile-friendly booking page', 'Most clients will book from a phone — the experience must work on mobile'],
+            ['Online booking with real-time availability', 'Clients book without messaging you, and you don\'t get double-booked'],
+            ['Deposit collection', 'The main tool for reducing no-shows. Without it, you carry all the risk'],
+            ['Automated reminders', 'Clients forget less, and you don\'t have to text everyone by hand'],
+            ['Cancellation policy at booking', 'Clients see and accept your policy before they confirm, so a kept deposit is not a surprise'],
+            ['Client profiles', 'Name, history and notes (shape, preferences, sensitivities) so you don\'t re-consult every visit'],
+            ['Mobile-friendly booking page', 'Clients coming from Instagram or TikTok book on their phone'],
           ]}
         />
       </section>
@@ -66,55 +79,74 @@ registerArticle({
         <ArticleTable
           headers={['Feature', 'When it\'s useful']}
           rows={[
-            ['Marketplace / discovery listing', 'If you want a platform to drive new clients to you, not just manage existing ones'],
-            ['Follow-up messages', 'Automated post-appointment messages prompting reviews or rebooking'],
-            ['Waitlist', 'Useful if you regularly fill up and want to manage cancellation slots'],
-            ['Instagram booking button integration', 'Direct link from your Instagram profile to book — reduces friction'],
-            ['Branded booking page', 'Customised to your visual identity rather than a generic template'],
-            ['Reporting and analytics', 'Revenue tracking, busiest days, popular services — useful once you\'re established'],
+            ['Marketplace / discovery listing', 'If clients in your city search on that platform\'s app'],
+            ['Follow-up messages', 'Automatic post-appointment messages asking for a review or a rebooking'],
+            ['Waitlist', 'If you regularly fill up and want to refill cancellations fast'],
+            ['Instagram booking button', 'A direct link from your profile to book'],
+            ['Branded booking page', 'Your colours, photos and name rather than a generic template'],
+            ['Reporting', 'Revenue, busiest days and popular services, once you are established'],
           ]}
         />
       </section>
 
       <section id="platform-types">
         <h2 className="font-serif text-2xl font-bold mb-4">Types of platforms to consider</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">There are a few distinct categories of scheduling tools used by nail techs:</p>
         <ArticleTable
-          headers={['Platform type', 'What it is', 'Best for']}
+          headers={['Platform type', 'Examples', 'Best for']}
           rows={[
-            ['Marketplace + booking software', 'Fresha, Booksy — both manage bookings and list you on a consumer marketplace', 'Nail techs who want a discovery channel alongside booking management'],
-            ['Dedicated beauty booking software', 'GlossGenius, Timely, Acuity — focused on the professional, not the marketplace', 'Nail techs who build their client base directly (Instagram, referrals) and want a clean booking experience'],
-            ['Purpose-built for nail techs', 'Nelsy — booking management designed specifically for nail businesses, with policies, deposits, client history', 'Independent nail techs who want everything nail-specific without paying for salon features they don\'t need'],
-            ['Generic scheduling tools', 'Calendly, Square Appointments — broad tools not specific to beauty', 'Can work for basic scheduling; typically lack nail-specific features like service-length templates or nail photo uploads'],
+            ['Marketplace + booking software', 'Fresha, Booksy', 'Nail techs who want a discovery channel alongside booking, and accept fees on marketplace clients'],
+            ['Beauty booking software without a marketplace focus', 'GlossGenius', 'Nail techs who find clients themselves and want a polished booking site'],
+            ['Link-in-bio booking page', 'Nelsy ($29/month or $25/month yearly, takes 0% commission on bookings)', 'Nail techs whose clients come from Instagram and TikTok, with deposits or full payment set per service'],
+            ['Generic scheduling tools', 'General calendar booking apps', 'Basic scheduling; check deposits and cancellation rules carefully before using one for nails'],
           ]}
         />
-        <ArticleTip>A platform with a large consumer marketplace in your area is only valuable if clients in your area actually use it. A sleek solo tool is only valuable if it handles deposits and reminders reliably. Match the tool to your actual situation, not the platform\'s marketing.</ArticleTip>
+        <ArticleTip>A marketplace is only valuable if clients in your area actually use it. A simple solo tool is only valuable if it handles deposits and reminders reliably. Match the tool to where your clients come from.</ArticleTip>
+      </section>
+
+      <section id="real-cost">
+        <h2 className="font-serif text-2xl font-bold mb-4">Work out the real monthly cost</h2>
+        <ArticleCallout variant="info" title="Formula">
+          Monthly cost = subscription + (card payments × (fee % × price + fixed fee)) + any fees on new marketplace clients
+        </ArticleCallout>
+        <p className="text-gray-700 mb-4 leading-relaxed">Example: 60 appointments a month at 60 (dollars or euros), all paid by card in person, no marketplace clients. Published rates checked November 2026:</p>
+        <ArticleTable
+          headers={['App', 'Subscription', 'Card fee per $60/€60 payment', 'Card fees × 60', 'Total']}
+          rows={[
+            ['Booksy (US, card reader)', '$29.99', '2.49% × 60 + $0.10 = $1.59', '$95.64', 'about $125.63'],
+            ['GlossGenius Standard (monthly)', '$28', '2.4% × 60 + $0.15 = $1.59', '$95.40', 'about $123.40'],
+            ['Fresha Independent', '€14.95', '0.59% × 60 + €0.15 = €0.50', '€30.24', 'about €45.19'],
+          ]}
+          caption="Exact per-payment fees: Booksy $1.594, GlossGenius $1.59, Fresha €0.504."
+        />
+        <p className="text-gray-700 mb-4 leading-relaxed">Change one input and the ranking can change. If clients pay online instead, Booksy mobile payments are 2.69% + $0.30, GlossGenius online is 3.4% + $0.15 and Fresha online is 1.29% + €0.15. Marketplace clients add more: Booksy Boost takes 30% of the first visit (up to $100), and Fresha charges a one-time fee on new marketplace clients whose rate is not published on its pricing page.</p>
+        <ArticleTip>Payments clients make in cash at the studio carry no card fee in any app. If most of your clients pay cash, the subscription is the cost that matters most.</ArticleTip>
       </section>
 
       <section id="how-to-evaluate">
         <h2 className="font-serif text-2xl font-bold mb-4">How to evaluate before committing</h2>
-        <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Book a test appointment on yourself:</strong> Go through the full client booking flow — this is what your clients experience, and it\'s often very different from the admin dashboard</li>
-          <li><strong>Test on mobile:</strong> Most clients will book from a phone — if the booking flow is clunky on mobile, your conversion rate will suffer</li>
-          <li><strong>Calculate your actual cost:</strong> Work out what you\'d pay at your appointment volume with the pricing structure — free platforms with per-transaction fees can exceed subscriptions for busy nail techs</li>
-          <li><strong>Check deposit and cancellation tools specifically:</strong> These matter enormously for day-to-day nail business operations — test them in the trial</li>
-          <li><strong>Ask other nail techs:</strong> What do nail techs in your area use? What\'s their experience of client adoption on each platform?</li>
-        </ul>
+        <ArticleSteps
+          steps={[
+            { title: 'Book a test appointment on yourself', body: 'On your phone, from an Instagram-style link. Count the taps from link to confirmed booking.' },
+            { title: 'Take a test deposit', body: 'Check the client sees the amount and your policy before paying, and that you can refund it.' },
+            { title: 'Run the cost formula', body: 'Use your real monthly appointments, average price and how clients pay.' },
+            { title: 'Check reminders and cancellations', body: 'Cancel your test booking inside and outside your notice window and see what happens to the deposit.' },
+            { title: 'Check data export', body: 'Make sure you can export your client list if you ever switch.' },
+          ]}
+        />
       </section>
 
       <section id="red-flags">
         <h2 className="font-serif text-2xl font-bold mb-4">Red flags to watch for</h2>
         <ArticleCallout variant="warning" title="Watch out for">
           <ul className="list-disc list-inside space-y-1">
-            <li>No deposit/cancellation fee enforcement — you carry all the no-show risk</li>
-            <li>Client-facing booking flow that only works on desktop</li>
-            <li>No client history or notes — you\'ll be re-consulting from scratch every appointment</li>
-            <li>Opaque pricing — always understand what you\'ll actually pay at your volume before committing</li>
-            <li>Lock-in without data export — ensure you can export your client list if you ever switch</li>
+            <li>No deposit or cancellation fee support: you carry all the no-show risk</li>
+            <li>A client booking flow that is awkward on a phone</li>
+            <li>No client history or notes</li>
+            <li>Fees you can&apos;t calculate in advance at your volume</li>
+            <li>No way to export your client list</li>
           </ul>
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">For platform-specific comparisons: <Link to="/blog/fresha-vs-booksy-for-nail-techs" className="underline text-[#F52B8C]">Fresha vs Booksy</Link> | <Link to="/blog/glossgenius-vs-fresha-for-nail-techs" className="underline text-[#F52B8C]">GlossGenius vs Fresha</Link>.</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">Nelsy is built for independent nail techs — online booking, deposits, client profiles, and nail-specific service management. <Link to="/" className="underline text-[#F52B8C]">Start free →</Link></p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Platform-specific comparisons: <Link to="/blog/fresha-vs-booksy-for-nail-techs" className={link}>Fresha vs Booksy</Link> and <Link to="/blog/glossgenius-vs-fresha-for-nail-techs" className={link}>GlossGenius vs Fresha</Link>. Our full ranking is in <Link to="/best-booking-app-for-nail-techs" className={link}>the best booking apps for nail techs</Link>.</p>
       </section>
     </div>
   ),
