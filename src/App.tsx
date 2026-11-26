@@ -20,6 +20,11 @@ import BestBookingApp from './pages/seo/BestBookingApp';
 import PricingCalculator from './pages/tools/PricingCalculator';
 import InstagramEngagementCalculator from './pages/tools/InstagramEngagementCalculator';
 import CreatorRateCalculator from './pages/tools/CreatorRateCalculator';
+import DepositCalculator from './pages/tools/DepositCalculator';
+import NoShowCostCalculator from './pages/tools/NoShowCostCalculator';
+import BookingAppFeeCalculator from './pages/tools/BookingAppFeeCalculator';
+import GlossaryIndex from './pages/glossary/GlossaryIndex';
+import GlossaryTermPage from './pages/glossary/GlossaryTermPage';
 import CancellationPolicyGenerator from './pages/tools/CancellationPolicyGenerator';
 import AppointmentReminderTemplates from './pages/tools/AppointmentReminderTemplates';
 import ToolsIndex from './pages/tools/ToolsIndex';
@@ -132,6 +137,11 @@ export default function App() {
             <Route path="/tools/nail-tech-pricing-calculator" element={<PricingCalculator />} />
             <Route path="/tools/instagram-engagement-calculator" element={<InstagramEngagementCalculator />} />
             <Route path="/tools/creator-rate-calculator" element={<CreatorRateCalculator />} />
+            <Route path="/tools/deposit-calculator" element={<DepositCalculator />} />
+            <Route path="/tools/no-show-cost-calculator" element={<NoShowCostCalculator />} />
+            <Route path="/tools/booking-app-fee-calculator" element={<BookingAppFeeCalculator />} />
+            <Route path="/glossary" element={<GlossaryIndex />} />
+            <Route path="/glossary/:term" element={<GlossaryTermPage />} />
 
             {/* ── Feature landing pages ──────────────────────────────────── */}
             <Route path="/features/bookings" element={<BookingsPage />} />

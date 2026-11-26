@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Calculator, ShieldCheck, BellRing, Heart, BadgeDollarSign } from 'lucide-react';
+import { Calculator, ShieldCheck, BellRing, Heart, BadgeDollarSign, Wallet, CalendarX, Scale } from 'lucide-react';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
@@ -37,6 +37,24 @@ const TOOLS = [
     description: 'Price sponsored posts and UGC from your views, CPM and production time.',
     href: '/tools/creator-rate-calculator',
   },
+  {
+    Icon: Wallet,
+    title: 'Deposit Calculator',
+    description: 'Work out the deposit, the balance due and what you receive after card fees.',
+    href: '/tools/deposit-calculator',
+  },
+  {
+    Icon: CalendarX,
+    title: 'No-Show Cost Calculator',
+    description: 'Estimate what no-shows and late cancellations cost you, and what a deposit recovers.',
+    href: '/tools/no-show-cost-calculator',
+  },
+  {
+    Icon: Scale,
+    title: 'Booking App Fee Calculator',
+    description: 'Compare the monthly cost of Fresha, Booksy, GlossGenius and Nelsy for your bookings.',
+    href: '/tools/booking-app-fee-calculator',
+  },
 ];
 
 export default function ToolsIndex() {
@@ -44,7 +62,7 @@ export default function ToolsIndex() {
     <>
       <SEOMeta
         title="Free Tools for Beauty Professionals | Nelsy"
-        description="Free tools for beauty pros and creators: pricing, engagement rate and creator rate calculators, cancellation policy generator and reminder templates."
+        description="Free tools for beauty pros and creators: pricing, deposit, no-show, booking app fee and creator rate calculators, policy generator and reminder templates."
         canonical="/tools"
       />
       <SiteNav />

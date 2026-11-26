@@ -43,6 +43,7 @@ const COLUMNS: { title: string; links: FooterLink[] }[] = [
     title: 'Resources',
     links: [
       { label: 'Blog', to: '/blog' },
+      { label: 'Glossary', to: '/glossary' },
       { label: 'Make money as a beauty creator', to: '/blog/how-to-make-money-as-a-beauty-creator' },
       { label: 'Collect deposits', to: '/nail-tech-deposits' },
       { label: 'Instagram booking', to: '/instagram-booking-for-nail-techs' },

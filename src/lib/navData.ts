@@ -91,8 +91,9 @@ export const TOOLS: NavTool[] = [
   // Calculators
   { slug: 'nail-tech-pricing-calculator',        title: 'Beauty Service Price Calculator',     category: 'calculator', route: '/tools/nail-tech-pricing-calculator' },
   { slug: 'profit-calculator',                   title: 'Beauty Business Profit Calculator',   category: 'calculator', route: '/tools/profit-calculator',           status: 'coming-soon' },
-  { slug: 'deposit-calculator',                  title: 'Deposit Calculator',                  category: 'calculator', route: '/tools/deposit-calculator',          status: 'coming-soon' },
-  { slug: 'no-show-cost-calculator',             title: 'No-Show Cost Calculator',             category: 'calculator', route: '/tools/no-show-cost-calculator',     status: 'coming-soon' },
+  { slug: 'deposit-calculator',                  title: 'Deposit Calculator',                  category: 'calculator', route: '/tools/deposit-calculator' },
+  { slug: 'no-show-cost-calculator',             title: 'No-Show Cost Calculator',             category: 'calculator', route: '/tools/no-show-cost-calculator' },
+  { slug: 'booking-app-fee-calculator',          title: 'Booking App Fee Calculator',          category: 'calculator', route: '/tools/booking-app-fee-calculator' },
   { slug: 'instagram-engagement-calculator',     title: 'Instagram Engagement Rate Calculator',category: 'calculator', route: '/tools/instagram-engagement-calculator', },
   { slug: 'creator-rate-calculator',             title: 'Creator Rate Calculator',             category: 'calculator', route: '/tools/creator-rate-calculator', },
   // Generators
