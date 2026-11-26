@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import { registerArticle } from '@/lib/articles';
-import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/ArticleBodyComponents';
+import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/components/article/ArticleBodyComponents';
+
+const link = 'underline text-[#F52B8C]';
 
 registerArticle({
   slug: 'how-to-calculate-product-cost',
   title: 'How to Calculate Product Cost Per Nail Appointment',
   seoTitle: 'How to Calculate Product Cost Per Nail Appointment',
-  excerpt: 'Knowing your product cost per service is fundamental to profitable pricing. Here\'s how to calculate it — and how to use the number to set prices that actually make money.',
-  seoDescription: 'How to calculate product cost per nail appointment. Step-by-step guide for nail techs — track product usage, calculate cost per service, and use it to set profitable prices.',
+  excerpt: 'Knowing your product cost per service is fundamental to profitable pricing. Here\'s how to calculate it, and how to use the number to set prices that actually make money.',
+  seoDescription: 'How to calculate product cost per nail appointment. Step-by-step guide for nail techs: track product usage, calculate cost per service, and set profitable prices.',
   category: 'pricing-money',
   tags: ['nail tech pricing', 'product cost calculation', 'nail business costs', 'nail tech profit'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #A7F3D0 100%)',
@@ -15,6 +17,16 @@ registerArticle({
   author: 'Nelsy Editorial',
   authorRole: 'Nail Tech Business Guide',
   publishedAt: '2026-10-21',
+  updatedAt: '2026-11-26',
+  tldr: {
+    answer: 'Product cost per appointment = for each product, (pack price ÷ uses per pack) × uses per service, added up, plus about 15% for waste.',
+    detail: 'In the worked example below, a gel manicure costs about £2.25 in products. That number is only one part of your price: add your time and a share of your monthly overheads to find your minimum price.',
+    points: [
+      { label: 'Step 1', text: 'Cost per use = pack price ÷ number of uses (a £12 base coat for 80 uses = £0.15).' },
+      { label: 'Step 2', text: 'Add every product and disposable used in the service, then add 10 to 15% waste.' },
+      { label: 'Step 3', text: 'Minimum price = product cost + time cost + overhead per client, then add profit.' },
+    ],
+  },
   toc: [
     { id: 'why-it-matters', label: 'Why product cost matters for pricing' },
     { id: 'what-to-include', label: 'What to include in your product cost' },
@@ -24,17 +36,18 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-price-nail-services-for-profit', 'how-much-should-nail-tech-charge', 'nail-tech-price-list-examples', 'how-to-increase-appointment-value'],
   faq: [
-    { q: 'What percentage of my nail appointment price should be product cost?', a: 'A common benchmark in beauty services is 10–15% of the service price as product cost. If your gel manicure is £40, product cost of £4–6 is in a healthy range. If your product cost is 25–30% of the service price, your pricing may need review. These are guidelines rather than rules — the more important metric is whether your total costs (product + time + overheads) are covered by your prices with a meaningful profit margin remaining.' },
-    { q: 'Do I need to track every drop of product?', a: 'No — but you do need a reasonable estimate. Weighing product before and after a service a few times to establish an average is more accurate than guessing. For products you use in larger quantities (base coat, top coat, dehydrator), tracking per-bottle usage over a week and dividing by client count gives a reliable average without obsessive tracking.' },
-    { q: 'How do I account for product waste?', a: 'Build a 10–15% waste factor into your product cost estimates. Some product is lost in the process — product brushed onto the cuticle and removed, colours that dry before use, products that expire. If you notice your actual costs are higher than estimated, increase the waste factor.' },
+    { q: 'What percentage of my nail appointment price should be product cost?', a: 'There is no official figure, and the share varies a lot by service: a gel manicure uses little product, while extensions use much more. In the example in this article, product is about 6% of a £38 gel manicure. The more useful test is whether your price covers product, your time and your overheads with profit left over. If product is a large share of the price, check your usage and supplier prices first, then your price.' },
+    { q: 'Do I need to track every drop of product?', a: 'No, a reasonable estimate is enough. For bottles, note the date you open one and the date it runs out, count the clients in between, and divide: a £12 bottle that lasts 80 clients costs £0.15 per client. Do this once for your main products and update it when you change brands or prices.' },
+    { q: 'How do I account for product waste?', a: 'Add a 10 to 15% waste factor to your total. It covers product left on the brush, gel that thickens, spills and expired bottles. If you compare your monthly product spend with your estimate and the real spend is higher, increase the factor.' },
+    { q: 'Should I include my lamp, drill and furniture in product cost?', a: 'No. Equipment that lasts months or years belongs in overheads. Spread it over its life: example, a £180 drill expected to last 2 years is £7.50 a month, which you add to your monthly overheads before dividing by your client count.' },
   ],
   relatedFeatureSlugs: ['payments', 'analytics'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="why-it-matters">
         <h2 className="font-serif text-2xl font-bold mb-4">Why product cost matters for pricing</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Many nail techs set prices based on what competitors charge, what clients expect, or what feels "reasonable" — without ever calculating what their service actually costs to deliver. The result is prices that may look competitive but leave very little profit after materials, time, and overheads are accounted for.</p>
-        <p className="text-gray-700 leading-relaxed">Knowing your product cost per service is the foundation of profitable pricing. It lets you calculate your actual profit margin, identify which services are more profitable, and confidently justify your prices to yourself (and occasionally to clients who push back).</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Many nail techs set prices based on what competitors charge or what feels &quot;reasonable&quot;, without ever calculating what the service costs to deliver. The result can be prices that look competitive but leave little profit after materials, time and overheads.</p>
+        <p className="text-gray-700 leading-relaxed">Knowing your product cost per service lets you calculate your real margin, see which services earn the most per hour, and justify your prices to yourself (and to the occasional client who pushes back).</p>
       </section>
 
       <section id="what-to-include">
@@ -51,23 +64,25 @@ registerArticle({
             ['Solvents/removers', 'Acetone, isopropyl alcohol, cleanser', 'Low per-use cost; used every service'],
           ]}
         />
-        <ArticleTip>Don\'t forget consumables like files and buffers — they\'re per-client costs if you use them hygienically (single-use emery boards, buffer blocks per client). These add up across a week of clients.</ArticleTip>
+        <ArticleTip>Don&apos;t forget consumables like files and buffers. If you use them hygienically (single-use files and buffers per client), they are often the biggest line in a gel manicure, as the example below shows.</ArticleTip>
       </section>
 
       <section id="calculation-method">
         <h2 className="font-serif text-2xl font-bold mb-4">How to calculate cost per service</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">The method:</p>
-        <ol className="list-decimal list-inside space-y-3 text-gray-700 mb-4">
-          <li><strong>List every product used for that service</strong> — be thorough. Every brush-full counts.</li>
-          <li><strong>Calculate cost per unit of each product</strong> — divide the product price by the number of uses you get from it. Example: a £12 bottle of base coat lasts 80 uses = £0.15 per use.</li>
-          <li><strong>Estimate quantity used per service</strong> — one coat of base coat = 1 use; two coats of colour = 2 uses. For bulk products (like acetone), weigh before and after or estimate volume.</li>
-          <li><strong>Add up all per-service costs</strong> — this is your product cost for that specific service.</li>
-          <li><strong>Add a 10–15% waste factor</strong> — to account for product that doesn\'t make it onto the nail.</li>
-        </ol>
+        <ArticleSteps
+          steps={[
+            { title: 'List every product used for that service', body: 'Walk through one appointment from prep to cuticle oil and write down everything you touch, including wipes and gloves.' },
+            { title: 'Calculate cost per use', body: 'Divide the pack price by the number of uses you get from it. Example: a £12 bottle of base coat that lasts 80 clients = £12 ÷ 80 = £0.15 per use.' },
+            { title: 'Count uses per service', body: 'One coat of base = 1 use; two coats of colour = 2 uses. For bulk products like acetone, estimate how many clients one bottle covers.' },
+            { title: 'Add up the per-service costs', body: 'Cost per use × uses per service, for every line. The total is your raw product cost for that service.' },
+            { title: 'Add a 10 to 15% waste factor', body: 'Multiply the total by 1.10 to 1.15 for product that never makes it onto the nail.' },
+          ]}
+        />
       </section>
 
       <section id="worked-example">
         <h2 className="font-serif text-2xl font-bold mb-4">Worked example: gel manicure</h2>
+        <p className="text-gray-700 mb-4 leading-relaxed">Example prices only. Replace them with what you actually pay.</p>
         <ArticleTable
           headers={['Product', 'Pack price', 'Uses per pack', 'Cost per use', 'Uses per service', 'Service cost']}
           rows={[
@@ -82,24 +97,28 @@ registerArticle({
             ['Gloves', '£6 per 100', '1', '£0.06', '1', '£0.06'],
           ]}
         />
-        <p className="text-gray-700 mt-4 mb-2 leading-relaxed"><strong>Subtotal: ~£1.96</strong></p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>With 15% waste factor: ~£2.25</strong></p>
+        <p className="text-gray-700 mt-4 mb-2 leading-relaxed"><strong>Subtotal:</strong> 0.05 + 0.10 + 0.15 + 0.40 + 0.15 + 0.50 + 0.40 + 0.15 + 0.06 = <strong>£1.96</strong></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>With 15% waste factor:</strong> £1.96 × 1.15 = <strong>about £2.25</strong></p>
         <ArticleCallout variant="info" title="Interpretation">
-          A gel manicure at £38 with a ~£2.25 product cost means product represents about 6% of the service price. This is healthy. If the price were £20, product cost would be 11% — still manageable but leaving less room for profit after time and overheads.
+          A gel manicure at £38 with about £2.25 of product means product is 2.25 ÷ 38 = about 6% of the price. At £20, the same product would be about 11%, leaving much less room for your time and overheads.
         </ArticleCallout>
       </section>
 
       <section id="using-the-number">
         <h2 className="font-serif text-2xl font-bold mb-4">Using the number to price correctly</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Product cost is one component of your total cost per service. The full calculation:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Product cost is one part of your total cost per service. The full formula:</p>
         <ArticleCallout variant="info" title="Full service cost formula">
-          Total cost = Product cost + Time cost + Overhead allocation{'\n\n'}
-          Product cost: as calculated above{'\n'}
-          Time cost: (service duration ÷ 60) × your target hourly rate{'\n'}
-          Overhead allocation: your monthly costs (rent/space, insurance, equipment, marketing) ÷ monthly client count{'\n\n'}
-          Your minimum price = Total cost + desired profit margin
+          Total cost = product cost + time cost + overhead per client<br />
+          Time cost = (service minutes ÷ 60) × your target hourly rate<br />
+          Overhead per client = monthly overheads (space, insurance, software, equipment, marketing) ÷ clients per month<br />
+          Minimum price = total cost + your profit margin
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">Use the <Link to="/tools/nail-tech-pricing-calculator" className="underline text-[#F52B8C]">nail tech pricing calculator</Link> to run this calculation for each service. See also: <Link to="/blog/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
+        <ArticleCallout variant="success" title="Example: pricing the gel manicure">
+          Example: product £2.25. Time: 60 minutes at a £25 target hourly rate = £25. Overheads: £300 a month ÷ 80 clients = £3.75.<br />
+          Total cost = 2.25 + 25 + 3.75 = <strong>£31</strong>.<br />
+          With a 20% profit margin on top: £31 × 1.20 = £37.20, rounded to <strong>£38</strong>.
+        </ArticleCallout>
+        <p className="text-gray-700 mt-4 leading-relaxed">Run this for each service with the <Link to="/tools/nail-tech-pricing-calculator" className={link}>nail tech pricing calculator</Link>. See also: <Link to="/blog/how-to-price-nail-services-for-profit" className={link}>how to price nail services for profit</Link>.</p>
       </section>
     </div>
   ),
