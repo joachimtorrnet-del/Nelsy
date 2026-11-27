@@ -2,6 +2,8 @@ import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { resolvePlan } from '../_shared/plans.ts'
+import { TRIAL_DAYS, trialAlreadyUsed } from '../_shared/trial.ts'
+import type { SubscriptionLike } from '../_shared/trial.ts'
 import { PostHog } from 'npm:posthog-node'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
@@ -85,6 +87,13 @@ serve(async (req) => {
       await supabase.from('profiles').update({ stripe_customer_id: customerId }).eq('id', user.id)
     }
 
+    // One free trial per account: a pro who already had a trial (or paid) reactivates without one.
+    let trialDays: number | undefined = TRIAL_DAYS
+    try {
+      const past = await stripe.subscriptions.list({ customer: customerId, status: 'all', limit: 100 })
+      if (trialAlreadyUsed(past.data as unknown as SubscriptionLike[])) trialDays = undefined
+    } catch { /* listing failed: keep the trial */ }
+
     const session = await stripe.checkout.sessions.create({
       mode: 'subscription',
       payment_method_types: ['card'],
@@ -92,7 +101,7 @@ serve(async (req) => {
       client_reference_id: user.id,
       line_items: [{ price: priceId, quantity: 1 }],
       subscription_data: {
-        trial_period_days: 14,
+        ...(trialDays ? { trial_period_days: trialDays } : {}),
         metadata: { plan: resolvedPlan },
       },
       metadata: {
@@ -112,7 +121,7 @@ serve(async (req) => {
       posthog.capture({
         distinctId: user.id,
         event: 'subscription checkout started',
-        properties: { plan: resolvedPlan, price_id: priceId, trial_period_days: 14, session_id: session.id },
+        properties: { plan: resolvedPlan, price_id: priceId, trial_period_days: trialDays ?? 0, session_id: session.id },
       })
       await posthog.shutdown()
     } catch {

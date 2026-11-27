@@ -110,8 +110,9 @@ export function useStudio(slug: string): UseStudioResult {
           return;
         }
 
-        // Draft studios (inactive subscription) are not publicly accessible
-        if (profileData.subscription_status === 'inactive' || !profileData.subscription_status) {
+        // Draft studios (no plan yet) and paused ones (plan ended, e.g. a free trial that ended
+        // without a card) are not publicly accessible. Same rule as the products / kit RPCs.
+        if (!profileData.subscription_status || ['inactive', 'incomplete', 'canceled', 'cancelled'].includes(profileData.subscription_status)) {
           if (!cancelled) {
             setError('Studio introuvable');
             setMerchant(null);

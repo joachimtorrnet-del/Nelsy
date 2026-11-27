@@ -474,7 +474,7 @@ const FAQ = [
   { q: 'What can I sell with Nelsy?', a: 'Your beauty services with online booking, plus courses, digital products such as guides and templates, 1:1 coaching and memberships, all from one page you share in your bio.' },
   { q: 'Do I need a website or technical skills?', a: 'No. Pick a template, add your services and photos, and your page is ready to share. No code, no website needed.' },
   { q: 'Does Nelsy take a cut of my sales?', a: 'No. Nelsy charges 0% commission on your bookings and sales. You pay your plan, and standard payment processing fees apply to online payments.' },
-  { q: 'How does the free trial work?', a: 'You get 14 days free. A card is saved at signup and you pay $0 today. Your plan starts after the trial, and you can cancel anytime before it ends.' },
+  { q: 'How does the free trial work?', a: 'You get 14 days free and pay $0 today. No card is needed to start. Add a card before the trial ends to keep your page live, or cancel anytime.' },
   {
     q: 'Which plan should I start with?',
     a: 'Start with Independent, the plan available today: bookings, deposits, online payments and reminders from your link in bio, free for 14 days. Creator (guides, courses, memberships and email marketing) and Salon (your whole team on one page) are not open yet. Select one in the plans above to join its waitlist and we will email you when it opens.',
