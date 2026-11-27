@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { resolvePlan } from '../_shared/plans.ts'
 import { PostHog } from 'npm:posthog-node'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
@@ -51,16 +52,14 @@ serve(async (req) => {
 
     const { plan } = await req.json() as { plan?: string }
 
-    // Resolve priceId server-side — never accept an arbitrary priceId from the client
-    const PLAN_PRICE_MAP: Record<string, string | undefined> = {
-      monthly: Deno.env.get('STRIPE_PRICE_MONTHLY'),
-      yearly: Deno.env.get('STRIPE_PRICE_YEARLY'),
-    }
-    const resolvedPlan = (plan && Object.prototype.hasOwnProperty.call(PLAN_PRICE_MAP, plan)) ? plan : 'monthly'
-    const priceId = PLAN_PRICE_MAP[resolvedPlan]
+    // Resolve priceId server-side: never accept an arbitrary priceId from the client.
+    // Missing or unknown plan falls back to Independent monthly, as before.
+    const resolved = resolvePlan(plan ?? 'monthly') ?? resolvePlan('monthly')!
+    const resolvedPlan = resolved.key
+    const priceId = resolved.priceId
 
     if (!priceId) {
-      return new Response(JSON.stringify({ error: `STRIPE_PRICE_${resolvedPlan.toUpperCase()} env var is not set` }), {
+      return new Response(JSON.stringify({ error: `${resolved.envVar} env var is not set` }), {
         status: 500, headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
     }

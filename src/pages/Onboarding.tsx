@@ -6,6 +6,15 @@ import { supabase } from '../lib/supabase';
 import { validatePassword } from '../utils/validation';
 import { isReservedSlug } from '@/lib/reservedSlugs';
 import { track, identify } from '../lib/analytics';
+import { PLANS, parsePlanParam, planKey } from '@/lib/plans';
+
+// Plan picked on the landing / pricing page (?plan=independent_yearly, legacy ?plan=yearly). Unavailable tiers fall back to Independent.
+const SELECTED = (() => {
+  try { return parsePlanParam(new URLSearchParams(window.location.search).get('plan')); }
+  catch { return parsePlanParam(null); }
+})();
+const SELECTED_PLAN = PLANS[SELECTED.tier];
+const YEARLY_SAVING_PCT = Math.round((1 - SELECTED_PLAN.yearlyTotal / (SELECTED_PLAN.monthly * 12)) * 100);
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
 
@@ -72,10 +81,8 @@ export default function Onboarding() {
     password: '',
     instagram: '',
     tiktok: '',
-    // Plan picked on the landing pricing section (?plan=monthly|yearly); step 3 then just confirms it
-    plan: (() => {
-      try { return new URLSearchParams(window.location.search).get('plan') === 'yearly' ? 'yearly' : 'monthly'; } catch { return 'monthly'; }
-    })(),
+    // Billing interval picked on the landing pricing section; step 3 then just confirms it
+    plan: SELECTED.interval,
     cardNumber: '',
     cardExpiry: '',
     cardCVC: '',
@@ -874,7 +881,7 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
               <div className="font-bold text-base text-gray-900 mb-0.5">Monthly</div>
               <div className="text-gray-600 text-sm">
                 <span className="text-lg font-bold text-gray-900">$0</span> for 14 days, then{' '}
-                <span className="text-lg font-bold text-gray-900">$29</span>/mo
+                <span className="text-lg font-bold text-gray-900">${SELECTED_PLAN.monthly}</span>/mo
               </div>
             </div>
           </button>
@@ -890,7 +897,7 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
           >
             <div className="absolute -top-2.5 right-4">
               <span className="px-2.5 py-1 bg-blue-500 text-white text-xs font-bold rounded-full shadow">
-                Save 20%
+                Save {YEARLY_SAVING_PCT}%
               </span>
             </div>
             <div className="absolute top-4 left-4">
@@ -908,8 +915,8 @@ function Step3({ formData, setFormData, nextStep }: StepProps) {
               <div className="font-bold text-base text-gray-900 mb-0.5">Yearly</div>
               <div className="text-gray-600 text-sm">
                 <span className="text-lg font-bold text-gray-900">$0</span> for 14 days, then{' '}
-                <span className="text-lg font-bold text-gray-900">$25</span>/mo{' '}
-                <span className="text-xs text-gray-500">($300/yr)</span>
+                <span className="text-lg font-bold text-gray-900">${SELECTED_PLAN.yearly}</span>/mo{' '}
+                <span className="text-xs text-gray-500">(${SELECTED_PLAN.yearlyTotal}/yr)</span>
               </div>
             </div>
           </button>
@@ -1045,7 +1052,7 @@ function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: Pay
         <div className="flex items-center justify-between bg-gray-50 rounded-2xl px-4 py-3 mb-5 border border-gray-100">
           <div>
             <p className="text-xs text-gray-500">Plan</p>
-            <p className="font-bold text-gray-900">{plan === 'monthly' ? 'Monthly — $29/mo' : 'Yearly — $25/mo'}</p>
+            <p className="font-bold text-gray-900">{SELECTED_PLAN.name}, {plan === 'monthly' ? `$${SELECTED_PLAN.monthly}/mo` : `$${SELECTED_PLAN.yearly}/mo billed yearly`}</p>
           </div>
           <div className="text-right">
             <p className="text-xs text-gray-500">Due today</p>
@@ -1208,7 +1215,9 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
       if (!session) throw new Error('[session] No session available');
 
       // 4. Create subscription + SetupIntent (Architecture B: subscription-first, card collected via pending_setup_intent)
-      const plan = formData.plan === 'yearly' ? 'yearly' : 'monthly';
+      const interval = formData.plan === 'yearly' ? 'yearly' : 'monthly';
+      // Independent sends the legacy value so it works with both the old and the new edge function.
+      const plan = SELECTED.tier === 'independent' ? interval : planKey(SELECTED.tier, interval);
       setError('Step 4/4 — Setting up payment...');
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 20000);
@@ -1292,7 +1301,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
             <div>
               <p className="text-xs text-gray-500 mb-0.5">Your plan</p>
               <p className="text-lg font-bold text-gray-900">
-                {formData.plan === 'monthly' ? 'Monthly' : 'Yearly'}
+                {SELECTED_PLAN.name}, {formData.plan === 'monthly' ? 'monthly' : 'yearly'}
               </p>
             </div>
             <div className="text-right">
@@ -1303,7 +1312,7 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
           <div className="pt-3 border-t border-gray-200 space-y-1.5">
             {[
               '14-day free trial starts today',
-              `Then ${formData.plan === 'monthly' ? '$29/month' : '$300/year ($25/mo)'}`,
+              `Then ${formData.plan === 'monthly' ? `$${SELECTED_PLAN.monthly}/month` : `$${SELECTED_PLAN.yearlyTotal}/year ($${SELECTED_PLAN.yearly}/mo)`}`,
               `Cancel anytime before ${formattedDate}`,
             ].map((text) => (
               <div key={text} className="flex items-center gap-2 text-xs text-gray-600">

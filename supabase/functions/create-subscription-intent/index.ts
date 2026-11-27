@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
 import { createClient } from 'npm:@supabase/supabase-js@2'
+import { resolvePlan } from '../_shared/plans.ts'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
 if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
@@ -36,22 +37,20 @@ serve(async (req) => {
       })
     }
 
-    const { plan } = await req.json() as { plan?: string }
+    const body = await req.json() as { plan?: string }
 
-    // Map plan to an authorized server-side Price ID — never accept arbitrary priceId from client
-    const PLAN_PRICE_MAP: Record<string, string | undefined> = {
-      monthly: Deno.env.get('STRIPE_PRICE_MONTHLY'),
-      yearly: Deno.env.get('STRIPE_PRICE_YEARLY'),
-    }
-    if (!plan || !Object.prototype.hasOwnProperty.call(PLAN_PRICE_MAP, plan)) {
-      return new Response(JSON.stringify({ error: "plan must be 'monthly' or 'yearly'" }), {
+    // Resolve plan to an authorized server-side Price ID: never accept an arbitrary priceId from the client
+    const resolved = resolvePlan(body.plan)
+    if (!resolved) {
+      return new Response(JSON.stringify({ error: 'Unknown or unavailable plan' }), {
         status: 400,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
     }
-    const priceId = PLAN_PRICE_MAP[plan]
+    const priceId = resolved.priceId
+    const plan = resolved.key
     if (!priceId) {
-      return new Response(JSON.stringify({ error: `STRIPE_PRICE_${plan.toUpperCase()} env var is not set` }), {
+      return new Response(JSON.stringify({ error: `${resolved.envVar} env var is not set` }), {
         status: 500,
         headers: { 'Content-Type': 'application/json', ...corsHeaders },
       })
