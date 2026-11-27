@@ -14,7 +14,9 @@
     "seo:audit": "node scripts/seo-audit.mjs",
     "dev:mobile": "vite --config vite.mobile.config.ts",
     "build:mobile": "tsc -p tsconfig.app.json --noEmit && vite build --config vite.mobile.config.ts",
-    "cap:sync": "npm run build:mobile && npx cap sync"
+    "cap:sync": "npm run build:mobile && npx cap sync",
+    "mobile:assets": "node scripts/mobile/generate-app-assets.mjs",
+    "mobile:screenshots": "node scripts/mobile/store-screenshots.mjs"
   },
   "dependencies": {
     "@capacitor/app": "^8.1.2",

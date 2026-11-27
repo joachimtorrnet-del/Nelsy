@@ -4,6 +4,7 @@ import Stripe from 'npm:stripe@13.11.0'
 import { PostHog } from 'npm:posthog-node'
 import { sendEmail, esc, row, layout } from '../_shared/email.ts'
 import { fetchOnlineSession, onlineSessionRows, onlineSessionNote } from '../_shared/online-session.ts'
+import { notifyPro, newBookingMessage, pushFeatureEnabled } from '../_shared/push.ts'
 
 // ── Stripe client ─────────────────────────────────────────────────────────────
 
@@ -370,6 +371,22 @@ serve(async (req) => {
         ])
       } catch (emailErr) {
         console.error('[on_arrival] confirmation emails failed', emailErr)
+      }
+
+      // Push to the pro's phone. After the booking insert and the emails; never affects the
+      // response. Off until PUSH_ENABLED is set (docs/mobile/push-notifications.md).
+      if (pushFeatureEnabled(Deno.env.get('PUSH_ENABLED'))) {
+        try {
+          const { data: pushSvc } = await supabase.from('services').select('name').eq('id', serviceId).maybeSingle()
+          await notifyPro(supabase, profileId, newBookingMessage({
+            clientName: String(bd.client_name),
+            serviceName: pushSvc?.name,
+            bookingDatetime: bookingDt.toISOString(),
+            timezone: tz,
+          }))
+        } catch (pushErr) {
+          console.error('[on_arrival] push failed (non-blocking)', pushErr)
+        }
       }
 
       return jsonResponse({

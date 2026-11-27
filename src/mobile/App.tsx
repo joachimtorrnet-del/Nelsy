@@ -18,6 +18,7 @@ import Studio from './screens/Studio';
 import Preview from './screens/Preview';
 import Settings from './screens/Settings';
 import DeleteAccount from './screens/DeleteAccount';
+import Audience from './screens/Audience';
 
 function TabShell() {
   const { loading, error, data, refresh, signOut } = useProData();
@@ -58,7 +59,7 @@ function Routed() {
   const authed = demo || !!session;
 
   useEffect(() => {
-    void initNativeShell(() => navigate(-1));
+    void initNativeShell(() => navigate(-1), (route) => navigate(route));
   }, [navigate]);
 
   const onSignedOut = useMemo(
@@ -86,6 +87,7 @@ function Routed() {
           <Route path="/studio" element={<Studio />} />
           <Route path="/preview" element={<Preview />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="/audience" element={<Audience />} />
         </Route>
         <Route path="*" element={<Navigate to={authed ? '/home' : '/welcome'} replace />} />
       </Routes>

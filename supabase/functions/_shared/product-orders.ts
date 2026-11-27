@@ -3,6 +3,7 @@
 import type Stripe from 'npm:stripe@13.11.0'
 import { sendEmail, esc, row, layout } from './email.ts'
 import { upsertContact, unsubscribeLinks, unsubscribeHeaders, unsubscribeFooter } from './contacts.ts'
+import { notifyPro, productSaleMessage, pushFeatureEnabled } from './push.ts'
 
 // Callers use different supabase-js versions (webhook pins 2.39.3), so keep this structural.
 // deno-lint-ignore no-explicit-any
@@ -137,6 +138,19 @@ export async function markProductOrderPaid(
       await sendProductOrderEmails(supabase, order, contactId)
     } catch (err) {
       console.error('[product_order] emails failed (non-blocking):', err)
+    }
+    // Push to the pro, once (same notification claim as the emails). Off until PUSH_ENABLED.
+    if (pushFeatureEnabled(Deno.env.get('PUSH_ENABLED'))) {
+      try {
+        const { data: sold } = await supabase.from('products').select('title').eq('id', order.product_id).maybeSingle()
+        await notifyPro(supabase, order.profile_id, productSaleMessage({
+          title: sold?.title,
+          amount: toMajor(order.amount_cents, order.currency),
+          currency: order.currency,
+        }))
+      } catch (err) {
+        console.error('[product_order] push failed (non-blocking):', err)
+      }
     }
   }
 

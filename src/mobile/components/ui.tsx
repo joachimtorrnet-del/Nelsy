@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
 import type { ReactNode } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ChevronLeft, Video } from 'lucide-react';
 import type { BookingStatus } from '../lib/types';
+import { demoLabelHidden } from '../lib/demo';
 import { PINK } from '../lib/constants';
 
 const STATUS: Record<BookingStatus, { label: string; bg: string; fg: string }> = {
   pending: { label: 'Pending', bg: '#FFF4DB', fg: '#8A5A00' },
   confirmed: { label: 'Confirmed', bg: '#E5F0FF', fg: '#1F4FB8' },
-  paid: { label: 'Deposit paid', bg: '#E3F7EC', fg: '#11733F' },
+  paid: { label: 'Paid', bg: '#E3F7EC', fg: '#11733F' },
   completed: { label: 'Completed', bg: '#EEEEEE', fg: '#3D3D3D' },
   no_show: { label: 'No-show', bg: '#FDE7E7', fg: '#B42318' },
   cancelled: { label: 'Cancelled', bg: '#FDE7E7', fg: '#B42318' },
@@ -47,6 +50,7 @@ export function Avatar({ src, name, size = 44 }: { src?: string | null; name: st
 
 /** Persistent label on every screen when showing the example persona. */
 export function DemoBanner() {
+  if (demoLabelHidden()) return null;
   return (
     <div className="mx-4 mb-3 rounded-xl bg-[#FFF0F7] px-3 py-2 text-center text-[12px] font-medium text-[#B0125E]">
       Demo mode: example studio and example data
@@ -89,7 +93,7 @@ export function Sheet({ open, onClose, children, title }: { open: boolean; onClo
   return (
     <div className="fixed inset-0 z-50 flex flex-col justify-end">
       <button type="button" aria-label="Close" className="m-fade absolute inset-0 bg-black/40" onClick={onClose} />
-      <div className="m-sheet relative rounded-t-3xl bg-white px-4 pb-safe pt-2">
+      <div className="m-sheet relative max-h-[88dvh] overflow-y-auto overscroll-contain rounded-t-3xl bg-white px-4 pb-safe pt-2">
         <div className="mx-auto mb-3 h-1.5 w-10 rounded-full bg-gray-300" />
         {title && <h3 className="mb-2 px-1 text-[17px] font-bold">{title}</h3>}
         <div className="pb-4">{children}</div>
@@ -118,6 +122,40 @@ export function ScreenTitle({ children, right }: { children: ReactNode; right?: 
     <div className="flex min-h-[52px] items-center justify-between px-4">
       <h1 className="text-[26px] font-extrabold tracking-tight">{children}</h1>
       {right}
+    </div>
+  );
+}
+
+/** Back header for pushed screens (Audience, Delete account). */
+export function BackHeader({ to, label, title }: { to: string; label: string; title?: string }) {
+  const { state } = useLocation();
+  const from = (state as { from?: string; fromLabel?: string } | null) ?? null;
+  return (
+    <div className="px-4">
+      <Link to={from?.from ?? to} className="-ml-2 mt-1 inline-flex h-11 items-center gap-1 px-2 text-[15px] font-semibold text-gray-600">
+        <ChevronLeft size={20} /> {from?.fromLabel ?? label}
+      </Link>
+      {title && <h1 className="mt-1 text-[26px] font-extrabold tracking-tight">{title}</h1>}
+    </div>
+  );
+}
+
+/** Small "Video call" badge for online sessions (services.location_type = 'online'). */
+export function VideoBadge() {
+  return (
+    <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-[#EEF2FF] px-2 py-[3px] text-[11px] font-semibold leading-none text-[#3730A3]">
+      <Video size={11} strokeWidth={2.5} /> Video call
+    </span>
+  );
+}
+
+export function EmptyState({ icon, title, sub, children }: { icon: ReactNode; title: string; sub?: string; children?: ReactNode }) {
+  return (
+    <div className="mx-4 mt-2 flex flex-col items-center rounded-2xl bg-gray-50 px-6 py-9 text-center">
+      <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-[#F52B8C]">{icon}</div>
+      <p className="mt-3 text-[16px] font-bold">{title}</p>
+      {sub && <p className="mt-1 text-[14px] text-gray-500">{sub}</p>}
+      {children}
     </div>
   );
 }
