@@ -45,6 +45,7 @@ registerArticle({
     { q: 'Can I take makeup lesson bookings and sell tutorials on the same page?', a: 'Yes with Nelsy: you can list services with pay on arrival, a deposit or full payment upfront, and sell courses, digital products or coaching on the same page.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'courses'],
+  relatedLinks: { tool: '/tools/booking-app-fee-calculator', pages: ['/use-cases/independent-beauty-pros', '/features/deposits', '/features/courses'] },
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">

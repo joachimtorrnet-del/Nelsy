@@ -46,6 +46,7 @@ registerArticle({
     { q: 'Should I keep Linktree and add a booking link?', a: 'You can, but each extra tap loses some clients. If most of your bio traffic is people wanting an appointment, sending them straight to a booking page is simpler.' },
   ],
   relatedFeatureSlugs: ['link-in-bio', 'bookings', 'deposits'],
+  relatedLinks: { tool: '/tools/instagram-engagement-calculator', pages: ['/features/link-in-bio', '/use-cases/turn-followers-into-bookings', '/features/bookings'] },
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">

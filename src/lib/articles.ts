@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { PagePath, ToolPath } from './blogLinks';
 
 // ─── Category definitions ────────────────────────────────────────────────────
 
@@ -76,9 +77,14 @@ export interface ArticleMeta {
   faq?: Array<{ q: string; a: string }>;
   /** Short answer shown at the top of the article (Stan-style TL;DR): one-sentence answer, optional "best for" list. */
   tldr?: { answer: string; detail?: string; points?: Array<{ label: string; text: string }> };
+  /**
+   * Curated internal links shown by the article template. Defaults come from
+   * CATEGORY_LINKS in blogLinks.ts; set this to pick a more specific tool or pages.
+   */
+  relatedLinks?: { tool?: ToolPath; pages?: PagePath[] };
 }
 
-// Content is a React render function — keeps it in TSX, no MDX needed
+// Content is a React render function: keeps it in TSX, no MDX needed
 export type ArticleContentFn = () => ReactNode;
 
 export interface Article extends ArticleMeta {
@@ -138,11 +144,14 @@ export function getRelatedArticles(slug: string, limit = 3): Article[] {
   if (picked.length >= limit) return picked.slice(0, limit);
 
   const own = keywords(article);
+  const ownTags = new Set(article.tags.map((t) => t.toLowerCase()));
   const taken = new Set([slug, ...picked.map((a) => a.slug)]);
+  // Same category first, scored by shared tags (strong signal) then shared title/tag words
   const fill = getAllArticles()
     .filter((a) => !taken.has(a.slug) && a.category === article.category)
     .map((a) => {
       let overlap = 0;
+      for (const t of a.tags) if (ownTags.has(t.toLowerCase())) overlap += 3;
       for (const w of keywords(a)) if (own.has(w)) overlap++;
       return { a, overlap, h: linkHash(slug, a.slug) };
     })

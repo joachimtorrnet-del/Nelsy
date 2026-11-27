@@ -45,6 +45,7 @@ registerArticle({
     { q: 'Can I sell a course and in-person training on the same page?', a: 'With Nelsy you can sell an online course and list in-person training or client services as bookable services, each with pay on arrival, a deposit or full payment upfront.' },
   ],
   relatedFeatureSlugs: ['courses', 'coaching', 'memberships'],
+  relatedLinks: { tool: '/tools/creator-rate-calculator', pages: ['/features/courses', '/features/coaching', '/use-cases/beauty-creators'] },
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">

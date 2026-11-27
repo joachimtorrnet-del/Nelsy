@@ -45,6 +45,7 @@ registerArticle({
     { q: 'Is there a free booking app for brow artists?', a: 'Square Appointments has a Free plan at $0 per location with an online booking site and reminders. Cancellation policies and no-show fees are listed on Plus at $49/month per location.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
+  relatedLinks: { tool: '/tools/booking-app-fee-calculator', pages: ['/use-cases/independent-beauty-pros', '/features/deposits', '/features/bookings'] },
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">

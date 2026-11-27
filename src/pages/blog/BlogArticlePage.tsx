@@ -1,17 +1,21 @@
-import { useParams, Navigate, Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { useParams, Navigate, Link, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import { getArticle, getRelatedArticles, getMoreInCategory, isProArticle, PRO_GUIDES, CATEGORY_LABELS, CATEGORY_COLORS } from '@/lib/articleRegistry';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
 import ArticleTOC from '@/components/article/ArticleTOC';
-import ArticleCard from '@/components/article/ArticleCard';
+import ArticleCard, { CoverPhoto } from '@/components/article/ArticleCard';
 import { ArticleCTABlock, ArticleTLDR, SummarizeWithAI } from '@/components/article/ArticleBodyComponents';
+import {
+  ArticleBody, ArticleSidebarCTA, FreeToolsBox, NelsyPagesBox, articleStats, readMinutes, resolveArticleLinks,
+} from '@/components/article/ArticleTemplateBlocks';
 import RelatedFeatures from '@/components/article/RelatedFeatures';
-import { useEffect } from 'react';
 import { trackArticleLandingView, trackArticleCTAClicked, track } from '@/lib/analytics';
 
 const ORIGIN = 'https://getnelsy.com';
+
+const fmt = (iso: string) => new Date(iso).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' });
 
 export default function BlogArticlePage() {
   const { slug = '' } = useParams<{ slug: string }>();
@@ -26,18 +30,23 @@ export default function BlogArticlePage() {
   if (!article) return <Navigate to="/blog" replace />;
 
   const related = getRelatedArticles(slug, 3);
-  const moreInCategory = getMoreInCategory(slug, related.map((a) => a.slug), 6);
+  const moreInCategory = getMoreInCategory(slug, related.map((a) => a.slug), 8);
+  // Two of them go into the inline "Keep reading" box, the rest in the list at the end
+  const keepReading = moreInCategory.slice(0, 2);
+  const moreList = moreInCategory.slice(2);
+  const { tools, pages } = resolveArticleLinks(article);
   const cat = CATEGORY_COLORS[article.category];
   const catLabel = CATEGORY_LABELS[article.category];
+  const minutes = readMinutes(article);
 
-  const publishDate = new Date(article.publishedAt).toLocaleDateString('en-GB', {
-    timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric',
-  });
-  const updateDate = article.updatedAt
-    ? new Date(article.updatedAt).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'long', year: 'numeric' })
-    : null;
+  const publishDate = fmt(article.publishedAt);
+  const updateDate = article.updatedAt ? fmt(article.updatedAt) : null;
 
   const canonicalPath = `/blog/${article.slug}`;
+  const url = `${ORIGIN}${canonicalPath}`;
+  const hasRealImage = article.heroImage.startsWith('/');
+  const coverSrc = hasRealImage ? article.heroImage : `/blog-covers/${article.slug}.png`;
+  const ogImage = `${ORIGIN}${coverSrc}`;
 
   const jsonLd = [
     {
@@ -45,17 +54,22 @@ export default function BlogArticlePage() {
       '@type': 'Article',
       headline: article.seoTitle ?? article.title,
       description: article.seoDescription ?? article.excerpt,
-      url: `${ORIGIN}${canonicalPath}`,
+      url,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': url },
       datePublished: article.publishedAt,
       dateModified: article.updatedAt ?? article.publishedAt,
-      author: { '@type': 'Person', name: article.author },
+      articleSection: catLabel,
+      keywords: article.tags.join(', '),
+      wordCount: articleStats(article).words,
+      timeRequired: `PT${minutes}M`,
+      author: { '@type': 'Organization', name: article.author, url: ORIGIN },
       publisher: {
         '@type': 'Organization',
         name: 'Nelsy',
         url: ORIGIN,
         logo: { '@type': 'ImageObject', url: `${ORIGIN}/og-image.png` },
       },
-      image: article.heroImage.startsWith('/') ? `${ORIGIN}${article.heroImage}` : undefined,
+      image: { '@type': 'ImageObject', url: ogImage },
     },
     {
       '@context': 'https://schema.org',
@@ -63,7 +77,7 @@ export default function BlogArticlePage() {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${ORIGIN}/` },
         { '@type': 'ListItem', position: 2, name: 'Blog', item: `${ORIGIN}/blog` },
-        { '@type': 'ListItem', position: 3, name: article.title, item: `${ORIGIN}${canonicalPath}` },
+        { '@type': 'ListItem', position: 3, name: article.title, item: url },
       ],
     },
     ...(article.faq?.length
@@ -79,18 +93,8 @@ export default function BlogArticlePage() {
       : []),
   ];
 
-  const articleSlug = article.slug;
-  const articleCategory = article.category;
-
-  function handleCTAClick() {
-    trackArticleCTAClicked(pathname, articleSlug, articleCategory, 'footer_cta', 'Start free →');
-  }
-
-  const hasRealImage = article.heroImage.startsWith('/');
-  // Prefer real image for OG; fall back to generated cover
-  const ogImage = hasRealImage
-    ? `${ORIGIN}${article.heroImage}`
-    : `${ORIGIN}/blog-covers/${article.slug}.png`;
+  const ctaClick = (position: 'mid_article' | 'sidebar' | 'footer_cta') => () =>
+    trackArticleCTAClicked(pathname, article.slug, article.category, position, 'Start your free trial');
 
   return (
     <>
@@ -104,89 +108,79 @@ export default function BlogArticlePage() {
       />
       <SiteNav />
 
-      <div className="bg-[#FFFBFB] min-h-screen pt-14">
+      <div className="bg-white min-h-screen pt-14">
 
         {/* ── Hero ─────────────────────────────────────────────────────── */}
-        <header className="border-b border-[#F4C2C2]/30 bg-white">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16">
-            <div className="grid md:grid-cols-2 gap-10 items-center">
-
-              {/* Left */}
-              <div>
-                {/* Breadcrumb */}
-                <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 flex-wrap mb-5">
-                  <Link to="/" className="text-xs text-gray-400 hover:text-gray-600 transition">Home</Link>
-                  <span className="text-gray-300 text-xs" aria-hidden>›</span>
-                  <Link to="/blog" className="text-xs text-gray-400 hover:text-gray-600 transition">Blog</Link>
-                  <span className="text-gray-300 text-xs" aria-hidden>›</span>
-                  <span
-                    className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
-                    style={{ background: cat.bg, color: cat.text }}
-                  >
-                    {catLabel}
-                  </span>
+        <header className="bg-[#FDF0F7]/60 border-b border-[#F4C2C2]/30">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 pb-10 md:py-14">
+            <div className="grid md:grid-cols-[1.1fr_1fr] gap-8 md:gap-12 items-center">
+              <div className="min-w-0">
+                <nav aria-label="Breadcrumb" className="mb-5">
+                  <ol className="flex items-center gap-1.5 flex-wrap text-xs text-gray-500">
+                    <li><Link to="/" className="hover:text-[#1A1A1A] transition">Home</Link></li>
+                    <li aria-hidden className="text-gray-300">›</li>
+                    <li><Link to="/blog" className="hover:text-[#1A1A1A] transition">Blog</Link></li>
+                    <li aria-hidden className="text-gray-300">›</li>
+                    <li>
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+                        style={{ background: cat.bg, color: cat.text }}
+                      >
+                        {catLabel}
+                      </span>
+                    </li>
+                  </ol>
                 </nav>
 
-                <h1 className="font-serif text-3xl md:text-4xl font-bold text-[#1A1A1A] leading-snug mb-4">
+                <h1 className="font-serif text-[2rem] leading-[1.15] sm:text-4xl lg:text-5xl font-bold text-[#1A1A1A] mb-5 tracking-tight">
                   {article.title}
                 </h1>
 
-                <p className="text-gray-500 text-lg leading-relaxed mb-6">
-                  {article.excerpt}
-                </p>
-
-                {/* Author + date */}
-                <div className="flex items-center gap-3 flex-wrap">
+                <div className="flex items-center gap-3">
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
+                    className="w-11 h-11 rounded-xl flex items-center justify-center text-white font-bold text-sm flex-shrink-0"
                     style={{ background: 'linear-gradient(135deg, #F52B8C, #FF8EC7)' }}
+                    aria-hidden
                   >
-                    {article.author.charAt(0)}
+                    N
                   </div>
-                  <div>
-                    <p className="text-sm font-semibold text-[#1A1A1A]">{article.author}</p>
-                    <p className="text-xs text-gray-400">{article.authorRole}</p>
-                  </div>
-                  <span className="text-gray-200 mx-1 hidden sm:inline" aria-hidden>|</span>
-                  <div className="text-xs text-gray-400">
-                    <time dateTime={article.publishedAt}>{publishDate}</time>
-                    {updateDate && <span className="ml-2">· Updated {updateDate}</span>}
+                  <div className="text-sm leading-tight">
+                    <p className="font-semibold text-[#1A1A1A]">By {article.author}</p>
+                    <p className="text-gray-500 mt-1">
+                      {updateDate ? (
+                        <>Updated <time dateTime={article.updatedAt}>{updateDate}</time></>
+                      ) : (
+                        <time dateTime={article.publishedAt}>{publishDate}</time>
+                      )}
+                      <span aria-hidden> · </span>{minutes} min read
+                    </p>
                   </div>
                 </div>
+
                 <SummarizeWithAI
-                  url={`https://getnelsy.com/blog/${article.slug}`}
+                  url={url}
                   title={article.title}
                   onClick={(tool) => track('article_summarize_clicked', { slug: article.slug, tool })}
                 />
               </div>
 
-              {/* Right: hero visual */}
               <div className="relative">
                 {hasRealImage ? (
                   <img
                     src={article.heroImage}
                     alt={article.heroImageAlt}
-                    className="w-full rounded-2xl object-cover shadow-lg"
-                    style={{ maxHeight: 360 }}
+                    width={1200}
+                    height={630}
+                    className="w-full aspect-[1200/630] rounded-2xl object-cover shadow-xl shadow-[#F52B8C]/10"
+                    fetchPriority="high"
                   />
                 ) : (
-                  <img
-                    src={`/blog-covers/${article.slug}.png`}
-                    alt={article.heroImageAlt}
-                    className="w-full rounded-2xl object-cover shadow-lg"
-                    style={{ maxHeight: 360 }}
-                    loading="eager"
-                    onError={(e) => {
-                      // If generated cover is missing, show gradient fallback
-                      const el = e.currentTarget as HTMLImageElement;
-                      el.style.display = 'none';
-                      const parent = el.parentElement;
-                      if (parent) {
-                        parent.style.height = '300px';
-                        parent.style.background = article.heroImage;
-                        parent.style.borderRadius = '1rem';
-                      }
-                    }}
+                  <CoverPhoto
+                    slug={article.slug}
+                    category={article.category}
+                    eager
+                    sizes="(max-width: 768px) 100vw, 520px"
+                    className="w-full aspect-[1200/630] rounded-2xl shadow-xl shadow-[#F52B8C]/10"
                   />
                 )}
               </div>
@@ -195,92 +189,89 @@ export default function BlogArticlePage() {
         </header>
 
         {/* ── Body ─────────────────────────────────────────────────────── */}
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-          <div className="grid lg:grid-cols-[220px_1fr] gap-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 md:py-14">
+          <div className="grid lg:grid-cols-[250px_minmax(0,1fr)] gap-12 xl:gap-16">
 
-            {/* Sidebar TOC */}
-            <ArticleTOC sections={article.toc} />
+            <ArticleTOC sections={article.toc}>
+              <ArticleSidebarCTA onClick={ctaClick('sidebar')} />
+            </ArticleTOC>
 
-            {/* Main content */}
             <main className="min-w-0">
               <div className="prose-article max-w-[720px]">
                 {article.tldr && <ArticleTLDR {...article.tldr} />}
-                {article.content()}
+                <ArticleBody article={article} keepReading={keepReading} onMidCtaClick={ctaClick('mid_article')} />
+
+                {/* Related Nelsy features (opt-in per article via relatedFeatureSlugs) */}
+                {article.relatedFeatureSlugs?.length ? (
+                  <RelatedFeatures slugs={article.relatedFeatureSlugs} />
+                ) : null}
+
+                {/* FAQ */}
+                {article.faq?.length ? (
+                  <section className="mt-12">
+                    <h2 id="faq" className="font-serif text-2xl font-bold text-[#1A1A1A] mb-6">
+                      Frequently asked questions
+                    </h2>
+                    <div className="space-y-3">
+                      {article.faq.map((item, i) => (
+                        <details
+                          key={i}
+                          className="group bg-white rounded-2xl border border-[#1A1A1A]/10 p-5 cursor-pointer open:border-[#F52B8C]/40"
+                        >
+                          <summary className="font-semibold text-[#1A1A1A] text-[15px] list-none flex items-center justify-between gap-3">
+                            {item.q}
+                            <span className="text-[#F52B8C] flex-shrink-0 transition-transform group-open:rotate-45 text-xl leading-none" aria-hidden>
+                              +
+                            </span>
+                          </summary>
+                          <p className="mt-3 text-sm text-gray-600 leading-relaxed">{item.a}</p>
+                        </details>
+                      ))}
+                    </div>
+                  </section>
+                ) : null}
+
+                {/* End CTA */}
+                <ArticleCTABlock onCtaClick={ctaClick('footer_cta')} />
+
+                <FreeToolsBox tools={tools} />
+                <NelsyPagesBox pages={pages} />
+
+                {/* Guides for nail techs (money pages) */}
+                {isProArticle(article) && (
+                  <nav aria-label="Guides for nail techs" className="not-prose mt-8 rounded-3xl border border-[#1A1A1A]/10 p-6 sm:p-8">
+                    <p className="font-serif text-xl font-bold text-[#1A1A1A] mb-4">Guides for nail techs</p>
+                    <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
+                      {PRO_GUIDES.map((g) => (
+                        <li key={g.path}>
+                          <Link to={g.path} className="text-sm font-medium text-[#1A1A1A] hover:text-[#F52B8C] transition">
+                            {g.label} →
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </nav>
+                )}
               </div>
-
-              {/* Related Nelsy features (opt-in per article via relatedFeatureSlugs) */}
-              {article.relatedFeatureSlugs?.length ? (
-                <RelatedFeatures slugs={article.relatedFeatureSlugs} />
-              ) : null}
-
-              {/* Product CTA */}
-              <ArticleCTABlock onCtaClick={handleCTAClick} />
-
-              {/* FAQ */}
-              {article.faq?.length ? (
-                <section className="mt-12">
-                  <h2
-                    id="faq"
-                    className="font-serif text-2xl font-bold text-[#1A1A1A] mb-6"
-                  >
-                    Frequently asked questions
-                  </h2>
-                  <div className="space-y-4">
-                    {article.faq.map((item, i) => (
-                      <details
-                        key={i}
-                        className="group bg-white rounded-xl border border-[#F4C2C2]/30 p-5 cursor-pointer"
-                      >
-                        <summary className="font-semibold text-[#1A1A1A] text-sm list-none flex items-center justify-between gap-3">
-                          {item.q}
-                          <span className="text-gray-400 flex-shrink-0 transition-transform group-open:rotate-180 text-xs" aria-hidden>
-                            ▾
-                          </span>
-                        </summary>
-                        <p className="mt-3 text-sm text-gray-600 leading-relaxed">{item.a}</p>
-                      </details>
-                    ))}
-                  </div>
-                </section>
-              ) : null}
-
-              {/* Guides for nail techs (money pages) */}
-              {isProArticle(article) && (
-                <nav aria-label="Guides for nail techs" className="mt-12 rounded-2xl border border-[#F4C2C2]/40 bg-[#FFFBFB] p-6">
-                  <h2 className="font-serif text-xl font-bold text-[#1A1A1A] mb-4">Guides for nail techs</h2>
-                  <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2.5">
-                    {PRO_GUIDES.map((g) => (
-                      <li key={g.path}>
-                        <Link to={g.path} className="text-sm font-medium text-[#1A1A1A] hover:text-[#F52B8C] transition">
-                          {g.label} →
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              )}
             </main>
           </div>
         </div>
 
         {/* ── Related articles ─────────────────────────────────────────── */}
         {related.length > 0 && (
-          <section className="border-t border-[#F4C2C2]/30 bg-white py-16 px-4 sm:px-6">
+          <section className="border-t border-[#F4C2C2]/30 bg-[#FFFBFB] py-14 md:py-16 px-4 sm:px-6">
             <div className="max-w-6xl mx-auto">
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2">Keep reading</p>
-              <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mb-8">
-                Related guides
-              </h2>
+              <h2 className="font-serif text-3xl font-bold text-[#1A1A1A] mb-8">You might also like</h2>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {related.map((a) => (
                   <ArticleCard key={a.slug} article={a} size="spotlight" />
                 ))}
               </div>
-              {moreInCategory.length > 0 && (
+              {moreList.length > 0 && (
                 <nav aria-label={`More in ${catLabel}`} className="mt-12">
-                  <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-4">More in {catLabel}</h3>
+                  <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-gray-400 mb-4">More in {catLabel}</h3>
                   <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-3">
-                    {moreInCategory.map((a) => (
+                    {moreList.map((a) => (
                       <li key={a.slug}>
                         <Link to={`/blog/${a.slug}`} className="text-[15px] text-[#1A1A1A] hover:text-[#F52B8C] transition leading-snug">
                           {a.title}
@@ -290,21 +281,15 @@ export default function BlogArticlePage() {
                   </ul>
                 </nav>
               )}
+              <Link
+                to="/blog"
+                className="mt-10 inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#F52B8C] transition-colors"
+              >
+                <span aria-hidden>←</span> Back to the Nelsy Blog
+              </Link>
             </div>
           </section>
         )}
-
-        {/* ── Back to blog ─────────────────────────────────────────────── */}
-        <div className="border-t border-[#F4C2C2]/20 py-8 px-4 sm:px-6">
-          <div className="max-w-6xl mx-auto">
-            <Link
-              to="/blog"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-[#F52B8C] transition-colors"
-            >
-              <span aria-hidden>←</span> Back to the Nelsy Blog
-            </Link>
-          </div>
-        </div>
       </div>
 
       <SiteFooter />

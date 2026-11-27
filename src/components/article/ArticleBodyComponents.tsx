@@ -60,7 +60,7 @@ export function ArticleQuote({
       <p>{children}</p>
       {attribution && (
         <footer className="mt-3 text-sm not-italic font-medium text-gray-500">
-          — {attribution}
+          {attribution}
         </footer>
       )}
     </blockquote>
@@ -68,6 +68,11 @@ export function ArticleQuote({
 }
 
 // ─── ArticleTable ────────────────────────────────────────────────────────────
+// Comparison-style table: dark header, sticky first column on small screens,
+// and the Nelsy row or column highlighted in brand pink (detected from the
+// first cell / header text, so every existing table gets it automatically).
+
+const isNelsy = (v: unknown) => typeof v === 'string' && /^nelsy\b/i.test(v.trim());
 
 export function ArticleTable({
   headers,
@@ -78,20 +83,24 @@ export function ArticleTable({
   rows: (string | ReactNode)[][];
   caption?: string;
 }) {
+  const nelsyCol = headers.findIndex((h, i) => i > 0 && isNelsy(h));
   return (
-    <div className="my-8 overflow-x-auto rounded-2xl border border-[#F4C2C2]/40">
-      <table className="w-full text-sm border-collapse">
+    <div className="not-prose my-8 overflow-x-auto rounded-2xl border border-[#1A1A1A]/10 bg-white shadow-sm">
+      <table className="w-full min-w-[560px] text-sm border-collapse">
         {caption && (
           <caption className="text-xs text-gray-500 pb-2 text-left px-4 pt-3">
             {caption}
           </caption>
         )}
         <thead>
-          <tr style={{ background: '#FDF0F7' }}>
-            {headers.map((h) => (
+          <tr>
+            {headers.map((h, j) => (
               <th
-                key={h}
-                className="text-left px-4 py-3 font-semibold text-[#1A1A1A] text-xs uppercase tracking-wide border-b border-[#F4C2C2]/40"
+                key={h + j}
+                scope="col"
+                className={`text-left px-4 py-3.5 font-bold text-[11px] uppercase tracking-wider ${
+                  j === nelsyCol ? 'bg-[#F52B8C] text-white' : 'bg-[#1A1A1A] text-white'
+                } ${j === 0 ? 'sticky left-0 z-10' : ''}`}
               >
                 {h}
               </th>
@@ -99,15 +108,32 @@ export function ArticleTable({
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, i) => (
-            <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-[#FFFBFB]'}>
-              {row.map((cell, j) => (
-                <td key={j} className="px-4 py-3 text-gray-700 border-b border-[#F4C2C2]/20 last:border-b-0">
-                  {cell}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {rows.map((row, i) => {
+            const nelsyRow = isNelsy(row[0]);
+            return (
+              <tr key={i} className={nelsyRow ? 'bg-[#FDF0F7]' : i % 2 === 0 ? 'bg-white' : 'bg-[#FFFBFB]'}>
+                {row.map((cell, j) => (
+                  <td
+                    key={j}
+                    className={`px-4 py-3 align-top border-b border-[#1A1A1A]/5 ${
+                      j === 0
+                        ? `sticky left-0 font-semibold text-[#1A1A1A] ${nelsyRow ? 'bg-[#FDF0F7]' : i % 2 === 0 ? 'bg-white' : 'bg-[#FFFBFB]'}`
+                        : j === nelsyCol
+                          ? 'bg-[#FDF0F7] text-[#1A1A1A] font-medium'
+                          : nelsyRow ? 'text-[#1A1A1A] font-medium' : 'text-gray-700'
+                    }`}
+                  >
+                    {j === 0 && nelsyRow ? (
+                      <span className="inline-flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#F52B8C]" aria-hidden />
+                        {cell}
+                      </span>
+                    ) : cell}
+                  </td>
+                ))}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -182,16 +208,23 @@ export function ArticleImage({
   alt,
   caption,
   fullWidth = false,
+  flush = false,
+  wide = false,
 }: {
   src: string;
   alt: string;
   caption?: string;
   fullWidth?: boolean;
+  /** No vertical margin (when the parent already spaces its children). */
+  flush?: boolean;
+  /** 16:9 crop instead of 4:3 (used for photos the template inserts). */
+  wide?: boolean;
 }) {
   const isUnsplash = src.startsWith('photo-');
-  const url = (w: number) => `${UNSPLASH}${src}?auto=format&fit=crop&w=${w}&h=${Math.round(w * 0.75)}&q=75`;
+  const ratio = wide ? 9 / 16 : 0.75;
+  const url = (w: number) => `${UNSPLASH}${src}?auto=format&fit=crop&w=${w}&h=${Math.round(w * ratio)}&q=75`;
   return (
-    <figure className={`my-8 ${fullWidth ? '-mx-4 sm:-mx-0' : ''}`}>
+    <figure className={`${flush ? '' : 'my-8'} ${fullWidth ? '-mx-4 sm:-mx-0' : ''}`}>
       <div className="rounded-2xl overflow-hidden bg-[#F7F3F3]">
         {isUnsplash ? (
           <img
@@ -199,7 +232,7 @@ export function ArticleImage({
             srcSet={`${url(480)} 480w, ${url(960)} 960w, ${url(1440)} 1440w`}
             sizes="(max-width: 768px) 100vw, 720px"
             width={960}
-            height={720}
+            height={Math.round(960 * ratio)}
             alt={alt}
             className="w-full h-auto object-cover"
             loading="lazy"
@@ -284,10 +317,12 @@ export function ArticleComparison({
 
 // ─── ArticleCTA (end-of-article product block) ───────────────────────────────
 
+export const TRIAL_PATH = '/onboarding?plan=independent_monthly';
+
 export function ArticleCTABlock({
-  heading = 'Ready to run your nail business more professionally?',
-  body = 'Manage bookings, deposits and payments from one customisable Nelsy booking page.',
-  ctaLabel = 'Start free →',
+  heading = 'Run your beauty business from one link',
+  body = 'Bookings, deposits, payments and your client list on one Nelsy page. Try it free for 14 days, then $29/month or $25/month billed yearly. 0% Nelsy commission.',
+  ctaLabel = 'Start your free trial',
   onCtaClick,
 }: {
   heading?: string;
@@ -296,28 +331,32 @@ export function ArticleCTABlock({
   onCtaClick?: () => void;
 }) {
   return (
-    <div
-      className="my-12 rounded-3xl px-8 py-10 flex flex-col sm:flex-row items-center gap-6"
-      style={{ background: 'linear-gradient(135deg, #FDF0F7 0%, #FFF5FB 100%)', border: `1.5px solid #F4C2C2` }}
+    <section
+      aria-label="Try Nelsy"
+      className="not-prose my-12 overflow-hidden rounded-3xl bg-[#1A1A1A] text-white grid sm:grid-cols-[1fr_200px] items-center"
     >
-      <img
-        src="/hero-mockup.png"
-        alt="Nelsy booking page"
-        className="w-28 sm:w-36 rounded-xl object-cover flex-shrink-0 shadow-md"
-      />
-      <div className="flex-1 text-center sm:text-left">
-        <h2 className="font-serif text-xl font-bold text-[#1A1A1A] mb-2">{heading}</h2>
-        <p className="text-gray-600 text-sm mb-4">{body}</p>
+      <div className="p-7 sm:p-10">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#F52B8C] mb-3">Nelsy</p>
+        <h2 className="font-serif text-2xl sm:text-3xl font-bold leading-tight mb-3">{heading}</h2>
+        <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">{body}</p>
         <Link
-          to="/onboarding"
+          to={TRIAL_PATH}
           onClick={onCtaClick}
-          className="inline-block px-5 py-2.5 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
           style={{ background: PINK }}
         >
-          {ctaLabel}
+          {ctaLabel} <span aria-hidden>→</span>
         </Link>
       </div>
-    </div>
+      <img
+        src="/hero-mockup-540.webp"
+        alt="Nelsy booking page with services, products and payments"
+        width={200}
+        height={214}
+        loading="lazy"
+        className="hidden sm:block w-[200px] h-auto self-end mr-6 mt-6"
+      />
+    </section>
   );
 }
 

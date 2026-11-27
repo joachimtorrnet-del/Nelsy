@@ -46,6 +46,7 @@ registerArticle({
     { q: 'How much do lash booking apps cost per month?', a: 'From the official pages: Nelsy $29 ($25 billed yearly), GlossGenius Standard $28 ($24 billed annually), Square Appointments Free $0 or Plus $49, Booksy US $29.99, Fresha Independent €14.95. Card fees come on top.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
+  relatedLinks: { tool: '/tools/booking-app-fee-calculator', pages: ['/use-cases/lash-techs', '/features/deposits', '/use-cases/reduce-no-shows'] },
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">

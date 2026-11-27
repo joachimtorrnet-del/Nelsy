@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 import type { TocSection } from '@/lib/articles';
 
 const PINK = '#F52B8C';
 
 interface Props {
   sections: TocSection[];
+  /** Extra sidebar content under the table of contents (desktop only), e.g. a CTA card. */
+  children?: ReactNode;
 }
 
-export default function ArticleTOC({ sections }: Props) {
+export default function ArticleTOC({ sections, children }: Props) {
   const [activeId, setActiveId] = useState<string>(sections[0]?.id ?? '');
   const [mobileOpen, setMobileOpen] = useState(false);
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -53,11 +56,11 @@ export default function ArticleTOC({ sections }: Props) {
             <li key={s.id}>
               <button
                 onClick={() => scrollTo(s.id)}
-                className="w-full text-left text-sm leading-snug py-1.5 px-3 rounded-lg transition-colors"
+                className="w-full text-left text-sm leading-snug py-1.5 pl-3 pr-2 border-l-2 transition-colors"
                 style={
                   isActive
-                    ? { color: PINK, fontWeight: 600, background: '#FDF0F7' }
-                    : { color: '#555', fontWeight: 400 }
+                    ? { color: PINK, fontWeight: 600, borderColor: PINK }
+                    : { color: '#555', fontWeight: 400, borderColor: 'transparent' }
                 }
               >
                 {s.label}
@@ -75,15 +78,17 @@ export default function ArticleTOC({ sections }: Props) {
       <aside className="hidden lg:block">
         <div className="sticky top-24 space-y-6">
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3 px-3">
-              Contents
+            <p className="font-serif text-lg font-bold text-[#1A1A1A] pb-3 mb-3 border-b border-[#1A1A1A]/10">
+              Table of contents
             </p>
-            {tocLinks}
+            <div className="max-h-[40vh] overflow-y-auto pr-1">{tocLinks}</div>
           </div>
+
+          {children}
 
           {/* Share */}
           <div>
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-3 px-3">
+            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 px-1">
               Share
             </p>
             <ShareButtons />

@@ -45,6 +45,7 @@ registerArticle({
     { q: 'Which link in bio has no transaction fees?', a: 'Stan lists 0% transaction fees. Nelsy charges 0% Nelsy commission. Payment processing fees from Stripe or your payment provider still apply on all of them.' },
   ],
   relatedFeatureSlugs: ['link-in-bio', 'bookings', 'digital-products'],
+  relatedLinks: { tool: '/tools/creator-rate-calculator', pages: ['/features/link-in-bio', '/use-cases/beauty-creators', '/use-cases/turn-followers-into-bookings'] },
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">

@@ -46,6 +46,7 @@ registerArticle({
     { q: 'Do estheticians need a HIPAA-compliant booking app?', a: 'It depends on your services and where you work. Acuity offers a Business Associate Agreement on its Premium plan. If you perform medical treatments, check your local rules and ask the provider directly.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'digital-products'],
+  relatedLinks: { tool: '/tools/booking-app-fee-calculator', pages: ['/use-cases/independent-beauty-pros', '/features/deposits', '/features/payments'] },
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">

@@ -45,6 +45,7 @@ registerArticle({
     { q: 'Can I take beauty appointments on Stan?', a: 'Stan sells bookings for your time, such as 1:1 calls. If you need a service menu for in-person clients with deposits or pay on arrival, a booking-first tool like Nelsy fits better.' },
   ],
   relatedFeatureSlugs: ['courses', 'digital-products', 'bookings'],
+  relatedLinks: { tool: '/tools/creator-rate-calculator', pages: ['/use-cases/beauty-creators', '/features/digital-products', '/features/courses'] },
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">
