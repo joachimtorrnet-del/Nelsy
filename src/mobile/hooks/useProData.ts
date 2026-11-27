@@ -7,6 +7,10 @@ export interface ProDataValue {
   error: string | null;
   refresh: () => Promise<void>;
   setServiceActive: (id: string, active: boolean) => Promise<void>;
+  /** Writes one key of profiles.notification_preferences. Resolves false if it could not be saved. */
+  setNotificationPref: (key: string, value: boolean) => Promise<boolean>;
+  /** Saves profiles.timezone. */
+  setTimezone: (tz: string) => Promise<boolean>;
   signOut: () => Promise<void>;
 }
 

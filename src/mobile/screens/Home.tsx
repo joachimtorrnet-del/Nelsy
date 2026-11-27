@@ -1,37 +1,39 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check, ChevronRight, Copy, Sparkles, X } from 'lucide-react';
+import { Check, ChevronRight, Copy, Sparkles, Users, X } from 'lucide-react';
 import { useMoney } from '@/lib/currency';
+import { hasFeature } from '@/lib/plans';
 import { useProData } from '../hooks/useProData';
 import { Avatar, DemoBanner } from '../components/ui';
 import { RevenueChart } from '../components/RevenueChart';
 import { BookingRow } from '../components/BookingRow';
+import { TimezoneBanner } from '../components/TimezoneBanner';
 import { Logo } from '../components/Logo';
 import { PINK, WEB, WEB_ORIGIN, pageUrl } from '../lib/constants';
 import { copyText, openExternal, prefs } from '../lib/native';
+import { first28Label, last28Index } from '../lib/format';
+import { planLinksAllowed } from '../lib/storePolicy';
 import type { ProSnapshot } from '../lib/types';
 
-const DAY = 24 * 60 * 60 * 1000;
 const EARNING = new Set(['paid', 'confirmed', 'completed']);
 const ACTIVE_SUBS = new Set(['active', 'trialing', 'trial', 'past_due']);
 
 function last28(data: ProSnapshot) {
-  const start = new Date();
-  start.setHours(0, 0, 0, 0);
-  const from = start.getTime() - 27 * DAY;
   const days = new Array(28).fill(0) as number[];
   let count = 0;
+  const now = Date.now();
   for (const b of data.bookings) {
-    const t = new Date(b.datetime).getTime();
-    if (t < from || t > Date.now()) continue;
+    if (new Date(b.datetime).getTime() > now) continue;
+    const i = last28Index(b.datetime, data.timezone);
+    if (i < 0) continue;
     if (b.status !== 'cancelled' && b.status !== 'expired') count++;
-    if (EARNING.has(b.status)) days[Math.min(27, Math.floor((t - from) / DAY))] += b.price;
+    if (EARNING.has(b.status)) days[i] += b.price;
   }
   const recent = data.bookings
-    .filter((b) => new Date(b.datetime).getTime() <= Date.now())
+    .filter((b) => new Date(b.datetime).getTime() <= now)
     .sort((a, b) => +new Date(b.datetime) - +new Date(a.datetime))
     .slice(0, 4);
-  return { days, count, from: new Date(from), recent };
+  return { days, count, recent };
 }
 
 export default function Home() {
@@ -49,6 +51,7 @@ export default function Home() {
 
   const link = pageUrl(data.slug);
   const subscribed = ACTIVE_SUBS.has(data.subscriptionStatus ?? '');
+  const audience = hasFeature(data.plan, 'digital_products');
   const { recent } = stats;
 
   const copy = async () => {
@@ -81,6 +84,7 @@ export default function Home() {
       </div>
 
       {data.mode === 'demo' && <DemoBanner />}
+      <TimezoneBanner />
 
       {/* Revenue */}
       <div className="flex items-center gap-3 px-4 pt-2">
@@ -107,22 +111,30 @@ export default function Home() {
         </button>
       </div>
 
-      {/* Promo */}
+      {/* Promo / page status */}
       {!subscribed ? (
-        <div className="mx-4 mt-4 rounded-2xl p-4 text-white" style={{ backgroundColor: PINK }}>
-          <p className="flex items-center gap-1.5 text-[15px] font-bold">
-            <Sparkles size={16} /> Turn on your page
-          </p>
-          <p className="mt-1 text-[13px] text-white/85">Start your free trial on {WEB_ORIGIN.replace('https://', '')} so clients can book you.</p>
-          <button
-            type="button"
-            onClick={() => openExternal(`${WEB.signup}?plan=independent_monthly&resume=1`)}
-            className="mt-3 h-11 rounded-full bg-white px-4 text-[13px] font-bold"
-            style={{ color: PINK }}
-          >
-            Start free trial
-          </button>
-        </div>
+        planLinksAllowed() ? (
+          <div className="mx-4 mt-4 rounded-2xl p-4 text-white" style={{ backgroundColor: PINK }}>
+            <p className="flex items-center gap-1.5 text-[15px] font-bold">
+              <Sparkles size={16} /> Turn on your page
+            </p>
+            <p className="mt-1 text-[13px] text-white/85">Start your free trial on {WEB_ORIGIN.replace('https://', '')} so clients can book you.</p>
+            <button
+              type="button"
+              onClick={() => openExternal(`${WEB.signup}?plan=independent_monthly&resume=1`)}
+              className="mt-3 h-11 rounded-full bg-white px-4 text-[13px] font-bold"
+              style={{ color: PINK }}
+            >
+              Start free trial
+            </button>
+          </div>
+        ) : (
+          // Store builds: status only, no call to action for a purchase (Guideline 3.1.3(f)).
+          <div className="mx-4 mt-4 rounded-2xl bg-gray-50 p-4">
+            <p className="text-[15px] font-bold">Your page is not live yet</p>
+            <p className="mt-1 text-[13px] text-gray-500">Clients can book you once your plan is active. You can check its status in Settings.</p>
+          </div>
+        )
       ) : (
         !promoHidden && (
           <div className="relative mx-4 mt-4 rounded-2xl bg-[#FFF0F7] p-4 pr-12">
@@ -161,12 +173,21 @@ export default function Home() {
         </div>
         <div className="mt-3 rounded-2xl border border-gray-100 p-3.5">
           <p className="mb-2 text-[12px] text-gray-500">Revenue per day</p>
-          <RevenueChart
-            points={stats.days}
-            labels={[stats.from.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }), 'Today']}
-          />
+          <RevenueChart points={stats.days} labels={[first28Label(data.timezone), 'Today']} />
         </div>
       </section>
+
+      {/* Audience shortcut (Creator plan) */}
+      {audience && (
+        <Link to="/audience" state={{ from: '/home', fromLabel: 'Home' }} className="mx-4 mt-3 flex min-h-[56px] items-center gap-3 rounded-2xl border border-gray-100 px-3.5">
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#FFF0F7] text-[#F52B8C]">
+            <Users size={18} />
+          </span>
+          <span className="flex-1 text-[15px] font-bold">Audience</span>
+          <span className="text-[13px] text-gray-400">Your contacts</span>
+          <ChevronRight size={18} className="text-gray-300" />
+        </Link>
+      )}
 
       {/* Recent bookings */}
       <section className="mx-4 mt-6">
@@ -181,7 +202,7 @@ export default function Home() {
         ) : (
           <div className="divide-y divide-gray-100">
             {recent.map((b) => (
-              <BookingRow key={b.id} b={b} showDate />
+              <BookingRow key={b.id} b={b} tz={data.timezone} showDate />
             ))}
           </div>
         )}

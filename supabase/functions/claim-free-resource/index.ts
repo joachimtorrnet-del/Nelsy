@@ -17,6 +17,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { planHasFeature } from '../_shared/plans.ts'
 import { sendEmail, esc, row, layout } from '../_shared/email.ts'
 import { MAX_DOWNLOADS, appUrl, isValidEmail } from '../_shared/product-orders.ts'
+import { notifyPro, leadMessage } from '../_shared/push.ts'
 import {
   upsertContact, consentText, rateKey, unsubscribeLinks, unsubscribeHeaders, unsubscribeFooter,
 } from '../_shared/contacts.ts'
@@ -179,6 +180,16 @@ serve(async (req) => {
       { headers: unsubscribeHeaders(unsub) },
     )
     await supabase.from('free_resource_claims').update({ emailed_at: new Date().toISOString() }).eq('id', claimId)
+
+    // ── 7. Push "New lead" to the pro: only for a first claim, never for a re-send.
+    // After the claim and the email; a failure never changes the response. Off until PUSH_ENABLED.
+    if (inserted?.id) {
+      try {
+        await notifyPro(supabase, profile.id, leadMessage({ firstName, resourceTitle: product.title }))
+      } catch (pushErr) {
+        console.error('[claim-free-resource] push failed (non-blocking):', pushErr)
+      }
+    }
 
     return json({ ok: true })
   } catch (err: unknown) {
