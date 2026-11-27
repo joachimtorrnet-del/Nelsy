@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Home, Sparkles, CalendarDays, ShoppingBag, Users, TrendingUp,
   BarChart2, Megaphone, Globe, Gift, HelpCircle, Settings, LogOut,
-  X, PanelLeftClose, PanelLeftOpen, Search, ExternalLink, ChevronUp, Package,
+  X, PanelLeftClose, PanelLeftOpen, Search, ExternalLink, ChevronUp, Package, Tag,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -28,6 +28,7 @@ export const MAIN_NAV: NavItem[] = [
 // Roadmap: these stay visible with a Soon badge until they ship
 export const GROW_NAV: NavItem[] = [
   { id: 'products',  label: 'Products',  icon: Package,     live: true },
+  { id: 'kit',       label: 'Shop my kit', icon: Tag,       live: true },
   { id: 'orders',    label: 'Orders',    icon: ShoppingBag, live: false },
   { id: 'marketing', label: 'Marketing', icon: Megaphone,   live: false },
   { id: 'community', label: 'Community', icon: Globe,       live: false },

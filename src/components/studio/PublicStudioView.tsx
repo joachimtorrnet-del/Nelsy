@@ -23,6 +23,7 @@ import { useStudioProducts } from '@/hooks/useStudioProducts';
 import type { ProductsTone } from './StudioProducts';
 import { ProductCheckoutModal } from './ProductCheckoutModal';
 import type { PublicProduct } from '@/lib/products';
+import { StudioKit } from './StudioKit';
 
 // Theme presets that use a standalone layout component (no StudioHeroV2 sections)
 const LAYOUT_PRESETS: Record<string, 'split' | 'editorial' | 'spotlight'> = {
@@ -101,10 +102,15 @@ function PublicStudioViewInner({ merchant, mode = 'live' }: Props) {
   // Digital products (Creator plan): shown after the services on every template
   const products = useStudioProducts(merchant.id);
   const [openProduct, setOpenProduct] = useState<PublicProduct | null>(null);
-  const productsSection = (tone: ProductsTone, padding?: string) =>
-    products.length > 0 ? (
-      <StudioProducts products={products} tone={tone} isPreview={isPreview} onOpen={setOpenProduct} padding={padding} />
-    ) : null;
+  const productsSection = (tone: ProductsTone, padding?: string) => (
+    <>
+      {products.length > 0 && (
+        <StudioProducts products={products} tone={tone} isPreview={isPreview} onOpen={setOpenProduct} padding={padding} />
+      )}
+      {/* Shop my kit (Creator plan): renders nothing when the pro has no public kit */}
+      <StudioKit profileId={merchant.id} tone={tone} isPreview={isPreview} padding={padding} />
+    </>
+  );
   const themeTone: ProductsTone = {
     text: theme.textPrimary, muted: theme.textSecondary, cardBg: theme.cardBg, cardBorder: theme.cardBorder,
     accent, accentText: theme.accentText, cardBlur: theme.cardBlur,

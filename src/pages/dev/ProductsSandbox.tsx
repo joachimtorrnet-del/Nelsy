@@ -6,6 +6,7 @@
 //   /dev/products?empty=1      same, starting with no products
 //   /dev/products?gated=1      the locked (Creator upgrade) state
 //   /dev/studio?preset=c_blush public studio page with demo products, any template
+//   /dev/kit                   dashboard Shop my kit page (?empty=1, ?gated=1)
 // ─────────────────────────────────────────────────────────────────────────────
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -13,6 +14,8 @@ import DashboardLayout from '@/components/dashboard/DashboardLayout';
 import Products from '@/pages/dashboard/Products';
 import { PublicStudioView } from '@/components/studio/PublicStudioView';
 import { createDemoProductsApi } from '@/lib/productsDemo';
+import Kit from '@/pages/dashboard/Kit';
+import { createDemoKitApi } from '@/lib/kitDemo';
 import { getMerchantBySlug } from '@/lib/mockData';
 
 export function ProductsSandbox() {
@@ -31,6 +34,27 @@ export function ProductsSandbox() {
         <Products profile={profile} api={api} forceLocked={gated} onNavigate={setTab} />
       ) : (
         <p className="p-8 text-sm text-gray-500">Sandbox: only the Products tab is wired.</p>
+      )}
+    </DashboardLayout>
+  );
+}
+
+export function KitSandbox() {
+  const [params] = useSearchParams();
+  const empty = params.get('empty') === '1';
+  const gated = params.get('gated') === '1';
+  const api = useMemo(() => createDemoKitApi(empty), [empty]);
+  const [tab, setTab] = useState('kit');
+  const profile = {
+    id: 'demo', full_name: 'Maya Laurent', slug: 'studio-maya', subscription_status: 'active',
+    plan: gated ? 'independent_monthly' : 'creator_monthly',
+  };
+  return (
+    <DashboardLayout profile={profile} activeTab={tab} setActiveTab={setTab}>
+      {tab === 'kit' ? (
+        <Kit profile={profile} api={api} forceLocked={gated} />
+      ) : (
+        <p className="p-8 text-sm text-gray-500">Sandbox: only the Shop my kit tab is wired.</p>
       )}
     </DashboardLayout>
   );

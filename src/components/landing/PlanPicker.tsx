@@ -26,7 +26,7 @@ const HIGHLIGHT_DETAILS: { match: string; icon: LucideIcon; detail: string }[] =
   { match: 'digital products', icon: BookOpen, detail: 'Sell guides, courses and 1:1 calls from the same page' },
   { match: 'memberships', icon: Repeat, detail: 'Monthly clubs and subscriptions for your community' },
   { match: 'email marketing', icon: Mail, detail: 'Grow your list and send your link automatically' },
-  { match: 'affiliate', icon: Handshake, detail: 'Let others promote your products for a share' },
+  { match: 'shop my kit', icon: Handshake, detail: 'Recommend the products you use with your affiliate links' },
   { match: 'team member', icon: Users, detail: 'Every stylist with their own calendar and services' },
   { match: '5 team members', icon: Users, detail: 'Every stylist with their own calendar and services' },
   { match: 'custom domain', icon: Globe, detail: 'Your page on your own web address' },
