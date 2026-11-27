@@ -234,7 +234,7 @@ export default function Onboarding() {
         return;
       case 'plan':
         track('app_onboarding_trial_opened_web', { plan: PLAN_PARAM });
-        openExternal(`${WEB.signup}?plan=${PLAN_PARAM}`);
+        openExternal(`${WEB.signup}?plan=${PLAN_PARAM}&resume=1`);
         track('app_onboarding_completed', { plan: PLAN_PARAM });
         navigate('/home', { replace: true });
     }

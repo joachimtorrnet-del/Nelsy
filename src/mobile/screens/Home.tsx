@@ -116,7 +116,7 @@ export default function Home() {
           <p className="mt-1 text-[13px] text-white/85">Start your free trial on {WEB_ORIGIN.replace('https://', '')} so clients can book you.</p>
           <button
             type="button"
-            onClick={() => openExternal(`${WEB.signup}?plan=independent_monthly`)}
+            onClick={() => openExternal(`${WEB.signup}?plan=independent_monthly&resume=1`)}
             className="mt-3 h-11 rounded-full bg-white px-4 text-[13px] font-bold"
             style={{ color: PINK }}
           >
