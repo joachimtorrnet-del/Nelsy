@@ -64,6 +64,8 @@ interface UseStudioResult {
   loading: boolean;
   error: string | null;
   usingMockData: boolean;
+  /** The slug exists but the page is not live (draft, or paused after the plan or free trial ended). */
+  unavailable: boolean;
 }
 
 export function useStudio(slug: string): UseStudioResult {
@@ -71,6 +73,7 @@ export function useStudio(slug: string): UseStudioResult {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [usingMockData, setUsingMockData] = useState(false);
+  const [unavailable, setUnavailable] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -78,6 +81,7 @@ export function useStudio(slug: string): UseStudioResult {
     async function fetchStudio() {
       setLoading(true);
       setError(null);
+      setUnavailable(false);
 
       // Capture module-level var in local const so TypeScript can narrow it
       const client = supabase;
@@ -115,6 +119,7 @@ export function useStudio(slug: string): UseStudioResult {
         if (!profileData.subscription_status || ['inactive', 'incomplete', 'canceled', 'cancelled'].includes(profileData.subscription_status)) {
           if (!cancelled) {
             setError('Studio introuvable');
+            setUnavailable(true);
             setMerchant(null);
             setLoading(false);
           }
@@ -149,5 +154,5 @@ export function useStudio(slug: string): UseStudioResult {
     return () => { cancelled = true; };
   }, [slug]);
 
-  return { merchant, loading, error, usingMockData };
+  return { merchant, loading, error, usingMockData, unavailable };
 }

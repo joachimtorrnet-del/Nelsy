@@ -115,31 +115,6 @@ export default function Dashboard() {
     );
   }
 
-  const BLOCKED = ['canceled', 'cancelled'];
-  if (profile && BLOCKED.includes(profile.subscription_status ?? '')) {
-    return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center px-6 text-center">
-        <div className="text-5xl mb-6">💅</div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-3">Your page is paused</h1>
-        <p className="text-gray-500 text-sm max-w-xs mb-8 leading-relaxed">
-          Your plan has ended, so getnelsy.com/{profile.slug} is not visible to clients. Your services and settings are saved. Add a card to reactivate your dashboard, bookings, and page.
-        </p>
-        <a
-          href="/onboarding?step=plan"
-          className="w-full max-w-xs py-4 bg-[#F52B8C] text-white rounded-2xl font-bold text-base text-center hover:opacity-90 transition"
-        >
-          Reactivate my page
-        </a>
-        <button
-          onClick={async () => { await supabase?.auth.signOut(); navigate('/login'); }}
-          className="mt-4 text-sm text-gray-400 hover:text-gray-600 transition"
-        >
-          Sign out
-        </button>
-      </div>
-    );
-  }
-
   return (
     <DashboardLayout
       profile={profile}

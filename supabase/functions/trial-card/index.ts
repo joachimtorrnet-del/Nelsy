@@ -1,6 +1,8 @@
 // Card collection during a no-card trial. Deploy with JWT verification on.
 //
-// Body: { action: 'status' } → { status, trialEnd, hasCard, cancelAtPeriodEnd }   (read only)
+// Body: { action: 'status' } → { status, trialStart, trialEnd, hasCard, cancelAtPeriodEnd, price, trialEnded }   (read only)
+//       After the subscription was deleted (profile has no subscription id), status describes the customer's
+//       latest subscription, with trialEnded true when it was a no-card trial that ended without a card.
 //       { action: 'checkout' } → { url }   Stripe Checkout in setup mode (card, Apple Pay, Google Pay).
 //
 // Checkout setup mode saves the card without charging. The webhook (checkout.session.completed,
@@ -9,6 +11,8 @@
 import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import Stripe from 'npm:stripe@13.11.0'
 import { createClient } from 'npm:@supabase/supabase-js@2'
+import { isTrialEndCancellation } from '../_shared/trial.ts'
+import type { SubscriptionLike } from '../_shared/trial.ts'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
 if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
@@ -46,12 +50,20 @@ serve(async (req) => {
       .select('stripe_customer_id, stripe_subscription_id')
       .eq('id', user.id)
       .single()
-    if (!profile?.stripe_customer_id || !profile.stripe_subscription_id) {
+    if (!profile?.stripe_customer_id) {
       return json({ error: 'No subscription found. Start your free trial first.' }, 400)
     }
 
+    let subId = profile.stripe_subscription_id as string | null
+    if (!subId && body.action === 'status') {
+      // Ended plan: the webhook cleared the id. Describe the latest subscription (paused page copy).
+      const latest = await stripe.subscriptions.list({ customer: profile.stripe_customer_id, status: 'all', limit: 1 })
+      subId = latest.data[0]?.id ?? null
+    }
+    if (!subId) return json({ error: 'No subscription found. Start your free trial first.' }, 400)
+
     const [sub, customer] = await Promise.all([
-      stripe.subscriptions.retrieve(profile.stripe_subscription_id),
+      stripe.subscriptions.retrieve(subId),
       stripe.customers.retrieve(profile.stripe_customer_id),
     ])
     const c = customer as Stripe.Customer
@@ -59,11 +71,17 @@ serve(async (req) => {
       (!c.deleted && (!!c.invoice_settings?.default_payment_method || !!c.default_source))
 
     if (body.action === 'status') {
+      const price = sub.items.data[0]?.price
       return json({
         status: sub.status,
+        trialStart: sub.trial_start ? new Date(sub.trial_start * 1000).toISOString() : null,
         trialEnd: sub.trial_end ? new Date(sub.trial_end * 1000).toISOString() : null,
         hasCard,
         cancelAtPeriodEnd: sub.cancel_at_period_end,
+        price: price?.unit_amount != null
+          ? { amount: price.unit_amount / 100, currency: price.currency, interval: price.recurring?.interval ?? 'month' }
+          : null,
+        trialEnded: isTrialEndCancellation(sub as unknown as SubscriptionLike),
       })
     }
 

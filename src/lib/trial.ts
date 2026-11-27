@@ -46,10 +46,18 @@ export async function checkTrialEligibility(plan: string): Promise<{ eligible: b
 
 export interface TrialCardStatus {
   status: string;
+  trialStart?: string | null;
   trialEnd: string | null;
   hasCard: boolean;
   cancelAtPeriodEnd: boolean;
+  /** Plan price in major units, e.g. { amount: 29, currency: 'usd', interval: 'month' } */
+  price?: { amount: number; currency: string; interval: string } | null;
+  /** Latest subscription was a no-card trial that ended without a card */
+  trialEnded?: boolean;
 }
+
+/** Statuses for which the dashboard asks trial-card for details. */
+const TRACKED = ['trialing', 'cancelled', 'canceled'];
 
 let cached: { at: number; promise: Promise<TrialCardStatus> } | null = null;
 
@@ -68,16 +76,45 @@ export async function openAddCard(): Promise<void> {
   window.location.href = url;
 }
 
-/** Card status while trialing; null otherwise or while loading / on error (callers then show nothing). */
+/** Subscription details while trialing or after the plan ended; null otherwise, while loading or on error. */
 export function useTrialCard(subscriptionStatus: string | undefined): TrialCardStatus | null {
   const [state, setState] = useState<TrialCardStatus | null>(null);
   useEffect(() => {
-    if (subscriptionStatus !== 'trialing') { setState(null); return; }
+    if (!TRACKED.includes(subscriptionStatus ?? '')) { setState(null); return; }
     let alive = true;
     getTrialCardStatus().then((s) => { if (alive) setState(s); }).catch(() => { if (alive) setState(null); });
     return () => { alive = false; };
   }, [subscriptionStatus]);
   return state;
+}
+
+/** Stripe Billing Portal (manage plan, card, cancel). */
+export async function openBillingPortal(): Promise<void> {
+  const { url } = await invoke<{ url?: string }>('create-billing-portal', { return_url: `${window.location.origin}/dashboard` });
+  if (!url) throw new Error('[create-billing-portal] No URL returned');
+  window.location.href = url;
+}
+
+/**
+ * Paused page: reactivate. start-trial sends an account that already used its trial to Checkout
+ * (first payment today, no new trial); an account that never had a live trial gets it now.
+ */
+export async function reactivatePage(plan: string | null | undefined): Promise<'redirected' | 'live'> {
+  const result = await startTrial(plan || 'independent_monthly');
+  if (result.kind === 'checkout') {
+    window.location.href = result.url;
+    return 'redirected';
+  }
+  return 'live';
+}
+
+export function formatPlanPrice(price: TrialCardStatus['price']): string {
+  if (!price) return '';
+  const amount = new Intl.NumberFormat('en-US', {
+    style: 'currency', currency: price.currency.toUpperCase(),
+    minimumFractionDigits: Number.isInteger(price.amount) ? 0 : 2,
+  }).format(price.amount);
+  return `${amount}/${price.interval === 'year' ? 'year' : 'month'}`;
 }
 
 export function formatTrialEnd(iso: string | null): string {

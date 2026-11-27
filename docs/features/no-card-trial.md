@@ -66,12 +66,28 @@ Shared, unit-tested logic: `supabase/functions/_shared/trial.ts` (`src/lib/__tes
 
 ### Dashboard and public page
 
-- Banner during a no-card trial: "X days left in your free trial. Add a card to keep your page live
-  after <date>" + **Add card**. `?card_added=1` (Checkout return) shows "Card saved".
+- Trial banner on every dashboard tab (`TrialBanner`, state logic in `src/lib/trialBanner.ts`, unit-tested),
+  with "Day N of 14" and a progress bar:
+  - no card, 4+ days left: soft pink, "X days left in your free trial. Add a card to keep your page live
+    after <date>" + **Add card**; can be hidden for the browser session
+  - no card, 3 to 1 days left: amber, "Only X days left...", cannot be hidden
+  - no card, last day: red, "Your trial ends today.", cannot be hidden
+  - card saved: calm grey, "Free trial: X days left. Your card is saved, your plan starts on <date>
+    ($29/month). Cancel anytime." + **Manage** (Billing Portal); can be hidden
+  - `?card_added=1` (Checkout return) shows "Card saved".
+- Plan or trial ended (`cancelled`): the dashboard is no longer blocked. Home shows a full-width "Your free
+  trial has ended. Your page is paused and clients can't book you right now." panel with **Reactivate my
+  page** (start-trial → Checkout, first payment today, no new trial) and what is kept; other tabs show a
+  dark top banner with the same action. `trial-card` status now also returns `trialStart`, `price` and
+  `trialEnded` (latest subscription when the profile's was deleted) for this copy.
+- Public page of a draft or paused studio: "This page is not available right now" (noindex) instead of
+  "Studio not found".
+- Analytics revenue card and chart use `formatMoney` with `profiles.business_currency` (EUR when unset, as
+  Home already did; there is no country-based default in the codebase).
 - Settings > Account Settings: **Add a card** first in the list (section opens by itself during a no-card
   trial). "Subscribe to Nelsy" now goes to the trial screen.
 - Draft banner (`inactive`): "Your page is not live yet. Start your 14-day free trial, no card needed."
-- Ended plan (`cancelled`): "Your page is paused" screen, "Reactivate my page" → `/onboarding?step=plan`
+- Ended plan (`cancelled`): see the paused state above; the email link `/onboarding?step=plan` also works
   → Checkout with immediate payment.
 - Public page (`useStudio`): `cancelled` / `canceled` / `incomplete` now hide the page like `inactive`
   (same rule as the products and kit RPCs). Before, a canceled plan kept its page public, which a no-card
