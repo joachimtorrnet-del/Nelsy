@@ -96,14 +96,15 @@ function Hero({ variant }: { variant: Variant }) {
             <p className="text-base sm:text-lg font-semibold text-gray-800">Nelsy commission, <span style={{ color: PINK }}>always.</span></p>
           </div>
 
-          <button
-            type="button"
-            onClick={() => scrollToPricing('hero', variant)}
+          {/* Goes straight to signup (one click less than scrolling to pricing first) */}
+          <Link
+            to="/onboarding?plan=independent_monthly"
+            onClick={() => track('landing_cta_clicked', { position: 'hero', variant, action: 'onboarding' })}
             className={`${BTN} w-full sm:w-auto h-[60px] lg:h-[69px] px-[30px] text-base lg:text-[19px] text-white`}
             style={{ background: PINK, boxShadow: '0 10px 30px -8px rgba(245,43,140,0.55)' }}
           >
-            Get started <ArrowDown className="w-5 h-5" aria-hidden="true" />
-          </button>
+            Continue <ArrowRight className="w-5 h-5" aria-hidden="true" />
+          </Link>
           <p className="mt-3 text-sm text-gray-500 text-center sm:text-left">{TRIAL_DAYS}-day free trial · $0 today · Cancel anytime</p>
         </div>
 
