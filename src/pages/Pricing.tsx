@@ -148,8 +148,8 @@ export default function Pricing() {
     {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
-      name: 'Pricing — Nelsy',
-      description: 'One plan. Everything you need to take bookings, collect deposits, and grow your beauty business. Start free for 14 days.',
+      name: 'Nelsy pricing',
+      description: 'Three plans for beauty pros. Start with Independent: bookings, deposits and online payments, free for 14 days.',
       url: 'https://getnelsy.com/pricing',
     },
     {
@@ -167,7 +167,7 @@ export default function Pricing() {
     <>
       <SEOMeta
         title="Pricing: $29/month, 0% Booking Commission"
-        description="Nelsy pricing: one plan at $29/month or $25/month billed yearly, 0% booking commission, deposits and online payments included. Free for 14 days."
+        description="Nelsy pricing: Independent is $29/month or $25/month billed yearly, with 0% Nelsy commission, deposits and online payments. Free for 14 days."
         canonical="/pricing"
         jsonLd={jsonLd}
       />
