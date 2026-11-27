@@ -1,54 +1,89 @@
-import { useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Logo } from '../components/Logo';
-import { ArtBookingPage, ArtBookings, ArtRevenue } from '../components/WelcomeArt';
-import { PINK } from '../lib/constants';
+import { ArtCashout, ArtNotifs, ArtRevenue } from '../components/WelcomeArt';
+import { MUTED, PrimaryPill } from '../components/onboardingUi';
+import { INK } from '../lib/constants';
+import { readDemoFlag } from '../lib/demo';
 
 const SLIDES = [
-  { Art: ArtBookingPage, title: 'Your studio in your pocket', sub: 'Run your booking page, services and prices from your phone.' },
-  { Art: ArtBookings, title: 'Every booking, right away', sub: 'Get notified the moment a client books, pays or cancels.' },
-  { Art: ArtRevenue, title: 'Know what you earn', sub: 'Revenue, deposits and page views at a glance.' },
+  { Art: ArtRevenue, title: 'Welcome to Nelsy 👋', sub: 'Get booked and paid from your link in bio' },
+  { Art: ArtCashout, title: 'Cash out your earnings', sub: 'Receive your funds with one tap' },
+  { Art: ArtNotifs, title: 'Never miss a notif', sub: 'Get notified when a client books' },
 ];
 
+const AUTO_MS = 5000;
+
 export default function Welcome() {
-  const [index, setIndex] = useState(0);
+  const navigate = useNavigate();
+  // Demo previews can open a given slide: #/welcome?demo=1&slide=2
+  const startSlide = useMemo(() => {
+    if (!readDemoFlag()) return 0;
+    const n = Number(new URLSearchParams(window.location.hash.split('?')[1] ?? '').get('slide'));
+    return n >= 1 && n <= SLIDES.length ? n - 1 : 0;
+  }, []);
+  const [index, setIndex] = useState(startSlide);
+  const [touched, setTouched] = useState(startSlide > 0);
   const track = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = track.current;
+    if (el && startSlide) el.scrollLeft = startSlide * el.clientWidth;
+  }, [startSlide]);
+
+  const goTo = (i: number, smooth = true) => track.current?.scrollTo({ left: i * track.current.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
+
+  // Auto-advance until the user swipes or taps a dot.
+  useEffect(() => {
+    if (touched) return;
+    const t = setTimeout(() => goTo((index + 1) % SLIDES.length), AUTO_MS);
+    return () => clearTimeout(t);
+  }, [index, touched]);
 
   const onScroll = () => {
     const el = track.current;
-    if (!el) return;
-    setIndex(Math.round(el.scrollLeft / el.clientWidth));
+    if (el) setIndex(Math.round(el.scrollLeft / el.clientWidth));
   };
-  const goTo = (i: number) => track.current?.scrollTo({ left: i * track.current.clientWidth, behavior: 'smooth' });
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-white pt-safe">
-      <div className="flex justify-center pt-4">
-        <Logo size={34} />
+    <div className="flex min-h-[100dvh] flex-col bg-[#F8F6F7] pt-safe">
+      <div className="flex h-[30px] justify-center" style={{ marginTop: 12 }}>
+        <Logo size={30} textSize={31} gap={10} />
       </div>
 
       <div
         ref={track}
         onScroll={onScroll}
-        className="no-scrollbar flex flex-1 snap-x snap-mandatory overflow-x-auto"
+        onTouchStart={() => setTouched(true)}
+        onPointerDown={() => setTouched(true)}
+        className="no-scrollbar flex snap-x snap-mandatory overflow-x-auto"
+        style={{ marginTop: 55 }}
         aria-roledescription="carousel"
       >
         {SLIDES.map(({ Art, title, sub }, i) => (
-          <section
-            key={title}
-            className="flex w-full shrink-0 snap-center flex-col items-center justify-center px-8 pt-6"
-            aria-label={`${i + 1} of ${SLIDES.length}`}
-          >
-            <div className="flex min-h-[330px] items-center">
-              <Art />
-            </div>
-            <h1 className="mt-8 text-center text-[28px] font-extrabold leading-tight tracking-tight">{title}</h1>
-            <p className="mt-2 max-w-[300px] text-center text-[15px] leading-snug text-gray-500">{sub}</p>
+          <section key={title} className="w-full shrink-0 snap-center overflow-hidden" aria-label={`${i + 1} of ${SLIDES.length}`}>
+            <Art />
+            <h1 className="mt-[37px] text-center text-[29px] font-extrabold leading-[1.2] tracking-[-0.01em]" style={{ color: INK }}>
+              {title}
+            </h1>
+            <p className="mt-[10px] px-4 text-center text-[17px]" style={{ color: MUTED }}>
+              {sub}
+            </p>
           </section>
         ))}
       </div>
 
-      <div className="flex justify-center gap-2 py-5" role="tablist">
+      <div className="min-h-[24px] flex-1" />
+
+      <div className="px-[39px]">
+        <PrimaryPill onClick={() => navigate('/signup')}>Sign up</PrimaryPill>
+        <Link to="/login" className="mx-auto mt-[5px] flex h-11 w-fit items-center px-4 text-[20px] font-bold" style={{ color: INK }}>
+          Log in
+        </Link>
+      </div>
+
+      {/* Dots sit in the top of the home-indicator area, like the reference */}
+      <div className="flex justify-center pb-safe pt-[36px]" style={{ marginBottom: -14 }} role="tablist">
         {SLIDES.map((s, i) => (
           <button
             key={s.title}
@@ -56,30 +91,18 @@ export default function Welcome() {
             role="tab"
             aria-selected={i === index}
             aria-label={`Slide ${i + 1}`}
-            onClick={() => goTo(i)}
-            className="flex h-6 w-6 items-center justify-center"
+            onClick={() => {
+              setTouched(true);
+              goTo(i);
+            }}
+            className="flex h-6 w-[15px] items-center justify-center"
           >
-            <span className="block h-2 w-2 rounded-full transition-colors" style={{ backgroundColor: i === index ? PINK : '#E0E0E0' }} />
+            <span
+              className="block rounded-full transition-all"
+              style={{ width: i === index ? 10 : 8, height: i === index ? 10 : 8, backgroundColor: i === index ? '#B9B5BA' : '#DCD9DC' }}
+            />
           </button>
         ))}
-      </div>
-
-      <div className="px-safe pb-safe">
-        <div className="pb-4">
-          <Link
-            to="/signup"
-            className="flex h-14 w-full items-center justify-center rounded-full text-[16px] font-bold text-white active:scale-[0.98]"
-            style={{ backgroundColor: PINK }}
-          >
-            Sign up
-          </Link>
-          <p className="mt-3 text-center text-[15px] text-gray-500">
-            Already have an account?{' '}
-            <Link to="/login" className="inline-flex h-11 items-center font-bold text-[#1A1A1A]">
-              Log in
-            </Link>
-          </p>
-        </div>
       </div>
     </div>
   );

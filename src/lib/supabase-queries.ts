@@ -164,6 +164,8 @@ const PROFILE_SAFE_COLUMNS = new Set([
   'slug', 'notification_preferences',
   'cover_url', 'specialty', 'location', 'pinterest_url', 'website_url',
   'color_background', 'font_family',
+  // Pro app signup answers (migration 20261130_01; callers tolerate the column missing)
+  'onboarding_answers',
 ]);
 
 export async function updateProfile(userId: string, updates: Record<string, unknown>) {

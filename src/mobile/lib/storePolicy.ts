@@ -8,6 +8,8 @@ import { Capacitor } from '@capacitor/core';
  * or calls to action for purchase outside of the app". So the native builds never show a
  * price, a trial offer, an upgrade button or a link to a plan page. They only show the
  * current plan status. Google Play's payments policy is treated the same way.
+ * One exception, documented in docs/mobile/app-store-checklist.md: the last signup screen can start the
+ * FREE trial with no card (start-trial); in store builds it shows no price and no website link.
  *
  * Plain browser runs (dev, `?demo=1` previews) keep the website links.
  * `?store=1` in a demo URL forces the store behaviour so it can be checked in a browser.

@@ -14,9 +14,26 @@ Current Apple wording (App Review Guidelines, checked 2026-11-27):
 - **3.1.3(a) Reader apps** are the only apps that can request the **External Link Account Entitlement** (magazines, books, audio, music, video). Nelsy is not a reader app, so that entitlement is not available to it. The other entitlement (3.1.1(a), StoreKit External Purchase Link) applies in specific storefronts with Apple commission and its own UI rules.
 - **3.1.3(e)**: services consumed outside the app (the bookings clients pay for) must NOT use IAP. Stripe for bookings and product sales on the public page is correct.
 
-**Decision built into the app** (`src/mobile/lib/storePolicy.ts`): the iOS build and the Android build show **plan status only** (plan name, trial or renewal date). No price, no "Start free trial", no "Upgrade", no "Manage plan on getnelsy.com", no plan link anywhere, including the last signup step (replaced by "Your account is ready") and the Creator-gated sections (Products, Shop my kit, Audience: "Not included in your current plan"). Website links that are not about buying (payouts, editing services, design, analytics, legal) stay.
+**Decision built into the app** (`src/mobile/lib/storePolicy.ts`): the iOS build and the Android build show **plan status only** (plan name, trial or renewal date). No price, no "Upgrade", no "Manage plan on getnelsy.com", no plan link anywhere, and no "Start free trial" outside the signup flow (see the exception below), and the Creator-gated sections (Products, Shop my kit, Audience: "Not included in your current plan"). Website links that are not about buying (payouts, editing services, design, analytics, legal) stay.
 
 Why not a neutral "Manage your plan on getnelsy.com" button: under 3.1.3(f) any call to action toward an outside purchase is a rejection reason, and reviewers read a link to a page that sells the plan as one. The US storefront exception exists, but one binary serves every storefront, so the conservative choice is to hide it everywhere. Reach users about plans by email instead (allowed: "Developers can send communications outside of the app to their user base about purchasing methods").
+
+### Exception: the free trial screen at the end of signup ("How your trial works")
+
+The last signup screen (`TrialScreen` in `src/mobile/screens/Onboarding.tsx`) has one billing-related action: **"Start my free trial"**, which calls the `start-trial` edge function. That function starts the 14-day trial **without a card** and without any payment; it never charges and the app never opens a payment page (if the trial was already used, the server answers `checkoutRequired` and the app just goes to Home, it does not open the Checkout URL). There is no "pay" or "subscribe" button and no purchase link.
+
+What each build shows:
+
+| | Web / `?demo=1` preview (`planLinksAllowed()` true) | iOS and Android store builds (`planLinksAllowed()` false) |
+|---|---|---|
+| Subline | "First 14 days free, then $29/month" | "First 14 days free" (no price) |
+| Day 14 line | "Add a card on getnelsy.com to keep your page live. No card needed today." (getnelsy.com is a link) | "Keep your page live by adding a card from your dashboard on the web." (no link) |
+| Button | Start my free trial (no card) | Start my free trial (no card) |
+| Footer | Terms, Privacy Policy, Logout | Terms, Privacy Policy, Logout (no "Restore": Nelsy has no in-app purchase) |
+
+Check it in a browser with `#/signup?demo=1&step=8&store=1`.
+
+**Risk note (3.1.1 / 3.1.3(f))**: a reviewer can read "Start my free trial" as unlocking a subscription feature outside IAP (3.1.1), and the day-14 line as pointing users to pay on the web (3.1.3(f): "no calls to action for purchase outside of the app"). Mitigations built in: the trial is free and needs no card, no price is shown in store builds, no link to a page that sells the plan, wording describes what happens rather than asking to buy. Fallback if review objects: set the store build to skip this screen (go straight to Home after Step 5/5; the trial can be started on the web), or change the day-14 line to "We'll email you before your trial ends." Mention the free, card-less trial in the review notes (section 4).
 
 Android: Google Play's payments policy also restricts steering to outside payment for digital subscriptions, so the same rule applies. `VITE_PLAN_LINKS=android` re-enables the links in Android builds only if the founder decides it later.
 

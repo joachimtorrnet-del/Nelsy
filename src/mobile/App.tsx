@@ -77,7 +77,8 @@ function Routed() {
   return (
     <ProDataProvider demo={demo} userId={session?.user.id ?? null} email={session?.user.email ?? ''} onSignedOut={onSignedOut}>
       <Routes>
-        <Route path="/welcome" element={authed ? <Navigate to="/home" replace /> : <Welcome />} />
+        {/* Demo previews can still open the welcome carousel; a real session skips it. */}
+        <Route path="/welcome" element={session ? <Navigate to="/home" replace /> : <Welcome />} />
         <Route path="/login" element={authed ? <Navigate to="/home" replace /> : <Login />} />
         <Route path="/signup" element={<Onboarding />} />
         <Route path="/settings/delete" element={gate(<DeleteAccount />)} />
