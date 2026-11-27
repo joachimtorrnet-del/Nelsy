@@ -24,6 +24,7 @@ function createPostHogClient() {
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 import { esc, row, layout } from '../_shared/email.ts'
+import { markProductOrderPaid } from '../_shared/product-orders.ts'
 
 const FROM_EMAIL = 'Nelsy <hello@getnelsy.com>'
 
@@ -601,6 +602,15 @@ serve(async (req) => {
       case 'payment_intent.succeeded': {
         const paymentIntent = event.data.object as Stripe.PaymentIntent
         const meta = paymentIntent.metadata ?? {}
+
+        // ── Digital product order (Creator plan). Not part of the booking ledger. ──
+        if (meta.kind === 'product_order') {
+          const productAccountId = (event as unknown as { account?: string }).account ?? null
+          const productResult = await markProductOrderPaid(supabase, paymentIntent, productAccountId)
+          console.log(`[product_order] PI ${paymentIntent.id}: ${productResult.result}`)
+          break
+        }
+
         if (!meta.booking_id) break
 
         // Fetch booking for email/analytics (we need this regardless of credit outcome)
@@ -775,6 +785,26 @@ serve(async (req) => {
 
       case 'charge.refunded': {
         const charge = event.data.object as Stripe.Charge
+
+        // ── Digital product order refund: flag the order, no booking ledger involved ──
+        if (charge.payment_intent) {
+          const { data: refundedOrder } = await supabase
+            .from('product_orders')
+            .select('id, status')
+            .eq('stripe_payment_intent_id', charge.payment_intent as string)
+            .maybeSingle()
+          if (refundedOrder) {
+            // Partial refunds keep the download; a full refund revokes it.
+            if (charge.refunded && refundedOrder.status !== 'refunded') {
+              await supabase
+                .from('product_orders')
+                .update({ status: 'refunded', refunded_at: new Date().toISOString() })
+                .eq('id', refundedOrder.id)
+            }
+            console.log(`[product_order] charge.refunded for order ${refundedOrder.id} (full=${charge.refunded})`)
+            break
+          }
+        }
         const refund = charge.refunds?.data[0]
 
         // Guard: without a specific refund object we cannot identify the amount or
