@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Copy, CheckCheck, Menu, Plus, Link2, ExternalLink } from 'lucide-react';
 import { Sidebar, MAIN_NAV, GROW_NAV, BOTTOM_NAV } from './Sidebar';
 import BottomNav from './BottomNav';
+import { TimezoneBanner } from './TimezoneBanner';
 import { CommandPalette } from './CommandPalette';
 import type { PaletteItem } from './CommandPalette';
 import type { ReactNode } from 'react';
@@ -13,6 +14,7 @@ interface Profile {
   full_name?: string;
   slug?: string;
   subscription_status?: string;
+  timezone?: string | null;
 }
 
 const PAGE_TITLES: Record<string, string> = {
@@ -135,6 +137,7 @@ export default function DashboardLayout({ profile, activeTab, setActiveTab, pend
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20 lg:pb-0">
+          {profile?.id && <TimezoneBanner userId={profile.id} profileTimezone={profile.timezone} />}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
               key={activeTab}

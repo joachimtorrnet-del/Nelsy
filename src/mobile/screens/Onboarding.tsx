@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { saveProfileTimezone } from '@/lib/timezone';
 import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Check, ChevronDown, Eye, EyeOff, Search, X } from 'lucide-react';
@@ -189,6 +190,8 @@ export default function Onboarding() {
       if (form.instagram) extra.instagram_url = form.instagram;
       if (form.tiktok) extra.tiktok_url = form.tiktok;
       if (Object.keys(extra).length) await updateProfile(userId, extra);
+      // Device timezone: slots, reminders and calendar times all follow profiles.timezone
+      await saveProfileTimezone(userId);
       return true;
     } catch (e) {
       const msg = e instanceof Error ? e.message : String(e);

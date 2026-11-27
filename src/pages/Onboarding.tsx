@@ -7,6 +7,7 @@ import { validatePassword } from '../utils/validation';
 import { isReservedSlug } from '@/lib/reservedSlugs';
 import { track, identify } from '../lib/analytics';
 import { PLANS, parsePlanParam, planKey } from '@/lib/plans';
+import { saveProfileTimezone } from '@/lib/timezone';
 
 // Plan picked on the landing / pricing page (?plan=independent_yearly, legacy ?plan=yearly). Unavailable tiers fall back to Independent.
 const SELECTED = (() => {
@@ -1222,6 +1223,9 @@ function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
           password: formData.password,
         });
         if (signInError) throw new Error(`[signin] ${signInError.message}`);
+
+        // Store the device timezone: slots, reminders and calendar times all follow profiles.timezone
+        await saveProfileTimezone(user.id);
 
         setAccountCreated(true);
       }
