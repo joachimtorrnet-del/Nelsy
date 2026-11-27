@@ -5,6 +5,7 @@ import { Copy, CheckCheck, Menu, Plus, Link2, ExternalLink } from 'lucide-react'
 import { Sidebar, MAIN_NAV, GROW_NAV, BOTTOM_NAV } from './Sidebar';
 import BottomNav from './BottomNav';
 import { TimezoneBanner } from './TimezoneBanner';
+import { PausedPanel, TrialBanner } from './TrialBanner';
 import { CommandPalette } from './CommandPalette';
 import type { PaletteItem } from './CommandPalette';
 import type { ReactNode } from 'react';
@@ -15,6 +16,8 @@ interface Profile {
   slug?: string;
   subscription_status?: string;
   timezone?: string | null;
+  plan?: string | null;
+  trial_ends_at?: string | null;
 }
 
 const PAGE_TITLES: Record<string, string> = {
@@ -97,12 +100,13 @@ export default function DashboardLayout({ profile, activeTab, setActiveTab, pend
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
         {isDraft && (
           <div className="bg-[#1A1A1A] text-white px-4 py-2 flex items-center justify-between gap-3 flex-shrink-0">
-            <p className="text-[13px] font-medium leading-snug flex-1 min-w-0">Your studio is not published yet. Choose a plan to go live.</p>
+            <p className="text-[13px] font-medium leading-snug flex-1 min-w-0">Your page is not live yet. Start your 14-day free trial, no card needed.</p>
             <a href="/onboarding?step=plan" className="flex-shrink-0 px-4 py-1.5 rounded-lg text-[12px] font-bold text-[#1A1A1A] bg-white hover:bg-gray-100 transition whitespace-nowrap">
-              Choose plan →
+              Start free trial
             </a>
           </div>
         )}
+        <TrialBanner subscriptionStatus={profile?.subscription_status} trialEndsAt={profile?.trial_ends_at} plan={profile?.plan} activeTab={activeTab} />
 
         <header className="h-16 flex-shrink-0 bg-white/90 backdrop-blur border-b border-black/[0.06] flex items-center px-4 lg:px-8 gap-3">
           <button onClick={() => setMobileOpen(true)} className="lg:hidden p-2 -ml-1 rounded-lg hover:bg-gray-100 text-gray-600" aria-label="Open menu">
@@ -137,6 +141,7 @@ export default function DashboardLayout({ profile, activeTab, setActiveTab, pend
         </header>
 
         <main className="flex-1 overflow-y-auto pb-20 lg:pb-0">
+          {activeTab === 'home' && <PausedPanel subscriptionStatus={profile?.subscription_status} plan={profile?.plan} />}
           {profile?.id && <TimezoneBanner userId={profile.id} profileTimezone={profile.timezone} />}
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

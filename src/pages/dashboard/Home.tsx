@@ -9,6 +9,7 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import { supabase } from '../../lib/supabase';
 import type { DbProfileRow, DbBookingRow } from '../../lib/supabase';
 import { track } from '../../lib/analytics';
+import { formatMoney } from '../../lib/currency';
 import { getBookings } from '../../lib/supabase-queries';
 import { buildLiveMerchant } from '../../lib/liveMerchant';
 import { LoadingScreen } from '../../components/dashboard/SkeletonLoader';
@@ -59,9 +60,8 @@ const STATUS_CONFIG: Record<string, { label: string; cls: string }> = {
   paid:      { label: 'Paid',             cls: 'bg-green-50 text-green-700 border-green-200' },
 };
 
-function fmt(amount: number, currency: string) {
-  return new Intl.NumberFormat('en-US', { style: 'currency', currency, minimumFractionDigits: 2 }).format(amount);
-}
+// Pro's business currency, shared formatter (src/lib/currency.tsx)
+const fmt = (amount: number, currency: string) => formatMoney(amount, currency);
 
 function dayKey(d: Date) {
   return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;

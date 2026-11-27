@@ -24,6 +24,8 @@ function createPostHogClient() {
 
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 import { esc, row, layout } from '../_shared/email.ts'
+import { isLiveSubscription, isTrialEndCancellation, profileStatusFor, shouldApplySubscriptionEvent } from '../_shared/trial.ts'
+import type { SubscriptionLike } from '../_shared/trial.ts'
 import { markProductOrderPaid } from '../_shared/product-orders.ts'
 // Pro's own policy when stored, else neutral "contact the studio" wording (no invented policy).
 import { policyNoteHtml } from '../_shared/booking-reminders.ts'
@@ -224,16 +226,54 @@ serve(async (req) => {
           break
         }
 
-        // ── Subscription checkout (pro onboarding) ────────────────
+        // ── Card added during a no-card trial (trial-card, Checkout setup mode) ──
+        // Make the saved card the default for the subscription and the customer so Stripe
+        // charges it at trial end instead of canceling the subscription.
+        if (session.mode === 'setup') {
+          if (meta.purpose !== 'trial_card' || !session.setup_intent) break
+          const si = await stripe.setupIntents.retrieve(session.setup_intent as string)
+          const pm = typeof si.payment_method === 'string' ? si.payment_method : si.payment_method?.id
+          if (!pm) break
+          if (session.customer) {
+            await stripe.customers.update(session.customer as string, { invoice_settings: { default_payment_method: pm } })
+          }
+          if (meta.subscription_id) {
+            const sub = await stripe.subscriptions.retrieve(meta.subscription_id)
+            if (isLiveSubscription(sub as unknown as SubscriptionLike)) {
+              await stripe.subscriptions.update(sub.id, { default_payment_method: pm })
+            }
+          }
+          const posthogCard = createPostHogClient()
+          posthogCard.capture({
+            distinctId: meta.supabase_user_id ?? session.client_reference_id ?? 'unknown',
+            event: 'trial card added',
+            properties: { subscription_id: meta.subscription_id ?? null },
+          })
+          await posthogCard.shutdown()
+          break
+        }
+
+        // ── Subscription checkout (pro onboarding, Settings subscribe, reactivation) ──
         const userId = meta.userId || session.client_reference_id
         if (!userId) break
+
+        // Status and trial end come from the real subscription: a reactivation has no trial.
+        let checkoutSub: Stripe.Subscription | null = null
+        if (session.subscription) {
+          try { checkoutSub = await stripe.subscriptions.retrieve(session.subscription as string) } catch { /* fall back below */ }
+        }
+        const checkoutStatus = checkoutSub ? profileStatusFor(checkoutSub as unknown as SubscriptionLike) : 'trialing'
+        const checkoutTrialEnd = checkoutSub
+          ? (checkoutSub.trial_end ? new Date(checkoutSub.trial_end * 1000).toISOString() : null)
+          : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString()
 
         const { error } = await supabase
           .from('profiles')
           .update({
             stripe_customer_id: session.customer,
-            subscription_status: 'trialing',
-            trial_ends_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+            ...(checkoutSub ? { stripe_subscription_id: checkoutSub.id } : {}),
+            subscription_status: checkoutStatus,
+            trial_ends_at: checkoutTrialEnd,
             onboarding_completed: true,
             updated_at: new Date().toISOString(),
           })
@@ -244,10 +284,10 @@ serve(async (req) => {
         const posthogTrial = createPostHogClient()
         posthogTrial.capture({
           distinctId: userId,
-          event: 'subscription trial started',
+          event: checkoutStatus === 'trialing' ? 'subscription trial started' : 'subscription activated',
           properties: {
             plan: meta.plan ?? 'pro',
-            trial_ends_at: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+            trial_ends_at: checkoutTrialEnd,
           },
         })
         await posthogTrial.shutdown()
@@ -261,24 +301,17 @@ serve(async (req) => {
 
         const { data: profile } = await supabase
           .from('profiles')
-          .select('id')
+          .select('id, stripe_subscription_id')
           .eq('stripe_customer_id', customerId)
           .single()
 
         if (!profile) break
+        // Ignore events about a dead or abandoned subscription the profile already replaced.
+        if (!shouldApplySubscriptionEvent(profile.stripe_subscription_id, subscription as unknown as SubscriptionLike)) break
 
-        let status = 'inactive'
-        if (subscription.status === 'active') status = 'active'
-        if (subscription.status === 'trialing') {
-          // pending_setup_intent is non-null while the user still hasn't entered a card.
-          // Keep 'inactive' until the intent clears (card saved); then promote to 'trialing'.
-          // 'incomplete' is not in the DB check constraint — use 'inactive' as the intermediate.
-          status = subscription.pending_setup_intent ? 'inactive' : 'trialing'
-        }
-        if (subscription.status === 'past_due') status = 'past_due'
-        if (subscription.status === 'canceled') status = 'cancelled'
-        if (subscription.status === 'incomplete') status = 'inactive'
-        if (subscription.status === 'incomplete_expired') status = 'cancelled'
+        // Card-first trials stay 'inactive' (draft) until the card is saved (pending_setup_intent
+        // cleared); no-card trials (start-trial, metadata no_card_trial) are 'trialing' right away.
+        const status = profileStatusFor(subscription as unknown as SubscriptionLike)
 
         const { error } = await supabase
           .from('profiles')
@@ -318,11 +351,29 @@ serve(async (req) => {
 
         const { data: profile } = await supabase
           .from('profiles')
-          .select('id')
+          .select('id, email, full_name, slug, stripe_subscription_id')
           .eq('stripe_customer_id', customerId)
           .single()
 
         if (!profile) break
+        // A replaced subscription (e.g. an abandoned card-step one canceled by start-trial) must not unpublish the page.
+        if (profile.stripe_subscription_id && profile.stripe_subscription_id !== subscription.id) break
+
+        // No-card trial ended without a card: tell the pro her page is paused and how to bring it back.
+        if (profile.email && isTrialEndCancellation(subscription as unknown as SubscriptionLike)) {
+          try {
+            await sendEmail(
+              profile.email,
+              'Your Nelsy page is paused',
+              layout(
+                'Your free trial has ended',
+                `Hi ${esc((profile.full_name ?? '').split(' ')[0] || 'there')}, your page is paused because no card was added. Your services and settings are saved. Add a card to reactivate your page.`,
+                row('Your page', esc(`getnelsy.com/${profile.slug ?? ''}`)) + row('Status', 'Paused', true),
+                `<div style="text-align:center"><a href="https://getnelsy.com/onboarding?step=plan" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Reactivate my page</a></div>`,
+              ),
+            )
+          } catch (e) { console.error('[trial ended email]', e) }
+        }
 
         const { error } = await supabase
           .from('profiles')
@@ -455,17 +506,35 @@ serve(async (req) => {
           : null
         const interval = price?.recurring?.interval === 'year' ? 'year' : 'month'
         const endDate = new Date(subscription.trial_end * 1000).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })
+        const firstName = esc((profile.full_name ?? '').split(' ')[0] || 'there')
+
+        // No card yet (no-card trial): the email's action is adding one (dashboard ?add_card=1 opens Checkout).
+        let hasCard = !!subscription.default_payment_method
+        if (!hasCard) {
+          try {
+            const cust = await stripe.customers.retrieve(subscription.customer as string)
+            hasCard = !cust.deleted && (!!(cust as Stripe.Customer).invoice_settings?.default_payment_method || !!(cust as Stripe.Customer).default_source)
+          } catch { /* treat as no card */ }
+        }
+        const thenRow = amount ? row('Then', esc(`${amount} per ${interval}`), true) : ''
 
         try {
           await sendEmail(
             profile.email,
-            `Your Nelsy free trial ends on ${endDate}`,
-            layout(
-              'Your free trial ends in 3 days',
-              `Hi ${esc((profile.full_name ?? '').split(' ')[0] || 'there')}, your plan starts automatically on ${esc(endDate)}. You can cancel anytime before then from your dashboard.`,
-              row('Trial ends', esc(endDate)) + (amount ? row('Then', esc(`${amount} per ${interval}`), true) : ''),
-              `<div style="text-align:center"><a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Manage my plan</a></div>`,
-            ),
+            hasCard ? `Your Nelsy free trial ends on ${endDate}` : `Add a card to keep your Nelsy page live after ${endDate}`,
+            hasCard
+              ? layout(
+                'Your free trial ends in 3 days',
+                `Hi ${firstName}, your plan starts automatically on ${esc(endDate)}. You can cancel anytime before then from your dashboard.`,
+                row('Trial ends', esc(endDate)) + thenRow,
+                `<div style="text-align:center"><a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Manage my plan</a></div>`,
+              )
+              : layout(
+                'Your free trial ends in 3 days',
+                `Hi ${firstName}, add a card to keep your page live after ${esc(endDate)}. Without a card, your page is paused when the trial ends. You will not be charged before ${esc(endDate)}.`,
+                row('Trial ends', esc(endDate)) + thenRow,
+                `<div style="text-align:center"><a href="https://getnelsy.com/dashboard?add_card=1" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">Add a card</a></div>`,
+              ),
           )
         } catch (e) { console.error('[trial_will_end email]', e) }
 

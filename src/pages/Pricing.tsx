@@ -62,11 +62,11 @@ const COMPARISON_ROWS = [
 const FAQ_ITEMS = [
   {
     q: 'How does the 14-day free trial work?',
-    a: 'When you sign up for Independent, you get 14 days of full access at no cost. Your card is saved during signup (so you can go live immediately), but you are not charged until the trial ends.',
+    a: 'When you sign up for Independent, you get 14 days of full access at no cost and your page goes live right away. No card is needed to start. Add a card before the trial ends to keep your page live.',
   },
   {
     q: 'Do I need a credit card to start?',
-    a: 'Yes. A card is saved when you start your trial so your booking page is live from day one. You will not be charged until after your 14-day trial ends.',
+    a: 'No. You start your 14-day free trial without a card and your booking page is live from day one. We remind you 3 days before the trial ends so you can add a card.',
   },
   {
     q: 'Does Nelsy charge booking commission?',
@@ -82,7 +82,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'What happens when my trial ends?',
-    a: 'At the end of your 14-day trial, your subscription starts and your saved card is charged. If you cancel before the trial ends, you will not be charged.',
+    a: 'If you added a card, your subscription starts and your card is charged. If you did not, your page simply pauses and nothing is charged. Add a card anytime to reactivate it.',
   },
   {
     q: 'Is Nelsy only for nail techs?',

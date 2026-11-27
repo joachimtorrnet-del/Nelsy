@@ -9,6 +9,7 @@ import ChangePasswordModal from '../../components/dashboard/ChangePasswordModal'
 import Toast from '../../components/dashboard/Toast';
 import AvailabilitySection from '../../components/dashboard/AvailabilitySection';
 import { useToast } from '../../hooks/useToast';
+import { formatTrialEnd, openAddCard, useTrialCard } from '../../lib/trial';
 
 export interface SettingsProfile {
   id?: string;
@@ -38,6 +39,8 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelLoading, setCancelLoading] = useState(false);
   const [cancelSuccess, setCancelSuccess] = useState<{ periodEnd: number } | null>(null);
+  const [addingCard, setAddingCard] = useState(false);
+  const trialCard = useTrialCard(profile?.subscription_status as string | undefined);
 
   // Sync from parent prop, or load independently if not provided
   useEffect(() => {
@@ -119,18 +122,9 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
         if (error || !data?.url) throw new Error(error?.message ?? 'No URL returned');
         window.location.href = data.url as string;
       } else {
-        // No active sub — redirect to Stripe Checkout to subscribe
-        const { data: { user } } = await supabase.auth.getUser();
-        if (!user) throw new Error('Non authentifié');
-        const { data, error } = await supabase.functions.invoke('create-subscription-checkout', {
-          body: {
-            userId: user.id,
-            email: user.email ?? '',
-            plan: 'monthly',
-          },
-        });
-        if (error || !data?.url) throw new Error(error?.message ?? 'No URL returned');
-        window.location.href = data.url as string;
+        // No live plan: the trial screen starts the no-card trial, or sends to Checkout
+        // (immediate payment) when this account already used its free trial.
+        navigate('/onboarding?step=plan');
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Une erreur est survenue';
@@ -156,7 +150,26 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
     }
   };
 
+  const handleAddCard = async () => {
+    setAddingCard(true);
+    try {
+      await openAddCard();
+    } catch {
+      showToast('Could not open the card form. Please try again.', 'error');
+      setAddingCard(false);
+    }
+  };
+
+  const needsCard = !!trialCard && trialCard.status === 'trialing' && !trialCard.hasCard;
+  // Trial without a card: open the Account section so "Add a card" is the first thing she sees there.
+  useEffect(() => { if (needsCard) setOpenSection('account'); }, [needsCard]);
+
   const accountItems: { label: string; desc: string; action: () => void; danger?: boolean }[] = [
+    ...(needsCard ? [{
+      label: 'Add a card',
+      desc: addingCard ? 'Redirecting…' : `Keep your page live after your free trial${trialCard?.trialEnd ? ` ends on ${formatTrialEnd(trialCard.trialEnd)}` : ''}`,
+      action: () => void handleAddCard(),
+    }] : []),
     { label: 'Edit Profile Details', desc: 'Update name, email, address', action: () => setShowEditProfile(true) },
     { label: 'Change Password', desc: 'Update your password', action: () => setShowChangePassword(true) },
     {
@@ -166,7 +179,8 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
       })(),
       desc: loadingPortal ? 'Redirecting…' : (() => {
         const s = profile?.subscription_status as string | undefined;
-        return (s === 'active' || s === 'trialing' || s === 'past_due') ? 'Change plan or update payment' : 'Start your 14-day free trial';
+        return (s === 'active' || s === 'trialing' || s === 'past_due') ? 'Change plan or update payment'
+          : (s === 'cancelled' || s === 'canceled') ? 'Reactivate your page' : 'Start your 14-day free trial, no card needed';
       })(),
       action: () => void handleSubscription(),
     },
