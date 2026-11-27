@@ -262,8 +262,7 @@ export type NavAudience = { slug: string; title: string; desc: string; route: st
 export const NAV_AUDIENCES: NavAudience[] = [
   { slug: 'nail-techs',      title: 'Nail Techs',       desc: 'Get booked and paid from your link in bio.',  route: '/use-cases/nail-techs',      icon: Sparkles },
   { slug: 'beauty-creators', title: 'Nail Tech Creators', desc: 'Turn your followers into clients and sales.', route: '/use-cases/beauty-creators', icon: Palette },
-  // Nail salons page is being built; add it back here once /use-cases/nail-salons is live:
-  // { slug: 'nail-salons', title: 'Nail Salons', desc: 'Bookings and payments for your whole team.', route: '/use-cases/nail-salons', icon: Store },
+  { slug: 'nail-salons',     title: 'Nail Salons',      desc: 'Bookings and payments for your whole team.',  route: '/use-cases/nail-salons',     icon: Store },
 ];
 
 /** Live craft pages (nail techs, lash techs, ...). */
@@ -281,4 +280,4 @@ export const NAV_RESOURCES: (NavLink & { desc: string })[] = [
 ];
 
 /** Primary call to action: same label everywhere in the header and footer. */
-export const NAV_CTA: NavLink = { label: 'Start free trial', to: '/onboarding' };
+export const NAV_CTA: NavLink = { label: 'Start free trial', to: '/onboarding?plan=independent_monthly' };

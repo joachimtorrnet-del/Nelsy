@@ -165,7 +165,7 @@ const PERSONAS: Persona[] = [
     thumbAlt: 'Nude gel nail set',
     offerType: 'Booking · Deposit',
     offer: 'Gel-X full set',
-    href: '/use-cases/beauty-pros',
+    href: '/use-cases/nail-techs',
     desktop: 'xl:left-0 xl:top-[45px] xl:w-[324px] xl:h-[476px]',
   },
   {
@@ -192,7 +192,7 @@ const PERSONAS: Persona[] = [
     thumb: 'team',
     offerType: 'Team booking',
     offer: 'Book with your nail tech',
-    href: '/use-cases/salons',
+    href: '/use-cases/nail-salons',
     desktop: 'xl:left-[352px] xl:top-[286px] xl:w-[296px] xl:h-[270px]',
   },
 ];

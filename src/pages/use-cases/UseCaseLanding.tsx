@@ -1,4 +1,4 @@
-// Shared layout for the audience landings (/use-cases/beauty-pros, /beauty-creators, /salons).
+// Shared layout for the audience landings (/use-cases/nail-techs, /beauty-creators, /nail-salons).
 // Same design language as the homepage (LandingPremium): 1240px container, bold Inter headings,
 // PINK / INK, soft pink hero gradient, pill buttons. Each page brings its own copy and structure.
 import { useEffect, useState } from 'react';
