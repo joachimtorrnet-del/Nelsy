@@ -260,9 +260,10 @@ export const liveToolGroups = () =>
 /** The three audiences Nelsy is built for. Fixed routes; the pages own their copy. */
 export type NavAudience = { slug: string; title: string; desc: string; route: string; icon: LucideIcon };
 export const NAV_AUDIENCES: NavAudience[] = [
-  { slug: 'beauty-pros',     title: 'Beauty Pros',     desc: 'Solo artists who want to get booked and paid.', route: '/use-cases/beauty-pros',     icon: Sparkles },
-  { slug: 'beauty-creators', title: 'Beauty Creators', desc: 'Turn your audience into clients and sales.',     route: '/use-cases/beauty-creators', icon: Palette },
-  { slug: 'salons',          title: 'Salons',          desc: 'Bookings and payments for your whole team.',     route: '/use-cases/salons',          icon: Store },
+  { slug: 'nail-techs',      title: 'Nail Techs',       desc: 'Get booked and paid from your link in bio.',  route: '/use-cases/nail-techs',      icon: Sparkles },
+  { slug: 'beauty-creators', title: 'Nail Tech Creators', desc: 'Turn your followers into clients and sales.', route: '/use-cases/beauty-creators', icon: Palette },
+  // Nail salons page is being built; add it back here once /use-cases/nail-salons is live:
+  // { slug: 'nail-salons', title: 'Nail Salons', desc: 'Bookings and payments for your whole team.', route: '/use-cases/nail-salons', icon: Store },
 ];
 
 /** Live craft pages (nail techs, lash techs, ...). */
