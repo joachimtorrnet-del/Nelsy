@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-set-up-online-booking-nail-business',
   title: 'How to Set Up Online Booking for Your Nail Business',
+  coverTitle: 'Set Up Online Booking',
   seoTitle: 'How to Set Up Online Booking for Your Nail Business',
   excerpt: 'Setting up online booking is one of the most impactful things you can do for your nail business. Here\'s how to do it in a few hours, from choosing a platform to your first booking.',
   seoDescription: 'How to set up online booking for your nail business, step by step: platform choice, services, deposits and sharing your booking link.',

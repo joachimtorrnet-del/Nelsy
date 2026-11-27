@@ -12,6 +12,7 @@ import {
 registerArticle({
   slug: 'nail-tech-deposit-policy',
   title: 'How to Write and Enforce a Nail Tech Deposit Policy',
+  coverTitle: 'Write a Deposit Policy',
   seoTitle: 'Nail Tech Deposit Policy: How to Write and Enforce One',
   excerpt:
     'A complete guide to deposit policies for nail techs, how much to charge, refundable vs non-refundable, communicating your policy, handling objections, and collecting deposits.',

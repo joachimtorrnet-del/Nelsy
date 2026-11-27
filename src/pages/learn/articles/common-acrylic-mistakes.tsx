@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'common-acrylic-mistakes',
   title: 'Common Acrylic Nail Mistakes and How to Fix Them',
+  coverTitle: 'Acrylic Mistakes to Fix',
   seoTitle: 'Common Acrylic Nail Mistakes and How to Fix Them',
   excerpt: 'Most acrylic problems come back to the same handful of mistakes. This guide covers the most common issues nail techs encounter, what causes them and how to fix them.',
   seoDescription: 'Common acrylic nail mistakes and how to fix them. Lifting, bubbles, cracking, cloudy product, rough surface: causes and solutions for nail techs.',

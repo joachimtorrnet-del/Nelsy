@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-get-more-nail-client-rebookings',
   title: 'How to Get More Nail Client Rebookings',
+  coverTitle: 'Get More Rebookings',
   seoTitle: 'How to Get More Nail Client Rebookings (Strategies That Work)',
   excerpt: 'Rebooking is the simplest way to grow a stable nail business. Here\'s how to ask for the next appointment naturally, and build systems that keep your calendar full.',
   seoDescription: 'How to get more nail client rebookings: when to ask, what to say, reminder systems and how to fill your calendar with returning clients.',

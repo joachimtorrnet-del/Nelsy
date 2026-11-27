@@ -6,7 +6,7 @@ import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
 import ArticleTOC from '@/components/article/ArticleTOC';
-import ArticleCard, { CoverPhoto } from '@/components/article/ArticleCard';
+import ArticleCard, { ArticleCover, coverUrl } from '@/components/article/ArticleCard';
 import { ArticleCTABlock, ArticleTLDR, SummarizeWithAI } from '@/components/article/ArticleBodyComponents';
 import {
   ArticleBody, ArticleSidebarCTA, FreeToolsBox, NelsyPagesBox, articleStats, readMinutes, resolveArticleLinks,
@@ -46,7 +46,8 @@ export default function BlogArticlePage() {
   const canonicalPath = `/blog/${article.slug}`;
   const url = `${ORIGIN}${canonicalPath}`;
   const hasRealImage = article.heroImage.startsWith('/');
-  const coverSrc = hasRealImage ? article.heroImage : `/blog-covers/${article.slug}.png`;
+  // og:image uses the JPEG version of the generated cover (widest crawler support)
+  const coverSrc = hasRealImage ? article.heroImage : coverUrl(article.slug, 'jpg');
   const ogImage = `${ORIGIN}${coverSrc}`;
 
   const jsonLd = [
@@ -70,7 +71,7 @@ export default function BlogArticlePage() {
         url: ORIGIN,
         logo: { '@type': 'ImageObject', url: `${ORIGIN}/og-image.png` },
       },
-      image: { '@type': 'ImageObject', url: ogImage },
+      image: { '@type': 'ImageObject', url: ogImage, ...(hasRealImage ? {} : { width: 1200, height: 675 }) },
     },
     {
       '@context': 'https://schema.org',
@@ -166,24 +167,11 @@ export default function BlogArticlePage() {
               </div>
 
               <div className="relative">
-                {hasRealImage ? (
-                  <img
-                    src={article.heroImage}
-                    alt={article.heroImageAlt}
-                    width={1200}
-                    height={630}
-                    className="w-full aspect-[1200/630] rounded-2xl object-cover shadow-xl shadow-[#F52B8C]/10"
-                    fetchPriority="high"
-                  />
-                ) : (
-                  <CoverPhoto
-                    slug={article.slug}
-                    category={article.category}
-                    eager
-                    sizes="(max-width: 768px) 100vw, 520px"
-                    className="w-full aspect-[1200/630] rounded-2xl shadow-xl shadow-[#F52B8C]/10"
-                  />
-                )}
+                <ArticleCover
+                  article={article}
+                  priority="high"
+                  className="w-full aspect-video rounded-2xl shadow-xl shadow-[#F52B8C]/10"
+                />
               </div>
             </div>
           </div>

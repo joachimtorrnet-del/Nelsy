@@ -24,7 +24,8 @@ import { track } from '@/lib/analytics';
 
 const PINK = '#F52B8C';
 const ORIGIN = 'https://getnelsy.com';
-const PAGE_SIZE = 12;
+// 3 columns x 3 rows per step, like Stan's 9-card pages
+const PAGE_SIZE = 9;
 
 // Category order in the navigation (most useful for pros first)
 const NAV_CATEGORIES: ArticleCategory[] = [
@@ -179,70 +180,70 @@ export default function BlogIndex() {
 
       <main className="bg-white min-h-screen pt-14">
 
-        {/* ── Masthead ────────────────────────────────────────────────── */}
+        {/* ── Masthead: one H1, one line, the three audience doors ───────── */}
         <header className="relative overflow-hidden bg-[#FDF0F7]/60 border-b border-[#F4C2C2]/30">
           <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-[#F52B8C]/10 blur-3xl" />
           <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-16 w-80 h-80 rounded-full bg-[#F4C2C2]/40 blur-3xl" />
-          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-14 md:py-20 text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.25em] mb-4" style={{ color: PINK }}>The Nelsy Blog</p>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-[#1A1A1A] leading-[1.05] tracking-tight mb-5">
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-10 md:pt-16 md:pb-12 text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] mb-4" style={{ color: PINK }}>The Nelsy Blog · {all.length} guides</p>
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-[#1A1A1A] leading-[1.05] tracking-tight mb-4">
               The Beauty Business Edit
             </h1>
             <p className="text-gray-600 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
               Practical guides for beauty pros, beauty creators and salons: getting clients, pricing, deposits, policies, content and selling what you know.
             </p>
-            <p className="mt-6 text-xs text-gray-500">{all.length} guides · Free tools</p>
+
+            <nav aria-label="Guides by audience" className="mt-8 md:mt-10 text-left">
+              <ul className="grid sm:grid-cols-3 gap-3">
+                {DOORS.map(({ audience, line, icon: Icon }) => {
+                  const active = activeAudience === audience;
+                  return (
+                    <li key={audience}>
+                      <a
+                        href={`/blog?audience=${audience}`}
+                        onClick={(e) => openDoor(e, audience)}
+                        aria-current={active ? 'true' : undefined}
+                        className={`group flex h-full items-center gap-3 rounded-2xl border px-4 py-3 transition ${
+                          active ? 'border-[#F52B8C] bg-white' : 'border-[#1A1A1A]/10 bg-white/80 hover:border-[#F52B8C]/60 hover:bg-white'
+                        }`}
+                      >
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#FDF0F7] text-[#F52B8C]">
+                          <Icon size={18} aria-hidden />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="flex items-baseline justify-between gap-2">
+                            <span className="font-serif text-lg font-bold text-[#1A1A1A]">{AUDIENCE_LABELS[audience]}</span>
+                            <span className="shrink-0 text-xs font-bold text-[#F52B8C]">
+                              {all.filter((a) => getAudiences(a).includes(audience)).length} guides <span aria-hidden>→</span>
+                            </span>
+                          </span>
+                          <span className="hidden sm:block text-xs leading-snug text-gray-500 line-clamp-1">{line}</span>
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
           </div>
         </header>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
-          {/* ── Audience doors ────────────────────────────────────────── */}
-          <nav aria-label="Guides by audience" className="pt-10 md:pt-12">
-            <ul className="grid sm:grid-cols-3 gap-4">
-              {DOORS.map(({ audience, line, icon: Icon }) => {
-                const active = activeAudience === audience;
-                return (
-                  <li key={audience}>
-                    <a
-                      href={`/blog?audience=${audience}`}
-                      onClick={(e) => openDoor(e, audience)}
-                      aria-current={active ? 'true' : undefined}
-                      className={`group flex h-full items-start gap-4 rounded-3xl border p-4 sm:p-5 transition ${
-                        active ? 'border-[#F52B8C] bg-[#FDF0F7]' : 'border-[#1A1A1A]/10 bg-white hover:border-[#F52B8C]/60'
-                      }`}
-                    >
-                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#FDF0F7] text-[#F52B8C]">
-                        <Icon size={20} aria-hidden />
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block font-serif text-xl font-bold text-[#1A1A1A]">{AUDIENCE_LABELS[audience]}</span>
-                        <span className="mt-1 block text-sm leading-snug text-gray-600">{line}</span>
-                        <span className="mt-3 inline-block text-sm font-bold text-[#F52B8C]">
-                          See {all.filter((a) => getAudiences(a).includes(audience)).length} guides <span aria-hidden>→</span>
-                        </span>
-                      </span>
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-
           {/* ── Featured ──────────────────────────────────────────────── */}
           {featured && (
-            <section aria-label="Featured article" className="pt-10 md:pt-12">
-              <ArticleCard article={featured} size="featured" />
+            <section aria-label="Featured article" className="pt-8 md:pt-10">
+              <ArticleCard article={featured} size="featured" minutes={readMinutes(featured)} priority="high" />
             </section>
           )}
 
           {/* ── Start here (editor's picks) ───────────────────────────── */}
           {spotlight.length > 0 && (
-            <section aria-labelledby="start-here" className="pt-14">
+            <section aria-labelledby="start-here" className="pt-12">
               <h2 id="start-here" className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-6">Start here</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
                 {spotlight.map((a) => (
-                  <ArticleCard key={a.slug} article={a} size="spotlight" minutes={readMinutes(a)} />
+                  <ArticleCard key={a.slug} article={a} size="spotlight" minutes={readMinutes(a)} priority="eager" />
                 ))}
               </div>
             </section>
@@ -349,9 +350,16 @@ export default function BlogIndex() {
               <p className="text-center py-16 text-gray-400 text-sm">No articles found. Try a different search, craft or category.</p>
             ) : (
               <>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {filtered.slice(0, visible).map((a) => (
-                    <ArticleCard key={a.slug} article={a} size="grid" minutes={readMinutes(a)} />
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+                  {filtered.slice(0, visible).map((a, i) => (
+                    <ArticleCard
+                      key={a.slug}
+                      article={a}
+                      size="grid"
+                      minutes={readMinutes(a)}
+                      // Filtered views put the grid near the top: load its first row right away
+                      priority={isFiltered && i < 3 ? 'eager' : 'lazy'}
+                    />
                   ))}
                 </div>
                 {filtered.length > visible && (

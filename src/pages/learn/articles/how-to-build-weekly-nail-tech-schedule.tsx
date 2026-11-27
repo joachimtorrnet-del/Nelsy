@@ -4,6 +4,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-build-weekly-nail-tech-schedule',
   title: 'How to Build a Weekly Schedule as a Nail Tech',
+  coverTitle: 'Build Your Weekly Schedule',
   seoTitle: 'How to Build a Weekly Schedule as a Nail Tech',
   excerpt: 'A good weekly schedule protects your income, your energy, and your time. Here\'s how to structure your working week as a nail tech, from booking windows to recovery days.',
   seoDescription: 'How to build a weekly schedule as a nail tech: booking hours, working days, time blocks and a week structure for steady income and work-life balance.',

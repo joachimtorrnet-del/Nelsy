@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'best-link-in-bio-for-beauty-creators',
   title: 'Best Link in Bio for Beauty Creators: Linktree vs Beacons vs Stan vs Nelsy',
+  coverTitle: 'Best Link in Bio',
   seoTitle: 'Best Link in Bio for Beauty Creators (2026)',
   excerpt: 'Linktree, Beacons, Stan and Nelsy compared for beauty creators: monthly price, fees on sales, bookings, courses and digital products. Every figure comes from the official vendor pages.',
   seoDescription: 'Linktree, Beacons, Stan and Nelsy compared for beauty creators: prices, seller fees, bookings, courses and digital products, from official pricing pages.',

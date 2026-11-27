@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: '100-nail-tech-content-ideas',
   title: '100 Nail Tech Content Ideas for Instagram',
+  coverTitle: '100 Content Ideas',
   seoTitle: '100 Nail Tech Content Ideas for Instagram (2026)',
   excerpt: 'Never run out of content ideas again. 100 post ideas for nail techs, organised by type, with tips on which formats convert best.',
   seoDescription: '100 nail tech content ideas for Instagram: portfolio posts, Reels, educational content, booking CTAs, behind the scenes, and more. Never post a blank again.',

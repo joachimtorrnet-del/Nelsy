@@ -4,6 +4,7 @@ import { ArticleTip, ArticleCallout, ArticleSteps, ArticleTable, ArticleChecklis
 registerArticle({
   slug: 'how-to-apply-nail-charms-securely',
   title: 'How to Apply Nail Charms Securely',
+  coverTitle: 'Charms That Stay On',
   seoTitle: "How to Apply Nail Charms So They Stay On (Step by Step)",
   excerpt: 'Nail charms that pop off within days are a client service issue. Here\'s how to set 3D charms, rhinestones, and nail art embellishments so they stay on for the full wear time.',
   seoDescription: "How to put on nail charms, rhinestones and 3D embellishments so they stay on: products, placement, curing and the mistakes that make charms fall off.",

@@ -4,6 +4,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'nail-tech-price-increase-message-templates',
   title: 'Nail Tech Price Increase Message Templates',
+  coverTitle: 'Price Increase Messages',
   seoTitle: 'Nail Tech Price Increase Message Templates (Copy & Paste)',
   excerpt: 'Announcing a price increase feels awkward, but most clients are fine with it when it\'s communicated well. Templates for announcing your price rise with confidence.',
   seoDescription: 'Nail tech price increase message templates. Copy-paste messages for announcing a nail price increase: to existing clients, on social media, and in your bio.',

@@ -5,6 +5,7 @@ import { ArticleTip, ArticleTable } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'best-booking-apps-home-based-nail-techs',
   title: 'Best Booking Apps for Home-Based Nail Techs',
+  coverTitle: 'Booking Apps for Home Studios',
   seoTitle: 'Best Booking Apps for Home-Based Nail Techs',
   excerpt: 'Working from home means managing your own bookings, deposits, and client communication without a front desk. Here are the best booking apps for home-based nail techs.',
   seoDescription: 'Best booking apps for home-based nail techs. What home-based nail techs specifically need from booking software, and which platforms suit the home-salon setup.',

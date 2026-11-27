@@ -4,6 +4,7 @@ import { ArticleSteps, ArticleTip, ArticleCallout } from '@/components/article/A
 registerArticle({
   slug: 'how-to-do-french-tips-evenly',
   title: 'How to Do French Tips More Evenly',
+  coverTitle: 'Even French Tips',
   seoTitle: 'How to Do French Tips More Evenly',
   excerpt: 'Uneven french tips are one of the most visible technique problems. Here\'s how to get a consistent smile line, whether you\'re painting freehand, using guides, or working with gel.',
   seoDescription: 'How to do French tips evenly: freehand, guide tape and gel techniques for a consistent smile line, plus fixes for uneven or wobbly French tips.',

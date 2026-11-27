@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'what-to-put-in-link-in-bio-beauty-creators',
   title: 'What to Put in Your Link in Bio: Ideas and Examples for Beauty Creators',
+  coverTitle: 'What Goes in Your Bio Link',
   seoTitle: 'Link in Bio Ideas and Examples for Beauty Creators',
   excerpt: 'What to put in your link in bio as a beauty creator or beauty pro: the order that converts, 20 link ideas, button wording that gets clicks, and four example pages for makeup, lash, skincare and nail creators.',
   seoDescription: 'Link in bio ideas for beauty creators: what to put on the page, in which order, button wording that gets clicks, and 4 example layouts.',

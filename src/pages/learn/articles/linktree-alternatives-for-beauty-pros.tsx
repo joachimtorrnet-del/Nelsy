@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'linktree-alternatives-for-beauty-pros',
   title: 'Linktree Alternatives for Beauty Pros Who Take Bookings',
+  coverTitle: 'Linktree Alternatives',
   seoTitle: 'Linktree Alternatives for Beauty Pros (With Booking)',
   excerpt: 'Linktree is great for links, but beauty pros need a link in bio that takes appointments and deposits. Five alternatives compared: Nelsy, GlossGenius, Square Appointments, Booksy and Fresha.',
   seoDescription: 'Linktree alternatives for nail techs, lash artists and hairstylists who need bookings and deposits: Nelsy, GlossGenius, Square, Booksy and Fresha compared.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-business-plan',
   title: 'Nail Tech Business Plan: Step-by-Step Guide',
+  coverTitle: 'Write Your Business Plan',
   seoTitle: 'Nail Tech Business Plan: Step-by-Step Guide for 2026',
   excerpt: 'A practical business plan for nail techs, not a corporate document, but a clear picture of what you\'re building, what it costs, and how to grow it.',
   seoDescription: 'How to write a nail tech business plan. A practical, jargon-free guide covering your offer, target clients, pricing, costs, revenue projections, and growth strategy.',

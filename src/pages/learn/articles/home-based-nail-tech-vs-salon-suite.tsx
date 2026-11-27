@@ -4,6 +4,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'home-based-nail-tech-vs-salon-suite',
   title: 'Home-Based Nail Tech vs Salon Suite: What\'s the Difference?',
+  coverTitle: 'Home Studio vs Salon Suite',
   seoTitle: 'Home-Based Nail Tech vs Salon Suite: Which Is Right for You?',
   excerpt: 'Home studio or rented salon suite: both are popular models for independent nail techs. Here\'s an honest comparison to help you decide which fits your situation.',
   seoDescription: 'Home-based nail tech vs salon suite. Compare working from home vs renting a salon suite: costs, client experience, privacy, professionalism, and career stage.',

@@ -4,6 +4,7 @@ import { ArticleSteps, ArticleTip } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'how-to-shape-almond-nails',
   title: 'How to Shape Almond Nails Step by Step',
+  coverTitle: 'Shape Almond Nails',
   seoTitle: 'How to Shape Almond Nails Step by Step',
   excerpt: 'Almond nails are one of the most flattering and elegant shapes, but they require filing precision to get right. Here\'s the exact technique, step by step.',
   seoDescription: 'How to shape almond nails step by step. Filing technique for almond nail shape on extensions and natural nails: taper, symmetry, and how to nail the rounded tip.',

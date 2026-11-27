@@ -5,6 +5,7 @@ import { ArticleTip, ArticleTable, ArticleChecklist } from '@/components/article
 registerArticle({
   slug: 'how-to-improve-nail-retention',
   title: 'How to Improve Nail Retention',
+  coverTitle: 'Better Nail Retention',
   seoTitle: "Nail Retention: What It Means and How to Improve It",
   excerpt: 'Poor retention frustrates both nail techs and clients. This guide covers every factor that affects how long gel and acrylic stays on, from prep through aftercare.',
   seoDescription: "What nail retention means, why gel and acrylic lift or pop off early, and how to improve retention with better prep, product application and client aftercare.",

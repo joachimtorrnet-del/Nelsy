@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'best-platform-to-sell-beauty-courses',
   title: 'Best Platform to Sell Beauty Courses: Kajabi vs Teachable vs Stan vs Beacons vs Nelsy',
+  coverTitle: 'Where to Sell Your Course',
   seoTitle: 'Best Platform to Sell Beauty Courses Online (2026)',
   excerpt: 'Where should a nail tech, lash artist or makeup artist sell an online course? Kajabi, Teachable, Stan, Beacons and Nelsy compared on price, transaction fees, product limits and bookings.',
   seoDescription: 'Kajabi, Teachable, Stan, Beacons and Nelsy compared for beauty educators: price, transaction fees, product limits, coaching and bookings.',

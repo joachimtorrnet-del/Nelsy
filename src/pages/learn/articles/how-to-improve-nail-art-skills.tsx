@@ -4,6 +4,7 @@ import { ArticleTip, ArticleCallout } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-improve-nail-art-skills',
   title: 'How to Improve Your Nail Art Skills',
+  coverTitle: 'Level Up Your Nail Art',
   seoTitle: 'How to Improve Your Nail Art Skills',
   excerpt: 'Nail art is a skill that compounds: every hour of deliberate practice builds speed and accuracy. Here\'s a practical framework for getting significantly better, faster.',
   seoDescription: 'How to improve nail art skills. Deliberate practice methods, skill-building framework, product knowledge, and how to expand your nail art menu over time.',

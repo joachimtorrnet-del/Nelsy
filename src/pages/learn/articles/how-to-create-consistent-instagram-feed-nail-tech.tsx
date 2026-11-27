@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-create-consistent-instagram-feed-nail-tech',
   title: 'How to Create a Consistent Nail Tech Instagram Feed',
+  coverTitle: 'A Consistent Feed',
   seoTitle: 'How to Create a Consistent Nail Tech Instagram Feed',
   excerpt: 'A consistent Instagram feed looks more professional and builds brand recognition. Here\'s how to create a cohesive nail tech feed without spending hours on aesthetics.',
   seoDescription: 'How to create a consistent nail tech Instagram feed: colour palette, photo style, editing and layout tips for a professional, cohesive feed.',

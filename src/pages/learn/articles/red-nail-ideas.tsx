@@ -4,6 +4,7 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'red-nail-ideas',
   title: '50 Red Nail Ideas From Classic to Trendy',
+  coverTitle: '50 Red Nail Ideas',
   seoTitle: '50 Red Nail Ideas From Classic to Trendy',
   excerpt: 'Red nails never go out of style, but there are more ways to wear red than a classic creme. Here are 50 red nail ideas from timeless to trend-forward.',
   seoDescription: '50 red nail ideas. Classic red, deep crimson, brick red, cherry, red chrome, red ombré, and red nail art: inspiration for every shade of red.',

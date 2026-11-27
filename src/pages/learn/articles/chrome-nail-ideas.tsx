@@ -5,6 +5,7 @@ import { ArticleImage, ArticleTable, ArticleSteps, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'chrome-nail-ideas',
   title: '50 Chrome Nail Ideas to Save',
+  coverTitle: '50 Chrome Nail Ideas',
   seoTitle: "50 Chrome Nail Ideas: Silver, Gold, Rose Gold & Holo",
   excerpt: 'Chrome nails are one of the most eye-catching effects you can offer: a mirror-like finish that turns heads. Here are 50 chrome nail ideas across every colour and style.',
   seoDescription: "50 chrome nail ideas and inspo: silver, gold, rose gold, holographic and color-shifting chrome nails, from minimalist looks to bold designs.",

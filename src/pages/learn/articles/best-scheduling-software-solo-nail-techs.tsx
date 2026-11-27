@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'best-scheduling-software-solo-nail-techs',
   title: 'Best Scheduling Software for Solo Nail Techs',
+  coverTitle: 'Scheduling Apps for Solo Techs',
   seoTitle: "Best Scheduling Software for Solo Nail Techs (2026)",
   excerpt: 'The right scheduling software can save hours every week and make your business easier to run. Here\'s what matters when choosing, and how different tools approach the problem.',
   seoDescription: 'Best scheduling software for solo nail techs. Which features matter, how to compare booking platforms and how to choose the right tool.',

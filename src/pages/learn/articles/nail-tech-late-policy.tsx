@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-late-policy',
   title: 'Nail Tech Late Policy Examples',
+  coverTitle: 'Late Policy Examples',
   seoTitle: 'Nail Tech Late Policy Examples (Templates You Can Copy)',
   excerpt: 'Late clients affect your whole day. Here\'s how to handle lateness professionally, with policy templates, communication scripts, and when to turn clients away.',
   seoDescription: 'Nail tech late policy examples and templates. How to handle late clients professionally, when to turn them away, and how to communicate your policy clearly.',

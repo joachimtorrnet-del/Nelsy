@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleChecklist, ArticleTable } from '@/co
 registerArticle({
   slug: 'what-should-nail-tech-booking-page-include',
   title: 'What Should a Nail Tech Booking Page Include?',
+  coverTitle: 'Your Booking Page Checklist',
   seoTitle: 'What Should a Nail Tech Booking Page Include?',
   excerpt: 'Everything a client needs to see before booking, and the things nail techs most often forget to include on their booking pages.',
   seoDescription: 'What to include on your nail tech booking page: services, pricing, deposit info, cancellation policy, location, and what makes clients actually book.',

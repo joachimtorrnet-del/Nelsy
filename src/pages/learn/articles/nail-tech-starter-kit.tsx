@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'nail-tech-starter-kit',
   title: 'Nail Tech Starter Kit: What You Actually Need',
+  coverTitle: 'Your Starter Kit',
   seoTitle: 'Nail Tech Starter Kit: What You Actually Need (2026)',
   excerpt: 'A practical guide to building your nail tech starter kit, what\'s essential, what can wait, and what to avoid buying before you know what you need.',
   seoDescription: 'Nail tech starter kit guide: essential equipment, products, tools, and what to buy first. Avoid overspending on gear you don\'t need as a beginner nail tech.',

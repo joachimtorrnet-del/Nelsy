@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-get-nail-clients-from-google-business-profile',
   title: 'How to Get More Nail Clients Through Google Business Profile',
+  coverTitle: 'Clients From Google',
   seoTitle: 'How to Get More Nail Clients Through Google Business Profile',
   excerpt: 'A well-optimised Google Business Profile puts your nail business in front of local clients actively searching for nail services. Here\'s how to set it up and make it work.',
   seoDescription: 'How to get nail clients from Google Business Profile: set up, optimise and get found on Google Maps with reviews, photos and local SEO.',

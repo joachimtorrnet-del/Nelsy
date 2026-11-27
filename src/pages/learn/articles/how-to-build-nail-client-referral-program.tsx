@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-build-nail-client-referral-program',
   title: 'How to Build a Nail Client Referral Program',
+  coverTitle: 'Start a Referral Program',
   seoTitle: 'How to Build a Nail Client Referral Program That Works',
   excerpt: 'Word of mouth is still the most powerful way for nail techs to grow. A simple referral program formalises what already happens naturally, and accelerates it.',
   seoDescription: 'How to build a nail client referral program. Simple referral schemes for nail techs: reward structures, how to ask for referrals, and tracking new referral clients.',

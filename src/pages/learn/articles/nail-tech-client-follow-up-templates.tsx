@@ -4,6 +4,7 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'nail-tech-client-follow-up-templates',
   title: 'Nail Tech Client Follow-Up Message Templates',
+  coverTitle: 'Follow-Up Templates',
   seoTitle: 'Nail Tech Client Follow-Up Message Templates (Copy & Paste)',
   excerpt: 'Following up with clients after an appointment builds loyalty and drives rebooking. Templates for post-appointment follow-ups, win-back messages, and checking in.',
   seoDescription: 'Nail tech client follow-up message templates. Post-appointment follow-up, win-back messages, and check-in templates for nail techs to boost rebooking and retention.',

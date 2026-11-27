@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'how-to-bring-back-old-nail-clients',
   title: 'How to Bring Back Old Nail Clients',
+  coverTitle: 'Win Back Old Clients',
   seoTitle: 'How to Bring Back Old Nail Clients: Win-Back Strategies',
   excerpt: 'Past clients who stopped booking are one of the easiest wins in a nail business. They already know your work: they just need the right reason to come back.',
   seoDescription: 'How to bring back old nail clients. Win-back message templates, when to reach out, what to say, and how to re-engage past nail clients who stopped booking.',

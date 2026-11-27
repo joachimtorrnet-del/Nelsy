@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'should-nail-techs-offer-discounts',
   title: 'Should Nail Techs Offer Discounts?',
+  coverTitle: 'Should You Discount?',
   seoTitle: 'Should Nail Techs Offer Discounts? When It Works',
   excerpt: 'Discounts can fill your calendar or devalue your brand: depending entirely on how you use them. Here\'s a clear framework for when discounts make sense and when they cost you more than they earn.',
   seoDescription: 'Should nail techs offer discounts? When discounts help, when they hurt, which types work best, and alternatives to discounting that add value without cutting prices.',

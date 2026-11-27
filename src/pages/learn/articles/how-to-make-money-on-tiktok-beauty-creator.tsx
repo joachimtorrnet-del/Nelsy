@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-to-make-money-on-tiktok-beauty-creator',
   title: 'How to Monetize a Beauty TikTok: 7 Ways to Make Money',
+  coverTitle: '7 Ways to Monetize TikTok',
   seoTitle: 'How to Make Money on TikTok as a Beauty Creator',
   excerpt: 'How beauty creators make money on TikTok: creator programs, TikTok Shop affiliate, brand deals, UGC, LIVE gifts, and selling your own services, guides and courses, with what each needs and how to start.',
   seoDescription: 'How to monetize a beauty TikTok: creator programs, TikTok Shop, brand deals, UGC, LIVE gifts and selling your own bookings, guides and courses. What each needs.',

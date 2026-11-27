@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-loyalty-program-ideas',
   title: 'Nail Tech Loyalty Program Ideas',
+  coverTitle: 'Loyalty Program Ideas',
   seoTitle: 'Nail Tech Loyalty Program Ideas (Simple Schemes That Work)',
   excerpt: 'A loyalty program gives clients a structural reason to keep coming back to you rather than trying other nail techs. Here are the simplest schemes that actually work for independent nail techs.',
   seoDescription: 'Nail tech loyalty program ideas. Simple loyalty schemes for nail techs: stamp cards, points systems, VIP tiers, and how to set one up without it becoming a headache.',

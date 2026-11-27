@@ -4,6 +4,7 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'fall-nail-ideas',
   title: '50 Fall Nail Ideas',
+  coverTitle: '50 Fall Nail Ideas',
   seoTitle: "50 Fall Nail Ideas: Burgundy, Brown & Autumn Nail Art",
   excerpt: 'Autumn brings the best nail colours of the year: rich, warm, and moody. Here are 50 fall nail ideas from earthy neutrals to deep dramatic hues.',
   seoDescription: "50 fall nail ideas: burgundy, chocolate, rust, forest green and autumn nail art, from simple fall nails to cozy seasonal designs.",

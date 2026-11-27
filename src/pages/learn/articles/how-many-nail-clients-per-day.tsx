@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-many-nail-clients-per-day',
   title: 'How Many Nail Clients Can You Realistically Take Per Day?',
+  coverTitle: 'Clients Per Day',
   seoTitle: 'How Many Nail Clients Can You Realistically Take Per Day?',
   excerpt: 'Working at full capacity every day sounds like the goal, but it\'s usually not sustainable. Here\'s how to figure out the right number of clients for your set-up and service mix.',
   seoDescription: 'How many nail clients per day can you take? A realistic capacity guide for nail techs by service type, with a simple formula to find your own number.',

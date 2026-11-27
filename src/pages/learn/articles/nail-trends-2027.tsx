@@ -4,6 +4,7 @@ import { ArticleCallout, ArticleImage, ArticleTable } from '@/components/article
 registerArticle({
   slug: 'nail-trends-2027',
   title: 'Nail Trends 2027',
+  coverTitle: 'Nail Trends 2027',
   seoTitle: 'Nail Trends 2027: Colours, Shapes and Designs Coming Next',
   excerpt: 'The nail trends shaping 2027: colours, finishes, nail art styles, and what clients will be asking for at the salon.',
   seoDescription: 'Nail trends 2027: the colours, finishes, shapes and nail art techniques set to take over this year, and how nail techs can get ahead of them.',

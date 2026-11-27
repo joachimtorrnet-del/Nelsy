@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-to-add-in-person-bookings-creator-business',
   title: 'From Creator to Studio: Adding In-Person Bookings to Your Beauty Business',
+  coverTitle: 'From Creator to Studio',
   seoTitle: 'From Beauty Creator to Studio: Add In-Person Bookings',
   excerpt: 'How beauty creators add in-person services, workshops and training days to an online business: what to offer, where to work, how to set up a booking link with deposits, policies, and how to protect your content time.',
   seoDescription: 'How beauty creators add in-person bookings: what services or workshops to offer, where to work, a booking link with deposits in your bio, policies and scheduling.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-fill-last-minute-nail-appointments',
   title: 'How to Fill Last-Minute Nail Appointments',
+  coverTitle: 'Fill Last-Minute Gaps',
   seoTitle: 'How to Fill Last-Minute Nail Appointments: 7 Fast Tactics',
   excerpt: 'A cancellation with 24 hours\' notice doesn\'t have to be lost revenue. Here are the fastest ways to fill a last-minute nail appointment slot.',
   seoDescription: 'How to fill last-minute nail appointments. Fast tactics for filling cancelled slots: Instagram Stories, waitlists, flash offers, and direct client messaging.',

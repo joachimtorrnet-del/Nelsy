@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleImage, ArticleTable, ArticleChecklist } from '@/
 registerArticle({
   slug: 'coffin-nail-ideas',
   title: '50 Coffin Nail Ideas to Save for Your Next Set',
+  coverTitle: '50 Coffin Nail Ideas',
   seoTitle: '50 Coffin Nail Ideas: Short, Long, Ombré & Chrome Designs',
   excerpt: 'Coffin nails (long, tapered sides with a squared-off tip) are one of the most popular nail shapes. Here are 50 coffin nail ideas across every style.',
   seoDescription: '50 coffin nail ideas to save for your next set: short and long coffin nails, ombré, chrome, French tips and minimalist designs for gel or acrylic.',

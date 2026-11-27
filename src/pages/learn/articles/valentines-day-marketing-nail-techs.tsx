@@ -4,6 +4,7 @@ import { ArticleTable, ArticleTip } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'valentines-day-marketing-nail-techs',
   title: "Valentine's Day Marketing Ideas for Nail Techs",
+  coverTitle: "Valentine's Day Marketing",
   seoTitle: "Valentine's Day Marketing Ideas for Nail Techs",
   excerpt: "Valentine's Day is one of the best seasonal opportunities for nail techs. Here's how to market your nail business in February: designs, promotions, and content.",
   seoDescription: "Valentine's Day marketing ideas for nail techs: fill your February bookings with festive designs, promotions and a content plan.",

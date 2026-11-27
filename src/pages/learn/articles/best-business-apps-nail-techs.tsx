@@ -5,6 +5,7 @@ import { ArticleTable } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'best-business-apps-nail-techs',
   title: 'Best Business Apps for Nail Techs',
+  coverTitle: 'Business Apps for Nail Techs',
   seoTitle: 'Best Business Apps for Nail Techs (Beyond Booking)',
   excerpt: 'Running a nail business means managing more than just bookings. Here are the business apps nail techs use for finances, photos, content, communication, and admin.',
   seoDescription: 'Best business apps for nail techs. Apps for finances, scheduling, photos, editing, social media, client communication, and running a nail business from your phone.',

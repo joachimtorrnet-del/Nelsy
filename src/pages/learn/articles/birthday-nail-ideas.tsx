@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'birthday-nail-ideas',
   title: '40 Birthday Nail Ideas Your Clients Will Love',
+  coverTitle: '40 Birthday Nail Ideas',
   seoTitle: '40 Birthday Nail Ideas for Nail Techs to Offer Clients',
   excerpt: 'Birthday bookings are one of the easiest repeating events to capture on your calendar. 40 birthday nail ideas across every style, age group, and nail length.',
   seoDescription: 'Birthday nail ideas for nail techs. 40 ideas (glam, fun, minimal, colourful) with advice on marketing birthday appointments and what to post around them.',

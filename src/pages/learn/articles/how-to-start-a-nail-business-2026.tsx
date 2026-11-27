@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleSteps, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'how-to-start-a-nail-business-2026',
   title: 'How to Start a Nail Business in 2026',
+  coverTitle: 'Start a Nail Business',
   seoTitle: 'How to Start a Nail Business in 2026: A Complete Guide',
   excerpt: 'A step-by-step guide to launching a nail business in 2026, from training and insurance to your first clients and booking system.',
   seoDescription: 'How to start a nail business in 2026. Everything you need: training, insurance, equipment, pricing, Instagram, booking software, and getting your first clients.',

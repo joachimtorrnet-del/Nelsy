@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'how-to-organize-nail-business-from-phone',
   title: 'How to Organise Your Nail Business From Your Phone',
+  coverTitle: 'Run It From Your Phone',
   seoTitle: 'How to Organise Your Nail Business From Your Phone',
   excerpt: 'Most nail techs run their entire business from their phone. Here\'s how to set it up so you\'re not drowning in messages, missed bookings, and admin.',
   seoDescription: 'How to organise your nail business from your phone. Apps, systems, and habits for managing bookings, clients, finances, and content from your phone efficiently.',

@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-to-sell-virtual-beauty-consultations',
   title: 'How to Sell 1:1 Beauty Coaching and Virtual Consultations',
+  coverTitle: 'Sell Virtual Beauty Coaching',
   seoTitle: 'How to Sell Virtual Makeup Consultations and Beauty Coaching',
   excerpt: 'How to offer and sell virtual beauty consultations and 1:1 coaching: what to offer (makeup lessons, skincare consults, mentoring for new pros), how to run the call, how to price it, and how to fill your first sessions.',
   seoDescription: 'How to sell virtual makeup consultations, online makeup lessons and 1:1 coaching for beauty pros: offers, call structure, pricing math and how to get first clients.',

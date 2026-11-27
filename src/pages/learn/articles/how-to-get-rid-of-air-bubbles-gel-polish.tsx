@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/compon
 registerArticle({
   slug: 'how-to-get-rid-of-air-bubbles-gel-polish',
   title: 'How to Get Rid of Air Bubbles in Gel Polish',
+  coverTitle: 'No More Air Bubbles',
   seoTitle: 'How to Get Rid of Air Bubbles in Gel Polish',
   excerpt: 'Air bubbles in gel polish ruin an otherwise great set. Here\'s why they happen and how to prevent and fix them before the colour cures.',
   seoDescription: 'How to prevent and fix air bubbles in gel polish: what causes them, a bubble-free application method, and how to fix bubbles before curing.',

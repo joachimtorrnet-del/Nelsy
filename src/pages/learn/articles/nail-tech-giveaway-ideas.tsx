@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-giveaway-ideas',
   title: 'Nail Tech Giveaway Ideas That Attract the Right Clients',
+  coverTitle: 'Giveaways That Work',
   seoTitle: 'Nail Tech Giveaway Ideas That Attract the Right Clients',
   excerpt: 'Giveaways can grow your audience, or fill it with people who never book. Here are giveaway ideas designed to attract followers who genuinely want nail services, not just free things.',
   seoDescription: 'Nail tech giveaway ideas that attract real clients. What to give away, how to structure entry requirements, and how to convert giveaway entrants into paying clients.',

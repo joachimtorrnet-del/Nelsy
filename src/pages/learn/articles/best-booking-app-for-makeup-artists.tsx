@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'best-booking-app-for-makeup-artists',
   title: 'Best Booking App for Makeup Artists: Bridal, Events and Studio Clients',
+  coverTitle: 'Booking Apps for MUAs',
   seoTitle: 'Best Booking App for Makeup Artists (2026)',
   excerpt: 'The best booking apps for makeup artists compared: HoneyBook, Acuity Scheduling, GlossGenius, Square Appointments and Nelsy, on price, deposits, contracts and card fees.',
   seoDescription: 'Best booking app for makeup artists: HoneyBook, Acuity, GlossGenius, Square and Nelsy compared on price, deposits, contracts and payment fees.',

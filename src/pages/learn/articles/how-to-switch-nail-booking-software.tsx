@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-switch-nail-booking-software',
   title: 'How to Switch Nail Booking Software Without Losing Clients',
+  coverTitle: 'Switch Apps, Keep Clients',
   seoTitle: 'How to Switch Nail Booking Software Without Losing Clients',
   excerpt: 'Switching booking platforms feels risky, but it doesn\'t have to be. Here\'s how to migrate from one booking system to another without losing clients or creating confusion.',
   seoDescription: 'How to switch nail booking software without losing clients: a step-by-step migration covering client data, links, communication and timing.',

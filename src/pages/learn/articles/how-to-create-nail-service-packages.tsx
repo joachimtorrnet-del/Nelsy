@@ -5,6 +5,7 @@ import { ArticleTip, ArticleTable } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'how-to-create-nail-service-packages',
   title: 'How to Create Nail Tech Service Packages',
+  coverTitle: 'Create Service Packages',
   seoTitle: 'How to Create Nail Tech Service Packages That Sell',
   excerpt: 'Packages bundle services into a single offer that\'s easier to say yes to, increases average spend, and encourages repeat bookings. Here\'s how to build packages that work.',
   seoDescription: 'How to create nail tech service packages. Bundle strategies, pricing, naming, and how to present packages to clients to increase average appointment value.',

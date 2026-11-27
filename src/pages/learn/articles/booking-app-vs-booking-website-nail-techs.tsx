@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'booking-app-vs-booking-website-nail-techs',
   title: 'Booking App vs Booking Website for Nail Techs',
+  coverTitle: 'Booking App or Website?',
   seoTitle: 'Booking App vs Booking Website for Nail Techs',
   excerpt: 'Should you use a booking app or build a dedicated booking website? Here\'s the honest comparison for nail techs, and when you might need both.',
   seoDescription: 'Booking app vs booking website for nail techs. What each option offers, their trade-offs, and which is right for your nail business at different stages.',

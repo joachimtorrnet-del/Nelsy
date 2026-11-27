@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-to-set-up-nail-tech-link-in-bio',
   title: 'How to Set Up a Nail Tech Link in Bio Page',
+  coverTitle: 'Set Up Your Link in Bio',
   seoTitle: 'How to Set Up a Nail Tech Link in Bio Page',
   excerpt: 'Your link in bio is where followers become clients. Here\'s what to put on your nail tech link in bio page and how to set it up so it actually converts.',
   seoDescription: 'How to set up a nail tech link in bio page. What to include, which tools to use, how to structure it for bookings, and what to avoid on your nail tech link page.',

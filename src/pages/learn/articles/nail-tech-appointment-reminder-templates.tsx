@@ -4,6 +4,7 @@ import { ArticleTable, ArticleTip } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'nail-tech-appointment-reminder-templates',
   title: 'Nail Tech Appointment Reminder Templates',
+  coverTitle: 'Reminder Templates',
   seoTitle: 'Nail Tech Appointment Reminder Message Templates (Copy & Paste)',
   excerpt: 'Send reminders that reduce no-shows and don\'t annoy your clients. Copy-paste templates for appointment reminders: SMS, WhatsApp, DM, and automated messages.',
   seoDescription: 'Nail tech appointment reminder templates: copy-paste SMS, WhatsApp and DM reminders for nail appointments in friendly, professional and firm versions.',

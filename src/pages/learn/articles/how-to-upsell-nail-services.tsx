@@ -5,6 +5,7 @@ import { ArticleTip, ArticleCallout } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-upsell-nail-services',
   title: 'How to Upsell Nail Services Without Being Pushy',
+  coverTitle: 'Upsell Without Pushing',
   seoTitle: 'How to Upsell Nail Services Without Being Pushy',
   excerpt: 'Upselling doesn\'t have to feel like selling. Done well, it feels like great client service: offering something the client actually wants. Here\'s how to do it naturally.',
   seoDescription: 'How to upsell nail services without being pushy: natural upsell language, the add-ons that work best and how to raise appointment value.',

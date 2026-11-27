@@ -5,6 +5,7 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'luxury-nail-ideas',
   title: '50 Luxury Nail Ideas',
+  coverTitle: '50 Luxury Nail Ideas',
   seoTitle: '50 Luxury Nail Ideas for an Elevated, High-End Look',
   excerpt: 'Luxury nails aren\'t about how much you spend: they\'re about the quality of execution, the choice of palette, and the attention to detail. Here are 50 ideas for an elevated nail look.',
   seoDescription: '50 luxury nail ideas for an elevated, high-end look. Premium nail sets from minimalist elegance to maximalist statement: inspiration for every aesthetic.',

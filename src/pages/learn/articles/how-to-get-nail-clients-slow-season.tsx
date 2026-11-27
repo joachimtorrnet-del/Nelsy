@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-get-nail-clients-slow-season',
   title: 'How to Get Nail Clients During Slow Season',
+  coverTitle: 'Beat the Slow Season',
   seoTitle: 'How to Get Nail Clients During Slow Season (Practical Strategies)',
   excerpt: 'January and early autumn are notoriously quiet for nail techs. Here\'s how to fill your calendar during slow periods without slashing your prices or panicking.',
   seoDescription: 'How to get nail clients in slow season: practical ways to fill your calendar in January, autumn and other quiet periods without cutting prices.',

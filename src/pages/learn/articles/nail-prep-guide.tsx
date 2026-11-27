@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleSteps, ArticleTable, ArticleChecklis
 registerArticle({
   slug: 'nail-prep-guide',
   title: 'Nail Prep Guide for Better Retention',
+  coverTitle: 'Prep for Retention',
   seoTitle: 'Nail Prep Guide for Better Retention (Step-by-Step)',
   excerpt: 'Gel lifting, peeling, and chipping almost always come back to prep. This guide covers every step of nail preparation (in order, with reasons) for both gel and acrylic.',
   seoDescription: 'Nail prep guide for better retention. Step-by-step nail preparation for gel and acrylic, why each step matters and the most common prep mistakes that cause lifting.',

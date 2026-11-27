@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'should-nail-techs-use-fresha',
   title: 'Fresha Review for Nail Techs (2026): Pricing, Fees and Verdict',
+  coverTitle: 'Should You Use Fresha?',
   seoTitle: 'Fresha Review (2026): Pricing, Fees and Terminal for Nail Techs',
   excerpt: 'An honest Fresha review for nail techs: what Fresha costs in 2026 (it is no longer free), the marketplace fee on new clients, card and terminal fees, text messages, add-ons and who it suits.',
   seoDescription: 'Fresha review for nail techs: €14.95/month plans, new-client marketplace fee, card terminal and payment fees, texts and add-ons, plus pros, cons and alternatives.',

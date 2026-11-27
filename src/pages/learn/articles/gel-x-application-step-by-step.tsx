@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleSteps, ArticleTable } from '@/compon
 registerArticle({
   slug: 'gel-x-application-step-by-step',
   title: 'Gel-X Application Step-by-Step',
+  coverTitle: 'Gel-X Step by Step',
   seoTitle: 'Gel-X Application Step-by-Step Guide for Nail Techs',
   excerpt: 'Gel-X extensions offer natural-looking length without acrylic. Here\'s the full application process, from prep to finishing, with tips on sizing, adhesion, and removal.',
   seoDescription: 'Gel-X application step-by-step guide for nail techs. Full process from prep to cure, tip sizing, adhesion gel, shaping, and how to get the best retention on Gel-X.',

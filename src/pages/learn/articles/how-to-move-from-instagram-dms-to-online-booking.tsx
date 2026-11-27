@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleSteps, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'how-to-move-from-instagram-dms-to-online-booking',
   title: 'How to Move from Instagram DMs to Online Booking',
+  coverTitle: 'From DMs to Bookings',
   seoTitle: 'How to Move from Instagram DMs to Online Booking as a Nail Tech',
   excerpt: 'A practical step-by-step guide for nail techs who want to switch from DM booking to a proper online booking system, without disrupting existing clients.',
   seoDescription: 'Step-by-step guide to moving your nail bookings from Instagram DMs to an online booking page. Scripts, templates, and what to tell existing clients.',

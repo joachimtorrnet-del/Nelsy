@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'why-do-gel-x-tips-pop-off',
   title: 'Why Do Gel-X Tips Pop Off? Common Causes and Fixes',
+  coverTitle: 'Why Gel-X Pops Off',
   seoTitle: 'Why Do Gel-X Tips Pop Off? Common Causes and Fixes',
   excerpt: 'Gel-X is popular for a reason, but tips that pop off within days signal a fixable problem. Here\'s what actually causes Gel-X failure and how to address each cause.',
   seoDescription: 'Why do Gel-X tips pop off? Common causes of Gel-X tip failure (sizing, prep, adhesive issues, and application problems) with practical fixes for each.',

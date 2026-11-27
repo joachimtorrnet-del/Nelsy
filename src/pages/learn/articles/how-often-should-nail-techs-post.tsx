@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-often-should-nail-techs-post',
   title: 'How Often Should Nail Techs Post on Instagram?',
+  coverTitle: 'How Often to Post',
   seoTitle: 'How Often Should Nail Techs Post on Instagram? (The Real Answer)',
   excerpt: 'Posting frequency matters, but not as much as you think. Here\'s a practical guide to how often nail techs should actually post, based on what drives bookings.',
   seoDescription: 'How often should nail techs post on Instagram? The honest answer, plus posting schedules for busy nail techs, what to post, and when consistency matters most.',

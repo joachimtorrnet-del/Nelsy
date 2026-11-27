@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-build-email-list-nail-tech',
   title: 'How to Build an Email List as a Nail Tech',
+  coverTitle: 'Build Your Email List',
   seoTitle: 'How to Build an Email List as a Nail Tech (And Why It Matters)',
   excerpt: 'An email list is the only marketing channel you fully own. Unlike Instagram, you\'re not at the mercy of an algorithm, when you want to fill your calendar, you email your list.',
   seoDescription: 'How to build an email list as a nail tech: why email matters for nail businesses, how to collect emails, what to send and how to fill your calendar.',

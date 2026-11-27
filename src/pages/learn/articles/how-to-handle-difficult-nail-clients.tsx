@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-handle-difficult-nail-clients',
   title: 'How to Handle Difficult Nail Clients Professionally',
+  coverTitle: 'Handle Difficult Clients',
   seoTitle: 'How to Handle Difficult Nail Clients: Scripts and Approach',
   excerpt: 'Difficult clients come in different forms: rude, indecisive, scope-creeping, or constantly unhappy. Here\'s how to handle each type professionally without losing your cool.',
   seoDescription: 'How to handle difficult nail clients professionally: scripts for rude and indecisive clients, scope creep, chronic complainers and ending the relationship.',

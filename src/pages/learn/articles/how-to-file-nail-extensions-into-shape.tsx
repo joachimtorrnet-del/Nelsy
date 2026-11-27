@@ -4,6 +4,7 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'how-to-file-nail-extensions-into-shape',
   title: 'How to File Nail Extensions Into Shape',
+  coverTitle: 'File Extensions Into Shape',
   seoTitle: 'How to File Nail Extensions Into Shape',
   excerpt: 'Filing extensions into shape is one of the most skill-intensive parts of nail work. Here\'s how to approach length, shape, surface, and symmetry with confidence.',
   seoDescription: 'How to file nail extensions into shape. Technique for filing acrylic, Gel-X, and builder gel extensions: length, shape, surface, symmetry, and finishing steps.',

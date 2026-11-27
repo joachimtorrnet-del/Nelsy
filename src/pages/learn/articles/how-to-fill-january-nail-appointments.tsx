@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'how-to-fill-january-nail-appointments',
   title: 'How to Fill January Nail Appointments',
+  coverTitle: 'Fill Your January',
   seoTitle: 'How to Fill January Nail Appointments as a Nail Tech',
   excerpt: 'January is notoriously slow for beauty businesses. Here\'s how to fill your diary after Christmas, without discounting your prices or panicking.',
   seoDescription: 'How to fill January nail appointments. Beat the post-Christmas slump with smart marketing, re-engagement campaigns, and strategies that work for nail techs.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'glossgenius-alternatives-nail-techs',
   title: 'GlossGenius Alternatives for Nail Techs',
+  coverTitle: 'GlossGenius Alternatives',
   seoTitle: 'GlossGenius Alternatives for Nail Techs (2027)',
   excerpt: 'GlossGenius isn\'t the right fit for every nail tech. Here are the most relevant alternatives, what they offer, who they suit, and how they compare.',
   seoDescription: 'GlossGenius alternatives for nail techs. Compare booking software if GlossGenius doesn\'t suit your nail business: features, pricing model and best use.',

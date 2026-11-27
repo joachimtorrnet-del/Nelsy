@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-content-pillars',
   title: 'Nail Tech Content Pillars: What Should You Post About?',
+  coverTitle: 'Your Content Pillars',
   seoTitle: 'Nail Tech Content Pillars: What to Post on Instagram (Framework)',
   excerpt: 'Stop staring at a blank caption box. Content pillars give your Instagram a strategy, so you always know what to post, why, and for whom.',
   seoDescription: 'Nail tech content pillars explained. The 5 content types every nail tech should post, with examples for each pillar and a weekly planning framework.',

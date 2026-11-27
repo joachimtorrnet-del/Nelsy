@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'short-nail-ideas',
   title: '50 Short Nail Ideas for Clients Who Want Something Clean',
+  coverTitle: '50 Short Nail Ideas',
   seoTitle: '50 Short Nail Ideas: Clean, Wearable Designs for Clients',
   excerpt: 'Short nails are having a moment, and clients are booking them on purpose, not just by necessity. 50 ideas for clean, elevated short nail looks across every style.',
   seoDescription: 'Short nail ideas for nail techs. 50 design ideas for short nails (neutrals, minimal art, textures, chrome, and seasonal looks) with client consultation tips.',

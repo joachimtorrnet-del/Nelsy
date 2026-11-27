@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/compon
 registerArticle({
   slug: 'how-to-price-nail-services-for-profit',
   title: 'How to Price Nail Services for Profit',
+  coverTitle: 'Price for Profit',
   seoTitle: 'How to Price Nail Services for Profit (Step-by-Step Guide)',
   excerpt: 'Most nail techs price based on what others charge, not what they need to earn. Here\'s how to build a pricing strategy that actually pays you properly.',
   seoDescription: 'How to price nail services for profit. Calculate your costs, set minimum hourly rates, price each service correctly, and avoid the undercharging trap.',

@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'independent-nail-tech-vs-nail-salon',
   title: 'Independent Nail Tech vs Nail Salon: Which Is Right for You?',
+  coverTitle: 'Independent or Salon?',
   seoTitle: 'Independent Nail Tech vs Nail Salon: Which Path Is Right for You?',
   excerpt: 'Working independently or in a salon are fundamentally different careers. Here\'s an honest breakdown of both: income, freedom, risk, and what each path looks like day to day.',
   seoDescription: 'Independent nail tech vs nail salon: what\'s the difference? Compare income, freedom, workload, and risk between going independent and working in a salon.',

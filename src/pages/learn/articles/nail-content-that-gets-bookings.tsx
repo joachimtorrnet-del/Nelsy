@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-content-that-gets-bookings',
   title: 'Nail Content That Gets Bookings (Not Just Likes)',
+  coverTitle: 'Content That Books',
   seoTitle: 'Nail Content That Gets Bookings (Not Just Likes)',
   excerpt: 'Most nail content is created to get likes. Content that gets bookings requires a different approach. Here\'s exactly what to post and why.',
   seoDescription: 'What nail content actually gets bookings on Instagram. The difference between viral content and booking-generating content, and how to do both.',

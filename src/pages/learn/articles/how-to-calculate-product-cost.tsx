@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-to-calculate-product-cost',
   title: 'How to Calculate Product Cost Per Nail Appointment',
+  coverTitle: 'Product Cost Per Set',
   seoTitle: 'How to Calculate Product Cost Per Nail Appointment',
   excerpt: 'Knowing your product cost per service is fundamental to profitable pricing. Here\'s how to calculate it, and how to use the number to set prices that actually make money.',
   seoDescription: 'How to calculate product cost per nail appointment. Step-by-step guide for nail techs: track product usage, calculate cost per service, and set profitable prices.',

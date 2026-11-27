@@ -4,6 +4,7 @@ import { ArticleCallout, ArticleTable, ArticleTip } from '@/components/article/A
 registerArticle({
   slug: 'how-to-remove-nail-extensions-without-damage',
   title: 'How to Remove Nail Extensions Without Damage',
+  coverTitle: 'Damage-Free Removal',
   seoTitle: 'How to Remove Nail Extensions Without Damaging Your Nails',
   excerpt: 'Removing nail extensions incorrectly is one of the biggest causes of nail damage. Here\'s how to remove acrylic, Gel-X, builder gel, and gel polish cleanly and safely.',
   seoDescription: 'How to remove nail extensions without damage. Safe removal technique for acrylic, Gel-X, builder gel, and gel polish: soak off, e-file, and manual methods explained.',

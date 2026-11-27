@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/compon
 registerArticle({
   slug: 'nail-dehydrator-vs-primer',
   title: 'Nail Dehydrator vs Primer: What\'s the Difference?',
+  coverTitle: 'Dehydrator vs Primer',
   seoTitle: "Nail Dehydrator vs Primer: Are They the Same Thing?",
   excerpt: 'Dehydrator and primer are both used in nail prep, but they do different things. Here\'s what each one does, when you need them, and why the difference matters for adhesion.',
   seoDescription: "Nail dehydrator vs primer: no, they are not the same. What each one does, the right order to apply them, and whether you need both for gel or acrylic.",

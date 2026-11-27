@@ -12,6 +12,7 @@ import {
 registerArticle({
   slug: 'nail-tech-pricing-guide',
   title: 'Nail Tech Pricing Guide: How to Set Your Rates and Charge What You\'re Worth',
+  coverTitle: 'Set Your Rates',
   seoTitle: 'Nail Tech Pricing Guide: How to Set Your Rates',
   excerpt:
     'A complete guide to pricing your nail services: cost-based pricing, market positioning, structuring your service menu, pricing nail art, and how to raise your prices.',

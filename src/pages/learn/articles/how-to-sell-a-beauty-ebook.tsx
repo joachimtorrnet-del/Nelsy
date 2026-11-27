@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-to-sell-a-beauty-ebook',
   title: 'How to Sell a Beauty Ebook or Guide (Step by Step)',
+  coverTitle: 'Sell Your Beauty Ebook',
   seoTitle: 'How to Sell a Beauty Ebook or PDF Guide Online',
   excerpt: 'How to write, design and sell a beauty ebook or PDF guide from Instagram: picking a topic people pay for, outlining it, pricing it, and getting your first sales without a big audience.',
   seoDescription: 'How to sell a beauty ebook or PDF guide: pick a topic people pay for, write and design it in Canva, set a price, and sell it from Instagram and your link in bio.',

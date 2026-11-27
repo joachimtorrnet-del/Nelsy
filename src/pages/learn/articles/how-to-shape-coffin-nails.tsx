@@ -4,6 +4,7 @@ import { ArticleSteps, ArticleTip, ArticleCallout } from '@/components/article/A
 registerArticle({
   slug: 'how-to-shape-coffin-nails',
   title: 'How to Shape Coffin Nails Step by Step',
+  coverTitle: 'Shape Coffin Nails',
   seoTitle: 'How to Shape Coffin Nails Step by Step',
   excerpt: 'Coffin nails are one of the most popular extension shapes: bold, tapered, and flat-tipped. Here\'s the exact technique to get the taper and flat tip right every time.',
   seoDescription: 'How to shape coffin nails step by step. Filing technique for coffin / ballerina nail shape, how to taper the sides and create a flat tip on extensions.',

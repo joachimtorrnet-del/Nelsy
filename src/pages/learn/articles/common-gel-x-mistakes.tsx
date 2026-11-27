@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'common-gel-x-mistakes',
   title: 'Common Gel-X Mistakes and How to Fix Them',
+  coverTitle: 'Gel-X Mistakes to Fix',
   seoTitle: 'Common Gel-X Mistakes and How to Fix Them',
   excerpt: 'Gel-X is a system with specific technique requirements. Here are the most common Gel-X mistakes nail techs make, and how to approach fixing each one.',
   seoDescription: 'Common Gel-X mistakes and how to fix them: lifting at the cuticle, air bubbles, tips popping off, sizing errors and prep problems, with a quick fix table.',

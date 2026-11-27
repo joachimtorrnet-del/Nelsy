@@ -4,6 +4,7 @@ import { ArticleCallout } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'nail-tech-reel-hooks',
   title: '100 Nail Tech Reel Hooks to Get More Views',
+  coverTitle: '100 Reel Hooks',
   seoTitle: '100 Nail Tech Reel Hooks to Get More Views',
   excerpt: 'The hook is the first 1–2 seconds of your Reel, and it determines whether anyone watches. Here are 100 proven hook formulas for nail tech Reels and TikToks.',
   seoDescription: '100 nail tech reel hooks to get more views. Hook formulas for nail TikTok and Instagram Reels: text-on-screen hooks, spoken hooks, and seasonal hook ideas.',

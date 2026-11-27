@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'square-appointments-alternatives-nail-techs',
   title: 'Square Appointments Alternatives for Nail Techs',
+  coverTitle: 'Square Alternatives',
   seoTitle: 'Square Appointments Alternatives for Nail Techs',
   excerpt: 'Square Appointments is a solid general tool, but it wasn\'t built with nail techs in mind. Here are the alternatives worth considering if Square Appointments doesn\'t meet your needs.',
   seoDescription: 'Square Appointments alternatives for nail techs: who Square suits, where it falls short and the booking software that fits nail businesses better.',

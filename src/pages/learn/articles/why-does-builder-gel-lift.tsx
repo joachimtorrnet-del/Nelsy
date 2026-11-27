@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'why-does-builder-gel-lift',
   title: 'Why Does Builder Gel Lift? Common Causes and Fixes',
+  coverTitle: 'Why Builder Gel Lifts',
   seoTitle: 'Why Does Builder Gel Lift? Common Causes and How to Fix Them',
   excerpt: 'Builder gel lifting is more complex than gel polish: the thicker product, longer cure, and infill cycle all create more opportunities for failure. Here\'s exactly what causes it.',
   seoDescription: 'Why does builder gel lift? Causes of BIAB and hard gel lifting, from prep and application to infill technique, with specific fixes for each scenario.',

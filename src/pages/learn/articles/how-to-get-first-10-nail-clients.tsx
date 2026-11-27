@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleSteps } from '@/components/article/A
 registerArticle({
   slug: 'how-to-get-first-10-nail-clients',
   title: 'How to Get Your First 10 Nail Clients',
+  coverTitle: 'Your First 10 Clients',
   seoTitle: 'How to Get Your First 10 Nail Clients as a New Nail Tech',
   excerpt: 'Getting your first 10 paying clients is the hardest part. Here\'s a realistic, step-by-step approach that doesn\'t require a big following or paid ads.',
   seoDescription: 'How to get your first 10 nail clients as a new nail tech. Practical steps covering portfolio building, Instagram, word of mouth, and pricing your first clients.',

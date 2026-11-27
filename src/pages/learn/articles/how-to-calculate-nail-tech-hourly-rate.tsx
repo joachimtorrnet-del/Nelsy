@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-calculate-nail-tech-hourly-rate',
   title: 'How to Calculate Your Nail Tech Hourly Rate',
+  coverTitle: 'Your Real Hourly Rate',
   seoTitle: 'How to Calculate Your Nail Tech Hourly Rate (Step-by-Step)',
   excerpt: 'Your hourly rate isn\'t just your service price divided by time: it\'s a function of your costs, target income, available hours, and efficiency. Here\'s how to work it out properly.',
   seoDescription: 'How to calculate your nail tech hourly rate. Formula and worked example for calculating what you need to charge per hour to hit your income goals after expenses.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleChecklist, ArticleTable } from '@/co
 registerArticle({
   slug: 'how-to-make-nail-business-look-professional',
   title: 'How to Make Your Nail Business Look More Professional',
+  coverTitle: 'Look More Professional',
   seoTitle: 'How to Make Your Nail Business Look More Professional',
   excerpt: 'Professionalism isn\'t about having a studio in a fancy location. It\'s about the details clients notice at every touchpoint: here\'s what actually matters.',
   seoDescription: 'How to make your nail business look professional: booking system, messages, photos, workspace and online presence, the details clients notice.',

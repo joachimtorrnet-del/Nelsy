@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'how-to-get-nail-clients-from-instagram',
   title: 'How to Get Nail Clients from Instagram',
+  coverTitle: 'Clients From Instagram',
   seoTitle: 'How to Get Nail Clients from Instagram (That Actually Book)',
   excerpt: 'Instagram can be your best client acquisition tool, but likes don\'t pay bills. Here\'s how to turn your nail content into actual bookings.',
   seoDescription: 'How to get nail clients from Instagram: what content to post, how to optimise your profile, convert followers into bookings, and use DMs strategically.',

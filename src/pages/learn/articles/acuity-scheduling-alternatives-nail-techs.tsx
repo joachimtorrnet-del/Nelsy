@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'acuity-scheduling-alternatives-nail-techs',
   title: 'Acuity Scheduling Alternatives for Nail Techs',
+  coverTitle: 'Acuity Alternatives',
   seoTitle: 'Acuity Scheduling Alternatives for Nail Techs',
   excerpt: 'Acuity Scheduling is a general appointment tool, but nail techs often outgrow it or find it lacks beauty-specific features. Here are the alternatives.',
   seoDescription: 'Acuity Scheduling alternatives for nail techs. Who Acuity suits, its limitations for nail businesses, and better-fit booking software alternatives.',

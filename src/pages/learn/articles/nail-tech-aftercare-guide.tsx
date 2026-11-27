@@ -5,6 +5,7 @@ import { ArticleChecklist, ArticleTip, ArticleTable } from '@/components/article
 registerArticle({
   slug: 'nail-tech-aftercare-guide',
   title: 'Nail Tech Aftercare Guide You Can Send to Clients',
+  coverTitle: 'Aftercare Guide for Clients',
   seoTitle: 'Nail Tech Aftercare Guide to Send Clients After Every Appointment',
   excerpt: 'A clear aftercare guide sent after every appointment reduces lifting, breakage, and repair requests, and shows clients you care about how their nails last.',
   seoDescription: 'Nail tech aftercare guide to send clients. Ready-to-use aftercare instructions for gel, acrylic, gel-X, and BIAB: copy and send after every appointment.',

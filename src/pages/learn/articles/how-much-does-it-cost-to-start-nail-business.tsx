@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-much-does-it-cost-to-start-nail-business',
   title: 'How Much Does It Cost to Start a Nail Business?',
+  coverTitle: 'Startup Costs Explained',
   seoTitle: 'How Much Does It Cost to Start a Nail Business? (UK 2026)',
   excerpt: 'A realistic cost breakdown for starting a nail business in the UK, from training and insurance to equipment, products, and marketing.',
   seoDescription: 'How much does it cost to start a nail business in the UK? Realistic startup cost breakdown: training, insurance, equipment, products, and what to prioritise.',

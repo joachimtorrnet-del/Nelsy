@@ -4,6 +4,7 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'abstract-nail-ideas',
   title: '50 Abstract Nail Ideas to Save',
+  coverTitle: '50 Abstract Nail Ideas',
   seoTitle: '50 Abstract Nail Ideas to Save',
   excerpt: 'Abstract nail art is one of the most creative and wearable styles: no two sets need to look the same. Here are 50 abstract nail ideas from minimal to maximalist.',
   seoDescription: '50 abstract nail ideas. Swirls, geometric, paint-stroke, and negative space abstract nails: inspiration for creative nail art that isn\'t tied to a specific motif.',

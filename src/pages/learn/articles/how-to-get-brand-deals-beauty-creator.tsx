@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-to-get-brand-deals-beauty-creator',
   title: 'How to Get Brand Deals as a Beauty Creator (+ Media Kit Checklist)',
+  coverTitle: 'Land Your First Brand Deal',
   seoTitle: 'How to Get Brand Deals as a Beauty Creator + Media Kit',
   excerpt: 'How beauty creators land brand deals, even as a small creator: getting brand-ready, building a media kit (with a checklist), finding and pitching brands, pricing the deal and negotiating usage rights.',
   seoDescription: 'How to get brand deals as a small beauty creator: get brand-ready, build a media kit (checklist inside), pitch brands with a template, price and negotiate the deal.',

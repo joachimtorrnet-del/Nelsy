@@ -5,6 +5,7 @@ import { ArticleTable } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'best-tools-running-nail-business',
   title: 'Best Tools for Running a Nail Business',
+  coverTitle: 'Tools to Run Your Business',
   seoTitle: 'Best Tools for Running a Nail Business (Software + Systems)',
   excerpt: 'The right tools reduce admin, protect your income, and free you to focus on your craft. Here are the tools that actually make a difference to how a nail business runs.',
   seoDescription: 'Best tools for running a nail business. Software, systems and physical tools that make booking, finance, admin and content easier for nail techs.',

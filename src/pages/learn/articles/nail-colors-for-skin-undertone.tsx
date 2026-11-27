@@ -4,6 +4,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'nail-colors-for-skin-undertone',
   title: 'Best Nail Colours for Your Skin Undertone',
+  coverTitle: 'Colours for Your Undertone',
   seoTitle: 'Best Nail Colours for Your Skin Undertone (Warm, Cool, Neutral)',
   excerpt: 'The right nail colour for your skin isn\'t just about what\'s trending: it\'s about undertone. Here\'s how to find shades that genuinely flatter your complexion.',
   seoDescription: 'Best nail colours for skin undertone. How to choose nail polish colours for warm, cool, and neutral undertones, with specific shade recommendations for each.',

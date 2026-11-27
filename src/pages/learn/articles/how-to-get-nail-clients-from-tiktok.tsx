@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-get-nail-clients-from-tiktok',
   title: 'How to Get Nail Clients from TikTok',
+  coverTitle: 'Clients From TikTok',
   seoTitle: 'How to Get Nail Clients from TikTok (What Actually Works)',
   excerpt: 'TikTok can send a wave of new nail enquiries, but only if you approach it differently from Instagram. Here\'s how to convert TikTok reach into actual bookings.',
   seoDescription: 'How to get nail clients from TikTok: content that drives bookings, turning viewers into clients, and how TikTok differs from Instagram for nail techs.',

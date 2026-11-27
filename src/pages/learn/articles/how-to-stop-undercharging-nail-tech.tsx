@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-stop-undercharging-nail-tech',
   title: 'How to Stop Undercharging as a Nail Tech',
+  coverTitle: 'Stop Undercharging',
   seoTitle: 'How to Stop Undercharging as a Nail Tech: Mindset and Steps',
   excerpt: 'Most nail techs know they\'re undercharging. The challenge is doing something about it: the fear of losing clients, the imposter syndrome, the uncomfortable conversations. Here\'s how to address all of it.',
   seoDescription: 'How to stop undercharging as a nail tech: why it happens, mindset shifts, raising prices without losing clients and scripts to announce price changes.',

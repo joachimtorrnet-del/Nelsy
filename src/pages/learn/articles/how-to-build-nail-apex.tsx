@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-build-nail-apex',
   title: 'How to Build a Nail Apex Correctly',
+  coverTitle: 'Build the Perfect Apex',
   seoTitle: 'How to Build a Nail Apex: Guide for Nail Techs',
   excerpt: 'The apex is the foundation of a strong nail extension. Without it, nails snap. Here\'s what the apex is, where it sits, and how to build it correctly in acrylic, gel, and builder gel.',
   seoDescription: 'How to build a nail apex. What the apex is, where it sits, how to build it in acrylic and gel, and how to check your apex placement is correct.',

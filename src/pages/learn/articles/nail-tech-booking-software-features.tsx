@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'nail-tech-booking-software-features',
   title: 'Best Booking Software for Nail Techs: What to Look For',
+  coverTitle: 'Booking Software Must-Haves',
   seoTitle: "Nail Tech Booking Software: Which Features Actually Matter",
   excerpt: 'Before you sign up for any booking platform, know which features actually matter for a nail business, and which ones you can safely ignore.',
   seoDescription: 'What features should nail tech booking software have? A practical checklist covering deposits, service menus, reminders, payments, and what to avoid.',

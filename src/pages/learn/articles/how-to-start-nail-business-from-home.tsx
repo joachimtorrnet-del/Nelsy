@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleChecklist, ArticleTable } from '@/co
 registerArticle({
   slug: 'how-to-start-nail-business-from-home',
   title: 'How to Start a Nail Business From Home',
+  coverTitle: 'Start From Home',
   seoTitle: 'How to Start a Nail Business From Home (UK Guide)',
   excerpt: 'A home nail business has lower startup costs and more flexibility, but requires specific setup, insurance, and client management considerations.',
   seoDescription: 'How to start a nail business from home in the UK. Setup checklist, insurance requirements, planning permission, pricing, and getting your first home nail clients.',

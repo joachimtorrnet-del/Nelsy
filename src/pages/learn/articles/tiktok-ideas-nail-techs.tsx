@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'tiktok-ideas-nail-techs',
   title: '50 TikTok Ideas for Nail Techs',
+  coverTitle: '50 TikTok Ideas',
   seoTitle: '50 TikTok Ideas for Nail Techs (Content That Gets Views)',
   excerpt: 'Running out of TikTok ideas? Here are 50 nail tech TikTok video concepts, from process videos to educational content, organised by format and goal.',
   seoDescription: '50 TikTok ideas for nail techs. Process videos, transformations, day-in-the-life, educational, trending audio, and business content ideas for nail tech TikTok.',

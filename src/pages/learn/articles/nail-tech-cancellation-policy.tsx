@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'nail-tech-cancellation-policy',
   title: 'Nail Tech Cancellation Policy: Complete Guide + Template',
+  coverTitle: 'Your Cancellation Policy',
   seoTitle: 'Nail Tech Cancellation Policy: Complete Guide + Templates',
   excerpt: 'A complete guide to writing, communicating, and enforcing your nail tech cancellation policy, with ready-to-use templates you can adapt.',
   seoDescription: 'Nail tech cancellation policy guide and templates. What to include, how to communicate it, when to enforce it, and how to handle disputes professionally.',

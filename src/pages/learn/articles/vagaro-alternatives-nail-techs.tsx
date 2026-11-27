@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'vagaro-alternatives-nail-techs',
   title: 'Vagaro Alternatives for Nail Techs',
+  coverTitle: 'Vagaro Alternatives',
   seoTitle: 'Vagaro Alternatives for Nail Techs',
   excerpt: 'Vagaro is a capable platform, but it\'s not the right choice for every nail tech. Here are the alternatives worth looking at if Vagaro doesn\'t suit your business.',
   seoDescription: 'Vagaro alternatives for nail techs. Who Vagaro suits, where it falls short, and the booking software alternatives for solo nail techs and nail salons.',

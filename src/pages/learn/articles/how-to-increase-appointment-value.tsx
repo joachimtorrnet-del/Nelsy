@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-increase-appointment-value',
   title: 'How to Increase Your Average Nail Appointment Value',
+  coverTitle: 'Raise Your Average Ticket',
   seoTitle: 'How to Increase Your Average Nail Appointment Value',
   excerpt: 'Increasing average appointment value means earning more from the same number of clients. Here are the most effective ways nail techs can do this without cutting corners or adding hours.',
   seoDescription: 'How to increase your average nail appointment value: add-ons, upselling, pricing and rebooking techniques that raise revenue per client.',

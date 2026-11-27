@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable, ArticleChecklist } from '@/components/art
 registerArticle({
   slug: 'nail-tech-booking-policy-template',
   title: 'Nail Tech Booking Policy Template',
+  coverTitle: 'Booking Policy Template',
   seoTitle: 'Nail Tech Booking Policy Template (Copy & Customise)',
   excerpt: 'A complete booking policy template for nail techs: covering deposits, cancellations, rescheduling, late arrivals, and no-shows in one place.',
   seoDescription: 'Nail tech booking policy template. Complete policy covering deposits, cancellations, rescheduling, late arrivals, and no-shows: copy, edit, and use immediately.',

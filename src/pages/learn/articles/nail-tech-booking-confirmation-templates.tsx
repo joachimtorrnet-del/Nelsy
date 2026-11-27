@@ -4,6 +4,7 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'nail-tech-booking-confirmation-templates',
   title: 'Nail Tech Booking Confirmation Message Templates',
+  coverTitle: 'Confirmation Templates',
   seoTitle: 'Nail Tech Booking Confirmation Message Templates (Copy & Paste)',
   excerpt: 'First impressions start at confirmation. Copy-paste booking confirmation templates for nail techs: for automated systems and manual messages.',
   seoDescription: 'Nail tech booking confirmation message templates. Copy-paste confirmation messages for nail appointments: automated and manual, friendly and professional versions.',

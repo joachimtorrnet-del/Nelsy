@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'nail-tech-break-even-point',
   title: 'How to Calculate Your Break-Even Point as a Nail Tech',
+  coverTitle: 'Find Your Break-Even',
   seoTitle: 'How to Calculate Your Break-Even Point as a Nail Tech',
   excerpt: 'Your break-even point is the minimum you need to earn to cover your costs. Once you know it, you can price with confidence and plan with clarity.',
   seoDescription: 'How to calculate your break-even point as a nail tech. Formula, worked example, and how to use your break-even to make better pricing and capacity decisions.',

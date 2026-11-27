@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-rescheduling-policy',
   title: 'Nail Tech Rescheduling Policy Examples',
+  coverTitle: 'Rescheduling Policy',
   seoTitle: 'Nail Tech Rescheduling Policy Examples (Templates)',
   excerpt: 'Rescheduling is different from cancelling, but without a clear policy, clients treat them the same way. Templates and guidance for nail techs.',
   seoDescription: 'Nail tech rescheduling policy examples and templates. How to handle reschedule requests, protect your diary, and what to do with deposits when clients reschedule.',

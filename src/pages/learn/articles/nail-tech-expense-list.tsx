@@ -5,6 +5,7 @@ import { ArticleChecklist, ArticleTable, ArticleTip } from '@/components/article
 registerArticle({
   slug: 'nail-tech-expense-list',
   title: 'Nail Tech Expense List: What to Track',
+  coverTitle: 'Expenses to Track',
   seoTitle: 'Nail Tech Expense List: Every Business Cost to Track',
   excerpt: 'If you\'re not tracking your expenses, you don\'t know your profit. Here\'s a complete expense list for nail techs: categorised, explained, and ready to adapt for your own records.',
   seoDescription: 'Nail tech expense list. Every business expense a nail tech should track (products, insurance, rent, equipment, training, software, and more) with tracking tips.',

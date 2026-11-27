@@ -4,6 +4,7 @@ import { ArticleSteps, ArticleTip, ArticleCallout } from '@/components/article/A
 registerArticle({
   slug: 'how-to-use-pinterest-for-nail-clients',
   title: 'How to Use Pinterest to Get Nail Clients',
+  coverTitle: 'Pinterest for Nail Clients',
   seoTitle: 'How to Use Pinterest to Get Nail Clients',
   excerpt: 'Pinterest is one of the most underused client acquisition tools for nail techs. Unlike Instagram, your content keeps driving traffic for months after you post. Here\'s how to use it.',
   seoDescription: 'How to use Pinterest to get nail clients. Pinterest strategy for nail techs, what to pin, how to optimise boards, and how to convert Pinterest views into bookings.',

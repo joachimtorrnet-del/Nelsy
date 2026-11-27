@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable, ArticleImage, ArticleChecklist } from '@/
 registerArticle({
   slug: 'french-tip-nail-ideas',
   title: '50 French Tip Nail Ideas for Nail Techs',
+  coverTitle: '50 French Tip Ideas',
   seoTitle: "50 French Tip Nail Ideas: Classic, Colored & Short French",
   excerpt: 'The French manicure has completely reinvented itself. Beyond the classic white tip, there are now dozens of variations nail techs should know: here are 50.',
   seoDescription: "50 French tip nail ideas: classic white, micro, colored, chrome and reverse French tips for short, square, almond and coffin nails.",

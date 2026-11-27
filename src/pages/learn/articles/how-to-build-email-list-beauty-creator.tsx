@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-to-build-email-list-beauty-creator',
   title: 'How to Build an Email List as a Beauty Creator (25 Lead Magnet Ideas)',
+  coverTitle: '25 Lead Magnet Ideas',
   seoTitle: 'How to Build an Email List as a Beauty Creator',
   excerpt: 'Why beauty creators need an email list, how to grow one from Instagram and TikTok without a website, 25 lead magnet ideas for makeup, skincare, hair, lash and nail creators, and what to send once people join.',
   seoDescription: 'How to build an email list from Instagram as a beauty creator: 25 lead magnet ideas, signups without a website, a welcome sequence and the legal basics.',

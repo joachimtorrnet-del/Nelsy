@@ -4,6 +4,7 @@ import { ArticleSteps, ArticleTip, ArticleCallout } from '@/components/article/A
 registerArticle({
   slug: 'how-to-make-chrome-nails-last-longer',
   title: 'How to Make Chrome Nails Last Longer',
+  coverTitle: 'Chrome That Lasts',
   seoTitle: 'How to Make Chrome Nails Last Longer',
   excerpt: 'Chrome that fades, chips, or dulls within days is almost always a prep or sealing issue. Here\'s how to apply chrome correctly so it stays mirror-bright for weeks.',
   seoDescription: 'How to make chrome nails last longer. Correct application technique, gel base requirements, sealing chrome powder, and aftercare to keep chrome mirror-bright.',

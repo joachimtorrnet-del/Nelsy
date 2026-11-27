@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'christmas-marketing-ideas-nail-techs',
   title: 'Christmas Marketing Ideas for Nail Techs',
+  coverTitle: 'Christmas Marketing Ideas',
   seoTitle: 'Christmas Marketing Ideas for Nail Techs That Fill Your Books',
   excerpt: 'Christmas is the busiest nail season of the year. Here\'s how to market your nail business in the lead-up, fill your festive slots fast, and avoid the December panic.',
   seoDescription: 'Christmas marketing ideas for nail techs. Fill your festive slots, promote seasonal sets, manage the holiday rush, and make the most of the busiest nail season.',

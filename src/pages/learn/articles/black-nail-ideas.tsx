@@ -4,6 +4,7 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'black-nail-ideas',
   title: '50 Black Nail Ideas for a Bold Look',
+  coverTitle: '50 Black Nail Ideas',
   seoTitle: '50 Black Nail Ideas for a Bold Look',
   excerpt: 'Black nails are one of the most versatile and enduring nail colours: minimal, dramatic, and works with everything. Here are 50 black nail ideas from classic to editorial.',
   seoDescription: '50 black nail ideas. Classic black, black nail art, black chrome, black ombré, and black accent nails: inspiration for bold black nail designs.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'best-booking-apps-beginner-nail-techs',
   title: 'Best Booking Apps for Beginner Nail Techs',
+  coverTitle: 'Booking Apps for Beginners',
   seoTitle: 'Best Booking Apps for Beginner Nail Techs Just Starting Out',
   excerpt: 'Just starting out as a nail tech? The right booking app sets professional expectations from day one. Here\'s what beginners need, and which apps deliver it.',
   seoDescription: 'Best booking apps for beginner nail techs. What new nail techs need from booking software, which apps are easiest to set up, and what to avoid.',

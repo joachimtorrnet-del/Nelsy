@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-beauty-creators-make-money-on-instagram',
   title: 'How Beauty Creators Make Money on Instagram',
+  coverTitle: 'Get Paid on Instagram',
   seoTitle: 'How Beauty Creators Make Money on Instagram: 8 Ways',
   excerpt: 'The 8 ways beauty creators and beauty influencers make money on Instagram, from bookings and digital products to brand deals, UGC, affiliate links and Instagram\'s own creator tools, with what each needs and how to start.',
   seoDescription: 'How beauty influencers make money on Instagram: bookings, guides and courses, brand deals, UGC, affiliate links and Instagram creator tools, with how to start each.',

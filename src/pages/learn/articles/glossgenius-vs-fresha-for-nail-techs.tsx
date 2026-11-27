@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'glossgenius-vs-fresha-for-nail-techs',
   title: 'GlossGenius vs Fresha (2026): Prices, Fees and Which to Choose',
+  coverTitle: 'GlossGenius vs Fresha',
   seoTitle: 'GlossGenius vs Fresha (2026): Prices, Fees & Differences',
   excerpt: 'GlossGenius vs Fresha compared for nail techs and beauty pros: plan prices, card fees, marketplace fee on new clients, texts, payouts and who each one suits. Figures from the official pricing pages.',
   seoDescription: 'GlossGenius vs Fresha: plans ($24 vs €14.95/month), card fees, Fresha marketplace fee, texts and payouts compared, with the differences that matter for nail techs.',

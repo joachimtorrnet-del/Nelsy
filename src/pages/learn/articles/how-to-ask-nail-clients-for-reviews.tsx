@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-ask-nail-clients-for-reviews',
   title: 'How to Ask Nail Clients for Reviews',
+  coverTitle: 'Ask for Reviews',
   seoTitle: 'How to Ask Nail Clients for Reviews (Scripts + Strategy)',
   excerpt: 'Reviews are one of the strongest trust signals for potential nail clients. Here\'s when and how to ask for them, without feeling awkward about it.',
   seoDescription: 'How to ask nail clients for reviews. When to ask, what to say, where to direct clients (Google, Instagram), and how to use reviews in your marketing.',

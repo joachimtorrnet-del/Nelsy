@@ -4,6 +4,7 @@ import { ArticleTable, ArticleTip } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'summer-nail-business-marketing-ideas',
   title: 'Summer Nail Business Marketing Ideas',
+  coverTitle: 'Summer Marketing Ideas',
   seoTitle: 'Summer Nail Business Marketing Ideas for Nail Techs',
   excerpt: 'Summer brings new demand: holiday nails, wedding season, festival looks. Here\'s how to market your nail business through the summer months and stay fully booked.',
   seoDescription: 'Summer marketing ideas for nail techs: promote holiday nails, wedding season, summer designs and outdoor events with seasonal strategies.',

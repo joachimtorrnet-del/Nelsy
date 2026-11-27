@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-film-nail-tech-tiktok-reels',
   title: 'How to Film Nail Tech TikTok and Reels Videos',
+  coverTitle: 'Film Better Reels',
   seoTitle: 'How to Film Nail Tech TikTok and Reels Videos',
   excerpt: 'Great nail video doesn\'t require a camera crew. Here\'s how to set up your phone to film nail process videos, reels, and TikToks that look professional and perform well.',
   seoDescription: 'How to film nail tech TikTok and Reels videos. Phone setup, angles, lighting, filming tips, and what to capture during appointments for high-quality nail content.',

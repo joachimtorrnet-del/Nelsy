@@ -4,6 +4,7 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'nail-tech-waitlist-message-templates',
   title: 'Nail Tech Waitlist Message Templates',
+  coverTitle: 'Waitlist Message Templates',
   seoTitle: 'Nail Tech Waitlist Message Templates (Copy & Paste)',
   excerpt: 'How to manage a waitlist professionally: templates for adding clients, notifying about openings, and handling the awkward "sorry, no space yet" message.',
   seoDescription: 'Nail tech waitlist message templates. Copy-paste waitlist messages for nail techs: adding clients to waitlist, notifying of openings, and managing expectations.',
