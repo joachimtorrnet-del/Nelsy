@@ -69,7 +69,8 @@ export type Feature =
   | 'team'
   | 'custom_domain'
 
-const INDEPENDENT_FEATURES: Feature[] = ['booking_page', 'online_payments', 'deposits', 'reminders']
+// All-in-one plan: keep in sync with src/lib/plans.ts
+const INDEPENDENT_FEATURES: Feature[] = ['booking_page', 'online_payments', 'deposits', 'reminders', 'digital_products', 'coaching', 'affiliates']
 const CREATOR_FEATURES: Feature[] = [
   ...INDEPENDENT_FEATURES,
   'digital_products', 'courses', 'coaching', 'memberships', 'email_marketing', 'auto_dm', 'affiliates',
@@ -89,6 +90,9 @@ export function tierFromProfilePlan(plan: string | null | undefined): PlanTier |
 }
 
 export function planHasFeature(plan: string | null | undefined, feature: Feature): boolean {
+  // Features of the single plan are open to every studio; public visibility is still
+  // limited by subscription status (see the public_* views).
+  if (INDEPENDENT_FEATURES.includes(feature)) return true
   const tier = tierFromProfilePlan(plan)
   return tier ? TIER_FEATURES[tier].includes(feature) : false
 }

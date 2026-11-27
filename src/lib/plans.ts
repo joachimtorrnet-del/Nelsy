@@ -35,7 +35,9 @@ export interface Plan {
   highlights: string[];
 }
 
-const INDEPENDENT_FEATURES: Feature[] = ['booking_page', 'online_payments', 'deposits', 'reminders'];
+// All-in-one plan: digital products (incl. free resources and the contacts list), online video
+// sessions ('coaching') and Shop my kit ('affiliates') are part of the single plan.
+const INDEPENDENT_FEATURES: Feature[] = ['booking_page', 'online_payments', 'deposits', 'reminders', 'digital_products', 'coaching', 'affiliates'];
 const CREATOR_FEATURES: Feature[] = [
   ...INDEPENDENT_FEATURES,
   'digital_products',
@@ -62,6 +64,9 @@ export const PLANS: Record<PlanTier, Plan> = {
       'Your booking page in your link in bio',
       'Online payments and deposits',
       'Email reminder 24 hours before each appointment',
+      'Digital products and free guides',
+      'Shop my kit with your affiliate links',
+      'Online video sessions',
       '0% Nelsy commission',
     ],
   },
@@ -122,6 +127,9 @@ export function tierFromProfilePlan(plan: string | null | undefined): PlanTier |
 }
 
 export function hasFeature(plan: string | null | undefined, feature: Feature): boolean {
+  // Everything in the single plan can be set up from the dashboard at any time, trial included.
+  // What clients can see and buy is decided server side by the studio's subscription status.
+  if (INDEPENDENT_FEATURES.includes(feature)) return true;
   const tier = tierFromProfilePlan(plan);
   return tier ? PLANS[tier].features.includes(feature) : false;
 }

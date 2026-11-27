@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, BellRing, BookOpen, Check, CreditCard, Globe, Handshake, Mail, Percent, Repeat, Smartphone, Users } from 'lucide-react';
+import { ArrowRight, BellRing, BookOpen, Check, CreditCard, Globe, Handshake, Mail, Video, Percent, Repeat, Smartphone, Users } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { PLANS, PLAN_ORDER, TRIAL_DAYS, planKey } from '@/lib/plans';
 import type { BillingInterval, Plan, PlanTier } from '@/lib/plans';
@@ -22,7 +22,8 @@ const HIGHLIGHT_DETAILS: { match: string; icon: LucideIcon; title: string; detai
   { match: 'online payments', icon: CreditCard, title: 'Payments and deposits', detail: 'Take a deposit or the full price when clients book' },
   { match: 'email reminder', icon: BellRing, title: 'Email reminders', detail: 'Clients get an email reminder 24 hours before each appointment' },
   { match: '0% nelsy', icon: Percent, title: '0% Nelsy commission', detail: 'Keep what you earn. Standard processing fees apply' },
-  { match: 'digital products', icon: BookOpen, title: 'Digital products and courses', detail: 'Sell guides, courses and 1:1 coaching calls' },
+  { match: 'digital products', icon: BookOpen, title: 'Digital products', detail: 'Sell your guides and templates, or offer a free one to grow your list' },
+  { match: 'online video', icon: Video, title: 'Online video sessions', detail: 'Sell 1:1 lessons and consultations by video call' },
   { match: 'memberships', icon: Repeat, title: 'Memberships', detail: 'Monthly clubs and subscriptions for your community' },
   { match: 'email marketing', icon: Mail, title: 'Email and Instagram AutoDM', detail: 'Grow your list and send your link automatically' },
   { match: 'shop my kit', icon: Handshake, title: 'Shop my kit', detail: 'Recommend the products you use with your affiliate links' },
