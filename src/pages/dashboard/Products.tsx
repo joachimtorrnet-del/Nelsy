@@ -61,7 +61,7 @@ function UpgradePanel() {
         </p>
         <ul className="grid sm:grid-cols-3 gap-3 text-left mb-8">
           {[
-            { icon: FileDown, title: 'Any file up to 100 MB', text: 'PDF, video, template or zip.' },
+            { icon: FileDown, title: 'Any file up to 50 MB', text: 'PDF, video, template or zip.' },
             { icon: ShoppingBag, title: 'Checkout on your page', text: 'Card, Apple Pay and Google Pay.' },
             { icon: Mail, title: 'Delivered by email', text: 'A secure link, valid for 10 downloads.' },
           ].map(({ icon: Icon, title, text }) => (
@@ -469,7 +469,7 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
     const f = e.target.files?.[0];
     e.target.value = '';
     if (!f) return;
-    if (f.size > PRODUCT_FILE_MAX_BYTES) { setError('The file must be 100 MB or less.'); return; }
+    if (f.size > PRODUCT_FILE_MAX_BYTES) { setError('The file must be 50 MB or less.'); return; }
     if (f.size === 0) { setError('This file is empty.'); return; }
     setError(null);
     setUploadingFile(true);
@@ -567,7 +567,7 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
             </div>
           </Field>
 
-          <Field label="File" hint="The download your client receives. Any format, up to 100 MB.">
+          <Field label="File" hint="The download your client receives. Any format, up to 50 MB.">
             <input ref={fileInput} type="file" className="hidden" onChange={onFile} />
             {file ? (
               <div className="flex items-center gap-3 rounded-xl border border-gray-200 px-3.5 py-3">
@@ -588,7 +588,7 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
                 className="w-full flex flex-col items-center justify-center gap-1.5 rounded-xl border-2 border-dashed border-gray-200 px-4 py-7 text-sm text-gray-500 hover:border-[#F52B8C] hover:text-[#C2186F] transition disabled:opacity-60">
                 {uploadingFile ? <Loader2 className="w-5 h-5 animate-spin" /> : <Upload className="w-5 h-5" />}
                 <span className="font-semibold">{uploadingFile ? 'Uploading your file…' : 'Upload a file'}</span>
-                <span className="text-xs text-gray-400">PDF, video, zip... up to 100 MB</span>
+                <span className="text-xs text-gray-400">PDF, video, zip... up to 50 MB</span>
               </button>
             )}
           </Field>

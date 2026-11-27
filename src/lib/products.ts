@@ -56,7 +56,7 @@ export type ProductInput = Pick<
   'title' | 'description' | 'price_cents' | 'cover_url' | 'file_path' | 'file_name' | 'file_size_bytes' | 'is_active'
 >;
 
-export const PRODUCT_FILE_MAX_BYTES = 100 * 1024 * 1024;
+export const PRODUCT_FILE_MAX_BYTES = 50 * 1024 * 1024;
 export const PRODUCT_COVER_MAX_BYTES = 5 * 1024 * 1024;
 export const PRODUCT_MAX_DOWNLOADS = 10;
 const FILES_BUCKET = 'product-files';
@@ -168,7 +168,7 @@ export async function uploadProductCover(file: File, profileId: string): Promise
 }
 
 export async function uploadProductFile(file: File, profileId: string): Promise<{ path: string; name: string; size: number }> {
-  if (file.size > PRODUCT_FILE_MAX_BYTES) throw new Error('File is larger than 100 MB');
+  if (file.size > PRODUCT_FILE_MAX_BYTES) throw new Error('File is larger than 50 MB');
   const path = `${profileId}/${crypto.randomUUID()}/${safeFileName(file.name)}`;
   const { error } = await client().storage.from(FILES_BUCKET).upload(path, file, {
     upsert: false,

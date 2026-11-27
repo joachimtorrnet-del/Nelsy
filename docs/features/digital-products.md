@@ -1,6 +1,6 @@
 # Digital products (Creator plan)
 
-Pros sell downloadable files (guides, templates, videos, up to 100 MB) from their studio page.
+Pros sell downloadable files (guides, templates, videos, up to 50 MB) from their studio page.
 Buyers pay with Stripe (direct charge on the pro's connected account, 0% Nelsy commission) and get
 a download link on screen and by email.
 
@@ -57,8 +57,8 @@ notified_at (email idempotency), created_at.
 | storage `product-covers` (public) | public URLs | write own folder | all |
 
 ### Storage
-- `product-files`: private, 100 MB bucket limit. The project-wide Storage upload limit must be at
-  least 100 MB (Dashboard > Storage > Settings), otherwise it caps the bucket.
+- `product-files`: private, 50 MB bucket limit (Supabase Free plan caps uploads at 50 MB; Pro allows more). The project-wide Storage upload limit must be at
+  least the bucket limit (Dashboard > Storage > Settings), otherwise it caps the bucket.
 - `product-covers`: public, 5 MB, png/jpeg/webp/gif.
 
 ## Flows
@@ -68,7 +68,7 @@ notified_at (email idempotency), created_at.
   Products are part of the Creator plan, with "Join the waitlist"
   (`mailto:hello@getnelsy.com?subject=Creator%20waitlist`).
 - List with up/down reordering, visible toggle, sales count; create/edit form (title,
-  description, price, file up to 100 MB, cover, visible toggle); orders tab (paid + refunded).
+  description, price, file up to 50 MB, cover, visible toggle); orders tab (paid + refunded).
 - Delete: hard delete if no orders, otherwise archived (hidden, buyers keep their downloads).
 - Warning banner when Stripe Connect is not complete.
 - Event: `product_created`.
@@ -176,4 +176,4 @@ Prereqs: test profile with `plan = 'creator_monthly'`, Stripe Connect test accou
   error for unknown order and wrong email.
 - **Known limitations**: pending orders from abandoned checkouts are kept (no cron cleanup yet);
   no rate limiting on the public functions beyond Supabase defaults; uploads use standard
-  (non-resumable) uploads, fine up to 100 MB but slow connections may need TUS later.
+  (non-resumable) uploads, fine up to 50 MB but slow connections may need TUS later.
