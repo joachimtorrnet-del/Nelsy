@@ -56,7 +56,7 @@ export default function NailSalons() {
             pain: 'No-shows cost the whole station',
             painText: 'When a client does not show up for a full set, a nail tech sits idle and the salon still pays for the station, the product and the hour.',
             fix: 'Deposits at booking, reminders before',
-            fixText: 'Ask for a deposit or full payment per service, so a slot is confirmed once it is paid. Clients get an automatic reminder before the appointment.',
+            fixText: 'Ask for a deposit or full payment per service, so a slot is confirmed once it is paid. Clients get an email reminder 24 hours before the appointment.',
             link: { label: 'Deposits on Nelsy', to: '/features/deposits' },
           },
           {
@@ -74,7 +74,7 @@ export default function NailSalons() {
         sub: 'Join the waitlist for the team plan, and get your bookings online now.',
         items: [
           { title: 'Join the Salon waitlist', text: 'Email us your salon name and team size. We will email you as soon as the Salon plan opens.' },
-          { title: 'Get bookings online today', text: 'Start on the Independent plan with your own services, or let each nail tech run their own page, with deposits and reminders from day one.' },
+          { title: 'Get bookings online today', text: 'Start on the Independent plan with your own services, or let each nail tech run their own page, with deposits and email reminders from day one.' },
           { title: 'Bring your team together', text: `With the Salon plan, add your nail techs: ${STAFF} members are included, and each extra member is $${EXTRA}/month.` },
         ],
         cta: WAITLIST,
@@ -84,7 +84,7 @@ export default function NailSalons() {
         sub: 'Each card says when it is available: today on the Independent plan, or with the upcoming Salon plan.',
         items: [
           { icon: Calendar, title: 'Online booking', text: 'Clients book services 24/7 from your link, with no app or account to create.', to: '/features/bookings', availability: 'today' },
-          { icon: Wallet, title: 'Deposits', text: 'A fixed or percentage deposit per service, collected when the client books.', to: '/features/deposits', availability: 'today' },
+          { icon: Wallet, title: 'Deposits', text: 'A fixed deposit amount per service, collected when the client books.', to: '/features/deposits', availability: 'today' },
           { icon: CreditCard, title: 'Payments', text: 'Card payments at booking, or pay on arrival. Mark cash payments by hand.', to: '/features/payments', availability: 'today' },
           { icon: UsersRound, title: 'Client list', text: 'Every client who books lands in one list with their visits.', to: '/features/crm', availability: 'today' },
           { icon: BarChart3, title: 'Analytics', text: 'Bookings and revenue over time, and where clients come from.', to: '/features/analytics', availability: 'today' },
@@ -106,7 +106,7 @@ export default function NailSalons() {
         points: [
           'Services with photos, prices and duration',
           'Deposits shown before clients confirm',
-          'Opening hours and buffer time respected automatically',
+          'Only the hours you work are bookable',
         ],
       }}
       compare={{
@@ -117,7 +117,7 @@ export default function NailSalons() {
         rows: [
           { label: 'Online booking page', today: true, next: 'One page for the team' },
           { label: 'Deposits and online payments', today: true, next: true },
-          { label: 'Automatic reminders', today: true, next: true },
+          { label: 'Email reminder 24 hours before each appointment', today: true, next: true },
           { label: 'Team members on one account', today: false, next: `${STAFF} included, $${EXTRA} per extra` },
           { label: 'Custom domain', today: false, next: true },
           { label: 'Digital products, courses and coaching', today: false, next: true },
@@ -145,7 +145,7 @@ export default function NailSalons() {
       faq={[
         { q: 'Can my whole nail salon team use Nelsy today?', a: 'Not on one account yet. Today each nail tech can run their own Nelsy page on the Independent plan, with bookings, deposits and payments. Team members on one salon account come with the Salon plan, which has a waitlist.' },
         { q: 'How much will the Salon plan cost?', a: `$${sal.monthly}/month, or $${sal.yearly}/month billed yearly, with ${STAFF} team members included. Each extra team member is $${EXTRA}/month.` },
-        { q: 'What is included in the Salon plan?', a: 'Everything in the Creator plan (bookings, deposits, payments, reminders, digital products, courses, coaching, memberships, email marketing and Instagram AutoDM), plus team members and a custom domain.' },
+        { q: 'What is included in the Salon plan?', a: 'Everything in the Creator plan (bookings, deposits, payments, email reminders, digital products, courses, coaching, memberships, email marketing and Instagram AutoDM), plus team members and a custom domain.' },
         { q: 'How do I join the Salon waitlist?', a: 'Email hello@getnelsy.com with the subject "Salon waitlist", or use the waitlist button on this page. Tell us your salon name and team size, and we will email you when the Salon plan opens.' },
         { q: 'Does Nelsy take a commission on nail salon bookings?', a: 'No. Nelsy charges 0% commission on bookings. You pay your plan, and standard payment processing fees apply to online payments.' },
         { q: 'Do clients need an app to book?', a: 'No. Clients open your link, pick a service and a time, and confirm. There is nothing to download and no account to create.' },

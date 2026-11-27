@@ -82,7 +82,7 @@ export default function BeautyCreators() {
         sub: 'Each card says when it is available. Bookings, deposits and your link in bio work today on the Independent plan.',
         items: [
           { icon: Link2, title: 'Link in bio', text: 'One branded page with your services, photos and socials for your Instagram and TikTok bio.', to: '/features/link-in-bio', availability: 'today' },
-          { icon: Calendar, title: 'Online booking', text: 'Followers book a service and a time 24/7, with automatic reminders before the appointment.', to: '/features/bookings', availability: 'today' },
+          { icon: Calendar, title: 'Online booking', text: 'Followers book a service and a time 24/7, with an email reminder 24 hours before the appointment.', to: '/features/bookings', availability: 'today' },
           { icon: Wallet, title: 'Deposits', text: 'Collect a deposit at booking so the people who book from a post actually show up.', to: '/features/deposits', availability: 'today' },
           { icon: FileDown, title: 'Digital products', text: 'A Gel-X application guide, a price list template, aftercare cards, sold from the same page.', to: '/features/digital-products', availability: 'creator' },
           { icon: GraduationCap, title: 'Courses', text: 'Teach your technique online: a builder gel class, a nail art course, a beginner nail tech program.', to: '/features/courses', availability: 'creator' },
@@ -118,7 +118,7 @@ export default function BeautyCreators() {
         rows: [
           { label: 'Booking page in your link in bio', today: true, next: true },
           { label: 'Deposits and online payments', today: true, next: true },
-          { label: 'Automatic reminders', today: true, next: true },
+          { label: 'Email reminder 24 hours before each appointment', today: true, next: true },
           { label: 'Paid 1:1 sessions as a bookable service', today: true, next: true },
           { label: 'Digital products (guides, templates)', today: false, next: true },
           { label: 'Online courses', today: false, next: true },

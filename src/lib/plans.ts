@@ -60,7 +60,7 @@ export const PLANS: Record<PlanTier, Plan> = {
     highlights: [
       'Your booking page in your link in bio',
       'Online payments and deposits',
-      'Automatic reminders',
+      'Email reminder 24 hours before each appointment',
       '0% Nelsy commission',
     ],
   },

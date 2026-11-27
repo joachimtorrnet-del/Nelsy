@@ -5,7 +5,7 @@ export default function LashTechs() {
     <UseCasePage
       seo={{
         title: 'Nelsy for Lash Techs: Online Booking & Client Management',
-        description: 'Run your lash business without the admin headache. Nelsy handles online booking, deposits for lash fills, client reminders, and more.',
+        description: 'Run your lash business without the admin headache. Nelsy handles online booking, deposits for lash fills, email reminders 24 hours before each appointment, and more.',
         canonical: '/use-cases/lash-techs',
       }}
       hero={{
@@ -23,16 +23,16 @@ export default function LashTechs() {
             'A lash appointment is typically 90 minutes or longer. An empty slot costs you real income.',
             'Deposits at booking time mean clients are financially committed before they show up.',
             'Set different deposit amounts for full sets versus fill appointments.',
-            'Automated reminders go out before every appointment so clients do not forget.',
+            'Clients get an email reminder 24 hours before every appointment so they do not forget.',
           ],
         },
         {
           heading: 'Build a loyal lash clientele',
-          body: 'Repeat business is the foundation of a lash business. Nelsy keeps a full history for every client, including their lash style preferences, allergies, and past appointments. You can see which clients are overdue for a fill and send targeted follow-up emails to bring them back before they book elsewhere.',
+          body: 'Repeat business is the foundation of a lash business. Every client who books lands in your Nelsy client list with their past appointments, so you can see who has not been back for a fill and reach out before they book elsewhere.',
         },
         {
           heading: 'Manage client communication without the chaos',
-          body: 'Stop tracking conversations across DMs, texts, and emails. Nelsy sends automated appointment reminders so you are not manually following up with every client. When you want to reach your full list, email newsletters let you announce promotions or fill last-minute openings without posting to Instagram and hoping the algorithm shows it.',
+          body: 'Stop tracking conversations across DMs, texts, and emails. Clients get a booking confirmation by email, then an email reminder 24 hours before the appointment, so you are not manually following up with every client.',
         },
       ]}
       faq={[
@@ -42,11 +42,11 @@ export default function LashTechs() {
         },
         {
           q: 'How do automated reminders work?',
-          a: 'Nelsy sends reminders to clients before their appointment, reducing no-shows without any manual effort from you.',
+          a: 'Nelsy emails each client a reminder 24 hours before their appointment, with the date, time and your studio page link. It is on by default and you can switch it off in Settings. Reminders are sent by email only, not by text message.',
         },
         {
           q: 'Can I manage a waitlist for cancellations?',
-          a: 'You can capture client contact details through audience capture, making it easy to message clients when a slot opens up.',
+          a: 'There is no automatic waitlist yet. Every client who books is saved in your client list with their email and phone, so you can contact them yourself when a slot opens up.',
         },
       ]}
       relatedFeatures={['bookings', 'deposits', 'crm', 'email-newsletters', 'payments']}

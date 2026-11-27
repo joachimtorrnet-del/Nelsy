@@ -20,7 +20,7 @@ const MUTED = '#6B6470';
 const HIGHLIGHT_DETAILS: { match: string; icon: LucideIcon; title: string; detail: string }[] = [
   { match: 'your booking page', icon: Smartphone, title: 'Your booking page', detail: 'In your link in bio, with your photos, services and colors' },
   { match: 'online payments', icon: CreditCard, title: 'Payments and deposits', detail: 'Take a deposit or the full price when clients book' },
-  { match: 'automatic reminders', icon: BellRing, title: 'Automatic reminders', detail: 'Clients get a reminder before every appointment' },
+  { match: 'email reminder', icon: BellRing, title: 'Email reminders', detail: 'Clients get an email reminder 24 hours before each appointment' },
   { match: '0% nelsy', icon: Percent, title: '0% Nelsy commission', detail: 'Keep what you earn. Standard processing fees apply' },
   { match: 'digital products', icon: BookOpen, title: 'Digital products and courses', detail: 'Sell guides, courses and 1:1 coaching calls' },
   { match: 'memberships', icon: Repeat, title: 'Memberships', detail: 'Monthly clubs and subscriptions for your community' },

@@ -75,7 +75,7 @@ export default function BookingsPage() {
         },
         {
           q: 'Does Nelsy send appointment reminders?',
-          a: 'Not yet. Today Nelsy sends an email confirmation when the client books. For reminders, our free appointment reminder templates give you ready-to-send messages.',
+          a: 'Yes, by email. Clients get an email confirmation when they book, then an email reminder 24 hours before the appointment. It is on by default and you can switch it off in Settings. For text messages, our free appointment reminder templates give you ready-to-send messages.',
         },
       ]}
       relatedFeatures={[

@@ -1,43 +1,18 @@
 // Transactional email via Resend. No-op when RESEND_API_KEY is not set.
+// The pure HTML helpers live in email-html.ts (importable from Node tests) and are re-exported here.
+export { esc, row, layout } from './email-html.ts'
+
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 const FROM = 'Nelsy <hello@getnelsy.com>' // same sender as stripe-webhooks (verified in Resend)
 
-export async function sendEmail(to: string, subject: string, html: string): Promise<void> {
-  if (!RESEND_API_KEY || !to) return
+/** Resolves true when Resend accepted the email, false otherwise. Never throws on HTTP errors. */
+export async function sendEmail(to: string, subject: string, html: string): Promise<boolean> {
+  if (!RESEND_API_KEY || !to) return false
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${RESEND_API_KEY}` },
     body: JSON.stringify({ from: FROM, to, subject, html }),
   })
   if (!res.ok) console.error(`[email] Resend ${res.status}: ${await res.text().catch(() => '')}`)
-}
-
-/** Client-entered text goes into HTML emails: escape it. */
-export function esc(value: unknown): string {
-  return String(value ?? '')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;')
-}
-
-export function row(label: string, value: string, last = false): string {
-  const border = last ? '' : 'border-bottom:1px solid #e5e7eb;'
-  return `<tr><td style="color:#6b7280;padding:8px 0;${border}">${label}</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;${border}">${value}</td></tr>`
-}
-
-export function layout(title: string, intro: string, rows: string, footer = ''): string {
-  return `
-  <div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:32px 24px;background:#ffffff">
-    <div style="text-align:center;margin-bottom:28px">
-      <h1 style="font-size:24px;font-weight:700;color:#111827;margin:0 0 8px">${title}</h1>
-      <p style="color:#6b7280;margin:0">${intro}</p>
-    </div>
-    <div style="background:#f9fafb;border-radius:16px;padding:24px;margin-bottom:24px">
-      <table style="width:100%;border-collapse:collapse">${rows}</table>
-    </div>
-    ${footer}
-    <p style="color:#9ca3af;font-size:12px;text-align:center;margin:24px 0 0">Sent by Nelsy</p>
-  </div>`
+  return res.ok
 }
