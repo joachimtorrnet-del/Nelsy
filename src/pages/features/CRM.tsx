@@ -4,75 +4,80 @@ import FeaturePage from './FeaturePage';
 export default function CRMPage() {
   return (
     <FeaturePage
-      title="Know Your Clients. Grow Your Business. | Nelsy"
-      metaDescription="Keep track of every client, their booking history, preferences and notes. Nelsy's client list helps beauty pros build relationships and get more repeat visits."
+      title="Client List and Booking History for Beauty Pros | Nelsy"
+      metaDescription="Every client who books is added to your Nelsy client list with visits, total booked, no-shows and booking history. Search, sort and export to CSV."
       canonical="/features/crm"
       h1="Know your clients. Grow your business."
-      heroDescription="The best beauty professionals remember details. Nelsy helps you track client preferences, booking history, and notes so every appointment feels personal, even when your schedule is full."
+      heroDescription="Every client who books through Nelsy lands in your client list automatically, with their visits, what they have booked and how to reach them. See who your regulars are and who you have not seen in a while."
       icon={UsersRound}
       benefits={[
         {
-          title: 'Every client in one place',
-          desc: 'See who has booked, how often they come back, what services they get, and anything else you want to remember: all in one profile.',
+          title: 'Built from your bookings',
+          desc: 'Clients are added automatically when they book, and matched by email or phone, so repeat bookings land on the same client.',
         },
         {
-          title: 'Personal service at scale',
-          desc: "A client who feels remembered comes back. Knowing their preferences, allergies, or favourite shapes means you can deliver without asking every time.",
+          title: 'The history that matters',
+          desc: 'For each client: visits, total booked, first and last visit, next appointment, no-shows, cancellations and every past booking.',
         },
         {
-          title: 'Identify your best clients',
-          desc: 'See which clients book most often, spend the most, and refer others. Focus your energy where it has the most impact.',
+          title: 'Find your best clients',
+          desc: 'Sort by most visits or highest total booked to see who your regulars are, or by most recent to see who came in lately.',
         },
         {
-          title: 'Win back lapsed clients',
-          desc: "Spot clients you have not seen in a while and reach out before they find someone else. A simple message can reactivate someone who simply got busy.",
+          title: 'Spot lapsed clients',
+          desc: 'The last visit date shows who you have not seen in a while. Email or call them in one tap from their profile.',
         },
       ]}
       steps={[
         {
           step: '1',
-          title: 'Build your client list automatically',
-          desc: 'Every client who books through Nelsy is added to your contact list. No manual data entry required.',
+          title: 'Clients book',
+          desc: 'Every online booking, and every booking you add yourself, adds to the client list. No manual data entry.',
         },
         {
           step: '2',
-          title: 'Add notes and preferences',
-          desc: 'Record anything useful: skin sensitivities, nail preferences, important dates, or notes from past appointments.',
+          title: 'Open a client',
+          desc: 'Search by name, email or phone and see their visits, totals and full booking history.',
         },
         {
           step: '3',
-          title: 'Use your data to take action',
-          desc: 'Filter by last booking date, service type, or spending to find the right clients to message or target with a promotion.',
+          title: 'Reach out or export',
+          desc: 'Email or call a client from their profile, or export the list to CSV for your own records or another tool.',
         },
       ]}
       useCases={[
         'Nail techs with a growing client base who want to stay organised',
-        'Beauty pros who want to send targeted rebooking messages to lapsed clients',
-        'Lash artists who track clients with sensitivities or specific product preferences',
-        'Salon owners who want visibility across all their clients in one system',
-        'Anyone who wants to move beyond trying to remember everything in their head',
+        'Beauty pros who want to see who is due for a rebooking',
+        'Lash artists who want to know their regulars at a glance',
+        'Pros moving away from a notebook or a phone contact list',
+        'Anyone who wants to move beyond trying to remember everything',
       ]}
       faq={[
         {
           q: 'Is client data stored securely?',
-          a: 'Yes. Client data is stored securely and you control who has access to it.',
+          a: 'Yes. Client details are stored with your bookings and only your account can see them.',
         },
         {
           q: 'Can I export my client list?',
-          a: 'Yes. You can export your contacts if you need to use them in another tool or keep your own backup.',
+          a: "Yes. Export it to CSV with each client's contact details, visits, no-shows, cancellations, total booked and first and last visit.",
         },
         {
-          q: 'How does the CRM connect to my bookings?',
-          a: 'Every booking is tied to a client profile automatically. Over time you build a full history without doing anything extra.',
+          q: 'How does the client list connect to my bookings?',
+          a: 'It is built from your bookings. Bookings with the same email address, or the same phone number when there is no email, are grouped under one client.',
         },
         {
-          q: 'Can I send messages to clients from the CRM?',
-          a: 'Yes. You can reach out to specific clients or segments: for a promotion, a rebooking nudge, or a personal follow-up.',
+          q: 'Can I send messages to clients from Nelsy?',
+          a: 'You can email or call one client at a time from their profile, using your own email or phone app. Email campaigns to groups of clients are part of the upcoming Creator plan.',
+        },
+        {
+          q: 'Can I add notes or preferences to a client?',
+          a: 'Not on the client profile yet. Today the profile shows contact details and booking history.',
         },
       ]}
       relatedFeatures={[
         { slug: 'bookings', title: 'Bookings', route: '/features/bookings' },
         { slug: 'analytics', title: 'Analytics', route: '/features/analytics' },
+        { slug: 'email', title: 'Email & Newsletters', route: '/features/email-newsletters' },
       ]}
     />
   );

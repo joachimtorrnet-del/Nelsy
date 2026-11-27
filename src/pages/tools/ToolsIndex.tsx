@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Calculator, ShieldCheck, BellRing, Heart, BadgeDollarSign, Wallet, CalendarX, Scale } from 'lucide-react';
+import { Calculator, ShieldCheck, BellRing, Heart, BadgeDollarSign, Wallet, CalendarX, Scale, PiggyBank, Store, UserRound, MessageSquareText, AtSign } from 'lucide-react';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
@@ -55,6 +55,36 @@ const TOOLS = [
     description: 'Compare the monthly cost of Fresha, Booksy, GlossGenius and Nelsy for your bookings.',
     href: '/tools/booking-app-fee-calculator',
   },
+  {
+    Icon: PiggyBank,
+    title: 'Beauty Business Profit Calculator',
+    description: 'See your monthly profit after products, rent, fees and taxes, your real hourly rate and break-even.',
+    href: '/tools/profit-calculator',
+  },
+  {
+    Icon: Store,
+    title: 'Beauty Business Name Generator',
+    description: 'Get dozens of name ideas for your nail, lash, brow, hair or skin business.',
+    href: '/tools/beauty-business-name-generator',
+  },
+  {
+    Icon: UserRound,
+    title: 'Instagram Bio Generator',
+    description: 'Write a bio that says what you do, where and how to book, in 150 characters.',
+    href: '/tools/instagram-bio-generator',
+  },
+  {
+    Icon: MessageSquareText,
+    title: 'Beauty Caption Generator',
+    description: 'Captions for sets, before and afters, open spots and tips, with hashtag sets.',
+    href: '/tools/beauty-caption-generator',
+  },
+  {
+    Icon: AtSign,
+    title: 'Username Generator',
+    description: 'Instagram and TikTok handle ideas from your name and craft that follow each app\'s rules.',
+    href: '/tools/username-generator',
+  },
 ];
 
 export default function ToolsIndex() {
@@ -62,7 +92,7 @@ export default function ToolsIndex() {
     <>
       <SEOMeta
         title="Free Tools for Beauty Professionals | Nelsy"
-        description="Free tools for beauty pros and creators: pricing, deposit, no-show, booking app fee and creator rate calculators, policy generator and reminder templates."
+        description="Free tools for beauty pros and creators: pricing, profit, deposit and no-show calculators, name, bio, caption and username generators, policy and reminder templates."
         canonical="/tools"
       />
       <SiteNav />

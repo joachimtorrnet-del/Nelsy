@@ -4,8 +4,9 @@ import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
 import type { LucideIcon } from 'lucide-react';
-import { UpcomingPlanBadge, UpcomingPlanButtons, IndependentTodayNote } from '@/components/UpcomingPlanCTA';
+import { UpcomingPlanBadge, UpcomingPlanButtons, IndependentTodayNote, INDEPENDENT_ONBOARDING } from '@/components/UpcomingPlanCTA';
 import type { UpcomingPlan } from '@/components/UpcomingPlanCTA';
+import { PLANS, TRIAL_DAYS } from '@/lib/plans';
 
 const PINK = '#F52B8C';
 
@@ -30,13 +31,69 @@ export interface FeaturePageProps {
   relatedFeatures: Array<{ slug: string; title: string; route: string }>;
   /** Feature not on sale yet: shows the plan badge and waitlist CTAs instead of signup. */
   upcomingPlan?: UpcomingPlan;
+  /**
+   * Feature planned but not tied to a plan yet ("a future Nelsy update"). The value is the
+   * feature name used in the waitlist email subject, e.g. "Gift Cards".
+   */
+  upcomingFeature?: string;
+}
+
+const TRIAL_LABEL = `Start your ${TRIAL_DAYS}-day free trial`;
+
+function featureWaitlistHref(feature: string): string {
+  return `mailto:hello@getnelsy.com?subject=${encodeURIComponent(`${feature} waitlist`)}`;
+}
+
+/** Waitlist + Independent CTAs for a feature planned for a future update (same look as UpcomingPlanButtons). */
+function FeatureWaitlistButtons({ feature, large = false }: { feature: string; large?: boolean }) {
+  const pad = large ? 'px-8 py-3.5' : 'px-6 py-3';
+  return (
+    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a
+        href={featureWaitlistHref(feature)}
+        className={`inline-flex items-center gap-2 ${pad} rounded-xl text-white font-bold text-[15px] transition hover:opacity-90`}
+        style={{ background: PINK }}
+      >
+        Join the waitlist
+      </a>
+      <Link
+        to={INDEPENDENT_ONBOARDING}
+        className={`inline-flex items-center gap-2 ${pad} rounded-xl border border-[#1A1A1A]/15 bg-white font-bold text-[15px] text-[#1A1A1A] transition hover:border-[#F52B8C]`}
+      >
+        Start with bookings
+      </Link>
+    </div>
+  );
+}
+
+function WaitlistCTAs({ plan, feature, large = false }: { plan?: UpcomingPlan; feature?: string; large?: boolean }) {
+  if (plan) return <UpcomingPlanButtons plan={plan} large={large} />;
+  return <FeatureWaitlistButtons feature={feature ?? 'Nelsy'} large={large} />;
+}
+
+function TrialButton({ large = false }: { large?: boolean }) {
+  return (
+    <>
+      <Link
+        to={INDEPENDENT_ONBOARDING}
+        className={`inline-flex items-center gap-2 ${large ? 'px-8 py-3.5' : 'px-6 py-3'} rounded-xl text-white font-bold text-[15px] transition hover:opacity-90`}
+        style={{ background: PINK }}
+      >
+        {TRIAL_LABEL}
+      </Link>
+      <p className="mt-4 text-xs text-gray-500">
+        Independent plan: ${PLANS.independent.monthly}/month after the trial, or ${PLANS.independent.yearly}/month billed yearly. 0% Nelsy commission.
+      </p>
+    </>
+  );
 }
 
 export default function FeaturePage({
   title, metaDescription, canonical,
   h1, heroDescription, icon: Icon,
-  benefits, steps, useCases, faq, relatedFeatures, upcomingPlan,
+  benefits, steps, useCases, faq, relatedFeatures, upcomingPlan, upcomingFeature,
 }: FeaturePageProps) {
+  const upcoming = Boolean(upcomingPlan || upcomingFeature);
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -83,25 +140,26 @@ export default function FeaturePage({
                 <UpcomingPlanBadge plan={upcomingPlan} />
               </div>
             )}
+            {!upcomingPlan && upcomingFeature && (
+              <div>
+                <p className="inline-flex items-center gap-2 rounded-full bg-[#FDF0F7] border border-[#F4C2C2] px-3 py-1 text-xs font-bold text-[#C8197A] mb-5">
+                  Planned for a future Nelsy update
+                </p>
+              </div>
+            )}
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#1A1A1A] leading-snug mb-5">
               {h1}
             </h1>
             <p className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-8">
               {heroDescription}
             </p>
-            {upcomingPlan ? (
+            {upcoming ? (
               <>
-                <UpcomingPlanButtons plan={upcomingPlan} />
+                <WaitlistCTAs plan={upcomingPlan} feature={upcomingFeature} />
                 <IndependentTodayNote />
               </>
             ) : (
-              <Link
-                to="/onboarding"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
-                style={{ background: PINK }}
-              >
-                Start for free
-              </Link>
+              <TrialButton />
             )}
           </div>
         </header>
@@ -130,7 +188,7 @@ export default function FeaturePage({
         <section className="bg-white border-y border-[#F4C2C2]/30 py-14">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-10 text-center">
-              {upcomingPlan ? 'How it will work' : 'How it works'}
+              {upcoming ? 'How it will work' : 'How it works'}
             </h2>
             <div className="space-y-8">
               {steps.map((s, i) => (
@@ -173,23 +231,21 @@ export default function FeaturePage({
         >
           <div className="max-w-2xl mx-auto px-4">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-4">
-              {upcomingPlan ? `Be first when the ${upcomingPlan} plan opens` : 'Ready to get started?'}
+              {upcomingPlan
+                ? `Be first when the ${upcomingPlan} plan opens`
+                : upcomingFeature
+                  ? `Be first when ${upcomingFeature.toLowerCase()} launch`
+                  : 'Ready to get started?'}
             </h2>
             <p className="text-gray-500 mb-8">
-              {upcomingPlan
+              {upcoming
                 ? 'Join the waitlist and we will email you when it opens. Meanwhile, start taking bookings and deposits from your link in bio.'
-                : 'Set up in minutes. No tech skills needed.'}
+                : 'Add your services and hours, connect Stripe, and share your link. No tech skills needed.'}
             </p>
-            {upcomingPlan ? (
-              <UpcomingPlanButtons plan={upcomingPlan} large />
+            {upcoming ? (
+              <WaitlistCTAs plan={upcomingPlan} feature={upcomingFeature} large />
             ) : (
-              <Link
-                to="/onboarding"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
-                style={{ background: PINK }}
-              >
-                Start for free
-              </Link>
+              <TrialButton large />
             )}
           </div>
         </section>

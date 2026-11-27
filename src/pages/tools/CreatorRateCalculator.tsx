@@ -76,7 +76,7 @@ export default function CreatorRateCalculator() {
         { q: 'What is the difference between UGC and a sponsored post?', a: 'A sponsored post is published on your account, so the brand pays for your audience and your content. UGC (user-generated content) is content you create for the brand to post or use in ads, without publishing it yourself, so it is priced on production time, plus usage rights.' },
         { q: 'Should I charge extra for usage rights?', a: 'Yes. If a brand wants to reuse your content in paid ads, on its website or for a long period, that is worth more than a single post on your account. Creators usually add a percentage on top of the base rate, depending on the duration and channels.' },
       ]}
-      cta={{ title: 'Your rate card, your shop, one link', text: 'With Nelsy, brands and clients find everything on one page: your services, bookings, deposits, coaching and digital products, with 0% Nelsy commission.' }}
+      cta={{ title: 'Your services and bookings, one link', text: 'With Nelsy, clients find your services on one page and book with a deposit, with 0% Nelsy commission. Digital products and coaching tools are coming with the Creator plan.' }}
       related={[
         { label: 'Instagram engagement rate calculator', href: '/tools/instagram-engagement-calculator' },
         { label: '100 nail tech content ideas', href: '/blog/100-nail-tech-content-ideas' },

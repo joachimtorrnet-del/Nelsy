@@ -74,7 +74,7 @@ const JSON_LD = [
         name: 'Can I automate appointment reminders as a nail tech?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Yes. Booking apps like Nelsy send confirmation and reminder messages automatically when a client books. You write the template once and the app sends it at the right time without any manual effort.',
+          text: 'Yes. Many booking apps can send reminder messages for you. With Nelsy today, clients who book on your Nelsy page get an email confirmation right away; reminders and follow-ups are still sent by you, and these templates make that quick.',
         },
       },
     ],
@@ -385,14 +385,14 @@ export default function AppointmentReminderTemplates() {
             className="rounded-2xl p-8 text-center"
             style={{ background: 'linear-gradient(135deg, #FDF0F7 0%, #FFF5FB 100%)', border: `1.5px solid #F4C2C2` }}
           >
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: PINK }}>Stop doing this manually</p>
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: PINK }}>Fewer messages to send</p>
             <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mb-3">
-              Let Nelsy send these automatically
+              Let confirmations send themselves
             </h2>
             <p className="text-gray-600 mb-6 max-w-lg mx-auto">
-              Set up your reminder templates once. Nelsy sends the confirmation, 24-hour reminder, and follow-up for every booking: no copy-paste, no forgetting.
+              When a client books on your Nelsy page, they get an email confirmation with the service and time, and you get an email about the new booking. Keep these templates for your reminders and follow-ups.
             </p>
-            <SeoCTA label="Send reminders automatically →" position="inline" variant="primary" />
+            <SeoCTA label="Try Nelsy free for 14 days →" position="inline" variant="primary" />
           </motion.div>
         </section>
 
@@ -502,7 +502,7 @@ export default function AppointmentReminderTemplates() {
               <Link to="/best-booking-app-for-nail-techs" className="underline" style={{ color: PINK }}>
                 a booking app
               </Link>{' '}
-              that automates reminders will save you significant time. Nelsy sends these messages automatically at the right time for every booking.
+              that sends some messages for you will save time. Nelsy emails each client a confirmation as soon as they book online; for the 24-hour reminder and the follow-up, keep using these templates.
             </p>
           </motion.div>
 
@@ -546,7 +546,7 @@ export default function AppointmentReminderTemplates() {
                 },
                 {
                   q: 'Can I automate appointment reminders as a nail tech?',
-                  a: 'Yes. Booking apps like Nelsy send confirmation and reminder messages automatically when a client books. You write the template once and the app handles delivery.',
+                  a: 'Yes. Many booking apps can send reminder messages for you. With Nelsy today, clients who book on your Nelsy page get an email confirmation right away; reminders and follow-ups are still sent by you, and these templates make that quick.',
                 },
               ].map((item, i) => (
                 <details key={i} className="group bg-white rounded-xl border border-[#F4C2C2]/30 p-4 cursor-pointer">
@@ -584,9 +584,9 @@ export default function AppointmentReminderTemplates() {
         {/* Footer CTA */}
         <section className="px-4 pb-20 max-w-2xl mx-auto text-center">
           <motion.div {...fadeUp()}>
-            <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mb-3">Never manually send a reminder again</h2>
+            <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mb-3">Let clients book and get confirmed on their own</h2>
             <p className="text-gray-600 mb-6">
-              Nelsy sends booking confirmations, reminders, and follow-ups automatically for every appointment. Set it up once.
+              Clients book and pay a deposit from your Nelsy page and get an email confirmation right away. 0% Nelsy commission on your bookings.
             </p>
             <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary" />
           </motion.div>

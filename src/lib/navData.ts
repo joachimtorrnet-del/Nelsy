@@ -42,21 +42,21 @@ export const FEATURES: NavFeature[] = [
   { slug: 'digital-products', title: 'Digital Products', desc: 'Upcoming Creator plan: sell guides and templates.',      icon: '📄', route: '/features/digital-products', category: 'sell', plan: 'creator' },
   { slug: 'memberships',      title: 'Memberships',      desc: 'Upcoming Creator plan: recurring memberships.',          icon: '💎', route: '/features/memberships',      category: 'sell', plan: 'creator' },
   { slug: 'coaching',         title: 'Coaching',         desc: 'Book paid sessions today; coaching tools in Creator plan.', icon: '👤', route: '/features/coaching',         category: 'sell' },
-  { slug: 'custom-products',  title: 'Custom Products',  desc: 'Sell personalized and custom offers.',                   icon: '✨', route: '/features/custom-products',  category: 'sell', status: 'coming-soon' },
+  { slug: 'custom-products',  title: 'Custom Products',  desc: 'Planned: sell made-to-order and custom offers.',       icon: '✨', route: '/features/custom-products',  category: 'sell' },
   // BOOK & GET PAID
   { slug: 'bookings',         title: 'Bookings',         desc: 'Let clients book services 24/7.',                        icon: '📅', route: '/features/bookings',         category: 'book' },
   { slug: 'deposits',         title: 'Deposits',         desc: 'Collect deposits before appointments.',                  icon: '💰', route: '/features/deposits',         category: 'book' },
   { slug: 'payments',         title: 'Payments',         desc: 'Get paid directly through Nelsy.',                      icon: '💳', route: '/features/payments',         category: 'book' },
-  { slug: 'gift-cards',       title: 'Gift Cards',       desc: 'Sell gift cards to clients.',                            icon: '🎁', route: '/features/gift-cards',       category: 'book', status: 'coming-soon' },
-  { slug: 'packages',         title: 'Packages',         desc: 'Bundle services and offers.',                            icon: '📦', route: '/features/packages',         category: 'book', status: 'coming-soon' },
+  { slug: 'gift-cards',       title: 'Gift Cards',       desc: 'Planned: gift cards clients buy online.',               icon: '🎁', route: '/features/gift-cards',       category: 'book' },
+  { slug: 'packages',         title: 'Packages',         desc: 'Planned: prepaid bundles of sessions.',                 icon: '📦', route: '/features/packages',         category: 'book' },
   // GROW
   { slug: 'link-in-bio',      title: 'Link in Bio',      desc: 'One branded page for your whole business.',              icon: '🔗', route: '/features/link-in-bio',      category: 'grow' },
   { slug: 'instagram-autodm', title: 'Instagram AutoDM', desc: 'Upcoming Creator plan: auto-reply to comments.',         icon: '💬', route: '/features/instagram-autodm', category: 'grow', plan: 'creator' },
   { slug: 'email',            title: 'Email & Newsletters', desc: 'Upcoming Creator plan: email your audience.',        icon: '📧', route: '/features/email-newsletters', category: 'grow', plan: 'creator' },
   { slug: 'audience-capture', title: 'Audience Capture', desc: 'Upcoming Creator plan: collect contacts you own.',       icon: '👥', route: '/features/audience-capture', category: 'grow', plan: 'creator' },
   // RUN YOUR BUSINESS
-  { slug: 'crm',              title: 'CRM & Clients',    desc: 'Manage your clients and relationships.',                 icon: '🗂️', route: '/features/crm',              category: 'run' },
-  { slug: 'analytics',        title: 'Analytics',        desc: 'Understand bookings, sales and performance.',            icon: '📊', route: '/features/analytics',        category: 'run' },
+  { slug: 'crm',              title: 'CRM & Clients',    desc: 'Every client, visit and booking in one list.',                 icon: '🗂️', route: '/features/crm',              category: 'run' },
+  { slug: 'analytics',        title: 'Analytics',        desc: 'Visits, bookings, revenue and traffic sources.',            icon: '📊', route: '/features/analytics',        category: 'run' },
 ];
 
 export const FEATURE_CATEGORIES: { key: FeatureCategory; label: string }[] = [
@@ -92,7 +92,7 @@ export const PERSONAS: NavPersona[] = [
 export const TOOLS: NavTool[] = [
   // Calculators
   { slug: 'nail-tech-pricing-calculator',        title: 'Beauty Service Price Calculator',     category: 'calculator', route: '/tools/nail-tech-pricing-calculator' },
-  { slug: 'profit-calculator',                   title: 'Beauty Business Profit Calculator',   category: 'calculator', route: '/tools/profit-calculator',           status: 'coming-soon' },
+  { slug: 'profit-calculator',                   title: 'Beauty Business Profit Calculator',   category: 'calculator', route: '/tools/profit-calculator',           },
   { slug: 'deposit-calculator',                  title: 'Deposit Calculator',                  category: 'calculator', route: '/tools/deposit-calculator' },
   { slug: 'no-show-cost-calculator',             title: 'No-Show Cost Calculator',             category: 'calculator', route: '/tools/no-show-cost-calculator' },
   { slug: 'booking-app-fee-calculator',          title: 'Booking App Fee Calculator',          category: 'calculator', route: '/tools/booking-app-fee-calculator' },
@@ -100,10 +100,10 @@ export const TOOLS: NavTool[] = [
   { slug: 'creator-rate-calculator',             title: 'Creator Rate Calculator',             category: 'calculator', route: '/tools/creator-rate-calculator', },
   // Generators
   { slug: 'nail-tech-cancellation-policy-generator', title: 'Cancellation Policy Generator',  category: 'generator',  route: '/tools/nail-tech-cancellation-policy-generator' },
-  { slug: 'beauty-business-name-generator',      title: 'Beauty Business Name Generator',      category: 'generator',  route: '/tools/beauty-business-name-generator', status: 'coming-soon' },
-  { slug: 'instagram-bio-generator',             title: 'Instagram Bio Generator',             category: 'generator',  route: '/tools/instagram-bio-generator',     status: 'coming-soon' },
-  { slug: 'beauty-caption-generator',            title: 'Beauty Caption Generator',            category: 'generator',  route: '/tools/beauty-caption-generator',    status: 'coming-soon' },
-  { slug: 'username-generator',                  title: 'Link-in-Bio Username Generator',      category: 'generator',  route: '/tools/username-generator',          status: 'coming-soon' },
+  { slug: 'beauty-business-name-generator',      title: 'Beauty Business Name Generator',      category: 'generator',  route: '/tools/beauty-business-name-generator', },
+  { slug: 'instagram-bio-generator',             title: 'Instagram Bio Generator',             category: 'generator',  route: '/tools/instagram-bio-generator',     },
+  { slug: 'beauty-caption-generator',            title: 'Beauty Caption Generator',            category: 'generator',  route: '/tools/beauty-caption-generator',    },
+  { slug: 'username-generator',                  title: 'Link-in-Bio Username Generator',      category: 'generator',  route: '/tools/username-generator',          },
   // Templates
   { slug: 'nail-tech-appointment-reminder-templates', title: 'Appointment Reminder Templates', category: 'template',   route: '/tools/nail-tech-appointment-reminder-templates' },
 ];

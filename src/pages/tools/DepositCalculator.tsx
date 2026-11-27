@@ -17,7 +17,10 @@ export default function DepositCalculator() {
   const rawDeposit = type === 'percent' ? (price * Math.min(value, 100)) / 100 : value;
   const deposit = Math.min(rawDeposit, price);
   const balance = price - deposit;
-  const fee = deposit > 0 ? (deposit * feePct) / 100 + feeFixed : 0;
+  const rawFee = deposit > 0 ? (deposit * Math.min(feePct, 100)) / 100 + feeFixed : 0;
+  // A fee can't take more than the deposit itself: flag it instead of showing a negative payout.
+  const feeEatsDeposit = deposit > 0 && rawFee >= deposit;
+  const fee = Math.min(rawFee, deposit);
   const net = deposit - fee;
   const depositShare = price > 0 ? (deposit / price) * 100 : 0;
 
@@ -54,7 +57,7 @@ export default function DepositCalculator() {
           suffix={type === 'percent' ? '%' : undefined}
         />
         <div className="grid grid-cols-2 gap-4">
-          <NumberField label="Card fee (%)" value={feePct} onChange={setFeePct} step={0.01} suffix="%" hint="From your payment provider" />
+          <NumberField label="Card fee (%)" value={feePct} onChange={setFeePct} step={0.01} max={100} suffix="%" hint="From your payment provider" />
           <NumberField label="Fixed fee per payment" value={feeFixed} onChange={setFeeFixed} step={0.01} prefix="$" hint="Per transaction" />
         </div>
       </div>
@@ -66,6 +69,11 @@ export default function DepositCalculator() {
         <ResultLine label="Card fee on the deposit" value={money(fee)} formula="deposit × fee % + fixed fee" />
         <ResultLine label="Net deposit you receive" value={money(net)} formula="deposit − card fee" />
         <ResultLine label="Deposit as a share of the price" value={`${depositShare.toFixed(1)}%`} />
+        {feeEatsDeposit && (
+          <p className="mt-4 rounded-xl bg-amber-50 border border-amber-200 p-3 text-xs text-amber-800 leading-relaxed">
+            The card fee is as large as the deposit, so you would keep nothing from it. Raise the deposit or check the fee figures.
+          </p>
+        )}
         <p className="text-xs text-gray-400 mt-4 leading-relaxed">
           Example values are pre-filled. The card fee figures are only an example: enter the rate from your own payment provider. The balance may also carry a card fee if the client pays it by card.
         </p>

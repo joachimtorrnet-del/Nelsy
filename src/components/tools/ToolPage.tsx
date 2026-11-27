@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import SEOMeta from '@/components/SEOMeta';
 import Breadcrumb from '@/components/Breadcrumb';
-import SeoCTA from '@/components/SeoCTA';
+import { trackSeoCTAClicked } from '@/lib/analytics';
+import { copyText } from '@/components/tools/toolWords';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
 import { TOOLS } from '@/lib/navData';
@@ -30,7 +31,10 @@ export function NumberField({
           max={max}
           step={step}
           value={Number.isFinite(value) ? value : 0}
-          onChange={(e) => onChange(Math.max(min, Number(e.target.value) || 0))}
+          onChange={(e) => {
+            const v = Math.max(min, Number(e.target.value) || 0);
+            onChange(max !== undefined ? Math.min(max, v) : v);
+          }}
           className="flex-1 px-3 py-2.5 text-sm font-medium text-gray-900 outline-none bg-white min-w-0"
         />
         {suffix && <span className="px-3 py-2.5 bg-gray-50 text-gray-500 text-sm font-medium border-l border-gray-200 select-none">{suffix}</span>}
@@ -50,6 +54,93 @@ export function ResultLine({ label, value, formula, highlight = false }: { label
         {value}
       </span>
     </div>
+  );
+}
+
+export function CopyButton({ text, label = 'Copy', className = '' }: { text: string; label?: string; className?: string }) {
+  const [state, setState] = useState<'idle' | 'copied' | 'failed'>('idle');
+  async function handle() {
+    const ok = await copyText(text);
+    setState(ok ? 'copied' : 'failed');
+    window.setTimeout(() => setState('idle'), 2000);
+  }
+  return (
+    <button
+      type="button"
+      onClick={() => void handle()}
+      data-copy={text}
+      className={`flex-shrink-0 rounded-lg border px-3 py-1.5 text-xs font-bold transition ${
+        state === 'copied' ? 'border-green-300 bg-green-50 text-green-700' : 'border-gray-200 bg-white text-gray-700 hover:border-pink-300'
+      } ${className}`}
+      aria-live="polite"
+    >
+      {state === 'copied' ? 'Copied' : state === 'failed' ? 'Select and copy' : label}
+    </button>
+  );
+}
+
+export function TextField({
+  label, value, onChange, placeholder, hint, maxLength = 40,
+}: {
+  label: string; value: string; onChange: (v: string) => void; placeholder?: string; hint?: string; maxLength?: number;
+}) {
+  return (
+    <div>
+      <label className="block text-sm font-semibold text-gray-700 mb-1">{label}</label>
+      {hint && <p className="text-xs text-gray-400 mb-2">{hint}</p>}
+      <input
+        type="text"
+        value={value}
+        maxLength={maxLength}
+        placeholder={placeholder}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-xl border-2 border-gray-200 focus:border-pink-400 px-3 py-2.5 text-sm font-medium text-gray-900 outline-none bg-white transition-colors"
+      />
+    </div>
+  );
+}
+
+export function ChoiceField<T extends string>({
+  label, value, onChange, options,
+}: {
+  label: string; value: T; onChange: (v: T) => void; options: { value: T; label: string }[];
+}) {
+  return (
+    <fieldset>
+      <legend className="block text-sm font-semibold text-gray-700 mb-2">{label}</legend>
+      <div className="flex flex-wrap gap-2">
+        {options.map((o) => (
+          <button
+            key={o.value}
+            type="button"
+            onClick={() => onChange(o.value)}
+            aria-pressed={value === o.value}
+            className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
+              value === o.value ? 'border-transparent text-white' : 'border-gray-200 bg-white text-gray-600 hover:border-pink-300'
+            }`}
+            style={value === o.value ? { backgroundColor: PINK } : undefined}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </fieldset>
+  );
+}
+
+export const SIGNUP_HREF = '/onboarding?plan=independent_monthly';
+
+function SignupCTA({ label }: { label: string }) {
+  const { pathname } = useLocation();
+  return (
+    <Link
+      to={SIGNUP_HREF}
+      onClick={() => trackSeoCTAClicked(pathname, 'footer_cta', label)}
+      className="inline-block px-10 py-4 bg-white font-bold rounded-2xl hover:bg-gray-50 transition active:scale-95 shadow-2xl text-base sm:text-lg"
+      style={{ color: PINK }}
+    >
+      {label}
+    </Link>
   );
 }
 
@@ -165,7 +256,7 @@ export default function ToolPage(p: ToolPageProps) {
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">{p.cta.title}</h2>
             <p className="text-base sm:text-lg text-white/80 mb-8 max-w-lg mx-auto">{p.cta.text}</p>
-            <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />
+            <SignupCTA label="Start your 14-day free trial →" />
             <p className="mt-5 text-xs text-white/60">$0 today · Cancel anytime · 0% Nelsy commission</p>
           </div>
         </section>

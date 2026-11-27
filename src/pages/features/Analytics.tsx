@@ -4,75 +4,76 @@ import FeaturePage from './FeaturePage';
 export default function AnalyticsPage() {
   return (
     <FeaturePage
-      title="Understand What's Working in Your Beauty Business | Nelsy"
-      metaDescription="See your booking trends, top services, and revenue patterns in one dashboard. Nelsy Analytics helps beauty professionals make smarter decisions without spreadsheets."
+      title="Analytics for Beauty Professionals | Nelsy"
+      metaDescription="See page visits, bookings and revenue for the last 7, 30 or 90 days, where your visitors come from, and how this period compares with the last one."
       canonical="/features/analytics"
       h1="Understand what's working in your beauty business"
-      heroDescription="Running a beauty business without data is guesswork. Nelsy shows you which services are most popular, when your busiest periods are, and how your income is trending, so you can make decisions based on facts."
+      heroDescription="Running a beauty business without numbers is guesswork. Nelsy shows how many people visit your page, where they come from, how many book and what you earn, so you can see what is working."
       icon={BarChart3}
       benefits={[
         {
-          title: 'See your business clearly',
-          desc: 'Revenue, bookings, and client activity are displayed in a simple dashboard. No spreadsheets, no manual counting.',
+          title: 'Visits, bookings and revenue',
+          desc: 'See how many people visited your page and how many booked over the last 7, 30 or 90 days, next to your revenue for the month.',
         },
         {
-          title: 'Know your best services',
-          desc: 'Find out which services you book most, which take the most time, and which generate the most income. Prioritise what works.',
+          title: 'Where clients come from',
+          desc: 'See how many visits came from Instagram, TikTok or a direct link, so you know which channel sends people to your page.',
         },
         {
-          title: 'Plan ahead',
-          desc: 'Spot your slow weeks before they arrive. Use that insight to run a promotion, adjust your availability, or plan your own schedule.',
+          title: 'Revenue day by day',
+          desc: 'A daily chart shows your booked revenue over the period, so busy and quiet days stand out.',
         },
         {
-          title: 'Track growth over time',
-          desc: "Compare this month to last month. See whether your business is growing, and understand what is driving the change.",
+          title: 'Compared with the last period',
+          desc: 'Your dashboard home compares visits, bookings and revenue with the previous period of the same length.',
         },
       ]}
       steps={[
         {
           step: '1',
-          title: 'Book and take payments through Nelsy',
-          desc: 'Every booking and payment automatically adds to your analytics. There is nothing to set up separately.',
+          title: 'Share your page and take bookings',
+          desc: 'Every visit to your page and every booking adds to your numbers. There is nothing to set up.',
         },
         {
           step: '2',
-          title: 'Check your dashboard',
-          desc: 'Open your Nelsy dashboard and see your stats at a glance: bookings, revenue, new clients, and more.',
+          title: 'Open Analytics',
+          desc: 'Pick 7, 30 or 90 days to see visits, bookings, revenue and traffic sources.',
         },
         {
           step: '3',
-          title: 'Use the insight to make decisions',
-          desc: "If Tuesday afternoons are always empty, fill them. If gel overlays outsell everything else, lean in. The data tells you what to do next.",
+          title: 'Act on what you see',
+          desc: 'If Instagram sends most of your visits, post there more. If visits are high but bookings are low, look at your services and prices.',
         },
       ]}
       useCases={[
-        'Nail techs who want to understand which services are most profitable per hour',
-        'Beauty pros planning a price increase and wanting data to support the decision',
-        'Salon owners tracking performance across services and time periods',
-        'Lash artists who want to see seasonal trends and plan their marketing accordingly',
-        'Anyone who wants to run their beauty business like a business, not a hustle',
+        'Nail techs who want to know if Instagram or TikTok brings more visitors',
+        'Beauty pros checking whether this month was better than the last',
+        'Pros planning a price increase who want to watch bookings before and after',
+        'Lash artists who want to see busy and quiet periods',
+        'Anyone who wants to run their beauty business with real numbers',
       ]}
       faq={[
         {
-          q: 'How far back does the analytics data go?',
-          a: 'Your data accumulates from the day you start using Nelsy. The longer you use it, the more valuable the trends become.',
+          q: 'How far back does the data go?',
+          a: 'Your numbers start from the day you start using Nelsy. The Analytics tab shows the last 7, 30 or 90 days.',
         },
         {
-          q: 'Do I need to do anything to set up analytics?',
-          a: 'No. Analytics are built in. Every booking and payment you process through Nelsy is tracked automatically.',
+          q: 'Do I need to set anything up?',
+          a: 'No. Visits to your Nelsy page and bookings made through it are counted automatically.',
         },
         {
-          q: 'Can I see data for specific services?',
-          a: 'Yes. You can filter your analytics by service type to see how individual offerings are performing.',
+          q: 'Can I see numbers for each service?',
+          a: 'Not yet. Analytics shows totals for your page: visits, bookings, revenue and traffic sources.',
         },
         {
           q: 'Can I export my data?',
-          a: 'You can view and export key reports from your dashboard if you want to use the data elsewhere.',
+          a: 'You can export your transactions from the Income tab and your client list from the Customers tab, both as CSV files.',
         },
       ]}
       relatedFeatures={[
         { slug: 'crm', title: 'CRM & Clients', route: '/features/crm' },
-        { slug: 'bookings', title: 'Bookings', route: '/features/bookings' },
+        { slug: 'payments', title: 'Payments', route: '/features/payments' },
+        { slug: 'link-in-bio', title: 'Link in Bio', route: '/features/link-in-bio' },
       ]}
     />
   );
