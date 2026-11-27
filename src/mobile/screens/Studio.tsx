@@ -123,8 +123,8 @@ export default function Studio() {
           <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-[#F52B8C]">
             <ShoppingBag size={24} />
           </div>
-          <p className="mt-3 text-[16px] font-bold">Products are coming soon</p>
-          <p className="mt-1 text-[14px] text-gray-500">Digital products for your clients are on the way. Bookings stay the focus for now.</p>
+          <p className="mt-3 text-[16px] font-bold">Sell products with the Creator plan</p>
+          <p className="mt-1 text-[14px] text-gray-500">Guides, courses and coaching live on the Creator plan. Join the waitlist at hello@getnelsy.com.</p>
         </div>
       )}
 
