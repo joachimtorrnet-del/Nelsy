@@ -3,24 +3,19 @@ import { Link } from 'react-router-dom';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
+import PlanPicker from '@/components/landing/PlanPicker';
+import { TRIAL_DAYS, planKey } from '@/lib/plans';
+import { track, trackSeoCTAClicked } from '@/lib/analytics';
 
 const PINK = '#F52B8C';
 
-// Confirmed from Stripe config / OnboardingV2 — both price IDs exist
-const MONTHLY_PRICE = 29;
-const YEARLY_PRICE_PER_MONTH = 25;
-const YEARLY_TOTAL = 300;
-const YEARLY_SAVINGS = (MONTHLY_PRICE - YEARLY_PRICE_PER_MONTH) * 12; // 48
-
-// Features with coming-soon flags from navData.ts
+// Live feature pages, linked from the pricing page for internal linking.
 const PLAN_FEATURES = {
   book: [
     { label: 'Online bookings', route: '/features/bookings' },
     { label: 'Deposits', route: '/features/deposits' },
     { label: 'Online payments', route: '/features/payments' },
     { label: 'Booking policies & cancellation', route: null },
-    { label: 'Gift cards', route: null, soon: true },
-    { label: 'Packages', route: null, soon: true },
   ],
   grow: [
     { label: 'Link in bio', route: '/features/link-in-bio' },
@@ -67,7 +62,7 @@ const COMPARISON_ROWS = [
 const FAQ_ITEMS = [
   {
     q: 'How does the 14-day free trial work?',
-    a: 'When you sign up, you get 14 days of full access to Nelsy Pro at no cost. Your card is saved during signup (so you can go live immediately), but you are not charged until the trial ends.',
+    a: 'When you sign up for Independent, you get 14 days of full access at no cost. Your card is saved during signup (so you can go live immediately), but you are not charged until the trial ends.',
   },
   {
     q: 'Do I need a credit card to start?',
@@ -102,10 +97,9 @@ const FAQ_ITEMS = [
 interface FeatureRowProps {
   label: string;
   route: string | null;
-  soon?: boolean;
 }
 
-function FeatureRow({ label, route, soon }: FeatureRowProps) {
+function FeatureRow({ label, route }: FeatureRowProps) {
   const inner = (
     <span className={route ? 'underline underline-offset-2 decoration-[#F4C2C2]' : ''}>
       {label}
@@ -118,14 +112,6 @@ function FeatureRow({ label, route, soon }: FeatureRowProps) {
         <path d="M5 8.5l2 2 4-4" stroke={PINK} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
       {route ? <Link to={route} className="hover:text-[#F52B8C] transition-colors">{inner}</Link> : inner}
-      {soon && (
-        <span
-          className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full uppercase tracking-wide"
-          style={{ background: `${PINK}12`, color: PINK }}
-        >
-          Soon
-        </span>
-      )}
     </li>
   );
 }
@@ -158,16 +144,12 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function Pricing() {
-  const [billing, setBilling] = useState<'monthly' | 'yearly'>('monthly');
-
-  const displayPrice = billing === 'monthly' ? MONTHLY_PRICE : YEARLY_PRICE_PER_MONTH;
-
   const jsonLd = [
     {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
-      name: 'Pricing — Nelsy',
-      description: 'One plan. Everything you need to take bookings, collect deposits, and grow your beauty business. Start free for 14 days.',
+      name: 'Nelsy pricing',
+      description: 'Three plans for beauty pros. Start with Independent: bookings, deposits and online payments, free for 14 days.',
       url: 'https://getnelsy.com/pricing',
     },
     {
@@ -185,7 +167,7 @@ export default function Pricing() {
     <>
       <SEOMeta
         title="Pricing: $29/month, 0% Booking Commission"
-        description="Nelsy pricing: one plan at $29/month or $25/month billed yearly, 0% booking commission, deposits and online payments included. Free for 14 days."
+        description="Nelsy pricing: Independent is $29/month or $25/month billed yearly, with 0% Nelsy commission, deposits and online payments. Free for 14 days."
         canonical="/pricing"
         jsonLd={jsonLd}
       />
@@ -200,14 +182,14 @@ export default function Pricing() {
               Simple pricing for beauty professionals.
             </h1>
             <p className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-8">
-              One plan. Everything you need to run and grow your beauty business.
+              Three plans that grow with your beauty business. Start with Independent today.
             </p>
             <Link
-              to="/onboarding"
+              to={`/onboarding?plan=${planKey('independent', 'monthly')}`}
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
               style={{ background: PINK }}
             >
-              Start your 14-day free trial
+              Start your {TRIAL_DAYS}-day free trial
             </Link>
             <p className="mt-3 text-[13px] text-gray-400">
               $0 today · Cancel anytime · 0% Nelsy booking commission
@@ -215,71 +197,36 @@ export default function Pricing() {
           </div>
         </header>
 
-        {/* 2. Pricing card */}
-        <section className="max-w-lg mx-auto px-4 sm:px-6 py-14">
-          {/* Billing toggle */}
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <button
-              onClick={() => setBilling('monthly')}
-              className={`px-4 py-1.5 rounded-full text-[13px] font-semibold transition ${billing === 'monthly' ? 'text-white' : 'text-gray-500 hover:text-[#1A1A1A]'}`}
-              style={billing === 'monthly' ? { background: PINK } : {}}
-            >
-              Monthly
-            </button>
-            <button
-              onClick={() => setBilling('yearly')}
-              className={`px-4 py-1.5 rounded-full text-[13px] font-semibold transition ${billing === 'yearly' ? 'text-white' : 'text-gray-500 hover:text-[#1A1A1A]'}`}
-              style={billing === 'yearly' ? { background: PINK } : {}}
-            >
-              Yearly
-              <span
-                className="ml-1.5 text-[10px] font-bold px-1.5 py-0.5 rounded-full"
-                style={{ background: billing === 'yearly' ? 'rgba(255,255,255,0.25)' : `${PINK}15`, color: billing === 'yearly' ? 'white' : PINK }}
-              >
-                Save ${YEARLY_SAVINGS}
-              </span>
-            </button>
+        {/* 2. Plans (same picker as the landing page) */}
+        <section className="bg-white border-b border-[#F4C2C2]/30 py-[72px] lg:py-28">
+          <div className="max-w-[1180px] mx-auto px-6 sm:px-8 lg:px-12">
+          <PlanPicker
+            title="Pick the plan that fits your business"
+            defaultInterval="monthly"
+            onStartTrial={(key) => {
+              track('pricing_cta_clicked', { plan: key, action: 'start_trial' });
+              trackSeoCTAClicked('/pricing', 'inline', 'Start my free trial');
+            }}
+            onWaitlist={(tier, interval) => {
+              track('pricing_cta_clicked', { plan: planKey(tier, interval), action: 'waitlist' });
+            }}
+          />
           </div>
+        </section>
 
-          {/* Card */}
+        {/* 3. Feature pages (internal links) */}
+        <section className="max-w-4xl mx-auto px-4 sm:px-6 py-14">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-2 text-center">
+            Explore the features
+          </h2>
+          <p className="text-gray-400 text-center text-sm mb-10">See how each part of Nelsy works.</p>
           <div className="bg-white rounded-2xl border border-[#F4C2C2]/50 shadow-sm p-8">
-            <div className="flex items-start justify-between mb-1">
-              <div>
-                <h2 className="font-serif text-2xl font-bold text-[#1A1A1A]">Nelsy Pro</h2>
-                <p className="text-[13px] text-gray-400 mt-0.5">Everything included</p>
-              </div>
-              <span
-                className="text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide"
-                style={{ background: `${PINK}12`, color: PINK }}
-              >
-                14-day free trial
-              </span>
-            </div>
-
-            <div className="mt-6 mb-1">
-              <span className="font-serif text-5xl font-bold text-[#1A1A1A]">${displayPrice}</span>
-              <span className="text-gray-400 text-[15px] ml-1">/month</span>
-            </div>
-            <p className="text-[12px] text-gray-400 mb-1">
-              {billing === 'yearly' ? `Billed as $${YEARLY_TOTAL}/year` : 'Billed monthly'}
-            </p>
-            <p className="text-[12px] text-gray-400 mb-6">after 14-day free trial</p>
-
-            <Link
-              to="/onboarding"
-              className="block w-full text-center px-6 py-3 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90 mb-8"
-              style={{ background: PINK }}
-            >
-              Start free trial
-            </Link>
-
-            {/* Feature groups */}
-            <div className="space-y-7">
+            <div className="grid gap-8 sm:grid-cols-3">
               <div>
                 <p className="text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-3">Book &amp; Get Paid</p>
                 <ul className="space-y-2.5">
                   {PLAN_FEATURES.book.map(f => (
-                    <FeatureRow key={f.label} label={f.label} route={f.route} soon={f.soon} />
+                    <FeatureRow key={f.label} label={f.label} route={f.route} />
                   ))}
                 </ul>
               </div>
