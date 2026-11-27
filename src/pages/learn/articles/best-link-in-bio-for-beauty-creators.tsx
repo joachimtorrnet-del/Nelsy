@@ -26,7 +26,7 @@ registerArticle({
       { label: 'Linktree', text: 'Best for creators who mainly need a clean list of links, with optional simple bookings.' },
       { label: 'Beacons', text: 'Best for creators focused on brand deals, a media kit and a storefront.' },
       { label: 'Stan', text: 'Best for creators selling courses, downloads and 1:1 calls to an online audience.' },
-      { label: 'Nelsy', text: 'Best for beauty pros who sell products and also book in-person appointments with deposits.' },
+      { label: 'Nelsy', text: 'Best for beauty pros who book in-person appointments with deposits; product selling is part of the upcoming Creator plan.' },
     ],
   },
   toc: [
@@ -71,10 +71,10 @@ registerArticle({
           rows={[
             ['Free plan', 'Yes', 'Not verified', 'No', 'No (14-day trial)'],
             ['Entry paid plan', 'Starter (price not published on its pricing page)', 'Prices not shown on a public page we could check', 'Creator $29/month or $25/month yearly', '$29/month or $25/month yearly'],
-            ['Plan with 0% platform fee', 'Not stated; Linktree takes a plan-dependent percentage on your own products', 'Not verified', 'All plans', 'All plans (0% Nelsy commission)'],
-            ['Selling on lower plans', 'Paid products need Pro or Premium', 'Not verified', 'All plans, 0% fee', 'All plans, 0% Nelsy commission'],
+            ['Plan with 0% platform fee', 'Not stated; Linktree takes a plan-dependent percentage on your own products', 'Not verified', 'All plans', 'Independent plan (0% Nelsy commission on bookings)'],
+            ['Selling on lower plans', 'Paid products need Pro or Premium', 'Not verified', 'All plans, 0% fee', 'Products: Creator plan (waitlist)'],
             ['Bookings', 'Free bookings on Free and Starter; paid bookings on Pro and Premium (certain countries)', 'Not a booking-first tool', '1:1 bookings', 'Service bookings with pay on arrival, deposit or full payment'],
-            ['Courses', 'Paid digital products and courses on Pro and Premium', 'Storefront for digital products', 'Yes', 'Yes'],
+            ['Courses', 'Paid digital products and courses on Pro and Premium', 'Storefront for digital products', 'Yes', 'Creator plan (waitlist)'],
             ['Free trial on paid plans', 'Not published', 'Not verified', 'Not confirmed on Stan\'s pages', '14 days'],
           ]}
         />
@@ -131,13 +131,13 @@ registerArticle({
       <section id="nelsy">
         <h2 className="font-serif text-2xl font-bold mb-4">Nelsy</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          Nelsy is a booking page and link-in-bio store for independent beauty pros and beauty creators. Clients book your services online, and you choose per service whether they pay on arrival, pay a deposit or pay in full upfront. You can record cash or card paid at the studio. On the same page you can sell courses, digital products, coaching and memberships. It costs $29/month or $25/month billed yearly, with a 14-day free trial and 0% Nelsy commission (standard Stripe processing fees apply).
+          Nelsy is a booking page for the link in bio of independent beauty pros and beauty creators. Clients book your services online, and you choose per service whether they pay on arrival, pay a deposit or pay in full upfront. You can record cash or card paid at the studio. Selling courses, digital products and coaching on the same page is part of the upcoming Creator plan (<a href="mailto:hello@getnelsy.com?subject=Creator%20waitlist" className={ext}>join the waitlist</a>). The Independent plan costs $29/month or $25/month billed yearly, with a 14-day free trial and 0% Nelsy commission (standard Stripe processing fees apply).
         </p>
         <p className="text-gray-700 mb-4"><strong>Best for:</strong> makeup artists, lash artists, nail techs and other pros who create content and also take clients in person.</p>
         <ArticleComparison
           items={[
-            { label: 'Pros', pros: ['Bookings and products on one page', 'Payment mode set per service', '0% Nelsy commission'], cons: [] },
-            { label: 'Cons', pros: [], cons: ['No free plan', 'No media kit or brand deal tools', 'More than you need if you only list links'] },
+            { label: 'Pros', pros: ['Service bookings with deposits from your bio', 'Payment mode set per service', '0% Nelsy commission'], cons: [] },
+            { label: 'Cons', pros: [], cons: ['No free plan', 'No product or course selling yet (upcoming Creator plan)', 'No media kit or brand deal tools'] },
           ]}
         />
       </section>
@@ -148,7 +148,7 @@ registerArticle({
           <li><strong>Just links, low budget:</strong> Linktree Free or Starter.</li>
           <li><strong>Brand deals first:</strong> Beacons, after checking the seller fee on the plan you pick.</li>
           <li><strong>Online products only:</strong> Stan.</li>
-          <li><strong>Products plus clients in your chair:</strong> Nelsy, so bookings, deposits and products live behind one link.</li>
+          <li><strong>Clients in your chair:</strong> Nelsy for bookings and deposits. If you also sell products today, keep them on Stan or another store until Nelsy&apos;s Creator plan opens.</li>
         </ul>
         <ArticleTip>Whatever you choose, do the maths on your own numbers: a percentage fee on sales can cost more than a monthly plan once you sell regularly.</ArticleTip>
         <p className="text-gray-700 mt-4 leading-relaxed">

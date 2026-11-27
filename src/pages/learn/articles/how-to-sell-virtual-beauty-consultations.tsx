@@ -193,7 +193,7 @@ registerArticle({
 
       <section id="nelsy">
         <h2 className={h2}>Where Nelsy fits</h2>
-        <p className={p}>You can list a virtual session as a regular service on your Nelsy booking page today: a name, a length, a price and full payment at booking, with automatic reminders, on the Independent plan ($29/month or $25/month billed yearly, 14-day free trial, 0% Nelsy commission; Stripe processing fees apply). Send the video link in your confirmation message. See <Link to="/features/bookings" className={a}>bookings</Link> and <Link to="/features/payments" className={a}>payments</Link>.</p>
+        <p className={p}>You can add a virtual session as a service on your Nelsy booking page today: a name, a description that says it happens by video, a length, a price and full payment at booking, on the Independent plan ($29/month or $25/month billed yearly, 14-day free trial, 0% Nelsy commission; Stripe processing fees apply). Nelsy services do not have a video-link field yet, and the booking confirmation does not include one, so send the call link yourself to the email or phone number the client gives when booking. See <Link to="/features/bookings" className={a}>bookings</Link> and <Link to="/features/payments" className={a}>payments</Link>.</p>
         <p className={p}>Dedicated coaching tools, along with selling guides and courses, are part of the upcoming Creator plan; <a href={WAITLIST} className={a}>join the waitlist</a> to hear when it opens.</p>
       </section>
     </div>

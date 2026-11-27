@@ -36,10 +36,10 @@ export type NavTool = {
 
 export const FEATURES: NavFeature[] = [
   // SELL
-  { slug: 'courses',          title: 'Courses',          desc: 'Sell online courses from your Nelsy page.',              icon: '🎓', route: '/features/courses',          category: 'sell' },
-  { slug: 'digital-products', title: 'Digital Products', desc: 'Sell guides, templates and downloadable files.',         icon: '📄', route: '/features/digital-products', category: 'sell' },
-  { slug: 'memberships',      title: 'Memberships',      desc: 'Create recurring paid memberships.',                     icon: '💎', route: '/features/memberships',      category: 'sell' },
-  { slug: 'coaching',         title: 'Coaching',         desc: 'Sell 1:1 sessions and consultations.',                   icon: '👤', route: '/features/coaching',         category: 'sell' },
+  { slug: 'courses',          title: 'Courses',          desc: 'Upcoming Creator plan: sell online courses.',            icon: '🎓', route: '/features/courses',          category: 'sell' },
+  { slug: 'digital-products', title: 'Digital Products', desc: 'Upcoming Creator plan: sell guides and templates.',      icon: '📄', route: '/features/digital-products', category: 'sell' },
+  { slug: 'memberships',      title: 'Memberships',      desc: 'Upcoming Creator plan: recurring memberships.',          icon: '💎', route: '/features/memberships',      category: 'sell' },
+  { slug: 'coaching',         title: 'Coaching',         desc: 'Book paid sessions today; coaching tools in Creator plan.', icon: '👤', route: '/features/coaching',         category: 'sell' },
   { slug: 'custom-products',  title: 'Custom Products',  desc: 'Sell personalized and custom offers.',                   icon: '✨', route: '/features/custom-products',  category: 'sell', status: 'coming-soon' },
   // BOOK & GET PAID
   { slug: 'bookings',         title: 'Bookings',         desc: 'Let clients book services 24/7.',                        icon: '📅', route: '/features/bookings',         category: 'book' },
@@ -49,9 +49,9 @@ export const FEATURES: NavFeature[] = [
   { slug: 'packages',         title: 'Packages',         desc: 'Bundle services and offers.',                            icon: '📦', route: '/features/packages',         category: 'book', status: 'coming-soon' },
   // GROW
   { slug: 'link-in-bio',      title: 'Link in Bio',      desc: 'One branded page for your whole business.',              icon: '🔗', route: '/features/link-in-bio',      category: 'grow' },
-  { slug: 'instagram-autodm', title: 'Instagram AutoDM', desc: 'Turn comments and DMs into bookings and sales.',         icon: '💬', route: '/features/instagram-autodm', category: 'grow' },
-  { slug: 'email',            title: 'Email & Newsletters', desc: 'Capture and message your audience.',                  icon: '📧', route: '/features/email-newsletters', category: 'grow' },
-  { slug: 'audience-capture', title: 'Audience Capture', desc: 'Own your audience beyond social media.',                 icon: '👥', route: '/features/audience-capture', category: 'grow' },
+  { slug: 'instagram-autodm', title: 'Instagram AutoDM', desc: 'Upcoming Creator plan: auto-reply to comments.',         icon: '💬', route: '/features/instagram-autodm', category: 'grow' },
+  { slug: 'email',            title: 'Email & Newsletters', desc: 'Upcoming Creator plan: email your audience.',        icon: '📧', route: '/features/email-newsletters', category: 'grow' },
+  { slug: 'audience-capture', title: 'Audience Capture', desc: 'Upcoming Creator plan: collect contacts you own.',       icon: '👥', route: '/features/audience-capture', category: 'grow' },
   // RUN YOUR BUSINESS
   { slug: 'crm',              title: 'CRM & Clients',    desc: 'Manage your clients and relationships.',                 icon: '🗂️', route: '/features/crm',              category: 'run' },
   { slug: 'analytics',        title: 'Analytics',        desc: 'Understand bookings, sales and performance.',            icon: '📊', route: '/features/analytics',        category: 'run' },
@@ -75,7 +75,7 @@ export const NAV_FEATURE_CATEGORIES: { key: FeatureCategory; label: string }[] =
 
 export const PERSONAS: NavPersona[] = [
   { slug: 'beauty-creators',  title: 'Beauty Creators',  desc: 'The all-in-one business platform for beauty creators.', icon: '✨', route: '/for/beauty-creators',  featured: true },
-  { slug: 'nail-techs',       title: 'Nail Techs',       desc: 'Take bookings, sell courses and grow your clientele.',   icon: '💅', route: '/for/nail-techs' },
+  { slug: 'nail-techs',       title: 'Nail Techs',       desc: 'Take bookings and deposits and grow your clientele.',  icon: '💅', route: '/for/nail-techs' },
   { slug: 'lash-artists',     title: 'Lash Artists',     desc: 'Automate bookings, deposits and client follow-ups.',     icon: '👁️', route: '/for/lash-artists' },
   { slug: 'makeup-artists',   title: 'Makeup Artists',   desc: 'Sell packages, take deposits and grow your brand.',      icon: '💄', route: '/for/makeup-artists' },
   { slug: 'hairstylists',     title: 'Hairstylists',     desc: 'Manage your chair, sell courses and build your list.',   icon: '✂️', route: '/for/hairstylists' },
@@ -150,7 +150,7 @@ export const USE_CASE_PERSONAS: UseCasePersona[] = [
     slug: 'beauty-creators',
     group: 'segment',
     title: 'Beauty Creators',
-    subtitle: 'Monetize your audience with bookings, products, and content.',
+    subtitle: 'Bookings today; products and courses with the Creator plan.',
     icon: Sparkles,
     route: '/use-cases/beauty-creators',
     live: true,

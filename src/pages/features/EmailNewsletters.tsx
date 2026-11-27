@@ -4,11 +4,12 @@ import FeaturePage from './FeaturePage';
 export default function EmailNewslettersPage() {
   return (
     <FeaturePage
-      title="Build and Message Your Beauty Audience | Nelsy"
-      metaDescription="Collect email addresses and message your clients directly. Send promotions, seasonal offers, and rebooking nudges without relying on Instagram's algorithm."
+      upcomingPlan="Creator"
+      title="Email Marketing for Beauty Pros: Nelsy Creator Plan"
+      metaDescription="Email marketing is part of the upcoming Nelsy Creator plan: message your clients without relying on Instagram. Join the waitlist; start with bookings today."
       canonical="/features/email-newsletters"
       h1="Build and message your beauty audience"
-      heroDescription="Instagram can limit your reach on any given day. Email does not. Build your client list and send messages that land directly in their inbox: no algorithm in the way."
+      heroDescription="Email marketing is part of the upcoming Nelsy Creator plan. Instagram can limit your reach on any given day; email lands directly in your clients' inbox. Join the waitlist to hear when it opens."
       icon={Mail}
       benefits={[
         {
@@ -17,7 +18,7 @@ export default function EmailNewslettersPage() {
         },
         {
           title: 'Fill your appointment book',
-          desc: 'Send seasonal promotions, last-minute availability alerts, or rebooking reminders and watch clients respond.',
+          desc: 'Send seasonal promotions, last-minute availability alerts or rebooking nudges to people who already know your work.',
         },
         {
           title: 'Build something you own',
@@ -32,7 +33,7 @@ export default function EmailNewslettersPage() {
         {
           step: '1',
           title: 'Collect email addresses',
-          desc: 'Use your Nelsy booking flow, link in bio, or audience capture tools to build your list. Every new client can be added automatically.',
+          desc: 'Use your Nelsy booking flow and link in bio to build your list, with clear consent from each contact.',
         },
         {
           step: '2',
@@ -54,20 +55,16 @@ export default function EmailNewslettersPage() {
       ]}
       faq={[
         {
-          q: 'How do I grow my email list?',
-          a: 'Your Nelsy booking flow captures client emails automatically. You can also add a signup prompt to your link in bio page.',
+          q: 'Can I send email campaigns from Nelsy today?',
+          a: 'Not yet. Email marketing is part of the upcoming Creator plan. Today, on the Independent plan, Nelsy handles bookings, deposits, payments and automatic appointment reminders. Join the waitlist at hello@getnelsy.com.',
         },
         {
-          q: 'Can I segment my list?',
-          a: 'Yes. You can send to all subscribers or target specific groups, like clients who have not booked in three months.',
+          q: 'How do I grow my email list in the meantime?',
+          a: 'Offer something useful in exchange for an email, such as a checklist or an availability alert, and link it from your bio. See our guide on building an email list as a beauty creator.',
         },
         {
           q: 'What kind of emails work well for beauty businesses?',
           a: 'Rebooking reminders, seasonal offers, new service announcements, and availability alerts tend to perform well. Short and personal beats long and polished.',
-        },
-        {
-          q: 'Does Nelsy handle unsubscribes?',
-          a: 'Yes. Every email includes an unsubscribe link and Nelsy handles opt-outs automatically.',
         },
       ]}
       relatedFeatures={[
