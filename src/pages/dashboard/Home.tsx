@@ -33,6 +33,7 @@ interface Service {
   card_style?: 'button' | 'callout' | 'preview' | null;
   card_subtitle?: string | null;
   card_cta_text?: string | null;
+  location_type?: 'in_person' | 'online' | null;
 }
 
 type Range = '7d' | '30d' | '90d';
@@ -442,7 +443,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                             <p className="font-semibold text-sm text-[#1A1A1A] flex-shrink-0">{fmt(Number(b.price_total ?? 0), currency)}</p>
                           </div>
                           <div className="flex items-center justify-between gap-2 mt-0.5">
-                            <p className="text-xs text-gray-500 truncate">{servicesMap.get(b.service_id ?? '')?.name ?? 'Service'} · {when}</p>
+                            <p className="text-xs text-gray-500 truncate">{servicesMap.get(b.service_id ?? '')?.name ?? 'Service'}{servicesMap.get(b.service_id ?? '')?.location_type === 'online' ? ' · Video call' : ''} · {when}</p>
                             <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium border flex-shrink-0 ${cfg.cls}`}>{cfg.label}</span>
                           </div>
                         </div>

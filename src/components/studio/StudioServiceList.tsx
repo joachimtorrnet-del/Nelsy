@@ -5,6 +5,7 @@ import type { Service } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { useMoney } from '@/lib/currency';
 import { useBookingStore } from '@/store/bookingStore';
+import { VideoCallBadge } from '@/components/studio/VideoCallBadge';
 
 interface CardProps {
   service: Service;
@@ -79,6 +80,7 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
           {service.duration} min
           <span style={{ margin: '0 5px', opacity: 0.35 }}>|</span>
           <span style={{ fontWeight: 700, color: theme.textPrimary }}>{formatCurrency(service.price)}</span>
+          {service.location_type === 'online' && <span style={{ marginLeft: 6 }}><VideoCallBadge color={theme.textPrimary} background="rgba(128,128,128,0.14)" /></span>}
         </p>
       </div>
 

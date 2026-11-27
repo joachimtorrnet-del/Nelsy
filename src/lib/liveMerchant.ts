@@ -37,6 +37,7 @@ interface ServiceLike {
   card_cta_text?: string | null;
   payment_mode?: 'on_arrival' | 'deposit' | 'full' | null;
   on_arrival_methods?: ('cash' | 'card')[] | null;
+  location_type?: 'in_person' | 'online' | null;
 }
 
 /** The pro's studio as clients would see it, built from dashboard data (draft-safe: no fetch). */
@@ -82,6 +83,7 @@ export function buildLiveMerchant(
         card_cta_text: s.card_cta_text ?? undefined,
         payment_mode: s.payment_mode ?? undefined,
         on_arrival_methods: s.on_arrival_methods ?? undefined,
+        location_type: s.location_type ?? undefined,
       })),
   } as Merchant;
 }

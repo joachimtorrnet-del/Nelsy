@@ -79,6 +79,7 @@ const Unsubscribe = lazy(() => import('./pages/Unsubscribe'));
 const ProductsSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.ProductsSandbox }))) : null;
 const StudioSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.StudioSandbox }))) : null;
 const AudienceSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.AudienceSandbox }))) : null;
+const CoachingSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/CoachingSandbox').then((m) => ({ default: m.CoachingSandbox }))) : null;
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 
@@ -340,6 +341,7 @@ export default function App() {
             {ProductsSandbox && <Route path="/dev/products" element={<ProductsSandbox />} />}
             {AudienceSandbox && <Route path="/dev/audience" element={<AudienceSandbox />} />}
             {StudioSandbox && <Route path="/dev/studio" element={<StudioSandbox />} />}
+            {CoachingSandbox && <Route path="/dev/coaching" element={<CoachingSandbox />} />}
 
             {/* ── Catch-all studio slug (must stay last) ─────────────────── */}
             <Route path="/:slug" element={<Studio />} />

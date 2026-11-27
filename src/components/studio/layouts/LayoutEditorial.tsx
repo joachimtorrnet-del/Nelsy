@@ -6,6 +6,7 @@ import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { useMoney } from '@/lib/currency';
 import { PoweredByNelsy } from '../PlgCTA';
 import { StudioTitle } from '../StudioTitle';
+import { VideoCallBadge } from '@/components/studio/VideoCallBadge';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -95,6 +96,7 @@ function OverlapCard({ service, thumb, accent, accentText, isPreview, onBook, is
           {service.duration > 0 && (
             <span style={{ fontSize: 13, color: '#9B928A', marginLeft: 8 }}>{service.duration} min</span>
           )}
+          {service.location_type === 'online' && <span style={{ marginLeft: 8 }}><VideoCallBadge color="#1A1A1A" background="rgba(26,26,26,0.07)" /></span>}
         </div>
       )}
 
@@ -154,6 +156,7 @@ function ImageLedCard({ service, thumb, accent, accentText, isPreview, onBook }:
             {service.duration > 0 && (
               <span style={{ fontSize: 13, fontWeight: 400, color: '#9B928A', marginLeft: 8 }}>{service.duration} min</span>
             )}
+            {service.location_type === 'online' && <span style={{ marginLeft: 8 }}><VideoCallBadge color="#1A1A1A" background="rgba(26,26,26,0.07)" /></span>}
           </p>
         )}
       </div>

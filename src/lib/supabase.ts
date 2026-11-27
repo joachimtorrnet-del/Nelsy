@@ -65,6 +65,8 @@ export interface DbServiceRow {
   card_cta_text: string | null;
   payment_mode: 'on_arrival' | 'deposit' | 'full';
   on_arrival_methods: ('cash' | 'card')[];
+  /** Added by 20261128_02_online_services. Absent until the migration is applied. */
+  location_type?: 'in_person' | 'online';
   created_at: string;
   updated_at: string;
 }

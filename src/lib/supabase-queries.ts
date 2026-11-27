@@ -511,6 +511,7 @@ export async function getCollectionsForProfile(profileId: string): Promise<Servi
             card_style: (svc.card_style as 'button' | 'callout' | 'preview') ?? 'callout',
             card_subtitle: svc.card_subtitle as string | undefined,
             card_cta_text: svc.card_cta_text as string | undefined,
+            location_type: svc.location_type === 'online' ? 'online' : undefined,
           },
           subcategory_id: m.subcategory_id as string | null,
           display_order: m.display_order as number,

@@ -7,6 +7,7 @@ import { ChevronRight, ChevronDown, Search, Clock, ArrowRight } from 'lucide-rea
 import { useMoney } from '@/lib/currency';
 import type { ServiceCollection } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
+import { VideoCallBadge } from '@/components/studio/VideoCallBadge';
 
 interface Props {
   collection: ServiceCollection;
@@ -231,6 +232,7 @@ export function ServiceCollectionCard({ collection, theme, isPreview = false, on
                         <span style={{ fontSize: 12, fontWeight: 600, color: textPrimary }}>
                           {formatCurrency(svc.price)}
                         </span>
+                        {svc.location_type === 'online' && <VideoCallBadge color={textPrimary} background="rgba(128,128,128,0.14)" />}
                         {svc.deposit > 0 && (
                           <span style={{ fontSize: 11, color: textSecondary }}>
                             Deposit {formatCurrency(svc.deposit)}
