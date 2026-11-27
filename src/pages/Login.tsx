@@ -20,7 +20,12 @@ export default function Login() {
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
       if (error) throw error;
-      if (data.user) navigate('/dashboard');
+      if (data.user) {
+        // ?next= lets the mobile app send a pro back to the trial step after signing in.
+        // Only same-site paths are accepted (no "//host" or absolute URLs).
+        const next = new URLSearchParams(window.location.search).get('next') ?? '';
+        navigate(next.startsWith('/') && !next.startsWith('//') ? next : '/dashboard');
+      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Invalid credentials';
       setError(message);

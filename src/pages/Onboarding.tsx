@@ -111,6 +111,24 @@ export default function Onboarding() {
     }
   }, [step]);
 
+  // ?resume=1 (sent by the mobile app after an in-app signup): the account already exists,
+  // so a signed-in pro goes straight to the trial step; otherwise sign in first and come back here.
+  useEffect(() => {
+    if (!supabase) return;
+    const search = window.location.search;
+    if (new URLSearchParams(search).get('resume') !== '1') return;
+    let cancelled = false;
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (cancelled) return;
+      if (session) {
+        setStep(4);
+      } else {
+        navigate(`/login?next=${encodeURIComponent(`/onboarding${search}`)}`, { replace: true });
+      }
+    });
+    return () => { cancelled = true; };
+  }, [navigate]);
+
   const nextStep = () => {
     if (step < 4) setStep(step + 1);
     else navigate('/dashboard');
