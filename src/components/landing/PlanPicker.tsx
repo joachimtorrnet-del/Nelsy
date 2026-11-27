@@ -88,10 +88,12 @@ interface PlanCardProps {
   plan: Plan;
   interval: BillingInterval;
   selected: boolean;
+  /** Only one plan on the page: a plain card, not a radio option. */
+  single?: boolean;
   onSelect: () => void;
 }
 
-function PlanCard({ plan, interval, selected, onSelect }: PlanCardProps) {
+function PlanCard({ plan, interval, selected, single, onSelect }: PlanCardProps) {
   const price = interval === 'yearly' ? plan.yearly : plan.monthly;
   const inherited = inheritedFeatures(plan.tier);
   const own = ownFeatures(plan);
@@ -103,20 +105,20 @@ function PlanCard({ plan, interval, selected, onSelect }: PlanCardProps) {
   };
   return (
     <div
-      role="radio"
-      aria-checked={selected}
-      aria-label={`${plan.name}, $${price} per month${plan.available ? '' : ', waitlist'}`}
-      tabIndex={0}
-      onClick={onSelect}
-      onKeyDown={onKey}
-      className={`relative cursor-pointer rounded-xl border-2 px-5 pt-[22px] pb-7 text-left outline-none transition focus-visible:ring-4 focus-visible:ring-pink-200 ${
+      role={single ? undefined : 'radio'}
+      aria-checked={single ? undefined : selected}
+      aria-label={single ? undefined : `${plan.name}, $${price} per month${plan.available ? '' : ', waitlist'}`}
+      tabIndex={single ? undefined : 0}
+      onClick={single ? undefined : onSelect}
+      onKeyDown={single ? undefined : onKey}
+      className={`relative ${single ? '' : 'cursor-pointer'} rounded-xl border-2 px-5 pt-[22px] pb-7 text-left outline-none transition focus-visible:ring-4 focus-visible:ring-pink-200 ${
         selected ? 'shadow-[0_16px_40px_-24px_rgba(245,43,140,0.6)]' : 'hover:border-[#F7B9D6]'
       }`}
       style={{ borderColor: selected ? PINK : BORDER, background: selected ? SELECTED_BG : '#FFFFFF' }}
     >
       {plan.available ? (
         <span className="absolute -top-[15px] right-[18px] rounded-full px-3 py-1 text-sm font-bold leading-5 text-white" style={{ background: PINK }}>
-          Available today
+          {single ? `${TRIAL_DAYS} days free` : 'Available today'}
         </span>
       ) : (
         <span className="absolute -top-[13px] right-[18px] rounded-full border bg-white px-2.5 py-0.5 text-xs font-bold leading-5" style={{ borderColor: BORDER, color: MUTED }}>
@@ -128,13 +130,13 @@ function PlanCard({ plan, interval, selected, onSelect }: PlanCardProps) {
         <p className="text-[34px] font-bold leading-[1.15] tracking-tight" style={{ color: plan.available ? INK : PINK, letterSpacing: '-0.02em' }}>
           {plan.name}
         </p>
-        <span
+        {!single && <span
           className="mt-2.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 bg-white"
           style={{ borderColor: selected ? PINK : '#B9B3BD' }}
           aria-hidden="true"
         >
           {selected && <span className="h-2.5 w-2.5 rounded-full" style={{ background: PINK }} />}
-        </span>
+        </span>}
       </div>
 
       <p className="mt-2 leading-none" style={{ color: INK }}>
@@ -184,7 +186,11 @@ export default function PlanPicker({
 }: PlanPickerProps) {
   const navigate = useNavigate();
   const [interval, setBilling] = useState<BillingInterval>(defaultInterval);
-  const [selected, setSelected] = useState<PlanTier>(PLAN_ORDER.find((t) => PLANS[t].available) ?? 'independent');
+  // Only plans that can be bought today are shown. Plans in preparation stay off the page
+  // until they open: one clear offer converts better than a waitlist nobody understands.
+  const visible = PLAN_ORDER.filter((t) => PLANS[t].available);
+  const single = visible.length === 1;
+  const [selected, setSelected] = useState<PlanTier>(visible[0] ?? 'independent');
   const plan = PLANS[selected];
 
   const start = () => {
@@ -200,7 +206,7 @@ export default function PlanPicker({
     <div>
       <div className="text-center">
         <h2 className="text-[26px] lg:text-[28px] font-bold leading-[1.2] tracking-tight" style={{ color: INK, letterSpacing: '-0.02em' }}>{title}</h2>
-        <p className="mt-4 text-[15px]" style={{ color: MUTED }}>Try Independent free for {TRIAL_DAYS} days.</p>
+        <p className="mt-4 text-[15px]" style={{ color: MUTED }}>{single ? `One plan, everything included. Free for ${TRIAL_DAYS} days, no card needed.` : `Try Independent free for ${TRIAL_DAYS} days.`}</p>
 
         <div className="mt-11 mb-12 inline-flex rounded-full bg-gray-100 p-[5px]" role="radiogroup" aria-label="Billing period">
           {(['monthly', 'yearly'] as const).map((b) => (
@@ -219,9 +225,13 @@ export default function PlanPicker({
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-[1084px] gap-6 lg:grid-cols-3 lg:gap-[14px] lg:items-start" role="radiogroup" aria-label="Plans">
-        {PLAN_ORDER.map((tier) => (
-          <PlanCard key={tier} plan={PLANS[tier]} interval={interval} selected={tier === selected} onSelect={() => setSelected(tier)} />
+      <div
+        className={single ? 'mx-auto max-w-[440px]' : `mx-auto grid max-w-[1084px] gap-6 lg:gap-[14px] lg:items-start ${visible.length === 2 ? 'lg:grid-cols-2 lg:max-w-[730px]' : 'lg:grid-cols-3'}`}
+        role={single ? undefined : 'radiogroup'}
+        aria-label={single ? undefined : 'Plans'}
+      >
+        {visible.map((tier) => (
+          <PlanCard key={tier} plan={PLANS[tier]} interval={interval} selected={tier === selected} single={single} onSelect={() => setSelected(tier)} />
         ))}
       </div>
 
@@ -229,7 +239,7 @@ export default function PlanPicker({
         <p className="mb-3 text-[15px]" style={{ color: INK }}>Due today: <strong>$0</strong></p>
         {plan.available ? (
           <button type="button" onClick={start} className={ctaClass} style={{ background: PINK }}>
-            Continue with {plan.name} <ArrowRight className="h-5 w-5" aria-hidden="true" />
+            {single ? 'Start my free trial' : `Continue with ${plan.name}`} <ArrowRight className="h-5 w-5" aria-hidden="true" />
           </button>
         ) : (
           <a href={waitlistHref(plan)} onClick={() => onWaitlist?.(plan.tier, interval)} className={ctaClass} style={{ background: PINK }}>

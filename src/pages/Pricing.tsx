@@ -150,7 +150,7 @@ export default function Pricing() {
       '@type': 'WebPage',
       name: 'Nelsy pricing',
       description:
-        'Three Nelsy plans for beauty pros. Independent (bookings, deposits and online payments) is available today, free for 14 days. Creator and Salon are open for waitlist.',
+        'One Nelsy plan for nail techs: bookings, deposits, online payments and email reminders, free for 14 days with no card needed.',
       url: 'https://getnelsy.com/pricing',
     },
     {
@@ -168,7 +168,7 @@ export default function Pricing() {
     <>
       <SEOMeta
         title="Pricing: $29/month, 0% Booking Commission"
-        description="Nelsy pricing: Independent is $29/month ($25 billed yearly), free for 14 days, 0% Nelsy commission. Creator and Salon plans are open for waitlist."
+        description="Nelsy pricing: one plan at $29/month ($25 billed yearly). Free for 14 days, no card needed, 0% Nelsy commission on your bookings."
         canonical="/pricing"
         jsonLd={jsonLd}
       />
@@ -183,7 +183,7 @@ export default function Pricing() {
               Simple pricing for beauty professionals.
             </h1>
             <p className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-8">
-              Three plans that grow with your beauty business. Independent is available today, Creator and Salon are open for waitlist.
+              One plan with everything you need to get booked and paid. Free for 14 days, no card needed.
             </p>
             <Link
               to={`/onboarding?plan=${planKey('independent', 'monthly')}`}

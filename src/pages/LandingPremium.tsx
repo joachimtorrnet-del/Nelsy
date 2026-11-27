@@ -471,13 +471,13 @@ function PricingSection({ variant }: { variant: Variant }) {
 // ─── 5. FAQ ──────────────────────────────────────────────────────────────────
 
 const FAQ = [
-  { q: 'What can I sell with Nelsy?', a: 'Your nail services, with online booking, deposits and payments, all from one link you share in your bio. Selling guides and coaching is part of the Creator plan, which has a waitlist today.' },
+  { q: 'What can I sell with Nelsy?', a: 'Your nail services, with online booking, deposits and payments, all from one link you share in your bio. Selling guides and coaching is not available yet.' },
   { q: 'Do I need a website or technical skills?', a: 'No. Pick a template, add your services and photos, and your page is ready to share. No code, no website needed.' },
   { q: 'Does Nelsy take a cut of my sales?', a: 'No. Nelsy charges 0% commission on your bookings and sales. You pay your plan, and standard payment processing fees apply to online payments.' },
   { q: 'How does the free trial work?', a: 'You get 14 days free and pay $0 today. No card is needed to start. Add a card before the trial ends to keep your page live, or cancel anytime.' },
   {
-    q: 'Which plan should I start with?',
-    a: 'Start with Independent, the plan available today: bookings, deposits, online payments and reminders from your link in bio, free for 14 days. Creator (guides, courses, memberships and email marketing) and Salon (your whole team on one page) are not open yet. Select one in the plans above to join its waitlist and we will email you when it opens.',
+    q: 'How much does Nelsy cost?',
+    a: 'One plan: $29 a month, or $25 a month billed yearly. It includes your booking page, deposits, online payments and email reminders, with 0% Nelsy commission. The first 14 days are free and you do not need a card to start.',
   },
   { q: 'Can clients pay at the appointment instead of online?', a: 'Yes. For each service you choose pay on arrival, a deposit, or full payment upfront, and you can record cash or card payments taken at the studio.' },
 ];
