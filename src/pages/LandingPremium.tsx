@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import posthog from 'posthog-js';
-import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, CalendarCheck, Check, CreditCard, Video } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUpRight, BookOpen, CalendarCheck, Check, CreditCard } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
-import PlanPicker, { SHOW_UNAVAILABLE_PLANS } from '@/components/landing/PlanPicker';
+import PlanPicker from '@/components/landing/PlanPicker';
 import { PublicStudioView } from '@/components/studio/PublicStudioView';
 import { STUDIO_TEMPLATES, TEMPLATE_DEMOS } from '@/lib/templateDemos';
 import { PLANS, TRIAL_DAYS, planKey } from '@/lib/plans';
@@ -125,8 +125,10 @@ function Hero({ variant }: { variant: Variant }) {
 }
 
 // ─── 2. Skills into income: three personas ───────────────────────────────────
-// Illustrative personas, one per audience (independent pro, creator, salon). No names, numbers or
-// quotes: each card is labeled "Example". Photos: Unsplash (Unsplash License), hotlinked.
+// Same composition as stan.store's "Turn what you know into what you earn." (1440: one tall card on
+// the left, two stacked on the right; 390: swipe row). Illustrative personas, one per audience
+// (nail tech, nail tech who sells a guide, nail salon): no names, numbers or quotes, and each card
+// carries a discreet "Example" marker. Photos: Unsplash (Unsplash License), hotlinked.
 
 const unsplash = (id: string, w: number, h?: number) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}${h ? `&h=${h}` : ''}&q=70`;
@@ -138,79 +140,123 @@ interface Persona {
   photo: string;
   photoAlt: string;
   photoSize: [number, number];
-  /** object-position of the photo, so the subject stays in frame at every card size. */
+  /** object-position of the photo, so the face stays in frame at every card size. */
   focus: string;
-  thumb: string;
-  thumbAlt: string;
+  thumb: 'photo' | 'guide' | 'team';
+  thumbPhoto?: string;
+  thumbAlt?: string;
   offerType: string;
   offer: string;
-  extra?: { icon: LucideIcon; text: string };
-  team?: boolean;
   href: string;
-  /** Size and position of the card in the desktop collage. */
+  /** Size and position of the card in the desktop collage (measured on stan.store at 1440). */
   desktop: string;
 }
 
 const PERSONAS: Persona[] = [
   {
     key: 'pro',
-    label: 'Lash artist · Independent pro',
-    photo: '1589710751893-f9a6770ad71b',
-    photoAlt: 'Lash artist placing an extension with tweezers',
+    label: 'Nail tech · Bookings',
+    photo: '1666226399043-bbb245d216d0',
+    photoAlt: 'Smiling nail tech with mint nails at her station, next to a UV nail lamp',
     photoSize: [1200, 1800],
-    focus: '50% 40%',
-    thumb: '1674049406467-824ea37c7184',
-    thumbAlt: 'Close-up of lash extensions being applied',
+    focus: '50% 18%',
+    thumb: 'photo',
+    thumbPhoto: '1610992015762-45dca7fa3a85',
+    thumbAlt: 'Nude gel nail set',
     offerType: 'Booking · Deposit',
-    offer: 'Classic lash full set',
-    extra: { icon: CalendarCheck, text: 'Deposit taken at booking' },
-    href: '/use-cases/lash-techs',
-    desktop: 'xl:left-0 xl:top-[48px] xl:w-[324px] xl:h-[476px]',
+    offer: 'Gel-X full set',
+    href: '/use-cases/beauty-pros',
+    desktop: 'xl:left-0 xl:top-[45px] xl:w-[324px] xl:h-[476px]',
   },
   {
     key: 'creator',
-    label: 'Beauty creator · Guides and coaching',
-    photo: '1758272421523-9b2a777083ef',
-    photoAlt: 'Beauty creator filming a makeup video at home',
-    photoSize: [1800, 1200],
-    focus: '50% 35%',
-    thumb: '1596462502278-27bfdc403348',
-    thumbAlt: 'Makeup brushes, lipstick and blush laid out',
+    label: 'Nail tech · Creator',
+    photo: '1642449687759-afab6f0ebc1c',
+    photoAlt: 'Smiling nail tech framing her face with her nail art for the camera',
+    photoSize: [1200, 1500],
+    focus: '50% 22%',
+    thumb: 'guide',
+    thumbPhoto: '1772322586785-3a34772cbc61',
     offerType: 'Digital guide',
-    offer: 'Soft glam at home guide',
-    extra: { icon: Video, text: 'Plus 1:1 coaching calls' },
+    offer: 'Gel-X at home: the full guide',
     href: '/use-cases/beauty-creators',
-    desktop: 'xl:left-[340px] xl:top-0 xl:w-[300px] xl:h-[282px]',
+    desktop: 'xl:left-[340px] xl:top-0 xl:w-[296px] xl:h-[270px]',
   },
   {
     key: 'salon',
-    label: 'Salon · Team of stylists',
-    photo: '1774660810725-fb04e002003d',
-    photoAlt: 'Stylist creating an updo for a client in a modern salon',
-    photoSize: [1200, 1500],
-    focus: '50% 30%',
-    thumb: '1706629503650-cade709d15e3',
-    thumbAlt: 'Salon with arched mirrors and beige chairs',
+    label: 'Nail salon · Team',
+    photo: '1666226398826-5b7ae0111e9a',
+    photoAlt: 'Pink nail salon where a nail tech works while a client smiles',
+    photoSize: [1800, 1200],
+    focus: '45% 30%',
+    thumb: 'team',
     offerType: 'Team booking',
-    offer: 'Book with your stylist',
-    team: true,
-    href: '/features/bookings',
-    desktop: 'xl:left-[352px] xl:top-[298px] xl:w-[300px] xl:h-[282px]',
+    offer: 'Book with your nail tech',
+    href: '/use-cases/salons',
+    desktop: 'xl:left-[352px] xl:top-[286px] xl:w-[296px] xl:h-[270px]',
   },
 ];
 
 const TEAM = [
-  { i: 'A', bg: '#F9C6DC' },
-  { i: 'M', bg: '#FBD9B5' },
-  { i: 'J', bg: '#CFE3F7' },
+  { i: 'A', bg: '#F9C6DC', pos: 'left-[3px] top-[4px]' },
+  { i: 'M', bg: '#FBD9B5', pos: 'right-[3px] top-[4px]' },
+  { i: 'J', bg: '#CFE3F7', pos: 'left-1/2 -translate-x-1/2 bottom-[3px]' },
 ];
 
+function PersonaThumb({ p }: { p: Persona }) {
+  if (p.thumb === 'team') {
+    return (
+      <span className="relative h-[46px] w-[46px] shrink-0 rounded-md" style={{ background: '#FDE8F3' }} aria-hidden="true">
+        {TEAM.map((m) => (
+          <span key={m.i} className={`absolute ${m.pos} flex h-[20px] w-[20px] items-center justify-center rounded-full text-[9px] font-bold ring-2 ring-white`} style={{ background: m.bg, color: INK }}>{m.i}</span>
+        ))}
+      </span>
+    );
+  }
+  if (p.thumb === 'guide' && p.thumbPhoto) {
+    // A small guide cover: nail photo on top, title band below.
+    return (
+      <span className="relative flex h-[46px] w-[46px] shrink-0 flex-col overflow-hidden rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.2)]" aria-hidden="true">
+        <img
+          src={unsplash(p.thumbPhoto, 100, 70)}
+          srcSet={`${unsplash(p.thumbPhoto, 100, 70)} 100w, ${unsplash(p.thumbPhoto, 200, 140)} 200w`}
+          sizes="46px"
+          width={100}
+          height={70}
+          loading="lazy"
+          decoding="async"
+          alt="Gel-X at home guide cover"
+          className="h-[30px] w-full object-cover"
+        />
+        <span className="flex flex-1 flex-col justify-center px-[3px] leading-none text-white" style={{ background: PINK }}>
+          <span className="block text-[6px] font-black uppercase tracking-tight">Gel-X</span>
+          <span className="block text-[5px] font-bold uppercase">at home</span>
+        </span>
+      </span>
+    );
+  }
+  return (
+    <img
+      src={unsplash(p.thumbPhoto ?? '', 100, 100)}
+      srcSet={`${unsplash(p.thumbPhoto ?? '', 100, 100)} 100w, ${unsplash(p.thumbPhoto ?? '', 200, 200)} 200w`}
+      sizes="46px"
+      width={100}
+      height={100}
+      loading="lazy"
+      decoding="async"
+      alt={p.thumbAlt ?? ''}
+      className="h-[46px] w-[46px] shrink-0 rounded-md object-cover"
+    />
+  );
+}
+
 function PersonaCard({ p }: { p: Persona }) {
-  const Extra = p.extra?.icon;
   return (
     <Link
       to={p.href}
-      className={`group relative block shrink-0 snap-start overflow-hidden rounded-[14px] bg-gray-200 w-[282px] h-[392px] xl:absolute ${p.desktop} shadow-[0_18px_40px_-22px_rgba(26,26,26,0.45)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_50px_-24px_rgba(26,26,26,0.55)]`}
+      onClick={() => track('landing_cta_clicked', { position: 'personas', persona: p.key, action: 'use_case' })}
+      aria-label={`${p.label}: ${p.offer}. See how it works`}
+      className={`group relative block shrink-0 snap-start overflow-hidden rounded-xl bg-gray-200 w-[282px] h-[380px] xl:absolute ${p.desktop} transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_44px_-24px_rgba(26,26,26,0.55)]`}
     >
       <img
         src={unsplash(p.photo, 640)}
@@ -221,46 +267,21 @@ function PersonaCard({ p }: { p: Persona }) {
         loading="lazy"
         decoding="async"
         alt={p.photoAlt}
-        className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+        className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
         style={{ objectPosition: p.focus }}
       />
-      <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(17,12,20,0.82) 0%, rgba(17,12,20,0.35) 38%, rgba(17,12,20,0) 62%)' }} aria-hidden="true" />
-      <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-gray-700 backdrop-blur">Example</span>
+      <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(20,14,22,0.78) 0%, rgba(20,14,22,0.35) 32%, rgba(20,14,22,0) 55%)' }} aria-hidden="true" />
+      <span className="absolute left-2.5 top-2.5 rounded bg-black/20 px-1.5 py-0.5 text-[10px] font-medium text-white/70">Example</span>
 
-      <div className="absolute inset-x-3 bottom-3">
-        <p className="mb-2 px-1 text-xs font-semibold text-white" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.35)' }}>{p.label}</p>
-        <div className="flex items-start gap-3 rounded-xl bg-white p-2.5 pr-3 shadow-[0_6px_20px_-8px_rgba(0,0,0,0.35)]">
-          <img
-            src={unsplash(p.thumb, 120, 120)}
-            srcSet={`${unsplash(p.thumb, 120, 120)} 120w, ${unsplash(p.thumb, 200, 200)} 200w`}
-            sizes="48px"
-            width={120}
-            height={120}
-            loading="lazy"
-            decoding="async"
-            alt={p.thumbAlt}
-            className="h-12 w-12 shrink-0 rounded-lg object-cover"
-          />
-          <div className="min-w-0 flex-1">
-            <span className="inline-block rounded-md px-2 py-0.5 text-[11px] font-bold" style={{ background: '#FDE8F3', color: PINK }}>{p.offerType}</span>
-            <p className="mt-1 text-sm font-bold leading-snug" style={{ color: INK }}>{p.offer}</p>
-            {Extra && p.extra && (
-              <p className="mt-1 flex items-center gap-1.5 text-xs text-gray-500">
-                <Extra className="h-3.5 w-3.5 shrink-0" style={{ color: PINK }} aria-hidden="true" /> {p.extra.text}
-              </p>
-            )}
-            {p.team && (
-              <div className="mt-1.5 flex items-center gap-2">
-                <span className="flex -space-x-1.5" aria-hidden="true">
-                  {TEAM.map((m) => (
-                    <span key={m.i} className="flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold ring-2 ring-white" style={{ background: m.bg, color: INK }}>{m.i}</span>
-                  ))}
-                </span>
-                <span className="text-xs text-gray-500">Choose a stylist</span>
-              </div>
-            )}
+      <div className="absolute inset-x-3 bottom-4">
+        <p className="mb-2 text-[11px] font-semibold text-white" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.4)' }}>{p.label}</p>
+        <div className="relative flex items-center gap-3 rounded-lg bg-white py-2.5 pl-2.5 pr-8 min-h-[84px]">
+          <PersonaThumb p={p} />
+          <div className="min-w-0">
+            <span className="inline-block rounded px-1.5 py-0.5 text-[10px] font-bold" style={{ background: '#FDE8F3', color: PINK }}>{p.offerType}</span>
+            <p className="mt-1.5 text-[13px] font-bold leading-[1.35]" style={{ color: INK }}>{p.offer}</p>
           </div>
-          <ArrowUpRight className="mt-0.5 h-4 w-4 shrink-0 text-gray-400 transition group-hover:text-gray-900" aria-hidden="true" />
+          <ArrowUpRight className="absolute bottom-3 right-3 h-3.5 w-3.5 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" style={{ color: PINK }} aria-hidden="true" />
         </div>
       </div>
     </Link>
@@ -270,26 +291,26 @@ function PersonaCard({ p }: { p: Persona }) {
 function SkillsSection({ variant }: { variant: Variant }) {
   return (
     <section className="pt-[60px] pb-16 lg:py-[100px] bg-white overflow-hidden">
-      <div className={`${WRAP} grid xl:grid-cols-[minmax(0,1fr)_652px] gap-10 xl:gap-12 items-center`}>
+      <div className={`${WRAP} grid xl:grid-cols-[minmax(0,1fr)_648px] gap-10 xl:gap-12 items-center`}>
         <div className="max-w-[520px] xl:max-w-[440px]">
-          <h2 className="font-bold tracking-tight leading-[1.15] mb-5 text-[34px] lg:text-[44px]" style={H2_STYLE}>
+          <h2 className="font-bold tracking-tight leading-[1.08] mb-6 text-[36px] lg:text-[48px]" style={{ color: INK, letterSpacing: '-0.035em' }}>
             Turn your skills<br /> into income.
           </h2>
-          <p className="text-base lg:text-lg text-gray-600 leading-[1.7] mb-6">Package what you know into something your clients and followers can book or buy.</p>
-          <p className="text-base lg:text-[17px] font-semibold leading-[1.9] mb-8" style={{ color: INK }}>
-            A lash set with a deposit.<br />A makeup guide and coaching calls.<br />A whole salon on one link.
+          <p className="text-[17px] lg:text-lg text-gray-500 leading-[1.7] mb-6 max-w-[340px] lg:max-w-[360px]">Your services, your know-how and your team, ready to book or buy.</p>
+          <p className="text-[17px] font-semibold leading-[1.9] mb-8" style={{ color: INK }}>
+            A gel set with a deposit.<br />A nail guide your followers buy.<br />A whole nail salon on one link.
           </p>
           <button
             type="button"
             onClick={() => scrollToPricing('skills', variant)}
-            className={`${BTN} h-[62px] px-7 text-base text-white`}
+            className={`${BTN} h-[62px] pl-7 pr-6 gap-8 text-base text-white`}
             style={{ background: INK }}
           >
             Start your page <ArrowDown className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
-        <div className="-mx-6 px-6 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 xl:mx-0 xl:px-0 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 sm:scroll-px-8 lg:scroll-px-12 pb-4 xl:pb-0 xl:block xl:relative xl:h-[580px] xl:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="-mx-6 px-6 sm:-mx-8 sm:px-8 lg:-mx-12 lg:px-12 xl:mx-0 xl:px-0 flex gap-4 overflow-x-auto snap-x snap-mandatory scroll-px-6 sm:scroll-px-8 lg:scroll-px-12 pb-4 xl:pb-0 xl:block xl:relative xl:h-[556px] xl:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {PERSONAS.map((p) => <PersonaCard key={p.key} p={p} />)}
         </div>
       </div>
@@ -317,7 +338,7 @@ function PhoneMockup({ merchant }: { merchant: Merchant }) {
     // Frame 268x540 on mobile, 308x620 on desktop. The 390px wide page is scaled to the screen width
     // through --s (screen width / 390).
     <div
-      className="relative w-[268px] h-[540px] lg:w-[308px] lg:h-[620px] rounded-[46px] lg:rounded-[54px] p-[9px] lg:p-[11px] [--s:0.641] lg:[--s:0.7333] rotate-[5deg]"
+      className="relative transition-transform duration-300 group-hover:-translate-y-1.5 w-[268px] h-[540px] lg:w-[308px] lg:h-[620px] rounded-[46px] lg:rounded-[54px] p-[9px] lg:p-[11px] [--s:0.641] lg:[--s:0.7333] rotate-[5deg]"
       style={{
         background: 'linear-gradient(150deg, #55555a 0%, #1d1d1f 22%, #2b2b2e 60%, #6a6a70 100%)',
         boxShadow: 'inset 0 0 0 1.5px rgba(255,255,255,0.22), inset 0 0 0 4px #111, 0 60px 90px -40px rgba(120,10,60,0.55), 0 35px 60px -30px rgba(0,0,0,0.5)',
@@ -384,7 +405,12 @@ function PlaceToSellSection({ variant }: { variant: Variant }) {
         </div>
 
         <div className="flex flex-col items-center">
-          <div className="relative w-full max-w-[400px] lg:max-w-[540px] h-[600px] lg:h-[690px] flex items-center justify-center">
+          <Link
+            to="/demo"
+            onClick={() => track('landing_cta_clicked', { position: 'place_to_sell_phone', variant, action: 'demo' })}
+            aria-label="Open the live demo page"
+            className="group relative w-full max-w-[400px] lg:max-w-[540px] h-[600px] lg:h-[690px] flex items-center justify-center"
+          >
             {/* Pink disc behind the phone */}
             <div
               className="absolute left-1/2 top-[56%] h-[330px] w-[330px] lg:h-[460px] lg:w-[460px] -translate-x-1/2 -translate-y-1/2 rounded-full"
@@ -410,8 +436,8 @@ function PlaceToSellSection({ variant }: { variant: Variant }) {
                 </div>
               );
             })}
-          </div>
-          <Link to="/demo" className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-1 min-h-[52px] bg-white rounded-2xl px-6 py-3 shadow-[0_6px_20px_-10px_rgba(26,26,26,0.2)] text-sm hover:shadow-[0_10px_26px_-10px_rgba(26,26,26,0.3)] transition">
+          </Link>
+          <Link to="/demo" onClick={() => track('landing_cta_clicked', { position: 'place_to_sell_demo', variant, action: 'demo' })} className="mt-6 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-1 min-h-[52px] bg-white rounded-2xl px-6 py-3 shadow-[0_6px_20px_-10px_rgba(26,26,26,0.2)] text-sm hover:shadow-[0_10px_26px_-10px_rgba(26,26,26,0.3)] transition">
             <span className="font-bold" style={{ color: INK }}>{demo.salon_name}, example page</span>
             <span className="font-semibold inline-flex items-center gap-1" style={{ color: PINK }}>See the live demo <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" /></span>
           </Link>
@@ -429,8 +455,8 @@ function PricingSection({ variant }: { variant: Variant }) {
       <div className="max-w-[1180px] mx-auto px-6 sm:px-8 lg:px-12">
         <PlanPicker
           onStartTrial={(key) => {
-            track('landing_cta_clicked', { position: 'pricing', variant, plan: key, action: 'start_trial' });
-            trackSeoCTAClicked('/', 'inline', 'Start my free trial');
+            track('landing_cta_clicked', { position: 'pricing', variant, plan: key, action: 'trial' });
+            trackSeoCTAClicked('/', 'inline', 'Continue with Independent');
           }}
           onWaitlist={(tier, interval) => {
             track('landing_cta_clicked', { position: 'pricing', variant, plan: planKey(tier, interval), action: 'waitlist' });
@@ -450,9 +476,7 @@ const FAQ = [
   { q: 'How does the free trial work?', a: 'You get 14 days free. A card is saved at signup and you pay $0 today. Your plan starts after the trial, and you can cancel anytime before it ends.' },
   {
     q: 'Which plan should I start with?',
-    a: SHOW_UNAVAILABLE_PLANS
-      ? 'Start with Independent to take bookings, deposits and payments from your link in bio today. Creator and Salon are not open yet: join their waitlist from the plans above and we will email you when they open.'
-      : 'Independent is the plan open today: bookings, deposits, payments and reminders from your link in bio. Plans for digital products and for salon teams are in the works. Email hello@getnelsy.com to hear first when they open.',
+    a: 'Start with Independent, the plan available today: bookings, deposits, online payments and reminders from your link in bio, free for 14 days. Creator (guides, courses, memberships and email marketing) and Salon (your whole team on one page) are not open yet. Select one in the plans above to join its waitlist and we will email you when it opens.',
   },
   { q: 'Can clients pay at the appointment instead of online?', a: 'Yes. For each service you choose pay on arrival, a deposit, or full payment upfront, and you can record cash or card payments taken at the studio.' },
 ];

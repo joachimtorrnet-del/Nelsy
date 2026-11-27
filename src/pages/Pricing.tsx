@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
-import PlanPicker, { SHOW_UNAVAILABLE_PLANS } from '@/components/landing/PlanPicker';
+import PlanPicker from '@/components/landing/PlanPicker';
 import { TRIAL_DAYS, planKey } from '@/lib/plans';
 import { track, trackSeoCTAClicked } from '@/lib/analytics';
 
@@ -149,9 +149,8 @@ export default function Pricing() {
       '@context': 'https://schema.org',
       '@type': 'WebPage',
       name: 'Nelsy pricing',
-      description: SHOW_UNAVAILABLE_PLANS
-        ? 'Three plans for beauty pros. Start with Independent: bookings, deposits and online payments, free for 14 days.'
-        : 'Nelsy Independent for beauty pros: bookings, deposits and online payments from your link in bio, free for 14 days.',
+      description:
+        'Three Nelsy plans for beauty pros. Independent (bookings, deposits and online payments) is available today, free for 14 days. Creator and Salon are open for waitlist.',
       url: 'https://getnelsy.com/pricing',
     },
     {
@@ -169,7 +168,7 @@ export default function Pricing() {
     <>
       <SEOMeta
         title="Pricing: $29/month, 0% Booking Commission"
-        description="Nelsy pricing: Independent is $29/month or $25/month billed yearly, with 0% Nelsy commission, deposits and online payments. Free for 14 days."
+        description="Nelsy pricing: Independent is $29/month ($25 billed yearly), free for 14 days, 0% Nelsy commission. Creator and Salon plans are open for waitlist."
         canonical="/pricing"
         jsonLd={jsonLd}
       />
@@ -184,9 +183,7 @@ export default function Pricing() {
               Simple pricing for beauty professionals.
             </h1>
             <p className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-xl mx-auto mb-8">
-              {SHOW_UNAVAILABLE_PLANS
-                ? 'Three plans that grow with your beauty business. Start with Independent today.'
-                : 'One plan with everything you need to get booked and paid from your link in bio.'}
+              Three plans that grow with your beauty business. Independent is available today, Creator and Salon are open for waitlist.
             </p>
             <Link
               to={`/onboarding?plan=${planKey('independent', 'monthly')}`}
@@ -205,7 +202,7 @@ export default function Pricing() {
         <section className="bg-white border-b border-[#F4C2C2]/30 py-[72px] lg:py-28">
           <div className="max-w-[1180px] mx-auto px-6 sm:px-8 lg:px-12">
           <PlanPicker
-            title={SHOW_UNAVAILABLE_PLANS ? 'Pick the plan that fits your business' : 'One simple plan to get booked'}
+            title="Pick the plan that fits your business"
             defaultInterval="monthly"
             onStartTrial={(key) => {
               track('pricing_cta_clicked', { plan: key, action: 'start_trial' });
