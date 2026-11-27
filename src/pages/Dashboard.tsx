@@ -14,6 +14,7 @@ import StripeSettings from './dashboard/StripeSettings';
 import Revenue from './dashboard/Revenue';
 import Customers from './dashboard/Customers';
 import Help from './dashboard/Help';
+import Products from './dashboard/Products';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import { ComingSoonPlaceholder } from '../components/dashboard/ComingSoonPlaceholder';
 import { ShoppingBag, Megaphone, Globe, Gift } from 'lucide-react';
@@ -26,11 +27,13 @@ interface Profile {
   subscription_status?: string;
   timezone?: string;
   business_currency?: string;
+  plan?: string | null;
+  stripe_onboarding_complete?: boolean;
 }
 
 const VALID_TABS = [
   'home', 'calendar', 'preview', 'analytics', 'revenue', 'stripe', 'settings',
-  'orders', 'customers', 'marketing', 'community', 'referrals', 'help',
+  'products', 'orders', 'customers', 'marketing', 'community', 'referrals', 'help',
 ];
 
 function tabFromPath(pathname: string): string {
@@ -159,6 +162,7 @@ export default function Dashboard() {
       {activeTab === 'settings'  && (
         <Settings profile={profile as SettingsProfile | null} onNavigate={handleSetTab} />
       )}
+      {activeTab === 'products' && <Products profile={profile} onNavigate={handleSetTab} />}
       {activeTab === 'orders' && (
         <ComingSoonPlaceholder
           title="Orders"

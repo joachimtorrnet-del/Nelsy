@@ -61,7 +61,7 @@ function UpgradePanel() {
         </p>
         <ul className="grid sm:grid-cols-3 gap-3 text-left mb-8">
           {[
-            { icon: FileDown, title: 'Any file up to 100 MB', text: 'PDF, video, Canva link sheet, zip.' },
+            { icon: FileDown, title: 'Any file up to 100 MB', text: 'PDF, video, template or zip.' },
             { icon: ShoppingBag, title: 'Checkout on your page', text: 'Card, Apple Pay and Google Pay.' },
             { icon: Mail, title: 'Delivered by email', text: 'A secure link, valid for 10 downloads.' },
           ].map(({ icon: Icon, title, text }) => (
@@ -302,7 +302,7 @@ function ProductRow({ product, sales, first, last, onUp, onDown, onEdit, onToggl
       </div>
       <CoverThumb url={product.cover_url} title={product.title} />
       <div className="flex-1 min-w-0">
-        <p className="text-[15px] font-semibold text-[#1A1A1A] truncate">{product.title}</p>
+        <p className="text-[15px] font-semibold text-[#1A1A1A] line-clamp-2 sm:truncate">{product.title}</p>
         <p className="text-sm text-gray-500 mt-0.5">
           <span className="font-semibold text-[#1A1A1A]">{formatProductPrice(product.price_cents, product.currency)}</span>
           <span className="mx-1.5 text-gray-300">|</span>

@@ -19,6 +19,7 @@ const PAGE_TITLES: Record<string, string> = {
   home:      'Home',
   preview:   'My Studio',
   calendar:  'Bookings',
+  products:  'Products',
   orders:    'Orders',
   marketing: 'Marketing',
   community: 'Community',
