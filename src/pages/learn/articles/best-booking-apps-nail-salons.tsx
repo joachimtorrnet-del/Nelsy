@@ -23,7 +23,7 @@ registerArticle({
   ],
   relatedSlugs: [ 'independent-nail-tech-vs-nail-salon', 'booth-rental-vs-commission-nail-techs', 'nail-tech-booking-software-features'],
   faq: [
-    { q: 'Can each nail tech in a salon have their own booking page?', a: 'Most salon booking platforms allow individual tech profiles within the same salon account — clients can either book a specific tech or book with whoever has availability. This is a core feature to look for when evaluating salon booking software.' },
+    { q: 'Can each nail tech in a salon have their own booking page?', a: 'Most salon booking platforms allow individual tech profiles within the same salon account: clients can either book a specific tech or book with whoever has availability. This is a core feature to look for when evaluating salon booking software.' },
     { q: 'How do nail salons handle deposits for multiple techs?', a: 'Deposit settings in salon booking software typically apply at the business level (all bookings require a deposit) or per service type. Ideally, the platform lets each tech or the salon owner configure deposit rules centrally, with the funds going to the appropriate account. Check how each platform handles payout routing if your techs are booth-renters with separate payment setups.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
@@ -35,7 +35,7 @@ registerArticle({
         <ArticleTable
           headers={['Feature', 'Why it matters at salon scale']}
           rows={[
-            ['Multi-staff scheduling', 'Clients need to book a specific tech, or the first available — both views required'],
+            ['Multi-staff scheduling', 'Clients need to book a specific tech, or the first available: both views required'],
             ['Centralised calendar', 'Manager view across all tech schedules; identify gaps and busy periods'],
             ['Staff account management', 'Each tech can manage their own schedule without admin-level access to the whole business'],
             ['Marketplace visibility for the salon', 'Appear in marketplace searches so new clients find the salon, not just individual techs'],
@@ -47,12 +47,12 @@ registerArticle({
 
       <section id="top-picks">
         <h2 className="font-serif text-2xl font-bold mb-4">Best platforms for nail salons</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong> — Multi-staff scheduling; individual tech profiles within a salon account; marketplace visibility; Team plan at €9.95 per team member per month, plus a one-time fee on new marketplace clients. One of the most widely used salon-scale platforms globally.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Multi-tech scheduling; marketplace; strong client-side app. Subscription scales with team size. Well-known to clients in major markets.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich with payroll, POS, marketing, and scheduling in one. Better suited to larger salons that need management depth. Monthly subscription; US-focused.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> — Solid multi-staff scheduling; deep payment integration; POS hardware for salon till setups. Not beauty-specific but handles the operational side of larger nail businesses.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: Multi-staff scheduling; individual tech profiles within a salon account; marketplace visibility; Team plan at €9.95 per team member per month, plus a one-time fee on new marketplace clients. One of the most widely used salon-scale platforms globally.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong>: Multi-tech scheduling; marketplace; strong client-side app. Subscription scales with team size. Well-known to clients in major markets.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong>: Feature-rich with payroll, POS, marketing, and scheduling in one. Better suited to larger salons that need management depth. Monthly subscription; US-focused.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong>: Solid multi-staff scheduling; deep payment integration; POS hardware for salon till setups. Not beauty-specific but handles the operational side of larger nail businesses.</p>
         <ArticleCallout variant="info" title="For booth-rental models">
-          If your salon runs a booth-rental model (techs paying to rent space and operating independently), the booking software model is different — each tech typically manages their own booking independently rather than through a central salon account. Read: <Link to="/blog/booth-rental-vs-commission-nail-techs" className="underline text-[#F52B8C]">booth rental vs commission for nail techs</Link>.
+          If your salon runs a booth-rental model (techs paying to rent space and operating independently), the booking software model is different: each tech typically manages their own booking independently rather than through a central salon account. Read: <Link to="/blog/booth-rental-vs-commission-nail-techs" className="underline text-[#F52B8C]">booth rental vs commission for nail techs</Link>.
         </ArticleCallout>
       </section>
 
@@ -71,7 +71,7 @@ registerArticle({
 
       <section id="commission-vs-booth">
         <h2 className="font-serif text-2xl font-bold mb-4">Commission vs booth rental and booking</h2>
-        <p className="text-gray-700 leading-relaxed">The way your salon is structured affects how booking is managed. Commission-model salons typically manage bookings centrally — one platform, one calendar, salon-level brand. Booth-rental salons typically have each tech managing their own bookings independently, even if they share physical space. Before choosing a platform, be clear on your salon's model — it determines whether you need a unified or individual setup.</p>
+        <p className="text-gray-700 leading-relaxed">The way your salon is structured affects how booking is managed. Commission-model salons typically manage bookings centrally: one platform, one calendar, salon-level brand. Booth-rental salons typically have each tech managing their own bookings independently, even if they share physical space. Before choosing a platform, be clear on your salon's model: it determines whether you need a unified or individual setup.</p>
       </section>
     </div>
   ),

@@ -75,7 +75,7 @@ export default function ToolsIndex() {
             Tools to grow your business
           </h1>
           <p className="text-gray-500 text-lg mb-12 max-w-lg">
-            Free calculators, generators and templates — no signup required.
+            Free calculators, generators and templates: no signup required.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

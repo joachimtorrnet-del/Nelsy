@@ -36,8 +36,8 @@ registerArticle({
   ],
   relatedSlugs: ['black-nail-ideas', 'pink-nail-ideas', 'minimalist-nail-ideas', 'nail-colors-for-skin-undertone'],
   faq: [
-    { q: 'Why do white nails look so popular on social media?', a: 'White nails photograph extremely well — they reflect light clearly, show shape definition strongly, and look crisp on camera. They also pair well with every skin tone in photographs and pop against almost any background. This makes them a perennial favourite for nail content creators.' },
-    { q: 'How do I get white gel polish fully opaque without streaks?', a: 'White gel is notoriously difficult to apply streak-free. Use a white gel specifically formulated for opacity (not a sheer white). Apply in three thin coats rather than two thick ones. The first coat will look patchy — that\'s normal. Build coverage gradually. See the full guide on applying gel polish without streaks.' },
+    { q: 'Why do white nails look so popular on social media?', a: 'White nails photograph extremely well: they reflect light clearly, show shape definition strongly, and look crisp on camera. They also pair well with every skin tone in photographs and pop against almost any background. This makes them a perennial favourite for nail content creators.' },
+    { q: 'How do I get white gel polish fully opaque without streaks?', a: 'White gel is notoriously difficult to apply streak-free. Use a white gel specifically formulated for opacity (not a sheer white). Apply in three thin coats rather than two thick ones. The first coat will look patchy, that\'s normal. Build coverage gradually. See the full guide on applying gel polish without streaks.' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
@@ -45,15 +45,15 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Classic and minimal white</h2>
         <ArticleImage src="photo-1633955726992-2b7c0d2d2a69" alt="Bright white nail polish on dark skin hands" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Bright opaque white — clean, crisp, graphic</li>
-          <li>White on short square nails — the most modern minimalist white look</li>
-          <li>White on long almond — elongating and editorial</li>
-          <li>White coffin nails — bold shape, clean colour</li>
+          <li>Bright opaque white: clean, crisp, graphic</li>
+          <li>White on short square nails: the most modern minimalist white look</li>
+          <li>White on long almond: elongating and editorial</li>
+          <li>White coffin nails: bold shape, clean colour</li>
           <li>White with a single chrome accent nail</li>
           <li>White with one negative space nail</li>
-          <li>White French tip (traditional) — white tip on a natural base</li>
+          <li>White French tip (traditional): white tip on a natural base</li>
           <li>All-white set with a glossy finish</li>
-          <li>White matte — gives a sculptural, modern quality</li>
+          <li>White matte: gives a sculptural, modern quality</li>
           <li>White with a single gold foil stripe</li>
         </ul>
       </section>
@@ -62,16 +62,16 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Soft and off-white shades</h2>
         <ArticleImage src="photo-1754799670410-b282791342c3" alt="Long coffin-shaped nails in white and soft pink" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Milk white — slightly warm, creamy, softer than pure white</li>
-          <li>Ivory — warm off-white; flattering on warm undertones</li>
-          <li>Vanilla — cream-white with a yellow warmth; soft and wearable</li>
-          <li>Chalk white — cool off-white; clean and modern</li>
-          <li>Cloud white — slightly grey-tinged; airy and minimal</li>
-          <li>Sheer white / glass white — translucent milk effect; the "clean girl" nail</li>
-          <li>Pearlescent white — white with a subtle shifting shimmer</li>
-          <li>Coconut white — warm, creamy, tropical feel</li>
-          <li>White with silver undertone — cool and metallic-adjacent</li>
-          <li>Nude-white — barely any colour; extremely skin-close</li>
+          <li>Milk white: slightly warm, creamy, softer than pure white</li>
+          <li>Ivory: warm off-white; flattering on warm undertones</li>
+          <li>Vanilla: cream-white with a yellow warmth; soft and wearable</li>
+          <li>Chalk white: cool off-white; clean and modern</li>
+          <li>Cloud white: slightly grey-tinged; airy and minimal</li>
+          <li>Sheer white / glass white: translucent milk effect; the "clean girl" nail</li>
+          <li>Pearlescent white: white with a subtle shifting shimmer</li>
+          <li>Coconut white: warm, creamy, tropical feel</li>
+          <li>White with silver undertone: cool and metallic-adjacent</li>
+          <li>Nude-white: barely any colour; extremely skin-close</li>
         </ul>
       </section>
 
@@ -81,7 +81,7 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>White with black abstract lines</li>
           <li>White with gold geometric detailing</li>
-          <li>White floral designs — daisy, rose, or cherry blossom</li>
+          <li>White floral designs: daisy, rose, or cherry blossom</li>
           <li>White marble effect with grey veining</li>
           <li>White and nude colour block</li>
           <li>White with soft pastel swirls</li>
@@ -95,16 +95,16 @@ registerArticle({
       <section id="white-effects">
         <h2 className="font-serif text-2xl font-bold mb-4">White with effects</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>White chrome — mirror-white; highly reflective and clean</li>
-          <li>White aurora powder — shifting white-to-blue-to-purple iridescence</li>
-          <li>White glitter — fine silver glitter embedded in a white base</li>
-          <li>White pearl shimmer — subtle lustre in a white gel</li>
-          <li>White holographic — white with rainbow shimmer</li>
-          <li>White velvet matte — soft, light-diffusing matte texture</li>
-          <li>White cat eye gel — shifting shimmer in a white magnetic gel</li>
-          <li>White with silver foil — asymmetric foil flecks</li>
-          <li>Glazed donut nails — the viral sheer white with chrome shimmer look</li>
-          <li>White jelly with rhinestones — sheer and sparkly</li>
+          <li>White chrome: mirror-white; highly reflective and clean</li>
+          <li>White aurora powder: shifting white-to-blue-to-purple iridescence</li>
+          <li>White glitter: fine silver glitter embedded in a white base</li>
+          <li>White pearl shimmer: subtle lustre in a white gel</li>
+          <li>White holographic: white with rainbow shimmer</li>
+          <li>White velvet matte: soft, light-diffusing matte texture</li>
+          <li>White cat eye gel: shifting shimmer in a white magnetic gel</li>
+          <li>White with silver foil: asymmetric foil flecks</li>
+          <li>Glazed donut nails: the viral sheer white with chrome shimmer look</li>
+          <li>White jelly with rhinestones: sheer and sparkly</li>
         </ul>
       </section>
 
@@ -112,16 +112,16 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">White mixed with colour</h2>
         <ArticleImage src="photo-1772322586702-73125782bd99" alt="Long nails with a blue to white ombré gradient" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>White and black — graphic, high-contrast, editorial</li>
-          <li>White and pastel ombré — soft gradient from white to any pastel</li>
-          <li>White and gold — luxe and minimal</li>
-          <li>White and green — crisp, fresh, summery</li>
-          <li>White and blue — nautical or clean and coastal</li>
-          <li>White and pink — soft, feminine, classic</li>
-          <li>White and red — striking; clean base with a red accent nail</li>
-          <li>White with multicolour swirls — maximalist and playful</li>
-          <li>White and nude mix — understated and polished</li>
-          <li>White with a neon accent nail — graphic contrast</li>
+          <li>White and black: graphic, high-contrast, editorial</li>
+          <li>White and pastel ombré: soft gradient from white to any pastel</li>
+          <li>White and gold: luxe and minimal</li>
+          <li>White and green: crisp, fresh, summery</li>
+          <li>White and blue: nautical or clean and coastal</li>
+          <li>White and pink: soft, feminine, classic</li>
+          <li>White and red: striking; clean base with a red accent nail</li>
+          <li>White with multicolour swirls: maximalist and playful</li>
+          <li>White and nude mix: understated and polished</li>
+          <li>White with a neon accent nail: graphic contrast</li>
         </ul>
       </section>
 

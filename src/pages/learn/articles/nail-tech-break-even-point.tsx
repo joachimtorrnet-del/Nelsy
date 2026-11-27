@@ -24,16 +24,16 @@ registerArticle({
   ],
   relatedSlugs: ['nail-tech-profit-margin-explained', 'nail-tech-expense-list', 'nail-tech-monthly-income-calculator', 'how-to-calculate-nail-tech-hourly-rate'],
   faq: [
-    { q: 'What\'s the difference between break-even and profit?', a: 'At break-even, your revenue exactly covers your costs — you neither profit nor lose money. Any revenue above your break-even point is profit. Below it, you\'re making a loss (spending more on the business than it generates). Break-even is the floor; your profit goal is the target above it.' },
-    { q: 'Should I include my own income in break-even?', a: 'It depends on what you\'re trying to measure. A pure break-even (covering business costs only) tells you the minimum revenue to keep the business operational. A "personal break-even" (covering business costs + your desired income + tax) tells you how much you need to earn to actually live on this income. For practical nail business planning, calculate both — the business break-even first, then the personal break-even that includes your income target.' },
-    { q: 'How often should I recalculate my break-even?', a: 'Whenever your costs change significantly: you move spaces, your insurance renews at a different rate, you add a new subscription, or your product costs shift. Otherwise, an annual review is sufficient. Costs tend to creep up over time — an annual break-even review catches this before it erodes your margin without you noticing.' },
+    { q: 'What\'s the difference between break-even and profit?', a: 'At break-even, your revenue exactly covers your costs: you neither profit nor lose money. Any revenue above your break-even point is profit. Below it, you\'re making a loss (spending more on the business than it generates). Break-even is the floor; your profit goal is the target above it.' },
+    { q: 'Should I include my own income in break-even?', a: 'It depends on what you\'re trying to measure. A pure break-even (covering business costs only) tells you the minimum revenue to keep the business operational. A "personal break-even" (covering business costs + your desired income + tax) tells you how much you need to earn to actually live on this income. For practical nail business planning, calculate both: the business break-even first, then the personal break-even that includes your income target.' },
+    { q: 'How often should I recalculate my break-even?', a: 'Whenever your costs change significantly: you move spaces, your insurance renews at a different rate, you add a new subscription, or your product costs shift. Otherwise, an annual review is sufficient. Costs tend to creep up over time: an annual break-even review catches this before it erodes your margin without you noticing.' },
   ],
   relatedFeatureSlugs: ['analytics', 'payments'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="what-is-break-even">
         <h2 className="font-serif text-2xl font-bold mb-4">What break-even means</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Your break-even point is the revenue your business needs to generate to cover all its costs — products, rent, insurance, software, everything. Below this level, you're running at a loss. Above it, you're profitable.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Your break-even point is the revenue your business needs to generate to cover all its costs: products, rent, insurance, software, everything. Below this level, you're running at a loss. Above it, you're profitable.</p>
         <p className="text-gray-700 leading-relaxed">Knowing your break-even answers practical questions: How many clients do I need per week to cover my costs? If I take a week off, what do I lose? Is this pricing sustainable? It gives you a solid floor to stand on when making business decisions.</p>
       </section>
 
@@ -75,22 +75,22 @@ registerArticle({
         <p className="text-gray-700 my-4 leading-relaxed">At an average appointment price of £45:</p>
         <p className="text-gray-700 mb-4 leading-relaxed">Contribution per appointment = £45 − £7 = £38 (per client, towards fixed costs and profit)</p>
         <p className="text-gray-700 leading-relaxed">Break-even clients per month = £528 ÷ £38 = <strong>14 clients per month</strong> (approximately)</p>
-        <p className="text-gray-700 mt-4 leading-relaxed">At 14 clients per month (roughly 3.5 per week), this example business breaks even. Every client above 14 generates profit. These figures are illustrative — your numbers will differ.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">At 14 clients per month (roughly 3.5 per week), this example business breaks even. Every client above 14 generates profit. These figures are illustrative: your numbers will differ.</p>
       </section>
 
       <section id="using-it">
         <h2 className="font-serif text-2xl font-bold mb-4">How to use your break-even number</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Pricing floor:</strong> Your price must be above variable costs — a service priced below its own material cost creates a loss before fixed costs are even considered</li>
-          <li><strong>Capacity planning:</strong> "I break even at 14 clients/month, and I want to take a week off in August — I need to cover that across the other 3 weeks"</li>
-          <li><strong>Risk assessment:</strong> "If I only see 10 clients next month (quiet season), I'll be £152 below break-even — I need to plan for this"</li>
-          <li><strong>Pricing changes:</strong> If you raise your average appointment value, your break-even client count drops — you need fewer clients to cover the same costs</li>
+          <li><strong>Pricing floor:</strong> Your price must be above variable costs. A service priced below its own material cost creates a loss before fixed costs are even considered</li>
+          <li><strong>Capacity planning:</strong> "I break even at 14 clients/month, and I want to take a week off in August. I need to cover that across the other 3 weeks"</li>
+          <li><strong>Risk assessment:</strong> "If I only see 10 clients next month (quiet season), I'll be £152 below break-even. I need to plan for this"</li>
+          <li><strong>Pricing changes:</strong> If you raise your average appointment value, your break-even client count drops. You need fewer clients to cover the same costs</li>
         </ul>
       </section>
 
       <section id="improving">
         <h2 className="font-serif text-2xl font-bold mb-4">Lowering your break-even</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Lowering your break-even gives you more financial cushion — fewer clients needed to cover costs, more profit from every client above that floor:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Lowering your break-even gives you more financial cushion. Fewer clients needed to cover costs, more profit from every client above that floor:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li><strong>Raise average appointment value:</strong> Higher prices reduce the number of clients needed to break even</li>
           <li><strong>Reduce fixed costs:</strong> Negotiate rent, switch to a lower-cost insurance provider, audit subscriptions</li>

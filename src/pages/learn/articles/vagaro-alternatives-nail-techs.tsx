@@ -6,7 +6,7 @@ registerArticle({
   slug: 'vagaro-alternatives-nail-techs',
   title: 'Vagaro Alternatives for Nail Techs',
   seoTitle: 'Vagaro Alternatives for Nail Techs',
-  excerpt: 'Vagaro is a capable platform — but it\'s not the right choice for every nail tech. Here are the alternatives worth looking at if Vagaro doesn\'t suit your business.',
+  excerpt: 'Vagaro is a capable platform, but it\'s not the right choice for every nail tech. Here are the alternatives worth looking at if Vagaro doesn\'t suit your business.',
   seoDescription: 'Vagaro alternatives for nail techs. Who Vagaro suits, where it falls short, and the booking software alternatives for solo nail techs and nail salons.',
   category: 'comparisons',
   tags: ['Vagaro alternatives', 'Vagaro nail techs', 'nail booking software alternative'],
@@ -24,7 +24,7 @@ registerArticle({
   relatedSlugs: [ 'how-to-choose-booking-app-nail-business', 'glossgenius-alternatives-nail-techs', 'how-to-switch-nail-booking-software'],
   faq: [
     { q: 'Is Vagaro only available in the US?', a: 'Vagaro is primarily US-focused, though it has expanded to some other markets. Nail techs outside the US often find that platforms with stronger international presence (Fresha in particular) are better alternatives. Check current Vagaro availability for your location on their website.' },
-    { q: 'What is Vagaro\'s pricing model?', a: 'Vagaro typically charges a monthly subscription with pricing that varies based on the number of bookable staff. Exact pricing changes — always verify current rates on Vagaro\'s pricing page before committing.' },
+    { q: 'What is Vagaro\'s pricing model?', a: 'Vagaro typically charges a monthly subscription with pricing that varies based on the number of bookable staff. Exact pricing changes, always verify current rates on Vagaro\'s pricing page before committing.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
@@ -46,7 +46,7 @@ registerArticle({
       <section id="where-it-falls-short">
         <h2 className="font-serif text-2xl font-bold mb-4">Where Vagaro falls short for nail techs</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Complexity for solo techs:</strong> Vagaro's breadth of features — payroll, inventory, reporting, marketing — adds complexity that solo nail techs don't need</li>
+          <li><strong>Complexity for solo techs:</strong> Vagaro's breadth of features (payroll, inventory, reporting, marketing) adds complexity that solo nail techs don't need</li>
           <li><strong>Subscription cost:</strong> The monthly fee is an ongoing commitment; lower-volume nail techs may find it hard to justify</li>
           <li><strong>US-centric:</strong> Limited international presence makes it largely unavailable or less useful for non-US nail techs</li>
           <li><strong>Learning curve:</strong> More features means more setup and more to learn before getting value from the platform</li>
@@ -74,7 +74,7 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Export client data (name, contact, appointment history) before closing your Vagaro account</li>
           <li>Check whether your new platform accepts CSV imports from Vagaro's export format</li>
-          <li>Update all booking links — social media bio, website, email signatures — when you switch</li>
+          <li>Update all booking links (social media bio, website, email signatures) when you switch</li>
           <li>Run the overlap period as short as practical; clients adapting to two booking systems causes confusion</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">Full switching guide: <Link to="/blog/how-to-switch-nail-booking-software" className="underline text-[#F52B8C]">how to switch nail booking software without losing clients</Link>.</p>

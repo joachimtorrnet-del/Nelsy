@@ -4,7 +4,7 @@ export default function LashTechs() {
   return (
     <UseCasePage
       seo={{
-        title: 'Nelsy for Lash Techs — Online Booking & Client Management',
+        title: 'Nelsy for Lash Techs: Online Booking & Client Management',
         description: 'Run your lash business without the admin headache. Nelsy handles online booking, deposits for lash fills, client reminders, and more.',
         canonical: '/use-cases/lash-techs',
       }}

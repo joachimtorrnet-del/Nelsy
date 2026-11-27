@@ -23,8 +23,8 @@ registerArticle({
   ],
   relatedSlugs: ['nail-tech-review-request-templates', 'nail-tech-referral-message-templates', 'nail-client-welcome-message-templates', 'how-to-retain-nail-clients'],
   faq: [
-    { q: 'How soon after an appointment should I follow up?', a: 'Within 24–48 hours is ideal for a post-appointment follow-up — close enough that the appointment is fresh in their mind but not so immediate it feels scripted. For a check-in or win-back message, the timing depends on your booking cycle — if clients typically rebook every 3 weeks, check in around week 4–5 if you haven\'t seen them.' },
-    { q: 'Is following up pushy?', a: 'A genuine, warm follow-up isn\'t pushy — it\'s good service. Most clients appreciate a nail tech who checks in to make sure they\'re happy. Keep it short, warm, and non-pressuring. A follow-up that feels like a sales message is pushy; one that asks how their nails are holding up feels caring.' },
+    { q: 'How soon after an appointment should I follow up?', a: 'Within 24–48 hours is ideal for a post-appointment follow-up: close enough that the appointment is fresh in their mind but not so immediate it feels scripted. For a check-in or win-back message, the timing depends on your booking cycle, if clients typically rebook every 3 weeks, check in around week 4–5 if you haven\'t seen them.' },
+    { q: 'Is following up pushy?', a: 'A genuine, warm follow-up isn\'t pushy: it\'s good service. Most clients appreciate a nail tech who checks in to make sure they\'re happy. Keep it short, warm, and non-pressuring. A follow-up that feels like a sales message is pushy; one that asks how their nails are holding up feels caring.' },
   ],
   relatedFeatureSlugs: ['crm', 'email-newsletters', 'bookings'],
   content: () => (
@@ -43,9 +43,9 @@ registerArticle({
 
       <section id="first-appointment">
         <h2 className="font-serif text-2xl font-bold mb-4">After a first appointment</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Following up with a new client is especially important — it sets the tone for the relationship:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Following up with a new client is especially important. It sets the tone for the relationship:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name]! It was so lovely meeting you today and having you as my first-timer 💕 I hope you're happy with your [service]! If you have any questions about looking after your nails, don't hesitate to ask. I'd love to see you again — you can book your next appointment at [link]. [Your name] ✨
+          Hi [Name]! It was so lovely meeting you today and having you as my first-timer 💕 I hope you're happy with your [service]! If you have any questions about looking after your nails, don't hesitate to ask. I'd love to see you again: you can book your next appointment at [link]. [Your name] ✨
         </blockquote>
         <ArticleTip>After a first appointment is also the best time to ask for a review, while the experience is fresh. You can include a review request naturally at the end of this message.</ArticleTip>
       </section>
@@ -54,22 +54,22 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Win-back message for lapsed clients</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">For clients you haven't seen in 2–3+ months:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name]! It's been a little while — I hope you're well! I've been thinking about you and wanted to check in. Have you been looking after your nails okay? 😊 If you're ready for a new set, I'd love to have you back. You can book at [link] — I have availability coming up in [timeframe]. Hope to see you soon! 💕
+          Hi [Name]! It's been a little while: I hope you're well! I've been thinking about you and wanted to check in. Have you been looking after your nails okay? 😊 If you're ready for a new set, I'd love to have you back. You can book at [link]: I have availability coming up in [timeframe]. Hope to see you soon! 💕
         </blockquote>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>More direct win-back:</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Hi [Name]! Haven't seen you in a while — we miss you! I have some availability coming up if you fancy treating yourself. Book at [link] or message me if you have any questions. Hope to see you soon! 💅
+          Hi [Name]! Haven't seen you in a while: we miss you! I have some availability coming up if you fancy treating yourself. Book at [link] or message me if you have any questions. Hope to see you soon! 💅
         </blockquote>
       </section>
 
       <section id="seasonal-checkin">
         <h2 className="font-serif text-2xl font-bold mb-4">Seasonal check-in</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Use seasonal moments to reach out — Christmas, summer, Valentine's Day — without it feeling like a cold call:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Use seasonal moments to reach out. Christmas, summer, Valentine's Day, without it feeling like a cold call:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name]! With Christmas just around the corner, I wanted to reach out — my festive slots are filling up fast! If you want to get your nails done for the season, it's worth booking soon. You can grab a slot at [link] 🎄✨
+          Hi [Name]! With Christmas just around the corner, I wanted to reach out: my festive slots are filling up fast! If you want to get your nails done for the season, it's worth booking soon. You can grab a slot at [link] 🎄✨
         </blockquote>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Hi [Name]! Hope you're having a lovely summer ☀️ If you want a fresh set before [upcoming event or season], I have some availability — book at [link] or let me know!
+          Hi [Name]! Hope you're having a lovely summer ☀️ If you want a fresh set before [upcoming event or season], I have some availability: book at [link] or let me know!
         </blockquote>
       </section>
 
@@ -77,10 +77,10 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Rebook nudge message</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">For regular clients who are overdue a rebook:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name]! Just checking in — it's been about [X] weeks since your last appointment. If you're ready for a refresh, I have availability coming up. Book at [link] or let me know what works for you! 💅
+          Hi [Name]! Just checking in: it's been about [X] weeks since your last appointment. If you're ready for a refresh, I have availability coming up. Book at [link] or let me know what works for you! 💅
         </blockquote>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Hey [Name]! Your nails must be getting to the infill stage 😄 I have a slot on [day] if you fancy it — let me know! 💕
+          Hey [Name]! Your nails must be getting to the infill stage 😄 I have a slot on [day] if you fancy it: let me know! 💕
         </blockquote>
       </section>
     </div>

@@ -8,12 +8,12 @@ export default function EmailNewslettersPage() {
       metaDescription="Collect email addresses and message your clients directly. Send promotions, seasonal offers, and rebooking nudges without relying on Instagram's algorithm."
       canonical="/features/email-newsletters"
       h1="Build and message your beauty audience"
-      heroDescription="Instagram can limit your reach on any given day. Email does not. Build your client list and send messages that land directly in their inbox — no algorithm in the way."
+      heroDescription="Instagram can limit your reach on any given day. Email does not. Build your client list and send messages that land directly in their inbox: no algorithm in the way."
       icon={Mail}
       benefits={[
         {
           title: 'Reach clients directly',
-          desc: 'Email bypasses social media algorithms. When you send a message, it goes to every subscriber — not just whoever the algorithm decides to show it to.',
+          desc: 'Email bypasses social media algorithms. When you send a message, it goes to every subscriber, not just whoever the algorithm decides to show it to.',
         },
         {
           title: 'Fill your appointment book',
@@ -37,7 +37,7 @@ export default function EmailNewslettersPage() {
         {
           step: '2',
           title: 'Write your message',
-          desc: "Create an email using simple formatting — no design skills needed. Add your offer, your personality, and a clear call to action.",
+          desc: "Create an email using simple formatting: no design skills needed. Add your offer, your personality, and a clear call to action.",
         },
         {
           step: '3',

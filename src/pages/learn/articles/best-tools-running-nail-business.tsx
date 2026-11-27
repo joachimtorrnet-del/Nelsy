@@ -7,7 +7,7 @@ registerArticle({
   title: 'Best Tools for Running a Nail Business',
   seoTitle: 'Best Tools for Running a Nail Business (Software + Systems)',
   excerpt: 'The right tools reduce admin, protect your income, and free you to focus on your craft. Here are the tools that actually make a difference to how a nail business runs.',
-  seoDescription: 'Best tools for running a nail business. Software, systems, and physical tools that make the business side of being a nail tech easier — booking, finance, admin, content.',
+  seoDescription: 'Best tools for running a nail business. Software, systems and physical tools that make booking, finance, admin and content easier for nail techs.',
   category: 'booking-software',
   tags: ['nail business tools', 'tools for nail tech business', 'nail tech software', 'running a nail business'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
@@ -24,8 +24,8 @@ registerArticle({
   ],
   relatedSlugs: ['best-business-apps-nail-techs', 'how-to-organize-nail-business-from-phone', 'nail-tech-starter-kit', 'nail-tech-expense-list'],
   faq: [
-    { q: 'How much should a nail tech spend on business tools?', a: 'Most of the tools that matter for running a nail business have free or low-cost tiers. A booking app (free on many platforms), photo editing (free with Snapseed or Lightroom free tier), basic accounting (free with Wave or a spreadsheet), and social scheduling (free via Meta Business Suite) can all be run at zero or near-zero cost. The main paid tool nail techs typically invest in is booking software that collects deposits — and even that has free-subscription options.' },
-    { q: 'Is there one tool that does everything for a nail tech?', a: 'No single tool covers everything well. The closest are comprehensive booking platforms (Fresha, Vagaro) that bundle booking, payments, and some marketing tools — but even those need supplementing with content creation tools, separate accounting software, and professional communication apps. A small stack of 4–6 focused tools typically works better than one complicated all-in-one.' },
+    { q: 'How much should a nail tech spend on business tools?', a: 'Most of the tools that matter for running a nail business have free or low-cost tiers. A booking app (free on many platforms), photo editing (free with Snapseed or Lightroom free tier), basic accounting (free with Wave or a spreadsheet), and social scheduling (free via Meta Business Suite) can all be run at zero or near-zero cost. The main paid tool nail techs typically invest in is booking software that collects deposits, and even that has free-subscription options.' },
+    { q: 'Is there one tool that does everything for a nail tech?', a: 'No single tool covers everything well. The closest are comprehensive booking platforms (Fresha, Vagaro) that bundle booking, payments, and some marketing tools, but even those need supplementing with content creation tools, separate accounting software, and professional communication apps. A small stack of 4–6 focused tools typically works better than one complicated all-in-one.' },
   ],
   relatedFeatureSlugs: ['bookings', 'crm', 'analytics'],
   content: () => (
@@ -92,7 +92,7 @@ registerArticle({
         <ArticleTable
           headers={['Tool', 'What it improves']}
           rows={[
-            ['Phone stand / tripod', 'Content creation — photos and video without assistance'],
+            ['Phone stand / tripod', 'Content creation: photos and video without assistance'],
             ['Ring light or window light reflector', 'Consistent lighting for content'],
             ['Card reader (SumUp, Square, iZettle)', 'In-person contactless payments for mobile or studio'],
             ['Label printer', 'Organise product supplies, client bags, custom aftercare packaging'],

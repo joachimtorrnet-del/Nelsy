@@ -6,8 +6,8 @@ registerArticle({
   slug: 'how-to-build-nail-client-referral-program',
   title: 'How to Build a Nail Client Referral Program',
   seoTitle: 'How to Build a Nail Client Referral Program That Works',
-  excerpt: 'Word of mouth is still the most powerful way for nail techs to grow. A simple referral program formalises what already happens naturally — and accelerates it.',
-  seoDescription: 'How to build a nail client referral program. Simple referral schemes for nail techs — reward structures, how to ask for referrals, and tracking new referral clients.',
+  excerpt: 'Word of mouth is still the most powerful way for nail techs to grow. A simple referral program formalises what already happens naturally, and accelerates it.',
+  seoDescription: 'How to build a nail client referral program. Simple referral schemes for nail techs: reward structures, how to ask for referrals, and tracking new referral clients.',
   category: 'get-clients',
   tags: ['nail client referral', 'nail referral program', 'word of mouth nail', 'nail business growth'],
   heroImage: 'linear-gradient(135deg, #F0FFF4 0%, #BBF7D0 100%)',
@@ -33,8 +33,8 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="why-referrals-matter">
         <h2 className="font-serif text-2xl font-bold mb-4">Why referrals are valuable</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Referred clients are among the best clients a nail tech can get. They arrive pre-sold on your work (their friend recommended you specifically), they have realistic expectations (they've seen your results in person), and they tend to have similar taste and lifestyle to your existing clients — meaning they're likely to be a good fit.</p>
-        <p className="text-gray-700 leading-relaxed">A referral program formalises what already happens organically. Most satisfied nail clients talk about their nails — a program gives them a structured reason to direct their friends to you specifically, and rewards them for doing so.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Referred clients are among the best clients a nail tech can get. They arrive pre-sold on your work (their friend recommended you specifically), they have realistic expectations (they've seen your results in person), and they tend to have similar taste and lifestyle to your existing clients: meaning they're likely to be a good fit.</p>
+        <p className="text-gray-700 leading-relaxed">A referral program formalises what already happens organically. Most satisfied nail clients talk about their nails: a program gives them a structured reason to direct their friends to you specifically, and rewards them for doing so.</p>
       </section>
 
       <section id="simple-schemes">
@@ -57,17 +57,17 @@ registerArticle({
 
       <section id="how-to-ask">
         <h2 className="font-serif text-2xl font-bold mb-4">How to ask for referrals</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">The best moment to ask is when a client has just received a fresh set and is visibly pleased with the result — at the end of the appointment, before they leave:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">The best moment to ask is when a client has just received a fresh set and is visibly pleased with the result. At the end of the appointment, before they leave:</p>
         <ArticleCallout variant="tip" title="Natural referral ask">
-          "I'm so glad you love them! I'm always looking for lovely clients like you — if any of your friends are looking for a nail tech, send them my way. I'll give you both £8 off your next appointments as a thank you 😊"
+          "I'm so glad you love them! I'm always looking for lovely clients like you, if any of your friends are looking for a nail tech, send them my way. I'll give you both £8 off your next appointments as a thank you 😊"
         </ArticleCallout>
         <p className="text-gray-700 mt-4 mb-4 leading-relaxed">Other moments to ask:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>In a follow-up message: "Love seeing your nails looking so good in your photos! If any friends are looking for a nail tech, I have a refer-a-friend offer — send them my way"</li>
+          <li>In a follow-up message: "Love seeing your nails looking so good in your photos! If any friends are looking for a nail tech, I have a refer-a-friend offer: send them my way"</li>
           <li>In your booking confirmation: "Know someone who needs nails? Send them to my booking page and you'll both get £8 off your next appointment"</li>
-          <li>On Instagram Stories: "Did you know I have a referral scheme? Refer a friend and you both save £8 — DM me for details"</li>
+          <li>On Instagram Stories: "Did you know I have a referral scheme? Refer a friend and you both save £8: DM me for details"</li>
         </ul>
-        <ArticleTip>Ask for referrals at the peak of client satisfaction — when they\'re admiring their fresh nails. The same ask a week later, when the nails are 5 days old, will get a much lower response rate.</ArticleTip>
+        <ArticleTip>Ask for referrals at the peak of client satisfaction, when they\'re admiring their fresh nails. The same ask a week later, when the nails are 5 days old, will get a much lower response rate.</ArticleTip>
       </section>
 
       <section id="communicating-the-scheme">
@@ -75,7 +75,7 @@ registerArticle({
         <ArticleTable
           headers={['Channel', 'How to use it']}
           rows={[
-            ['Booking confirmation', 'One line: "Refer a friend and you\'ll both get £8 off — just ask them to mention your name when they book"'],
+            ['Booking confirmation', 'One line: "Refer a friend and you\'ll both get £8 off, just ask them to mention your name when they book"'],
             ['Instagram Highlights', 'A "Refer a Friend" slide in your booking/FAQ Highlight'],
             ['Instagram Story', 'Occasional story: "My referral scheme 👇" with the details'],
             ['End of appointment', 'Verbal mention when client is happy with their nails'],
@@ -89,8 +89,8 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Ask new clients "how did you hear about me?" at their first appointment or on their booking form</li>
           <li>When a client is referred, note the referrer\'s name against the new booking</li>
-          <li>Apply the referrer\'s discount at the next appointment (a note on their booking: "£8 off — referred [new client name]")</li>
-          <li>For high volume, a simple spreadsheet or a column in your booking system notes field is enough — you don\'t need specialist software</li>
+          <li>Apply the referrer\'s discount at the next appointment (a note on their booking: "£8 off: referred [new client name]")</li>
+          <li>For high volume, a simple spreadsheet or a column in your booking system notes field is enough: you don\'t need specialist software</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">For more client growth strategies: <Link to="/blog/how-to-ask-nail-clients-for-reviews" className="underline text-[#F52B8C]">how to ask nail clients for reviews</Link> | <Link to="/blog/how-to-get-more-local-nail-clients" className="underline text-[#F52B8C]">how to get more local nail clients</Link>.</p>
       </section>

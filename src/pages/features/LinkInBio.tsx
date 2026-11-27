@@ -5,15 +5,15 @@ export default function LinkInBioPage() {
   return (
     <FeaturePage
       title="Link in Bio for Beauty Professionals | Nelsy"
-      metaDescription="One link in your Instagram bio that shows your services, takes bookings, and represents your whole beauty business. Built for nail techs, lash artists, and beauty pros."
+      metaDescription="One link in your Instagram bio that shows your services, takes bookings and represents your beauty business. Built for nail techs, lash artists and beauty pros."
       canonical="/features/link-in-bio"
       h1="One link. Your entire beauty business."
-      heroDescription="Your Instagram bio has one link. Make it count. Your Nelsy page puts your booking, services, and brand all in one place — ready for every new follower who lands on your profile."
+      heroDescription="Your Instagram bio has one link. Make it count. Your Nelsy page puts your booking, services, and brand all in one place: ready for every new follower who lands on your profile."
       icon={Link2}
       benefits={[
         {
           title: 'Everything a client needs in one place',
-          desc: "Services, pricing, availability, and a booking button — all on one page clients reach with a single tap from your Instagram bio.",
+          desc: "Services, pricing, availability, and a booking button: all on one page clients reach with a single tap from your Instagram bio.",
         },
         {
           title: 'Converts followers into clients',
@@ -37,7 +37,7 @@ export default function LinkInBioPage() {
         {
           step: '2',
           title: 'Put your link in your bio',
-          desc: "Copy your Nelsy link and paste it into your Instagram bio. That one link does everything — it's all clients need.",
+          desc: "Copy your Nelsy link and paste it into your Instagram bio. That one link does everything: it's all clients need.",
         },
         {
           step: '3',
@@ -55,7 +55,7 @@ export default function LinkInBioPage() {
       faq={[
         {
           q: "Do I need a website if I have a Nelsy link in bio page?",
-          a: "For many beauty professionals, a Nelsy page covers everything a website would do — and it is built for bookings. You may not need anything else.",
+          a: "For many beauty professionals, a Nelsy page covers everything a website would do, and it is built for bookings. You may not need anything else.",
         },
         {
           q: 'Can I customise the look of my page?',

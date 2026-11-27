@@ -45,7 +45,7 @@ const COMPARISON_ROWS: { feature: string; fresha: CellValue; nelsy: CellValue }[
   { feature: 'Branded booking page',   fresha: 'Fresha-branded experience',     nelsy: 'Fully branded to your business' },
   { feature: 'Deposit collection',     fresha: true,                            nelsy: true },
   { feature: 'Online payments',        fresha: true,                            nelsy: true },
-  { feature: 'Nelsy booking commission', fresha: '—',                           nelsy: '0%' },
+  { feature: 'Nelsy booking commission', fresha: 'n/a',                           nelsy: '0%' },
 ];
 
 function ComparisonCell({ value }: { value: CellValue }) {
@@ -62,7 +62,7 @@ export default function FreshaAlternative() {
   return (
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
-        title="Fresha Alternative for Nail Techs — Why Nail Techs Switch to Nelsy"
+        title="Fresha Alternative for Nail Techs: Fresha vs Nelsy"
         description="Comparing Fresha vs Nelsy for independent nail techs. See how each platform handles branding, Instagram booking, deposits and client ownership before you decide."
         canonical="/fresha-alternative-nail-techs"
         jsonLd={JSON_LD}
@@ -74,7 +74,7 @@ export default function FreshaAlternative() {
         {/* ── Disclosure ── */}
         <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
           <p className="max-w-6xl mx-auto text-xs text-gray-500 text-center">
-            <strong>Transparency note:</strong> This page is published by Nelsy. We've done our best to represent both platforms fairly based on publicly available information. Product details change — verify current features and pricing directly with each provider.
+            <strong>Transparency note:</strong> This page is published by Nelsy. We've done our best to represent both platforms fairly based on publicly available information. Product details change: verify current features and pricing directly with each provider.
           </p>
         </div>
 
@@ -98,7 +98,7 @@ export default function FreshaAlternative() {
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.1 }}
               className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed"
             >
-              Fresha is a strong platform for salons and studios. But independent nail techs who build their audience on Instagram often find they need something different — a booking tool that works around their social presence, not a marketplace that owns the client relationship.
+              Fresha is a strong platform for salons and studios. But independent nail techs who build their audience on Instagram often find they need something different: a booking tool that works around their social presence, not a marketplace that owns the client relationship.
             </motion.p>
           </div>
         </section>
@@ -108,7 +108,7 @@ export default function FreshaAlternative() {
           <div className="max-w-3xl mx-auto">
             <motion.div {...fadeUp()} className="text-center mb-10">
               <h2 style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)', fontWeight: 900, color: '#0D0D0D', letterSpacing: '-0.03em' }}>
-                Fresha vs Nelsy — How They Compare
+                Fresha vs Nelsy, How They Compare
               </h2>
               <p className="text-gray-400 text-sm mt-2">Based on publicly available product information. Verify details directly with each provider.</p>
             </motion.div>
@@ -147,7 +147,7 @@ export default function FreshaAlternative() {
               <motion.div {...fadeUp()} className="bg-white rounded-2xl p-6 border border-gray-200">
                 <h3 className="font-bold text-gray-900 text-base mb-3">Fresha is a marketplace</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  Fresha works by listing your business on the Fresha platform. Clients can discover you through Fresha's directory and book through Fresha's interface. This is powerful for client discovery — especially if you're a new business without an existing following.
+                  Fresha works by listing your business on the Fresha platform. Clients can discover you through Fresha's directory and book through Fresha's interface. This is powerful for client discovery, especially if you're a new business without an existing following.
                 </p>
                 <p className="text-sm text-gray-500 leading-relaxed mt-3">
                   The tradeoff: the booking experience lives within Fresha's ecosystem. Your clients are booking on Fresha, not exclusively on your own branded page.
@@ -156,10 +156,10 @@ export default function FreshaAlternative() {
               <motion.div {...fadeUp(0.08)} className="bg-white rounded-2xl p-6 border-2" style={{ borderColor: PINK }}>
                 <h3 className="font-bold text-gray-900 text-base mb-3" style={{ color: PINK }}>Nelsy is your own branded booking tool</h3>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  Nelsy gives you a booking page that belongs to your business — not to a marketplace. When clients book through your Nelsy link, they're booking with you directly. Your brand, your URL, your client relationships.
+                  Nelsy gives you a booking page that belongs to your business, not to a marketplace. When clients book through your Nelsy link, they're booking with you directly. Your brand, your URL, your client relationships.
                 </p>
                 <p className="text-sm text-gray-500 leading-relaxed mt-3">
-                  This is especially valuable for nail techs who already have an Instagram audience. Your followers know you — they don't need a marketplace to find you. They need a frictionless way to book and pay.
+                  This is especially valuable for nail techs who already have an Instagram audience. Your followers know you: they don't need a marketplace to find you. They need a frictionless way to book and pay.
                 </p>
               </motion.div>
             </div>
@@ -222,7 +222,7 @@ export default function FreshaAlternative() {
               Try Nelsy free for 14 days.
             </motion.h2>
             <motion.p {...fadeUp(0.06)} className="text-base sm:text-xl text-white/80 mb-8 max-w-lg mx-auto">
-              Set up your branded booking page, add it to your Instagram bio and start collecting deposits — without leaving your clients to a marketplace.
+              Set up your branded booking page, add it to your Instagram bio and start collecting deposits, without leaving your clients to a marketplace.
             </motion.p>
             <motion.div {...fadeUp(0.12)}>
               <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />
@@ -239,7 +239,7 @@ export default function FreshaAlternative() {
             <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4">ALSO COMPARE</p>
             <div className="flex flex-wrap gap-3">
               <Link to="/" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
-                Nelsy — Nail Tech Booking App
+                Nelsy: Nail Tech Booking App
               </Link>
               <span className="text-gray-300">·</span>
               <Link to="/booksy-alternative-nail-techs" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">

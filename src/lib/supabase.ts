@@ -142,7 +142,7 @@ export interface DbBookingInsert {
 }
 
 // ============================================================
-// Database schema — explicit Insert/Update types to avoid
+// Database schema: explicit Insert/Update types to avoid
 // circular references that collapse to 'never'
 // ============================================================
 
@@ -268,12 +268,12 @@ export type DbProfile = DbProfileRow;
 export type DbService = DbServiceRow;
 export type DbBooking = DbBookingRow;
 export type DbAvailability = DbAvailabilityRow;
-// Use untyped client — Supabase CLI-generated types are the proper way to
+// Use untyped client: Supabase CLI-generated types are the proper way to
 // get full end-to-end type safety. For manual types we rely on explicit casts.
 export type NelsupabaseClient = SupabaseClient;
 
 // ============================================================
-// Client — optional (falls back to mock data when env vars missing)
+// Client: optional (falls back to mock data when env vars missing)
 // ============================================================
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined;

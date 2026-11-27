@@ -35,15 +35,15 @@ registerArticle({
   ],
   relatedSlugs: ['nail-drill-bits-explained', 'nail-prep-guide', 'how-to-prevent-nail-lifting'],
   faq: [
-    { q: 'Can you use the same nail file on natural nails and gel/acrylic?', a: 'You can physically use the same file, but you shouldn\'t. Files used on extensions accumulate product particles and lose abrasiveness. More importantly, a file appropriate for acrylic (100-grit) would badly damage natural nails. Keep separate files for natural nail prep and product work — and replace or disinfect between clients.' },
-    { q: 'What grit nail file should a beginner nail tech use on natural nails?', a: '180-grit is the most versatile starting point for natural nails — firm enough to file and shape, gentle enough not to damage. Many experienced nail techs use 180-grit as their primary natural nail file and only go coarser for specific extension prep tasks.' },
-    { q: 'How often should nail files be replaced?', a: 'A file loses abrasiveness with use and cannot be fully restored. Replace files regularly — most professionals use disposable files and replace them between clients for sanitation reasons. Reusable files (crystal, glass, metal) can be disinfected between clients. A file that feels smooth or requires more passes than usual is past its effective life.' },
+    { q: 'Can you use the same nail file on natural nails and gel/acrylic?', a: 'You can physically use the same file, but you shouldn\'t. Files used on extensions accumulate product particles and lose abrasiveness. More importantly, a file appropriate for acrylic (100-grit) would badly damage natural nails. Keep separate files for natural nail prep and product work, and replace or disinfect between clients.' },
+    { q: 'What grit nail file should a beginner nail tech use on natural nails?', a: '180-grit is the most versatile starting point for natural nails: firm enough to file and shape, gentle enough not to damage. Many experienced nail techs use 180-grit as their primary natural nail file and only go coarser for specific extension prep tasks.' },
+    { q: 'How often should nail files be replaced?', a: 'A file loses abrasiveness with use and cannot be fully restored. Replace files regularly: most professionals use disposable files and replace them between clients for sanitation reasons. Reusable files (crystal, glass, metal) can be disinfected between clients. A file that feels smooth or requires more passes than usual is past its effective life.' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="what-grit-means">
         <h2 className="font-serif text-2xl font-bold mb-4">What grit numbers mean</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Grit number refers to the size of the abrasive particles on the file surface. The number is based on mesh size — how many holes per square inch a mesh would need to pass those particles through. A higher number = smaller particles = finer file. A lower number = larger particles = coarser file.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Grit number refers to the size of the abrasive particles on the file surface. The number is based on mesh size, how many holes per square inch a mesh would need to pass those particles through. A higher number = smaller particles = finer file. A lower number = larger particles = coarser file.</p>
         <p className="text-gray-700 leading-relaxed">The practical implication: a 100-grit file removes material quickly and aggressively; a 240-grit file smooths and polishes. Choosing the wrong grit means either failing to remove what needs removing, or removing too much.</p>
         <ArticleCallout variant="info" title="Quick rule">
           Low number = more abrasive = for tough jobs (product removal, shaping extensions). High number = less abrasive = for delicate jobs (natural nails, finishing, buffing).
@@ -115,13 +115,13 @@ registerArticle({
       <section id="hygiene">
         <h2 className="font-serif text-2xl font-bold mb-4">File hygiene and replacement</h2>
         <ArticleChecklist title="File hygiene checklist" items={[
-          'Use disposable emery boards and buffers — replace between clients without exception',
+          'Use disposable emery boards and buffers: replace between clients without exception',
           'Reusable files (glass, metal): wash with soap and water after each client, then disinfect',
-          'Metal files: autoclave-safe — sterilise regularly if your setup allows',
+          'Metal files: autoclave-safe. Sterilise regularly if your setup allows',
           'Never use a natural nail file on extension/product (or vice versa)',
           'Label file sets for natural nails vs. product to avoid cross-use',
           'Replace files when they feel smooth or take more passes than usual to achieve the same result',
-          'A file that sheds abrasive particles has degraded — replace immediately',
+          'A file that sheds abrasive particles has degraded: replace immediately',
         ]} />
         <ArticleCallout variant="tip" title="Hygiene regulation note">
           In the UK, disposable tools (emery boards, buffers) used on clients must be disposed of after each client. Reusable metal tools must be cleaned, disinfected, and sterilised to local hygiene standards. Check your council/insurance requirements for specifics if you work in a registered salon space.

@@ -6,8 +6,8 @@ registerArticle({
   slug: 'common-acrylic-mistakes',
   title: 'Common Acrylic Nail Mistakes and How to Fix Them',
   seoTitle: 'Common Acrylic Nail Mistakes and How to Fix Them',
-  excerpt: 'Most acrylic problems come back to the same handful of mistakes. This guide covers the most common issues nail techs encounter — what causes them and how to fix them.',
-  seoDescription: 'Common acrylic nail mistakes and how to fix them. Lifting, bubbles, cracking, cloudy product, rough surface — causes and solutions for nail techs.',
+  excerpt: 'Most acrylic problems come back to the same handful of mistakes. This guide covers the most common issues nail techs encounter, what causes them and how to fix them.',
+  seoDescription: 'Common acrylic nail mistakes and how to fix them. Lifting, bubbles, cracking, cloudy product, rough surface: causes and solutions for nail techs.',
   category: 'nail-education',
   tags: ['acrylic mistakes', 'acrylic troubleshooting', 'acrylic nails problems', 'nail tech education'],
   heroImage: 'linear-gradient(135deg, #FEF2F2 0%, #FECACA 100%)',
@@ -26,15 +26,15 @@ registerArticle({
   ],
   relatedSlugs: ['acrylic-application-step-by-step', 'acrylic-bead-ratio-explained', 'how-to-build-nail-apex', 'nail-prep-guide'],
   faq: [
-    { q: 'Why do my acrylic nails keep breaking at the same spot?', a: 'Consistent breakage in the same location points to a structural issue. Breaking at the stress zone (mid-nail) usually indicates an absent or misplaced apex. Breaking at the free edge suggests the tip product is too thin. Breaking near the cuticle often points to lifting that\'s been ongoing — the product has separated from the nail and the remaining bond is under disproportionate stress.' },
+    { q: 'Why do my acrylic nails keep breaking at the same spot?', a: 'Consistent breakage in the same location points to a structural issue. Breaking at the stress zone (mid-nail) usually indicates an absent or misplaced apex. Breaking at the free edge suggests the tip product is too thin. Breaking near the cuticle often points to lifting that\'s been ongoing: the product has separated from the nail and the remaining bond is under disproportionate stress.' },
     { q: 'Why does my acrylic look yellow after a few weeks?', a: 'Yellowing in cured acrylic is usually caused by: UV exposure (sunlight degrades some acrylic pigments), product contamination (certain pigmented gel polishes can migrate into acrylic), or the product itself if it\'s a lower-grade formulation. Use a UV-inhibiting top coat, and test your top coat product with your acrylic for compatibility to prevent pigment migration.' },
-    { q: 'Can I fix lifting at home between appointments?', a: 'Advise clients not to — any gap between the product and the natural nail is a potential entry point for moisture and bacteria. Self-fixing with a home nail glue creates an additional layer over the problem rather than addressing it. The correct approach is to come in for a repair appointment.' },
+    { q: 'Can I fix lifting at home between appointments?', a: 'Advise clients not to: any gap between the product and the natural nail is a potential entry point for moisture and bacteria. Self-fixing with a home nail glue creates an additional layer over the problem rather than addressing it. The correct approach is to come in for a repair appointment.' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="lifting">
         <h2 className="font-serif text-2xl font-bold mb-4">Lifting</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Lifting — product separating from the natural nail — is the most common acrylic complaint. The location of lifting is diagnostic:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Lifting, product separating from the natural nail, is the most common acrylic complaint. The location of lifting is diagnostic:</p>
         <ArticleTable
           headers={['Where it lifts', 'Likely cause']}
           rows={[
@@ -45,7 +45,7 @@ registerArticle({
           ]}
         />
         <ArticleCallout variant="tip" title="Lifting fix at appointment">
-          For a lifting nail at an infill: remove the lifted product entirely back to the natural nail — don\'t just fill over a gap. Applying product over lifting creates a pocket that holds moisture and can lead to bacterial or fungal issues. Clean the area, reapply primer, and seal properly.
+          For a lifting nail at an infill: remove the lifted product entirely back to the natural nail. Don\'t just fill over a gap. Applying product over lifting creates a pocket that holds moisture and can lead to bacterial or fungal issues. Clean the area, reapply primer, and seal properly.
         </ArticleCallout>
       </section>
 
@@ -58,10 +58,10 @@ registerArticle({
             ['Working time exceeded before placement', 'Work faster with each bead once picked up; place and don\'t overwork'],
             ['Over-working the bead', 'Place and smooth with minimum strokes; over-working introduces air'],
             ['Too-dry bead', 'Porous consistency creates internal air pockets; use a medium-wet bead'],
-            ['Contamination in monomer', 'Replace monomer if consistently getting bubbles — contaminated monomer can cause issues'],
+            ['Contamination in monomer', 'Replace monomer if consistently getting bubbles: contaminated monomer can cause issues'],
           ]}
         />
-        <ArticleTip>Small surface bubbles can sometimes be resolved at the file stage if they're at the surface. Bubbles trapped within the product body require removal and reapplication of that section — they cannot be filed out.</ArticleTip>
+        <ArticleTip>Small surface bubbles can sometimes be resolved at the file stage if they're at the surface. Bubbles trapped within the product body require removal and reapplication of that section: they cannot be filed out.</ArticleTip>
       </section>
 
       <section id="cloudy-product">
@@ -73,7 +73,7 @@ registerArticle({
             ['Over-wet bead', 'Excess monomer that doesn\'t fully react can create cloudiness; use correct ratio'],
             ['Product contamination', 'Replace monomer if it has become contaminated (e.g. water, oil, colour pigment)'],
             ['Wrong product pairing', 'Some monomer/powder combinations from different brands don\'t produce clear results; stay within a brand system'],
-            ['Age/degradation', 'Expired or improperly stored product degrades — replace aged stock'],
+            ['Age/degradation', 'Expired or improperly stored product degrades: replace aged stock'],
           ]}
         />
       </section>
@@ -104,14 +104,14 @@ registerArticle({
 
       <section id="flooding-cuticle">
         <h2 className="font-serif text-2xl font-bold mb-4">Flooding the cuticle</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Product that touches or overlaps the cuticle skin almost always lifts — the product bonds to the skin and lifts when the skin moves. Causes:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Product that touches or overlaps the cuticle skin almost always lifts: the product bonds to the skin and lifts when the skin moves. Causes:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Too-wet bead that runs before setting</li>
           <li>Placing the cuticle bead too far back (too close to the cuticle)</li>
           <li>Not checking the cuticle gap before curing</li>
         </ul>
         <ArticleCallout variant="tip" title="Fix for mild flooding">
-          If product has touched the cuticle, gently create a break in the product at the skin line with an orangewood stick or a cuticle tool before it cures — don\'t drag along the cuticle, but lift and separate the product from the skin. After curing, ensure there\'s a visible clean gap at the cuticle.
+          If product has touched the cuticle, gently create a break in the product at the skin line with an orangewood stick or a cuticle tool before it cures: don\'t drag along the cuticle, but lift and separate the product from the skin. After curing, ensure there\'s a visible clean gap at the cuticle.
         </ArticleCallout>
       </section>
 

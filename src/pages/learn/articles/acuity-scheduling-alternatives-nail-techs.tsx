@@ -6,7 +6,7 @@ registerArticle({
   slug: 'acuity-scheduling-alternatives-nail-techs',
   title: 'Acuity Scheduling Alternatives for Nail Techs',
   seoTitle: 'Acuity Scheduling Alternatives for Nail Techs',
-  excerpt: 'Acuity Scheduling is a general appointment tool — but nail techs often outgrow it or find it lacks beauty-specific features. Here are the alternatives.',
+  excerpt: 'Acuity Scheduling is a general appointment tool, but nail techs often outgrow it or find it lacks beauty-specific features. Here are the alternatives.',
   seoDescription: 'Acuity Scheduling alternatives for nail techs. Who Acuity suits, its limitations for nail businesses, and better-fit booking software alternatives.',
   category: 'comparisons',
   tags: ['Acuity Scheduling alternatives', 'nail tech booking software', 'Acuity vs nail booking apps'],
@@ -23,14 +23,14 @@ registerArticle({
   ],
   relatedSlugs: [ 'how-to-choose-booking-app-nail-business', 'booking-app-vs-booking-website-nail-techs', 'how-to-set-up-online-booking-nail-business'],
   faq: [
-    { q: 'Why do nail techs use Acuity Scheduling?', a: 'Acuity is often used by nail techs who come from a general freelance or service-business background and know the tool from other contexts, or who were recommended it without awareness of beauty-specific alternatives. It\'s also used by nail techs who want extensive customisation over their booking page — Acuity offers significant flexibility for intake forms and availability rules.' },
+    { q: 'Why do nail techs use Acuity Scheduling?', a: 'Acuity is often used by nail techs who come from a general freelance or service-business background and know the tool from other contexts, or who were recommended it without awareness of beauty-specific alternatives. It\'s also used by nail techs who want extensive customisation over their booking page: Acuity offers significant flexibility for intake forms and availability rules.' },
     { q: 'Is Acuity Scheduling good for taking deposits?', a: 'Acuity can handle deposits through Stripe or PayPal integration. However, the deposit setup is not as streamlined as platforms built specifically for beauty services. Beauty-specific booking tools typically handle deposits with less configuration.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="Acuity is a Squarespace product">
-        Acuity Scheduling is owned by Squarespace. If you use Squarespace for your website, Acuity integrates seamlessly — which is often why nail techs using Squarespace sites end up on Acuity. This integration is a genuine strength for that specific combination.
+        Acuity Scheduling is owned by Squarespace. If you use Squarespace for your website, Acuity integrates seamlessly, which is often why nail techs using Squarespace sites end up on Acuity. This integration is a genuine strength for that specific combination.
       </ArticleCallout>
 
       <section id="who-acuity-suits">
@@ -46,7 +46,7 @@ registerArticle({
       <section id="limitations">
         <h2 className="font-serif text-2xl font-bold mb-4">Limitations for nail techs</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>No beauty marketplace:</strong> Acuity has no client discovery marketplace — you bring all your own traffic</li>
+          <li><strong>No beauty marketplace:</strong> Acuity has no client discovery marketplace. You bring all your own traffic</li>
           <li><strong>Not beauty-specific:</strong> No nail-specific client management features; no built-in nail tech business tools</li>
           <li><strong>Setup complexity:</strong> More flexible = more to configure; beauty-specific tools come pre-configured for nail businesses</li>
           <li><strong>Subscription cost:</strong> Requires a paid plan for most useful features; may exceed what a solo nail tech needs</li>
@@ -65,12 +65,12 @@ registerArticle({
             ['Acuity + Squarespace', 'Nail techs with Squarespace sites', 'No', 'General purpose'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">If your main reason for using Acuity is the Squarespace connection, it's worth weighing whether a beauty-specific tool might serve your clients better — even if it means having a separate booking URL from your website.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">If your main reason for using Acuity is the Squarespace connection, it's worth weighing whether a beauty-specific tool might serve your clients better, even if it means having a separate booking URL from your website.</p>
       </section>
 
       <section id="decision">
         <h2 className="font-serif text-2xl font-bold mb-4">Making the decision</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">If you're already on Acuity and it's working, switching has a cost — client migration, new link distribution, learning curve. Switch when:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">If you're already on Acuity and it's working, switching has a cost: client migration, new link distribution, learning curve. Switch when:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>You're starting fresh and evaluating options</li>
           <li>Acuity's subscription cost isn't justified by your booking volume</li>

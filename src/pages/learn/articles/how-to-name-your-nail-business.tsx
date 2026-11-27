@@ -6,8 +6,8 @@ registerArticle({
   slug: 'how-to-name-your-nail-business',
   title: 'How to Name Your Nail Business',
   seoTitle: 'How to Name Your Nail Business (Without Overthinking It)',
-  excerpt: 'Your nail business name matters — but not as much as the work. Here\'s how to choose a name that works, check it\'s available, and avoid common mistakes.',
-  seoDescription: 'How to name your nail business. What makes a good nail business name, how to check availability, and what to avoid — with examples and naming frameworks.',
+  excerpt: 'Your nail business name matters, but not as much as the work. Here\'s how to choose a name that works, check it\'s available, and avoid common mistakes.',
+  seoDescription: 'How to name your nail business. What makes a good nail business name, how to check availability, and what to avoid, with examples and naming frameworks.',
   category: 'branding-growth',
   tags: ['nail business name', 'nail business branding', 'nail business naming', 'nail tech brand'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #DDD6FE 100%)',
@@ -24,8 +24,8 @@ registerArticle({
   ],
   relatedSlugs: ['100-nail-business-name-ideas', 'how-to-brand-your-nail-business', 'how-to-start-a-nail-business-2026'],
   faq: [
-    { q: 'Can I use my own name as a nail business name?', a: 'Yes — many nail techs use their own name or first name ("Maya Nails", "Nails by Jade"). This has the advantage of being unique and building personal brand. The disadvantage: if you ever sell the business or bring in other nail techs, your own name in the brand becomes awkward.' },
-    { q: 'Should my nail business name include the word "nails"?', a: 'Including "nails" in your name makes it immediately clear what you do, which is useful. It\'s not required — many successful nail businesses don\'t have "nails" in the name. If your name doesn\'t make the business obvious, make sure your Instagram bio and booking page are explicit about what you offer.' },
+    { q: 'Can I use my own name as a nail business name?', a: 'Yes: many nail techs use their own name or first name ("Maya Nails", "Nails by Jade"). This has the advantage of being unique and building personal brand. The disadvantage: if you ever sell the business or bring in other nail techs, your own name in the brand becomes awkward.' },
+    { q: 'Should my nail business name include the word "nails"?', a: 'Including "nails" in your name makes it immediately clear what you do, which is useful. It\'s not required: many successful nail businesses don\'t have "nails" in the name. If your name doesn\'t make the business obvious, make sure your Instagram bio and booking page are explicit about what you offer.' },
     { q: 'How do I check if a nail business name is taken?', a: 'Check: Instagram username availability, Companies House (if you want to register as a company), the Intellectual Property Office for trademarks if you\'re building a brand you might want to protect, and Google search for existing businesses with the same name in your area.' },
   ],
   relatedFeatureSlugs: ['link-in-bio', 'bookings'],
@@ -39,7 +39,7 @@ registerArticle({
           rows={[
             ['Memorable', 'Clients can find you again and refer you accurately'],
             ['Searchable', 'Google and Instagram searches should find you'],
-            ['Pronounceable', 'Word of mouth works — "I can\'t remember exactly how you spell it" breaks referrals'],
+            ['Pronounceable', 'Word of mouth works: "I can\'t remember exactly how you spell it" breaks referrals'],
             ['Available on Instagram', 'Your Instagram handle should match or be close to your business name'],
             ['Scales with your business', 'A name tied to a specific location or technique limits you if you expand'],
           ]}
@@ -74,7 +74,7 @@ registerArticle({
       <section id="checking-availability">
         <h2 className="font-serif text-2xl font-bold mb-4">Checking availability</h2>
         <ArticleSteps steps={[
-          { title: 'Check Instagram', body: 'Search for the exact handle and close variations. Instagram usernames are case-insensitive but exact — @velvet.nails and @velvetnails are different accounts.' },
+          { title: 'Check Instagram', body: 'Search for the exact handle and close variations. Instagram usernames are case-insensitive but exact: @velvet.nails and @velvetnails are different accounts.' },
           { title: 'Google the name', body: 'Search "[name] nails" and "[name] nail tech". If there\'s already an established business with that name, especially locally, reconsider.' },
           { title: 'Check Companies House', body: 'If you plan to register as a limited company, search at find-and-update.company-information.service.gov.uk. Sole traders don\'t need to register a company, but the same name being registered as a company by someone else can cause legal issues if you later want to register.' },
           { title: 'Check domain availability', body: 'Even if you don\'t plan a website immediately, securing the .co.uk domain for your business name (usually £5–15/year) is worthwhile if you might want it later.' },

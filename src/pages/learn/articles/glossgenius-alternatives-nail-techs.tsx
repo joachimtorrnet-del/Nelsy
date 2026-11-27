@@ -6,8 +6,8 @@ registerArticle({
   slug: 'glossgenius-alternatives-nail-techs',
   title: 'GlossGenius Alternatives for Nail Techs',
   seoTitle: 'GlossGenius Alternatives for Nail Techs (2027)',
-  excerpt: 'GlossGenius isn\'t the right fit for every nail tech. Here are the most relevant alternatives — what they offer, who they suit, and how they compare.',
-  seoDescription: 'GlossGenius alternatives for nail techs. Compare booking software options if GlossGenius doesn\'t work for your nail business — features, pricing model, and ideal use case.',
+  excerpt: 'GlossGenius isn\'t the right fit for every nail tech. Here are the most relevant alternatives, what they offer, who they suit, and how they compare.',
+  seoDescription: 'GlossGenius alternatives for nail techs. Compare booking software if GlossGenius doesn\'t suit your nail business: features, pricing model and best use.',
   category: 'comparisons',
   tags: ['GlossGenius alternatives', 'nail tech booking software alternatives', 'GlossGenius vs', 'booking software nail techs'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
@@ -25,7 +25,7 @@ registerArticle({
   relatedSlugs: ['glossgenius-vs-fresha-for-nail-techs', 'glossgenius-vs-booksy-nail-techs', 'how-to-choose-booking-app-nail-business'],
   faq: [
     { q: 'Is GlossGenius only available in the US?', a: 'GlossGenius publishes its prices in US dollars and its pricing page does not list other countries, so it is mainly used by US businesses. Nail techs in the UK, Europe or Australia usually compare Fresha, Booksy or a link-in-bio booking page such as Nelsy instead.' },
-    { q: 'What\'s the main reason nail techs leave GlossGenius?', a: 'The most commonly cited reasons in nail tech communities are: the subscription fee feels high relative to their volume of bookings, geographic unavailability, or a desire for marketplace visibility (which GlossGenius doesn\'t offer — it\'s a direct booking tool, not a discovery platform). Fresha and Booksy both offer marketplace visibility alongside booking management.' },
+    { q: 'What\'s the main reason nail techs leave GlossGenius?', a: 'The most commonly cited reasons in nail tech communities are: the subscription fee feels high relative to their volume of bookings, geographic unavailability, or a desire for marketplace visibility (which GlossGenius doesn\'t offer. It\'s a direct booking tool, not a discovery platform). Fresha and Booksy both offer marketplace visibility alongside booking management.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
@@ -40,7 +40,7 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li><strong>Geographic availability:</strong> GlossGenius is primarily US-based. Nail techs in the UK, Australia, and other markets often can't access it.</li>
           <li><strong>Subscription cost:</strong> GlossGenius charges a monthly subscription. For lower-volume nail techs, this can feel disproportionate to their booking volume.</li>
-          <li><strong>No marketplace:</strong> GlossGenius is a direct booking tool — it doesn't expose your profile to discovery by new clients the way marketplace platforms do.</li>
+          <li><strong>No marketplace:</strong> GlossGenius is a direct booking tool. It doesn't expose your profile to discovery by new clients the way marketplace platforms do.</li>
           <li><strong>Switching cost:</strong> After using it, some nail techs want to consolidate onto one tool that also handles payments differently.</li>
         </ul>
       </section>
@@ -48,10 +48,10 @@ registerArticle({
       <section id="alternatives">
         <h2 className="font-serif text-2xl font-bold mb-4">The main alternatives</h2>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month (one-time fee on new marketplace clients); strong in UK, Australia, globally. Best for nail techs who want marketplace discovery alongside booking management. Read: <Link to="/blog/should-nail-techs-use-fresha" className="underline text-[#F52B8C]">should nail techs use Fresha?</Link></p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Subscription model with marketplace; strong client-side app. Good for nail techs in areas with strong Booksy client adoption. Read: <Link to="/blog/is-booksy-worth-it-nail-techs" className="underline text-[#F52B8C]">is Booksy worth it for nail techs?</Link></p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> — Strong if you already use Square for payments; integrates well with POS hardware. Better suited to salon settings than solo home-based techs.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich platform with marketplace and management tools; monthly subscription. Popular in the US. Read: <Link to="/blog/vagaro-alternatives-nail-techs" className="underline text-[#F52B8C]">Vagaro alternatives</Link> if Vagaro doesn't fit either.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Built specifically for nail techs. Direct booking page with deposit collection, client management, and payment processing — without a marketplace commission model. <Link to="/" className="underline text-[#F52B8C]">See how Nelsy works →</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong>: Subscription model with marketplace; strong client-side app. Good for nail techs in areas with strong Booksy client adoption. Read: <Link to="/blog/is-booksy-worth-it-nail-techs" className="underline text-[#F52B8C]">is Booksy worth it for nail techs?</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong>: Strong if you already use Square for payments; integrates well with POS hardware. Better suited to salon settings than solo home-based techs.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong>: Feature-rich platform with marketplace and management tools; monthly subscription. Popular in the US. Read: <Link to="/blog/vagaro-alternatives-nail-techs" className="underline text-[#F52B8C]">Vagaro alternatives</Link> if Vagaro doesn't fit either.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong>: Built specifically for nail techs. Direct booking page with deposit collection, client management, and payment processing, without a marketplace commission model. <Link to="/" className="underline text-[#F52B8C]">See how Nelsy works →</Link></p>
       </section>
 
       <section id="comparison">
@@ -71,8 +71,8 @@ registerArticle({
       <section id="switching">
         <h2 className="font-serif text-2xl font-bold mb-4">Switching from GlossGenius</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Export your client list before you close your GlossGenius account — most platforms allow CSV import</li>
-          <li>Communicate the new booking link to clients before switching — a simple message or story post is enough</li>
+          <li>Export your client list before you close your GlossGenius account: most platforms allow CSV import</li>
+          <li>Communicate the new booking link to clients before switching: a simple message or story post is enough</li>
           <li>Run both systems briefly if possible while clients migrate</li>
           <li>Update your Instagram bio, link in bio page, and any website booking links simultaneously</li>
         </ul>

@@ -6,8 +6,8 @@ registerArticle({
   slug: 'nail-tech-beginner-business-checklist',
   title: 'Nail Tech Beginner Business Checklist',
   seoTitle: 'Nail Tech Beginner Business Checklist (Everything You Need)',
-  excerpt: 'A complete checklist for new nail techs starting their business — covering training, insurance, equipment, booking, marketing, and first clients.',
-  seoDescription: 'Nail tech beginner business checklist. Everything you need to do before, during, and after launching your nail business — from insurance to Instagram.',
+  excerpt: 'A complete checklist for new nail techs starting their business: covering training, insurance, equipment, booking, marketing, and first clients.',
+  seoDescription: 'Nail tech beginner business checklist. Everything you need to do before, during, and after launching your nail business, from insurance to Instagram.',
   category: 'start-your-business',
   tags: ['nail business checklist', 'beginner nail tech', 'starting nail business', 'nail tech setup'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
@@ -26,13 +26,13 @@ registerArticle({
   relatedSlugs: ['how-to-start-a-nail-business-2026', 'nail-tech-starter-kit', 'nail-tech-beginner-mistakes'],
   faq: [
     { q: 'What do I need to do first when starting a nail business?', a: 'Training and insurance, in that order. Training gives you the skills and credibility; insurance protects you before you take a single paying client. Everything else (equipment, Instagram, booking page) can follow.' },
-    { q: 'How do I register a nail business in the UK?', a: 'Most new nail techs register as self-employed sole traders with HMRC — this is the simplest structure. Do it online via the HMRC website before you start earning. You don\'t need to register a company unless you want to trade as a limited company (more complex, more protection, more admin).' },
+    { q: 'How do I register a nail business in the UK?', a: 'Most new nail techs register as self-employed sole traders with HMRC: this is the simplest structure. Do it online via the HMRC website before you start earning. You don\'t need to register a company unless you want to trade as a limited company (more complex, more protection, more admin).' },
     { q: 'Do I need a website to start a nail business?', a: 'No. Instagram + a booking page covers everything you need to start. A website can come later once you\'re established. Don\'t let website-building become a procrastination tool that delays you taking clients.' },
   ],
   relatedFeatureSlugs: ['bookings', 'crm', 'payments'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
-      <p className="text-gray-700 leading-relaxed text-lg">Use this checklist to track your launch. Don't try to complete everything before you start taking clients — the goal is to get the essential items done first, then build from there.</p>
+      <p className="text-gray-700 leading-relaxed text-lg">Use this checklist to track your launch. Don't try to complete everything before you start taking clients: the goal is to get the essential items done first, then build from there.</p>
 
       <section id="before-taking-clients">
         <h2 className="font-serif text-2xl font-bold mb-4">Before taking any clients</h2>
@@ -43,7 +43,7 @@ registerArticle({
           'Open a business bank account (or dedicated personal account for business)',
           'Write and save your cancellation/deposit policy',
           'Do 5–10 practice/model sets to build your portfolio',
-          'Photograph every practice set — clean, well-lit',
+          'Photograph every practice set: clean, well-lit',
         ]} />
       </section>
 
@@ -63,7 +63,7 @@ registerArticle({
           'Ring light',
           'Ventilation (fan or open window)',
         ]} />
-        <p className="text-gray-700 mt-4 leading-relaxed">Full equipment list: <Link to="/blog/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit — what you actually need</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Full equipment list: <Link to="/blog/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit, what you actually need</Link>.</p>
       </section>
 
       <section id="booking-admin">
@@ -103,7 +103,7 @@ registerArticle({
           'Ask every client for a referral or social tag',
           'Post at least 3x per week to Instagram',
           'Get your first rebook (client books return appointment)',
-          'Review your prices — are they covering costs?',
+          'Review your prices: are they covering costs?',
           'Troubleshoot anything that went wrong (lifting, slow booking flow, late clients)',
         ]} />
         <ArticleCallout variant="tip" title="Expect imperfection in month one">
@@ -119,7 +119,7 @@ registerArticle({
           'Ask for referrals at every appointment',
           'Review prices every 6–12 months',
           'Track income and costs monthly',
-          'Continue training — at least one course per year',
+          'Continue training: at least one course per year',
           'Photograph every set you\'re proud of',
           'Review and update your cancellation policy if issues arise',
         ]} />

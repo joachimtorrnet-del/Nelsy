@@ -22,7 +22,7 @@ const JSON_LD = [
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'How to Get More Nail Clients: A Practical Guide for Nail Techs',
-    description: 'A practical guide to growing your nail tech client base — from Instagram and photography to booking friction, deposits, referrals and retention.',
+    description: 'A practical guide to growing your nail tech client base, from Instagram and photography to booking friction, deposits, referrals and retention.',
     url: 'https://getnelsy.com/learn/how-to-get-more-nail-clients',
     datePublished: '2026-10-20',
     author: { '@type': 'Organization', name: 'Nelsy', url: 'https://getnelsy.com' },
@@ -82,7 +82,7 @@ export default function HowToGetMoreNailClients() {
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
         title="How to Get More Nail Clients: A Practical Guide for Nail Techs | Nelsy"
-        description="Practical strategies to grow your nail tech client base — Instagram, photography, booking friction, deposits, referrals, retention and more. Written specifically for nail techs."
+        description="Practical strategies to grow your nail tech client base: Instagram, photography, booking friction, deposits, referrals, retention and more. Written specifically for nail techs."
         canonical="/blog/how-to-get-more-nail-clients"
         jsonLd={JSON_LD}
       />
@@ -107,7 +107,7 @@ export default function HowToGetMoreNailClients() {
             </motion.h1>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
               className="text-base sm:text-lg text-gray-500 leading-relaxed mb-4">
-              Growing a nail business isn't one thing — it's a combination of visibility, first impressions, how easy you are to book, how well you retain the clients you have, and how your existing clients talk about you to others.
+              Growing a nail business isn't one thing: it's a combination of visibility, first impressions, how easy you are to book, how well you retain the clients you have, and how your existing clients talk about you to others.
             </motion.p>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
               className="text-sm text-gray-400">
@@ -124,15 +124,15 @@ export default function HowToGetMoreNailClients() {
 
             <Section id="instagram-profile" title="1. Optimise your Instagram profile">
               <p>
-                Most independent nail techs get the majority of their new clients from Instagram. Your profile is the first thing potential clients see — and it does a lot of work in the few seconds someone spends deciding whether to follow or book.
+                Most independent nail techs get the majority of their new clients from Instagram. Your profile is the first thing potential clients see, and it does a lot of work in the few seconds someone spends deciding whether to follow or book.
               </p>
               <p>A strong nail tech Instagram profile has:</p>
               <ul className="space-y-2 mt-2">
                 {[
-                  'A clear, readable username — ideally your name or business name, not a generic phrase',
+                  'A clear, readable username, ideally your name or business name, not a generic phrase',
                   'Your specialty in the bio: "Press-on sets · gel · nail art · [City]" is more useful than "nail lover ✨"',
-                  'Your city or location (or service area) — people search locally',
-                  'A booking link — your Nelsy page, not a long URL that breaks or a generic Linktree',
+                  'Your city or location (or service area): people search locally',
+                  'A booking link: your Nelsy page, not a long URL that breaks or a generic Linktree',
                   'A profile photo that shows your face or your work, not a logo',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
@@ -142,20 +142,20 @@ export default function HowToGetMoreNailClients() {
                 ))}
               </ul>
               <Tip>
-                When someone visits your profile and clicks your booking link, they should land on a page that shows your services, prices and availability — so they can book in the same session. If your link goes somewhere confusing, most people drop off.
+                When someone visits your profile and clicks your booking link, they should land on a page that shows your services, prices and availability, so they can book in the same session. If your link goes somewhere confusing, most people drop off.
               </Tip>
             </Section>
 
             <Section id="nail-photography" title="2. Nail photography that converts">
               <p>
-                Your Instagram photos are your portfolio and your storefront. The difference between a photo that gets a DM and one that gets ignored is usually lighting, background and angle — not the quality of the nails themselves.
+                Your Instagram photos are your portfolio and your storefront. The difference between a photo that gets a DM and one that gets ignored is usually lighting, background and angle, not the quality of the nails themselves.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { label: 'Light', detail: 'Natural light is best — shoot near a window. Avoid overhead indoor lighting, which creates yellow tones and washes out detail. The best time is mid-morning.' },
+                  { label: 'Light', detail: 'Natural light is best: shoot near a window. Avoid overhead indoor lighting, which creates yellow tones and washes out detail. The best time is mid-morning.' },
                   { label: 'Background', detail: 'Plain backgrounds (white, beige, grey marble) keep the focus on the nails. Busy backgrounds compete for attention and look less professional.' },
                   { label: 'Angle', detail: 'Flat lay (nails face-up from above) and the classic angled hand shot are both proven. Try both for each set and see which performs better for your style.' },
-                  { label: 'Consistency', detail: 'You don\'t need a new background for every post, but your feed should feel cohesive. Clients often scroll your grid before booking — they\'re assessing your range and aesthetic.' },
+                  { label: 'Consistency', detail: 'You don\'t need a new background for every post, but your feed should feel cohesive. Clients often scroll your grid before booking: they\'re assessing your range and aesthetic.' },
                 ].map((item) => (
                   <div key={item.label} className="bg-gray-50 rounded-xl p-4 border border-gray-200">
                     <p className="font-semibold text-gray-900 text-sm mb-1">{item.label}</p>
@@ -164,7 +164,7 @@ export default function HowToGetMoreNailClients() {
                 ))}
               </div>
               <Tip>
-                Photo reels of the nail art process — from prep to finished set — consistently outperform static photos on reach. You don't need a ring light or a video setup. A phone propped against a product bottle works.
+                Photo reels of the nail art process, from prep to finished set, consistently outperform static photos on reach. You don't need a ring light or a video setup. A phone propped against a product bottle works.
               </Tip>
             </Section>
 
@@ -216,10 +216,10 @@ export default function HowToGetMoreNailClients() {
               <p>The practical steps to reduce friction:</p>
               <ul className="space-y-2.5">
                 {[
-                  'Add your booking link to your Instagram bio — not a Linktree, not a DM request, your actual booking page',
+                  'Add your booking link to your Instagram bio, not a Linktree, not a DM request, your actual booking page',
                   'Show your prices on your booking page. Clients who see prices and still book are serious. Hiding prices creates DMs from people who aren\'t going to book.',
                   'Show your real availability. Let clients self-schedule without asking you first.',
-                  'Require a deposit at the time of booking. This is a filter, not a barrier — serious clients won\'t balk at a fair deposit.',
+                  'Require a deposit at the time of booking. This is a filter, not a barrier: serious clients won\'t balk at a fair deposit.',
                   'Confirm bookings automatically. Clients shouldn\'t have to wonder if their booking went through.',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
@@ -231,7 +231,7 @@ export default function HowToGetMoreNailClients() {
               <div className="rounded-xl p-5 border border-gray-200 bg-white">
                 <p className="text-sm font-semibold text-gray-900 mb-2">What this looks like with Nelsy</p>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  Your Nelsy booking page lives at your own URL. Add it to your Instagram bio. Clients click, see your services and prices, pick a time, and pay a deposit — all without you being involved. The booking shows up in your calendar only after the deposit is confirmed.
+                  Your Nelsy booking page lives at your own URL. Add it to your Instagram bio. Clients click, see your services and prices, pick a time, and pay a deposit: all without you being involved. The booking shows up in your calendar only after the deposit is confirmed.
                 </p>
                 <Link to="/" className="inline-block mt-3 text-sm font-bold underline underline-offset-2" style={{ color: PINK }}>
                   Learn more about Nelsy →
@@ -241,7 +241,7 @@ export default function HowToGetMoreNailClients() {
 
             <Section id="deposits" title="5. Use deposits to protect your calendar">
               <p>
-                A fully booked calendar means nothing if clients no-show or cancel last minute. No-shows don't just cost you the service income — they cost you the slot you could have sold to someone else.
+                A fully booked calendar means nothing if clients no-show or cancel last minute. No-shows don't just cost you the service income: they cost you the slot you could have sold to someone else.
               </p>
               <p>
                 Requiring a deposit before confirming any booking is the single most effective way to reduce no-shows. A client who has paid $20–$50 to hold a slot is almost always going to show up or give you advance notice.
@@ -265,9 +265,9 @@ export default function HowToGetMoreNailClients() {
               <ul className="space-y-2.5">
                 {[
                   'Ask directly at the end of a great appointment: "If you know anyone who\'d love this, send them my way. Here\'s my booking link."',
-                  'Offer a small incentive — a discount on their next service when their referred friend books. Keep it simple.',
+                  'Offer a small incentive: a discount on their next service when their referred friend books. Keep it simple.',
                   'Make sharing easy: your booking link should be a clean URL that looks trustworthy when a client texts it to a friend.',
-                  'Thank clients when referrals come through — a simple message or small acknowledgement goes a long way.',
+                  'Thank clients when referrals come through: a simple message or small acknowledgement goes a long way.',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span className="flex-shrink-0 mt-1" style={{ color: PINK }}>→</span>
@@ -282,7 +282,7 @@ export default function HowToGetMoreNailClients() {
                 The easiest client to book is the one sitting in front of you. Before they leave, show them their next available slot. "Do you want to rebook before your gels grow out? I have [date] available."
               </p>
               <p>
-                Many clients will say yes if you make it effortless. They're already happy with their nails, they already trust you — asking for the rebooking while they're there is much more effective than hoping they remember to book in three weeks when their nails are growing out.
+                Many clients will say yes if you make it effortless. They're already happy with their nails, they already trust you: asking for the rebooking while they're there is much more effective than hoping they remember to book in three weeks when their nails are growing out.
               </p>
               <p>
                 Having a booking page they can come back to independently also helps. If life gets in the way and they don't rebook at the appointment, your link in their DMs or their browser history means they can book themselves when the time comes.
@@ -298,7 +298,7 @@ export default function HowToGetMoreNailClients() {
                   { title: 'First appointment experience', detail: 'New clients are always evaluating whether they\'ll come back. Ask about their nail history, nail concerns and lifestyle (how hard they are on their hands, whether they do manual work). It shows you\'re thinking about their nails specifically, not just applying product.' },
                   { title: 'Aftercare advice', detail: 'Telling clients how to care for their nails between appointments is both good practice and a retention tool. Clients whose nails hold up longer credit their nail tech.' },
                   { title: 'Consistent communication', detail: 'Send booking confirmations. If you need to reschedule, give as much notice as possible. Small acts of reliability build the kind of relationship where clients don\'t leave.' },
-                  { title: 'Remember details', detail: 'A simple note in your client record — their job, their upcoming events, what they said they wanted to try next — makes return appointments feel personal.' },
+                  { title: 'Remember details', detail: 'A simple note in your client record (their job, their upcoming events, what they said they wanted to try next) makes return appointments feel personal.' },
                 ].map((item) => (
                   <div key={item.title} className="bg-gray-50 rounded-xl p-4 border border-gray-100">
                     <p className="font-semibold text-gray-900 text-sm mb-1">{item.title}</p>
@@ -315,7 +315,7 @@ export default function HowToGetMoreNailClients() {
               <ul className="space-y-2.5">
                 {[
                   'Set up or claim your Google Business Profile and add your booking link, services and photos',
-                  'Ask satisfied clients to leave a Google review — a specific ask ("would you mind leaving a review on Google? It really helps") works better than a generic request',
+                  'Ask satisfied clients to leave a Google review: a specific ask ("would you mind leaving a review on Google? It really helps") works better than a generic request',
                   'Respond to reviews, including negative ones, professionally. Future clients read your responses.',
                   'Keep your profile information current: hours, prices and booking link change over time',
                 ].map((item, i) => (
@@ -329,7 +329,7 @@ export default function HowToGetMoreNailClients() {
 
             <Section id="pricing" title="10. Pricing clarity attracts serious clients">
               <p>
-                Hiding your prices doesn't protect you from clients who think you're too expensive — it just moves the conversation to DMs, where it often dies. Nail techs who display prices clearly attract clients who are already comfortable with their rates.
+                Hiding your prices doesn't protect you from clients who think you're too expensive: it just moves the conversation to DMs, where it often dies. Nail techs who display prices clearly attract clients who are already comfortable with their rates.
               </p>
               <p>
                 Unclear pricing creates friction at multiple points: in DMs, in the booking process, and at the end of the appointment when the total feels unexpected.
@@ -353,7 +353,7 @@ export default function HowToGetMoreNailClients() {
               Turn your Instagram into bookings.
             </motion.h2>
             <motion.p {...fadeUp(0.06)} className="text-base sm:text-lg text-white/80 mb-8 max-w-lg mx-auto">
-              Nelsy gives you a booking page to link from your bio, deposit collection to stop no-shows, and online payments — everything in one place.
+              Nelsy gives you a booking page to link from your bio, deposit collection to stop no-shows, and online payments: everything in one place.
             </motion.p>
             <motion.div {...fadeUp(0.12)}>
               <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />

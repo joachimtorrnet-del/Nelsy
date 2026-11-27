@@ -5,10 +5,10 @@ export default function AudienceCapturePage() {
   return (
     <FeaturePage
       title="Own Your Audience Beyond Social Media | Nelsy"
-      metaDescription="Collect emails and phone numbers from potential clients before they leave. Audience Capture turns Instagram followers and casual browsers into a list you own forever."
+      metaDescription="Collect emails and phone numbers from potential clients before they leave. Audience Capture turns Instagram followers and browsers into a list you own."
       canonical="/features/audience-capture"
       h1="Own your audience beyond social media"
-      heroDescription="Social media followers are rented. An email list is yours. Audience Capture turns every interaction — a post view, a bio click, a booking — into a contact you can reach again."
+      heroDescription="Social media followers are rented. An email list is yours. Audience Capture turns every interaction (a post view, a bio click, a booking) into a contact you can reach again."
       icon={UserPlus}
       benefits={[
         {
@@ -32,7 +32,7 @@ export default function AudienceCapturePage() {
         {
           step: '1',
           title: 'Add a capture form to your page',
-          desc: 'Place a simple signup on your Nelsy link in bio page or your booking flow. Offer something useful in exchange — an availability alert, a first booking offer.',
+          desc: 'Place a simple signup on your Nelsy link in bio page or your booking flow. Offer something useful in exchange: an availability alert, a first booking offer.',
         },
         {
           step: '2',
@@ -49,7 +49,7 @@ export default function AudienceCapturePage() {
         'Nail techs who get lots of profile visits but not enough bookings',
         'Beauty pros who want to reduce reliance on Instagram for all their client acquisition',
         'Anyone running a waitlist and wanting to notify people when slots open',
-        'Beauty professionals building toward a launch — new studio, new service line, new prices',
+        'Beauty professionals building toward a launch: new studio, new service line, new prices',
         'Lash and brow artists who want to retarget warm leads from past campaigns',
       ]}
       faq={[
@@ -63,7 +63,7 @@ export default function AudienceCapturePage() {
         },
         {
           q: 'How do I encourage people to sign up?',
-          a: "Offer something relevant — early access to your booking calendar, a note when cancellations open up, or a first-appointment offer. Something that has real value for your audience.",
+          a: "Offer something relevant: early access to your booking calendar, a note when cancellations open up, or a first-appointment offer. Something that has real value for your audience.",
         },
         {
           q: 'Where do captured contacts go?',

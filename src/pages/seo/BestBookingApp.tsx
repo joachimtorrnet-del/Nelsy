@@ -85,7 +85,7 @@ const COMPARISON_ROWS: {
   {
     feature: 'Built for independent nail techs',
     nelsy: true, fresha: false, booksy: false, glossgenius: 'Partial',
-    note: 'GlossGenius serves independent beauty pros broadly — not nail-tech-specific',
+    note: 'GlossGenius serves independent beauty pros broadly, not nail-tech-specific',
   },
   {
     feature: 'Own branded booking page',
@@ -95,7 +95,7 @@ const COMPARISON_ROWS: {
   {
     feature: 'Marketplace / client discovery',
     nelsy: false, fresha: true, booksy: true, glossgenius: 'Partial',
-    note: 'Nelsy does not operate a marketplace — your clients come through your own links.',
+    note: 'Nelsy does not operate a marketplace: your clients come through your own links.',
   },
   {
     feature: 'Instagram / social media workflow',
@@ -180,7 +180,7 @@ export default function BestBookingApp() {
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
         title="Best Booking Apps for Nail Techs in 2026: Compared | Nelsy"
-        description="A fair comparison of the best booking apps for nail techs — Nelsy, Fresha, Booksy and GlossGenius. Covers deposits, branding, Instagram workflow, pricing and best fit."
+        description="Best booking apps for nail techs compared: Nelsy, Fresha, Booksy and GlossGenius on deposits, branding, Instagram workflow, pricing and best fit."
         canonical="/best-booking-app-for-nail-techs"
         jsonLd={JSON_LD}
       />
@@ -191,7 +191,7 @@ export default function BestBookingApp() {
         {/* ── Disclosure ── */}
         <div className="bg-amber-50 border-b border-amber-200 px-4 py-3">
           <p className="max-w-6xl mx-auto text-xs text-amber-800 text-center">
-            <strong>Transparency:</strong> This comparison is published by Nelsy. We've done our best to represent each platform fairly based on publicly available information as of October 2026. Features and pricing change — always verify with each provider before making a decision.
+            <strong>Transparency:</strong> This comparison is published by Nelsy. We've done our best to represent each platform fairly based on publicly available information as of October 2026. Features and pricing change, always verify with each provider before making a decision.
           </p>
         </div>
 
@@ -226,15 +226,15 @@ export default function BestBookingApp() {
                   What nail techs should look for in a booking app
                 </h2>
                 <p className="text-gray-600 leading-relaxed mb-5">
-                  Most booking software is built for general service businesses — salons, spas, fitness studios. Independent nail techs have a different workflow, and the right tool should fit it. Here are the factors that matter most:
+                  Most booking software is built for general service businesses: salons, spas, fitness studios. Independent nail techs have a different workflow, and the right tool should fit it. Here are the factors that matter most:
                 </p>
                 <div className="space-y-4">
                   {[
-                    { title: 'Where your clients come from', detail: 'If you build your audience on Instagram or TikTok, you need a booking page you can link from your bio — not a marketplace profile that keeps clients within another platform\'s ecosystem.' },
+                    { title: 'Where your clients come from', detail: 'If you build your audience on Instagram or TikTok, you need a booking page you can link from your bio, not a marketplace profile that keeps clients within another platform\'s ecosystem.' },
                     { title: 'Deposit collection', detail: 'No-shows are one of the most common problems for independent nail techs. A booking app that lets you require a deposit before confirming an appointment effectively eliminates most no-shows.' },
-                    { title: 'Branded experience', detail: 'Your booking page should feel like your business — your name, your photos, your services. Not a generic form with another company\'s logo on it.' },
+                    { title: 'Branded experience', detail: 'Your booking page should feel like your business: your name, your photos, your services. Not a generic form with another company\'s logo on it.' },
                     { title: 'Service and pricing clarity', detail: 'Clients should be able to see exactly what you offer, how long each service takes and what it costs, before they pick a time. Reduces DMs and sets expectations.' },
-                    { title: 'Pricing model', detail: 'Booking apps charge in different ways — flat subscriptions, per-booking fees, marketplace commission. Understand what you\'re paying before you\'re fully set up.' },
+                    { title: 'Pricing model', detail: 'Booking apps charge in different ways: flat subscriptions, per-booking fees, marketplace commission. Understand what you\'re paying before you\'re fully set up.' },
                     { title: 'Ease of setup', detail: 'You shouldn\'t need a developer. Setting up your services, availability and booking page should take an afternoon at most.' },
                   ].map((item) => (
                     <div key={item.title} className="flex gap-4 items-start">
@@ -254,7 +254,7 @@ export default function BestBookingApp() {
               <motion.div {...fadeUp()}>
                 <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">Quick comparison table</h2>
                 <p className="text-gray-500 text-sm mb-5">
-                  Based on publicly available product information. Pricing and features change — verify with each provider.
+                  Based on publicly available product information. Pricing and features change: verify with each provider.
                 </p>
                 <div className="overflow-x-auto -mx-4 sm:mx-0">
                   <div className="min-w-[560px] sm:min-w-0 px-4 sm:px-0">
@@ -300,19 +300,19 @@ export default function BestBookingApp() {
                 name="Nelsy"
                 forWho="Independent nail techs with a social media audience"
                 strengths={[
-                  'Built specifically for independent nail techs — not adapted from a generic salon tool',
+                  'Built specifically for independent nail techs, not adapted from a generic salon tool',
                   'Own branded booking page you link from Instagram bio, TikTok, anywhere',
-                  'Deposit collection built into the booking flow — confirmed bookings only',
+                  'Deposit collection built into the booking flow: confirmed bookings only',
                   'Flat-rate monthly subscription with 0% booking commission',
                   'Clients book and pay on your page, not within a third-party marketplace',
                 ]}
                 considerations={[
-                  'No marketplace for new client discovery — you drive your own traffic',
+                  'No marketplace for new client discovery: you drive your own traffic',
                   'Focused on independent nail techs; not designed for multi-staff studios',
                 ]}
               >
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  Nelsy is designed around a specific workflow: you build an audience on Instagram, you add your booking link to your bio, clients click through and book with a deposit. There's no marketplace discovery — your growth depends on your own audience. That's a tradeoff worth understanding before you sign up.
+                  Nelsy is designed around a specific workflow: you build an audience on Instagram, you add your booking link to your bio, clients click through and book with a deposit. There's no marketplace discovery: your growth depends on your own audience. That's a tradeoff worth understanding before you sign up.
                 </p>
               </PlatformSection>
             </motion.div>
@@ -323,9 +323,9 @@ export default function BestBookingApp() {
                 name="Fresha"
                 forWho="Salons, studios and businesses that want marketplace discovery"
                 strengths={[
-                  'Marketplace exposure — clients can discover your business through Fresha\'s directory',
+                  'Marketplace exposure: clients can discover your business through Fresha\'s directory',
                   'Low entry price: €14.95/month for one person, 7-day trial',
-                  'Widely used — clients may already be familiar with the platform',
+                  'Widely used: clients may already be familiar with the platform',
                   'Broad feature set for salons with multiple staff and service categories',
                 ]}
                 considerations={[
@@ -335,7 +335,7 @@ export default function BestBookingApp() {
                 ]}
               >
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  Fresha operates as a marketplace: clients can search for and discover nail services in their area, and book through Fresha's platform. This is valuable if you're a newer nail tech who needs the discoverability — but if your clients already find you on Instagram, you may not need a marketplace at all. The tradeoff is that bookings happen inside Fresha's ecosystem rather than on your own branded page.
+                  Fresha operates as a marketplace: clients can search for and discover nail services in their area, and book through Fresha's platform. This is valuable if you're a newer nail tech who needs the discoverability, but if your clients already find you on Instagram, you may not need a marketplace at all. The tradeoff is that bookings happen inside Fresha's ecosystem rather than on your own branded page.
                 </p>
               </PlatformSection>
             </motion.div>
@@ -347,18 +347,18 @@ export default function BestBookingApp() {
                 forWho="Beauty professionals who want both a marketplace and a shareable booking link"
                 strengths={[
                   'Has both a marketplace directory and shareable booking profile links',
-                  'Serves a wide range of beauty professionals — large user base',
+                  'Serves a wide range of beauty professionals: large user base',
                   'Clients can be discovered through Booksy\'s directory',
                   'Calendar management and client messaging features',
                 ]}
                 considerations={[
-                  'Not specifically built for nail techs — serves hair, nails, spa and wellness broadly',
+                  'Not specifically built for nail techs: serves hair, nails, spa and wellness broadly',
                   '$29.99/month in the US (£40 in the UK), plus 30% of a Boost client\'s first visit',
                   'Booking experience is partly within Booksy\'s platform',
                 ]}
               >
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  Booksy bridges the marketplace and direct-booking worlds. It has a client-facing directory where new clients can find you, and it also provides shareable profile links. For nail techs who want both exposure and a direct booking option, it's a reasonable middle ground. That said, it's a generalist platform — it doesn't have the specific nail-tech workflow focus that tools like Nelsy or GlossGenius provide.
+                  Booksy bridges the marketplace and direct-booking worlds. It has a client-facing directory where new clients can find you, and it also provides shareable profile links. For nail techs who want both exposure and a direct booking option, it's a reasonable middle ground. That said, it's a generalist platform: it doesn't have the specific nail-tech workflow focus that tools like Nelsy or GlossGenius provide.
                 </p>
               </PlatformSection>
             </motion.div>
@@ -369,19 +369,19 @@ export default function BestBookingApp() {
                 name="GlossGenius"
                 forWho="Independent beauty professionals focused on branding and client experience"
                 strengths={[
-                  'Strong branding and customization features — your page looks polished',
+                  'Strong branding and customization features: your page looks polished',
                   'Built for independent beauty professionals (hair, nails, esthetics)',
                   'Free same-business-day payouts (Monday to Thursday)',
                   'Integrated marketing tools including rebooking reminders and client messaging',
                 ]}
                 considerations={[
                   'From $24/month billed annually; Gold ($48 to $56) for Google Booking and text marketing',
-                  'Not nail-tech-specific — serves a broad range of beauty professionals',
+                  'Not nail-tech-specific: serves a broad range of beauty professionals',
                   'Features are strong but the platform may include more than an independent nail tech needs',
                 ]}
               >
                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                  GlossGenius has a strong reputation for helping independent beauty professionals present their work professionally. Its branding tools and client management features are well-regarded. It's a credible option for nail techs who want a polished, all-in-one platform — with plans from $24/month billed annually up to $148 for large teams.
+                  GlossGenius has a strong reputation for helping independent beauty professionals present their work professionally. Its branding tools and client management features are well-regarded. It's a credible option for nail techs who want a polished, all-in-one platform, with plans from $24/month billed annually up to $148 for large teams.
                 </p>
               </PlatformSection>
             </motion.div>
@@ -416,7 +416,7 @@ export default function BestBookingApp() {
                     <div key={item.type} className="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
                       <p className="text-sm font-bold text-gray-900 mb-1">{item.type}</p>
                       <p className="text-sm text-gray-500 leading-relaxed">
-                        <span className="font-semibold" style={{ color: PINK }}>Best fit: {item.recommendation}</span> — {item.reason}
+                        <span className="font-semibold" style={{ color: PINK }}>Best fit: {item.recommendation}</span>. {item.reason}
                       </p>
                     </div>
                   ))}
@@ -436,7 +436,7 @@ export default function BestBookingApp() {
                     },
                     {
                       q: 'Do I need a booking app with a marketplace?',
-                      a: 'Only if marketplace discovery matters for your growth. If you already have a social media audience, a direct booking tool is more valuable — and avoids having clients associate your brand with another platform.',
+                      a: 'Only if marketplace discovery matters for your growth. If you already have a social media audience, a direct booking tool is more valuable, and avoids having clients associate your brand with another platform.',
                     },
                     {
                       q: 'How much do nail tech booking apps cost?',
@@ -467,7 +467,7 @@ export default function BestBookingApp() {
               Try Nelsy free for 14 days.
             </motion.h2>
             <motion.p {...fadeUp(0.06)} className="text-base sm:text-lg text-white/80 mb-8 max-w-lg mx-auto">
-              If you build your client base on Instagram, Nelsy is built for you — booking, deposits and payments from your own branded page.
+              If you build your client base on Instagram, Nelsy is built for you: booking, deposits and payments from your own branded page.
             </motion.p>
             <motion.div {...fadeUp(0.12)}>
               <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />
@@ -484,8 +484,8 @@ export default function BestBookingApp() {
             <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4">DEEP DIVES</p>
             <div className="flex flex-wrap gap-3">
               {[
-                { to: '/fresha-alternative-nail-techs', label: 'Fresha vs Nelsy — Full Comparison' },
-                { to: '/booksy-alternative-nail-techs', label: 'Booksy vs Nelsy — Full Comparison' },
+                { to: '/fresha-alternative-nail-techs', label: 'Fresha vs Nelsy: Full Comparison' },
+                { to: '/booksy-alternative-nail-techs', label: 'Booksy vs Nelsy: Full Comparison' },
                 { to: '/nail-tech-deposits', label: 'How to Collect Deposits' },
                 { to: '/instagram-booking-for-nail-techs', label: 'Instagram Booking for Nail Techs' },
               ].map((link) => (

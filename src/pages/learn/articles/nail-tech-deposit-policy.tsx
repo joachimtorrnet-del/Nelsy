@@ -14,9 +14,9 @@ registerArticle({
   title: 'How to Write and Enforce a Nail Tech Deposit Policy',
   seoTitle: 'Nail Tech Deposit Policy: How to Write and Enforce One',
   excerpt:
-    'A complete guide to deposit policies for nail techs — how much to charge, refundable vs non-refundable, communicating your policy, handling objections, and collecting deposits.',
+    'A complete guide to deposit policies for nail techs, how much to charge, refundable vs non-refundable, communicating your policy, handling objections, and collecting deposits.',
   seoDescription:
-    'How to write and enforce a deposit policy as a nail tech — deposit amounts, refundable vs non-refundable, policy templates, objection handling scripts and how to collect payments.',
+    'How to write and enforce a nail tech deposit policy: deposit amounts, refundable vs non-refundable, templates, objection scripts and collecting payment.',
   category: 'policies-clients',
   tags: ['deposits', 'policy', 'no-shows', 'cancellations', 'booking'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 70%, #86EFAC 100%)',
@@ -52,7 +52,7 @@ registerArticle({
     },
     {
       q: 'Can I take deposits without a booking app?',
-      a: "Yes — bank transfer or PayPal works. But manual deposit collection is time-consuming and harder to track. A booking platform that handles deposits automatically saves significant admin time and ensures clients see the deposit requirement before confirming.",
+      a: "Yes: bank transfer or PayPal works. But manual deposit collection is time-consuming and harder to track. A booking platform that handles deposits automatically saves significant admin time and ensures clients see the deposit requirement before confirming.",
     },
   ],
   relatedFeatureSlugs: ['deposits', 'bookings', 'payments'],
@@ -62,10 +62,10 @@ registerArticle({
       <section id="why-deposits">
         <h2 className="font-serif text-2xl font-bold mb-4">1. Why a deposit policy matters</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          An empty appointment slot is lost income. A £50 nail appointment that doesn't show up costs you £50 in lost revenue — plus any products prepared, the time you could have given to another client, and the mental overhead of a last-minute cancellation.
+          An empty appointment slot is lost income. A £50 nail appointment that doesn't show up costs you £50 in lost revenue, plus any products prepared, the time you could have given to another client, and the mental overhead of a last-minute cancellation.
         </p>
         <ArticleQuote attribution="Nail tech, East London (via Reddit)">
-          I used to get 3–4 no-shows a month. Since adding a £20 deposit I've had maybe 2 in the last year. The clients who were ghosting me weren't serious — the deposit just made that clear before it cost me a slot.
+          I used to get 3–4 no-shows a month. Since adding a £20 deposit I've had maybe 2 in the last year. The clients who were ghosting me weren't serious: the deposit just made that clear before it cost me a slot.
         </ArticleQuote>
         <p className="text-gray-700 mb-4 leading-relaxed">
           A deposit policy has two effects: it reduces the number of no-shows (clients who have paid something are far less likely to ghost) and it ensures that when a cancellation does happen, you have partial compensation for the lost slot.
@@ -107,7 +107,7 @@ registerArticle({
       <section id="refundable">
         <h2 className="font-serif text-2xl font-bold mb-4">3. Refundable vs non-refundable deposits</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          The most client-friendly — and most effective — approach is a tiered deposit policy based on notice period:
+          The most client-friendly, and most effective, approach is a tiered deposit policy based on notice period:
         </p>
         <ArticleTable
           headers={['Notice given', 'Deposit outcome']}
@@ -134,7 +134,7 @@ registerArticle({
           className="my-6 p-5 rounded-2xl text-sm leading-relaxed text-gray-700"
           style={{ background: '#F7F3F3', border: '1px solid #F4C2C2' }}
         >
-          <p className="font-semibold text-[#1A1A1A] mb-2">Deposit Policy — [Your Business Name]</p>
+          <p className="font-semibold text-[#1A1A1A] mb-2">Deposit Policy: [Your Business Name]</p>
           <p>A non-refundable deposit of £[amount] is required to confirm your booking. This deposit is deducted from the total cost of your appointment.</p>
           <ul className="mt-2 space-y-1 list-disc list-inside">
             <li>Cancellations with 48+ hours notice: deposit transferred to a new appointment.</li>
@@ -185,11 +185,11 @@ registerArticle({
           rows={[
             [
               '"I\'ve never had to pay a deposit before"',
-              '"Most nail techs are adding them now — it\'s standard practice to hold appointment slots. The deposit comes off your total on the day."',
+              '"Most nail techs are adding them now: it\'s standard practice to hold appointment slots. The deposit comes off your total on the day."',
             ],
             [
               '"I\'m a regular, do I still need to pay?"',
-              '"Yes — it\'s the same for all bookings. It just secures the slot and comes off the price as usual."',
+              '"Yes: it\'s the same for all bookings. It just secures the slot and comes off the price as usual."',
             ],
             [
               '"What if I need to cancel?"',
@@ -197,7 +197,7 @@ registerArticle({
             ],
             [
               '"Can I pay when I arrive?"',
-              '"The deposit is what holds the slot — without it the booking isn\'t confirmed. I do get enquiries from multiple people for the same time, so I need it to secure yours."',
+              '"The deposit is what holds the slot, without it the booking isn\'t confirmed. I do get enquiries from multiple people for the same time, so I need it to secure yours."',
             ],
           ]}
         />
@@ -214,14 +214,14 @@ registerArticle({
         <ArticleTable
           headers={['Method', 'Friction', 'Notes']}
           rows={[
-            ['Bank transfer / BACS', 'Medium', 'Manual — you have to confirm receipt and chase non-payment'],
+            ['Bank transfer / BACS', 'Medium', 'Manual: you have to confirm receipt and chase non-payment'],
             ['PayPal Friends & Family', 'Medium', 'No fees but no buyer protection; clients may dispute'],
             ['PayPal Goods & Services', 'Medium', 'Has fees; clients may raise disputes'],
             ['Booking app (Stripe-based)', 'Low', 'Automatic; collected at booking, tracked per appointment, reduces admin'],
           ]}
         />
         <p className="text-gray-700 mt-4 leading-relaxed">
-          <ArticleCTAInline to="/">Nelsy</ArticleCTAInline> collects deposits automatically when a client books — no bank transfers to chase, no manual tracking. The deposit is deducted from the final amount on the day.
+          <ArticleCTAInline to="/">Nelsy</ArticleCTAInline> collects deposits automatically when a client books: no bank transfers to chase, no manual tracking. The deposit is deducted from the final amount on the day.
         </p>
       </section>
 
@@ -229,9 +229,9 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Useful resources</h2>
         <ul className="space-y-2 text-sm">
           {[
-            ['/nail-tech-deposits', 'How to take deposits as a nail tech — the full guide'],
+            ['/nail-tech-deposits', 'How to take deposits as a nail tech: the full guide'],
             ['/tools/nail-tech-cancellation-policy-generator', 'Free cancellation policy generator'],
-            ['/tools/nail-tech-appointment-reminder-templates', 'Appointment reminder templates — including post-appointment follow-up'],
+            ['/tools/nail-tech-appointment-reminder-templates', 'Appointment reminder templates, including post-appointment follow-up'],
             ['/blog/how-to-get-more-nail-clients', 'How to get more nail clients'],
             ['/blog/nail-tech-pricing-guide', 'Nail tech pricing guide'],
           ].map(([href, label]) => (

@@ -6,7 +6,7 @@ registerArticle({
   slug: 'nail-tech-business-plan',
   title: 'Nail Tech Business Plan: Step-by-Step Guide',
   seoTitle: 'Nail Tech Business Plan: Step-by-Step Guide for 2026',
-  excerpt: 'A practical business plan for nail techs — not a corporate document, but a clear picture of what you\'re building, what it costs, and how to grow it.',
+  excerpt: 'A practical business plan for nail techs, not a corporate document, but a clear picture of what you\'re building, what it costs, and how to grow it.',
   seoDescription: 'How to write a nail tech business plan. A practical, jargon-free guide covering your offer, target clients, pricing, costs, revenue projections, and growth strategy.',
   category: 'start-your-business',
   tags: ['nail business plan', 'business plan', 'nail tech strategy', 'nail business finances'],
@@ -26,22 +26,22 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-start-a-nail-business-2026', 'how-to-price-nail-services-for-profit', 'how-to-get-more-nail-clients'],
   faq: [
-    { q: 'Do nail techs need a formal business plan?', a: 'Not a formal one — you\'re not applying for a bank loan. But a clear, written picture of your business, costs, revenue, and marketing strategy is genuinely useful. It forces you to think through assumptions you might otherwise gloss over, and gives you a reference point to measure against.' },
+    { q: 'Do nail techs need a formal business plan?', a: 'Not a formal one: you\'re not applying for a bank loan. But a clear, written picture of your business, costs, revenue, and marketing strategy is genuinely useful. It forces you to think through assumptions you might otherwise gloss over, and gives you a reference point to measure against.' },
     { q: 'How much should a nail tech expect to earn in year one?', a: 'Highly variable. A part-time nail tech (2–3 days per week) might earn £15,000–£25,000. A full-time nail tech with a full book earns £25,000–£50,000+. These figures depend heavily on pricing, location, efficiency, and how quickly you build your clientele. The business plan calculator below helps you model your specific scenario.' },
-    { q: 'Should I start as a sole trader or limited company as a nail tech?', a: 'Almost all new nail techs start as sole traders — simpler administration, less cost, easier to understand. A limited company may make sense once you\'re earning significantly above the higher rate tax threshold. Speak to an accountant before making this decision.' },
+    { q: 'Should I start as a sole trader or limited company as a nail tech?', a: 'Almost all new nail techs start as sole traders: simpler administration, less cost, easier to understand. A limited company may make sense once you\'re earning significantly above the higher rate tax threshold. Speak to an accountant before making this decision.' },
   ],
   relatedFeatureSlugs: ['bookings', 'analytics', 'crm'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="why-bother">
         <h2 className="font-serif text-2xl font-bold mb-4">Why a business plan?</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">A nail tech business plan isn't a 30-page document for a bank — it's a clear, written answer to: what are you building, who for, at what price, and how will you find enough clients to make it work?</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">A nail tech business plan isn't a 30-page document for a bank. It's a clear, written answer to: what are you building, who for, at what price, and how will you find enough clients to make it work?</p>
         <p className="text-gray-700 leading-relaxed">The process of writing it is as valuable as the document itself. It forces decisions you might otherwise avoid: What will I actually charge? How many clients do I need per week to hit my income goal? What will I do if I can't fill my diary?</p>
       </section>
 
       <section id="your-offer">
         <h2 className="font-serif text-2xl font-bold mb-4">1. Define your offer</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">What services will you offer? Write them out with prices and durations. This is your service menu — it defines what you sell and how much time each item takes.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">What services will you offer? Write them out with prices and durations. This is your service menu: it defines what you sell and how much time each item takes.</p>
         <ArticleTable
           headers={['Service', 'Price', 'Duration', 'Notes']}
           rows={[
@@ -51,9 +51,9 @@ registerArticle({
             ['Nail art add-on', '£5/nail', '+30–45 min', 'Premium add-on'],
             ['Gel removal + new set', '£60', '2h', 'New client common'],
           ]}
-          caption="Example service menu — replace with your actual services and prices"
+          caption="Example service menu: replace with your actual services and prices"
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">Your niche matters. A nail tech specialising in soft gel extensions for professionals is targeting a different client than one specialising in nail art for students. Neither is better — but clarity helps you market more effectively.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Your niche matters. A nail tech specialising in soft gel extensions for professionals is targeting a different client than one specialising in nail art for students. Neither is better, but clarity helps you market more effectively.</p>
       </section>
 
       <section id="target-clients">
@@ -78,7 +78,7 @@ registerArticle({
             ['15', '£50', '£750', '£3,000'],
             ['20', '£55', '£1,100', '£4,400'],
           ]}
-          caption="Example projections — use your actual prices and working hours"
+          caption="Example projections: use your actual prices and working hours"
         />
         <p className="text-gray-700 mt-4 leading-relaxed">From monthly revenue, subtract costs to get profit. Model multiple scenarios: what happens if you have a quiet month? What's your minimum viable client count? See: <Link to="/blog/how-to-price-nail-services-for-profit" className="underline text-[#F52B8C]">how to price nail services for profit</Link>.</p>
       </section>

@@ -5,10 +5,10 @@ export default function PaymentsPage() {
   return (
     <FeaturePage
       title="Get Paid for Every Appointment | Nelsy"
-      metaDescription="Accept payments directly through Nelsy. Collect deposits, balances, and tips without dealing with cash or separate payment apps. Built for nail techs and beauty pros."
+      metaDescription="Accept payments directly through Nelsy. Collect deposits, balances and tips without cash or separate payment apps. Built for nail techs and beauty pros."
       canonical="/features/payments"
       h1="Get paid for every appointment"
-      heroDescription="Chase less, earn more. Nelsy handles payments for your beauty business — from the initial deposit to the final balance — so money lands where it should."
+      heroDescription="Chase less, earn more. Nelsy handles payments for your beauty business, from the initial deposit to the final balance, so money lands where it should."
       icon={CreditCard}
       benefits={[
         {

@@ -7,7 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'black-friday-ideas-nail-techs',
   title: 'Black Friday Ideas for Nail Techs',
-  seoTitle: 'Black Friday Ideas for Nail Techs (Without Discounting Your Services)',
+  seoTitle: 'Black Friday Ideas for Nail Techs (Without Discounting)',
   excerpt: 'Black Friday doesn\'t have to mean discounting your services. Here\'s how nail techs can take part in the biggest shopping weekend of the year, on their own terms.',
   seoDescription: 'Black Friday ideas for nail techs. Run a Black Friday promotion without slashing prices: gift cards, add-ons, product bundles, and smart ways to use the weekend.',
   category: 'get-clients',

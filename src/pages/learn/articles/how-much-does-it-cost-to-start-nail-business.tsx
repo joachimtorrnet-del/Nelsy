@@ -6,7 +6,7 @@ registerArticle({
   slug: 'how-much-does-it-cost-to-start-nail-business',
   title: 'How Much Does It Cost to Start a Nail Business?',
   seoTitle: 'How Much Does It Cost to Start a Nail Business? (UK 2026)',
-  excerpt: 'A realistic cost breakdown for starting a nail business in the UK — from training and insurance to equipment, products, and marketing.',
+  excerpt: 'A realistic cost breakdown for starting a nail business in the UK, from training and insurance to equipment, products, and marketing.',
   seoDescription: 'How much does it cost to start a nail business in the UK? Realistic startup cost breakdown: training, insurance, equipment, products, and what to prioritise.',
   category: 'start-your-business',
   tags: ['nail business startup costs', 'cost to start nail business', 'nail tech investment', 'nail business budget'],
@@ -26,9 +26,9 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-start-a-nail-business-2026', 'nail-tech-starter-kit', 'nail-tech-beginner-business-checklist'],
   faq: [
-    { q: 'Can you start a nail business on a small budget?', a: 'Yes. A basic functional setup — enough to take clients and build your business — costs £500–£800. You don\'t need the full professional kit on day one. Start with essentials, use income to reinvest in better equipment and a broader product range as your business grows.' },
-    { q: 'Is nail tech training worth the cost?', a: 'Yes — and it\'s the one area not to cut corners. Untrained nail techs risk damaging clients\' nails, face difficulty getting insurance, and have no credibility when clients ask about qualifications. A good qualification also accelerates your learning curve significantly.' },
-    { q: 'What nail equipment should I buy first?', a: 'Lamp, core products (base/top/colour gel, primer, dehydrator), files and buffers, and basic tools (cuticle pusher, brush). The lamp is the most critical equipment purchase — buy one compatible with your gel system. Everything else can be upgraded over time.' },
+    { q: 'Can you start a nail business on a small budget?', a: 'Yes. A basic functional setup, enough to take clients and build your business, costs £500–£800. You don\'t need the full professional kit on day one. Start with essentials, use income to reinvest in better equipment and a broader product range as your business grows.' },
+    { q: 'Is nail tech training worth the cost?', a: 'Yes, and it\'s the one area not to cut corners. Untrained nail techs risk damaging clients\' nails, face difficulty getting insurance, and have no credibility when clients ask about qualifications. A good qualification also accelerates your learning curve significantly.' },
+    { q: 'What nail equipment should I buy first?', a: 'Lamp, core products (base/top/colour gel, primer, dehydrator), files and buffers, and basic tools (cuticle pusher, brush). The lamp is the most critical equipment purchase: buy one compatible with your gel system. Everything else can be upgraded over time.' },
   ],
   relatedFeatureSlugs: ['bookings', 'payments', 'analytics'],
   content: () => (
@@ -47,7 +47,7 @@ registerArticle({
           ]}
           caption="One-off startup costs. Ongoing monthly costs are separate."
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">These ranges reflect real UK nail tech startup costs in 2026. Training is the biggest variable — a short brand-specific course costs far less than a full Level 3 qualification, but provides less foundation.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">These ranges reflect real UK nail tech startup costs in 2026. Training is the biggest variable: a short brand-specific course costs far less than a full Level 3 qualification, but provides less foundation.</p>
       </section>
 
       <section id="training-costs">
@@ -61,7 +61,7 @@ registerArticle({
             ['Online nail courses', '£50–200', 'Supplementary; limited practical experience'],
           ]}
         />
-        <ArticleTip>Some training providers offer payment plans. If cost is a barrier, a Level 3 course spread over 3–6 months is more affordable than paying upfront — and the qualification time means you have longer to practise before seeing paying clients.</ArticleTip>
+        <ArticleTip>Some training providers offer payment plans. If cost is a barrier, a Level 3 course spread over 3–6 months is more affordable than paying upfront, and the qualification time means you have longer to practise before seeing paying clients.</ArticleTip>
       </section>
 
       <section id="insurance">
@@ -92,15 +92,15 @@ registerArticle({
             ['Storage (acrylic organiser)', '£20–40', '£40–80', 'Helpful'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">The lamp is the most critical equipment purchase. Buy one specifically designed for your gel system — a cheap lamp that doesn\'t fully cure your gel will cause lifting and client complaints. See: <Link to="/blog/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit guide</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">The lamp is the most critical equipment purchase. Buy one specifically designed for your gel system: a cheap lamp that doesn\'t fully cure your gel will cause lifting and client complaints. See: <Link to="/blog/nail-tech-starter-kit" className="underline text-[#F52B8C]">nail tech starter kit guide</Link>.</p>
       </section>
 
       <section id="products-costs">
         <h2 className="font-serif text-2xl font-bold mb-4">Products and supplies</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Your initial product kit needs to cover the basics for your core services. Resist buying a huge colour range before you have clients — focus on essentials:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Your initial product kit needs to cover the basics for your core services. Resist buying a huge colour range before you have clients. Focus on essentials:</p>
         <ul className="list-disc list-inside space-y-1 text-gray-700">
           <li>Base coat, top coat (rubber base, glossy/matte top)</li>
-          <li>10–15 gel colours (neutrals, pinks, reds — the most requested shades)</li>
+          <li>10–15 gel colours (neutrals, pinks, reds: the most requested shades)</li>
           <li>Builder gel (if doing extensions)</li>
           <li>Primer and dehydrator</li>
           <li>Nail forms or tips (if doing extensions)</li>
@@ -108,7 +108,7 @@ registerArticle({
           <li>Acetone and nail wipes</li>
         </ul>
         <ArticleCallout variant="info" title="Start with a system">
-          Use one brand's base, colour, and top coat together initially — especially when starting out. Mixing brands can cause compatibility issues. Once you understand your products well, you can experiment with mixing.
+          Use one brand's base, colour, and top coat together initially, especially when starting out. Mixing brands can cause compatibility issues. Once you understand your products well, you can experiment with mixing.
         </ArticleCallout>
       </section>
 
@@ -131,7 +131,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Minimum viable setup</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">If you want to start with the absolute minimum while still being professional:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Training: brand-specific course (£150–300) — add Level 3 as soon as you can</li>
+          <li>Training: brand-specific course (£150–300). Add Level 3 as soon as you can</li>
           <li>Insurance: combined policy (£90–150/year)</li>
           <li>Lamp + core gel products: (£150–250)</li>
           <li>Files, buffers, tools: (£50–80)</li>

@@ -9,7 +9,7 @@ registerArticle({
   title: 'Best Scheduling Software for Solo Nail Techs',
   seoTitle: "Best Scheduling Software for Solo Nail Techs (2026)",
   excerpt: 'The right scheduling software can save hours every week and make your business easier to run. Here\'s what matters when choosing, and how different tools approach the problem.',
-  seoDescription: 'Best scheduling software for solo nail techs. What features matter, how to compare booking platforms, and how to choose the right tool for an independent nail business.',
+  seoDescription: 'Best scheduling software for solo nail techs. Which features matter, how to compare booking platforms and how to choose the right tool.',
   category: 'comparisons',
   tags: ['scheduling software nail tech', 'nail tech booking app', 'best booking system nail', 'solo nail tech software'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #A7F3D0 100%)',

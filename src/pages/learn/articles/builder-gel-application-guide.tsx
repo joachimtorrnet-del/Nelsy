@@ -7,7 +7,7 @@ registerArticle({
   title: 'Builder Gel Application Guide for Beginners',
   seoTitle: 'Builder Gel (BIAB) Application Guide for Beginner Nail Techs',
   excerpt: 'Builder gel (BIAB) is one of the most in-demand nail services. This guide covers the application process, layering technique, self-levelling, and how to get a consistent result.',
-  seoDescription: 'Builder gel application guide for nail techs. Step-by-step BIAB technique — application, self-levelling, filing, apex, and troubleshooting common issues.',
+  seoDescription: 'Builder gel application guide for nail techs. Step-by-step BIAB technique: application, self-levelling, filing, apex, and troubleshooting common issues.',
   category: 'nail-education',
   tags: ['builder gel', 'BIAB', 'builder gel application', 'nail technique'],
   heroImage: 'linear-gradient(135deg, #ECFDF5 0%, #6EE7B7 100%)',
@@ -50,7 +50,7 @@ registerArticle({
         <p className="text-gray-700 mb-4 leading-relaxed">Builder gel is a thick, UV/LED-cured gel used to add structure, strength, and sometimes length to natural nails. BIAB (Builder in a Bottle) is a formulation of builder gel in a brush-on bottle, making application easier and more accessible than traditional pot-style builder gels.</p>
         <p className="text-gray-700 leading-relaxed">The product self-levels to some extent once applied, cures hard under a UV/LED lamp, and can be filed and shaped after cure. It produces a structured nail overlay that is stronger than gel polish alone. Many clients use BIAB specifically to strengthen nails that break or peel easily.</p>
         <ArticleCallout variant="info" title="Brand variation note">
-          BIAB products vary considerably between brands in terms of viscosity, self-levelling behaviour, cure time, and filing requirements. This guide covers general technique — always follow your specific product's instructions.
+          BIAB products vary considerably between brands in terms of viscosity, self-levelling behaviour, cure time, and filing requirements. This guide covers general technique, always follow your specific product's instructions.
         </ArticleCallout>
       </section>
 
@@ -77,7 +77,7 @@ registerArticle({
           },
           {
             title: 'Apply the first layer of builder gel',
-            body: 'Apply a thin layer of builder gel to the nail plate. With a BIAB bottle, apply from the centre of the nail outward — don\'t drag product back toward the cuticle. Leave a 0.5–1mm gap at the cuticle and sidewalls. Cap the free edge. Cure according to manufacturer instructions.',
+            body: 'Apply a thin layer of builder gel to the nail plate. With a BIAB bottle, apply from the centre of the nail outward: don\'t drag product back toward the cuticle. Leave a 0.5–1mm gap at the cuticle and sidewalls. Cap the free edge. Cure according to manufacturer instructions.',
           },
           {
             title: 'Build the apex zone (second layer)',
@@ -85,23 +85,23 @@ registerArticle({
           },
           {
             title: 'Check for self-levelling',
-            body: 'Allow the product to self-level before curing — many builder gels will settle into a smooth finish if given 30–60 seconds. If you cure too quickly, you may lock in brush marks. Move to the next nail while this one self-levels. Work in a sequence — don\'t leave product uncured for too long.',
+            body: 'Allow the product to self-level before curing: many builder gels will settle into a smooth finish if given 30–60 seconds. If you cure too quickly, you may lock in brush marks. Move to the next nail while this one self-levels. Work in a sequence: don\'t leave product uncured for too long.',
           },
           {
             title: 'Apply additional layers if needed',
-            body: 'For extensions or for clients needing significant strengthening: a third thin layer may be appropriate. Keep each layer thin — thick layers don\'t cure uniformly and can cause the product to pop off in sheets.',
+            body: 'For extensions or for clients needing significant strengthening: a third thin layer may be appropriate. Keep each layer thin: thick layers don\'t cure uniformly and can cause the product to pop off in sheets.',
           },
         ]} />
       </section>
 
       <section id="self-levelling">
         <h2 className="font-serif text-2xl font-bold mb-4">Self-levelling technique</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Most builder gels self-level — the viscosity causes them to flow slightly toward a smooth surface before curing. You can encourage this:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Most builder gels self-level: the viscosity causes them to flow slightly toward a smooth surface before curing. You can encourage this:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Apply product, shape roughly with your brush, then stop touching it and allow it to settle</li>
           <li>Holding the hand/finger horizontal helps product settle evenly; tilting causes it to flow toward the lower side</li>
-          <li>A slight warming (from a lamp on low or a warming plate) speeds up self-levelling — but check product compatibility before doing this</li>
-          <li>If the product has levelled and cured without brush marks, no filing is needed on the surface — a light buff is enough for finishing</li>
+          <li>A slight warming (from a lamp on low or a warming plate) speeds up self-levelling, but check product compatibility before doing this</li>
+          <li>If the product has levelled and cured without brush marks, no filing is needed on the surface: a light buff is enough for finishing</li>
         </ul>
         <ArticleTip>The key with self-levelling: apply and guide, then leave it. Overworking builder gel creates streaks and brush marks. Trust the product.</ArticleTip>
       </section>
@@ -123,9 +123,9 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Filing and finishing</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">After cure:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Check the surface — well-applied builder gel needs minimal filing if self-levelling worked</li>
+          <li>Check the surface: well-applied builder gel needs minimal filing if self-levelling worked</li>
           <li>Shape the free edge with a 180-grit file</li>
-          <li>Lightly refine the surface with 240-grit if needed — don't over-file, the product is a functional structure, not just cosmetic</li>
+          <li>Lightly refine the surface with 240-grit if needed: don't over-file, the product is a functional structure, not just cosmetic</li>
           <li>Buff to a smooth finish</li>
           <li>Apply gel polish colour over the top, or a gel top coat for a natural look</li>
         </ul>

@@ -25,7 +25,7 @@ registerArticle({
   relatedSlugs: ['when-to-get-your-own-nail-studio', 'home-based-nail-tech-vs-salon-suite', 'nail-tech-client-follow-up-templates', 'nail-tech-expense-list'],
   faq: [
     { q: 'Will I lose clients when I move from home to a studio?', a: 'Some clients may not follow you, especially if the studio is further from them. Plan for a small drop (5–15% is normal) and factor that into your financial projections. Most established clients who love your work will follow. The move often attracts new clients who previously wouldn\'t come to a home setting.' },
-    { q: 'How far in advance should I tell clients about the move?', a: 'Tell existing clients 4–6 weeks before the move date. This gives them time to have a last home appointment if they want, and adjust their travel expectations. Don\'t tell them too far in advance — you risk them booking elsewhere in the interim.' },
+    { q: 'How far in advance should I tell clients about the move?', a: 'Tell existing clients 4–6 weeks before the move date. This gives them time to have a last home appointment if they want, and adjust their travel expectations. Don\'t tell them too far in advance: you risk them booking elsewhere in the interim.' },
   ],
   relatedFeatureSlugs: ['bookings', 'crm', 'analytics'],
   content: () => (
@@ -33,15 +33,15 @@ registerArticle({
       <section id="before-signing">
         <h2 className="font-serif text-2xl font-bold mb-4">Before you sign anything</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Confirm your monthly income for the last 6 months — is it consistent enough to absorb the rent?</li>
+          <li>Confirm your monthly income for the last 6 months: is it consistent enough to absorb the rent?</li>
           <li>Calculate your break-even: how many appointments per week do you need just to cover rent?</li>
-          <li>Visit the space in person — check ventilation, parking, lighting, and whether it feels right</li>
-          <li>Read the lease carefully — understand notice period, what's included, and any restrictions</li>
+          <li>Visit the space in person: check ventilation, parking, lighting, and whether it feels right</li>
+          <li>Read the lease carefully: understand notice period, what's included, and any restrictions</li>
           <li>Confirm what setup costs you'll have (painting, fitting, equipment)</li>
           <li>Ensure you have savings for the deposit, first month's rent, and setup costs before signing</li>
         </ul>
         <ArticleCallout variant="warning" title="Never sign a studio lease in a rush">
-          Studio transitions that go wrong are usually the result of signing too quickly — before checking finances, visiting the space properly, or reading the lease. Take your time.
+          Studio transitions that go wrong are usually the result of signing too quickly: before checking finances, visiting the space properly, or reading the lease. Take your time.
         </ArticleCallout>
       </section>
 
@@ -61,9 +61,9 @@ registerArticle({
         <ArticleTable
           headers={['Channel', 'What to say']}
           rows={[
-            ['Direct message to existing clients', '"Exciting news — I\'m moving to my own studio in [area] from [date]. New address: [address]. I\'d love to see you there!"'],
-            ['Instagram post', '"BIG news — I\'m getting my own studio! 🎉 From [date], all appointments will be at [location]. Link in bio to book."'],
-            ['Instagram Story', 'Behind-the-scenes of the setup process — creates excitement'],
+            ['Direct message to existing clients', '"Exciting news: I\'m moving to my own studio in [area] from [date]. New address: [address]. I\'d love to see you there!"'],
+            ['Instagram post', '"BIG news: I\'m getting my own studio! 🎉 From [date], all appointments will be at [location]. Link in bio to book."'],
+            ['Instagram Story', 'Behind-the-scenes of the setup process: creates excitement'],
             ['Booking page update', 'Update address in your booking system before the move date'],
           ]}
         />
@@ -74,7 +74,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Setting up your studio space</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li><strong>Ventilation:</strong> If the space doesn't have ventilation, fit an extractor fan before your first client</li>
-          <li><strong>Lighting:</strong> Good lighting is non-negotiable — natural light plus a strong overhead or ring light</li>
+          <li><strong>Lighting:</strong> Good lighting is non-negotiable. Natural light plus a strong overhead or ring light</li>
           <li><strong>Client chair and nail desk:</strong> Set up for your working height to avoid back strain</li>
           <li><strong>Storage:</strong> Organised, accessible product storage reduces time between clients</li>
           <li><strong>Content setup:</strong> Create a spot with a neutral or branded backdrop for nail photography</li>
@@ -86,8 +86,8 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">After the move</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Update your Instagram bio, booking page, and Google Business profile with the new address immediately</li>
-          <li>Post your studio reveal on Instagram — it's a milestone worth celebrating and drives bookings</li>
-          <li>Ask your first few studio clients for their thoughts — early feedback helps you refine the setup</li>
+          <li>Post your studio reveal on Instagram: it's a milestone worth celebrating and drives bookings</li>
+          <li>Ask your first few studio clients for their thoughts: early feedback helps you refine the setup</li>
           <li>Track your income vs. rent for the first 3 months to confirm the move is financially working</li>
           <li>If your old clients who didn't follow up haven't booked in 6–8 weeks, send a gentle check-in</li>
         </ul>

@@ -5,8 +5,8 @@ registerArticle({
   slug: 'nail-tech-no-show-message-templates',
   title: 'Nail Tech No-Show Message Templates',
   seoTitle: 'Nail Tech No-Show Message Templates (Copy & Paste)',
-  excerpt: 'A no-show is frustrating. Here\'s how to handle it professionally — templates for reaching out, retaining the deposit, and deciding whether to rebook the client.',
-  seoDescription: 'Nail tech no-show message templates. Copy-paste no-show messages for nail techs — reach out, retain deposit, and handle repeat no-shows professionally.',
+  excerpt: 'A no-show is frustrating. Here\'s how to handle it professionally: templates for reaching out, retaining the deposit, and deciding whether to rebook the client.',
+  seoDescription: 'Nail tech no-show message templates. Copy-paste no-show messages for nail techs: reach out, retain deposit, and handle repeat no-shows professionally.',
   category: 'policies-clients',
   tags: ['nail tech no-show message template', 'nail appointment no show message', 'client no show nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)',
@@ -23,16 +23,16 @@ registerArticle({
   ],
   relatedSlugs: ['nail-tech-cancellation-message-templates', 'nail-tech-appointment-reminder-templates', 'how-to-deal-with-nail-client-no-shows', 'nail-tech-deposit-policy'],
   faq: [
-    { q: 'Should I reach out to a client who no-showed?', a: 'Yes — a brief, neutral message gives the client a chance to explain (emergencies happen). It also puts your policy on record. Send it the same day or within a few hours of the missed appointment. Keep it short and professional, not passive-aggressive.' },
-    { q: 'Can I refuse to rebook a client who no-showed?', a: 'Yes. If a client has a history of no-shows or last-minute cancellations, you can decline to rebook, or make rebooking conditional on a larger deposit or full prepayment. This is your business — protecting your time is entirely reasonable.' },
-    { q: 'What if the client had an emergency?', a: 'An emergency is a reason, not an excuse to waive your policy. You can acknowledge the difficulty while still retaining the deposit. Some nail techs choose to waive in genuine emergencies — that\'s a personal decision. If you do waive it, make sure it\'s a genuine exception and not a pattern.' },
+    { q: 'Should I reach out to a client who no-showed?', a: 'Yes: a brief, neutral message gives the client a chance to explain (emergencies happen). It also puts your policy on record. Send it the same day or within a few hours of the missed appointment. Keep it short and professional, not passive-aggressive.' },
+    { q: 'Can I refuse to rebook a client who no-showed?', a: 'Yes. If a client has a history of no-shows or last-minute cancellations, you can decline to rebook, or make rebooking conditional on a larger deposit or full prepayment. This is your business: protecting your time is entirely reasonable.' },
+    { q: 'What if the client had an emergency?', a: 'An emergency is a reason, not an excuse to waive your policy. You can acknowledge the difficulty while still retaining the deposit. Some nail techs choose to waive in genuine emergencies, that\'s a personal decision. If you do waive it, make sure it\'s a genuine exception and not a pattern.' },
   ],
   relatedFeatureSlugs: ['deposits', 'bookings'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="first-contact">
         <h2 className="font-serif text-2xl font-bold mb-4">First contact after a no-show</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Send this within a couple of hours of the missed appointment — neutral, not accusatory:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Send this within a couple of hours of the missed appointment. Neutral, not accusatory:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
           Hi [Name], I had you booked in for a [service] today at [time] and it looks like you weren't able to make it. I hope everything's okay. As per my booking policy, your deposit of £[amount] will be retained for the missed appointment. Please let me know if you'd like to rebook. [Your name]
         </blockquote>
@@ -77,7 +77,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Conditional rebook message</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">If you're willing to rebook but want a larger deposit or full prepayment:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Hi [Name], I'd be happy to rebook you — however, given the previous missed appointment, I'll need full payment in advance to secure your spot. If you're happy with that, just let me know what dates work and I'll send a payment link. [Your name]
+          Hi [Name], I'd be happy to rebook you: however, given the previous missed appointment, I'll need full payment in advance to secure your spot. If you're happy with that, just let me know what dates work and I'll send a payment link. [Your name]
         </blockquote>
       </section>
     </div>

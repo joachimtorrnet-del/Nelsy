@@ -6,7 +6,7 @@ registerArticle({
   slug: 'how-to-get-nail-clients-from-instagram',
   title: 'How to Get Nail Clients from Instagram',
   seoTitle: 'How to Get Nail Clients from Instagram (That Actually Book)',
-  excerpt: 'Instagram can be your best client acquisition tool — but likes don\'t pay bills. Here\'s how to turn your nail content into actual bookings.',
+  excerpt: 'Instagram can be your best client acquisition tool, but likes don\'t pay bills. Here\'s how to turn your nail content into actual bookings.',
   seoDescription: 'How to get nail clients from Instagram: what content to post, how to optimise your profile, convert followers into bookings, and use DMs strategically.',
   category: 'get-clients',
   tags: ['Instagram', 'nail clients', 'social media', 'Instagram strategy'],
@@ -28,7 +28,7 @@ registerArticle({
   faq: [
     { q: 'How many Instagram followers do I need to get nail clients?', a: 'You don\'t need a large following to get local nail clients from Instagram. Nail techs with 500–1000 local followers consistently get fully booked through Instagram. The key is that followers are local and your profile is clear about how to book.' },
     { q: 'Should I post Reels or photos to get nail clients?', a: 'Both work, and Reels tend to get more reach. But photos are often better for converting that reach into bookings because clients can scroll through your portfolio. The most effective approach is to use Reels for discovery and photos for the portfolio that convinces clients to book.' },
-    { q: 'How often should I post to get nail clients from Instagram?', a: '3–5 times per week is the sweet spot for growing a nail tech account. Consistency matters more than frequency — it\'s better to post 3x reliably every week than to post daily for two weeks and then go quiet for a month.' },
+    { q: 'How often should I post to get nail clients from Instagram?', a: '3–5 times per week is the sweet spot for growing a nail tech account. Consistency matters more than frequency: it\'s better to post 3x reliably every week than to post daily for two weeks and then go quiet for a month.' },
   ],
   relatedFeatureSlugs: ['instagram-autodm', 'link-in-bio', 'audience-capture'],
   content: () => (
@@ -43,7 +43,7 @@ registerArticle({
           <li>How to book and roughly what it costs</li>
         </ol>
         <ArticleCallout variant="info" title="The conversion gap">
-          If a potential client sees your content, likes your work, clicks to your profile, can't immediately see how to book or where you're based, and then clicks away — you've lost a client who was ready to book. The content worked. The profile didn't.
+          If a potential client sees your content, likes your work, clicks to your profile, can't immediately see how to book or where you're based, and then clicks away: you've lost a client who was ready to book. The content worked. The profile didn't.
         </ArticleCallout>
       </section>
 
@@ -69,7 +69,7 @@ registerArticle({
             ['Portfolio photos (clean, well-lit nail shots)', 'High', 'Clients need to see what they\'re booking before committing'],
             ['Before/after transformations', 'High', 'Shows skill, attracts clients with problem nails'],
             ['Process videos (Reels)', 'Medium-high', 'Good for reach; include booking CTA'],
-            ['Availability posts ("I have slots this week")', 'Very high', 'Direct conversion — only works if you have engaged followers'],
+            ['Availability posts ("I have slots this week")', 'Very high', 'Direct conversion, only works if you have engaged followers'],
             ['Nail inspo you\'ve created', 'High', 'Attracts clients who want that specific look'],
             ['Behind-the-scenes', 'Low-medium', 'Good for brand; less direct conversion'],
           ]}
@@ -95,20 +95,20 @@ registerArticle({
           headers={['CTA', 'When to use']}
           rows={[
             ['"Book via link in bio"', 'On portfolio posts and Reels'],
-            ['"I have availability this week — DM me to book"', 'When you have specific gaps to fill'],
+            ['"I have availability this week: DM me to book"', 'When you have specific gaps to fill'],
             ['"Save this for nail inspo and book when you\'re ready"', 'On inspo/wishlist content'],
             ['"Comment if you want this design and I\'ll DM you the details"', 'On trending designs'],
-            ['"Tag a friend who needs this set"', 'On especially popular posts — expands reach'],
+            ['"Tag a friend who needs this set"', 'On especially popular posts: expands reach'],
           ]}
         />
       </section>
 
       <section id="dm-conversion">
         <h2 className="font-serif text-2xl font-bold mb-4">Converting DM enquiries</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">When someone DMs you after seeing your content, reply quickly (within a few hours at most). Speed matters — they may be messaging multiple nail techs.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">When someone DMs you after seeing your content, reply quickly (within a few hours at most). Speed matters: they may be messaging multiple nail techs.</p>
         <p className="text-gray-700 mb-4 leading-relaxed">Don't start a long back-and-forth. Direct them to your booking page:</p>
         <ArticleCallout variant="tip" title="DM reply template">
-          "Hey! So glad you like my work 🙏 The easiest way to book is through my online booking page — you can see my availability and secure your slot with a deposit right there. Link in bio! Let me know if you have any questions."
+          "Hey! So glad you like my work 🙏 The easiest way to book is through my online booking page: you can see my availability and secure your slot with a deposit right there. Link in bio! Let me know if you have any questions."
         </ArticleCallout>
         <p className="text-gray-700 mt-4 leading-relaxed">For more: <Link to="/blog/why-booking-through-dms-costs-nail-techs-clients" className="underline text-[#F52B8C]">Why booking through DMs costs nail techs clients</Link>.</p>
       </section>

@@ -6,8 +6,8 @@ registerArticle({
   slug: 'how-to-make-nail-business-look-professional',
   title: 'How to Make Your Nail Business Look More Professional',
   seoTitle: 'How to Make Your Nail Business Look More Professional',
-  excerpt: 'Professionalism isn\'t about having a studio in a fancy location. It\'s about the details clients notice at every touchpoint — here\'s what actually matters.',
-  seoDescription: 'How to make your nail business look more professional. The details that signal quality to clients: booking system, communications, photos, workspace, and online presence.',
+  excerpt: 'Professionalism isn\'t about having a studio in a fancy location. It\'s about the details clients notice at every touchpoint: here\'s what actually matters.',
+  seoDescription: 'How to make your nail business look professional: booking system, messages, photos, workspace and online presence, the details clients notice.',
   category: 'branding-growth',
   tags: ['professional nail business', 'nail business credibility', 'nail business appearance', 'nail tech professionalism'],
   heroImage: 'linear-gradient(135deg, #F0F4FF 0%, #A5B4FC 100%)',
@@ -34,7 +34,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="what-clients-notice">
         <h2 className="font-serif text-2xl font-bold mb-4">What clients actually notice</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Professionalism in a nail business comes from the cumulative impression of many small details — not from one big thing. Clients form an impression before they've met you, based on your Instagram, booking page, and the communications they receive.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Professionalism in a nail business comes from the cumulative impression of many small details, not from one big thing. Clients form an impression before they've met you, based on your Instagram, booking page, and the communications they receive.</p>
         <ArticleTable
           headers={['Touchpoint', 'Professional signal']}
           rows={[
@@ -82,7 +82,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Your workspace</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Whether home or salon, these workspace details matter:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Clean and reset between every client — dust, product residue, used tools all removed</li>
+          <li>Clean and reset between every client: dust, product residue, used tools all removed</li>
           <li>Products organised and accessible, not piled haphazardly</li>
           <li>Fresh towel or nail mat for each client</li>
           <li>Hand wash station clearly available</li>
@@ -96,9 +96,9 @@ registerArticle({
       <section id="during-appointment">
         <h2 className="font-serif text-2xl font-bold mb-4">During the appointment</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Phone away (yours) — being present signals respect for the client's time</li>
+          <li>Phone away (yours): being present signals respect for the client's time</li>
           <li>Ask about their preferences early: shape, length, any lifestyle considerations</li>
-          <li>Explain what you're doing if the client asks — don't be mysterious about your process</li>
+          <li>Explain what you're doing if the client asks: don't be mysterious about your process</li>
           <li>Give honest advice (e.g. "your nails need a break" if that's true)</li>
           <li>Suggest the rebooking before they leave</li>
         </ul>

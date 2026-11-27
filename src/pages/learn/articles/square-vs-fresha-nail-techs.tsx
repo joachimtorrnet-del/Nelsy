@@ -6,8 +6,8 @@ registerArticle({
   slug: 'square-vs-fresha-nail-techs',
   title: 'Square Appointments vs Fresha for Nail Techs',
   seoTitle: 'Square Appointments vs Fresha for Nail Techs',
-  excerpt: 'Square Appointments and Fresha serve different nail tech needs. Here\'s an honest comparison — who each platform suits, and which one to choose.',
-  seoDescription: 'Square Appointments vs Fresha for nail techs. Honest comparison of features, pricing model, marketplace, and which platform is the better choice for different nail tech setups.',
+  excerpt: 'Square Appointments and Fresha serve different nail tech needs. Here\'s an honest comparison, who each platform suits, and which one to choose.',
+  seoDescription: 'Square Appointments vs Fresha for nail techs: features, pricing model, marketplace and which platform suits different nail tech setups.',
   category: 'comparisons',
   tags: ['Square vs Fresha nail techs', 'Square Appointments Fresha comparison', 'nail tech booking software'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
@@ -24,7 +24,7 @@ registerArticle({
   relatedSlugs: ['fresha-vs-booksy-for-nail-techs', 'square-appointments-alternatives-nail-techs', 'should-nail-techs-use-fresha'],
   faq: [
     { q: 'Is Fresha really free for nail techs?', a: 'No. Fresha no longer has a free plan: its pricing page lists the Independent plan at €14.95/month and the Team plan at €9.95 per team member per month, after a 7-day trial. Fresha also charges a one-time fee on brand new clients who find you through its marketplace (the percentage is not shown on the pricing page), while returning clients and bookings from your own link are free. Card payments cost 1.29% + €0.15 online and 0.59% + €0.15 in person.' },
-    { q: 'Does Square Appointments have a beauty marketplace?', a: 'No. Square Appointments is a scheduling and payments tool — it doesn\'t have a client-facing beauty marketplace where new clients discover providers. All your bookings come from clients you direct to your booking link.' },
+    { q: 'Does Square Appointments have a beauty marketplace?', a: 'No. Square Appointments is a scheduling and payments tool: it doesn\'t have a client-facing beauty marketplace where new clients discover providers. All your bookings come from clients you direct to your booking link.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
@@ -35,7 +35,7 @@ registerArticle({
 
       <section id="positioning">
         <h2 className="font-serif text-2xl font-bold mb-4">How each platform positions itself</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> positions as a scheduling tool integrated into the Square payments ecosystem. It's built for service businesses broadly — not beauty-specific. Its main value is tight integration with Square point-of-sale, online payments, and hardware. It works best when you're already in the Square ecosystem.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Square Appointments</strong> positions as a scheduling tool integrated into the Square payments ecosystem. It's built for service businesses broadly, not beauty-specific. Its main value is tight integration with Square point-of-sale, online payments, and hardware. It works best when you're already in the Square ecosystem.</p>
         <p className="text-gray-700 leading-relaxed"><strong>Fresha</strong> positions as a beauty-specific booking and management platform. It has a marketplace where clients discover and book providers, plus management tools for appointments, clients, and (in some markets) payments. It's built around the beauty industry.</p>
       </section>
 
@@ -45,12 +45,12 @@ registerArticle({
           headers={['Feature', 'Square Appointments', 'Fresha']}
           rows={[
             ['Subscription cost', 'Free (limited) or paid tiers', 'Free subscription (commission on marketplace bookings)'],
-            ['Beauty marketplace', 'No', 'Yes — clients can discover you on Fresha'],
-            ['Beauty-specific tools', 'No', 'Yes — beauty industry focused'],
-            ['Payment integration', 'Deep — native Square payments', 'Available in most markets'],
+            ['Beauty marketplace', 'No', 'Yes: clients can discover you on Fresha'],
+            ['Beauty-specific tools', 'No', 'Yes: beauty industry focused'],
+            ['Payment integration', 'Deep: native Square payments', 'Available in most markets'],
             ['Multi-staff (salons)', 'Yes', 'Yes'],
             ['Geographic availability', 'US, UK, Australia, Canada, more', 'Global; very strong in UK and Australia'],
-            ['POS hardware support', 'Yes — Square card readers, terminals', 'Limited compared to Square'],
+            ['POS hardware support', 'Yes: Square card readers, terminals', 'Limited compared to Square'],
             ['Client-side app quality', 'Moderate', 'Strong client-facing app'],
           ]}
         />
@@ -66,7 +66,7 @@ registerArticle({
         </ul>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Choose Fresha if:</strong></p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>You want marketplace discovery — Fresha can surface your profile to new local clients</li>
+          <li>You want marketplace discovery: Fresha can surface your profile to new local clients</li>
           <li>You're in the UK, Australia, or another non-US market</li>
           <li>You want beauty-specific tools without paying a monthly subscription</li>
           <li>You're a solo nail tech who doesn't need POS hardware</li>
@@ -75,7 +75,7 @@ registerArticle({
 
       <section id="verdict">
         <h2 className="font-serif text-2xl font-bold mb-4">Our take</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">For most solo nail techs, Fresha is the stronger choice — it's built for beauty, has marketplace visibility, and doesn't charge a monthly subscription. Square Appointments serves a specific use case (existing Square ecosystem, POS hardware needs) well, but that use case is narrower.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">For most solo nail techs, Fresha is the stronger choice: it's built for beauty, has marketplace visibility, and doesn't charge a monthly subscription. Square Appointments serves a specific use case (existing Square ecosystem, POS hardware needs) well, but that use case is narrower.</p>
         <p className="text-gray-700 leading-relaxed">For nail techs who want something built specifically for nail tech businesses: <Link to="/" className="underline text-[#F52B8C]">Nelsy →</Link>. For the full Fresha review: <Link to="/blog/should-nail-techs-use-fresha" className="underline text-[#F52B8C]">should nail techs use Fresha?</Link></p>
       </section>
     </div>

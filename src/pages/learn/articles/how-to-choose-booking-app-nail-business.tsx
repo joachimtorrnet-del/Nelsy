@@ -6,7 +6,7 @@ registerArticle({
   slug: 'how-to-choose-booking-app-nail-business',
   title: 'How to Choose a Booking App for Your Nail Business',
   seoTitle: 'How to Choose a Booking App for Your Nail Business',
-  excerpt: 'A step-by-step decision guide for nail techs evaluating booking apps — what questions to ask, what to test, and how to avoid wasting time on the wrong platform.',
+  excerpt: 'A step-by-step decision guide for nail techs evaluating booking apps, what questions to ask, what to test, and how to avoid wasting time on the wrong platform.',
   seoDescription: 'How to choose the right booking app for your nail business. A decision guide covering setup, deposits, service menus, fees, and what to test before committing.',
   category: 'booking-software',
   tags: ['booking app', 'decision guide', 'nail tech tools', 'switching booking systems'],
@@ -26,7 +26,7 @@ registerArticle({
   relatedSlugs: [ 'nail-tech-booking-software-features', 'how-to-move-from-instagram-dms-to-online-booking'],
   faq: [
     { q: 'How long does it take to set up a nail tech booking app?', a: 'Most platforms take 1–3 hours to set up properly: creating your service menu, writing service descriptions, adding prices, setting your availability, and configuring deposit settings. Some platforms have more complex setups. If it\'s taking longer than an afternoon, that complexity will affect your day-to-day use.' },
-    { q: 'Should I choose a platform with a marketplace or a standalone booking page?', a: 'Depends on where you are in your business. If you need new clients and don\'t have a strong Instagram presence, marketplace visibility helps. If you have an established following and primarily want to manage bookings, a clean standalone booking page is better — and avoids marketplace commission fees.' },
+    { q: 'Should I choose a platform with a marketplace or a standalone booking page?', a: 'Depends on where you are in your business. If you need new clients and don\'t have a strong Instagram presence, marketplace visibility helps. If you have an established following and primarily want to manage bookings, a clean standalone booking page is better, and avoids marketplace commission fees.' },
     { q: 'What happens to my bookings if I switch platforms?', a: 'Most platforms let you export your client list and booking history. Check this before committing. You\'ll need to update your booking link (in your bio, on your website if you have one, in saved message templates). Let existing clients know the link has changed.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
@@ -53,7 +53,7 @@ registerArticle({
             ['Is there commission on bookings from my existing clients?', 'Some marketplaces charge commission even if the client already knew you'],
             ['Can I set my own booking link / URL?', 'A clean URL matters for your Instagram bio and client trust'],
             ['What happens if I cancel my subscription?', 'Can you export your client data? Will existing bookings still be visible?'],
-            ['How does the client experience look on mobile?', 'Test on your phone — most bookings happen on phones'],
+            ['How does the client experience look on mobile?', 'Test on your phone: most bookings happen on phones'],
             ['What payment processor do they use?', 'Stripe is standard and reliable; proprietary processors can have higher fees'],
             ['Is there a free trial without a credit card?', 'Lets you test properly without risk'],
           ]}
@@ -62,7 +62,7 @@ registerArticle({
 
       <section id="test-process">
         <h2 className="font-serif text-2xl font-bold mb-4">How to properly test a booking platform</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Most nail techs evaluate booking platforms by looking at the admin dashboard — the calendar view, the settings pages. That's the wrong approach. Evaluate the <em>client-facing</em> experience first.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Most nail techs evaluate booking platforms by looking at the admin dashboard: the calendar view, the settings pages. That's the wrong approach. Evaluate the <em>client-facing</em> experience first.</p>
         <ArticleSteps steps={[
           { title: 'Create a free account and set up a basic service menu', body: 'Add 2–3 real services with accurate prices and durations. Set a deposit amount. This tests how flexible the service setup is.' },
           { title: 'Send yourself the booking link', body: 'Open it on your phone as if you were a new client seeing it for the first time. How does it look? Is it clear? Can you find the services easily?' },
@@ -71,7 +71,7 @@ registerArticle({
           { title: 'Test the reminder system', body: 'Check whether reminders are configured by default and what they say. Ideally test a 24-hour reminder if the platform allows it.' },
         ]} />
         <ArticleCallout variant="info" title="The 10-minute test">
-          If a test booking takes more than 10 minutes from "open booking link" to "booking confirmed", it's too slow. Most clients won't persist through a slow flow. They'll DM you instead — or find a nail tech who's easier to book.
+          If a test booking takes more than 10 minutes from "open booking link" to "booking confirmed", it's too slow. Most clients won't persist through a slow flow. They'll DM you instead, or find a nail tech who's easier to book.
         </ArticleCallout>
       </section>
 
@@ -84,8 +84,8 @@ registerArticle({
             ['Flat monthly subscription', 'Pay a fixed monthly fee regardless of bookings', 'You have consistent booking volume'],
             ['Per-booking fee', 'Platform charges a small fee per completed booking', 'You have variable booking volume'],
             ['Commission on new clients', "Platform charges % commission on clients found via their marketplace", 'You want marketplace exposure and factor in the cost'],
-            ['Payment processing fee', 'Fee on each payment processed (typically 1.5–3%)', 'Standard — check the rate vs alternatives'],
-            ['No subscription + transaction fee', "Free to use but charges % on each booking's deposit or total", 'Compare carefully — can be high volume cost'],
+            ['Payment processing fee', 'Fee on each payment processed (typically 1.5–3%)', 'Standard: check the rate vs alternatives'],
+            ['No subscription + transaction fee', "Free to use but charges % on each booking's deposit or total", 'Compare carefully: can be high volume cost'],
           ]}
         />
         <ArticleTip>Calculate your expected monthly cost at your actual booking volume. A "free" platform with 2% commission on every booking can cost more than a £20/month flat subscription if you're booking 40+ appointments.</ArticleTip>
@@ -93,11 +93,11 @@ registerArticle({
 
       <section id="switching">
         <h2 className="font-serif text-2xl font-bold mb-4">Switching from one platform to another</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Switching booking apps is common — most nail techs try 2–3 before settling. The main tasks when switching:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Switching booking apps is common: most nail techs try 2–3 before settling. The main tasks when switching:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Export your client list from the old platform before cancelling</li>
           <li>Update your Instagram bio link, any website booking links, and any saved DM templates you use</li>
-          <li>Message existing clients: "I've moved my booking to [new link] — please use this for your next appointment"</li>
+          <li>Message existing clients: "I've moved my booking to [new link]: please use this for your next appointment"</li>
           <li>Let any bookings that are already confirmed run out on the old platform before fully switching</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">Switching is less disruptive than nail techs fear. Clients who want to book with you will use whatever link you give them.</p>
@@ -107,7 +107,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Useful resources</h2>
         <ul className="space-y-2 text-sm">
           {[
-            ['/best-booking-app-for-nail-techs', 'Best booking app for nail techs — feature comparison'],
+            ['/best-booking-app-for-nail-techs', 'Best booking app for nail techs: feature comparison'],
             ['/best-booking-app-for-nail-techs', 'Best booking apps for nail techs in 2026'],
             ['/blog/nail-tech-booking-software-features', 'What features to look for in nail tech booking software'],
             ['/blog/why-booking-through-dms-costs-nail-techs-clients', 'Why booking through DMs costs nail techs clients'],

@@ -50,7 +50,7 @@ const PROBLEMS = [
   {
     Icon: Hourglass,
     title: 'Managing DMs eats your time',
-    desc: 'Every DM booking is a manual process — confirming availability, sending prices, collecting details. That\'s time not spent doing nails.',
+    desc: 'Every DM booking is a manual process: confirming availability, sending prices, collecting details. That\'s time not spent doing nails.',
   },
 ];
 
@@ -58,7 +58,7 @@ const STEPS = [
   {
     Icon: Smartphone,
     title: 'Add your Nelsy link to your Instagram bio',
-    desc: 'One link replaces your entire DM booking process. Anyone who visits your profile can book directly — no DMs required.',
+    desc: 'One link replaces your entire DM booking process. Anyone who visits your profile can book directly: no DMs required.',
   },
   {
     Icon: Sparkles,
@@ -68,7 +68,7 @@ const STEPS = [
   {
     Icon: Wallet,
     title: 'They leave a deposit to confirm',
-    desc: 'Clients pay a deposit to lock in their slot. No deposit, no confirmed booking — which means no more no-shows from Instagram followers.',
+    desc: 'Clients pay a deposit to lock in their slot. No deposit, no confirmed booking, which means no more no-shows from Instagram followers.',
   },
   {
     Icon: CalendarCheck2,
@@ -85,8 +85,8 @@ export default function InstagramBooking() {
   return (
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
-        title="Instagram Booking for Nail Techs — Turn Followers into Clients | Nelsy"
-        description="Add your Nelsy booking link to your Instagram bio. Followers click, browse your services, leave a deposit and book — without a single DM. Built for nail techs."
+        title="Instagram Booking for Nail Techs: Turn Followers into Clients"
+        description="Add your Nelsy booking link to your Instagram bio. Followers click, browse your services, leave a deposit and book, without a single DM. Built for nail techs."
         canonical="/instagram-booking-for-nail-techs"
         jsonLd={JSON_LD}
       />
@@ -114,7 +114,7 @@ export default function InstagramBooking() {
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.1 }}
               className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8"
             >
-              Your Instagram is already bringing you clients. Nelsy gives you a booking page you can link from your bio — so followers can browse your services, pick a time and pay a deposit, without you being there.
+              Your Instagram is already bringing you clients. Nelsy gives you a booking page you can link from your bio, so followers can browse your services, pick a time and pay a deposit, without you being there.
             </motion.p>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.2 }}>
               <SeoCTA label="Create my booking page →" position="hero" />
@@ -190,15 +190,15 @@ export default function InstagramBooking() {
           <div className="max-w-3xl mx-auto">
             <motion.div {...fadeUp()} className="text-center mb-10">
               <h2 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.5rem)', fontWeight: 900, color: '#0D0D0D', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
-                Your Nelsy Booking Page — Always On, Always Branded
+                Your Nelsy Booking Page, Always On, Always Branded
               </h2>
               <p className="text-gray-500 mt-4 text-base sm:text-lg max-w-xl mx-auto">
-                Your booking page lives at your own Nelsy URL. Share it anywhere — Instagram bio, TikTok, stories, or direct message.
+                Your booking page lives at your own Nelsy URL. Share it anywhere: Instagram bio, TikTok, stories, or direct message.
               </p>
             </motion.div>
             <motion.div {...fadeUp(0.1)} className="grid gap-4 sm:grid-cols-2">
               {[
-                { title: 'Your services and prices', desc: 'Every service, duration and price — visible before a client selects anything.' },
+                { title: 'Your services and prices', desc: 'Every service, duration and price: visible before a client selects anything.' },
                 { title: 'Real-time availability', desc: 'Clients only see slots you\'ve marked open. No double-bookings.' },
                 { title: 'Online deposit collection', desc: 'Set a deposit amount. Clients pay it to confirm. No deposit, no booking.' },
                 { title: 'Branded to your style', desc: 'Your name, your colors, your booking experience. Not a generic marketplace page.' },
@@ -258,7 +258,7 @@ export default function InstagramBooking() {
             <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4">ALSO ON NELSY</p>
             <div className="flex flex-wrap gap-3">
               <Link to="/" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
-                Nelsy — Nail Tech Booking App
+                Nelsy: Nail Tech Booking App
               </Link>
               <span className="text-gray-300">·</span>
               <Link to="/nail-tech-deposits" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">

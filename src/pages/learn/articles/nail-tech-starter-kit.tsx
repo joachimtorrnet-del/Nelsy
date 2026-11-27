@@ -6,7 +6,7 @@ registerArticle({
   slug: 'nail-tech-starter-kit',
   title: 'Nail Tech Starter Kit: What You Actually Need',
   seoTitle: 'Nail Tech Starter Kit: What You Actually Need (2026)',
-  excerpt: 'A practical guide to building your nail tech starter kit — what\'s essential, what can wait, and what to avoid buying before you know what you need.',
+  excerpt: 'A practical guide to building your nail tech starter kit, what\'s essential, what can wait, and what to avoid buying before you know what you need.',
   seoDescription: 'Nail tech starter kit guide: essential equipment, products, tools, and what to buy first. Avoid overspending on gear you don\'t need as a beginner nail tech.',
   category: 'start-your-business',
   tags: ['nail tech starter kit', 'nail tech equipment', 'nail supplies', 'starter kit'],
@@ -25,14 +25,14 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-start-a-nail-business-2026', 'how-much-does-it-cost-to-start-nail-business', 'nail-tech-beginner-business-checklist'],
   faq: [
-    { q: 'What brand of gel should a beginner nail tech use?', a: 'Use one complete system from a single brand to start — base coat, colours, and top coat from the same manufacturer. This reduces compatibility issues. Popular starter systems in the UK include The Gel Bottle, Halo, Gelish, and CND Shellac. Learn one system well before mixing brands.' },
-    { q: 'Do I need a nail drill to start?', a: 'Depends on what services you want to offer. For gel polish on natural nails, a drill isn\'t essential — you can prep and remove without one. For gel extensions, BIAB, or acrylic, a drill speeds up work significantly and is effectively essential. If you plan to do extensions from day one, add a nail drill to your starter kit.' },
+    { q: 'What brand of gel should a beginner nail tech use?', a: 'Use one complete system from a single brand to start: base coat, colours, and top coat from the same manufacturer. This reduces compatibility issues. Popular starter systems in the UK include The Gel Bottle, Halo, Gelish, and CND Shellac. Learn one system well before mixing brands.' },
+    { q: 'Do I need a nail drill to start?', a: 'Depends on what services you want to offer. For gel polish on natural nails, a drill isn\'t essential: you can prep and remove without one. For gel extensions, BIAB, or acrylic, a drill speeds up work significantly and is effectively essential. If you plan to do extensions from day one, add a nail drill to your starter kit.' },
     { q: 'How much should I spend on a nail lamp as a beginner?', a: 'Spend enough to get one that actually cures your products properly. Cheap lamps (under £20) often don\'t cure gels fully, which causes lifting. A mid-range LED lamp (£40–80) from a reputable brand compatible with your gel system is the sweet spot for a beginner.' },
   ],
   relatedFeatureSlugs: ['bookings', 'payments'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
-      <p className="text-gray-700 leading-relaxed text-lg">The most common beginner mistake is buying too much too soon — or buying cheap versions of the most important tools. This guide tells you what's essential on day one, what can wait, and where it's worth spending more.</p>
+      <p className="text-gray-700 leading-relaxed text-lg">The most common beginner mistake is buying too much too soon, or buying cheap versions of the most important tools. This guide tells you what's essential on day one, what can wait, and where it's worth spending more.</p>
 
       <section id="essential-tools">
         <h2 className="font-serif text-2xl font-bold mb-4">Essential tools</h2>
@@ -45,7 +45,7 @@ registerArticle({
           'Nail file (180 grit for natural nails)',
           'Buffer block',
           'Nail brush (stiff, for dust removal)',
-          'Gel brushes (flat, detail, oval) — from your gel brand',
+          'Gel brushes (flat, detail, oval), from your gel brand',
           'Lint-free nail wipes',
           'Nail foil (if doing foil art)',
         ]} />
@@ -57,8 +57,8 @@ registerArticle({
         <ArticleTable
           headers={['Lamp type', 'Price range', 'Notes']}
           rows={[
-            ['Budget LED (unknown brand)', '£10–25', 'Often inadequate curing — avoid'],
-            ['Mid-range LED', '£40–80', 'Suitable for most gel systems — good starting point'],
+            ['Budget LED (unknown brand)', '£10–25', 'Often inadequate curing: avoid'],
+            ['Mid-range LED', '£40–80', 'Suitable for most gel systems: good starting point'],
             ['Brand-specific lamp', '£60–120', 'Guaranteed compatibility with that gel brand'],
             ['Professional LED (Gelish 18G, etc.)', '£80–150', 'Fast cure, wide compatibility, long-lasting'],
           ]}
@@ -68,7 +68,7 @@ registerArticle({
 
       <section id="products">
         <h2 className="font-serif text-2xl font-bold mb-4">Products and supplies</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Start with one complete gel system. Don't buy 50 colours before you have clients — start with 15–20 versatile shades and expand based on what clients actually request.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Start with one complete gel system. Don't buy 50 colours before you have clients: start with 15–20 versatile shades and expand based on what clients actually request.</p>
         <ArticleTable
           headers={['Product', 'Essential?', 'Notes']}
           rows={[
@@ -77,7 +77,7 @@ registerArticle({
             ['Base coat / rubber base', 'Yes', 'Buy your brand\'s recommended base'],
             ['Top coat (glossy)', 'Yes', 'Buy your brand\'s recommended top'],
             ['Matte top coat', 'Useful', 'Expand after basics'],
-            ['15–20 gel colours', 'Yes', 'Neutrals, pinks, reds — most requested'],
+            ['15–20 gel colours', 'Yes', 'Neutrals, pinks, reds: most requested'],
             ['Builder gel / BIAB', 'If doing extensions', 'Core product for extension services'],
             ['Acetone (pure)', 'Yes', 'Gel removal'],
             ['Foils and nail art supplies', 'Later', 'Add when you\'re confident in basics'],
@@ -106,10 +106,10 @@ registerArticle({
       <section id="photography">
         <h2 className="font-serif text-2xl font-bold mb-4">Photography kit</h2>
         <ArticleChecklist title="Photography essentials" items={[
-          'Ring light (£30–50) — transforms nail photos',
+          'Ring light (£30–50): transforms nail photos',
           'Phone mount / tripod (£15–30)',
           'Simple, clean background (white foam board, marble contact paper)',
-          'Cuticle oil — apply before photos to make nails look their best',
+          'Cuticle oil: apply before photos to make nails look their best',
           'Hand lotion or cuticle cream for clean skin around nails in photos',
         ]} />
         <p className="text-gray-700 mt-4 leading-relaxed">Your portfolio photos are your primary marketing tool. A £40 ring light will do more for your client acquisition than £200 of extra gel colours. Buy the light first.</p>
@@ -120,9 +120,9 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li><strong>Huge colour ranges:</strong> 50+ colours before you have clients is wasted spend. Start with 15–20 and expand with demand.</li>
           <li><strong>Expensive professional furniture:</strong> Your chair and table matter for your posture, not for impressing clients. Upgrade once you're earning.</li>
-          <li><strong>Every nail art supply imaginable:</strong> Foils, pigments, stamping plates — add these when clients specifically request them, not before.</li>
+          <li><strong>Every nail art supply imaginable:</strong> Foils, pigments, stamping plates. Add these when clients specifically request them, not before.</li>
           <li><strong>Multiple gel systems:</strong> Learn one system well. Mixing brands confuses troubleshooting and increases compatibility issues.</li>
-          <li><strong>Professional-grade tools before you can use them:</strong> A beginner with a £150 drill will get the same results as with a £60 drill — skill matters more than equipment at this stage.</li>
+          <li><strong>Professional-grade tools before you can use them:</strong> A beginner with a £150 drill will get the same results as with a £60 drill. Skill matters more than equipment at this stage.</li>
         </ul>
         <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-much-does-it-cost-to-start-nail-business" className="underline text-[#F52B8C]">how much does it cost to start a nail business?</Link></p>
       </section>

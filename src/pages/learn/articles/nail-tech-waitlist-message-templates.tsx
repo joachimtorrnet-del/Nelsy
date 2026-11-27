@@ -5,8 +5,8 @@ registerArticle({
   slug: 'nail-tech-waitlist-message-templates',
   title: 'Nail Tech Waitlist Message Templates',
   seoTitle: 'Nail Tech Waitlist Message Templates (Copy & Paste)',
-  excerpt: 'How to manage a waitlist professionally — templates for adding clients, notifying about openings, and handling the awkward "sorry, no space yet" message.',
-  seoDescription: 'Nail tech waitlist message templates. Copy-paste waitlist messages for nail techs — adding clients to waitlist, notifying of openings, and managing expectations.',
+  excerpt: 'How to manage a waitlist professionally: templates for adding clients, notifying about openings, and handling the awkward "sorry, no space yet" message.',
+  seoDescription: 'Nail tech waitlist message templates. Copy-paste waitlist messages for nail techs: adding clients to waitlist, notifying of openings, and managing expectations.',
   category: 'policies-clients',
   tags: ['nail tech waitlist message', 'nail tech waitlist template', 'waitlist message nail tech'],
   heroImage: 'linear-gradient(135deg, #F0F9FF 0%, #BAE6FD 100%)',
@@ -23,8 +23,8 @@ registerArticle({
   ],
   relatedSlugs: ['nail-tech-client-follow-up-templates', 'nail-tech-booking-confirmation-templates', 'how-to-manage-fully-booked-nail-schedule', 'how-to-get-more-nail-clients'],
   faq: [
-    { q: 'How should I manage my waitlist practically?', a: 'Keep a simple note or spreadsheet: client name, contact, service requested, preferred days/times. When a slot opens, check who\'s first on the waitlist for that service/time combination and reach out. First in, first offered — unless someone repeatedly can\'t make it (then move them down).' },
-    { q: 'How long should I give a client to respond to an opening?', a: 'Give at least a few hours — ideally 24 hours if the slot is not urgent. If you don\'t hear back within that window, move to the next person. State the response deadline in your message so it\'s clear.' },
+    { q: 'How should I manage my waitlist practically?', a: 'Keep a simple note or spreadsheet: client name, contact, service requested, preferred days/times. When a slot opens, check who\'s first on the waitlist for that service/time combination and reach out. First in, first offered, unless someone repeatedly can\'t make it (then move them down).' },
+    { q: 'How long should I give a client to respond to an opening?', a: 'Give at least a few hours, ideally 24 hours if the slot is not urgent. If you don\'t hear back within that window, move to the next person. State the response deadline in your message so it\'s clear.' },
   ],
   relatedFeatureSlugs: ['bookings', 'audience-capture'],
   content: () => (
@@ -43,13 +43,13 @@ registerArticle({
 
       <section id="spot-opened">
         <h2 className="font-serif text-2xl font-bold mb-4">Notifying a client of an opening</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Opening message — quick response required:</strong></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Opening message. Quick response required:</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name]! A spot has just opened up — I have availability on [day] at [time] for a [service]. Would this work for you? If you'd like it, please let me know by [time/date] and I'll get you booked in. If I don't hear back, I'll offer it to the next person on the list. 💅
+          Hi [Name]! A spot has just opened up: I have availability on [day] at [time] for a [service]. Would this work for you? If you'd like it, please let me know by [time/date] and I'll get you booked in. If I don't hear back, I'll offer it to the next person on the list. 💅
         </blockquote>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Shorter opening message:</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Hi [Name]! Spot opened — [day] at [time]. Yours if you want it! Just reply by [time]. 💅
+          Hi [Name]! Spot opened: [day] at [time]. Yours if you want it! Just reply by [time]. 💅
         </blockquote>
         <ArticleTip>Always give a response deadline when offering a waitlist spot. Without one, you may hold it indefinitely or feel awkward offering it to someone else.</ArticleTip>
       </section>
@@ -58,11 +58,11 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Checking in when no space has opened</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">If a client is on the waitlist and hasn't heard from you in a while:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name], just checking in — you're still on my waitlist and I haven't forgotten about you! It's been a busy period. I'll be in touch as soon as something opens up. Are you still looking for a [service] appointment, and is your timing still flexible? 💕
+          Hi [Name], just checking in: you're still on my waitlist and I haven't forgotten about you! It's been a busy period. I'll be in touch as soon as something opens up. Are you still looking for a [service] appointment, and is your timing still flexible? 💕
         </blockquote>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Waitlist status update (when you know timing):</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Hi [Name], quick update — I'm anticipating some availability opening up in [timeframe, e.g. the next 2–3 weeks]. I'll reach out as soon as a spot opens. Are you still interested?
+          Hi [Name], quick update: I'm anticipating some availability opening up in [timeframe, e.g. the next 2–3 weeks]. I'll reach out as soon as a spot opens. Are you still interested?
         </blockquote>
       </section>
 
@@ -70,12 +70,12 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Closing the waitlist</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">When you need to stop accepting waitlist requests:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name], I'm sorry — I'm currently so fully booked that I've had to close my waitlist as I can't guarantee spots in a reasonable timeframe. I'd hate to keep you waiting indefinitely. I'll post on Instagram when I open new availability. Thank you so much for your interest. 💕
+          Hi [Name], I'm sorry: I'm currently so fully booked that I've had to close my waitlist as I can't guarantee spots in a reasonable timeframe. I'd hate to keep you waiting indefinitely. I'll post on Instagram when I open new availability. Thank you so much for your interest. 💕
         </blockquote>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Instagram Story for closing waitlist:</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
           ⚠️ Waitlist closed<br />
-          I'm so overwhelmed by the love — thank you! I've had to close my waitlist as I can't take on any more requests right now.<br />
+          I'm so overwhelmed by the love: thank you! I've had to close my waitlist as I can't take on any more requests right now.<br />
           Follow for availability updates 💅
         </blockquote>
       </section>
@@ -90,7 +90,7 @@ registerArticle({
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Announcing new availability:</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
           📅 New availability just dropped!<br /><br />
-          A few slots have opened up for [month]. If you're on my waitlist, check your messages — if not, book now via link in bio before they're gone. 💕
+          A few slots have opened up for [month]. If you're on my waitlist, check your messages, if not, book now via link in bio before they're gone. 💕
         </blockquote>
       </section>
     </div>

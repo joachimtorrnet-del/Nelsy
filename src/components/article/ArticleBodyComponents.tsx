@@ -315,6 +315,45 @@ export function ArticleComparison({
   );
 }
 
+// ─── Example booking page mockup (no ratings, reviews or other social proof) ──
+
+const EXAMPLE_SERVICES = [
+  { name: 'Gel manicure', meta: '60 min', price: '$45' },
+  { name: 'Builder gel infill', meta: '75 min', price: '$55' },
+  { name: 'Nail art add-on', meta: '15 min', price: '$10' },
+];
+
+export function ExampleBookingMockup({ className = '' }: { className?: string }) {
+  return (
+    <div className={`relative w-[168px] shrink-0 ${className}`} aria-hidden>
+      <span className="absolute -top-2 -right-2 z-10 rounded-full bg-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#1A1A1A] shadow">
+        Example
+      </span>
+      <div className="rounded-[26px] border-[5px] border-[#1A1A1A] bg-white overflow-hidden shadow-xl">
+        <div className="h-12 bg-gradient-to-br from-[#F52B8C] to-[#FF8EC7]" />
+        <div className="-mt-5 flex flex-col items-center px-3">
+          <div className="h-10 w-10 rounded-full border-2 border-white bg-[#FDF0F7]" />
+          <p className="mt-1 text-[11px] font-bold text-[#1A1A1A]">Your studio</p>
+          <p className="text-[8px] text-gray-400">Nail tech · Your city</p>
+        </div>
+        <div className="mt-2 space-y-1.5 px-2.5">
+          {EXAMPLE_SERVICES.map((sv) => (
+            <div key={sv.name} className="flex items-center justify-between rounded-lg border border-[#F4C2C2]/60 px-2 py-1.5">
+              <div className="min-w-0">
+                <p className="truncate text-[9px] font-semibold text-[#1A1A1A]">{sv.name}</p>
+                <p className="text-[8px] text-gray-400">{sv.meta}</p>
+              </div>
+              <p className="text-[9px] font-bold text-[#1A1A1A]">{sv.price}</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-2 px-2.5 text-[8px] text-gray-500">Deposit taken at booking</p>
+        <div className="mx-2.5 mb-3 mt-1.5 rounded-full bg-[#F52B8C] py-1.5 text-center text-[9px] font-bold text-white">Book now</div>
+      </div>
+    </div>
+  );
+}
+
 // ─── ArticleCTA (end-of-article product block) ───────────────────────────────
 
 export const TRIAL_PATH = '/onboarding?plan=independent_monthly';
@@ -333,7 +372,7 @@ export function ArticleCTABlock({
   return (
     <section
       aria-label="Try Nelsy"
-      className="not-prose my-12 overflow-hidden rounded-3xl bg-[#1A1A1A] text-white grid sm:grid-cols-[1fr_200px] items-center"
+      className="not-prose my-12 overflow-hidden rounded-3xl bg-[#1A1A1A] text-white grid sm:grid-cols-[1fr_220px] items-center"
     >
       <div className="p-7 sm:p-10">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#F52B8C] mb-3">Nelsy</p>
@@ -348,14 +387,7 @@ export function ArticleCTABlock({
           {ctaLabel} <span aria-hidden>→</span>
         </Link>
       </div>
-      <img
-        src="/hero-mockup-540.webp"
-        alt="Nelsy booking page with services, products and payments"
-        width={200}
-        height={214}
-        loading="lazy"
-        className="hidden sm:block w-[200px] h-auto self-end mr-6 mt-6"
-      />
+      <ExampleBookingMockup className="hidden sm:block self-center mx-auto my-8" />
     </section>
   );
 }

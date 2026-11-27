@@ -6,7 +6,7 @@ registerArticle({
   slug: 'ombre-nail-ideas',
   title: '50 Ombré Nail Ideas to Save',
   seoTitle: '50 Ombre Nail Ideas: Pink, French, Sunset & Dark Designs',
-  excerpt: 'Ombré nails are one of the most requested nail effects — a gradient that blends two or more colours across each nail. Here are 50 ombré ideas to inspire your next set.',
+  excerpt: 'Ombré nails are one of the most requested nail effects: a gradient that blends two or more colours across each nail. Here are 50 ombré ideas to inspire your next set.',
   seoDescription: '50 ombre nail ideas: soft pink and French ombré, sunset gradients, dark-to-light and multi-colour designs, with the colour combinations that work best.',
   category: 'nail-inspo',
   tags: ['ombre nail ideas', 'gradient nails', 'ombre nail designs'],
@@ -47,16 +47,16 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Classic two-colour ombré</h2>
         <ArticleImage src="photo-1772322586702-73125782bd99" alt="Blue and white ombré nails" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Baby pink to white — the softest, most classic ombré</li>
-          <li>Pink to purple — romantic and versatile</li>
-          <li>Nude to pink — subtle and skin-flattering</li>
-          <li>Blue to teal — fresh and cool</li>
-          <li>Peach to coral — warm and summery</li>
-          <li>Lavender to pink — soft and dreamy</li>
-          <li>Nude to gold — warm glam ombré</li>
-          <li>White to silver chrome — clean metallic gradient</li>
-          <li>Rose to burgundy — dark to light in the same red family</li>
-          <li>Mint to white — fresh and minimal</li>
+          <li>Baby pink to white: the softest, most classic ombré</li>
+          <li>Pink to purple: romantic and versatile</li>
+          <li>Nude to pink: subtle and skin-flattering</li>
+          <li>Blue to teal: fresh and cool</li>
+          <li>Peach to coral: warm and summery</li>
+          <li>Lavender to pink: soft and dreamy</li>
+          <li>Nude to gold: warm glam ombré</li>
+          <li>White to silver chrome: clean metallic gradient</li>
+          <li>Rose to burgundy: dark to light in the same red family</li>
+          <li>Mint to white: fresh and minimal</li>
         </ul>
       </section>
 
@@ -81,16 +81,16 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Dark and moody ombré</h2>
         <ArticleImage src="photo-1587393794661-ef05657e10b9" alt="Dark manicure on short nails" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Black to deep red — dramatic and intense</li>
-          <li>Black to burgundy — dark and sophisticated</li>
-          <li>Black to deep purple — gothic and editorial</li>
-          <li>Dark navy to black — subtle tonal ombré</li>
-          <li>Black to chrome — ultra-modern metallic fade</li>
-          <li>Charcoal to smoke — neutral dark ombré</li>
-          <li>Deep teal to black — moody and cool</li>
-          <li>Oxblood to nude — dark base fading to skin tone</li>
-          <li>Forest green to black — earthy and autumnal</li>
-          <li>Dark plum to nude — sophisticated fade</li>
+          <li>Black to deep red: dramatic and intense</li>
+          <li>Black to burgundy: dark and sophisticated</li>
+          <li>Black to deep purple: gothic and editorial</li>
+          <li>Dark navy to black: subtle tonal ombré</li>
+          <li>Black to chrome: ultra-modern metallic fade</li>
+          <li>Charcoal to smoke: neutral dark ombré</li>
+          <li>Deep teal to black: moody and cool</li>
+          <li>Oxblood to nude: dark base fading to skin tone</li>
+          <li>Forest green to black: earthy and autumnal</li>
+          <li>Dark plum to nude: sophisticated fade</li>
         </ul>
       </section>
 
@@ -98,16 +98,16 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Pastel and soft ombré</h2>
         <ArticleImage src="photo-1607779097040-26e80aa78e66" alt="Pastel lilac, white and glitter nails" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Pastel rainbow across a full set — each nail a different pastel step</li>
-          <li>Lilac to pale pink — soft and feminine</li>
-          <li>Sky blue to white — cloud-like and airy</li>
-          <li>Mint to yellow — fresh and cheerful</li>
-          <li>Peach to vanilla — warm and skin-flattering</li>
-          <li>Powder pink to nude — barely-there soft ombré</li>
-          <li>Pastel blue to pastel pink — popular for gender-neutral or celebration sets</li>
-          <li>Lavender to mint — cool and refreshing</li>
-          <li>All pastels on alternating nails — coordinated set with each nail slightly different</li>
-          <li>White to pastel — barely visible at one end, soft colour at the other</li>
+          <li>Pastel rainbow across a full set: each nail a different pastel step</li>
+          <li>Lilac to pale pink: soft and feminine</li>
+          <li>Sky blue to white: cloud-like and airy</li>
+          <li>Mint to yellow: fresh and cheerful</li>
+          <li>Peach to vanilla: warm and skin-flattering</li>
+          <li>Powder pink to nude: barely-there soft ombré</li>
+          <li>Pastel blue to pastel pink: popular for gender-neutral or celebration sets</li>
+          <li>Lavender to mint: cool and refreshing</li>
+          <li>All pastels on alternating nails: coordinated set with each nail slightly different</li>
+          <li>White to pastel: barely visible at one end, soft colour at the other</li>
         </ul>
       </section>
 
@@ -115,16 +115,16 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Ombré with effects</h2>
         <ArticleImage src="photo-1772322586785-3a34772cbc61" alt="White nails with marbled purple and black tips" />
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Ombré with chrome powder at the tip — gradient fading into a mirror finish</li>
-          <li>Glitter ombré — fade from colour to glitter at the tip</li>
-          <li>Aurora ombré — iridescent powder over a colour gradient</li>
-          <li>Velvet matte ombré — soft gradient in a matte finish</li>
-          <li>Chrome to colour ombré — mirror chrome fading into a deep colour</li>
-          <li>Foil fleck ombré — scattered foil intensifying toward one end</li>
-          <li>Glassy ombré — sheer jelly effect in a gradient</li>
-          <li>Rhinestone-tipped ombré — gems concentrated at the tip of a gradient</li>
-          <li>Holographic ombré — shifting shimmer embedded in the gradient</li>
-          <li>Pigment powder ombré — pressed pigment dusted into the wet gel gradient</li>
+          <li>Ombré with chrome powder at the tip: gradient fading into a mirror finish</li>
+          <li>Glitter ombré: fade from colour to glitter at the tip</li>
+          <li>Aurora ombré: iridescent powder over a colour gradient</li>
+          <li>Velvet matte ombré: soft gradient in a matte finish</li>
+          <li>Chrome to colour ombré: mirror chrome fading into a deep colour</li>
+          <li>Foil fleck ombré: scattered foil intensifying toward one end</li>
+          <li>Glassy ombré: sheer jelly effect in a gradient</li>
+          <li>Rhinestone-tipped ombré: gems concentrated at the tip of a gradient</li>
+          <li>Holographic ombré: shifting shimmer embedded in the gradient</li>
+          <li>Pigment powder ombré: pressed pigment dusted into the wet gel gradient</li>
         </ul>
       </section>
 

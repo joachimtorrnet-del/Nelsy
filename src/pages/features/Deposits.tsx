@@ -5,7 +5,7 @@ export default function DepositsPage() {
   return (
     <FeaturePage
       title="Collect Booking Deposits Automatically | Nelsy"
-      metaDescription="Require a deposit before confirming appointments. Protect your schedule from no-shows and last-minute cancellations with automatic deposit collection for beauty pros."
+      metaDescription="Require a deposit before confirming appointments. Protect your schedule from no-shows and late cancellations with automatic deposits for beauty pros."
       canonical="/features/deposits"
       h1="Collect booking deposits automatically"
       heroDescription="No-shows cost beauty professionals real money. Requiring a deposit before confirming appointments protects your time and ensures clients show up committed."
@@ -25,7 +25,7 @@ export default function DepositsPage() {
         },
         {
           title: 'Clients know you mean business',
-          desc: "Requiring a deposit signals professionalism. It tells clients your time has value — and that's a message worth sending.",
+          desc: "Requiring a deposit signals professionalism. It tells clients your time has value, and that's a message worth sending.",
         },
       ]}
       steps={[

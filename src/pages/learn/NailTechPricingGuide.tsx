@@ -22,7 +22,7 @@ const JSON_LD = [
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Nail Tech Pricing Guide: How to Set Your Rates and Charge What You\'re Worth',
-    description: 'A practical guide to nail tech pricing — cost-based pricing, market positioning, how to raise rates, and what to include on your booking page.',
+    description: 'A practical guide to nail tech pricing: cost-based pricing, market positioning, how to raise rates, and what to include on your booking page.',
     url: 'https://getnelsy.com/learn/nail-tech-pricing-guide',
     datePublished: '2026-10-20',
     author: { '@type': 'Organization', name: 'Nelsy', url: 'https://getnelsy.com' },
@@ -59,7 +59,7 @@ const JSON_LD = [
       {
         '@type': 'Question',
         name: 'How do I show my prices without scaring clients off?',
-        acceptedAnswer: { '@type': 'Answer', text: 'Clear pricing doesn\'t scare good clients away — it filters out clients who aren\'t a fit. Present prices with what\'s included (duration, what\'s covered) so clients can see the value, not just the number.' },
+        acceptedAnswer: { '@type': 'Answer', text: 'Clear pricing doesn\'t scare good clients away. It filters out clients who aren\'t a fit. Present prices with what\'s included (duration, what\'s covered) so clients can see the value, not just the number.' },
       },
     ],
   },
@@ -107,7 +107,7 @@ export default function NailTechPricingGuide() {
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
         title="Nail Tech Pricing Guide: How to Set Your Rates and Charge What You're Worth | Nelsy"
-        description="A practical nail tech pricing guide — cost-based pricing, market positioning, nail art pricing, how to raise rates, and how to display prices on your booking page."
+        description="A practical nail tech pricing guide: cost-based pricing, market positioning, nail art pricing, how to raise rates, and how to display prices on your booking page."
         canonical="/blog/nail-tech-pricing-guide"
         jsonLd={JSON_LD}
       />
@@ -132,7 +132,7 @@ export default function NailTechPricingGuide() {
             </motion.h1>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
               className="text-base sm:text-lg text-gray-500 leading-relaxed mb-4">
-              Most nail techs undercharge — not because they don't deserve more, but because they've never worked through the actual numbers. This guide walks through how to set prices based on real costs, how to position in your market, and how to raise your rates without losing clients.
+              Most nail techs undercharge, not because they don't deserve more, but because they've never worked through the actual numbers. This guide walks through how to set prices based on real costs, how to position in your market, and how to raise your rates without losing clients.
             </motion.p>
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.15 }}
               className="text-sm text-gray-400">
@@ -149,7 +149,7 @@ export default function NailTechPricingGuide() {
 
             <Section id="why-pricing-matters" title="1. Why pricing matters beyond income">
               <p>
-                Pricing is often treated as a pure income question — charge more, earn more. But your prices affect more than your take-home. They affect which clients you attract, how busy you stay, whether clients respect your time, and how sustainable your business is long-term.
+                Pricing is often treated as a pure income question: charge more, earn more. But your prices affect more than your take-home. They affect which clients you attract, how busy you stay, whether clients respect your time, and how sustainable your business is long-term.
               </p>
               <p>
                 Undercharging creates several problems nail techs don't always connect to pricing:
@@ -158,7 +158,7 @@ export default function NailTechPricingGuide() {
                 {[
                   'You need more appointments to hit the same income, which leads to physical strain and burnout',
                   'Low prices attract price-sensitive clients who are more likely to no-show or push back on policies',
-                  'You can\'t reinvest in quality products, education or equipment — which limits what you can offer',
+                  'You can\'t reinvest in quality products, education or equipment, which limits what you can offer',
                   'There\'s no buffer for slow weeks, illness or business costs',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
@@ -168,7 +168,7 @@ export default function NailTechPricingGuide() {
                 ))}
               </ul>
               <p>
-                Pricing correctly isn't about charging what you want — it's about charging what the business requires.
+                Pricing correctly isn't about charging what you want: it's about charging what the business requires.
               </p>
             </Section>
 
@@ -185,7 +185,7 @@ export default function NailTechPricingGuide() {
                 <p>Final price = base price ÷ (1 − profit margin %)</p>
               </div>
               <p>
-                The key variable most nail techs ignore is <strong>target hourly rate</strong>. This should reflect what you need to earn — not what you think clients will pay, not what other local nail techs charge. Start with what you need to make the business work, then see how it compares to the market.
+                The key variable most nail techs ignore is <strong>target hourly rate</strong>. This should reflect what you need to earn, not what you think clients will pay, not what other local nail techs charge. Start with what you need to make the business work, then see how it compares to the market.
               </p>
               <Callout>
                 Use the <Link to="/tools/nail-tech-pricing-calculator" className="font-bold underline underline-offset-2" style={{ color: PINK }}>Nelsy pricing calculator</Link> to run these numbers for your specific services. It shows the formula breakdown for each line so you can see exactly how price is calculated.
@@ -198,10 +198,10 @@ export default function NailTechPricingGuide() {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { label: 'Product and materials', detail: 'Gel, acrylic, base and top coats, nail art supplies, glitters, foils. Include consumables like wipes, files, buffers — these add up.' },
+                  { label: 'Product and materials', detail: 'Gel, acrylic, base and top coats, nail art supplies, glitters, foils. Include consumables like wipes, files, buffers: these add up.' },
                   { label: 'Monthly overhead', detail: 'Rent or booth fee, utilities, insurance, subscriptions (booking software, accounting, Spotify). Divide by your monthly appointments.' },
                   { label: 'Continuing education', detail: 'Courses, certifications, industry events. Spread annually across your appointments to get the monthly cost.' },
-                  { label: 'Equipment and tools', detail: 'Lamp, drill, table, sanitation equipment. These depreciate over time — include a monthly depreciation allowance.' },
+                  { label: 'Equipment and tools', detail: 'Lamp, drill, table, sanitation equipment. These depreciate over time: include a monthly depreciation allowance.' },
                   { label: 'Platform or booking fees', detail: 'If your booking software charges per booking or a commission, it\'s a direct cost per appointment.' },
                   { label: 'Taxes and self-employment', detail: 'Self-employment tax and income tax. For a simple estimate, set aside 25–30% of income. Include this in your target hourly rate, not as an afterthought.' },
                 ].map((item) => (
@@ -248,11 +248,11 @@ export default function NailTechPricingGuide() {
               <p>General principles:</p>
               <ul className="space-y-2.5">
                 {[
-                  'List each service with its price and duration — so clients know what they\'re booking and how long to allow',
+                  'List each service with its price and duration, so clients know what they\'re booking and how long to allow',
                   'Group logically: manicures, pedicures, enhancements, nail art',
-                  'Be specific about what\'s included: "Gel Manicure — includes removal of previous gel, prep, two gel coats, top coat"',
+                  'Be specific about what\'s included: "Gel Manicure: includes removal of previous gel, prep, two gel coats, top coat"',
                   'Separate add-ons clearly: nail art, length extensions, repair, removal are better priced as add-ons than hidden in base prices',
-                  'Don\'t have too many tiers — 6–8 core services with clear add-ons is more bookable than 20 variations',
+                  'Don\'t have too many tiers: 6–8 core services with clear add-ons is more bookable than 20 variations',
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-2.5">
                     <span className="flex-shrink-0 mt-1" style={{ color: PINK }}>→</span>
@@ -267,7 +267,7 @@ export default function NailTechPricingGuide() {
 
             <Section id="nail-art-pricing" title="6. Pricing nail art and add-ons">
               <p>
-                Nail art is where many nail techs leave money on the table. It takes more time, uses more materials, and requires specific skills — and it should be priced accordingly.
+                Nail art is where many nail techs leave money on the table. It takes more time, uses more materials, and requires specific skills, and it should be priced accordingly.
               </p>
               <p>Common approaches:</p>
               <div className="overflow-x-auto -mx-4 sm:mx-0">
@@ -304,11 +304,11 @@ export default function NailTechPricingGuide() {
 
             <Section id="raising-prices" title="7. How to raise your prices">
               <p>
-                Most nail techs who are undercharging know it — but worry about losing clients when they raise prices. Here's what typically happens in practice:
+                Most nail techs who are undercharging know it, but worry about losing clients when they raise prices. Here's what typically happens in practice:
               </p>
               <ul className="space-y-2.5">
                 {[
-                  'Most existing clients stay — especially loyal ones who book regularly',
+                  'Most existing clients stay, especially loyal ones who book regularly',
                   'A small number of price-sensitive clients leave, and are replaced by clients willing to pay the new rate',
                   'The clients who leave are often the most difficult: those who push back on policies, no-show, or need excessive discounts',
                 ].map((item, i) => (
@@ -354,12 +354,12 @@ export default function NailTechPricingGuide() {
                 ))}
               </ul>
               <p>
-                Clients who see a professional, clear booking page with transparent pricing make a decision before reaching out. They arrive knowing what they booked and what it costs — which is better for everyone.
+                Clients who see a professional, clear booking page with transparent pricing make a decision before reaching out. They arrive knowing what they booked and what it costs, which is better for everyone.
               </p>
               <div className="rounded-xl p-5 border border-gray-200 bg-white">
                 <p className="text-sm font-semibold text-gray-900 mb-2">Your booking page with Nelsy</p>
                 <p className="text-sm text-gray-500 leading-relaxed">
-                  Nelsy gives you a branded booking page where you list your services with prices and durations. Clients self-book, pick a time from your real availability, and pay a deposit to confirm — all without DMs. Your page is your public price list and your booking system in one place.
+                  Nelsy gives you a branded booking page where you list your services with prices and durations. Clients self-book, pick a time from your real availability, and pay a deposit to confirm: all without DMs. Your page is your public price list and your booking system in one place.
                 </p>
                 <Link to="/demo" className="inline-block mt-3 text-sm font-bold underline underline-offset-2" style={{ color: PINK }}>
                   See an example booking page →
@@ -387,7 +387,7 @@ export default function NailTechPricingGuide() {
                     },
                     {
                       q: 'How do I show my prices without scaring clients off?',
-                      a: 'Clear pricing doesn\'t scare good clients away — it filters out clients who aren\'t a fit. Present prices with what\'s included (duration, what\'s covered) so clients can see the value, not just the number. Clients who can see your work and your prices and still reach out are much more likely to book and show up.',
+                      a: 'Clear pricing doesn\'t scare good clients away: it filters out clients who aren\'t a fit. Present prices with what\'s included (duration, what\'s covered) so clients can see the value, not just the number. Clients who can see your work and your prices and still reach out are much more likely to book and show up.',
                     },
                   ].map((item, i) => (
                     <div key={i} className="bg-gray-50 rounded-xl p-5 border border-gray-200">
@@ -410,7 +410,7 @@ export default function NailTechPricingGuide() {
               A booking page that shows your prices and books clients automatically.
             </motion.h2>
             <motion.p {...fadeUp(0.06)} className="text-base sm:text-lg text-white/80 mb-8 max-w-lg mx-auto">
-              Nelsy gives you a branded booking page with your services, prices and real-time availability. Clients self-book and pay a deposit — no DMs required.
+              Nelsy gives you a branded booking page with your services, prices and real-time availability. Clients self-book and pay a deposit: no DMs required.
             </motion.p>
             <motion.div {...fadeUp(0.12)} className="flex flex-col sm:flex-row gap-3 justify-center items-center">
               <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />

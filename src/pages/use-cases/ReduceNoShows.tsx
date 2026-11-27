@@ -4,7 +4,7 @@ export default function ReduceNoShows() {
   return (
     <UseCasePage
       seo={{
-        title: 'Reduce No-Shows for Your Beauty Business — Nelsy',
+        title: 'Reduce No-Shows for Your Beauty Business: Nelsy',
         description: 'Stop losing money to no-shows and last-minute cancellations. Nelsy deposits and automated reminders protect your time and income.',
         canonical: '/use-cases/reduce-no-shows',
       }}

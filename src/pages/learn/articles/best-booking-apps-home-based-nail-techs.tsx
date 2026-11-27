@@ -24,7 +24,7 @@ registerArticle({
   relatedSlugs: [ 'how-to-start-nail-business-from-home', 'nail-tech-deposit-policy', 'how-to-set-up-online-booking-nail-business'],
   faq: [
     { q: 'Do I need to share my home address on a booking app?', a: 'Not necessarily. Many booking platforms allow you to display a general area (neighbourhood, town) rather than a full address, with the exact address sent only to confirmed clients. Check your platform\'s privacy settings. For home-based nail techs, it\'s sensible practice to share your full address only with confirmed bookings rather than making it publicly visible.' },
-    { q: 'Should home-based nail techs require deposits?', a: 'Yes — deposits are especially important for home-based nail techs. No-shows at a home nail business affect your personal time and space. A deposit creates commitment and provides financial cover if a client cancels late or doesn\'t show. Most home-based nail techs charge 20–50% deposit at booking.' },
+    { q: 'Should home-based nail techs require deposits?', a: 'Yes: deposits are especially important for home-based nail techs. No-shows at a home nail business affect your personal time and space. A deposit creates commitment and provides financial cover if a client cancels late or doesn\'t show. Most home-based nail techs charge 20–50% deposit at booking.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits'],
   content: () => (
@@ -38,7 +38,7 @@ registerArticle({
             ['Deposit collection at booking', 'No-shows at home affect your personal time and space more directly than at a commercial salon'],
             ['Address privacy controls', 'Share your address only with confirmed clients, not publicly on a marketplace'],
             ['Simple, solo setup', 'No need for multi-staff scheduling; solo-tech focus keeps it clean'],
-            ['Mobile management', 'You\'re running everything yourself from your phone — the app needs to be easy to use on mobile'],
+            ['Mobile management', 'You\'re running everything yourself from your phone: the app needs to be easy to use on mobile'],
             ['Automatic reminders', 'Reduces no-shows; you don\'t have a receptionist to follow up manually'],
             ['Waitlist management', 'Home studios often have limited slots; waitlist fills gaps from cancellations'],
           ]}
@@ -47,11 +47,11 @@ registerArticle({
 
       <section id="top-picks">
         <h2 className="font-serif text-2xl font-bold mb-4">Top platform picks for home-based nail techs</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Built for nail techs, including home-based. Booking page with deposits, client management, and no marketplace exposure of your address. <Link to="/" className="underline text-[#F52B8C]">See how Nelsy works →</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong>: Built for nail techs, including home-based. Booking page with deposits, client management, and no marketplace exposure of your address. <Link to="/" className="underline text-[#F52B8C]">See how Nelsy works →</Link></p>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month; strong globally. Privacy settings allow area-level display rather than full address on the marketplace. Good for home-based techs who want new client discovery without broadcasting their home location publicly.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>GlossGenius (US)</strong> — Clean, simple booking experience for solo techs. Not a marketplace, so no address exposed publicly. US only.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Marketplace with privacy options; strong automated reminders. Subscription required.</p>
-        <ArticleTip>For home-based nail techs, the most critical booking app feature isn't aesthetics or reporting — it's deposit collection and automatic reminders. Prioritise those over any other feature.</ArticleTip>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>GlossGenius (US)</strong>: Clean, simple booking experience for solo techs. Not a marketplace, so no address exposed publicly. US only.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong>: Marketplace with privacy options; strong automated reminders. Subscription required.</p>
+        <ArticleTip>For home-based nail techs, the most critical booking app feature isn't aesthetics or reporting: it's deposit collection and automatic reminders. Prioritise those over any other feature.</ArticleTip>
       </section>
 
       <section id="deposit-priority">
@@ -64,7 +64,7 @@ registerArticle({
       <section id="privacy">
         <h2 className="font-serif text-2xl font-bold mb-4">Privacy considerations for home-based nail techs</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Check marketplace visibility settings before listing — most platforms let you control what appears publicly</li>
+          <li>Check marketplace visibility settings before listing: most platforms let you control what appears publicly</li>
           <li>Only confirm your address to clients after deposit payment is received</li>
           <li>Consider using a general area description ("South London", "Manchester city centre") as your public location</li>
           <li>Use the booking app's messaging to confirm address details on the day before the appointment, not at booking</li>

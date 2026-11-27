@@ -6,8 +6,8 @@ registerArticle({
   slug: '50-instagram-reel-ideas-for-nail-techs',
   title: '50 Instagram Reel Ideas for Nail Techs',
   seoTitle: '50 Instagram Reel Ideas for Nail Techs (That Get Views)',
-  excerpt: '50 ready-to-film Instagram Reel ideas for nail techs — from easy 30-second clips to slightly more involved videos that consistently get reach.',
-  seoDescription: '50 Instagram Reel ideas for nail techs. From quick process clips to educational Reels — ideas that work for solo nail techs and don\'t require video production skills.',
+  excerpt: '50 ready-to-film Instagram Reel ideas for nail techs, from easy 30-second clips to slightly more involved videos that consistently get reach.',
+  seoDescription: '50 Instagram Reel ideas for nail techs. From quick process clips to educational Reels: ideas that work for solo nail techs and don\'t require video production skills.',
   category: 'instagram-content',
   tags: ['Instagram Reels', 'Reel ideas', 'nail tech content', 'Instagram growth'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
@@ -26,7 +26,7 @@ registerArticle({
   relatedSlugs: ['100-nail-tech-content-ideas', 'nail-content-that-gets-bookings', 'how-to-grow-nail-tech-instagram'],
   faq: [
     { q: 'How long should nail tech Reels be?', a: '7–15 seconds for process/time-lapse clips. 30–60 seconds for educational or narrative Reels. Shorter Reels tend to get more replays (which Instagram counts as good engagement). If your Reel can be cut to 15 seconds without losing the point, cut it.' },
-    { q: 'Do I need special equipment to film Reels as a nail tech?', a: 'No. A phone mounted above your work area with a ring light is enough for process Reels. Close-up nail shots look better than you\'d expect on a recent phone camera. The most important thing is steady footage and decent light — not professional gear.' },
+    { q: 'Do I need special equipment to film Reels as a nail tech?', a: 'No. A phone mounted above your work area with a ring light is enough for process Reels. Close-up nail shots look better than you\'d expect on a recent phone camera. The most important thing is steady footage and decent light, not professional gear.' },
     { q: 'What is the best time to post Reels for nail techs?', a: 'For UK nail techs, 6–9pm on weekdays and Saturday mornings tend to get the best initial engagement. But Reels keep distributing for days after posting, so the "right" time matters less than it does for feed posts. Post when you\'re ready.' },
   ],
   relatedFeatureSlugs: ['instagram-autodm', 'link-in-bio', 'audience-capture'],
@@ -79,7 +79,7 @@ registerArticle({
         <ol start={26} className="list-decimal list-inside space-y-2 text-gray-700">
           <li>"3 things that make gel nails last longer"</li>
           <li>"Why your nails are lifting (and how to prevent it)"</li>
-          <li>"Gel vs acrylic vs hard gel — explained simply"</li>
+          <li>"Gel vs acrylic vs hard gel: explained simply"</li>
           <li>"This is why I prep your nails before every set"</li>
           <li>"How to choose the right nail shape for your hands"</li>
           <li>"What happens if you pick gel nails off"</li>
@@ -114,22 +114,22 @@ registerArticle({
           <li>"Why I take a deposit for every booking" (short, direct explanation)</li>
           <li>A week in my diary: showing a full week of sets</li>
           <li>"Services I offer and prices" (direct, no-nonsense)</li>
-          <li>"I have slots this month — here\'s how to book" (simple CTA Reel)</li>
+          <li>"I have slots this month: here\'s how to book" (simple CTA Reel)</li>
         </ol>
         <ArticleCallout variant="info" title="Business Reels convert directly">
-          A simple "here are my services and how to book" Reel doesn't go viral — but it converts the people who see it. Include it in your rotation once a month.
+          A simple "here are my services and how to book" Reel doesn't go viral, but it converts the people who see it. Include it in your rotation once a month.
         </ArticleCallout>
       </section>
 
       <section id="filming-tips">
         <h2 className="font-serif text-2xl font-bold mb-4">Quick filming tips for nail techs</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Mount your phone directly above your work area for process clips — a flexible tripod arm works well</li>
+          <li>Mount your phone directly above your work area for process clips: a flexible tripod arm works well</li>
           <li>Film everything; edit later. You don't know what's worth keeping until you watch it back</li>
           <li>A ring light makes a bigger difference than your phone model</li>
           <li>Film client hands for before/after (ask permission first)</li>
           <li>Batch editing: edit 3–5 Reels at once while you're in the flow</li>
-          <li>Add text to every Reel — many viewers watch without sound</li>
+          <li>Add text to every Reel: many viewers watch without sound</li>
         </ul>
         <p className="text-gray-700 mt-4 leading-relaxed">More content ideas: <Link to="/blog/100-nail-tech-content-ideas" className="underline text-[#F52B8C]">100 nail tech content ideas for Instagram</Link>.</p>
       </section>
