@@ -631,7 +631,7 @@ function StepPlan() {
         <span className="text-[20px] font-extrabold" style={{ color: PINK }}>$0</span>
       </div>
       <p className="mt-4 text-[12.5px] leading-relaxed text-gray-500">
-        You add your card on {WEB_ORIGIN.replace('https://', '')} in your browser. Cancel anytime before {end} and you will not be charged.
+        Your trial starts on {WEB_ORIGIN.replace('https://', '')} in your browser. No card needed: add one before {end} to keep your page live.
       </p>
     </>
   );

@@ -4,10 +4,12 @@ import { TrendingUp, TrendingDown } from 'lucide-react';
 import { calculateStats, getBookings, getPageViewStats } from '../../lib/supabase-queries';
 import type { PageViewStats } from '../../lib/supabase-queries';
 import { ChartSkeleton, CardSkeleton } from '../../components/dashboard/SkeletonLoader';
+import { formatMoney } from '../../lib/currency';
 
 interface Profile {
   id?: string;
   full_name?: string;
+  business_currency?: string | null;
 }
 
 type TimeRange = '7' | '30' | '90';
@@ -43,6 +45,8 @@ const DEFAULT_STATS: StatsState = {
 };
 
 export default function Analytics({ profile }: { profile: Profile | null }) {
+  // The pro's business currency (EUR until she sets one, as everywhere else in the dashboard)
+  const currency = (profile?.business_currency || 'EUR').toUpperCase();
   const [timeRange, setTimeRange] = useState<TimeRange>('7');
   const [initialLoading, setInitialLoading] = useState(true);
   const [stats, setStats] = useState<StatsState>(DEFAULT_STATS);
@@ -183,7 +187,7 @@ export default function Analytics({ profile }: { profile: Profile | null }) {
                 </div>
               )}
             </div>
-            <p className="text-2xl font-bold text-gray-900">€{stats.revenue.toFixed(0)}</p>
+            <p className="text-2xl font-bold text-gray-900">{formatMoney(Math.round(stats.revenue), currency)}</p>
           </div>
 
           {/* Bookings */}
@@ -208,7 +212,7 @@ export default function Analytics({ profile }: { profile: Profile | null }) {
                 tick={{ fontSize: 9, fill: '#9ca3af' }}
                 tickLine={false}
                 axisLine={false}
-                tickFormatter={(v) => `€${v}`}
+                tickFormatter={(v) => formatMoney(Number(v), currency)}
               />
               <Tooltip
                 contentStyle={{
@@ -218,7 +222,7 @@ export default function Analytics({ profile }: { profile: Profile | null }) {
                   fontSize: '11px',
                   boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
                 }}
-                formatter={(value) => [`€${Number(value ?? 0).toFixed(2)}`, 'Revenue']}
+                formatter={(value) => [formatMoney(Number(value ?? 0), currency), 'Revenue']}
                 labelStyle={{ color: '#6b7280' }}
                 cursor={{ fill: 'rgba(245,43,140,0.05)' }}
               />

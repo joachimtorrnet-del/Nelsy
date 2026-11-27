@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
+import type { ReactNode } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js/pure';
-import { Elements, PaymentElement, ExpressCheckoutElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { supabase } from '../lib/supabase';
 import { validatePassword } from '../utils/validation';
 import { isReservedSlug } from '@/lib/reservedSlugs';
 import { track, identify } from '../lib/analytics';
-import { PLANS, parsePlanParam, planKey } from '@/lib/plans';
+import { PLANS, TRIAL_DAYS, parsePlanParam, planKey } from '@/lib/plans';
+import type { BillingInterval } from '@/lib/plans';
 import { saveProfileTimezone } from '@/lib/timezone';
+import { checkTrialEligibility, startTrial } from '@/lib/trial';
 
 // Plan picked on the landing / pricing page (?plan=independent_yearly, legacy ?plan=yearly). Unavailable tiers fall back to Independent.
 const SELECTED = (() => {
@@ -16,8 +17,14 @@ const SELECTED = (() => {
 })();
 const SELECTED_PLAN = PLANS[SELECTED.tier];
 const YEARLY_SAVING_PCT = Math.round((1 - SELECTED_PLAN.yearlyTotal / (SELECTED_PLAN.monthly * 12)) * 100);
+const PINK = '#F52B8C';
 
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY as string);
+// Signup, one or two fields per screen (same order and feel as the app's native signup,
+// src/mobile/screens/Onboarding.tsx). The slug is checked on screen 1, before any account exists;
+// the account is created on the email + password screen so the lead is kept even if she stops
+// later, and the free trial (no card) starts on the last screen.
+const STEPS = ['claim_link', 'name', 'credentials', 'phone', 'start_trial'] as const;
+type StepName = (typeof STEPS)[number];
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -25,32 +32,15 @@ interface FormData {
   username: string;
   fullName: string;
   email: string;
-  phone: string;
+  phone: string; // "+33 612345678"
   password: string;
-  instagram: string;
-  tiktok: string;
-  plan: 'monthly' | 'yearly';
-  cardNumber: string;
-  cardExpiry: string;
-  cardCVC: string;
+  plan: BillingInterval;
   agreedToTerms: boolean;
 }
 
-interface StepProps {
-  formData: FormData;
-  setFormData: (data: FormData) => void;
-  nextStep: () => void;
-  prevStep?: () => void;
-}
+type SlugState = 'idle' | 'checking' | 'free' | 'taken' | 'reserved';
 
 // ─── Analytics helpers ────────────────────────────────────────────────────────
-
-const STEP_NAMES: Record<number, string> = {
-  1: 'account_info',
-  2: 'social_links',
-  3: 'plan_selection',
-  4: 'trial_confirmation',
-};
 
 function parseBackendError(msg: string): { operation: string; http_status?: number; error_type: string } {
   const opMatch = msg.match(/^\[([^\]]+)\]/);
@@ -58,6 +48,7 @@ function parseBackendError(msg: string): { operation: string; http_status?: numb
   const opMap: Record<string, string> = {
     signup: 'signup', profile: 'profile_creation',
     signin: 'signin', intent: 'subscription_intent', session: 'session',
+    'start-trial': 'start_trial',
   };
   const operation = opMap[rawOp] ?? 'unknown';
   const statusMatch = msg.match(/\] (\d{3}):/);
@@ -70,114 +61,711 @@ function parseBackendError(msg: string): { operation: string; http_status?: numb
   return { operation, http_status, error_type };
 }
 
+/** "[signup] 500: Something" → "Something" for display. */
+const displayError = (msg: string) => msg.replace(/^\[[^\]]+\]\s*(\d{3}:\s*)?/, '') || 'Something went wrong. Please try again.';
+
+const emailOk = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+const nationalDigits = (phone: string) => phone.replace(/^\+\d+\s?/, '').replace(/\D/g, '');
+
+function passwordErrorType(password: string): string {
+  if (!password) return 'required';
+  const pwErrors = validatePassword(password).errors;
+  return pwErrors.some(e => e.includes('8 characters')) ? 'too_short'
+    : pwErrors.some(e => e.includes('uppercase')) ? 'missing_uppercase'
+    : pwErrors.some(e => e.includes('lowercase')) ? 'missing_lowercase'
+    : pwErrors.some(e => e.includes('number')) ? 'missing_number'
+    : 'too_weak';
+}
+
 // ─── Main Onboarding ──────────────────────────────────────────────────────────
 
 export default function Onboarding() {
-  const [step, setStep] = useState(1);
+  const navigate = useNavigate();
+  const [booting, setBooting] = useState(!!supabase);
+  const [step, setStep] = useState(0);
   const [formData, setFormData] = useState<FormData>({
     username: '',
     fullName: '',
     email: '',
     phone: '',
     password: '',
-    instagram: '',
-    tiktok: '',
-    // Billing interval picked on the landing pricing section; step 3 then just confirms it
+    // Billing interval picked on the landing pricing section; the trial screen lets her switch
     plan: SELECTED.interval,
-    cardNumber: '',
-    cardExpiry: '',
-    cardCVC: '',
     agreedToTerms: false,
   });
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<ReactNode>('');
+  const [accountCreated, setAccountCreated] = useState(false);
+  // Signed in when the page opened (mobile app ?resume=1, dashboard "Start free trial", reactivation)
+  const [resumed, setResumed] = useState(false);
+  // false: this account already used its free trial, the last screen reactivates with a payment
+  const [trialEligible, setTrialEligible] = useState(true);
+  const [termsNudge, setTermsNudge] = useState(false);
 
-  const navigate = useNavigate();
+  const name: StepName = STEPS[step];
   const viewedSteps = useRef<Set<number>>(new Set());
   // Always-current plan ref so the step_viewed effect has a fresh value without
   // plan needing to be a dependency (which would re-fire on every plan toggle).
-  const planRef = useRef<'monthly' | 'yearly'>(formData.plan);
+  const planRef = useRef<BillingInterval>(formData.plan);
   planRef.current = formData.plan;
+
+  const set = (patch: Partial<FormData>) => {
+    setFormData((f) => ({ ...f, ...patch }));
+    setError('');
+  };
 
   useEffect(() => {
     track('onboarding_started');
   }, []);
 
-  useEffect(() => {
-    if (!viewedSteps.current.has(step)) {
-      viewedSteps.current.add(step);
-      track('onboarding_step_viewed', {
-        step: STEP_NAMES[step],
-        step_number: step,
-        plan: planRef.current,
-      });
-    }
-  }, [step]);
-
-  // ?resume=1 (sent by the mobile app after an in-app signup): the account already exists,
-  // so a signed-in pro goes straight to the trial step; otherwise sign in first and come back here.
+  // A signed-in pro (account already created: mobile app ?resume=1, dashboard banner, reactivation)
+  // goes straight to the trial screen. ?resume=1 without a session: sign in first and come back here.
   useEffect(() => {
     if (!supabase) return;
     const search = window.location.search;
-    if (new URLSearchParams(search).get('resume') !== '1') return;
     let cancelled = false;
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       if (cancelled) return;
       if (session) {
-        setStep(4);
-      } else {
+        identify(session.user.id);
+        setResumed(true);
+        setStep(STEPS.indexOf('start_trial'));
+        setBooting(false);
+        try {
+          const check = await checkTrialEligibility(planKey(SELECTED.tier, planRef.current));
+          if (cancelled) return;
+          if (check.alreadySubscribed) { navigate('/dashboard', { replace: true }); return; }
+          setTrialEligible(check.eligible);
+        } catch { /* keep the trial copy: start-trial decides server side anyway */ }
+      } else if (new URLSearchParams(search).get('resume') === '1') {
         navigate(`/login?next=${encodeURIComponent(`/onboarding${search}`)}`, { replace: true });
+      } else {
+        setBooting(false);
       }
-    });
+    }).catch(() => { if (!cancelled) setBooting(false); });
     return () => { cancelled = true; };
   }, [navigate]);
 
-  const nextStep = () => {
-    if (step < 4) setStep(step + 1);
-    else navigate('/dashboard');
-  };
-
-  const prevStep = () => {
-    if (step > 1) setStep(step - 1);
-  };
-
-  // Steps 2 and 3 have no internal validation — fire completed before advancing.
-  const completeAndAdvance = (stepNum: number) => () => {
-    track('onboarding_step_completed', {
-      step: STEP_NAMES[stepNum],
-      step_number: stepNum,
+  useEffect(() => {
+    if (booting || viewedSteps.current.has(step)) return;
+    viewedSteps.current.add(step);
+    track('onboarding_step_viewed', {
+      step: STEPS[step],
+      step_number: step + 1,
       plan: planRef.current,
     });
-    nextStep();
+  }, [step, booting]);
+
+  const fail = (field: string, error_type: string, message: ReactNode) => {
+    track('onboarding_validation_error', { step: name, field, error_type });
+    setError(message);
   };
 
+  const advance = (extra?: Record<string, unknown>) => {
+    track('onboarding_step_completed', { step: name, step_number: step + 1, plan: planRef.current, ...extra });
+    setError('');
+    setStep((s) => Math.min(s + 1, STEPS.length - 1));
+  };
+
+  const back = () => {
+    setError('');
+    if (step === 0) navigate('/');
+    else setStep(step - 1);
+  };
+
+  // ── Screen 1: slug availability (debounced, same check as the app) ────────
+  const [slugState, setSlugState] = useState<SlugState>('idle');
+  useEffect(() => {
+    const slug = formData.username;
+    if (slug.length < 3) { setSlugState('idle'); return; }
+    if (isReservedSlug(slug)) { setSlugState('reserved'); return; }
+    const client = supabase;
+    if (!client) { setSlugState('free'); return; }
+    setSlugState('checking');
+    let alive = true;
+    const t = setTimeout(async () => {
+      try {
+        // profiles is not readable by anon; the public view exposes slug
+        const { data } = await client.from('public_profiles').select('slug').eq('slug', slug).maybeSingle();
+        if (alive) setSlugState(data ? 'taken' : 'free');
+      } catch {
+        if (alive) setSlugState('free'); // the unique constraint still guards it at signUp
+      }
+    }, 450);
+    return () => { alive = false; clearTimeout(t); };
+  }, [formData.username]);
+
+  // ── Screen 3: account creation (slug and name already validated) ──────────
+  const createAccount = async (): Promise<boolean> => {
+    if (!supabase) { setError('Configuration error. Please contact support.'); return false; }
+    try {
+      // Existing session (e.g. went back and forth): the account exists, nothing to create.
+      const { data: { session: existingSession } } = await supabase.auth.getSession();
+      if (existingSession) {
+        identify(existingSession.user.id);
+        setAccountCreated(true);
+        return true;
+      }
+
+      const { data: { user }, error: signUpError } = await supabase.auth.signUp({
+        email: formData.email,
+        password: formData.password,
+        options: {
+          data: {
+            full_name: formData.fullName.trim(),
+            slug: formData.username,
+            phone: formData.phone,
+            instagram: '',
+            tiktok: '',
+          },
+        },
+      });
+      // With email confirmation on, Supabase answers an existing email with a user that has
+      // no identities instead of an error; without it, it returns "User already registered".
+      if (signUpError?.message?.toLowerCase().includes('already registered') || (user && user.identities?.length === 0)) {
+        fail('email', 'already_registered', (
+          <>This email already has a Nelsy account. <Link to="/login" className="underline font-semibold">Log in instead</Link>.</>
+        ));
+        return false;
+      }
+      // The profile trigger fails on the slug unique constraint if someone took the link meanwhile.
+      if (signUpError?.message?.toLowerCase().includes('database error')) {
+        const { data: taken } = await supabase.from('public_profiles').select('slug').eq('slug', formData.username).maybeSingle();
+        if (taken) {
+          track('onboarding_validation_error', { step: 'credentials', field: 'username', error_type: 'already_taken' });
+          setSlugState('taken');
+          setStep(0);
+          setError('Someone just claimed this link. Please choose another one.');
+          return false;
+        }
+      }
+      if (signUpError) throw new Error(`[signup] ${signUpError.message}`);
+      if (!user) throw new Error('[signup] No user returned');
+      identify(user.id);
+      track('account_created', { plan: formData.plan });
+
+      // Wait for the DB trigger to create the profile
+      let profile = null;
+      for (let retries = 6; retries > 0 && !profile; retries--) {
+        await new Promise((r) => setTimeout(r, 500));
+        const { data } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
+        profile = data;
+      }
+      if (!profile) throw new Error('[profile] Profile creation timed out');
+
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      });
+      if (signInError) throw new Error(`[signin] ${signInError.message}`);
+
+      // Store the device timezone: slots, reminders and calendar times all follow profiles.timezone
+      await saveProfileTimezone(user.id);
+
+      setAccountCreated(true);
+      return true;
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('[Onboarding]', msg);
+      const { operation, http_status, error_type } = parseBackendError(msg);
+      track('onboarding_backend_error', {
+        step: 'credentials', operation, error_type,
+        ...(http_status !== undefined ? { http_status } : {}),
+      });
+      setError(displayError(msg));
+      return false;
+    }
+  };
+
+  // ── Screen 5: start the trial (no card) ───────────────────────────────────
+  const beginTrial = async () => {
+    if (!formData.agreedToTerms) {
+      setTermsNudge(true);
+      setTimeout(() => document.getElementById('onboarding-terms')?.scrollIntoView({ block: 'center', behavior: 'smooth' }), 50);
+      track('onboarding_validation_error', { step: 'start_trial', field: 'terms', error_type: 'not_accepted' });
+      return;
+    }
+    const plan = planKey(SELECTED.tier, formData.plan);
+    try {
+      const result = await startTrial(plan);
+      track('onboarding_step_completed', { step: 'start_trial', step_number: 5, plan: formData.plan });
+      if (result.kind === 'checkout') {
+        track('reactivation_checkout_opened', { plan });
+        window.location.href = result.url;
+        return;
+      }
+      if (result.kind === 'trialing') {
+        track('subscription_trial_started', { plan: formData.plan, trial_type: 'no_card' });
+      }
+      track('onboarding_completed', { plan: formData.plan, trial_type: 'no_card' });
+      sessionStorage.setItem('nelsy_onboarding_just_completed', '1');
+      navigate('/dashboard');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error('[Onboarding]', msg);
+      const { operation, http_status, error_type } = parseBackendError(msg);
+      track('onboarding_backend_error', {
+        step: 'start_trial', operation, error_type,
+        ...(http_status !== undefined ? { http_status } : {}),
+      });
+      setError(`We could not start your trial: ${displayError(msg)}`);
+    }
+  };
+
+  const onNext = async () => {
+    if (busy) return;
+    switch (name) {
+      case 'claim_link':
+        if (formData.username.length < 3) return fail('username', 'too_short', 'Your link needs at least 3 characters.');
+        if (slugState === 'reserved') return fail('username', 'reserved', 'This name is reserved, please choose another one.');
+        if (slugState === 'taken') return fail('username', 'already_taken', 'This link is already taken.');
+        if (slugState === 'checking') return;
+        return advance();
+      case 'name':
+        if (formData.fullName.trim().length < 2) return fail('full_name', 'too_short', 'Please enter your full name.');
+        return advance();
+      case 'credentials': {
+        if (!formData.email) return fail('email', 'required', 'Email is required.');
+        if (!emailOk(formData.email)) return fail('email', 'invalid_format', 'Please enter a valid email address.');
+        const pw = validatePassword(formData.password);
+        if (!pw.valid) return fail('password', passwordErrorType(formData.password), pw.errors[0]);
+        setBusy(true);
+        try {
+          if (await createAccount()) advance();
+        } finally {
+          setBusy(false);
+        }
+        return;
+      }
+      case 'phone': {
+        const digits = nationalDigits(formData.phone);
+        if (!digits) return skipPhone();
+        if (digits.length < 6) return fail('phone', 'too_short', 'This number looks too short. Enter it without the country code.');
+        setBusy(true);
+        try {
+          // Same place as before (auth user metadata.phone), written now that the account exists.
+          const { error: phoneError } = supabase ? await supabase.auth.updateUser({ data: { phone: formData.phone } }) : { error: null };
+          if (phoneError) {
+            track('onboarding_backend_error', { step: 'phone', operation: 'phone_update', error_type: 'unknown' });
+          }
+        } finally {
+          setBusy(false);
+        }
+        return advance({ skipped: false });
+      }
+      case 'start_trial':
+        setBusy(true);
+        try { await beginTrial(); } finally { setBusy(false); }
+    }
+  };
+
+  const skipPhone = () => advance({ skipped: true });
+
+  const nextLabel =
+    name === 'credentials' ? (busy ? 'Creating your account...' : 'Create my account')
+    : name === 'start_trial' ? (busy ? 'Starting...' : trialEligible ? 'Start my free trial' : 'Continue to payment')
+    : busy ? 'Saving...' : 'Next';
+  const nextDisabled =
+    busy ||
+    (name === 'claim_link' && (formData.username.length < 3 || slugState === 'checking' || slugState === 'taken' || slugState === 'reserved'));
+  // No way back into screens whose data is already saved on the account
+  const showBack = !busy && !(resumed && name === 'start_trial') && !(accountCreated && name === 'phone');
+
+  if (booting) {
+    return (
+      <div className="min-h-[100dvh] bg-white flex items-center justify-center">
+        <div className="animate-spin rounded-full h-10 w-10 border-4 border-[#F52B8C] border-t-transparent" />
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-white">
-
-      {/* Progress Bar */}
-      <div className="pt-4 px-4">
-        <div className="flex gap-2 max-w-md mx-auto">
-          {[1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              className="flex-1 h-1 rounded-full transition-all duration-300"
-              style={{ backgroundColor: i <= step ? '#F52B8C' : '#E4E4E7' }}
-            />
-          ))}
+    <div className="min-h-[100dvh] bg-white flex flex-col">
+      <div className="w-full max-w-md mx-auto flex-1 flex flex-col px-4">
+        {/* Top: back + progress */}
+        <div className="pt-2">
+          <div className="flex h-11 items-center">
+            {showBack && (
+              <button type="button" onClick={back} className="-ml-2 flex h-11 items-center gap-1.5 px-2 text-[15px] font-semibold text-gray-600 hover:text-gray-900">
+                <span aria-hidden="true">←</span> Back
+              </button>
+            )}
+          </div>
+          <div className="mt-1 flex gap-1.5" role="progressbar" aria-valuemin={1} aria-valuemax={STEPS.length} aria-valuenow={step + 1} aria-label={`Step ${step + 1} of ${STEPS.length}`}>
+            {STEPS.map((s, i) => (
+              <span key={s} className="h-1 flex-1 rounded-full transition-colors duration-300" style={{ backgroundColor: i <= step ? PINK : '#EDEDED' }} />
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Steps Content */}
-      <div className="flex flex-col justify-between px-4 py-6 max-w-md mx-auto w-full min-h-[calc(100vh-2.5rem)]">
-        {step === 1 && <Step1 formData={formData} setFormData={setFormData} nextStep={nextStep} />}
-        {step === 2 && <Step2 formData={formData} setFormData={setFormData} nextStep={completeAndAdvance(2)} prevStep={prevStep} />}
-        {step === 3 && <Step3 formData={formData} setFormData={setFormData} nextStep={completeAndAdvance(3)} prevStep={prevStep} />}
-        {step === 4 && <Step4 formData={formData} setFormData={setFormData} nextStep={nextStep} prevStep={prevStep} />}
-      </div>
+        <form
+          className="flex-1 flex flex-col"
+          onSubmit={(e) => { e.preventDefault(); void onNext(); }}
+          noValidate
+        >
+          <div className="flex-1 pt-8 pb-6">
+            {name === 'claim_link' && <StepLink formData={formData} set={set} state={slugState} />}
+            {name === 'name' && <StepFullName formData={formData} set={set} />}
+            {name === 'credentials' && <StepCredentials formData={formData} set={set} />}
+            {name === 'phone' && <StepPhone formData={formData} set={set} />}
+            {name === 'start_trial' && (
+              <StepTrial
+                formData={formData}
+                set={set}
+                eligible={trialEligible}
+                termsNudge={termsNudge}
+                clearNudge={() => setTermsNudge(false)}
+              />
+            )}
+            {error && (
+              <p role="alert" className="mt-4 rounded-xl bg-[#FDECEC] px-3 py-2.5 text-[13px] font-medium text-[#B42318]">
+                {error}
+              </p>
+            )}
+          </div>
 
+          {/* Bottom actions */}
+          <div className="sticky bottom-0 bg-white pb-4 pt-2" style={{ paddingBottom: 'max(1rem, env(safe-area-inset-bottom))' }}>
+            <button
+              type="submit"
+              disabled={nextDisabled}
+              className="h-14 w-full rounded-full text-[16px] font-bold text-white transition active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#E0167A] bg-[#F52B8C]"
+            >
+              {nextLabel}
+            </button>
+            {name === 'phone' && (
+              <button type="button" onClick={skipPhone} disabled={busy} className="mt-1 h-11 w-full text-[15px] font-semibold disabled:opacity-50" style={{ color: PINK }}>
+                Skip
+              </button>
+            )}
+            {name === 'start_trial' && resumed && (
+              <button type="button" onClick={() => navigate('/dashboard')} disabled={busy} className="mt-1 h-11 w-full text-[15px] font-semibold text-gray-500 disabled:opacity-50">
+                Not now
+              </button>
+            )}
+            {name === 'claim_link' && (
+              <p className="mt-3 text-center text-[13px] text-gray-600">
+                Have an account?{' '}
+                <Link to="/login" className="font-semibold text-[#F52B8C]">Log in</Link>
+              </p>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
 
-// ─── Step 1 — Signup ──────────────────────────────────────────────────────────
+// ─── Pieces ───────────────────────────────────────────────────────────────────
+
+function Heading({ title, sub }: { title: string; sub?: ReactNode }) {
+  return (
+    <div className="mb-7">
+      <h1 className="text-[28px] font-extrabold leading-[1.15] tracking-tight text-[#1A1A1A]">{title}</h1>
+      {sub && <p className="mt-2 text-[15px] leading-snug text-gray-500">{sub}</p>}
+    </div>
+  );
+}
+
+function Field({ label, children, hint }: { label: string; children: ReactNode; hint?: ReactNode }) {
+  return (
+    <div className="mb-4">
+      <label className="block">
+        <span className="mb-1.5 block text-[13px] font-semibold text-gray-700">{label}</span>
+        {children}
+      </label>
+      {hint}
+    </div>
+  );
+}
+
+const inputCls =
+  'h-14 w-full rounded-2xl border-2 border-gray-200 bg-white px-4 text-[16px] text-[#1A1A1A] outline-none transition placeholder:text-gray-400 focus:border-[#F52B8C]';
+
+interface StepProps {
+  formData: FormData;
+  set: (patch: Partial<FormData>) => void;
+}
+
+const CheckIcon = ({ className = 'h-4 w-4' }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+  </svg>
+);
+
+// ─── Screen 1: claim your link ────────────────────────────────────────────────
+
+function StepLink({ formData, set, state }: StepProps & { state: SlugState }) {
+  const msg =
+    state === 'checking' ? { t: 'Checking...', c: 'text-gray-500' }
+    : state === 'free' ? { t: `Available: getnelsy.com/${formData.username}`, c: 'text-[#11733F]' }
+    : state === 'taken' ? { t: 'Already taken, try another one', c: 'text-[#B42318]' }
+    : state === 'reserved' ? { t: 'This name is reserved, please choose another one', c: 'text-[#B42318]' }
+    : null;
+  const border = state === 'free' ? 'border-green-500' : state === 'taken' || state === 'reserved' ? 'border-red-500' : 'border-gray-200 focus-within:border-[#F52B8C]';
+  return (
+    <>
+      <Heading title="Claim your link" sub="This is the link you put in your bio. Clients book you here." />
+      <div className={`flex h-14 items-center rounded-2xl border-2 bg-white pl-4 pr-3 transition ${border}`}>
+        <span className="shrink-0 text-[16px] font-medium text-gray-400 select-none">getnelsy.com/</span>
+        <input
+          aria-label="Your link"
+          autoFocus
+          autoCapitalize="none"
+          autoCorrect="off"
+          autoComplete="off"
+          spellCheck={false}
+          value={formData.username}
+          onChange={(e) => set({ username: e.target.value.toLowerCase().replace(/\s/g, '-').replace(/[^a-z0-9-_]/g, '') })}
+          placeholder="yourname"
+          className="min-w-0 flex-1 bg-transparent text-[16px] font-semibold text-[#1A1A1A] outline-none placeholder:font-normal placeholder:text-gray-400"
+        />
+        {state === 'checking' && (
+          <svg className="animate-spin h-4 w-4 text-gray-400 shrink-0" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+          </svg>
+        )}
+        {state === 'free' && <CheckIcon className="h-5 w-5 shrink-0 text-[#11733F]" />}
+      </div>
+      {msg && <p className={`mt-2 text-[13px] font-medium ${msg.c}`} aria-live="polite">{msg.t}</p>}
+    </>
+  );
+}
+
+// ─── Screen 2: name ───────────────────────────────────────────────────────────
+
+function StepFullName({ formData, set }: StepProps) {
+  return (
+    <>
+      <Heading title="What's your name?" sub="It shows on your page so clients know who they book." />
+      <Field label="Full name">
+        <input
+          className={inputCls}
+          autoFocus
+          autoComplete="name"
+          value={formData.fullName}
+          onChange={(e) => set({ fullName: e.target.value })}
+          placeholder="Your name"
+        />
+      </Field>
+    </>
+  );
+}
+
+// ─── Screen 3: email + password (creates the account) ─────────────────────────
+
+function StepCredentials({ formData, set }: StepProps) {
+  const [show, setShow] = useState(false);
+  return (
+    <>
+      <Heading title="Create your login" sub="You will use it on getnelsy.com and in the app." />
+      <Field label="Email">
+        <input
+          className={inputCls}
+          type="email"
+          inputMode="email"
+          autoFocus
+          autoComplete="email"
+          autoCapitalize="none"
+          value={formData.email}
+          onChange={(e) => set({ email: e.target.value.trim() })}
+          placeholder="you@example.com"
+        />
+      </Field>
+      <Field
+        label="Password"
+        hint={
+          <ul className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1.5" aria-live="polite">
+            {PASSWORD_RULES.map((r) => {
+              const ok = r.test(formData.password);
+              return (
+                <li key={r.label} className={`flex items-center gap-1.5 text-[12.5px] ${ok ? 'text-[#11733F]' : 'text-gray-400'}`}>
+                  <span className={`flex h-4 w-4 items-center justify-center rounded-full ${ok ? 'bg-[#11733F] text-white' : 'border border-gray-300'}`}>
+                    {ok && <CheckIcon className="h-3 w-3" />}
+                  </span>
+                  {r.label}
+                </li>
+              );
+            })}
+          </ul>
+        }
+      >
+        <div className="relative">
+          <input
+            className={`${inputCls} pr-20`}
+            type={show ? 'text' : 'password'}
+            autoComplete="new-password"
+            value={formData.password}
+            onChange={(e) => set({ password: e.target.value })}
+            placeholder="Create a password"
+          />
+          <button
+            type="button"
+            onClick={() => setShow((s) => !s)}
+            className="absolute right-1 top-1/2 flex h-11 -translate-y-1/2 items-center px-3 text-[13px] font-semibold text-gray-500 hover:text-gray-800"
+            aria-label={show ? 'Hide password' : 'Show password'}
+          >
+            {show ? 'Hide' : 'Show'}
+          </button>
+        </div>
+      </Field>
+      <p className="mt-2 text-[12px] leading-relaxed text-gray-500">
+        By continuing, you agree to our{' '}
+        <a href="/terms" className="underline" style={{ color: PINK }}>Terms</a> and{' '}
+        <a href="/privacy" className="underline" style={{ color: PINK }}>Privacy Policy</a>.
+        Protected under <span className="font-semibold">GDPR</span>.
+      </p>
+    </>
+  );
+}
+
+// ─── Screen 4: phone (optional) ───────────────────────────────────────────────
+
+function StepPhone({ formData, set }: StepProps) {
+  const [countryCode, setCountryCode] = useState(() => formData.phone.match(/^\+\d+/)?.[0] ?? defaultDialCode());
+  const digits = formData.phone.replace(/^\+\d+\s?/, '');
+  return (
+    <>
+      <Heading title="Add your phone number" sub="Optional. We only use it for account security, never on your page." />
+      <Field label="Phone">
+        <div className="flex gap-2">
+          <CountryCodePicker
+            value={countryCode}
+            onChange={(code) => {
+              setCountryCode(code);
+              set({ phone: digits ? `${code} ${digits}` : '' });
+            }}
+          />
+          <input
+            className={`${inputCls} min-w-0 flex-1`}
+            type="tel"
+            inputMode="tel"
+            autoFocus
+            autoComplete="tel-national"
+            value={digits}
+            onChange={(e) => {
+              const d = e.target.value.replace(/\D/g, '');
+              set({ phone: d ? `${countryCode} ${d}` : '' });
+            }}
+            placeholder="Phone number"
+          />
+        </div>
+      </Field>
+    </>
+  );
+}
+
+// ─── Screen 5: start the free trial (no card) ─────────────────────────────────
+
+function StepTrial({ formData, set, eligible, termsNudge, clearNudge }: StepProps & { eligible: boolean; termsNudge: boolean; clearNudge: () => void }) {
+  const [endLabel] = useState(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + TRIAL_DAYS);
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  });
+  const yearly = formData.plan === 'yearly';
+  const price = yearly ? `$${SELECTED_PLAN.yearlyTotal}/year` : `$${SELECTED_PLAN.monthly}/month`;
+
+  return (
+    <>
+      {eligible ? (
+        <Heading
+          title="Start your free trial"
+          sub={<>No card needed. {TRIAL_DAYS} days free, then {price}. We'll remind you 3 days before.</>}
+        />
+      ) : (
+        <Heading
+          title="Reactivate your page"
+          sub={<>Your free trial was already used on this account. {price}, starting today. Cancel anytime.</>}
+        />
+      )}
+
+      <div className="rounded-3xl border-2 p-5" style={{ borderColor: PINK, boxShadow: '0 10px 30px rgba(245,43,140,0.12)' }}>
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-[18px] font-extrabold text-[#1A1A1A]">{SELECTED_PLAN.name}</p>
+            <p className="mt-0.5 text-[13px] text-gray-500">{SELECTED_PLAN.tagline}</p>
+          </div>
+          {eligible && (
+            <span className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ backgroundColor: PINK }}>
+              {TRIAL_DAYS} days free
+            </span>
+          )}
+        </div>
+
+        {/* Billing interval */}
+        <div className="mt-4 grid grid-cols-2 gap-1 rounded-full bg-gray-100 p-1" role="radiogroup" aria-label="Billing">
+          {(['monthly', 'yearly'] as const).map((p) => (
+            <button
+              key={p}
+              type="button"
+              role="radio"
+              aria-checked={formData.plan === p}
+              onClick={() => set({ plan: p })}
+              className={`h-9 rounded-full text-[13px] font-bold transition ${formData.plan === p ? 'bg-white text-[#1A1A1A] shadow-sm' : 'text-gray-500'}`}
+            >
+              {p === 'monthly' ? 'Monthly' : `Yearly, save ${YEARLY_SAVING_PCT}%`}
+            </button>
+          ))}
+        </div>
+
+        <p className="mt-4 text-[14px] text-gray-600">
+          {eligible ? (
+            <><span className="text-[26px] font-extrabold text-[#1A1A1A]">$0</span> for {TRIAL_DAYS} days, then {yearly ? `$${SELECTED_PLAN.yearly}/mo billed yearly` : `$${SELECTED_PLAN.monthly}/mo`}</>
+          ) : (
+            <><span className="text-[26px] font-extrabold text-[#1A1A1A]">${yearly ? SELECTED_PLAN.yearlyTotal : SELECTED_PLAN.monthly}</span> {yearly ? 'per year' : 'per month'}</>
+          )}
+        </p>
+        <ul className="mt-4 space-y-2">
+          {SELECTED_PLAN.highlights.map((h) => (
+            <li key={h} className="flex items-start gap-2 text-[14px] text-[#1A1A1A]">
+              <span className="mt-0.5 shrink-0" style={{ color: PINK }}><CheckIcon /></span>
+              {h}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {eligible && (
+        <div className="mt-4 flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3.5">
+          <span className="text-[14px] font-semibold text-gray-600">Due today</span>
+          <span className="text-[20px] font-extrabold" style={{ color: PINK }}>$0</span>
+        </div>
+      )}
+
+      {eligible && (
+        <p className="mt-3 text-[12.5px] leading-relaxed text-gray-500">
+          Your page goes live today. Add a card anytime before {endLabel} to keep it live. Without a card, it simply pauses.
+        </p>
+      )}
+
+      {/* Terms */}
+      <label id="onboarding-terms" className={`mt-4 flex items-start gap-2 cursor-pointer rounded-xl transition ${termsNudge && !formData.agreedToTerms ? 'p-3 bg-red-50 ring-2 ring-red-300' : ''}`}>
+        <input
+          type="checkbox"
+          checked={formData.agreedToTerms}
+          onChange={(e) => { set({ agreedToTerms: e.target.checked }); if (e.target.checked) clearNudge(); }}
+          className="mt-0.5 w-4 h-4 rounded border-2 border-gray-300 accent-[#F52B8C]"
+        />
+        <span className="text-xs text-gray-600">
+          I agree to the{' '}
+          <a href="/terms" className="underline" style={{ color: PINK }}>Terms</a>{' '}
+          and{' '}
+          <a href="/privacy" className="underline" style={{ color: PINK }}>Privacy Policy</a>.
+          GDPR compliant.
+          {termsNudge && !formData.agreedToTerms && (
+            <span className="block mt-1 font-semibold text-red-600">
+              {eligible ? 'Tick this box to start your free trial.' : 'Tick this box to continue.'}
+            </span>
+          )}
+        </span>
+      </label>
+    </>
+  );
+}
+
+// ─── Phone helpers (country picker, default dial code) and password rules ────
 
 const COUNTRY_CODES = [
   { code: '+93', flag: '🇦🇫', name: 'Afghanistan' },
@@ -449,968 +1037,3 @@ const PASSWORD_RULES: { label: string; test: (p: string) => boolean }[] = [
   { label: 'One lowercase letter', test: (p) => /[a-z]/.test(p) },
   { label: 'One number', test: (p) => /[0-9]/.test(p) },
 ];
-
-function Step1({ formData, setFormData, nextStep }: StepProps) {
-  const [errors, setErrors] = useState({ username: '', fullName: '', email: '', phone: '', password: '' });
-  const [checkingUsername, setCheckingUsername] = useState(false);
-  const [usernameAvailable, setUsernameAvailable] = useState<boolean | null>(null);
-  const [checkingEmail, setCheckingEmail] = useState(false);
-  const [emailExists, setEmailExists] = useState<boolean | null>(null);
-  const [countryCode, setCountryCode] = useState(() => formData.phone.match(/^\+\d+/)?.[0] ?? defaultDialCode());
-  const [showPassword, setShowPassword] = useState(false);
-  const [passwordFocused, setPasswordFocused] = useState(false);
-  const clearError = (field: keyof typeof errors) => setErrors((prev) => (prev[field] ? { ...prev, [field]: '' } : prev));
-
-  const validateEmailFormat = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-  const checkUsernameAvailability = async (username: string) => {
-    if (!username || username.length < 3) { setUsernameAvailable(null); return; }
-    if (isReservedSlug(username)) {
-      setUsernameAvailable(false);
-      setErrors((prev) => ({ ...prev, username: 'This name is reserved, please choose another one' }));
-      return;
-    }
-    if (!supabase) return;
-    setCheckingUsername(true);
-    try {
-      // profiles is not readable by anon; the public view exposes slug
-      const { data } = await supabase.from('public_profiles').select('slug').eq('slug', username).maybeSingle();
-      if (data) {
-        setUsernameAvailable(false);
-        setErrors((prev) => ({ ...prev, username: 'This username is already taken' }));
-      } else {
-        setUsernameAvailable(true);
-        setErrors((prev) => ({ ...prev, username: '' }));
-      }
-    } catch { /* ignore */ } finally {
-      setCheckingUsername(false);
-    }
-  };
-
-  const checkEmailExists = async (email: string) => {
-    if (!validateEmailFormat(email)) { setEmailExists(null); return; }
-    if (!supabase) return;
-    setCheckingEmail(true);
-    try {
-      const { data } = await supabase.from('profiles').select('id').eq('email', email).maybeSingle();
-      // RLS hides other users' profiles, so "not found" doesn't mean the email is free:
-      // only report a hit. Existing emails are caught for sure at signUp.
-      if (data) {
-        setEmailExists(true);
-        setErrors((prev) => ({ ...prev, email: 'This email is already registered' }));
-      } else {
-        setEmailExists(null);
-      }
-    } catch { /* ignore */ } finally {
-      setCheckingEmail(false);
-    }
-  };
-
-  useEffect(() => {
-    if (formData.username.length >= 3) {
-      const timer = setTimeout(() => checkUsernameAvailability(formData.username), 500);
-      return () => clearTimeout(timer);
-    } else {
-      setUsernameAvailable(null);
-    }
-  }, [formData.username]);
-
-  useEffect(() => {
-    if (validateEmailFormat(formData.email)) {
-      const timer = setTimeout(() => checkEmailExists(formData.email), 600);
-      return () => clearTimeout(timer);
-    } else {
-      setEmailExists(null);
-    }
-  }, [formData.email]);
-
-  const validateForm = (): boolean => {
-    const newErrors = { username: '', fullName: '', email: '', phone: '', password: '' };
-    let isValid = true;
-
-    if (!formData.username || formData.username.length < 3) {
-      newErrors.username = 'Username must be at least 3 characters'; isValid = false;
-    } else if (isReservedSlug(formData.username)) {
-      newErrors.username = 'This name is reserved, please choose another one'; isValid = false;
-    } else if (usernameAvailable === false) {
-      newErrors.username = 'This username is already taken'; isValid = false;
-    }
-    if (!formData.fullName || formData.fullName.trim().length < 2) {
-      newErrors.fullName = 'Please enter your full name'; isValid = false;
-    }
-    if (!formData.email) {
-      newErrors.email = 'Email is required'; isValid = false;
-    } else if (!validateEmailFormat(formData.email)) {
-      newErrors.email = 'Please enter a valid email address'; isValid = false;
-    } else if (emailExists === true) {
-      newErrors.email = 'This email is already registered'; isValid = false;
-    }
-    const nationalDigits = formData.phone.replace(/^\+\d+\s?/, '').replace(/\D/g, '');
-    if (nationalDigits.length < 6) {
-      newErrors.phone = nationalDigits ? 'This number looks too short. Enter it without the country code.' : 'Enter your phone number (we only use it for account security)'; isValid = false;
-    }
-    if (!formData.password) {
-      newErrors.password = 'Password is required'; isValid = false;
-    } else {
-      const pwCheck = validatePassword(formData.password);
-      if (!pwCheck.valid) { newErrors.password = pwCheck.errors[0]; isValid = false; }
-    }
-
-    setErrors(newErrors);
-
-    if (!isValid) {
-      if (newErrors.username) track('onboarding_validation_error', {
-        step: 'account_info', field: 'username',
-        error_type: isReservedSlug(formData.username) ? 'reserved' : usernameAvailable === false ? 'already_taken' : 'too_short',
-      });
-      if (newErrors.fullName) track('onboarding_validation_error', {
-        step: 'account_info', field: 'full_name', error_type: 'too_short',
-      });
-      if (newErrors.email) track('onboarding_validation_error', {
-        step: 'account_info', field: 'email',
-        error_type: emailExists === true ? 'already_registered'
-          : !validateEmailFormat(formData.email) ? 'invalid_format'
-          : 'required',
-      });
-      if (newErrors.phone) track('onboarding_validation_error', {
-        step: 'account_info', field: 'phone', error_type: 'too_short',
-      });
-      if (newErrors.password) {
-        const pwErrors = formData.password ? validatePassword(formData.password).errors : [];
-        const pwType = !formData.password ? 'required'
-          : pwErrors.some(e => e.includes('8 characters')) ? 'too_short'
-          : pwErrors.some(e => e.includes('uppercase')) ? 'missing_uppercase'
-          : pwErrors.some(e => e.includes('lowercase')) ? 'missing_lowercase'
-          : pwErrors.some(e => e.includes('number')) ? 'missing_number'
-          : 'too_weak';
-        track('onboarding_validation_error', { step: 'account_info', field: 'password', error_type: pwType });
-      }
-    }
-
-    return isValid;
-  };
-
-  const handleNext = () => {
-    if (checkingUsername || checkingEmail) return;
-    if (validateForm()) {
-      track('onboarding_step_completed', { step: 'account_info', step_number: 1 });
-      nextStep();
-    }
-  };
-
-  const inputClass = (error: string, valid?: boolean) =>
-    `border-2 rounded-2xl focus:outline-none transition ${
-      error ? 'border-red-500' : valid ? 'border-green-500' : 'border-gray-200 focus:border-[#F52B8C]'
-    }`;
-
-  return (
-    <>
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 text-center">
-          {formData.username ? `Hey @${formData.username} 👋` : 'Hey 👋'}
-        </h1>
-        <p className="text-base sm:text-lg text-gray-600 mb-6 text-center">Let's build your empire!</p>
-
-        <div className="space-y-3">
-          {/* Username */}
-          <div className="space-y-1">
-            <div className="relative">
-              <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm pointer-events-none select-none">
-                getnelsy.com/
-              </div>
-              <input
-                type="text"
-                placeholder="yourname"
-                value={formData.username}
-                onChange={(e) => {
-                  const value = e.target.value.toLowerCase().replace(/\s/g, '-').replace(/[^a-z0-9-_]/g, '');
-                  setFormData({ ...formData, username: value });
-                  if (value.length >= 3) clearError('username');
-                }}
-                className={`w-full pl-[118px] pr-10 py-4 text-base ${inputClass(errors.username, usernameAvailable === true)}`}
-              />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                {checkingUsername && (
-                  <svg className="animate-spin h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                )}
-                {!checkingUsername && usernameAvailable === true && (
-                  <svg className="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                )}
-                {!checkingUsername && usernameAvailable === false && (
-                  <svg className="h-4 w-4 text-red-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </div>
-            </div>
-            {errors.username && <p className="text-xs text-red-600">{errors.username}</p>}
-            {!errors.username && usernameAvailable === true && formData.username && (
-              <p className="text-xs text-green-600">✓ Username available — getnelsy.com/{formData.username}</p>
-            )}
-          </div>
-
-          {/* Full Name */}
-          <div className="space-y-1">
-            <input
-              type="text"
-              placeholder="Full Name"
-              value={formData.fullName}
-              onChange={(e) => { setFormData({ ...formData, fullName: e.target.value }); clearError('fullName'); }}
-              className={`w-full px-4 py-4 text-base ${inputClass(errors.fullName)}`}
-            />
-            {errors.fullName && <p className="text-xs text-red-600">{errors.fullName}</p>}
-          </div>
-
-          {/* Email */}
-          <div className="space-y-1">
-            <div className="relative">
-              <input
-                type="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={(e) => {
-                  setEmailExists(null);
-                  setErrors((prev) => ({ ...prev, email: '' }));
-                  setFormData({ ...formData, email: e.target.value });
-                  clearError('email');
-                }}
-                className={`w-full px-4 pr-10 py-4 text-base ${inputClass(errors.email, emailExists === false)}`}
-              />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                {checkingEmail && (
-                  <svg className="animate-spin h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                  </svg>
-                )}
-                {!checkingEmail && emailExists === false && (
-                  <svg className="h-4 w-4 text-green-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                  </svg>
-                )}
-                {!checkingEmail && emailExists === true && (
-                  <svg className="h-4 w-4 text-red-500" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </div>
-            </div>
-            {errors.email && <p className="text-xs text-red-600">{errors.email}</p>}
-          </div>
-
-          {/* Phone */}
-          <div className="space-y-1">
-            <div className="flex gap-2">
-              <CountryCodePicker
-                value={countryCode}
-                onChange={(code) => {
-                  setCountryCode(code);
-                  const digits = formData.phone.replace(/^\+\d+\s?/, '');
-                  setFormData({ ...formData, phone: `${code} ${digits}`.trim() });
-                }}
-              />
-              <input
-                type="tel"
-                inputMode="tel"
-                autoComplete="tel-national"
-                placeholder="Phone number"
-                value={formData.phone.replace(/^\+\d+\s?/, '')}
-                onChange={(e) => {
-                  const digits = e.target.value.replace(/\D/g, '');
-                  setFormData({ ...formData, phone: `${countryCode} ${digits}`.trim() });
-                  clearError('phone');
-                }}
-                className={`flex-1 px-4 py-4 text-base ${inputClass(errors.phone)}`}
-              />
-            </div>
-            {errors.phone && <p className="text-xs text-red-600">{errors.phone}</p>}
-          </div>
-
-          {/* Password */}
-          <div className="space-y-2">
-            <div className="relative">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                placeholder="Create a password"
-                autoComplete="new-password"
-                value={formData.password}
-                onFocus={() => setPasswordFocused(true)}
-                onChange={(e) => { setFormData({ ...formData, password: e.target.value }); clearError('password'); }}
-                className={`w-full pl-4 pr-16 py-4 text-base ${inputClass(errors.password, !!formData.password && validatePassword(formData.password).valid)}`}
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 px-2 py-1 text-xs font-semibold text-gray-500 hover:text-gray-800"
-                aria-label={showPassword ? 'Hide password' : 'Show password'}
-              >
-                {showPassword ? 'Hide' : 'Show'}
-              </button>
-            </div>
-            {(passwordFocused || formData.password || errors.password) && (
-              <ul className="grid grid-cols-2 gap-x-3 gap-y-1" aria-live="polite">
-                {PASSWORD_RULES.map((rule) => {
-                  const ok = rule.test(formData.password);
-                  return (
-                    <li key={rule.label} className={`flex items-center gap-1.5 text-xs ${ok ? 'text-green-600' : errors.password ? 'text-red-600' : 'text-gray-500'}`}>
-                      <span aria-hidden="true">{ok ? '✓' : '○'}</span>{rule.label}
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
-        </div>
-
-        <p className="text-xs text-gray-500 mt-4 text-center">
-          By continuing, you agree to our{' '}
-          <a href="/terms" className="underline" style={{ color: '#F52B8C' }}>Terms</a>{' '}
-          and{' '}
-          <a href="/privacy" className="underline" style={{ color: '#F52B8C' }}>Privacy</a>.
-          Protected under <span className="font-semibold">GDPR</span>.
-        </p>
-        <p className="text-xs text-gray-600 mt-2 text-center">
-          Have an account?{' '}
-          <Link to="/login" className="font-semibold text-[#F52B8C]">Login</Link>
-        </p>
-      </div>
-
-      <button
-        onClick={handleNext}
-        disabled={checkingUsername || checkingEmail || usernameAvailable === false || emailExists === true}
-        className="w-full py-4 text-white rounded-2xl font-bold text-base transition active:scale-95 mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
-        style={{ backgroundColor: '#F52B8C' }}
-        onMouseEnter={(e) => { if (!e.currentTarget.disabled) e.currentTarget.style.backgroundColor = '#E0167A'; }}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#F52B8C')}
-      >
-        {checkingUsername ? 'Checking...' : 'Next'}
-      </button>
-    </>
-  );
-}
-
-// ─── Step 2 — Connect Socials ─────────────────────────────────────────────────
-
-function Step2({ formData, setFormData, nextStep }: StepProps) {
-  return (
-    <>
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 text-center">
-          Connect your socials
-        </h1>
-        <p className="text-base sm:text-lg text-gray-600 mb-6 text-center">
-          We'll use it to personalize your studio
-        </p>
-
-        <div className="space-y-3">
-          {/* Instagram */}
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none">
-              <svg className="w-5 h-5 text-pink-500" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-              </svg>
-              <span className="text-gray-500 text-sm">@</span>
-            </div>
-            <input
-              type="text"
-              placeholder="yourname"
-              value={formData.instagram}
-              onChange={(e) => setFormData({ ...formData, instagram: e.target.value })}
-              className="w-full pl-16 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-[#F52B8C] transition"
-            />
-          </div>
-
-          {/* TikTok */}
-          <div className="relative">
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center gap-2 pointer-events-none">
-              <svg className="w-5 h-5 text-gray-900" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64 2.93 2.93 0 01.88.13V9.4a6.84 6.84 0 00-1-.05A6.33 6.33 0 005 20.1a6.34 6.34 0 0010.86-4.43v-7a8.16 8.16 0 004.77 1.52v-3.4a4.85 4.85 0 01-1-.1z" />
-              </svg>
-              <span className="text-gray-500 text-sm">@</span>
-            </div>
-            <input
-              type="text"
-              placeholder="yourname"
-              value={formData.tiktok}
-              onChange={(e) => setFormData({ ...formData, tiktok: e.target.value })}
-              className="w-full pl-16 pr-4 py-4 text-base border-2 border-gray-200 rounded-2xl focus:outline-none focus:border-[#F52B8C] transition"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="space-y-3">
-        <button
-          onClick={nextStep}
-          className="w-full py-4 text-white rounded-2xl font-bold text-base transition active:scale-95"
-          style={{ backgroundColor: '#F52B8C' }}
-          onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#E0167A')}
-          onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#F52B8C')}
-        >
-          Next
-        </button>
-        <button onClick={nextStep} className="w-full font-semibold text-sm" style={{ color: '#F52B8C' }}>
-          Skip
-        </button>
-      </div>
-    </>
-  );
-}
-
-// ─── Step 3 — Pricing ─────────────────────────────────────────────────────────
-
-function Step3({ formData, setFormData, nextStep }: StepProps) {
-  return (
-    <>
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 text-center">
-          Pick your plan 💸
-        </h1>
-        <p className="text-base sm:text-lg text-gray-600 mb-6 text-center">
-          Start earning today — free for 14 days
-        </p>
-
-        <div className="space-y-3">
-          {/* Monthly Plan */}
-          <button
-            onClick={() => setFormData({ ...formData, plan: 'monthly' })}
-            className="relative w-full p-4 border-4 rounded-2xl text-left transition"
-            style={{
-              borderColor: formData.plan === 'monthly' ? '#F52B8C' : '#E4E4E7',
-              boxShadow: formData.plan === 'monthly' ? '0 8px 24px rgba(245,43,140,0.15)' : 'none',
-            }}
-          >
-            <div className="absolute top-4 left-4">
-              <div
-                className="w-5 h-5 rounded-full border-4 flex items-center justify-center transition"
-                style={{
-                  borderColor: formData.plan === 'monthly' ? '#F52B8C' : '#D4D4D8',
-                  backgroundColor: formData.plan === 'monthly' ? '#F52B8C' : 'transparent',
-                }}
-              >
-                {formData.plan === 'monthly' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
-              </div>
-            </div>
-            <div className="pl-8">
-              <div className="font-bold text-base text-gray-900 mb-0.5">Monthly</div>
-              <div className="text-gray-600 text-sm">
-                <span className="text-lg font-bold text-gray-900">$0</span> for 14 days, then{' '}
-                <span className="text-lg font-bold text-gray-900">${SELECTED_PLAN.monthly}</span>/mo
-              </div>
-            </div>
-          </button>
-
-          {/* Yearly Plan */}
-          <button
-            onClick={() => setFormData({ ...formData, plan: 'yearly' })}
-            className="relative w-full p-4 border-4 rounded-2xl text-left transition"
-            style={{
-              borderColor: formData.plan === 'yearly' ? '#F52B8C' : '#E4E4E7',
-              boxShadow: formData.plan === 'yearly' ? '0 8px 24px rgba(245,43,140,0.15)' : 'none',
-            }}
-          >
-            <div className="absolute -top-2.5 right-4">
-              <span className="px-2.5 py-1 bg-blue-500 text-white text-xs font-bold rounded-full shadow">
-                Save {YEARLY_SAVING_PCT}%
-              </span>
-            </div>
-            <div className="absolute top-4 left-4">
-              <div
-                className="w-5 h-5 rounded-full border-4 flex items-center justify-center transition"
-                style={{
-                  borderColor: formData.plan === 'yearly' ? '#F52B8C' : '#D4D4D8',
-                  backgroundColor: formData.plan === 'yearly' ? '#F52B8C' : 'transparent',
-                }}
-              >
-                {formData.plan === 'yearly' && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
-              </div>
-            </div>
-            <div className="pl-8">
-              <div className="font-bold text-base text-gray-900 mb-0.5">Yearly</div>
-              <div className="text-gray-600 text-sm">
-                <span className="text-lg font-bold text-gray-900">$0</span> for 14 days, then{' '}
-                <span className="text-lg font-bold text-gray-900">${SELECTED_PLAN.yearly}</span>/mo{' '}
-                <span className="text-xs text-gray-500">(${SELECTED_PLAN.yearlyTotal}/yr)</span>
-              </div>
-            </div>
-          </button>
-        </div>
-
-        <p className="mt-4 text-center text-sm text-gray-600">
-          Due today <span className="text-xl font-bold" style={{ color: '#F52B8C' }}>$0</span> 🙌
-        </p>
-      </div>
-
-      <button
-        onClick={nextStep}
-        className="w-full py-4 text-white rounded-2xl font-bold text-base transition active:scale-95"
-        style={{ backgroundColor: '#F52B8C' }}
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#E0167A')}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#F52B8C')}
-      >
-        Next
-      </button>
-    </>
-  );
-}
-
-// ─── Step 4 — Payment (embedded Stripe Elements) ──────────────────────────────
-
-const STRIPE_APPEARANCE = {
-  theme: 'stripe' as const,
-  variables: {
-    colorPrimary: '#F52B8C',
-    colorBackground: '#ffffff',
-    colorText: '#111827',
-    colorDanger: '#ef4444',
-    fontFamily: 'Inter, ui-sans-serif, system-ui, sans-serif',
-    borderRadius: '12px',
-    spacingUnit: '4px',
-  },
-  rules: {
-    '.Input': { border: '2px solid #E4E4E7', padding: '14px 16px', fontSize: '15px' },
-    '.Input:focus': { border: '2px solid #F52B8C', boxShadow: 'none', outline: 'none' },
-    '.Label': { fontWeight: '600', fontSize: '13px', marginBottom: '6px' },
-    '.Tab': { border: '2px solid #E4E4E7', borderRadius: '10px' },
-    '.Tab--selected': { border: '2px solid #F52B8C', color: '#F52B8C' },
-    '.Tab:focus': { boxShadow: 'none' },
-  },
-};
-
-// Inner component — must live inside <Elements> to call useStripe/useElements
-interface PaymentStepProps {
-  plan: 'monthly' | 'yearly';
-  formattedDate: string;
-  intentType: 'setup' | 'payment';
-  onSuccess: () => void;
-  onBack: () => void;
-}
-
-function PaymentStep({ plan, formattedDate, intentType, onSuccess, onBack }: PaymentStepProps) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [expressAvailable, setExpressAvailable] = useState(false);
-
-  const confirm = async () => {
-    if (!stripe || !elements) return;
-    setLoading(true);
-    setError('');
-    track('card_submitted', { plan });
-
-    const result = intentType === 'setup'
-      ? await stripe.confirmSetup({ elements, redirect: 'if_required' })
-      : await stripe.confirmPayment({ elements, redirect: 'if_required' });
-
-    if (result.error) {
-      track('stripe_setup_failed', {
-        plan,
-        error_code: result.error.code ?? 'unknown',
-        error_type: result.error.type ?? 'unknown',
-        decline_code: result.error.decline_code ?? null,
-      });
-      setError(result.error.message ?? 'Payment failed. Please try again.');
-      setLoading(false);
-    } else {
-      // confirmSetup() success means the card is attached and pending_setup_intent is cleared.
-      // Write 'trialing' immediately so Dashboard doesn't bounce back while waiting for
-      // the webhook to fire. The webhook writes the same value later (idempotent).
-      track('stripe_setup_succeeded', { plan });
-      // subscription_status is a protected field written only by the stripe-webhooks
-      // edge function (service_role). Poll until the webhook fires (typically < 3s)
-      // before navigating so Dashboard doesn't bounce the user back.
-      if (supabase) {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session) {
-          const POLL_INTERVAL_MS = 1000;
-          const POLL_TIMEOUT_MS = 8000;
-          const deadline = Date.now() + POLL_TIMEOUT_MS;
-          let confirmed = false;
-          while (Date.now() < deadline) {
-            await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
-            const { data: p } = await supabase
-              .from('profiles')
-              .select('subscription_status')
-              .eq('id', session.user.id)
-              .single();
-            if (p?.subscription_status === 'trialing' || p?.subscription_status === 'active') {
-              confirmed = true;
-              track('subscription_trial_started', { plan });
-              break;
-            }
-          }
-          if (!confirmed) {
-            // Webhook delayed — navigate anyway; Dashboard will recheck on load.
-            console.warn('subscription_status not yet updated by webhook after 8s — navigating anyway');
-          }
-        }
-      }
-      track('onboarding_completed', { plan });
-      sessionStorage.setItem('nelsy_onboarding_just_completed', '1');
-      onSuccess();
-    }
-  };
-
-  return (
-    <>
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 text-center">
-          Add your payment details
-        </h1>
-        <p className="text-base text-gray-500 mb-6 text-center">
-          You won't be charged until {formattedDate} 🎉
-        </p>
-
-        {/* Plan recap */}
-        <div className="flex items-center justify-between bg-gray-50 rounded-2xl px-4 py-3 mb-5 border border-gray-100">
-          <div>
-            <p className="text-xs text-gray-500">Plan</p>
-            <p className="font-bold text-gray-900">{SELECTED_PLAN.name}, {plan === 'monthly' ? `$${SELECTED_PLAN.monthly}/mo` : `$${SELECTED_PLAN.yearly}/mo billed yearly`}</p>
-          </div>
-          <div className="text-right">
-            <p className="text-xs text-gray-500">Due today</p>
-            <p className="text-2xl font-bold" style={{ color: '#F52B8C' }}>$0</p>
-          </div>
-        </div>
-
-        {/* Apple Pay / Google Pay express buttons */}
-        <div className="mb-2">
-          <ExpressCheckoutElement
-            onConfirm={confirm}
-            onReady={({ availablePaymentMethods }) => {
-              setExpressAvailable(!!availablePaymentMethods && Object.keys(availablePaymentMethods).length > 0);
-            }}
-            options={{
-              buttonHeight: 48,
-              buttonType: { applePay: 'subscribe', googlePay: 'subscribe' },
-            }}
-          />
-        </div>
-
-        {/* OR divider — only visible when at least one express method is available */}
-        {expressAvailable && (
-          <div className="flex items-center gap-3 my-4">
-            <div className="flex-1 h-px bg-gray-200" />
-            <span className="text-xs font-medium text-gray-400 uppercase tracking-wide">or pay by card</span>
-            <div className="flex-1 h-px bg-gray-200" />
-          </div>
-        )}
-
-        {/* Card fields — wallets suppressed here since ECE handles them above */}
-        <div className="mb-4">
-          <PaymentElement
-            onReady={() => track('stripe_setup_started', { plan })}
-            options={{ layout: 'tabs', wallets: { applePay: 'never', googlePay: 'never' } } as object}
-          />
-        </div>
-
-        {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 text-xs mb-3">
-            {error}
-          </div>
-        )}
-
-        <p className="text-xs text-center text-gray-400 mb-4 flex items-center justify-center gap-1">
-          <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-            <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
-          </svg>
-          Secured by Stripe
-        </p>
-      </div>
-
-      <div className="space-y-3">
-        <button
-          onClick={confirm}
-          disabled={!stripe || !elements || loading}
-          className="w-full py-4 text-white rounded-2xl font-bold text-base hover:opacity-90 transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          style={{ backgroundColor: '#F52B8C' }}
-        >
-          {loading ? (
-            <>
-              <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-              </svg>
-              Processing...
-            </>
-          ) : 'Start your 14-day free trial'}
-        </button>
-        <button onClick={onBack} disabled={loading} className="w-full font-semibold text-sm disabled:opacity-50" style={{ color: '#F52B8C' }}>
-          ← Change plan
-        </button>
-      </div>
-    </>
-  );
-}
-
-function Step4({ formData, setFormData, nextStep, prevStep }: StepProps) {
-  const [phase, setPhase] = useState<'info' | 'payment'>('info');
-  const [clientSecret, setClientSecret] = useState('');
-  const [intentType, setIntentType] = useState<'setup' | 'payment'>('setup');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [accountCreated, setAccountCreated] = useState(false);
-  const [termsNudge, setTermsNudge] = useState(false);
-
-  const trialEndDate = new Date();
-  trialEndDate.setDate(trialEndDate.getDate() + 14);
-  const formattedDate = trialEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-
-  const handleCreateAccountAndFetchIntent = async () => {
-    if (!formData.agreedToTerms) { setError('Please accept the terms and conditions'); return; }
-    if (!supabase) { setError('Configuration error. Please contact support.'); return; }
-
-    setLoading(true);
-    setError('');
-
-    try {
-      let session;
-
-      // Check for an existing session first — handles returning users who abandoned
-      // the payment step in a previous session (e.g. closed the tab).
-      const { data: { session: existingSession } } = await supabase.auth.getSession();
-
-      if (existingSession) identify(existingSession.user.id);
-
-      if (!existingSession && !accountCreated) {
-        // 1. Create Supabase account
-        setError('Step 1/4 — Creating your account...');
-        const { data: { user }, error: signUpError } = await supabase.auth.signUp({
-          email: formData.email,
-          password: formData.password,
-          options: {
-            data: {
-              full_name: formData.fullName,
-              slug: formData.username,
-              phone: formData.phone,
-              instagram: formData.instagram,
-              tiktok: formData.tiktok,
-            },
-          },
-        });
-        // With email confirmation on, Supabase answers an existing email with a user that has
-        // no identities instead of an error; without it, it returns "User already registered".
-        if (signUpError?.message?.toLowerCase().includes('already registered') || (user && user.identities?.length === 0)) {
-          throw new Error('This email already has a Nelsy account. Log in instead.');
-        }
-        if (signUpError) throw new Error(`[signup] ${signUpError.message}`);
-        if (!user) throw new Error('[signup] No user returned');
-        identify(user.id);
-        track('account_created', { plan: formData.plan });
-
-        // 2. Wait for DB trigger to create profile
-        setError('Step 2/4 — Setting up your profile...');
-        let profile = null;
-        let retries = 6;
-        while (retries > 0 && !profile) {
-          await new Promise((r) => setTimeout(r, 500));
-          const { data } = await supabase.from('profiles').select('id').eq('id', user.id).maybeSingle();
-          if (data) { profile = data; break; }
-          retries--;
-        }
-        if (!profile) throw new Error('[profile] Profile creation timed out');
-
-        // 3. Sign in to get a valid session
-        setError('Step 3/4 — Signing you in...');
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
-        });
-        if (signInError) throw new Error(`[signin] ${signInError.message}`);
-
-        // Store the device timezone: slots, reminders and calendar times all follow profiles.timezone
-        await saveProfileTimezone(user.id);
-
-        setAccountCreated(true);
-      }
-      // else: user is already logged in (returning from a previous session) — skip to intent fetch
-
-      // Get current session (works whether account was just created or already existed)
-      const { data: { session: currentSession } } = await supabase.auth.getSession();
-      session = currentSession;
-      if (!session) throw new Error('[session] No session available');
-
-      // 4. Create subscription + SetupIntent (Architecture B: subscription-first, card collected via pending_setup_intent)
-      const interval = formData.plan === 'yearly' ? 'yearly' : 'monthly';
-      // Independent sends the legacy value so it works with both the old and the new edge function.
-      const plan = SELECTED.tier === 'independent' ? interval : planKey(SELECTED.tier, interval);
-      setError('Step 4/4 — Setting up payment...');
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 20000);
-      let res: Response;
-      try {
-        res = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-subscription-intent`, {
-          method: 'POST',
-          signal: controller.signal,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${session.access_token}`,
-            'apikey': import.meta.env.VITE_SUPABASE_ANON_KEY as string,
-          },
-          body: JSON.stringify({ plan }),
-        });
-      } catch (fetchErr) {
-        throw new Error(`[intent] Network error: ${fetchErr instanceof Error ? fetchErr.message : String(fetchErr)}`);
-      } finally {
-        clearTimeout(timeout);
-      }
-
-      if (!res.ok) {
-        const body = await res.text().catch(() => '');
-        let detail = body;
-        try { detail = (JSON.parse(body) as { error?: string }).error ?? body; } catch { /* keep raw */ }
-        throw new Error(`[intent] ${res.status}: ${detail}`);
-      }
-      const data = await res.json() as { clientSecret?: string; type?: 'setup' | 'payment'; subscriptionId?: string };
-
-      if (!data.clientSecret) throw new Error('[intent] No client secret returned');
-
-      setError('');
-      setClientSecret(data.clientSecret!);
-      setIntentType(data.type ?? 'setup');
-      track('onboarding_step_completed', {
-        step: 'trial_confirmation', step_number: 4, plan: formData.plan,
-      });
-      setPhase('payment');
-
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : String(err);
-      console.error('[Onboarding]', msg);
-      const { operation, http_status, error_type } = parseBackendError(msg);
-      track('onboarding_backend_error', {
-        step: 'trial_confirmation', operation, error_type,
-        ...(http_status !== undefined ? { http_status } : {}),
-      });
-      setError(msg);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Payment phase — render embedded Stripe PaymentElement
-  if (phase === 'payment' && clientSecret) {
-    return (
-      <Elements stripe={stripePromise} options={{ clientSecret, appearance: STRIPE_APPEARANCE }}>
-        <PaymentStep
-          plan={formData.plan}
-          formattedDate={formattedDate}
-          intentType={intentType}
-          onSuccess={nextStep}
-          onBack={() => setPhase('info')}
-        />
-      </Elements>
-    );
-  }
-
-  // Info phase — plan recap + terms + create account button
-  return (
-    <>
-      <div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1 text-center">
-          Free till {formattedDate} 🎉
-        </h1>
-        <p className="text-base text-gray-500 mb-6 text-center">Cancel anytime before your trial ends</p>
-
-        {/* Plan recap */}
-        <div className="bg-gradient-to-br from-pink-50 to-purple-50 rounded-2xl p-4 mb-4 border-2" style={{ borderColor: '#F52B8C' }}>
-          <div className="flex items-center justify-between mb-3">
-            <div>
-              <p className="text-xs text-gray-500 mb-0.5">Your plan</p>
-              <p className="text-lg font-bold text-gray-900">
-                {SELECTED_PLAN.name}, {formData.plan === 'monthly' ? 'monthly' : 'yearly'}
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-xs text-gray-500 mb-0.5">Due today</p>
-              <p className="text-2xl font-bold" style={{ color: '#F52B8C' }}>$0</p>
-            </div>
-          </div>
-          <div className="pt-3 border-t border-gray-200 space-y-1.5">
-            {[
-              '14-day free trial starts today',
-              `Then ${formData.plan === 'monthly' ? `$${SELECTED_PLAN.monthly}/month` : `$${SELECTED_PLAN.yearlyTotal}/year ($${SELECTED_PLAN.yearly}/mo)`}`,
-              `Cancel anytime before ${formattedDate}`,
-            ].map((text) => (
-              <div key={text} className="flex items-center gap-2 text-xs text-gray-600">
-                <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                {text}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Terms */}
-        <label className={`flex items-start gap-2 cursor-pointer mb-4 rounded-xl transition ${termsNudge && !formData.agreedToTerms ? 'p-3 bg-red-50 ring-2 ring-red-300' : ''}`}>
-          <input
-            type="checkbox"
-            checked={formData.agreedToTerms}
-            onChange={(e) => { setFormData({ ...formData, agreedToTerms: e.target.checked }); if (e.target.checked) setTermsNudge(false); }}
-            className="mt-0.5 w-4 h-4 rounded border-2 border-gray-300 accent-[#F52B8C]"
-          />
-          <span className="text-xs text-gray-600">
-            I agree to the{' '}
-            <a href="/terms" className="underline" style={{ color: '#F52B8C' }}>Terms</a>{' '}
-            and{' '}
-            <a href="/privacy" className="underline" style={{ color: '#F52B8C' }}>Privacy Policy</a>.
-            GDPR compliant.
-            {termsNudge && !formData.agreedToTerms && (
-              <span className="block mt-1 font-semibold text-red-600">Tick this box to start your free trial.</span>
-            )}
-          </span>
-        </label>
-
-        {error && (
-          <div className={`p-3 rounded-xl text-xs mb-3 ${
-            error.startsWith('Step')
-              ? 'bg-blue-50 border border-blue-200 text-blue-700'
-              : 'bg-red-50 border border-red-200 text-red-700'
-          }`}>
-            {error}
-          </div>
-        )}
-      </div>
-
-      <div className="space-y-3">
-        <button
-          onClick={() => {
-            if (!formData.agreedToTerms) {
-              setTermsNudge(true);
-              track('onboarding_validation_error', { step: 'trial_confirmation', field: 'terms', error_type: 'not_accepted' });
-              return;
-            }
-            void handleCreateAccountAndFetchIntent();
-          }}
-          disabled={loading}
-          className="w-full py-4 text-white rounded-2xl font-bold text-base hover:opacity-90 transition active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          style={{ backgroundColor: '#F52B8C' }}
-        >
-          {loading ? (
-            <>
-              <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-              </svg>
-              Setting up your account...
-            </>
-          ) : 'Start your 14-day free trial →'}
-        </button>
-        <button
-          onClick={prevStep}
-          disabled={loading}
-          className="w-full font-semibold text-sm disabled:opacity-50"
-          style={{ color: '#F52B8C' }}
-        >
-          ← Back to plans
-        </button>
-      </div>
-    </>
-  );
-}

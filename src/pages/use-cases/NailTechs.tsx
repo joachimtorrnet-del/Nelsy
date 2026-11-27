@@ -135,7 +135,7 @@ export default function NailTechs() {
         { q: 'How do deposits work?', a: 'For each service you choose pay on arrival, a deposit (a fixed amount you set per service) or full payment upfront. Clients pay by card when they book, and the appointment is confirmed once the deposit is paid. The rest is collected at the appointment.' },
         { q: 'Does Nelsy take a commission on my bookings?', a: 'No. Nelsy charges 0% commission on bookings. You pay your plan, and standard payment processing fees apply to online payments.' },
         { q: 'Can I use Nelsy as my Instagram link in bio?', a: 'Yes. Your Nelsy page has its own link (getnelsy.com/yourname) for your Instagram or TikTok bio, stories and DMs. It shows your services, photos and socials on one page.' },
-        { q: 'How does the free trial work?', a: `You get ${TRIAL_DAYS} days free. A card is saved at signup and you pay $0 today. Your plan starts after the trial, and you can cancel anytime before it ends.` },
+        { q: 'How does the free trial work?', a: `You get ${TRIAL_DAYS} days free and pay $0 today. No card is needed to start. Add a card before the trial ends to keep your page live, or cancel anytime.` },
       ]}
       final={{
         title: 'Your nail chair, fully booked',
