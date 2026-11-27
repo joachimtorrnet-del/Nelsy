@@ -33,7 +33,7 @@ function loadEnv() {
 }
 
 // Top-level app routes a studio slug must never shadow
-const RESERVED = new Set(['about', 'admin', 'affiliate', 'alternatives', 'api', 'app', 'assets', 'blog', 'booking-confirmed',
+const RESERVED = new Set(['about', 'admin', 'affiliate', 'affiliates', 'alternatives', 'api', 'app', 'assets', 'blog', 'booking-confirmed',
   'compare', 'contact', 'dashboard', 'demo', 'features', 'for', 'forgot-password', 'glossary', 'help', 'learn', 'login', 'nelsy',
   'onboarding', 'onboarding-stripe', 'pricing', 'privacy', 'reset-password', 'settings', 'signup', 'stripe', 'studio',
   'support', 'terms', 'tools', 'use-cases', 'www']); // keep in sync with src/lib/reservedSlugs.ts
@@ -98,6 +98,7 @@ const STATIC_SEO_ROUTES = [
   { path: '/glossary', priority: '0.7', changefreq: 'monthly', lastmod: '2026-11-26' },
   ...GLOSSARY_ROUTES,
   { path: '/pricing',                                        priority: '0.9', changefreq: 'monthly', lastmod: '2026-11-23' },
+  { path: '/affiliates', priority: '0.7', changefreq: 'monthly', lastmod: '2026-11-28' },
   { path: '/features/bookings', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/features/deposits', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },
   { path: '/features/payments', priority: '0.8', changefreq: 'monthly', lastmod: '2026-11-23' },

@@ -7,6 +7,7 @@ import type { ReactNode } from 'react';
 import posthog from 'posthog-js';
 import SEOMeta from './components/SEOMeta';
 import { trackSeoLandingView, trackSeoSignupStarted } from './lib/analytics';
+import { captureReferral } from './lib/referrals';
 
 // Public marketing pages — eagerly loaded (part of initial bundle)
 import LandingPremium from './pages/LandingPremium';
@@ -53,6 +54,7 @@ import GiftCardsPage from './pages/features/GiftCards';
 import PackagesPage from './pages/features/Packages';
 import CustomProductsPage from './pages/features/CustomProducts';
 import Pricing from './pages/Pricing';
+import Affiliates from './pages/Affiliates';
 import Contact from './pages/Contact';
 import Demo from './pages/Demo';
 import NotFound from './pages/NotFound';
@@ -81,6 +83,7 @@ const ProductsSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/Pro
 const KitSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.KitSandbox }))) : null;
 const StudioSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.StudioSandbox }))) : null;
 const AudienceSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.AudienceSandbox }))) : null;
+const ReferralsSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ReferralsSandbox').then((m) => ({ default: m.ReferralsSandbox }))) : null;
 const CoachingSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/CoachingSandbox').then((m) => ({ default: m.CoachingSandbox }))) : null;
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('./pages/ResetPassword'));
@@ -119,6 +122,13 @@ function PageviewTracker() {
   return null;
 }
 
+// Referral program: remember ?ref=<code> from the landing URL for 60 days (last click wins).
+// Runs once per page load, on whatever page the visitor lands (/?ref=, /onboarding?ref= from the studio badge).
+function ReferralCapture() {
+  useEffect(() => { captureReferral(); }, []);
+  return null;
+}
+
 // Redirects /learn/:slug → /blog/:slug permanently
 function LearnArticleRedirect() {
   const { slug = '' } = useParams<{ slug: string }>();
@@ -133,7 +143,7 @@ function AppFallback() {
 // Stripe.js (~1 MB) is only needed where money moves (studio pages, onboarding, dashboard, checkout).
 // Marketing pages skip it; Elements accepts going from null to a promise once, on first navigation
 // to a page that needs it.
-const NO_STRIPE_PREFIXES = ['/blog', '/tools', '/features', '/glossary', '/use-cases', '/pricing', '/best-', '/contact', '/privacy', '/terms'];
+const NO_STRIPE_PREFIXES = ['/blog', '/tools', '/features', '/glossary', '/use-cases', '/pricing', '/affiliates', '/best-', '/contact', '/privacy', '/terms'];
 function needsStripe(pathname: string): boolean {
   if (pathname === '/') return false;
   if (/-alternative-|-for-nail-techs$/.test(pathname)) return false;
@@ -155,6 +165,7 @@ export default function App() {
       <StripeProvider>
         <ScrollToTop />
         <PageviewTracker />
+        <ReferralCapture />
         <Suspense fallback={<AppFallback />}>
           <Routes>
             {/* ── Public indexable routes ────────────────────────────────── */}
@@ -206,6 +217,7 @@ export default function App() {
 
             {/* ── Use case pages ─────────────────────────────────────────── */}
             <Route path="/pricing" element={<Pricing />} />
+            <Route path="/affiliates" element={<Affiliates />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/demo" element={<Demo />} />
             <Route path="/use-cases/nail-techs" element={<NailTechsPage />} />
@@ -364,6 +376,7 @@ export default function App() {
             {StudioSandbox && <Route path="/dev/studio" element={<StudioSandbox />} />}
             {CoachingSandbox && <Route path="/dev/coaching" element={<CoachingSandbox />} />}
             {KitSandbox && <Route path="/dev/kit" element={<KitSandbox />} />}
+            {ReferralsSandbox && <Route path="/dev/referrals" element={<ReferralsSandbox />} />}
 
             {/* ── Catch-all studio slug (must stay last) ─────────────────── */}
             <Route path="/:slug" element={<Studio />} />

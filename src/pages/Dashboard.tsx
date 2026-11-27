@@ -17,9 +17,10 @@ import Help from './dashboard/Help';
 import Products from './dashboard/Products';
 import Audience from './dashboard/Audience';
 import Kit from './dashboard/Kit';
+import Referrals from './dashboard/Referrals';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import { ComingSoonPlaceholder } from '../components/dashboard/ComingSoonPlaceholder';
-import { ShoppingBag, Megaphone, Globe, Gift } from 'lucide-react';
+import { ShoppingBag, Megaphone, Globe } from 'lucide-react';
 
 interface Profile {
   id: string;
@@ -164,13 +165,7 @@ export default function Dashboard() {
           icon={Globe}
         />
       )}
-      {activeTab === 'referrals' && (
-        <ComingSoonPlaceholder
-          title="Referrals"
-          description="Invite other beauty professionals to Nelsy and earn rewards."
-          icon={Gift}
-        />
-      )}
+      {activeTab === 'referrals' && <Referrals profile={profile} />}
       {activeTab === 'help' && <Help onNavigate={handleSetTab} />}
     </DashboardLayout>
   );

@@ -9,6 +9,7 @@ import { PLANS, TRIAL_DAYS, parsePlanParam, planKey } from '@/lib/plans';
 import type { BillingInterval } from '@/lib/plans';
 import { saveProfileTimezone } from '@/lib/timezone';
 import { checkTrialEligibility, startTrial } from '@/lib/trial';
+import { claimStoredReferral } from '@/lib/referrals';
 
 // Plan picked on the landing / pricing page (?plan=independent_yearly, legacy ?plan=yearly). Unavailable tiers fall back to Independent.
 const SELECTED = (() => {
@@ -18,6 +19,11 @@ const SELECTED = (() => {
 const SELECTED_PLAN = PLANS[SELECTED.tier];
 const YEARLY_SAVING_PCT = Math.round((1 - SELECTED_PLAN.yearlyTotal / (SELECTED_PLAN.monthly * 12)) * 100);
 const PINK = '#F52B8C';
+// ?next=affiliates (from /affiliates): land on the Referrals tab once the account is ready.
+const AFTER_SIGNUP = (() => {
+  try { return new URLSearchParams(window.location.search).get('next') === 'affiliates' ? '/dashboard/referrals' : '/dashboard'; }
+  catch { return '/dashboard'; }
+})();
 
 // Signup, one or two fields per screen (same order and feel as the app's native signup,
 // src/mobile/screens/Onboarding.tsx). The slug is checked on screen 1, before any account exists;
@@ -134,7 +140,7 @@ export default function Onboarding() {
         try {
           const check = await checkTrialEligibility(planKey(SELECTED.tier, planRef.current));
           if (cancelled) return;
-          if (check.alreadySubscribed) { navigate('/dashboard', { replace: true }); return; }
+          if (check.alreadySubscribed) { navigate(AFTER_SIGNUP, { replace: true }); return; }
           setTrialEligible(check.eligible);
         } catch { /* keep the trial copy: start-trial decides server side anyway */ }
       } else if (new URLSearchParams(search).get('resume') === '1') {
@@ -262,6 +268,9 @@ export default function Onboarding() {
       // Store the device timezone: slots, reminders and calendar times all follow profiles.timezone
       await saveProfileTimezone(user.id);
 
+      // Referral program: attach this new account to the pro whose link she clicked (never blocks signup)
+      if (await claimStoredReferral()) track('referral_claimed', { source: 'link' });
+
       setAccountCreated(true);
       return true;
     } catch (err: unknown) {
@@ -287,6 +296,8 @@ export default function Onboarding() {
     }
     const plan = planKey(SELECTED.tier, formData.plan);
     try {
+      // Account created earlier (app, another tab): the claim is a no-op when already done or too late
+      await claimStoredReferral();
       const result = await startTrial(plan);
       track('onboarding_step_completed', { step: 'start_trial', step_number: 5, plan: formData.plan });
       if (result.kind === 'checkout') {
@@ -299,7 +310,7 @@ export default function Onboarding() {
       }
       track('onboarding_completed', { plan: formData.plan, trial_type: 'no_card' });
       sessionStorage.setItem('nelsy_onboarding_just_completed', '1');
-      navigate('/dashboard');
+      navigate(AFTER_SIGNUP);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       console.error('[Onboarding]', msg);

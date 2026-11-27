@@ -4,7 +4,7 @@
  * Keep in sync with RESERVED in scripts/generate-routes.mjs.
  */
 export const RESERVED_SLUGS = new Set([
-  'about', 'admin', 'affiliate', 'alternatives', 'api', 'app', 'assets', 'blog', 'booking-confirmed', 'compare',
+  'about', 'admin', 'affiliate', 'affiliates', 'alternatives', 'api', 'app', 'assets', 'blog', 'booking-confirmed', 'compare',
   'contact', 'dashboard', 'demo', 'features', 'for', 'forgot-password', 'glossary', 'help', 'learn', 'login', 'nelsy',
   'onboarding', 'onboarding-stripe', 'pricing', 'privacy', 'reset-password', 'settings', 'signup', 'stripe',
   'studio', 'support', 'terms', 'tools', 'use-cases', 'www',
