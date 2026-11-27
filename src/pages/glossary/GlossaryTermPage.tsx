@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-import { Link, Navigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import NotFound from '@/pages/NotFound';
 import SEOMeta from '@/components/SEOMeta';
 import Breadcrumb from '@/components/Breadcrumb';
 import SeoCTA from '@/components/SeoCTA';
@@ -18,7 +19,7 @@ export default function GlossaryTermPage() {
     if (term) document.dispatchEvent(new Event('render-complete'));
   }, [term]);
 
-  if (!term) return <Navigate to="/glossary" replace />;
+  if (!term) return <NotFound backTo="/glossary" backLabel="Browse the glossary" />;
 
   const url = `${ORIGIN}/glossary/${term.slug}`;
   const index = GLOSSARY.findIndex((t) => t.slug === term.slug);

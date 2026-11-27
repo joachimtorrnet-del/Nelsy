@@ -1,4 +1,5 @@
-import { useParams, Navigate, Link, useLocation } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
+import NotFound from '@/pages/NotFound';
 import { useEffect } from 'react';
 import { getArticle, getRelatedArticles, getMoreInCategory, isProArticle, PRO_GUIDES, CATEGORY_LABELS, CATEGORY_COLORS } from '@/lib/articleRegistry';
 import SEOMeta from '@/components/SEOMeta';
@@ -27,7 +28,7 @@ export default function BlogArticlePage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  if (!article) return <Navigate to="/blog" replace />;
+  if (!article) return <NotFound backTo="/blog" backLabel="Browse all guides" />;
 
   const related = getRelatedArticles(slug, 3);
   const moreInCategory = getMoreInCategory(slug, related.map((a) => a.slug), 8);

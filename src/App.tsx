@@ -46,6 +46,7 @@ import MembershipsPage from './pages/features/Memberships';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
 import Demo from './pages/Demo';
+import NotFound from './pages/NotFound';
 import NailTechsPage from './pages/use-cases/NailTechs';
 import BeautyCreatorsPage from './pages/use-cases/BeautyCreators';
 import IndependentBeautyProsPage from './pages/use-cases/IndependentBeautyPros';
@@ -303,6 +304,8 @@ export default function App() {
 
             {/* ── Catch-all studio slug (must stay last) ─────────────────── */}
             <Route path="/:slug" element={<Studio />} />
+            {/* Unknown multi-segment URLs: real not-found page with noindex instead of a blank screen */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
         <CookieBanner />
