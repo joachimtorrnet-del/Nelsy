@@ -35,17 +35,24 @@ export function PlgCTA({ profileId, theme }: Props) {
         rel="noopener noreferrer"
         onClick={() => trackPlgCtaClick(profileId)}
         style={{
-          fontSize: 12,
+          // Small pill, like the "made with" badge on link-in-bio pages: visible, never louder than the pro's page
+          display: 'inline-flex',
+          alignItems: 'center',
+          minHeight: 36,
+          padding: '0 16px',
+          borderRadius: 999,
+          border: `1px solid ${theme.textSecondary}33`,
+          fontSize: 12.5,
+          fontWeight: 600,
           color: theme.textSecondary,
           textDecoration: 'none',
-          opacity: 0.65,
+          opacity: 0.85,
           transition: 'opacity 0.15s',
-          letterSpacing: '0.01em',
         }}
         onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '1'; }}
-        onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.65'; }}
+        onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = '0.85'; }}
       >
-        Made with Nelsy · Create yours →
+        Made with Nelsy · Create your own page →
       </a>
     </div>
   );
@@ -79,18 +86,19 @@ export function PoweredByNelsy({ profileId, isPreview, color, brandColor, fontSi
   }, [profileId, isPreview]);
 
   const label = <>Powered by <strong style={{ color: brandColor }}>Nelsy</strong></>;
+  const liveLabel = <>Made with <strong style={{ color: brandColor }}>Nelsy</strong> · Create your own page →</>;
   if (isPreview) return <span style={{ fontSize, color }}>{label}</span>;
 
   return (
     <a
       ref={ref}
-      href={`https://getnelsy.com/?utm_source=studio_plg&utm_medium=powered_by&ref=${encodeURIComponent(profileId)}`}
+      href={`https://getnelsy.com/onboarding?utm_source=studio_plg&utm_medium=powered_by&ref=${encodeURIComponent(profileId)}`}
       target="_blank"
       rel="noopener"
       onClick={() => trackPlgCtaClick(profileId)}
-      style={{ fontSize, color, textDecoration: 'none' }}
+      style={{ fontSize: Math.max(fontSize, 12), color, textDecoration: 'none' }}
     >
-      {label}
+      {liveLabel}
     </a>
   );
 }
