@@ -55,11 +55,11 @@ function useHeroVariant(): Variant {
 const HERO: Record<Variant, { title: string; sub: string }> = {
   A: {
     title: 'Get booked and paid from your link in bio.',
-    sub: 'Bookings with deposits, courses and digital products on one page built for beauty pros.',
+    sub: 'Bookings, deposits and payments on one link built for nail techs.',
   },
   B: {
     title: 'Your talent deserves more than DMs.',
-    sub: 'Take bookings with deposits, sell your courses and guides, and get paid from one link made for beauty creators.',
+    sub: 'Take bookings with deposits and get paid from one link made for nail techs.',
   },
 };
 
@@ -471,7 +471,7 @@ function PricingSection({ variant }: { variant: Variant }) {
 // ─── 5. FAQ ──────────────────────────────────────────────────────────────────
 
 const FAQ = [
-  { q: 'What can I sell with Nelsy?', a: 'Your beauty services with online booking, plus courses, digital products such as guides and templates, 1:1 coaching and memberships, all from one page you share in your bio.' },
+  { q: 'What can I sell with Nelsy?', a: 'Your nail services, with online booking, deposits and payments, all from one link you share in your bio. Selling guides and coaching is part of the Creator plan, which has a waitlist today.' },
   { q: 'Do I need a website or technical skills?', a: 'No. Pick a template, add your services and photos, and your page is ready to share. No code, no website needed.' },
   { q: 'Does Nelsy take a cut of my sales?', a: 'No. Nelsy charges 0% commission on your bookings and sales. You pay your plan, and standard payment processing fees apply to online payments.' },
   { q: 'How does the free trial work?', a: 'You get 14 days free and pay $0 today. No card is needed to start. Add a card before the trial ends to keep your page live, or cancel anytime.' },
@@ -513,7 +513,7 @@ function FinalCTA({ variant }: { variant: Variant }) {
     <section className="py-[65px] lg:py-[85px] text-center text-white" style={{ background: PINK }}>
       <div className="max-w-3xl mx-auto px-6">
         <h2 className="font-bold tracking-tight leading-[1.15] mb-4 text-[39px] lg:text-[64px]" style={{ letterSpacing: '-0.03em' }}>Start your free trial</h2>
-        <p className="text-sm lg:text-base text-white/90 mb-8">Your bookings, courses and products. One link.</p>
+        <p className="text-sm lg:text-base text-white/90 mb-8">Your bookings, deposits and payments. One link.</p>
         <button
           type="button"
           onClick={() => {
@@ -544,8 +544,8 @@ export default function LandingPremium() {
   return (
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
-        title="Nelsy: Link in Bio Store & Booking App for Beauty Creators"
-        description="Take bookings with deposits, sell courses, digital products and coaching, and get paid from one link. 0% Nelsy commission. Try free for 14 days."
+        title="Nelsy: The All-in-One Booking Link for Nail Techs"
+        description="Take bookings with deposits and get paid from your link in bio. 0% Nelsy commission. Try free for 14 days, no card needed."
         canonical="/"
         jsonLd={[
           {
@@ -569,7 +569,7 @@ export default function LandingPremium() {
             url: 'https://getnelsy.com',
             applicationCategory: 'BusinessApplication',
             operatingSystem: 'Web',
-            description: 'Link in bio store and booking app for beauty creators: online bookings with deposits or pay on arrival, courses, digital products, coaching and memberships, with 0% Nelsy commission.',
+            description: 'The all-in-one booking link for nail techs: online bookings with deposits or pay on arrival, email reminders and payments, with 0% Nelsy commission.',
             offers: {
               '@type': 'Offer',
               price: String(PLANS.independent.monthly),
