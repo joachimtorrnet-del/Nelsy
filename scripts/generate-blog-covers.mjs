@@ -403,9 +403,14 @@ function subtitleFor(a) {
 }
 
 function compareHTML(a, theme, brands) {
-  const nelsyFirst = /Nelsy/.test(a.src) ? ['Nelsy', ...brands.filter((b) => b !== 'Nelsy')] : brands;
-  const chips = nelsyFirst.slice(0, 5);
-  const label = /worth it|review/i.test(a.title) ? 'Honest review' : /alternatives/i.test(a.title) ? 'Alternatives' : 'Compared';
+  const isReview = /worth it|review/i.test(a.title);
+  // Reviews must read as neutral: no Nelsy chip and no check mark on the cover (Nelsy is discussed inside the article).
+  // Comparisons list Nelsy first, like Stan lists itself first.
+  const ordered = isReview
+    ? brands.filter((b) => b !== 'Nelsy')
+    : /Nelsy/.test(a.src) ? ['Nelsy', ...brands.filter((b) => b !== 'Nelsy')] : brands;
+  const chips = ordered.slice(0, 5);
+  const label = isReview ? 'Honest review' : /alternatives/i.test(a.title) ? 'Alternatives' : 'Compared';
   return shell(theme, `
     <div style="position:absolute;left:64px;top:60px;width:560px">
       <span class="pill">${esc(label)}</span>
