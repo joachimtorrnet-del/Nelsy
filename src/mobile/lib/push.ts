@@ -1,38 +1,77 @@
+import { Capacitor } from '@capacitor/core';
 import { PushNotifications } from '@capacitor/push-notifications';
-import { isNative } from './native';
-
-export type PushKind = 'new_booking' | 'payment_received' | 'cancellation';
+import { supabase } from '@/lib/supabase';
+import { isNative, prefs } from './native';
 
 /**
- * Registers the device for push notifications. Only runs inside the native app.
- *
- * TODO(founder): before this can deliver anything:
- *  - iOS: enable the Push Notifications capability in Xcode and create an APNs key
- *    in the Apple Developer account (Certificates, IDs & Profiles > Keys).
- *  - Android: create a Firebase project, add the Android app (com.getnelsy.app) and drop
- *    google-services.json into android/app/.
- *  - Backend: store the token per pro (e.g. a `push_tokens` table keyed by profile id)
- *    and send from the booking / payment / cancellation webhooks, honoring the
- *    per-kind toggles from Settings.
+ * Push types. Each one maps to a key in profiles.notification_preferences that the server
+ * (supabase/functions/_shared/push.ts) reads before sending. Absent key = on.
  */
-export async function registerPush(onToken: (token: string) => void) {
+export type PushKind = 'new_booking' | 'payment' | 'cancellation' | 'lead';
+
+export const PUSH_PREF_KEY: Record<PushKind, 'push_new_booking' | 'push_payment' | 'push_cancellation' | 'push_lead'> = {
+  new_booking: 'push_new_booking',
+  payment: 'push_payment',
+  cancellation: 'push_cancellation',
+  lead: 'push_lead',
+};
+
+const TOKEN_KEY = 'push-token';
+
+/**
+ * Registers the device for push notifications and saves the token for this pro.
+ * Only runs inside the native app, and only when the build was made with VITE_PUSH_ENABLED=1
+ * (on Android, register() crashes without google-services.json).
+ *
+ * Token storage: RPC register_push_token (supabase/migrations/20261129_01_push_tokens.sql).
+ * It moves the token to the signed-in pro if another account used this device before.
+ */
+export async function registerPush() {
   if (!isNative()) return;
-  // Off until APNs / Firebase are set up: on Android, register() crashes without google-services.json.
   if (import.meta.env.VITE_PUSH_ENABLED !== '1') return;
 
-  let perm = await PushNotifications.checkPermissions();
-  if (perm.receive === 'prompt') perm = await PushNotifications.requestPermissions();
-  if (perm.receive !== 'granted') return;
+  try {
+    let perm = await PushNotifications.checkPermissions();
+    if (perm.receive === 'prompt') perm = await PushNotifications.requestPermissions();
+    if (perm.receive !== 'granted') return;
 
-  await PushNotifications.removeAllListeners();
-  await PushNotifications.addListener('registration', (t) => onToken(t.value));
-  await PushNotifications.addListener('registrationError', (err) => {
-    console.warn('[push] registration error', err.error);
-  });
-  await PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
-    // Deep link: payloads should carry { route: '/bookings' } etc.
-    const route = action.notification.data?.route as string | undefined;
-    if (route) window.location.hash = route;
-  });
-  await PushNotifications.register();
+    await PushNotifications.removeAllListeners();
+    await PushNotifications.addListener('registration', (t) => void saveToken(t.value));
+    await PushNotifications.addListener('registrationError', (err) => {
+      console.warn('[push] registration error', err.error);
+    });
+    await PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
+      // Payloads carry { route: '/bookings' } (see _shared/push-messages.ts).
+      const route = action.notification.data?.route as string | undefined;
+      if (route && route.startsWith('/')) window.location.hash = route;
+    });
+    await PushNotifications.register();
+  } catch (e) {
+    console.warn('[push] setup failed', e);
+  }
+}
+
+async function saveToken(token: string) {
+  if (!supabase || !token) return;
+  const platform = Capacitor.getPlatform() === 'android' ? 'android' : 'ios';
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { error } = await (supabase as any).rpc('register_push_token', { p_token: token, p_platform: platform });
+  if (error) console.warn('[push] could not save token', error.message);
+  else await prefs.set(TOKEN_KEY, token);
+}
+
+/** On log out: this device must stop receiving the pro's notifications. Never throws. */
+export async function unregisterPush() {
+  if (!isNative() || !supabase) return;
+  try {
+    const token = await prefs.get<string | null>(TOKEN_KEY, null);
+    if (token) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await (supabase as any).rpc('unregister_push_token', { p_token: token });
+      await prefs.set(TOKEN_KEY, null);
+    }
+    if (import.meta.env.VITE_PUSH_ENABLED === '1') await PushNotifications.removeAllListeners();
+  } catch {
+    /* best effort */
+  }
 }

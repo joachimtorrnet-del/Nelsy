@@ -28,6 +28,8 @@ import { markProductOrderPaid } from '../_shared/product-orders.ts'
 // Pro's own policy when stored, else neutral "contact the studio" wording (no invented policy).
 import { policyNoteHtml } from '../_shared/booking-reminders.ts'
 import { fetchOnlineSession, onlineSessionRows, onlineSessionNote } from '../_shared/online-session.ts'
+// Pro push notifications: feature-flagged (PUSH_ENABLED), never throws, runs after ledger + emails.
+import { notifyPro, proPushPrefs, paidBookingMessage, cancellationMessage, pushAllowed, pushFeatureEnabled } from '../_shared/push.ts'
 
 const FROM_EMAIL = 'Nelsy <hello@getnelsy.com>'
 
@@ -782,6 +784,24 @@ serve(async (req) => {
           } catch (emailErr) {
             console.error('Email error (non-blocking):', emailErr)
           }
+
+          // ── Push to the pro's phone (non-blocking, after ledger + emails) ──
+          // Only on the run that credited, so webhook retries never notify twice.
+          try {
+            await notifyPro(supabase, booking.profile_id, paidBookingMessage(
+              await proPushPrefs(supabase, booking.profile_id),
+              {
+                clientName: booking.client_name,
+                serviceName: (booking.services as { name: string } | null)?.name ?? 'Service',
+                bookingDatetime: booking.booking_datetime,
+                timezone: salonTimezone,
+                amount: gross,
+                currency,
+              },
+            ))
+          } catch (pushErr) {
+            console.error('Push error (non-blocking):', pushErr)
+          }
         }
 
         break
@@ -934,6 +954,31 @@ serve(async (req) => {
           },
         })
         await posthogRefund.shutdown()
+
+        // ── Push to the pro (non-blocking, after the refund ledger) ──
+        // Only when this refund is what cancelled the booking: later partial refunds stay quiet.
+        if (booking.status !== 'cancelled' && pushFeatureEnabled(Deno.env.get('PUSH_ENABLED'))) {
+          try {
+            const [{ data: cancelled }, prefs] = await Promise.all([
+              supabase
+                .from('bookings')
+                .select('client_name, booking_datetime, services(name), profiles(timezone)')
+                .eq('id', booking.id)
+                .maybeSingle(),
+              proPushPrefs(supabase, booking.profile_id),
+            ])
+            if (pushAllowed(prefs, 'cancellation')) {
+              await notifyPro(supabase, booking.profile_id, cancellationMessage({
+                clientName: cancelled?.client_name,
+                serviceName: (cancelled?.services as { name: string } | null)?.name,
+                bookingDatetime: cancelled?.booking_datetime,
+                timezone: (cancelled?.profiles as { timezone: string | null } | null)?.timezone,
+              }))
+            }
+          } catch (pushErr) {
+            console.error('Push error (non-blocking):', pushErr)
+          }
+        }
         break
       }
 

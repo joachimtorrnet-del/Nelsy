@@ -14,6 +14,7 @@ import { PINK, WEB_ORIGIN, WEB } from '../lib/constants';
 import { openExternal } from '../lib/native';
 import { readDemoFlag } from '../lib/demo';
 import { trialEndLabel } from '../lib/format';
+import { planLinksAllowed } from '../lib/storePolicy';
 
 // Native signup, one or two fields per screen. Account creation mirrors src/pages/Onboarding.tsx:
 // same supabase.auth.signUp metadata (the DB trigger creates the profile), same profile wait, same sign-in.
@@ -73,6 +74,7 @@ export default function Onboarding() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
   const viewed = useRef(new Set<number>());
+  const planLinks = useMemo(() => planLinksAllowed(), []);
 
   const name: StepName = STEPS[step];
   const set = (patch: Partial<Form>) => {
@@ -236,6 +238,12 @@ export default function Onboarding() {
         }
         return;
       case 'plan':
+        if (!planLinks) {
+          // Store builds: no trial offer or website plan link inside the app (Guideline 3.1.3(f)).
+          track('app_onboarding_completed', { plan: 'none_store_build' });
+          navigate('/home', { replace: true });
+          return;
+        }
         track('app_onboarding_trial_opened_web', { plan: PLAN_PARAM });
         openExternal(`${WEB.signup}?plan=${PLAN_PARAM}&resume=1`);
         track('app_onboarding_completed', { plan: PLAN_PARAM });
@@ -243,7 +251,8 @@ export default function Onboarding() {
     }
   };
 
-  const nextLabel = name === 'craft' ? (busy ? 'Creating your account...' : 'Create my account') : name === 'plan' ? 'Start my free trial' : 'Next';
+  const nextLabel =
+    name === 'craft' ? (busy ? 'Creating your account...' : 'Create my account') : name === 'plan' ? (planLinks ? 'Start my free trial' : 'Go to my studio') : 'Next';
   const nextDisabled =
     busy ||
     (name === 'claim_link' && (form.username.length < 3 || slugState === 'checking' || slugState === 'taken' || slugState === 'reserved')) ||
@@ -273,7 +282,7 @@ export default function Onboarding() {
         {name === 'credentials' && <StepCredentials form={form} set={set} />}
         {name === 'socials' && <StepSocials form={form} set={set} />}
         {name === 'craft' && <StepCraft form={form} set={set} />}
-        {name === 'plan' && <StepPlan />}
+        {name === 'plan' && (planLinks ? <StepPlan /> : <StepReady />)}
         {error && (
           <p role="alert" className="mt-4 rounded-xl bg-[#FDECEC] px-3 py-2.5 text-[13px] font-medium text-[#B42318]">
             {error}
@@ -298,7 +307,7 @@ export default function Onboarding() {
               Skip
             </button>
           )}
-          {name === 'plan' && (
+          {name === 'plan' && planLinks && (
             <button type="button" onClick={() => navigate('/home', { replace: true })} className="mt-1 h-11 w-full text-[15px] font-semibold text-gray-500">
               Not now
             </button>
@@ -567,6 +576,25 @@ function StepCraft({ form, set }: StepProps) {
           );
         })}
       </div>
+    </>
+  );
+}
+
+/** Last step in store builds: the account exists; no price, trial or plan link is shown in the app. */
+function StepReady() {
+  return (
+    <>
+      <Heading title="Your account is ready" sub="Your Nelsy studio is created. Next, add your services and check how your page looks." />
+      <ul className="space-y-3">
+        {['Add your services and prices', 'Preview your page', 'Share your link in your bio'].map((t, i) => (
+          <li key={t} className="flex items-center gap-3 rounded-2xl bg-gray-50 px-4 py-3.5">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[13px] font-bold text-white" style={{ backgroundColor: PINK }}>
+              {i + 1}
+            </span>
+            <span className="text-[15px] font-semibold text-[#1A1A1A]">{t}</span>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
