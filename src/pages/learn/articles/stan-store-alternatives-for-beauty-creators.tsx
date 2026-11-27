@@ -19,9 +19,9 @@ registerArticle({
   publishedAt: '2026-11-26',
   tldr: {
     answer: 'Stan is a good creator store; the right alternative depends on what Stan does not do for you.',
-    detail: 'Stan costs $29/month (or $25/month yearly) with 0% transaction fees. Beacons and Linktree have free plans. Kajabi and Teachable go deeper on courses, at a higher price or with product limits. Nelsy matches Stan\'s entry price and adds in-person service bookings with deposits.',
+    detail: 'Stan costs $29/month (or $25/month yearly) with 0% transaction fees. Linktree has a free plan. Kajabi and Teachable go deeper on courses, at a higher price or with product limits. Nelsy matches Stan\'s entry price and adds in-person service bookings with deposits.',
     points: [
-      { label: 'Beacons', text: 'Best for a free start, a media kit and brand deals.' },
+      { label: 'Beacons', text: 'Best for a media kit and brand deals.' },
       { label: 'Kajabi', text: 'Best for established educators running a full course business.' },
       { label: 'Teachable', text: 'Best for creators who want a dedicated course school.' },
       { label: 'Nelsy', text: 'Best for beauty pros who sell products and also book clients in person.' },
@@ -40,7 +40,7 @@ registerArticle({
   relatedSlugs: ['best-link-in-bio-for-beauty-creators', 'best-platform-to-sell-beauty-courses', 'how-to-make-money-as-a-beauty-creator', 'how-to-sell-a-nail-course-online'],
   faq: [
     { q: 'How much does Stan cost?', a: 'Stan lists Creator at $29/month or $25/month billed yearly, Creator Pro at $99/month or $79/month yearly, and Creator Max at $299/month or $250/month yearly ($3,000/year). Stan lists 0% transaction fees, and there is no free plan.' },
-    { q: 'Is there a free alternative to Stan?', a: 'Beacons and Linktree both have free plans. On Beacons, the Free plan carries a 9% seller fee. On Linktree, selling paid digital products requires the Pro or Premium plan.' },
+    { q: 'Is there a free alternative to Stan?', a: 'Linktree has a free plan, but selling paid digital products requires its Pro or Premium plan. Beacons does not show its prices on a public page we could check; see its site for current plans.' },
     { q: 'Is Kajabi better than Stan for courses?', a: 'Kajabi is a full course and community platform with coaching, memberships and email, but it starts at $179/month ($143/month billed annually). For a first course, Stan or Nelsy cost far less. Kajabi makes more sense once courses are your main income.' },
     { q: 'Can I take beauty appointments on Stan?', a: 'Stan sells bookings for your time, such as 1:1 calls. If you need a service menu for in-person clients with deposits or pay on arrival, a booking-first tool like Nelsy fits better.' },
   ],
@@ -48,7 +48,7 @@ registerArticle({
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">
-        Every competitor price and fee comes from the vendor&apos;s official pages, checked on November 27, 2026: <a href="https://help.stan.store/article/31-creator-vs-creator-pro" rel="nofollow noopener" target="_blank" className={ext}>Stan plans</a>, <a href="https://beacons.ai/i/pricing" rel="nofollow noopener" target="_blank" className={ext}>Beacons pricing</a>, <a href="https://linktr.ee/s/pricing" rel="nofollow noopener" target="_blank" className={ext}>Linktree pricing</a>, <a href="https://linktr.ee/help/articles/10518645-guide-to-selling-digital-products-on-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree digital products</a>, <a href="https://linktr.ee/help/articles/11410206-understanding-transaction-and-processing-fees-on-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree fees</a>, <a href="https://kajabi.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Kajabi pricing</a> and <a href="https://teachable.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Teachable pricing</a>. Linktree does not publish prices on its pricing page (it says pricing varies by region and is shown in local currency), so check its site for your country. Prices exclude tax and can change. Nelsy is our product.
+        Every competitor price and fee comes from the vendor&apos;s official pages, checked on November 27, 2026: <a href="https://help.stan.store/article/31-creator-vs-creator-pro" rel="nofollow noopener" target="_blank" className={ext}>Stan plans</a>, <a href="https://linktr.ee/s/pricing" rel="nofollow noopener" target="_blank" className={ext}>Linktree pricing</a>, <a href="https://linktr.ee/help/articles/10518645-guide-to-selling-digital-products-on-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree digital products</a>, <a href="https://linktr.ee/help/articles/11410206-understanding-transaction-and-processing-fees-on-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree fees</a>, <a href="https://kajabi.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Kajabi pricing</a> and <a href="https://teachable.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Teachable pricing</a>. Linktree does not publish prices on its pricing page (it says pricing varies by region and is shown in local currency), so check its site for your country. Beacons does not show its prices on a public page we could check; see its site for current plans. Prices exclude tax and can change. Nelsy is our product.
       </ArticleCallout>
 
       <section id="why-switch">
@@ -70,7 +70,7 @@ registerArticle({
           headers={['Platform', 'Entry price', 'Platform fee on sales', 'Free plan or trial', 'Best for']}
           rows={[
             ['Stan', '$29/month or $25/month yearly', '0% transaction fees', 'No free plan', 'Online products and 1:1 calls'],
-            ['Beacons', 'Free; Creator $10/month; Creator Plus $30/month ($25 yearly)', '9% on Free and Creator, 0% on Creator Plus and Max', 'Free plan', 'Brand deals and media kit'],
+            ['Beacons', 'Not shown on a public page we could check', 'Not verified', 'Not verified', 'Brand deals and media kit'],
             ['Linktree', 'Free plan; paid plan prices not published on its pricing page', 'Plan-dependent % of the sale price; paid products need Pro or Premium', 'Free plan', 'Links first, selling second'],
             ['Kajabi', 'Basic $179/month ($143/month yearly)', 'Card processing from 2.9% + 30¢ (US)', '14-day trial', 'Full course business'],
             ['Teachable', 'Starter $39/month ($29/month yearly)', '7.5% on Starter, 0% on Builder and up with Teachable Payments', '7-day trial on Starter', 'Dedicated course school'],
@@ -85,13 +85,13 @@ registerArticle({
       <section id="beacons">
         <h2 className="font-serif text-2xl font-bold mb-4">1. Beacons</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          Beacons is the closest like-for-like alternative: link in bio, storefront, email and a media kit for brand deals. You can start free, but the Free and Creator ($10/month) plans take a 9% seller fee. Creator Plus at $30/month ($25/month yearly) removes it and unlocks unlimited courses with video hosting and memberships.
+          Beacons is the closest like-for-like alternative: it is positioned as a link in bio with a storefront, a media kit and brand deal tools, plus an AI assistant called Beam and Smart Reply for DMs. Beacons does not show its prices on a public page we could check; see its site for current plans.
         </p>
         <p className="text-gray-700 mb-4"><strong>Best for:</strong> beauty creators who earn from brand partnerships as much as from products.</p>
         <ArticleComparison
           items={[
-            { label: 'Pros', pros: ['Free plan', 'Media kit and AI brand-outreach tools', 'Same 0% fee as Stan from Creator Plus'], cons: [] },
-            { label: 'Cons', pros: [], cons: ['9% seller fee on the cheaper plans', 'Courses limited below Creator Plus', 'Not built for salon-style appointments'] },
+            { label: 'Pros', pros: ['Media kit and brand deal tools', 'AI assistant (Beam) and Smart Reply for DMs', 'Storefront next to your links'], cons: [] },
+            { label: 'Cons', pros: [], cons: ['Prices not shown on a public page we could check', 'Check the seller fee on your plan', 'Not built for salon-style appointments'] },
           ]}
         />
       </section>
@@ -155,7 +155,7 @@ registerArticle({
       <section id="verdict">
         <h2 className="font-serif text-2xl font-bold mb-4">Verdict</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          If Stan already does what you need, there is no strong reason to move. Pick <strong>Beacons</strong> for a free start and brand deals, <strong>Kajabi</strong> or <strong>Teachable</strong> once courses are your main income, and <strong>Nelsy</strong> if your audience also books you for services.
+          If Stan already does what you need, there is no strong reason to move. Pick <strong>Beacons</strong> for brand deals and a media kit, <strong>Kajabi</strong> or <strong>Teachable</strong> once courses are your main income, and <strong>Nelsy</strong> if your audience also books you for services.
         </p>
         <ArticleTip>Before you switch, list the products you sell today and check each one is supported on the plan you are looking at, not just on the top tier.</ArticleTip>
         <p className="text-gray-700 mt-4 leading-relaxed">

@@ -19,7 +19,7 @@ registerArticle({
   publishedAt: '2026-11-26',
   tldr: {
     answer: 'For a first beauty course, a link-in-bio store is usually enough; a full course platform pays off later.',
-    detail: 'Stan, Beacons Creator Plus and Nelsy all let you sell a course for around $25 to $30 a month with 0% platform fees. Kajabi and Teachable go deeper on course delivery, community and marketing, at a higher price or with product limits.',
+    detail: 'Stan and Nelsy both let you sell a course for $25 to $29 a month with 0% platform fees (Stan lists 0% transaction fees; Nelsy charges 0% Nelsy commission). Kajabi and Teachable go deeper on course delivery, community and marketing, at a higher price or with product limits.',
     points: [
       { label: 'Kajabi', text: 'Best for established educators running courses, community and email in one place.' },
       { label: 'Teachable', text: 'Best for a dedicated course school with a low entry plan.' },
@@ -39,7 +39,7 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-sell-a-nail-course-online', 'stan-store-alternatives-for-beauty-creators', 'how-to-make-money-as-a-beauty-creator', 'best-link-in-bio-for-beauty-creators'],
   faq: [
-    { q: 'What is the best platform to sell a nail or lash course?', a: 'For a first course, a store like Stan, Beacons Creator Plus or Nelsy keeps costs around $25 to $30 a month with 0% platform fees. Once courses are a major income, Kajabi or Teachable offer more advanced course and community tools.' },
+    { q: 'What is the best platform to sell a nail or lash course?', a: 'For a first course, a store like Stan or Nelsy keeps costs at $25 to $29 a month with 0% platform fees. Once courses are a major income, Kajabi or Teachable offer more advanced course and community tools.' },
     { q: 'Is Kajabi worth it for beauty educators?', a: 'Kajabi starts at $179/month ($143/month billed annually) for 5 products and 2,500 contacts. It is worth it when you have an audience, several courses and a community to run. For one course, it is expensive.' },
     { q: 'Does Teachable take a cut of course sales?', a: 'Teachable\'s Starter plan ($39/month, or $29/month billed annually) has a 7.5% transaction fee. Builder and Growth list 0% transaction fees when you use Teachable Payments. Card processing still applies.' },
     { q: 'Can I sell a course and in-person training on the same page?', a: 'With Nelsy you can sell an online course and list in-person training or client services as bookable services, each with pay on arrival, a deposit or full payment upfront.' },
@@ -48,7 +48,7 @@ registerArticle({
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">
-        Every competitor figure comes from the vendor&apos;s official pages, checked on November 27, 2026: <a href="https://kajabi.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Kajabi pricing</a>, <a href="https://teachable.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Teachable pricing</a>, <a href="https://help.stan.store/article/31-creator-vs-creator-pro" rel="nofollow noopener" target="_blank" className={ext}>Stan plans</a> and <a href="https://beacons.ai/i/pricing" rel="nofollow noopener" target="_blank" className={ext}>Beacons pricing</a>. Prices in USD, excluding tax, and they can change. Teachable showed a temporary Black Friday price on Builder and Growth; we use the regular prices shown after the promotion. Thinkific is not included because its pricing page only showed us euro prices. Nelsy is our product.
+        Every competitor figure comes from the vendor&apos;s official pages, checked on November 27, 2026: <a href="https://kajabi.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Kajabi pricing</a>, <a href="https://teachable.com/pricing" rel="nofollow noopener" target="_blank" className={ext}>Teachable pricing</a> and <a href="https://help.stan.store/article/31-creator-vs-creator-pro" rel="nofollow noopener" target="_blank" className={ext}>Stan plans</a>. Beacons does not show its prices on a public page we could check; see its site for current plans. Prices in USD, excluding tax, and they can change. Teachable showed a temporary Black Friday price on Builder and Growth; we use the regular prices shown after the promotion. Thinkific is not included because its pricing page only showed us euro prices. Nelsy is our product.
       </ArticleCallout>
 
       <section id="what-to-look-for">
@@ -69,7 +69,7 @@ registerArticle({
             ['Kajabi', 'Basic $179/month ($143 billed annually)', 'None listed; card processing 2.9% + 30¢ (US, Basic)', '5 products, 2,500 contacts', '14 days'],
             ['Teachable', 'Starter $39/month ($29 billed annually)', '7.5% on Starter; 0% on Builder and up with Teachable Payments', '5 published products', '7 days on Starter'],
             ['Stan', 'Creator $29/month ($25 billed yearly)', '0% transaction fees', 'Payment plans (Afterpay, Klarna) need Creator Pro', 'No free plan'],
-            ['Beacons', 'Creator Plus $30/month ($25 billed annually)', '0% on Creator Plus and Max; 9% on Free and Creator', 'Unlimited courses with video hosting on Creator Plus', 'Free plan'],
+            ['Beacons', 'Not shown on a public page we could check', 'Not verified', 'Not verified', 'Not verified'],
             ['Nelsy', '$29/month ($25 billed yearly)', '0% Nelsy commission', 'Courses, digital products, coaching and memberships', '14 days'],
           ]}
         />
@@ -115,7 +115,7 @@ registerArticle({
       <section id="beacons">
         <h2 className="font-serif text-2xl font-bold mb-4">4. Beacons</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          On Beacons, the Free and Creator plans allow one course without video hosting and carry a 9% seller fee. Creator Plus ($30/month, $25 billed annually) unlocks unlimited courses with video hosting, memberships and 0% seller fees.
+          Beacons is positioned as a link in bio with a storefront, a media kit and brand deal tools, plus an AI assistant called Beam and Smart Reply for DMs. Beacons does not show its prices on a public page we could check; see its site for current plans. Check course limits and the seller fee on the plan you would use.
         </p>
         <p className="text-gray-700 mb-4"><strong>Best for:</strong> creators who also need a media kit for brand deals.</p>
       </section>
@@ -137,7 +137,7 @@ registerArticle({
       <section id="verdict">
         <h2 className="font-serif text-2xl font-bold mb-4">Verdict</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>First course, small audience:</strong> Stan, Beacons Creator Plus or Nelsy.</li>
+          <li><strong>First course, small audience:</strong> Stan or Nelsy.</li>
           <li><strong>Course plus clients and in-person training:</strong> Nelsy.</li>
           <li><strong>Several courses and a community:</strong> Kajabi.</li>
           <li><strong>A school with a low entry price:</strong> Teachable, moving to Builder once sales justify it.</li>

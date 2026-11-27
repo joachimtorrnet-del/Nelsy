@@ -19,7 +19,7 @@ registerArticle({
   publishedAt: '2026-11-26',
   tldr: {
     answer: 'The best link in bio for a beauty creator depends on whether you also take appointments.',
-    detail: 'Linktree is the simplest way to list links and has a free plan. Beacons and Stan are built to sell digital products and courses: Stan lists 0% transaction fees on every plan, and Beacons lists 0% seller fees from Creator Plus. If you also do clients in a chair, a link in bio that handles bookings with deposits saves you a second tool.',
+    detail: 'Linktree is the simplest way to list links and has a free plan. Stan is built to sell digital products and courses, while Beacons focuses on a storefront, a media kit and brand deals. If you also do clients in a chair, a link in bio that handles bookings with deposits saves you a second tool.',
     points: [
       { label: 'Linktree', text: 'Best for creators who mainly need a clean list of links, with optional simple bookings.' },
       { label: 'Beacons', text: 'Best for creators focused on brand deals, a media kit and a storefront.' },
@@ -38,23 +38,23 @@ registerArticle({
   ],
   relatedSlugs: ['stan-store-alternatives-for-beauty-creators', 'linktree-alternatives-for-beauty-pros', 'how-to-make-money-as-a-beauty-creator', 'how-to-set-up-nail-tech-link-in-bio'],
   faq: [
-    { q: 'What is the best link in bio for a beauty creator?', a: 'If you only need to list links, Linktree is the simplest option and has a free plan. If you sell courses or digital products, Beacons Creator Plus and Stan charge 0% seller fees. If you also take in-person appointments, pick a tool that handles bookings and deposits, such as Nelsy.' },
+    { q: 'What is the best link in bio for a beauty creator?', a: 'If you only need to list links, Linktree is the simplest option and has a free plan. If you sell courses or digital products, Stan lists 0% transaction fees. If you also take in-person appointments, pick a tool that handles bookings and deposits, such as Nelsy.' },
     { q: 'Does Linktree take a cut of sales?', a: 'Linktree\'s help center says that on your own digital products and courses it takes a percentage of the sale price that depends on your plan, and that Stripe charges 2.9% + $0.30 per purchase on every plan. Selling paid digital products is available on Pro and Premium. Its pricing page does not publish prices; check its site for your country.' },
-    { q: 'Is Beacons free?', a: 'Beacons has a free plan. Its pricing page lists a 9% seller fee on the Free and Creator plans, and 0% on Creator Plus ($30/month, or $25/month billed annually) and Creator Max.' },
+    { q: 'How much does Beacons cost?', a: 'Beacons does not show its prices on a public page we could check; see its site for current plans. Check the fee on the plan you would use before you start selling.' },
     { q: 'Can I take bookings from my link in bio?', a: 'Yes, on several tools. Linktree\'s help center says Free and Starter plans can offer free bookings, and paid bookings are available on Pro and Premium in certain countries. Stan sells 1:1 bookings. Nelsy is built around appointments, with pay on arrival, a deposit or full payment set per service.' },
-    { q: 'Which link in bio has no transaction fees?', a: 'Stan lists 0% transaction fees on every plan. Beacons lists 0% on Creator Plus and Creator Max. Nelsy charges 0% Nelsy commission. Payment processing fees from Stripe or your payment provider still apply on all of them.' },
+    { q: 'Which link in bio has no transaction fees?', a: 'Stan lists 0% transaction fees. Nelsy charges 0% Nelsy commission. Payment processing fees from Stripe or your payment provider still apply on all of them.' },
   ],
   relatedFeatureSlugs: ['link-in-bio', 'bookings', 'digital-products'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="info" title="How we sourced these figures">
-        Prices and fees come from each vendor&apos;s official pages, checked on November 27, 2026: <a href="https://linktr.ee/s/pricing" rel="nofollow noopener" target="_blank" className={ext}>Linktree pricing</a>, <a href="https://linktr.ee/help/articles/11410206-understanding-transaction-and-processing-fees-on-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree fees</a>, <a href="https://linktr.ee/help/articles/11567751-how-to-offer-bookings-on-your-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree bookings</a>, <a href="https://linktr.ee/help/articles/10518645-guide-to-selling-digital-products-on-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree digital products</a>, <a href="https://beacons.ai/i/pricing" rel="nofollow noopener" target="_blank" className={ext}>Beacons pricing</a> and <a href="https://help.stan.store/article/31-creator-vs-creator-pro" rel="nofollow noopener" target="_blank" className={ext}>Stan plans</a>. Linktree&apos;s pricing page does not publish prices (it says pricing varies by region and is shown in local currency), so we do not quote Linktree prices; check its site for your country. Prices exclude tax and can change. Nelsy is our product. We don&apos;t quote ratings or testimonials.
+        Prices and fees come from each vendor&apos;s official pages, checked on November 27, 2026: <a href="https://linktr.ee/s/pricing" rel="nofollow noopener" target="_blank" className={ext}>Linktree pricing</a>, <a href="https://linktr.ee/help/articles/11410206-understanding-transaction-and-processing-fees-on-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree fees</a>, <a href="https://linktr.ee/help/articles/11567751-how-to-offer-bookings-on-your-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree bookings</a>, <a href="https://linktr.ee/help/articles/10518645-guide-to-selling-digital-products-on-linktree" rel="nofollow noopener" target="_blank" className={ext}>Linktree digital products</a> and <a href="https://help.stan.store/article/31-creator-vs-creator-pro" rel="nofollow noopener" target="_blank" className={ext}>Stan plans</a>. Linktree&apos;s pricing page does not publish prices (it says pricing varies by region and is shown in local currency), so we do not quote Linktree prices; check its site for your country. Beacons does not show its prices on a public page we could check; see its site for current plans. Prices exclude tax and can change. Nelsy is our product. We don&apos;t quote ratings or testimonials.
       </ArticleCallout>
 
       <section id="what-to-look-for">
         <h2 className="font-serif text-2xl font-bold mb-4">What to look for in a link in bio as a beauty creator</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li><strong>Fees on what you sell.</strong> A 9% seller fee on a $50 guide is $4.50 per sale. Check the fee on the plan you will actually use, plus payment processing.</li>
+          <li><strong>Fees on what you sell.</strong> A percentage fee adds up: for example, a 10% fee on a $50 guide is $5 per sale (10% x $50). Check the fee on the plan you will actually use, plus payment processing.</li>
           <li><strong>The products you plan to sell.</strong> Presets, tutorials, a course, a paid community, 1:1 consultations: not every plan supports every type.</li>
           <li><strong>Bookings, if you also do clients.</strong> A makeup artist, lash artist or nail tech needs times, services and ideally a deposit, not just a contact link.</li>
           <li><strong>Branding.</strong> Most free plans show the platform&apos;s logo. Removing it is usually a paid feature.</li>
@@ -66,17 +66,17 @@ registerArticle({
         <ArticleTable
           headers={['', 'Linktree', 'Beacons', 'Stan', 'Nelsy']}
           rows={[
-            ['Free plan', 'Yes', 'Yes (Free forever)', 'No', 'No (14-day trial)'],
-            ['Entry paid plan', 'Starter (price not published on its pricing page)', 'Creator $10/month ($8.33/month yearly)', 'Creator $29/month or $25/month yearly', '$29/month or $25/month yearly'],
-            ['Plan with 0% platform fee', 'Not stated; Linktree takes a plan-dependent percentage on your own products', 'Creator Plus: $30/month or $25/month yearly', 'All plans', 'All plans (0% Nelsy commission)'],
-            ['Selling on lower plans', 'Paid products need Pro or Premium', '9% seller fee (Free and Creator)', 'All plans, 0% fee', 'All plans, 0% Nelsy commission'],
-            ['Bookings', 'Free bookings on Free and Starter; paid bookings on Pro and Premium (certain countries)', 'Multiple-calendar integration on Creator Plus and Max; no bookings feature listed', '1:1 bookings', 'Service bookings with pay on arrival, deposit or full payment'],
-            ['Courses', 'Paid digital products and courses on Pro and Premium', '1 course without video hosting on Free and Creator; unlimited on Plus', 'Yes', 'Yes'],
-            ['Free trial on paid plans', 'Not published', 'Not stated', 'Not confirmed on Stan\'s pages', '14 days'],
+            ['Free plan', 'Yes', 'Not verified', 'No', 'No (14-day trial)'],
+            ['Entry paid plan', 'Starter (price not published on its pricing page)', 'Prices not shown on a public page we could check', 'Creator $29/month or $25/month yearly', '$29/month or $25/month yearly'],
+            ['Plan with 0% platform fee', 'Not stated; Linktree takes a plan-dependent percentage on your own products', 'Not verified', 'All plans', 'All plans (0% Nelsy commission)'],
+            ['Selling on lower plans', 'Paid products need Pro or Premium', 'Not verified', 'All plans, 0% fee', 'All plans, 0% Nelsy commission'],
+            ['Bookings', 'Free bookings on Free and Starter; paid bookings on Pro and Premium (certain countries)', 'Not a booking-first tool', '1:1 bookings', 'Service bookings with pay on arrival, deposit or full payment'],
+            ['Courses', 'Paid digital products and courses on Pro and Premium', 'Storefront for digital products', 'Yes', 'Yes'],
+            ['Free trial on paid plans', 'Not published', 'Not verified', 'Not confirmed on Stan\'s pages', '14 days'],
           ]}
         />
         <p className="text-gray-700 mt-4 leading-relaxed text-sm">
-          Payment processing is extra on every platform. Linktree&apos;s help center lists Stripe at 2.9% + $0.30 per purchase; Beacons notes that payment-processing fees may still apply. Prices exclude tax. Prices checked on November 27, 2026 on each vendor&apos;s official pricing page.
+          Payment processing is extra on every platform. Linktree&apos;s help center lists Stripe at 2.9% + $0.30 per purchase. Prices exclude tax. Prices checked on November 27, 2026 on each vendor&apos;s official pricing page.
         </p>
       </section>
 
@@ -100,13 +100,13 @@ registerArticle({
       <section id="beacons">
         <h2 className="font-serif text-2xl font-bold mb-4">Beacons</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          Beacons combines a link in bio with a storefront, a daily-updating media kit and AI brand-outreach tools. The Free plan and the Creator plan ($10/month, $8.33/month billed annually) carry a 9% seller fee on store sales. Creator Plus ($30/month, $25/month billed annually) and Creator Max ($100/month, $83.33/month billed annually) drop that to 0%, and add unlimited courses with video hosting, unlimited memberships and unlimited email sends.
+          Beacons is positioned as a link in bio with a storefront, a media kit and brand deal tools, plus an AI assistant called Beam and Smart Reply for DMs. Beacons does not show its prices on a public page we could check; see its site for current plans.
         </p>
         <p className="text-gray-700 mb-4"><strong>Best for:</strong> beauty creators who earn from brand partnerships and want a media kit next to their store.</p>
         <ArticleComparison
           items={[
-            { label: 'Pros', pros: ['Free forever plan', 'Media kit and AI brand-outreach tools', '0% seller fees from Creator Plus'], cons: [] },
-            { label: 'Cons', pros: [], cons: ['9% seller fee on Free and Creator', 'Courses limited on lower plans', 'Not built for in-person appointments'] },
+            { label: 'Pros', pros: ['Media kit and brand deal tools', 'AI assistant (Beam) and Smart Reply for DMs', 'Storefront next to your links'], cons: [] },
+            { label: 'Cons', pros: [], cons: ['Prices not shown on a public page we could check', 'Check the seller fee on your plan', 'Not built for in-person appointments'] },
           ]}
         />
       </section>
@@ -143,8 +143,8 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Verdict</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li><strong>Just links, low budget:</strong> Linktree Free or Starter.</li>
-          <li><strong>Brand deals first:</strong> Beacons, ideally on Creator Plus to avoid the 9% seller fee.</li>
-          <li><strong>Online products only:</strong> Stan or Beacons Creator Plus.</li>
+          <li><strong>Brand deals first:</strong> Beacons, after checking the seller fee on the plan you pick.</li>
+          <li><strong>Online products only:</strong> Stan.</li>
           <li><strong>Products plus clients in your chair:</strong> Nelsy, so bookings, deposits and products live behind one link.</li>
         </ul>
         <ArticleTip>Whatever you choose, do the maths on your own numbers: a percentage fee on sales can cost more than a monthly plan once you sell regularly.</ArticleTip>

@@ -152,22 +152,9 @@ Creator and Creator Pro already verified 2026-11-23/24 on Stan's official pages;
 NOT USED: trial length (help center only hints at a "Try 14 Days Free" banner; not confirmed).
 
 ## Beacons
-URL: https://beacons.ai/i/pricing
-Note: earlier sessions got a 403. On 2026-11-27 the page returned content via WebFetch, so the figures below are verified for this date. If a later check gets 403 again, treat as UNVERIFIABLE and remove.
+**UNVERIFIABLE (2026-11-27).** A fresh WebFetch of https://beacons.ai/pricing returned HTTP 403, and in a real browser /pricing redirects to the homepage, which shows no prices or fees. (An earlier WebFetch of https://beacons.ai/i/pricing the same day returned plan figures, but they cannot be confirmed on a page a reader can open, so they are not used.)
 
-| Figure | Quote from page |
-|---|---|
-| Free $0, 9% seller fee | "Free": "$0/mo", "9% seller fee on sales"; "Free forever." |
-| Creator $10 ($8.33 annual), 9% | "Creator": "$10/mo" (or $8.33/mo billed annually), "9% seller fee on sales" |
-| Creator Plus $30 ($25 annual), 0% | "Creator Plus": "$30/mo" (or $25/mo billed annually), "0% seller fees on sales" |
-| Creator Max $100 ($83.33 annual), 0% | "Creator Max": "$100/mo" (or $83.33/mo billed annually), "0% seller fees on sales" |
-| Processing | "Payment-processing fees may still apply." |
-| Courses | Free and Creator: "1, no video hosting"; Creator Plus: "Unlimited courses with video hosting" |
-| Memberships | Creator Plus: "Unlimited memberships"; not on Free/Creator |
-| Email sends | Free "50 email sends a month", Creator "500", Creator Plus "Unlimited email sends" |
-| Calendar | "Multiple-calendar integration" on Creator Plus and Max; no bookings feature listed |
-| Media kit | "Daily-updating media kit" (Free and up) |
-| Trial | not on the page |
+No Beacons price, seller fee, plan name or plan limit may appear in any article. Articles describe Beacons by positioning only (link in bio, storefront, media kit, brand deals, AI assistant "Beam", Smart Reply DMs; positioning provided by the coordinator's browser check of the homepage) and carry the line: "Beacons does not show its prices on a public page we could check; see its site for current plans."
 
 ## Linktree
 URLs:
@@ -222,6 +209,7 @@ Independent $29/mo or $25/mo billed yearly, 14-day free trial, 0% Nelsy commissi
 ---
 
 ## UNVERIFIABLE summary
+- **Beacons**: all prices, seller fees and plan limits (pricing page 403 / redirects to homepage with no prices, 2026-11-27).
 - **Linktree**: plan prices, trial length, per-plan Linktree fee percentage (pricing page publishes no prices).
 - **Vagaro**: US prices (page served GBP only).
 - **Thinkific**: USD prices (page served EUR only).
