@@ -138,11 +138,11 @@ describe('computeAvailableSlots', () => {
     });
     expect(slots).not.toContain('10:00');
     expect(slots).not.toContain('13:00');
-    expect(slots).not.toContain('13:30'); // 13:30 + 60 = 14:30 — touches but doesn't overlap [13:00, 14:30)?
+    expect(slots).not.toContain('13:30'); // 13:30 + 60 = 14:30. Touches but doesn't overlap [13:00, 14:30)?
     // 13:30 < 14:30 and 14:30 > 13:00 → overlaps → blocked ✓
     expect(slots).toContain('09:00');
     expect(slots).toContain('11:00');
-    expect(slots).toContain('14:30'); // 14:30 + 60 = 15:30 — no overlap
+    expect(slots).toContain('14:30'); // 14:30 + 60 = 15:30. No overlap
   });
 
   it('returns empty array when no slots fit (tiny window)', () => {
@@ -368,7 +368,7 @@ describe('webhook balance calculation', () => {
     // so pro ends up with negative balance (Stripe fee absorbed by pro on refund)
     expect(deducted).toBe(80);
     expect(credited).toBeLessThan(80); // e.g. ~77.57
-    // This is correct — Stripe fees are non-refundable
+    // This is correct: Stripe fees are non-refundable
     expect(deducted - credited).toBeGreaterThan(0);
     expect(deducted - credited).toBeLessThan(5); // fee should be < €5 on €80
   });

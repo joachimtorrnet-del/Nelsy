@@ -4,7 +4,7 @@ export interface NelsyTheme {
   emoji: string;
   // Page
   pageBg: string;
-  // Hero (legacy — used by old StudioHero if kept)
+  // Hero (legacy: used by old StudioHero if kept)
   headerGradient: string;
   headerTextPrimary: string;
   headerTextSecondary: string;

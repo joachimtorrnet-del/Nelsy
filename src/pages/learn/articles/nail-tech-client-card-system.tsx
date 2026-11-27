@@ -6,8 +6,8 @@ registerArticle({
   slug: 'nail-tech-client-card-system',
   title: 'How to Create a Nail Tech Client Card System',
   seoTitle: 'How to Create a Nail Tech Client Card System (What to Track)',
-  excerpt: 'Knowing your clients\' history — their nail shape, sensitivities, what they liked last time — creates the personalised experience that builds loyalty. Here\'s what to record and how.',
-  seoDescription: 'How to create a nail tech client card system. What client information to record, paper vs digital, consultation forms, and how client history builds loyalty and saves time.',
+  excerpt: 'Knowing your clients\' history (their nail shape, sensitivities, what they liked last time) creates the personalised experience that builds loyalty. Here\'s what to record and how.',
+  seoDescription: 'How to create a nail tech client card system: what to record, paper vs digital, consultation forms and how client history builds loyalty.',
   category: 'policies-clients',
   tags: ['nail client card', 'nail client record', 'nail tech consultation form', 'nail client history'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #D1FAE5 100%)',
@@ -24,7 +24,7 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-create-nail-client-experience', 'how-to-increase-nail-client-retention', 'how-to-handle-difficult-nail-clients', 'nail-tech-booking-policy-template'],
   faq: [
-    { q: 'Is it a legal requirement to keep client records as a nail tech?', a: 'Requirements vary by jurisdiction and the services you offer. Some regions require a written record for certain chemical services. In the UK, while there\'s no universal legal requirement for nail client records, keeping them is considered best practice professionally. Check with your insurance provider — some professional indemnity insurers expect or recommend consultation records. This is not legal advice; consult a relevant authority for your situation.' },
+    { q: 'Is it a legal requirement to keep client records as a nail tech?', a: 'Requirements vary by jurisdiction and the services you offer. Some regions require a written record for certain chemical services. In the UK, while there\'s no universal legal requirement for nail client records, keeping them is considered best practice professionally. Check with your insurance provider: some professional indemnity insurers expect or recommend consultation records. This is not legal advice; consult a relevant authority for your situation.' },
     { q: 'Do I need GDPR consent to store client information?', a: 'In the UK and EU, storing personal data (name, health information, contact details) requires a lawful basis under GDPR. For existing clients receiving a service, this is typically the performance of a contract. Ensure you have a privacy notice, store data securely, and don\'t retain data longer than necessary. The ICO (UK) provides guidance for small businesses. This is not legal advice.' },
     { q: 'What\'s the minimum information I need on a client card?', a: 'At minimum: name, contact details, any allergies or sensitivities, nail shape preference, and the service/colour from their last appointment. Everything else is a bonus. Even this basic information significantly improves the client experience and your ability to provide safe, consistent services.' },
   ],
@@ -33,7 +33,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="why-client-cards">
         <h2 className="font-serif text-2xl font-bold mb-4">Why client records matter</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">A client who arrives and hears "what length did we do last time?" feels like a number. A client who arrives and hears "I've got your shape noted as short almond — shall we keep it the same?" feels like a valued regular. Client records are the foundation of the personalised experience that builds long-term loyalty.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">A client who arrives and hears "what length did we do last time?" feels like a number. A client who arrives and hears "I've got your shape noted as short almond: shall we keep it the same?" feels like a valued regular. Client records are the foundation of the personalised experience that builds long-term loyalty.</p>
         <p className="text-gray-700 leading-relaxed">Beyond experience, records have practical safety value. Knowing a client had a previous reaction to a specific monomer, is pregnant, or has a fungal condition they're treating means you can make informed service decisions rather than guessing.</p>
       </section>
 
@@ -50,7 +50,7 @@ registerArticle({
           ]}
         />
         <ArticleCallout variant="info" title="Personal notes are powerful">
-          "Works as a nurse — keeps nails short and natural" or "has a wedding in May" — these small notes let you ask relevant questions and make considered recommendations. Clients notice when you remember.
+          "Works as a nurse: keeps nails short and natural" or "has a wedding in May". These small notes let you ask relevant questions and make considered recommendations. Clients notice when you remember.
         </ArticleCallout>
       </section>
 
@@ -70,7 +70,7 @@ registerArticle({
 
       <section id="consultation-form">
         <h2 className="font-serif text-2xl font-bold mb-4">New client consultation form</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Send a consultation form before the first appointment, or have clients complete it on arrival. Keep it focused — a 20-question form creates friction. The essentials:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Send a consultation form before the first appointment, or have clients complete it on arrival. Keep it focused: a 20-question form creates friction. The essentials:</p>
         <ArticleChecklist items={[
           'Full name',
           'Phone number and email',

@@ -82,7 +82,7 @@ export async function createBooking(
 
 // ── getAvailableSlots ─────────────────────────────────────────────────────────
 // Returns 'HH:MM' strings for available 30-min slot starts on the given date.
-// serviceDurationMinutes: the selected service's duration — used to:
+// serviceDurationMinutes: the selected service's duration. Used to:
 //   (a) exclude start-time slots where a prior booking overlaps
 //   (b) exclude start-time slots where the service would end past closing
 //

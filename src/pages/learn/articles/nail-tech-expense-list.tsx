@@ -5,9 +5,9 @@ import { ArticleChecklist, ArticleTable, ArticleTip } from '@/components/article
 registerArticle({
   slug: 'nail-tech-expense-list',
   title: 'Nail Tech Expense List: What to Track',
-  seoTitle: 'Nail Tech Expense List: Every Business Cost You Should Be Tracking',
-  excerpt: 'If you\'re not tracking your expenses, you don\'t know your profit. Here\'s a complete expense list for nail techs — categorised, explained, and ready to adapt for your own records.',
-  seoDescription: 'Nail tech expense list. Every business expense a nail tech should track — products, insurance, rent, equipment, training, software, and more — with tracking tips.',
+  seoTitle: 'Nail Tech Expense List: Every Business Cost to Track',
+  excerpt: 'If you\'re not tracking your expenses, you don\'t know your profit. Here\'s a complete expense list for nail techs: categorised, explained, and ready to adapt for your own records.',
+  seoDescription: 'Nail tech expense list. Every business expense a nail tech should track (products, insurance, rent, equipment, training, software, and more) with tracking tips.',
   category: 'pricing-money',
   tags: ['nail tech expenses', 'nail business costs', 'nail tech bookkeeping', 'nail business finance'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #D1FAE5 100%)',
@@ -27,8 +27,8 @@ registerArticle({
   ],
   relatedSlugs: ['nail-tech-profit-margin-explained', 'nail-tech-monthly-income-calculator', 'nail-tech-break-even-point', 'how-to-calculate-product-cost'],
   faq: [
-    { q: 'Can I claim all these expenses against tax?', a: 'In the UK, business expenses that are wholly and exclusively for business use can generally be claimed against self-employment income, reducing your taxable profit. This includes products, insurance, equipment, and training directly related to your nail business. However, tax rules change and your specific situation matters — consult an accountant or check HMRC guidance for your circumstances. This is not tax advice.' },
-    { q: 'How often should I update my expense records?', a: 'Monthly is the minimum for staying on top of your finances. Weekly is better — it only takes 10–15 minutes when transactions are fresh. The longer you leave it, the more likely you are to miss expenses and lose track of where you\'re at financially.' },
+    { q: 'Can I claim all these expenses against tax?', a: 'In the UK, business expenses that are wholly and exclusively for business use can generally be claimed against self-employment income, reducing your taxable profit. This includes products, insurance, equipment, and training directly related to your nail business. However, tax rules change and your specific situation matters: consult an accountant or check HMRC guidance for your circumstances. This is not tax advice.' },
+    { q: 'How often should I update my expense records?', a: 'Monthly is the minimum for staying on top of your finances. Weekly is better: it only takes 10–15 minutes when transactions are fresh. The longer you leave it, the more likely you are to miss expenses and lose track of where you\'re at financially.' },
     { q: 'Do I need accounting software or is a spreadsheet fine?', a: 'A spreadsheet works well for most independent nail techs starting out. Google Sheets or Excel, organised by category, is simple and free. Dedicated self-employment accounting apps (QuickBooks Self-Employed, FreeAgent, Coconut) offer automation (bank feed import, mileage tracking, tax estimates) that saves time as your business grows. Many nail techs start with a spreadsheet and upgrade when the admin time starts to feel significant.' },
   ],
   relatedFeatureSlugs: ['analytics', 'payments'],
@@ -36,7 +36,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="product-costs">
         <h2 className="font-serif text-2xl font-bold mb-4">Product and supply costs</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">These are your primary variable costs — they rise with your client volume. Track these per order and average them monthly:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">These are your primary variable costs: they rise with your client volume. Track these per order and average them monthly:</p>
         <ArticleChecklist items={[
           'Gel products (base coat, colour gel, topcoat)',
           'Acrylic products (monomer, polymer)',
@@ -59,7 +59,7 @@ registerArticle({
           headers={['Expense', 'Notes']}
           rows={[
             ['Chair rent / room hire', 'If working from a salon; typically weekly or monthly'],
-            ['Home workspace proportion', 'If working from home, a proportion of home costs (bills, mortgage interest/rent) may be claimable — consult an accountant for the correct calculation for your situation'],
+            ['Home workspace proportion', 'If working from home, a proportion of home costs (bills, mortgage interest/rent) may be claimable: consult an accountant for the correct calculation for your situation'],
             ['Salon or studio rent', 'If you rent your own space'],
             ['Utilities (proportion)', 'Electricity, water for commercial space'],
           ]}
@@ -74,12 +74,12 @@ registerArticle({
           'Products liability insurance (often bundled)',
           'Treatment risk insurance (for nail services)',
         ]} />
-        <ArticleTip>Insurance for nail techs is typically sold as a bundled professional beauty policy. Annual cost varies by provider and coverage level — check that nail services are explicitly covered under your policy.</ArticleTip>
+        <ArticleTip>Insurance for nail techs is typically sold as a bundled professional beauty policy. Annual cost varies by provider and coverage level: check that nail services are explicitly covered under your policy.</ArticleTip>
       </section>
 
       <section id="equipment">
         <h2 className="font-serif text-2xl font-bold mb-4">Equipment</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Equipment is generally a capital expense (depreciates over time) rather than a monthly cost — but it's worth tracking:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Equipment is generally a capital expense (depreciates over time) rather than a monthly cost, but it's worth tracking:</p>
         <ArticleChecklist items={[
           'Nail lamp (UV/LED)',
           'Nail drill / e-file',
@@ -132,7 +132,7 @@ registerArticle({
           <li>Use a dedicated business bank account or card for all business spending</li>
           <li>Photograph paper receipts immediately (apps like Dext or Hubdoc capture and organise them)</li>
           <li>Categorise expenses monthly using the categories above</li>
-          <li>Compare monthly spending to your budget — are products costing more than expected? Is a specific category growing?</li>
+          <li>Compare monthly spending to your budget: are products costing more than expected? Is a specific category growing?</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">For calculating per-service product costs: <Link to="/blog/how-to-calculate-product-cost" className="underline text-[#F52B8C]">how to calculate your nail product cost</Link>.</p>
       </section>

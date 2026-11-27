@@ -1,58 +1,48 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { ArticleMeta } from '@/lib/articles';
 import { CATEGORY_LABELS, CATEGORY_COLORS } from '@/lib/articles';
+import { coverPhotoFor } from '@/lib/blogLinks';
+
+const unsplash = (id: string, w: number, ratio: number) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&h=${Math.round(w * ratio)}&q=70`;
+
+/** Topic photo used as the article cover on cards and in the article hero. */
+export function CoverPhoto({
+  slug,
+  category,
+  className,
+  sizes = '(max-width: 640px) 100vw, 400px',
+  eager = false,
+  ratio = 630 / 1200,
+}: {
+  slug: string;
+  category: ArticleMeta['category'];
+  className?: string;
+  sizes?: string;
+  eager?: boolean;
+  ratio?: number;
+}) {
+  const photo = coverPhotoFor(slug, category);
+  return (
+    <img
+      src={unsplash(photo.id, 800, ratio)}
+      srcSet={`${unsplash(photo.id, 400, ratio)} 400w, ${unsplash(photo.id, 800, ratio)} 800w, ${unsplash(photo.id, 1200, ratio)} 1200w`}
+      sizes={sizes}
+      width={1200}
+      height={Math.round(1200 * ratio)}
+      alt={photo.alt}
+      className={`${className ?? ''} object-cover`}
+      loading={eager ? 'eager' : 'lazy'}
+      decoding="async"
+    />
+  );
+}
 
 interface Props {
   article: ArticleMeta;
   size?: 'featured' | 'spotlight' | 'grid';
-}
-
-// Gradient fallback used only when the generated cover fails to load
-const GRADIENT_FALLBACK: Record<string, string> = {
-  'get-clients':         'linear-gradient(135deg, #FDF0F7 0%, #FBCFE8 100%)',
-  'instagram-content':   'linear-gradient(135deg, #FFF0F5 0%, #F9A8D4 100%)',
-  'pricing-money':       'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
-  'booking-software':    'linear-gradient(135deg, #EFF6FF 0%, #BFDBFE 100%)',
-  'policies-clients':    'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
-  'start-your-business': 'linear-gradient(135deg, #FDF4FF 0%, #E9D5FF 100%)',
-  'nail-education':      'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
-  'nail-inspo':          'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
-  comparisons:           'linear-gradient(135deg, #F0FDFA 0%, #99F6E4 100%)',
-  'branding-growth':     'linear-gradient(135deg, #FFF8F0 0%, #FED7AA 100%)',
-  'beauty-creators':     'linear-gradient(135deg, #F5F0FF 0%, #DDD6FE 100%)',
-};
-
-// Generated cover image — falls back to gradient on error
-function CoverImage({
-  slug,
-  category,
-  alt,
-  className,
-}: {
-  slug: string;
-  category: string;
-  alt: string;
-  className?: string;
-}) {
-  const [errored, setErrored] = useState(false);
-  if (errored) {
-    return (
-      <div
-        className={className}
-        style={{ background: GRADIENT_FALLBACK[category] ?? GRADIENT_FALLBACK['get-clients'] }}
-      />
-    );
-  }
-  return (
-    <img
-      src={`/blog-covers/${slug}.png`}
-      alt={alt}
-      className={`${className ?? ''} object-cover`}
-      loading="lazy"
-      onError={() => setErrored(true)}
-    />
-  );
+  /** Read time shown on grid cards when known. */
+  minutes?: number;
 }
 
 function CategoryPill({ category }: { category: string }) {
@@ -68,24 +58,25 @@ function CategoryPill({ category }: { category: string }) {
   );
 }
 
-export default function ArticleCard({ article, size = 'grid' }: Props) {
-  const isFeatured = size === 'featured';
-  const isSpotlight = size === 'spotlight';
+const shortDate = (iso: string) =>
+  new Date(iso).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' });
 
-  // Real editorial photo takes priority; otherwise use generated cover
+export default function ArticleCard({ article, size = 'grid', minutes }: Props) {
+  const isFeatured = size === 'featured';
+  const cat = CATEGORY_COLORS[article.category];
+  const date = shortDate(article.updatedAt ?? article.publishedAt);
+
+  // Real editorial photo takes priority; otherwise a topic photo
+  const zoom = 'w-full h-full transition-transform duration-500 group-hover:scale-[1.03]';
   const imageEl = article.heroImage.startsWith('/') ? (
-    <img
-      src={article.heroImage}
-      alt={article.heroImageAlt}
-      className="w-full h-full object-cover"
-      loading="lazy"
-    />
+    <img src={article.heroImage} alt={article.heroImageAlt} className={`${zoom} object-cover`} loading="lazy" />
   ) : (
-    <CoverImage
+    <CoverPhoto
       slug={article.slug}
       category={article.category}
-      alt={article.heroImageAlt}
-      className="w-full h-full"
+      className={zoom}
+      sizes={isFeatured ? '(max-width: 768px) 100vw, 560px' : '(max-width: 640px) 100vw, 400px'}
+      eager={isFeatured}
     />
   );
 
@@ -93,64 +84,51 @@ export default function ArticleCard({ article, size = 'grid' }: Props) {
     return (
       <Link
         to={`/blog/${article.slug}`}
-        className="group block rounded-3xl overflow-hidden bg-white border border-[#F4C2C2]/30 hover:shadow-lg transition-shadow"
+        className="group grid md:grid-cols-2 rounded-3xl overflow-hidden bg-[#FDF0F7] border border-[#F4C2C2]/50 hover:shadow-xl hover:shadow-[#F52B8C]/10 transition-shadow"
       >
-        <div className="grid md:grid-cols-2">
-          <div className="aspect-[4/3] md:aspect-auto overflow-hidden min-h-[260px]">
-            {imageEl}
-          </div>
-          <div className="p-8 flex flex-col justify-center">
+        <div className="aspect-[1200/630] md:aspect-auto md:min-h-[340px] overflow-hidden bg-white">
+          {imageEl}
+        </div>
+        <div className="p-6 sm:p-10 flex flex-col justify-center">
+          <div className="flex flex-wrap items-center gap-2 mb-4">
             <CategoryPill category={article.category} />
-            <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mt-3 mb-3 group-hover:text-[#F52B8C] transition-colors leading-snug">
-              {article.title}
-            </h2>
-            <p className="text-gray-600 text-sm leading-relaxed mb-4 line-clamp-3">
-              {article.excerpt}
-            </p>
-            <div className="flex items-center gap-3 text-xs text-gray-400">
-              <span>{article.author}</span>
-              <span>·</span>
-              <span>{new Date(article.publishedAt).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' })}</span>
-            </div>
+            <span className="text-[11px] font-medium text-gray-500 bg-white rounded-full px-2.5 py-1">{date}</span>
           </div>
-        </div>
-      </Link>
-    );
-  }
-
-  if (isSpotlight) {
-    return (
-      <Link
-        to={`/blog/${article.slug}`}
-        className="group block rounded-2xl overflow-hidden bg-white border border-[#F4C2C2]/30 hover:shadow-md transition-shadow"
-      >
-        <div className="aspect-[16/9] overflow-hidden">{imageEl}</div>
-        <div className="p-5">
-          <CategoryPill category={article.category} />
-          <h3 className="font-serif text-lg font-bold text-[#1A1A1A] mt-2 mb-2 group-hover:text-[#F52B8C] transition-colors leading-snug line-clamp-2">
+          <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-3 group-hover:text-[#F52B8C] transition-colors leading-tight">
             {article.title}
-          </h3>
-          <p className="text-gray-500 text-sm leading-relaxed line-clamp-2">{article.excerpt}</p>
+          </h2>
+          <p className="text-gray-600 text-[15px] leading-relaxed mb-6 line-clamp-3">
+            {article.tldr?.answer ?? article.excerpt}
+          </p>
+          <span className="inline-flex w-fit items-center gap-2 rounded-full bg-[#F52B8C] px-5 py-2.5 text-sm font-bold text-white">
+            Read article <span aria-hidden>→</span>
+          </span>
         </div>
       </Link>
     );
   }
 
-  // Grid card
+  // Grid / spotlight card
   return (
     <Link
       to={`/blog/${article.slug}`}
-      className="group block rounded-2xl overflow-hidden bg-white border border-[#F4C2C2]/30 hover:shadow-md transition-shadow"
+      className="group flex flex-col h-full rounded-2xl overflow-hidden bg-white border border-[#1A1A1A]/10 hover:border-[#F52B8C]/40 hover:shadow-lg hover:shadow-[#F52B8C]/5 transition"
     >
-      <div className="aspect-[16/9] overflow-hidden">{imageEl}</div>
-      <div className="p-5">
-        <CategoryPill category={article.category} />
-        <h3 className="font-serif text-base font-bold text-[#1A1A1A] mt-2 mb-2 group-hover:text-[#F52B8C] transition-colors leading-snug line-clamp-2">
+      <div className="aspect-[1200/630] overflow-hidden bg-[#F7F3F3]">{imageEl}</div>
+      <div className="flex flex-1 flex-col p-5">
+        <p className="text-[11px] font-bold uppercase tracking-wider mb-2" style={{ color: cat?.text ?? '#555' }}>
+          {CATEGORY_LABELS[article.category]}
+          <span className="font-medium normal-case tracking-normal text-gray-400"> · {date}</span>
+        </p>
+        <h3 className="font-serif text-lg font-bold text-[#1A1A1A] mb-2 group-hover:text-[#F52B8C] transition-colors leading-snug line-clamp-2">
           {article.title}
         </h3>
-        <p className="text-gray-500 text-xs leading-relaxed line-clamp-2 mb-3">{article.excerpt}</p>
-        <span className="text-xs text-gray-400">
-          {new Date(article.publishedAt).toLocaleDateString('en-GB', { timeZone: 'UTC', day: 'numeric', month: 'short', year: 'numeric' })}
+        {size === 'spotlight' && (
+          <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-3">{article.excerpt}</p>
+        )}
+        <span className="mt-auto pt-2 flex items-center justify-between text-xs">
+          <span className="font-semibold text-[#1A1A1A] group-hover:text-[#F52B8C] transition-colors">Read more <span aria-hidden>→</span></span>
+          {minutes ? <span className="text-gray-400">{minutes} min read</span> : null}
         </span>
       </div>
     </Link>

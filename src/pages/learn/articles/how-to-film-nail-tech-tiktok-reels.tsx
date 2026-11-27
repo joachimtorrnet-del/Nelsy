@@ -25,9 +25,9 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-take-better-nail-photos', 'tiktok-ideas-nail-techs', 'how-to-batch-nail-content', 'how-to-edit-nail-photos'],
   faq: [
-    { q: 'Do I need a ring light to film nail videos?', a: 'A ring light helps with consistent artificial light, but isn\'t essential. Natural window light works very well for nail videos — often better than a ring light, which can create distracting reflections on chrome and glitter nails. If you want to invest in something, a small flexible tripod/phone mount is more useful than a ring light to start.' },
-    { q: 'What should I do if my client doesn\'t want to be filmed?', a: 'Respect it completely. Always ask permission before filming any appointment, and a "no" is a no without discussion. Film only the nails (not the client\'s face, body, or anything identifying) unless you have explicit consent. Most clients who are fine with their nails being filmed prefer not to appear in the video themselves — that\'s an easy accommodation.' },
-    { q: 'How do I film nails without interrupting the appointment?', a: 'The key is a phone stand — once it\'s set up at the right angle, it films without you needing to manage it. Prop your phone on a stand or against your tools at the right angle, start filming, and work normally. Review the footage after the client leaves and cut what you need. You don\'t need to direct the filming while working.' },
+    { q: 'Do I need a ring light to film nail videos?', a: 'A ring light helps with consistent artificial light, but isn\'t essential. Natural window light works very well for nail videos, often better than a ring light, which can create distracting reflections on chrome and glitter nails. If you want to invest in something, a small flexible tripod/phone mount is more useful than a ring light to start.' },
+    { q: 'What should I do if my client doesn\'t want to be filmed?', a: 'Respect it completely. Always ask permission before filming any appointment, and a "no" is a no without discussion. Film only the nails (not the client\'s face, body, or anything identifying) unless you have explicit consent. Most clients who are fine with their nails being filmed prefer not to appear in the video themselves, that\'s an easy accommodation.' },
+    { q: 'How do I film nails without interrupting the appointment?', a: 'The key is a phone stand: once it\'s set up at the right angle, it films without you needing to manage it. Prop your phone on a stand or against your tools at the right angle, start filming, and work normally. Review the footage after the client leaves and cut what you need. You don\'t need to direct the filming while working.' },
   ],
   relatedFeatureSlugs: ['instagram-autodm', 'link-in-bio'],
   content: () => (
@@ -40,7 +40,7 @@ registerArticle({
           <li><strong>Good light:</strong> Natural window light positioned to the side of the nail area. Or a softbox / ring light for consistent artificial light when working without natural light.</li>
           <li><strong>A clean background:</strong> What's visible behind the nails in the frame. A simple neutral surface and no visible clutter is enough.</li>
         </ul>
-        <ArticleTip>Spend 2 minutes on setup before the client's appointment — position your phone stand, test the angle, start recording. A good setup takes the friction out of filming consistently.</ArticleTip>
+        <ArticleTip>Spend 2 minutes on setup before the client's appointment: position your phone stand, test the angle, start recording. A good setup takes the friction out of filming consistently.</ArticleTip>
       </section>
 
       <section id="angles">
@@ -48,28 +48,28 @@ registerArticle({
         <ArticleTable
           headers={['Angle', 'What it shows', 'Best for']}
           rows={[
-            ['Overhead / birds-eye', 'Application from directly above — clear view of nail surface', 'Nail art, colour application, timelapse'],
-            ['45-degree front', 'Nail from slight angle — shows length and surface', 'Most process videos; versatile'],
+            ['Overhead / birds-eye', 'Application from directly above: clear view of nail surface', 'Nail art, colour application, timelapse'],
+            ['45-degree front', 'Nail from slight angle: shows length and surface', 'Most process videos; versatile'],
             ['Side profile', 'Nail length, apex, extension shape', 'Acrylic building, shaping, length reveals'],
             ['Close-up detail', 'Macro view of a single nail', 'Chrome powder, glitter, fine art details'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">For process videos, start with a 45-degree angle — it's the most forgiving and versatile. Add a close-up cutaway if you have a detail worth highlighting.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">For process videos, start with a 45-degree angle: it's the most forgiving and versatile. Add a close-up cutaway if you have a detail worth highlighting.</p>
       </section>
 
       <section id="what-to-film">
         <h2 className="font-serif text-2xl font-bold mb-4">What to film during appointments</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">You don't need to film an entire appointment. Film specific moments and build content from them:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Prep sequence:</strong> Cuticle work, dehydration — satisfying and shows quality</li>
-          <li><strong>Product application:</strong> Gel, acrylic, builder gel being applied — the main process</li>
-          <li><strong>Nail art moments:</strong> Freehand art, stamping, chrome application — most engaging</li>
-          <li><strong>Shaping/filing:</strong> The nail shape emerging from the file — very satisfying to watch</li>
+          <li><strong>Prep sequence:</strong> Cuticle work, dehydration. Satisfying and shows quality</li>
+          <li><strong>Product application:</strong> Gel, acrylic, builder gel being applied. The main process</li>
+          <li><strong>Nail art moments:</strong> Freehand art, stamping, chrome application. Most engaging</li>
+          <li><strong>Shaping/filing:</strong> The nail shape emerging from the file. Very satisfying to watch</li>
           <li><strong>Before and after:</strong> Brief shot of the bare nail, then the finished result</li>
           <li><strong>Reveal:</strong> The finished set, clean, oiled, photographed or filmed as the final shot</li>
         </ul>
         <ArticleCallout variant="info" title="Consent reminder">
-          Always ask your client's permission before filming. A quick "do you mind if I film your nails today for social content?" at the start of the appointment is all you need. Film only the nails — not the client's face, identifying features, or personal items.
+          Always ask your client's permission before filming. A quick "do you mind if I film your nails today for social content?" at the start of the appointment is all you need. Film only the nails, not the client's face, identifying features, or personal items.
         </ArticleCallout>
       </section>
 
@@ -77,7 +77,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Audio and sound</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Three audio options for nail videos:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Nail ASMR (native sound):</strong> The natural sound of filing, tapping, product application. Very popular on nail TikTok — highly satisfying, no music needed</li>
+          <li><strong>Nail ASMR (native sound):</strong> The natural sound of filing, tapping, product application. Very popular on nail TikTok: highly satisfying, no music needed</li>
           <li><strong>Trending audio:</strong> Add a trending sound in TikTok or Instagram after filming. Good for discovery but choose sounds that fit naturally</li>
           <li><strong>No audio / silent with text:</strong> Works for educational content with text overlays and captions</li>
         </ul>
@@ -91,7 +91,7 @@ registerArticle({
           <li><strong>Cut the start and end:</strong> Remove setup footage and anything after the finished reveal</li>
           <li><strong>Speed up slow sections:</strong> Application clips often work well at 2–4× speed</li>
           <li><strong>Add text overlay:</strong> Name the style, service, or technique (helps with search on TikTok)</li>
-          <li><strong>Colour grading:</strong> A slight brightness boost and minor contrast adjustment is usually enough — don't over-filter nail video</li>
+          <li><strong>Colour grading:</strong> A slight brightness boost and minor contrast adjustment is usually enough. Don't over-filter nail video</li>
           <li><strong>Captions:</strong> Add auto-captions in TikTok or Instagram for accessibility</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">For photo editing specifically: <Link to="/blog/how-to-edit-nail-photos" className="underline text-[#F52B8C]">how to edit nail photos without making them look fake</Link>.</p>
@@ -102,8 +102,8 @@ registerArticle({
         <ArticleTable
           headers={['Mistake', 'Fix']}
           rows={[
-            ['Shaky footage', 'Use a phone stand — hand-held nail video is too unstable'],
-            ['Bad lighting — yellow or dark', 'Move to window light; never rely solely on overhead salon lights'],
+            ['Shaky footage', 'Use a phone stand: hand-held nail video is too unstable'],
+            ['Bad lighting: yellow or dark', 'Move to window light; never rely solely on overhead salon lights'],
             ['Out of focus nails', 'Tap to focus on the nails before the key application moment; re-tap if the camera refocuses elsewhere'],
             ['Filming horizontally for TikTok/Reels', 'Always film vertically (portrait mode) for short-form video; horizontal doesn\'t fill the screen'],
             ['Too long with no edit', 'A 4-minute raw application clip needs editing down to 30–60 seconds of highlights'],

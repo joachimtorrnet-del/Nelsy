@@ -5,15 +5,15 @@ export default function CRMPage() {
   return (
     <FeaturePage
       title="Know Your Clients. Grow Your Business. | Nelsy"
-      metaDescription="Keep track of every client, their booking history, preferences, and notes. Nelsy's CRM helps beauty professionals build stronger relationships and get more repeat business."
+      metaDescription="Keep track of every client, their booking history, preferences and notes. Nelsy's client list helps beauty pros build relationships and get more repeat visits."
       canonical="/features/crm"
       h1="Know your clients. Grow your business."
-      heroDescription="The best beauty professionals remember details. Nelsy helps you track client preferences, booking history, and notes so every appointment feels personal — even when your schedule is full."
+      heroDescription="The best beauty professionals remember details. Nelsy helps you track client preferences, booking history, and notes so every appointment feels personal, even when your schedule is full."
       icon={UsersRound}
       benefits={[
         {
           title: 'Every client in one place',
-          desc: 'See who has booked, how often they come back, what services they get, and anything else you want to remember — all in one profile.',
+          desc: 'See who has booked, how often they come back, what services they get, and anything else you want to remember: all in one profile.',
         },
         {
           title: 'Personal service at scale',
@@ -37,7 +37,7 @@ export default function CRMPage() {
         {
           step: '2',
           title: 'Add notes and preferences',
-          desc: 'Record anything useful — skin sensitivities, nail preferences, important dates, or notes from past appointments.',
+          desc: 'Record anything useful: skin sensitivities, nail preferences, important dates, or notes from past appointments.',
         },
         {
           step: '3',
@@ -67,7 +67,7 @@ export default function CRMPage() {
         },
         {
           q: 'Can I send messages to clients from the CRM?',
-          a: 'Yes. You can reach out to specific clients or segments — for a promotion, a rebooking nudge, or a personal follow-up.',
+          a: 'Yes. You can reach out to specific clients or segments: for a promotion, a rebooking nudge, or a personal follow-up.',
         },
       ]}
       relatedFeatures={[

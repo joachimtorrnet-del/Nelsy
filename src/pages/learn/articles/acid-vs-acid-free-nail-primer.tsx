@@ -6,7 +6,7 @@ registerArticle({
   slug: 'acid-vs-acid-free-nail-primer',
   title: 'Acid vs Acid-Free Nail Primer: Which Should You Use?',
   seoTitle: "Acid vs Acid-Free Nail Primer: Differences and When to Use",
-  excerpt: 'Not all nail primers are the same — acid and non-acid primers work differently, suit different systems, and have different safety considerations. Here\'s what you need to know about each.',
+  excerpt: 'Not all nail primers are the same: acid and non-acid primers work differently, suit different systems, and have different safety considerations. Here\'s what you need to know about each.',
   seoDescription: "Acid-based vs acid-free nail primer: what methacrylic acid does, how to apply each safely, and which primer to use for acrylic or gel.",
   category: 'nail-education',
   tags: ['acid primer nails', 'acid free nail primer', 'nail primer types', 'nail primer comparison'],
@@ -36,14 +36,14 @@ registerArticle({
   ],
   relatedSlugs: ['nail-dehydrator-vs-primer', 'common-gel-x-mistakes', 'common-builder-gel-mistakes', 'acrylic-application-step-by-step'],
   faq: [
-    { q: 'Can I use acid primer under gel systems?', a: 'In most cases, no — acid primer is corrosive and can prevent gel systems from curing correctly or interfere with adhesion in gel-based systems. Most gel and builder gel products specify their own prep protocol (typically dehydrator + a non-acid bonding product). Using acid primer under gel systems unless your product explicitly supports it is not recommended. Always check your product\'s compatibility guidelines.' },
+    { q: 'Can I use acid primer under gel systems?', a: 'In most cases, no: acid primer is corrosive and can prevent gel systems from curing correctly or interfere with adhesion in gel-based systems. Most gel and builder gel products specify their own prep protocol (typically dehydrator + a non-acid bonding product). Using acid primer under gel systems unless your product explicitly supports it is not recommended. Always check your product\'s compatibility guidelines.' },
     { q: 'Does acid primer damage the nail?', a: 'Acid primer contains methacrylic acid, which is corrosive and should not contact skin or cuticles. Applied correctly to the nail plate only, and in the thin application specified by the manufacturer, acid primer has a long history of use in professional nail services. Over-application or incorrect technique (flooding, skin contact) increases risk. Follow your product\'s safety and application instructions.' },
-    { q: 'Is non-acid primer as strong as acid primer?', a: 'Non-acid primers provide good adhesion for gel-based systems, though the mechanism is different from acid primer. For traditional acrylic systems, especially on challenging nail types, some technicians find acid primer provides stronger initial adhesion. The appropriate primer is the one your product system recommends — "stronger" is less meaningful than "correct for your system."' },
+    { q: 'Is non-acid primer as strong as acid primer?', a: 'Non-acid primers provide good adhesion for gel-based systems, though the mechanism is different from acid primer. For traditional acrylic systems, especially on challenging nail types, some technicians find acid primer provides stronger initial adhesion. The appropriate primer is the one your product system recommends: "stronger" is less meaningful than "correct for your system."' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="warning" title="Always use the primer your product system specifies">
-        Primer type isn't a universal choice — it's determined by the product system you're using. Using the wrong primer type can affect adhesion, curing, or safety. This article explains the differences; your product's training materials specify what to use for that system.
+        Primer type isn't a universal choice: it's determined by the product system you're using. Using the wrong primer type can affect adhesion, curing, or safety. This article explains the differences; your product's training materials specify what to use for that system.
       </ArticleCallout>
 
       <section id="acid-primer">
@@ -52,21 +52,21 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Creates a strong chemical bond with the natural nail plate</li>
           <li>Primarily used with traditional acrylic (monomer + polymer) systems</li>
-          <li>Corrosive — must not contact skin, cuticles, or eyes</li>
+          <li>Corrosive: must not contact skin, cuticles, or eyes</li>
           <li>Applied in a thin layer; excess application increases corrosion risk without improving adhesion</li>
-          <li>The nail plate should appear white/frosted after application — this is normal and expected</li>
+          <li>The nail plate should appear white/frosted after application: this is normal and expected</li>
         </ul>
-        <ArticleTip>Apply acid primer with a small, precise brush — only to the nail plate, with a clear margin from the cuticle and sidewalls. Drips or flooding contact with skin causes irritation and should be avoided.</ArticleTip>
+        <ArticleTip>Apply acid primer with a small, precise brush, only to the nail plate, with a clear margin from the cuticle and sidewalls. Drips or flooding contact with skin causes irritation and should be avoided.</ArticleTip>
       </section>
 
       <section id="non-acid-primer">
         <h2 className="font-serif text-2xl font-bold mb-4">Non-acid / acid-free primer</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Non-acid primers achieve adhesion through a different mechanism — typically by creating a surface that the nail product bonds to, rather than through the corrosive chemical reaction of acid primer.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Non-acid primers achieve adhesion through a different mechanism, typically by creating a surface that the nail product bonds to, rather than through the corrosive chemical reaction of acid primer.</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Less aggressive than acid primer — lower risk of skin irritation if minor contact occurs</li>
+          <li>Less aggressive than acid primer: lower risk of skin irritation if minor contact occurs</li>
           <li>Commonly used with gel systems, builder gel, and some modern acrylic systems</li>
           <li>Provides good adhesion for gel-based products without the risk profile of acid primer</li>
-          <li>Some are called "bonding agents" rather than primers — similar function, different product name</li>
+          <li>Some are called "bonding agents" rather than primers: similar function, different product name</li>
         </ul>
       </section>
 
@@ -78,7 +78,7 @@ registerArticle({
             ['Active ingredient', 'Methacrylic acid', 'Varies by product (resin-based, bonding agents)'],
             ['Bond mechanism', 'Chemical reaction with nail keratin', 'Surface chemistry / physical adhesion'],
             ['Primary use', 'Traditional acrylic systems', 'Gel, builder gel, modern nail systems'],
-            ['Safety profile', 'Corrosive — avoid skin contact', 'Less aggressive — still avoid skin contact'],
+            ['Safety profile', 'Corrosive: avoid skin contact', 'Less aggressive, still avoid skin contact'],
             ['Application appearance', 'White/frosted nail plate after application', 'May appear clear or slightly tacky'],
           ]}
         />
@@ -93,7 +93,7 @@ registerArticle({
           <li><strong>Both:</strong> Keep away from eyes; follow your product's specific safety guidance; have a first aid protocol for accidental skin or eye contact</li>
         </ul>
         <ArticleCallout variant="warning" title="Read the SDS for every product you use">
-          Every professional nail product comes with a Safety Data Sheet. Reading the SDS for each product you use is both a professional responsibility and a practical safety practice — it tells you exactly how to handle the product, what to do in case of contact, and storage requirements.
+          Every professional nail product comes with a Safety Data Sheet. Reading the SDS for each product you use is both a professional responsibility and a practical safety practice: it tells you exactly how to handle the product, what to do in case of contact, and storage requirements.
         </ArticleCallout>
       </section>
 
@@ -102,13 +102,13 @@ registerArticle({
         <ArticleTable
           headers={['Service type', 'Typical primer recommendation']}
           rows={[
-            ['Traditional acrylic (monomer + polymer)', 'Acid primer — most systems recommend it for adhesion'],
+            ['Traditional acrylic (monomer + polymer)', 'Acid primer: most systems recommend it for adhesion'],
             ['Gel-X extensions', 'Non-acid or specific bonding product from the system brand; check your product\'s protocol'],
             ['Builder gel / BIAB', 'Non-acid bonding product or specific primer specified by the product brand'],
-            ['Gel polish on natural nails', 'Dehydrator + base coat (often no separate primer needed — check your system)'],
+            ['Gel polish on natural nails', 'Dehydrator + base coat (often no separate primer needed: check your system)'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">These are general tendencies, not universal rules — your specific product system's training is the authority. For more on prep products: <Link to="/blog/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer — what's the difference</Link>.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">These are general tendencies, not universal rules: your specific product system's training is the authority. For more on prep products: <Link to="/blog/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer, what's the difference</Link>.</p>
       </section>
 
       <section id="how-to-apply">

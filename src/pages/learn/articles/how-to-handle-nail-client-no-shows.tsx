@@ -7,7 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-to-handle-nail-client-no-shows',
   title: 'How to Handle Nail Client No-Shows Professionally',
-  seoTitle: 'How to Handle Nail Client No-Shows Professionally (Scripts + Policy)',
+  seoTitle: 'How to Handle Nail Client No-Shows: Scripts and Policy',
   excerpt: 'No-shows are one of the most frustrating parts of running a nail business. Here\'s how to respond professionally, enforce your policy fairly, and reduce no-shows in the first place.',
   seoDescription: 'How to handle nail client no-shows professionally. How to respond, enforce your cancellation policy, message scripts, and systems to reduce no-shows going forward.',
   category: 'policies-clients',

@@ -9,7 +9,7 @@
  * Nothing else needs to change in this file.
  */
 
-// Eager glob — Vite statically includes all matching files at build time.
+// Eager glob: Vite statically includes all matching files at build time.
 // New files in this directory are picked up automatically.
 import.meta.glob('../pages/learn/articles/*.tsx', { eager: true });
 

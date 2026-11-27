@@ -122,7 +122,7 @@ function generatePolicy(f: FormState): string {
     : '';
 
   return [
-    `CANCELLATION & NO-SHOW POLICY — ${name.toUpperCase()}`,
+    `CANCELLATION & NO-SHOW POLICY: ${name.toUpperCase()}`,
     '',
     'Please read this policy carefully before booking.',
     '',
@@ -182,8 +182,8 @@ export default function CancellationPolicyGenerator() {
   return (
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
-        title="Nail Tech Cancellation Policy Generator — Free Tool | Nelsy"
-        description="Generate a professional cancellation and no-show policy for your nail tech booking page in under two minutes. Free tool — copy and paste instantly."
+        title="Nail Tech Cancellation Policy Generator: Free Tool | Nelsy"
+        description="Generate a professional cancellation and no-show policy for your nail tech booking page in under two minutes. Free tool: copy and paste instantly."
         canonical="/tools/nail-tech-cancellation-policy-generator"
         jsonLd={JSON_LD}
       />
@@ -274,7 +274,7 @@ export default function CancellationPolicyGenerator() {
                     <option value="10">10 minutes</option>
                     <option value="15">15 minutes (recommended)</option>
                     <option value="20">20 minutes</option>
-                    <option value="cancel">Strict — may cancel immediately</option>
+                    <option value="cancel">Strict: may cancel immediately</option>
                   </select>
                 </div>
 
@@ -330,16 +330,16 @@ export default function CancellationPolicyGenerator() {
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">Why nail techs need a cancellation policy</h2>
               <div className="space-y-4 text-sm sm:text-base text-gray-600 leading-relaxed">
                 <p>
-                  No-shows and last-minute cancellations are one of the most damaging things that can happen to a nail tech's income. A cancelled appointment isn't just lost revenue for that slot — it's also the revenue you could have earned by booking someone else in that time, and it's time you can't get back.
+                  No-shows and last-minute cancellations are one of the most damaging things that can happen to a nail tech's income. A cancelled appointment isn't just lost revenue for that slot: it's also the revenue you could have earned by booking someone else in that time, and it's time you can't get back.
                 </p>
                 <p>
                   A written cancellation policy does three things:
                 </p>
                 <ul className="space-y-2">
                   {[
-                    'Sets clear expectations before the booking is confirmed — clients know what happens if they cancel or no-show',
-                    'Gives you a documented basis for any fees you charge — no more awkward conversations where you\'re enforcing an unspoken rule',
-                    'Filters clients — clients who read and accept your policy are taking the booking seriously',
+                    'Sets clear expectations before the booking is confirmed: clients know what happens if they cancel or no-show',
+                    'Gives you a documented basis for any fees you charge: no more awkward conversations where you\'re enforcing an unspoken rule',
+                    'Filters clients: clients who read and accept your policy are taking the booking seriously',
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2.5">
                       <span className="flex-shrink-0 mt-1" style={{ color: PINK }}>→</span>
@@ -354,7 +354,7 @@ export default function CancellationPolicyGenerator() {
               <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4">What to include in your cancellation policy</h2>
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
-                  { label: 'Notice window', detail: 'How many hours notice is required for a free cancellation. This is the core of the policy — 24–48 hours is standard.' },
+                  { label: 'Notice window', detail: 'How many hours notice is required for a free cancellation. This is the core of the policy: 24–48 hours is standard.' },
                   { label: 'Late cancellation fee', detail: 'What you charge when a client cancels inside the notice window. Usually the deposit or a percentage of the service.' },
                   { label: 'No-show fee', detail: 'No-shows are more disruptive than cancellations. Most nail techs retain the full deposit or charge a higher percentage.' },
                   { label: 'Rescheduling terms', detail: 'Whether clients can reschedule, how much notice they need, and whether there\'s a fee for repeated rescheduling.' },
@@ -400,9 +400,9 @@ export default function CancellationPolicyGenerator() {
                 </p>
                 <ul className="space-y-2">
                   {[
-                    'Be consistent — applying the policy to some clients and not others creates resentment and word-of-mouth complaints',
-                    'Be matter-of-fact, not apologetic — "Per the cancellation policy you agreed to, the deposit is non-refundable" is enough',
-                    'Make exceptions rarely and for genuine emergencies, not social pressure — exceptions become precedents',
+                    'Be consistent: applying the policy to some clients and not others creates resentment and word-of-mouth complaints',
+                    'Be matter-of-fact, not apologetic: "Per the cancellation policy you agreed to, the deposit is non-refundable" is enough',
+                    'Make exceptions rarely and for genuine emergencies, not social pressure: exceptions become precedents',
                     'If a client disputes a fee, remind them when the policy was presented and that they confirmed the booking',
                   ].map((item, i) => (
                     <li key={i} className="flex items-start gap-2.5">

@@ -23,8 +23,8 @@ registerArticle({
   ],
   relatedSlugs: ['chrome-nail-ideas', 'how-to-apply-gel-polish-without-streaks', 'nail-tech-aftercare-guide'],
   faq: [
-    { q: 'Can you apply chrome powder over regular gel polish?', a: 'Chrome powder requires a gel top coat or base with a sticky, tacky inhibition layer to bond. Some regular gel polishes can work as a base if they leave a tacky inhibition layer after curing. The chrome must be applied while the surface is still tacky — it won\'t bond to a fully finished surface.' },
-    { q: 'Why does chrome go dull after top coat?', a: 'Some top coats matte chrome when cured — this is a compatibility issue between the chrome and the top coat formula. Use a top coat specifically tested for chrome. Apply it in thin layers and avoid dragging the brush over the chrome repeatedly — this can disturb the powder before it\'s sealed.' },
+    { q: 'Can you apply chrome powder over regular gel polish?', a: 'Chrome powder requires a gel top coat or base with a sticky, tacky inhibition layer to bond. Some regular gel polishes can work as a base if they leave a tacky inhibition layer after curing. The chrome must be applied while the surface is still tacky: it won\'t bond to a fully finished surface.' },
+    { q: 'Why does chrome go dull after top coat?', a: 'Some top coats matte chrome when cured: this is a compatibility issue between the chrome and the top coat formula. Use a top coat specifically tested for chrome. Apply it in thin layers and avoid dragging the brush over the chrome repeatedly: this can disturb the powder before it\'s sealed.' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
@@ -44,11 +44,11 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Chrome powder bonds to the inhibition layer (tacky layer) left on gel after curing without wiping</li>
           <li>Apply your colour base and top coat or a dedicated chrome gel base, cure according to manufacturer instructions, and do NOT wipe the surface before applying chrome</li>
-          <li>The most reliable base for chrome is a no-wipe gel top coat that still cures with a tacky layer — check your product spec before using</li>
-          <li>A smooth, even surface beneath the chrome gives a more even mirror finish — uneven gel surfaces create uneven chrome</li>
+          <li>The most reliable base for chrome is a no-wipe gel top coat that still cures with a tacky layer: check your product spec before using</li>
+          <li>A smooth, even surface beneath the chrome gives a more even mirror finish: uneven gel surfaces create uneven chrome</li>
         </ul>
         <ArticleCallout variant="info" title="Check your product compatibility">
-          Not all gel systems work equally well with chrome. Test a new base/chrome/top coat combination on yourself before offering it to clients — particularly when switching products.
+          Not all gel systems work equally well with chrome. Test a new base/chrome/top coat combination on yourself before offering it to clients: particularly when switching products.
         </ArticleCallout>
       </section>
 
@@ -58,21 +58,21 @@ registerArticle({
           steps={[
             { title: 'Cure and do not wipe', body: 'Cure your base layer according to the manufacturer\'s instruction and place it under the lamp. Remove from the lamp and do not wipe the tacky surface.' },
             { title: 'Load the applicator lightly', body: 'Pick up a small amount of chrome powder on a silicone applicator or eyeshadow-style sponge. Less powder applied with more pressure gives a better mirror result than more powder applied loosely.' },
-            { title: 'Buff in circular motions', body: 'Work the powder into the tacky surface using small circular motions across the entire nail. Build intensity gradually — keep buffing until you see the mirror effect appear. Applying and immediately moving on gives insufficient coverage.' },
-            { title: 'Check coverage from different angles', body: 'Look at the nail from different angles — chrome can look complete straight-on but have dull or unmirrorred spots at the edges when viewed from the side.' },
+            { title: 'Buff in circular motions', body: 'Work the powder into the tacky surface using small circular motions across the entire nail. Build intensity gradually: keep buffing until you see the mirror effect appear. Applying and immediately moving on gives insufficient coverage.' },
+            { title: 'Check coverage from different angles', body: 'Look at the nail from different angles: chrome can look complete straight-on but have dull or unmirrorred spots at the edges when viewed from the side.' },
             { title: 'Dust off excess', body: 'Use a clean, dry brush to sweep off any loose powder before sealing. Excess powder left on the nail can create texture under the top coat.' },
           ]}
         />
-        <ArticleTip>More buffing pressure gives a more intense mirror effect — many techs under-buff on the first attempt. Keep working the powder into the surface until you get the level of mirror you want before sealing.</ArticleTip>
+        <ArticleTip>More buffing pressure gives a more intense mirror effect: many techs under-buff on the first attempt. Keep working the powder into the surface until you get the level of mirror you want before sealing.</ArticleTip>
       </section>
 
       <section id="sealing">
         <h2 className="font-serif text-2xl font-bold mb-4">Sealing chrome properly</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Use a top coat specifically tested for use over chrome — check the product recommendation from your chrome powder brand</li>
-          <li>Apply the top coat in one thin, smooth pass — don't drag or go back over areas; this can disturb the chrome before it's sealed</li>
-          <li>Cure fully at full lamp power — undercured top coat is softer and protects chrome less</li>
-          <li>Apply a second thin layer of top coat for extra durability on chrome nails — two thin coats seal better than one thick coat</li>
+          <li>Use a top coat specifically tested for use over chrome: check the product recommendation from your chrome powder brand</li>
+          <li>Apply the top coat in one thin, smooth pass: don't drag or go back over areas; this can disturb the chrome before it's sealed</li>
+          <li>Cure fully at full lamp power: undercured top coat is softer and protects chrome less</li>
+          <li>Apply a second thin layer of top coat for extra durability on chrome nails: two thin coats seal better than one thick coat</li>
           <li>Cap the free edge with top coat to prevent the chrome layer from lifting from the tip</li>
         </ul>
       </section>
@@ -80,10 +80,10 @@ registerArticle({
       <section id="aftercare">
         <h2 className="font-serif text-2xl font-bold mb-4">Client aftercare</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Advise clients to avoid heavy hand creams in the first 24 hours after application — oils can soften the sealing layer before it has fully hardened</li>
+          <li>Advise clients to avoid heavy hand creams in the first 24 hours after application: oils can soften the sealing layer before it has fully hardened</li>
           <li>Cuticle oil is fine as long as it's applied to the skin, not rubbed aggressively across the chrome surface</li>
           <li>Wearing gloves for cleaning with harsh chemicals protects chrome nails significantly</li>
-          <li>The free edge is the most vulnerable point — advise clients to avoid using their fingernails as tools</li>
+          <li>The free edge is the most vulnerable point: advise clients to avoid using their fingernails as tools</li>
         </ul>
       </section>
     </div>

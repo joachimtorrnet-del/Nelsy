@@ -13,7 +13,7 @@ export default function InstagramAutoDMPage() {
       benefits={[
         {
           title: 'Respond instantly, every time',
-          desc: 'When someone comments on your posts, they get your booking link immediately — not hours later when you find the time to reply.',
+          desc: 'When someone comments on your posts, they get your booking link immediately, not hours later when you find the time to reply.',
         },
         {
           title: 'Stop losing warm leads',
@@ -32,7 +32,7 @@ export default function InstagramAutoDMPage() {
         {
           step: '1',
           title: 'Set your trigger words',
-          desc: 'Choose keywords — like "book", "price", or "info" — that trigger the automated reply when someone uses them in a comment.',
+          desc: 'Choose keywords, like "book", "price", or "info", that trigger the automated reply when someone uses them in a comment.',
         },
         {
           step: '2',

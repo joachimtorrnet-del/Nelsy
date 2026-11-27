@@ -316,7 +316,7 @@ export function detectPageViewSource(): { source: PageViewSource; referrer: stri
 }
 
 export async function recordPageView(profileId: string) {
-  if (!supabase) return; // silently skip — visitor shouldn't see errors
+  if (!supabase) return; // silently skip: visitor shouldn't see errors
 
   const { source, referrer } = detectPageViewSource();
 

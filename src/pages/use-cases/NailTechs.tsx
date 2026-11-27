@@ -4,7 +4,7 @@ export default function NailTechs() {
   return (
     <UseCasePage
       seo={{
-        title: 'Nelsy for Nail Techs — Bookings, Deposits & More',
+        title: 'Nelsy for Nail Techs: Bookings, Deposits & More',
         description: 'The business platform built for nail techs. Take online bookings, collect deposits to prevent no-shows, get paid, and grow your clientele from Instagram.',
         canonical: '/use-cases/nail-techs',
       }}

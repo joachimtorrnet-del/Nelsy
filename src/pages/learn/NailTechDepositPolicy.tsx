@@ -22,7 +22,7 @@ const JSON_LD = [
     '@context': 'https://schema.org',
     '@type': 'Article',
     headline: 'Nail Tech Deposit Policy: How to Write and Enforce One',
-    description: 'A practical guide to writing and enforcing a deposit policy for nail techs — how much to charge, how to communicate it, and how to handle exceptions.',
+    description: 'A practical guide to writing and enforcing a deposit policy for nail techs, how much to charge, how to communicate it, and how to handle exceptions.',
     url: 'https://getnelsy.com/learn/nail-tech-deposit-policy',
     datePublished: '2026-10-20',
     author: { '@type': 'Organization', name: 'Nelsy', url: 'https://getnelsy.com' },
@@ -106,7 +106,7 @@ export default function NailTechDepositPolicy() {
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
         title="Nail Tech Deposit Policy: How to Write and Enforce One | Nelsy"
-        description="How to write and enforce a nail tech deposit policy — how much to charge, refund rules, how to communicate it, and how to handle client objections."
+        description="How to write and enforce a nail tech deposit policy, how much to charge, refund rules, how to communicate it, and how to handle client objections."
         canonical="/blog/nail-tech-deposit-policy"
         jsonLd={JSON_LD}
       />
@@ -166,7 +166,7 @@ export default function NailTechDepositPolicy() {
                   <ul className="text-sm text-green-700 space-y-1.5">
                     <li>→ Clients commit when they book</li>
                     <li>→ No-show rate drops significantly</li>
-                    <li>→ You hold the deposit — no need to chase</li>
+                    <li>→ You hold the deposit: no need to chase</li>
                     <li>→ Policy was agreed to before the appointment</li>
                   </ul>
                 </div>
@@ -195,7 +195,7 @@ export default function NailTechDepositPolicy() {
                         ['Nail extensions (acrylic / gel)', '25–40%'],
                         ['Custom nail art or full sets', '30–50%'],
                         ['Long appointments (90 min+)', '30–50%'],
-                        ['New or first-time clients', '25–50% (higher — new relationships carry more risk)'],
+                        ['New or first-time clients', '25–50% (higher: new relationships carry more risk)'],
                       ].map(([service, range], i) => (
                         <tr key={i} className={`border-t border-gray-100 ${i % 2 === 1 ? 'bg-gray-50/40' : ''}`}>
                           <td className="px-4 py-3 text-gray-700">{service}</td>
@@ -231,7 +231,7 @@ export default function NailTechDepositPolicy() {
                 ))}
               </div>
               <p>
-                The most important thing is that your policy is stated clearly before the client books — so there's no dispute about whether they knew.
+                The most important thing is that your policy is stated clearly before the client books, so there's no dispute about whether they knew.
               </p>
             </Section>
 
@@ -253,7 +253,7 @@ export default function NailTechDepositPolicy() {
                 ))}
               </ul>
               <p>
-                Keep it plain and direct. A deposit policy doesn't need to read like a legal document — it needs to be clearly understood by a client reading it in 30 seconds before they book.
+                Keep it plain and direct. A deposit policy doesn't need to read like a legal document: it needs to be clearly understood by a client reading it in 30 seconds before they book.
               </p>
               <div className="rounded-xl border border-gray-200 bg-gray-50 p-5">
                 <p className="text-xs font-bold tracking-wider text-gray-400 uppercase mb-3">Example policy (short version)</p>
@@ -293,7 +293,7 @@ export default function NailTechDepositPolicy() {
                 {[
                   {
                     objection: '"I\'ve never had to pay a deposit before."',
-                    response: 'That\'s fine — this is my policy. A deposit protects my time and confirms your slot. If you\'d like to book, I can send you the link.',
+                    response: 'That\'s fine: this is my policy. A deposit protects my time and confirms your slot. If you\'d like to book, I can send you the link.',
                   },
                   {
                     objection: '"What if I need to cancel?"',
@@ -321,7 +321,7 @@ export default function NailTechDepositPolicy() {
               </p>
               <div className="space-y-3">
                 {[
-                  { method: 'Automated at booking (recommended)', detail: 'The deposit is charged when the client selects a time. No follow-up needed. The booking isn\'t confirmed until payment goes through. This is how Nelsy works — the deposit is collected before the slot is held.' },
+                  { method: 'Automated at booking (recommended)', detail: 'The deposit is charged when the client selects a time. No follow-up needed. The booking isn\'t confirmed until payment goes through. This is how Nelsy works: the deposit is collected before the slot is held.' },
                   { method: 'Payment link sent after DM', detail: 'Client DMs you, you send a payment link, they pay, you confirm the booking. Adds friction on both sides and relies on the client following through after the DM.' },
                   { method: 'Cash or bank transfer', detail: 'Works but creates admin overhead and makes tracking harder. Difficult to scale.' },
                 ].map((item) => (
@@ -370,7 +370,7 @@ export default function NailTechDepositPolicy() {
               Collect deposits automatically at booking.
             </motion.h2>
             <motion.p {...fadeUp(0.06)} className="text-base sm:text-lg text-white/80 mb-8 max-w-lg mx-auto">
-              Nelsy collects deposits when clients book — the slot isn't confirmed until they pay. No chasing, no awkward conversations.
+              Nelsy collects deposits when clients book: the slot isn't confirmed until they pay. No chasing, no awkward conversations.
             </motion.p>
             <motion.div {...fadeUp(0.12)}>
               <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />

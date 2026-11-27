@@ -6,7 +6,7 @@ registerArticle({
   slug: 'nail-tech-profit-margin-explained',
   title: 'Nail Tech Profit Margin Explained',
   seoTitle: 'Nail Tech Profit Margin Explained: What You Actually Keep',
-  excerpt: 'Revenue is what you charge. Profit is what you keep. Understanding the difference — and the expenses that sit between them — is the foundation of a financially healthy nail business.',
+  excerpt: 'Revenue is what you charge. Profit is what you keep. Understanding the difference, and the expenses that sit between them, is the foundation of a financially healthy nail business.',
   seoDescription: 'Nail tech profit margin explained. How to calculate your gross and net profit margin, what typical nail tech margins look like, and how to improve yours.',
   category: 'pricing-money',
   tags: ['nail tech profit margin', 'nail business profit', 'nail tech finances', 'nail business income'],
@@ -24,9 +24,9 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-calculate-nail-tech-hourly-rate', 'nail-tech-expense-list', 'nail-tech-monthly-income-calculator', 'nail-tech-break-even-point'],
   faq: [
-    { q: 'What\'s a typical profit margin for a nail tech?', a: 'This varies widely by business model, pricing, and overheads. A home-based nail tech with low overheads and good product efficiency might achieve 60–75% net margins. A nail tech renting a chair in a salon, paying for insurance, training, and substantial product costs might sit at 40–55%. These are illustrative ranges, not guarantees — your actual margin depends entirely on your specific costs and revenue.' },
+    { q: 'What\'s a typical profit margin for a nail tech?', a: 'This varies widely by business model, pricing, and overheads. A home-based nail tech with low overheads and good product efficiency might achieve 60–75% net margins. A nail tech renting a chair in a salon, paying for insurance, training, and substantial product costs might sit at 40–55%. These are illustrative ranges, not guarantees: your actual margin depends entirely on your specific costs and revenue.' },
     { q: 'Should I calculate margin per service or overall?', a: 'Both are useful. Per-service margin shows you which services are most profitable (and which might be underpriced relative to their costs). Overall margin shows you whether your business is healthy at the total level. Start with overall, then drill into per-service margins when you want to optimise your pricing or service menu.' },
-    { q: 'Is margin the same as take-home pay?', a: 'Not quite. Net profit margin is the percentage of revenue left after expenses — but for a sole trader, "profit" is your pre-tax income. From that, you\'ll pay income tax and National Insurance (in the UK), and you might reinvest some into the business. Your actual take-home is net profit minus tax. How to calculate your monthly income: see the linked article.' },
+    { q: 'Is margin the same as take-home pay?', a: 'Not quite. Net profit margin is the percentage of revenue left after expenses, but for a sole trader, "profit" is your pre-tax income. From that, you\'ll pay income tax and National Insurance (in the UK), and you might reinvest some into the business. Your actual take-home is net profit minus tax. How to calculate your monthly income: see the linked article.' },
   ],
   relatedFeatureSlugs: ['analytics', 'payments'],
   content: () => (
@@ -50,7 +50,7 @@ registerArticle({
       <section id="net-margin">
         <h2 className="font-serif text-2xl font-bold mb-4">Net profit margin</h2>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Net profit margin</strong> = (Revenue − All costs) ÷ Revenue × 100</p>
-        <p className="text-gray-700 leading-relaxed">All costs includes: product costs, rent/chair rent, insurance (professional indemnity + public liability), training, equipment depreciation, booking software, marketing, continuing education, and any other business expenses. What's left is your net profit — your income before tax.</p>
+        <p className="text-gray-700 leading-relaxed">All costs includes: product costs, rent/chair rent, insurance (professional indemnity + public liability), training, equipment depreciation, booking software, marketing, continuing education, and any other business expenses. What's left is your net profit: your income before tax.</p>
       </section>
 
       <section id="worked-example">
@@ -69,7 +69,7 @@ registerArticle({
             ['Net margin', '74%'],
           ]}
         />
-        <ArticleTip>This example uses illustrative figures. Your costs will be different — calculate yours specifically. The categories are the same; the numbers are yours to input.</ArticleTip>
+        <ArticleTip>This example uses illustrative figures. Your costs will be different: calculate yours specifically. The categories are the same; the numbers are yours to input.</ArticleTip>
         <p className="text-gray-700 mt-4 leading-relaxed">For a full expenses breakdown: <Link to="/blog/nail-tech-expense-list" className="underline text-[#F52B8C]">nail tech expense list: what to track</Link>.</p>
       </section>
 
@@ -83,7 +83,7 @@ registerArticle({
             ['Improve product efficiency', 'Track how much product you actually use per service; waste adds up'],
             ['Add high-margin add-ons', 'Chrome, nail art, cuticle treatments: low material cost, meaningful additional revenue'],
             ['Reduce overheads', 'Negotiate chair rent; switch to a lower-cost booking platform; bulk-buy supplies'],
-            ['Fill your calendar', 'Fixed costs (rent, insurance) stay the same whether you do 15 or 25 clients per week — more clients per week = better fixed-cost coverage'],
+            ['Fill your calendar', 'Fixed costs (rent, insurance) stay the same whether you do 15 or 25 clients per week: more clients per week = better fixed-cost coverage'],
           ]}
         />
         <p className="text-gray-700 mt-4 leading-relaxed">For calculating your hourly rate: <Link to="/blog/how-to-calculate-nail-tech-hourly-rate" className="underline text-[#F52B8C]">how to calculate your nail tech hourly rate</Link>.</p>

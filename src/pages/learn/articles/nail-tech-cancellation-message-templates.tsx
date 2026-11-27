@@ -5,8 +5,8 @@ registerArticle({
   slug: 'nail-tech-cancellation-message-templates',
   title: 'Nail Tech Cancellation Message Templates',
   seoTitle: 'Nail Tech Cancellation Message Templates (Copy & Paste)',
-  excerpt: 'Templates for every cancellation scenario — when the client cancels, when you need to cancel, and how to handle last-minute cancellations professionally.',
-  seoDescription: 'Nail tech cancellation message templates. Copy-paste messages for when clients cancel, when you cancel, last-minute cancellations, and retaining deposits — friendly, professional, and firm.',
+  excerpt: 'Templates for every cancellation scenario, when the client cancels, when you need to cancel, and how to handle last-minute cancellations professionally.',
+  seoDescription: 'Nail tech cancellation message templates for when clients cancel, when you cancel, last-minute cancellations and keeping deposits.',
   category: 'policies-clients',
   tags: ['nail tech cancellation message template', 'nail appointment cancellation message', 'cancellation message nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%)',
@@ -23,8 +23,8 @@ registerArticle({
   ],
   relatedSlugs: ['nail-tech-no-show-message-templates', 'nail-tech-appointment-reminder-templates', 'nail-tech-deposit-policy', 'how-to-deal-with-nail-client-no-shows'],
   faq: [
-    { q: 'Should I charge a cancellation fee even for a good reason?', a: 'Your policy should apply consistently. If you make exceptions for some clients but not others, clients will start testing your limits. A kind, empathetic message retaining the deposit ("I completely understand, but as per policy...") is both fair and professional. If you choose to waive the fee, that\'s your decision — but do it consciously, not because you felt too awkward to enforce the policy.' },
-    { q: 'How do I respond when a client gets upset about their deposit being retained?', a: 'Acknowledge their frustration calmly and refer to the policy they agreed to at booking. "I understand this is frustrating — unfortunately the deposit is non-refundable for cancellations within [X] hours, which is the policy you agreed to when booking. I\'d love to have you back — you can rebook at [link]." Don\'t apologise for enforcing your policy, but do stay warm.' },
+    { q: 'Should I charge a cancellation fee even for a good reason?', a: 'Your policy should apply consistently. If you make exceptions for some clients but not others, clients will start testing your limits. A kind, empathetic message retaining the deposit ("I completely understand, but as per policy...") is both fair and professional. If you choose to waive the fee, that\'s your decision, but do it consciously, not because you felt too awkward to enforce the policy.' },
+    { q: 'How do I respond when a client gets upset about their deposit being retained?', a: 'Acknowledge their frustration calmly and refer to the policy they agreed to at booking. "I understand this is frustrating: unfortunately the deposit is non-refundable for cancellations within [X] hours, which is the policy you agreed to when booking. I\'d love to have you back: you can rebook at [link]." Don\'t apologise for enforcing your policy, but do stay warm.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits'],
   content: () => (
@@ -43,9 +43,9 @@ registerArticle({
 
       <section id="client-cancels-late">
         <h2 className="font-serif text-2xl font-bold mb-4">Client cancels late (deposit retained)</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Empathetic but firm — deposit retained:</strong></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Empathetic but firm. Deposit retained:</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name], I'm sorry to hear you can't make it. Unfortunately, as this cancellation is within [X] hours of your appointment, your deposit will be retained as per my cancellation policy. I do understand it's frustrating — but this policy protects time that could have been offered to another client. I'd love to have you back — you can rebook at [link].
+          Hi [Name], I'm sorry to hear you can't make it. Unfortunately, as this cancellation is within [X] hours of your appointment, your deposit will be retained as per my cancellation policy. I do understand it's frustrating, but this policy protects time that could have been offered to another client. I'd love to have you back: you can rebook at [link].
         </blockquote>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Brief and firm:</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
@@ -60,14 +60,14 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">You need to cancel</h2>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>You cancelling with advance notice:</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name], I'm so sorry — I need to cancel your [service] appointment on [date] due to [brief reason if appropriate, e.g. illness, family emergency]. I've refunded your deposit in full and it should appear within [X] days. I'd love to rebook you — please let me know a time that works or book at [link]. I'm really sorry for the inconvenience.
+          Hi [Name], I'm so sorry: I need to cancel your [service] appointment on [date] due to [brief reason if appropriate, e.g. illness, family emergency]. I've refunded your deposit in full and it should appear within [X] days. I'd love to rebook you: please let me know a time that works or book at [link]. I'm really sorry for the inconvenience.
         </blockquote>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>You cancelling same-day (emergency):</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Hi [Name], I am so sorry to message you so close to your appointment — I have an emergency and I'm unable to see you today. I've refunded your full deposit and I'm deeply sorry for the disruption to your day. Please let me know when you'd like to rebook and I'll prioritise you. Thank you so much for understanding. 🙏
+          Hi [Name], I am so sorry to message you so close to your appointment: I have an emergency and I'm unable to see you today. I've refunded your full deposit and I'm deeply sorry for the disruption to your day. Please let me know when you'd like to rebook and I'll prioritise you. Thank you so much for understanding. 🙏
         </blockquote>
         <ArticleCallout variant="warning" title="Always refund the full deposit when you cancel">
-          If you are the one cancelling, always refund in full — no matter the reason, no matter the notice given. Retaining a deposit when you cancel damages trust and can create serious conflict.
+          If you are the one cancelling, always refund in full: no matter the reason, no matter the notice given. Retaining a deposit when you cancel damages trust and can create serious conflict.
         </ArticleCallout>
       </section>
 
@@ -75,18 +75,18 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Acknowledging a cancellation quickly</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">If you receive a cancellation and want to acknowledge it immediately before sending a fuller response:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          Hi [Name], thanks for letting me know — I'll get that sorted and come back to you shortly.
+          Hi [Name], thanks for letting me know: I'll get that sorted and come back to you shortly.
         </blockquote>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Got it, [Name] — I'll cancel your appointment now and be in touch.
+          Got it, [Name]: I'll cancel your appointment now and be in touch.
         </blockquote>
       </section>
 
       <section id="rebook-after-cancel">
         <h2 className="font-serif text-2xl font-bold mb-4">Inviting them to rebook</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Always leave the door open to rebooking — even if a client cancels late, they may still want to return:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Always leave the door open to rebooking, even if a client cancels late, they may still want to return:</p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600 mb-6">
-          I'd love to have you back whenever you're ready — you can book online at [link] any time.
+          I'd love to have you back whenever you're ready: you can book online at [link] any time.
         </blockquote>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
           Whenever you want to rebook, I'm here! [link]

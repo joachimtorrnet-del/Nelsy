@@ -66,7 +66,7 @@ const JSON_LD = [
         name: 'What should an appointment reminder include?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Include: the client\'s name, the service booked, the date and time, your location or address, your cancellation policy notice period, and a way to confirm or reschedule. Keep it short — one paragraph is enough.',
+          text: 'Include: the client\'s name, the service booked, the date and time, your location or address, your cancellation policy notice period, and a way to confirm or reschedule. Keep it short: one paragraph is enough.',
         },
       },
       {
@@ -122,7 +122,7 @@ const TEMPLATES: Template[] = [
     timing: 'Immediately after booking',
     channel: 'text',
     generate: (c) =>
-      `Hi [Client Name]! 🎀 This is ${name(c)} from ${salon(c)}. Your appointment is confirmed for [Date] at [Time].\n\n📍 Location: ${addr(c)}\n💅 Service: [Service Name]\n${c.depositRequired ? '\nYour deposit has been received — thank you!\n' : ''}\nPlease cancel or reschedule at least ${c.cancelHours} hours in advance. Reply to this message if you need to make changes.\n\nSee you soon! 🩷`,
+      `Hi [Client Name]! 🎀 This is ${name(c)} from ${salon(c)}. Your appointment is confirmed for [Date] at [Time].\n\n📍 Location: ${addr(c)}\n💅 Service: [Service Name]\n${c.depositRequired ? '\nYour deposit has been received. Thank you!\n' : ''}\nPlease cancel or reschedule at least ${c.cancelHours} hours in advance. Reply to this message if you need to make changes.\n\nSee you soon! 🩷`,
   },
   {
     id: 'reminder48',
@@ -130,7 +130,7 @@ const TEMPLATES: Template[] = [
     timing: '2 days before appointment',
     channel: 'text',
     generate: (c) =>
-      `Hi [Client Name]! Friendly reminder from ${name(c)} — your appointment is coming up on [Date] at [Time] at ${addr(c)}.\n\nIf you need to reschedule, please let me know at least ${c.cancelHours} hours before. Looking forward to seeing you! 🩷`,
+      `Hi [Client Name]! Friendly reminder from ${name(c)}: your appointment is coming up on [Date] at [Time] at ${addr(c)}.\n\nIf you need to reschedule, please let me know at least ${c.cancelHours} hours before. Looking forward to seeing you! 🩷`,
   },
   {
     id: 'reminder24',
@@ -138,7 +138,7 @@ const TEMPLATES: Template[] = [
     timing: 'Day before appointment',
     channel: 'text',
     generate: (c) =>
-      `Hi [Client Name]! Just a reminder — you have an appointment with ${name(c)} tomorrow at [Time].\n\n📍 ${addr(c)}\n\nIf anything has come up, please message me ASAP so I can offer the slot to someone else. Can't wait to see you! 💅`,
+      `Hi [Client Name]! Just a reminder: you have an appointment with ${name(c)} tomorrow at [Time].\n\n📍 ${addr(c)}\n\nIf anything has come up, please message me ASAP so I can offer the slot to someone else. Can't wait to see you! 💅`,
   },
   {
     id: 'followup',
@@ -146,7 +146,7 @@ const TEMPLATES: Template[] = [
     timing: '1–2 days after appointment',
     channel: 'dm',
     generate: (c) =>
-      `Hi [Client Name]! 🩷 It was so lovely to have you in! I hope you’re loving your nails.\n\nIf you have a chance, I’d really appreciate a review or a tag if you share a photo — it means the world to a small business like mine.\n\n${c.bookingLink ? `You can rebook anytime here: ${link(c)}` : `Message me when you’re ready to book your next appointment!`}\n\nThank you so much! — ${name(c)} ✨`,
+      `Hi [Client Name]! 🩷 It was so lovely to have you in! I hope you’re loving your nails.\n\nIf you have a chance, I’d really appreciate a review or a tag if you share a photo: it means the world to a small business like mine.\n\n${c.bookingLink ? `You can rebook anytime here: ${link(c)}` : `Message me when you’re ready to book your next appointment!`}\n\nThank you so much!: ${name(c)} ✨`,
   },
   {
     id: 'reschedule',
@@ -154,7 +154,7 @@ const TEMPLATES: Template[] = [
     timing: 'When you need to move an appointment',
     channel: 'text',
     generate: (c) =>
-      `Hi [Client Name], this is ${name(c)} from ${salon(c)}. I’m so sorry — I need to reschedule your appointment on [Date] at [Time] due to [brief reason].\n\nI’d love to get you in as soon as possible. ${c.bookingLink ? `You can pick a new time here: ${link(c)}` : `Please message me back with a few times that work for you.`}\n\nSorry for any inconvenience and thank you for understanding! 💗`,
+      `Hi [Client Name], this is ${name(c)} from ${salon(c)}. I’m so sorry: I need to reschedule your appointment on [Date] at [Time] due to [brief reason].\n\nI’d love to get you in as soon as possible. ${c.bookingLink ? `You can pick a new time here: ${link(c)}` : `Please message me back with a few times that work for you.`}\n\nSorry for any inconvenience and thank you for understanding! 💗`,
   },
 ];
 
@@ -162,12 +162,12 @@ const DM_VARIANTS: Partial<Record<ReminderType, (c: Config) => string>> = {
   confirmation: (c: Config) =>
     `Hey [Client Name]! 🎀 Just confirming your booking with ${name(c)} for [Service] on [Date] at [Time].\n\n${c.depositRequired ? `Your deposit is secured 💗\n\n` : ``}Heads up: cancellations need ${c.cancelHours}+ hours notice. DM me if anything changes!\n\nCan’t wait! ✨`,
   reminder24: (c: Config) =>
-    `Hey [Client Name]! 🩷 See you tomorrow at [Time]! If anything has come up DM me ASAP — I want to give you as much notice as possible if the slot needs to go to someone else.\n\n${addr(c)} — see you soon! 💅`,
+    `Hey [Client Name]! 🩷 See you tomorrow at [Time]! If anything has come up DM me ASAP: I want to give you as much notice as possible if the slot needs to go to someone else.\n\n${addr(c)}. See you soon! 💅`,
 };
 
 const EMAIL_VARIANT = (c: Config, type: ReminderType): string => {
   const subject: Record<ReminderType, string> = {
-    confirmation: `Your nail appointment is confirmed — ${salon(c)}`,
+    confirmation: `Your nail appointment is confirmed: ${salon(c)}`,
     reminder48: `Your appointment is in 2 days`,
     reminder24: `Reminder: appointment tomorrow`,
     followup: `Thank you for visiting ${salon(c)}!`,
@@ -219,8 +219,8 @@ export default function AppointmentReminderTemplates() {
   return (
     <>
       <SEOMeta
-        title="Nail Tech Appointment Reminder Templates — Free Copy-Paste Messages"
-        description="Free appointment reminder templates for nail techs. Copy-paste text, DM, and email reminders for booking confirmation, 24-hour reminder, and follow-up. Personalise with your name and send instantly."
+        title="Nail Tech Appointment Reminder Templates (Free)"
+        description="Free appointment reminder templates for nail techs: copy-paste text, DM and email messages for booking confirmation, the 24-hour reminder and follow-up."
         canonical="/tools/nail-tech-appointment-reminder-templates"
         jsonLd={JSON_LD}
       />
@@ -235,7 +235,7 @@ export default function AppointmentReminderTemplates() {
               Nail Tech Appointment Reminder Templates
             </h1>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              Free copy-paste reminders for every stage of the client journey — confirmation, 24-hour reminder, follow-up, and more. Personalise with your name and send instantly.
+              Free copy-paste reminders for every stage of the client journey: confirmation, 24-hour reminder, follow-up, and more. Personalise with your name and send instantly.
             </p>
           </motion.div>
         </section>
@@ -378,7 +378,7 @@ export default function AppointmentReminderTemplates() {
           </div>
         </section>
 
-        {/* Inline CTA — automate */}
+        {/* Inline CTA: automate */}
         <section className="px-4 pb-16 max-w-3xl mx-auto">
           <motion.div
             {...fadeUp()}
@@ -390,7 +390,7 @@ export default function AppointmentReminderTemplates() {
               Let Nelsy send these automatically
             </h2>
             <p className="text-gray-600 mb-6 max-w-lg mx-auto">
-              Set up your reminder templates once. Nelsy sends the confirmation, 24-hour reminder, and follow-up for every booking — no copy-paste, no forgetting.
+              Set up your reminder templates once. Nelsy sends the confirmation, 24-hour reminder, and follow-up for every booking: no copy-paste, no forgetting.
             </p>
             <SeoCTA label="Send reminders automatically →" position="inline" variant="primary" />
           </motion.div>
@@ -402,13 +402,13 @@ export default function AppointmentReminderTemplates() {
           <motion.div {...fadeUp()}>
             <h2 className="font-serif text-2xl font-bold text-[#1A1A1A] mb-4">Why appointment reminders matter for nail techs</h2>
             <p className="text-gray-700 mb-4">
-              No-shows and same-day cancellations are the most common reason nail techs lose income. A slot that sits empty costs the same as a slot you never sold — but it's worse, because you turned away other clients to hold it.
+              No-shows and same-day cancellations are the most common reason nail techs lose income. A slot that sits empty costs the same as a slot you never sold, but it's worse, because you turned away other clients to hold it.
             </p>
             <p className="text-gray-700 mb-4">
               The single highest-leverage thing most nail techs can add to their workflow is a 24-hour reminder message. It gives clients enough notice to reschedule rather than ghost, which means you can often fill the slot with someone from your waitlist.
             </p>
             <p className="text-gray-700">
-              Reminders also reduce the "I forgot" no-show — a client who genuinely didn't mean to miss. A quick text the day before turns most of those into on-time arrivals.
+              Reminders also reduce the "I forgot" no-show: a client who genuinely didn't mean to miss. A quick text the day before turns most of those into on-time arrivals.
             </p>
           </motion.div>
 
@@ -419,12 +419,12 @@ export default function AppointmentReminderTemplates() {
                 {
                   step: '1',
                   title: 'Booking confirmation (immediately)',
-                  body: 'Sent right after the client books. This sets expectations: what service, when, where, and your cancellation policy. Clients reference this message when they\'re looking for the address or time — keep it clear and complete.',
+                  body: 'Sent right after the client books. This sets expectations: what service, when, where, and your cancellation policy. Clients reference this message when they\'re looking for the address or time: keep it clear and complete.',
                 },
                 {
                   step: '2',
                   title: '48-hour reminder (optional but valuable)',
-                  body: 'For clients who book weeks in advance, a 48-hour heads-up is a low-effort way to catch conflicts early. If someone needs to reschedule, you want to know 48 hours out — not 2 hours before.',
+                  body: 'For clients who book weeks in advance, a 48-hour heads-up is a low-effort way to catch conflicts early. If someone needs to reschedule, you want to know 48 hours out, not 2 hours before.',
                 },
                 {
                   step: '3',
@@ -466,7 +466,7 @@ export default function AppointmentReminderTemplates() {
                 </thead>
                 <tbody className="divide-y divide-[#F4C2C2]/20">
                   {[
-                    ['SMS / Text', 'Confirmations, 24-hour reminders — highest open rate', 'Requires client\'s mobile number; some clients prefer not to share'],
+                    ['SMS / Text', 'Confirmations, 24-hour reminders: highest open rate', 'Requires client\'s mobile number; some clients prefer not to share'],
                     ['Instagram DM', 'Clients who booked via DM, follow-up and rebook prompts', 'DMs can get buried; not ideal if you have many clients'],
                     ['Email', 'Detailed confirmations with service info, directions', 'Lower open rate for reminders; better for receipts'],
                   ].map(([ch, best, watch]) => (

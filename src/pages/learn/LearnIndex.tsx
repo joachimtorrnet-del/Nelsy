@@ -30,7 +30,7 @@ const JSON_LD = [
   {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    name: 'Nelsy Learn — The Nail Tech Business Guide',
+    name: 'Nelsy Learn: The Nail Tech Business Guide',
     description:
       'Practical guides, ideas and tools to help nail techs get more clients, charge with confidence and grow their nail business.',
     url: 'https://getnelsy.com/learn',
@@ -70,7 +70,7 @@ export default function LearnIndex() {
   return (
     <>
       <SEOMeta
-        title="Nelsy Learn — The Nail Tech Business Guide"
+        title="Nelsy Learn: The Nail Tech Business Guide"
         description="Practical guides, ideas and tools to help nail techs get more clients, charge with confidence and grow their nail business."
         canonical="/learn"
         jsonLd={JSON_LD}

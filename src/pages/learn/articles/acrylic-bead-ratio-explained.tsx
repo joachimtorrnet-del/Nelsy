@@ -6,7 +6,7 @@ registerArticle({
   slug: 'acrylic-bead-ratio-explained',
   title: 'Acrylic Bead Ratio Explained',
   seoTitle: "Acrylic Bead Ratio: Wet, Medium and Dry Beads Explained",
-  excerpt: 'The bead ratio — the amount of liquid monomer relative to acrylic powder in your bead — affects everything from workability to finished strength. Here\'s how to get it right.',
+  excerpt: 'The bead ratio, the amount of liquid monomer relative to acrylic powder in your bead, affects everything from workability to finished strength. Here\'s how to get it right.',
   seoDescription: "Acrylic bead ratio explained: what a wet, medium and dry bead look like, the ideal liquid and powder mix, and how to pick up a consistent bead.",
   category: 'nail-education',
   tags: ['acrylic bead ratio', 'acrylic consistency', 'acrylic technique', 'nail tech education'],
@@ -36,9 +36,9 @@ registerArticle({
   ],
   relatedSlugs: ['acrylic-application-step-by-step', 'how-to-build-nail-apex', 'common-acrylic-mistakes'],
   faq: [
-    { q: 'What does a correct acrylic bead look like?', a: 'A medium-consistency bead holds its dome shape when sitting on your brush but moves slightly when you press it — it\'s workable without running. A too-wet bead pools and spreads; a too-dry bead is lumpy and hard to press flat. With experience, the correct consistency becomes instinctive, but early on, pressing the bead gently against your wrist (without applying) to feel the resistance is a useful consistency check.' },
-    { q: 'Why does my acrylic go lumpy?', a: 'Lumpy acrylic is usually a too-dry bead. The dry bead has insufficient monomer to bind the powder smoothly, creating a grainy or lumpy surface rather than a glossy, smooth bead. Add slightly more monomer to your ratio. It can also indicate your monomer is evaporating from the dappen dish — keep the dish covered between beads.' },
-    { q: 'Does the bead ratio change between brands?', a: 'Yes — different acrylic systems have different ideal working consistencies based on their formulation. Some systems are designed to work wet, others drier. A ratio that works perfectly with one brand may be too wet or dry for another. When switching products, invest time in practicing with the new product before using it on clients.' },
+    { q: 'What does a correct acrylic bead look like?', a: 'A medium-consistency bead holds its dome shape when sitting on your brush but moves slightly when you press it: it\'s workable without running. A too-wet bead pools and spreads; a too-dry bead is lumpy and hard to press flat. With experience, the correct consistency becomes instinctive, but early on, pressing the bead gently against your wrist (without applying) to feel the resistance is a useful consistency check.' },
+    { q: 'Why does my acrylic go lumpy?', a: 'Lumpy acrylic is usually a too-dry bead. The dry bead has insufficient monomer to bind the powder smoothly, creating a grainy or lumpy surface rather than a glossy, smooth bead. Add slightly more monomer to your ratio. It can also indicate your monomer is evaporating from the dappen dish: keep the dish covered between beads.' },
+    { q: 'Does the bead ratio change between brands?', a: 'Yes: different acrylic systems have different ideal working consistencies based on their formulation. Some systems are designed to work wet, others drier. A ratio that works perfectly with one brand may be too wet or dry for another. When switching products, invest time in practicing with the new product before using it on clients.' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
@@ -60,19 +60,19 @@ registerArticle({
             ['Dry', 'Matte dome, holds shape firmly, little movement', 'Hard to press flat; creates drag marks; rough surface', 'Porous, grainy surface; weaker due to insufficient monomer bonds'],
           ]}
         />
-        <ArticleTip>The ideal bead for most nail tech work is a medium consistency — glossy but self-contained, moves when pressed but doesn\'t run. This consistency is what educational programs typically teach as the standard.</ArticleTip>
+        <ArticleTip>The ideal bead for most nail tech work is a medium consistency: glossy but self-contained, moves when pressed but doesn\'t run. This consistency is what educational programs typically teach as the standard.</ArticleTip>
       </section>
 
       <section id="picking-up-beads">
         <h2 className="font-serif text-2xl font-bold mb-4">How to pick up consistent beads</h2>
         <ol className="list-decimal list-inside space-y-3 text-gray-700 mb-4">
-          <li><strong>Saturate the brush:</strong> Dip the brush tip into the monomer. The brush should be wet but not dripping — press the brush flat on the dappen dish edge to remove excess.</li>
-          <li><strong>Angle and press into powder:</strong> Hold the brush at roughly 45°, press into the surface of the powder, and turn slightly while pressing to pick up a bead. Don't scoop — press and roll.</li>
-          <li><strong>Let the bead form naturally:</strong> A correct bead forms as you lift the brush out of the powder — a dome shape sitting on the brush tip. Don't try to "make" a bead; the monomer picks up the powder and creates it.</li>
+          <li><strong>Saturate the brush:</strong> Dip the brush tip into the monomer. The brush should be wet but not dripping: press the brush flat on the dappen dish edge to remove excess.</li>
+          <li><strong>Angle and press into powder:</strong> Hold the brush at roughly 45°, press into the surface of the powder, and turn slightly while pressing to pick up a bead. Don't scoop: press and roll.</li>
+          <li><strong>Let the bead form naturally:</strong> A correct bead forms as you lift the brush out of the powder. A dome shape sitting on the brush tip. Don't try to "make" a bead; the monomer picks up the powder and creates it.</li>
           <li><strong>Check before placing:</strong> The bead should hold its shape for a few seconds on the brush. If it flows off the brush, it's too wet. If it looks matte and gritty, it's too dry.</li>
         </ol>
         <ArticleCallout variant="info" title="Consistent bead placement">
-          Practice picking up and placing beads on a non-client surface (paper, practice hand) until you can consistently pick up beads of a similar size and consistency. Inconsistent beads usually indicate inconsistent brush saturation — the most common variable to address.
+          Practice picking up and placing beads on a non-client surface (paper, practice hand) until you can consistently pick up beads of a similar size and consistency. Inconsistent beads usually indicate inconsistent brush saturation: the most common variable to address.
         </ArticleCallout>
       </section>
 
@@ -101,12 +101,12 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Product variation</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Different acrylic systems have different designed working consistencies and different bead behaviour:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Slow-set systems give more working time at a medium consistency — better for beginners</li>
+          <li>Slow-set systems give more working time at a medium consistency: better for beginners</li>
           <li>Fast-set systems require confident placement as the working window is shorter</li>
           <li>Self-levelling systems are formulated to be slightly wetter and require less brush work</li>
-          <li>Temperature affects working time — cold environments extend it; warm rooms speed it up</li>
+          <li>Temperature affects working time: cold environments extend it; warm rooms speed it up</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">When learning a new product: practice bead pick-up and placement extensively before using it on clients. Bead ratio is intuitive once you know your specific product's behaviour — but it requires time with that specific system to develop. See: <Link to="/blog/acrylic-application-step-by-step" className="underline text-[#F52B8C]">acrylic application step-by-step</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">When learning a new product: practice bead pick-up and placement extensively before using it on clients. Bead ratio is intuitive once you know your specific product's behaviour, but it requires time with that specific system to develop. See: <Link to="/blog/acrylic-application-step-by-step" className="underline text-[#F52B8C]">acrylic application step-by-step</Link>.</p>
       </section>
 
       <section id="troubleshooting">

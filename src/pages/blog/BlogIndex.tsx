@@ -1,62 +1,50 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { Calculator, Search } from 'lucide-react';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
 import ArticleCard from '@/components/article/ArticleCard';
+import { readMinutes } from '@/components/article/ArticleTemplateBlocks';
+import { TRIAL_PATH } from '@/components/article/ArticleBodyComponents';
 import {
   getAllArticles,
   getFeaturedArticle,
   getSpotlightArticles,
   searchArticles,
-  getArticlesByCategory,
   CATEGORY_LABELS,
-  CATEGORY_COLORS,
 } from '@/lib/articleRegistry';
 import type { ArticleCategory } from '@/lib/articles';
+import { CORE_TOOLS, TOOL_LINKS } from '@/lib/blogLinks';
+import { track } from '@/lib/analytics';
 
 const PINK = '#F52B8C';
 const ORIGIN = 'https://getnelsy.com';
+const PAGE_SIZE = 12;
 
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.5, delay },
-} as const);
-
-// Category nav displayed below hero
+// Category order in the navigation (most useful for pros first)
 const NAV_CATEGORIES: ArticleCategory[] = [
   'get-clients',
-  'instagram-content',
   'pricing-money',
+  'policies-clients',
   'booking-software',
+  'comparisons',
+  'instagram-content',
+  'start-your-business',
+  'branding-growth',
+  'beauty-creators',
   'nail-education',
   'nail-inspo',
-  'beauty-creators',
 ];
-
-// Editorial sections on the homepage
-const EDITORIAL_SECTIONS: { category: ArticleCategory; emoji: string; desc: string }[] = [
-  { category: 'get-clients',         emoji: '🌸', desc: 'Strategies to attract and keep more nail clients.' },
-  { category: 'instagram-content',   emoji: '📱', desc: 'Content ideas, hooks, and social media strategy.' },
-  { category: 'pricing-money',       emoji: '💸', desc: 'Price with confidence and know your numbers.' },
-  { category: 'nail-education',      emoji: '💅', desc: 'Technique guides and product deep-dives.' },
-  { category: 'nail-inspo',          emoji: '✨', desc: 'Seasonal looks and colour inspiration.' },
-  { category: 'start-your-business', emoji: '🚀', desc: 'Everything you need to launch and grow.' },
-  { category: 'beauty-creators',     emoji: '🎥', desc: 'Sell courses, digital products and brand deals.' },
-];
-
-const CATEGORIES = Object.entries(CATEGORY_LABELS) as [ArticleCategory, string][];
 
 const JSON_LD = [
   {
     '@context': 'https://schema.org',
-    '@type': 'WebPage',
-    name: 'Nail Tech Business Tips, Guides & Inspiration | Nelsy',
-    description: 'Practical ideas, strategies and inspiration for growing a better nail business.',
+    '@type': 'Blog',
+    name: 'The Nelsy Blog',
+    description: 'Practical guides for nail techs and beauty pros: getting clients, pricing, deposits, policies, booking apps and content.',
     url: `${ORIGIN}/blog`,
+    publisher: { '@type': 'Organization', name: 'Nelsy', url: ORIGIN },
   },
   {
     '@context': 'https://schema.org',
@@ -71,25 +59,41 @@ const JSON_LD = [
 export default function BlogIndex() {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<ArticleCategory | 'all'>('all');
+  const [visible, setVisible] = useState(PAGE_SIZE);
+
+  // Deep link: /blog?category=pricing-money (read after mount, the prerendered page shows "All")
+  useEffect(() => {
+    const c = new URLSearchParams(window.location.search).get('category');
+    if (c && c in CATEGORY_LABELS) setActiveCategory(c as ArticleCategory);
+  }, []);
 
   const featured = getFeaturedArticle();
   const spotlight = getSpotlightArticles();
   const all = getAllArticles();
 
-  const isFiltered = query.trim().length > 0 || activeCategory !== 'all';
+  const counts = useMemo(() => {
+    const m = new Map<ArticleCategory, number>();
+    for (const a of all) m.set(a.category, (m.get(a.category) ?? 0) + 1);
+    return m;
+  }, [all]);
 
   const filtered = useMemo(() => {
-    let articles = query ? searchArticles(query) : all;
-    if (activeCategory !== 'all') {
-      articles = articles.filter((a) => a.category === activeCategory);
-    }
+    let articles = query ? searchArticles(query) : all.filter((a) => a.slug !== featured?.slug);
+    if (activeCategory !== 'all') articles = articles.filter((a) => a.category === activeCategory);
     return articles;
-  }, [query, activeCategory, all]);
+  }, [query, activeCategory, all, featured]);
 
-  // Grid: when filtered show the filtered list; otherwise show remaining articles
-  const gridArticles = isFiltered
-    ? filtered
-    : filtered.filter((a) => !a.featured && !a.spotlight);
+  function pick(cat: ArticleCategory | 'all') {
+    setActiveCategory(cat);
+    setQuery('');
+    setVisible(PAGE_SIZE);
+    try {
+      const url = cat === 'all' ? '/blog' : `/blog?category=${cat}`;
+      window.history.replaceState(null, '', url);
+    } catch { /* ignore */ }
+  }
+
+  const isFiltered = query.trim().length > 0 || activeCategory !== 'all';
 
   return (
     <>
@@ -101,246 +105,189 @@ export default function BlogIndex() {
       />
       <SiteNav />
 
-      <main className="bg-[#FFFBFB] min-h-screen pt-14">
+      <main className="bg-white min-h-screen pt-14">
 
-        {/* ── Blog hero ───────────────────────────────────────────────── */}
-        <header
-          className="border-b border-[#F4C2C2]/30"
-          style={{ background: 'linear-gradient(165deg, #FFF5F9 0%, #FFFBFB 55%, #F7F3FF 100%)' }}
-        >
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-20">
-            <motion.div {...fadeUp()}>
-              <p
-                className="text-xs font-black uppercase tracking-[0.2em] mb-4"
-                style={{ color: PINK }}
-              >
-                Nelsy Blog
-              </p>
-              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-[#1A1A1A] mb-5 leading-tight max-w-2xl">
-                The Nail Business Edit
-              </h1>
-              <p className="text-gray-500 text-lg max-w-lg leading-relaxed">
-                Practical ideas, strategies and inspiration for growing a better nail business.
-              </p>
-            </motion.div>
-
-            {/* Category quick nav */}
-            <motion.div {...fadeUp(0.12)} className="mt-10 flex flex-wrap gap-2">
-              {NAV_CATEGORIES.map((cat) => {
-                const c = CATEGORY_COLORS[cat];
-                return (
-                  <button
-                    key={cat}
-                    onClick={() => { setActiveCategory(cat); setQuery(''); window.scrollTo({ top: 600, behavior: 'smooth' }); }}
-                    className="text-xs font-semibold px-3.5 py-1.5 rounded-full transition-colors hover:opacity-90"
-                    style={{ background: c.bg, color: c.text }}
-                  >
-                    {CATEGORY_LABELS[cat]}
-                  </button>
-                );
-              })}
-            </motion.div>
+        {/* ── Masthead ────────────────────────────────────────────────── */}
+        <header className="relative overflow-hidden bg-[#FDF0F7]/60 border-b border-[#F4C2C2]/30">
+          <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-[#F52B8C]/10 blur-3xl" />
+          <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-16 w-80 h-80 rounded-full bg-[#F4C2C2]/40 blur-3xl" />
+          <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-14 md:py-20 text-center">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] mb-4" style={{ color: PINK }}>The Nelsy Blog</p>
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-[#1A1A1A] leading-[1.05] tracking-tight mb-5">
+              The Nail Business Edit
+            </h1>
+            <p className="text-gray-600 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+              Practical guides for nail techs and beauty pros: getting clients, pricing, deposits, policies, booking apps and content that books.
+            </p>
+            <p className="mt-6 text-xs text-gray-500">{all.length} guides · Free tools</p>
           </div>
         </header>
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
-          {!isFiltered && (
-            <>
-              {/* ── Featured story ──────────────────────────────────────── */}
-              {featured && (
-                <motion.section {...fadeUp(0.05)} className="py-14 border-b border-[#F4C2C2]/20">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="h-px flex-1 bg-[#F4C2C2]/40" />
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Featured</p>
-                    <div className="h-px flex-1 bg-[#F4C2C2]/40" />
-                  </div>
-                  <ArticleCard article={featured} size="featured" />
-                </motion.section>
-              )}
-
-              {/* ── Spotlight row ────────────────────────────────────────── */}
-              {spotlight.length > 0 && (
-                <motion.section {...fadeUp(0.1)} className="py-14 border-b border-[#F4C2C2]/20">
-                  <div className="flex items-center justify-between mb-6">
-                    <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Editors' picks</p>
-                  </div>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {spotlight.map((a) => (
-                      <ArticleCard key={a.slug} article={a} size="spotlight" />
-                    ))}
-                  </div>
-                </motion.section>
-              )}
-
-              {/* ── Editorial sections ───────────────────────────────────── */}
-              {EDITORIAL_SECTIONS.map((sec, idx) => {
-                const articles = getArticlesByCategory(sec.category).slice(0, 6);
-                if (!articles.length) return null;
-                const c = CATEGORY_COLORS[sec.category];
-                return (
-                  <motion.section
-                    key={sec.category}
-                    {...fadeUp(0.05 * idx)}
-                    className="py-14 border-b border-[#F4C2C2]/20 last:border-b-0"
-                  >
-                    {/* Section header */}
-                    <div className="flex items-end justify-between mb-7 flex-wrap gap-3">
-                      <div>
-                        <span
-                          className="inline-block text-[10px] font-black uppercase tracking-[0.18em] px-2.5 py-1 rounded-full mb-3"
-                          style={{ background: c.bg, color: c.text }}
-                        >
-                          {CATEGORY_LABELS[sec.category]}
-                        </span>
-                        <p className="text-gray-500 text-sm">{sec.desc}</p>
-                      </div>
-                      <button
-                        onClick={() => { setActiveCategory(sec.category); setQuery(''); window.scrollTo({ top: 800, behavior: 'smooth' }); }}
-                        className="text-sm font-semibold flex items-center gap-1 transition-opacity hover:opacity-70 flex-shrink-0"
-                        style={{ color: PINK }}
-                      >
-                        View all <span aria-hidden>→</span>
-                      </button>
-                    </div>
-
-                    {/* Article grid */}
-                    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                      {articles.map((a) => (
-                        <ArticleCard key={a.slug} article={a} size="grid" />
-                      ))}
-                    </div>
-                  </motion.section>
-                );
-              })}
-            </>
+          {/* ── Featured ──────────────────────────────────────────────── */}
+          {featured && (
+            <section aria-label="Featured article" className="pt-10 md:pt-14">
+              <ArticleCard article={featured} size="featured" />
+            </section>
           )}
 
-          {/* ── Search + filter (always visible below curated) ───────── */}
-          <motion.section {...fadeUp(0.15)} className="py-14">
-            {/* Section divider */}
-            {!isFiltered && (
-              <div className="flex items-center gap-3 mb-10">
-                <div className="h-px flex-1 bg-[#F4C2C2]/40" />
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">All articles</p>
-                <div className="h-px flex-1 bg-[#F4C2C2]/40" />
+          {/* ── Start here (editor's picks) ───────────────────────────── */}
+          {spotlight.length > 0 && (
+            <section aria-labelledby="start-here" className="pt-14">
+              <h2 id="start-here" className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-6">Start here</h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {spotlight.map((a) => (
+                  <ArticleCard key={a.slug} article={a} size="spotlight" minutes={readMinutes(a)} />
+                ))}
               </div>
-            )}
+            </section>
+          )}
 
-            {/* Search */}
-            <div className="relative max-w-md mb-6">
-              <svg
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                width="14" height="14" viewBox="0 0 20 20" fill="currentColor"
-                aria-hidden="true"
-              >
-                <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-              </svg>
-              <input
-                type="search"
-                placeholder="Search the Nelsy Blog…"
-                value={query}
-                onChange={(e) => { setQuery(e.target.value); setActiveCategory('all'); }}
-                className="w-full pl-10 pr-4 py-3 text-sm rounded-full border border-[#F4C2C2]/60 bg-white focus:outline-none focus:border-[#F52B8C] transition"
-              />
+          {/* ── More to explore: category nav + search + grid ─────────── */}
+          <section aria-labelledby="explore" className="pt-16 pb-14" id="explore-articles">
+            <div className="text-center mb-8">
+              <h2 id="explore" className="font-serif text-3xl sm:text-4xl font-bold text-[#1A1A1A]">More to explore</h2>
             </div>
 
-            {/* Category pills */}
-            <div className="flex flex-wrap gap-2 mb-8">
-              <button
-                onClick={() => { setActiveCategory('all'); setQuery(''); }}
-                className="text-xs font-semibold px-3.5 py-1.5 rounded-full transition-colors"
-                style={
-                  activeCategory === 'all' && !query
-                    ? { background: PINK, color: '#fff' }
-                    : { background: '#F7F3F3', color: '#555' }
-                }
-              >
-                All
-              </button>
-              {CATEGORIES.map(([cat, label]) => {
-                const c = CATEGORY_COLORS[cat];
-                const isActive = activeCategory === cat;
-                return (
+            <div className="flex flex-col md:flex-row md:items-center gap-4 mb-8">
+              <div className="-mx-4 px-4 md:mx-0 md:px-0 flex-1 overflow-x-auto">
+                <div className="flex gap-2 w-max md:w-auto md:flex-wrap" role="tablist" aria-label="Categories">
                   <button
-                    key={cat}
-                    onClick={() => { setActiveCategory(cat); setQuery(''); }}
-                    className="text-xs font-semibold px-3.5 py-1.5 rounded-full transition-colors"
-                    style={
-                      isActive
-                        ? { background: c.text, color: '#fff' }
-                        : { background: c.bg, color: c.text }
-                    }
+                    role="tab"
+                    aria-selected={activeCategory === 'all' && !query}
+                    onClick={() => pick('all')}
+                    className={`whitespace-nowrap text-sm font-semibold px-4 py-2 rounded-full border transition ${
+                      activeCategory === 'all' && !query ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]' : 'bg-white text-[#1A1A1A] border-[#1A1A1A]/15 hover:border-[#1A1A1A]/40'
+                    }`}
                   >
-                    {label}
+                    All
                   </button>
-                );
-              })}
+                  {NAV_CATEGORIES.filter((c) => counts.get(c)).map((cat) => {
+                    const active = activeCategory === cat;
+                    return (
+                      <button
+                        key={cat}
+                        role="tab"
+                        aria-selected={active}
+                        onClick={() => pick(cat)}
+                        className={`whitespace-nowrap text-sm font-semibold px-4 py-2 rounded-full border transition ${
+                          active ? 'bg-[#F52B8C] text-white border-[#F52B8C]' : 'bg-white text-[#1A1A1A] border-[#1A1A1A]/15 hover:border-[#F52B8C]/60'
+                        }`}
+                      >
+                        {CATEGORY_LABELS[cat]}
+                        <span className={`ml-1.5 text-xs ${active ? 'text-white/80' : 'text-gray-400'}`}>{counts.get(cat)}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+              <label className="relative md:w-64 shrink-0">
+                <span className="sr-only">Search the blog</span>
+                <Search size={15} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden />
+                <input
+                  type="search"
+                  placeholder="Search guides"
+                  value={query}
+                  onChange={(e) => { setQuery(e.target.value); setActiveCategory('all'); setVisible(PAGE_SIZE); }}
+                  className="w-full pl-10 pr-4 py-2.5 text-sm rounded-full border border-[#1A1A1A]/15 bg-[#F7F3F3] focus:bg-white focus:outline-none focus:border-[#F52B8C] transition"
+                />
+              </label>
             </div>
 
-            {/* Results label */}
             {query && (
               <p className="text-sm text-gray-500 mb-5">
                 {filtered.length} result{filtered.length !== 1 ? 's' : ''} for &ldquo;{query}&rdquo;
               </p>
             )}
-            {activeCategory !== 'all' && !query && (
-              <p className="text-xs font-black uppercase tracking-widest text-gray-400 mb-5">
-                {CATEGORY_LABELS[activeCategory]}
-              </p>
-            )}
 
-            {/* Article grid */}
-            {gridArticles.length === 0 ? (
-              <div className="text-center py-16">
-                <p className="text-gray-400 text-sm">No articles found. Try a different search or category.</p>
-              </div>
+            {filtered.length === 0 ? (
+              <p className="text-center py-16 text-gray-400 text-sm">No articles found. Try a different search or category.</p>
             ) : (
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {gridArticles.map((a, i) => (
-                  <motion.div key={a.slug} {...fadeUp(Math.min(i, 8) * 0.04)}>
-                    <ArticleCard article={a} size="grid" />
-                  </motion.div>
-                ))}
-              </div>
+              <>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {filtered.slice(0, visible).map((a) => (
+                    <ArticleCard key={a.slug} article={a} size="grid" minutes={readMinutes(a)} />
+                  ))}
+                </div>
+                {filtered.length > visible && (
+                  <div className="mt-10 text-center">
+                    <button
+                      onClick={() => setVisible((v) => v + PAGE_SIZE)}
+                      className="rounded-full border border-[#1A1A1A] px-6 py-3 text-sm font-bold text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white transition"
+                    >
+                      Show more guides ({filtered.length - visible} left)
+                    </button>
+                  </div>
+                )}
+              </>
             )}
-          </motion.section>
+          </section>
         </div>
 
-        {/* ── Free tools cross-link ────────────────────────────────────── */}
-        {!isFiltered && (
-          <motion.section
-            {...fadeUp()}
-            className="border-t border-[#F4C2C2]/30 bg-white py-14 px-4"
-          >
-            <div className="max-w-6xl mx-auto">
-              <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-6">Free tools</p>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {[
-                  { label: 'Nail Tech Pricing Calculator', desc: 'Calculate your service prices for profit.', href: '/tools/nail-tech-pricing-calculator' },
-                  { label: 'Cancellation Policy Generator', desc: 'Generate a professional cancellation policy in seconds.', href: '/tools/nail-tech-cancellation-policy-generator' },
-                  { label: 'Appointment Reminder Templates', desc: 'Copy-paste reminder messages for any booking system.', href: '/tools/nail-tech-appointment-reminder-templates' },
-                ].map((t) => (
-                  <Link
-                    key={t.href}
-                    to={t.href}
-                    className="group flex items-start gap-4 rounded-2xl border border-[#F4C2C2]/40 bg-white p-5 hover:shadow-md transition-shadow"
-                  >
-                    <div
-                      className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 text-white text-sm font-bold"
-                      style={{ background: PINK }}
-                    >
-                      ✦
-                    </div>
-                    <div>
-                      <p className="font-semibold text-[#1A1A1A] text-sm group-hover:text-[#F52B8C] transition-colors">{t.label}</p>
-                      <p className="text-gray-500 text-xs mt-0.5 leading-relaxed">{t.desc}</p>
-                    </div>
+        {/* ── Tools + trial band ───────────────────────────────────────── */}
+        <section aria-labelledby="tools-band" className="px-4 sm:px-6 pb-16">
+          <div className="max-w-6xl mx-auto rounded-3xl bg-[#1A1A1A] text-white p-7 sm:p-12 grid lg:grid-cols-[1fr_1.2fr] gap-10 items-center">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] mb-3" style={{ color: PINK }}>Free tools</p>
+              <h2 id="tools-band" className="font-serif text-3xl sm:text-4xl font-bold leading-tight mb-4">Know your numbers before you change anything</h2>
+              <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">
+                Free calculators for deposits, no-shows and booking app fees. When you are ready, try Nelsy free for 14 days: $29/month after, 0% Nelsy commission.
+              </p>
+              <Link
+                to={TRIAL_PATH}
+                onClick={() => track('seo_cta_clicked', { landing_page: '/blog', page_type: 'blog_index', cta_position: 'footer_cta', cta_label: 'Start your free trial' })}
+                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90"
+                style={{ background: PINK }}
+              >
+                Start your free trial <span aria-hidden>→</span>
+              </Link>
+            </div>
+            <ul className="grid gap-3">
+              {CORE_TOOLS.map((path) => (
+                <li key={path}>
+                  <Link to={path} className="group flex items-center gap-4 rounded-2xl bg-white/5 border border-white/10 p-4 hover:bg-white/10 transition">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" style={{ background: PINK }}>
+                      <Calculator size={18} aria-hidden />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-semibold text-sm">{TOOL_LINKS[path].label}</span>
+                      <span className="block text-xs text-white/60 mt-0.5">{TOOL_LINKS[path].desc}</span>
+                    </span>
+                    <span aria-hidden className="text-white/40 group-hover:text-white transition">→</span>
                   </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        {/* ── All guides by topic (plain links: every article reachable from /blog) ── */}
+        {!isFiltered && (
+          <section aria-labelledby="by-topic" className="border-t border-[#F4C2C2]/30 bg-[#FFFBFB] px-4 sm:px-6 py-14">
+            <div className="max-w-6xl mx-auto">
+              <h2 id="by-topic" className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-8">All guides by topic</h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+                {NAV_CATEGORIES.filter((c) => counts.get(c)).map((cat) => (
+                  <details key={cat} className="group" open>
+                    <summary className="cursor-pointer list-none flex items-center justify-between border-b border-[#1A1A1A]/10 pb-2 mb-3">
+                      <h3 className="text-sm font-bold uppercase tracking-wider text-[#1A1A1A]">{CATEGORY_LABELS[cat]}</h3>
+                      <span className="text-xs text-gray-400">{counts.get(cat)}</span>
+                    </summary>
+                    <ul className="space-y-2 max-h-72 overflow-y-auto pr-2">
+                      {all.filter((a) => a.category === cat).map((a) => (
+                        <li key={a.slug}>
+                          <Link to={`/blog/${a.slug}`} className="text-sm text-gray-700 hover:text-[#F52B8C] transition leading-snug">
+                            {a.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
                 ))}
               </div>
             </div>
-          </motion.section>
+          </section>
         )}
       </main>
 

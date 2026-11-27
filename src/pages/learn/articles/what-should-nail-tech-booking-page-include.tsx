@@ -6,7 +6,7 @@ registerArticle({
   slug: 'what-should-nail-tech-booking-page-include',
   title: 'What Should a Nail Tech Booking Page Include?',
   seoTitle: 'What Should a Nail Tech Booking Page Include?',
-  excerpt: 'Everything a client needs to see before booking — and the things nail techs most often forget to include on their booking pages.',
+  excerpt: 'Everything a client needs to see before booking, and the things nail techs most often forget to include on their booking pages.',
   seoDescription: 'What to include on your nail tech booking page: services, pricing, deposit info, cancellation policy, location, and what makes clients actually book.',
   category: 'booking-software',
   tags: ['booking page', 'nail tech setup', 'online booking', 'client experience'],
@@ -27,8 +27,8 @@ registerArticle({
   relatedSlugs: ['how-to-move-from-instagram-dms-to-online-booking', 'nail-tech-no-show-policy-examples'],
   faq: [
     { q: 'Should I list prices on my booking page?', a: 'Yes. Hiding prices creates friction and distrust. Clients who don\'t know your price often assume the worst. Listing prices upfront filters out clients who can\'t afford your services (saving you both time) and attracts clients who are comfortable with your rates.' },
-    { q: 'Do I need a photo on my booking page?', a: 'A photo of your work is strongly recommended. Clients booking nails want to see what they\'re getting. Even one or two high-quality nail photos significantly improve booking conversion. A photo of you is a bonus — it adds trust, especially for clients booking for the first time.' },
-    { q: 'How detailed should service descriptions be?', a: 'Detailed enough to answer the most common pre-booking questions. For each service: what\'s included, approximately how long it takes, what preparation the client needs to do (if any), and what the end result looks like. Avoid jargon that clients might not know — "gel overlay" is clear; technical terms for specific nail techniques may not be.' },
+    { q: 'Do I need a photo on my booking page?', a: 'A photo of your work is strongly recommended. Clients booking nails want to see what they\'re getting. Even one or two high-quality nail photos significantly improve booking conversion. A photo of you is a bonus: it adds trust, especially for clients booking for the first time.' },
+    { q: 'How detailed should service descriptions be?', a: 'Detailed enough to answer the most common pre-booking questions. For each service: what\'s included, approximately how long it takes, what preparation the client needs to do (if any), and what the end result looks like. Avoid jargon that clients might not know: "gel overlay" is clear; technical terms for specific nail techniques may not be.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
@@ -41,7 +41,7 @@ registerArticle({
           'A brief description of what you offer and where you\'re based',
           'Full service menu with prices and durations',
           'Deposit amount and what it covers',
-          'Your location (city / area — full address can come in confirmation)',
+          'Your location (city / area: full address can come in confirmation)',
           'Your cancellation policy and notice period',
           'Photos of your work',
           'How to contact you if clients have questions',
@@ -67,7 +67,7 @@ registerArticle({
 
       <section id="deposit-policy">
         <h2 className="font-serif text-2xl font-bold mb-4">Deposit and payment info</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Be upfront about deposits. Don't hide the deposit requirement at the end of the booking flow — state it clearly at the start. Clients who are surprised by a deposit at checkout are more likely to abandon the booking than clients who knew it was coming.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Be upfront about deposits. Don't hide the deposit requirement at the end of the booking flow: state it clearly at the start. Clients who are surprised by a deposit at checkout are more likely to abandon the booking than clients who knew it was coming.</p>
         <ArticleCallout variant="info" title="What to include about deposits">
           <ul className="space-y-1 list-disc list-inside text-sm">
             <li>The deposit amount or percentage</li>
@@ -81,14 +81,14 @@ registerArticle({
 
       <section id="location">
         <h2 className="font-serif text-2xl font-bold mb-4">Location and access info</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">You don't need to put your full address on a public booking page — especially if you work from home. What clients need to know at booking time:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">You don't need to put your full address on a public booking page, especially if you work from home. What clients need to know at booking time:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>The area or neighbourhood you're based in (e.g. "East London, E3")</li>
           <li>Whether there's parking or which tube/train station is closest</li>
           <li>Whether you're home-based, in a salon, or mobile</li>
           <li>Full address can come in the confirmation message after booking</li>
         </ul>
-        <ArticleTip>If you work from home and prefer not to share your address publicly, put "Home studio — East London" on the booking page and include the full address in the booking confirmation message.</ArticleTip>
+        <ArticleTip>If you work from home and prefer not to share your address publicly, put "Home studio: East London" on the booking page and include the full address in the booking confirmation message.</ArticleTip>
       </section>
 
       <section id="cancellation">
@@ -104,14 +104,14 @@ registerArticle({
 
       <section id="photos">
         <h2 className="font-serif text-2xl font-bold mb-4">Photos and portfolio</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Clients book nail services based on what they see. A booking page with no photos converts significantly worse than one with even 3–4 good photos of your work. You don't need a professional shoot — clean, well-lit photos of recent sets you're proud of are enough.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Clients book nail services based on what they see. A booking page with no photos converts significantly worse than one with even 3–4 good photos of your work. You don't need a professional shoot: clean, well-lit photos of recent sets you're proud of are enough.</p>
         <ArticleTable
           headers={['Photo type', 'Effectiveness']}
           rows={[
-            ['Recent nail sets (close-up)', 'High — shows clients what to expect'],
-            ['Nail art you\'re proud of', 'High — attracts clients who want similar work'],
-            ['Photo of you working', 'Medium — adds trust and personality'],
-            ['Before/after', 'High — shows skill and transformation'],
+            ['Recent nail sets (close-up)', 'High: shows clients what to expect'],
+            ['Nail art you\'re proud of', 'High: attracts clients who want similar work'],
+            ['Photo of you working', 'Medium: adds trust and personality'],
+            ['Before/after', 'High: shows skill and transformation'],
           ]}
         />
       </section>

@@ -6,7 +6,7 @@ registerArticle({
   slug: 'how-to-get-more-local-nail-clients',
   title: 'How to Get More Local Nail Clients',
   seoTitle: 'How to Get More Local Nail Clients (Proven Strategies)',
-  excerpt: 'Local clients are the lifeblood of every nail business. A practical guide to building a steady stream of clients in your area — beyond just Instagram.',
+  excerpt: 'Local clients are the lifeblood of every nail business. A practical guide to building a steady stream of clients in your area: beyond just Instagram.',
   seoDescription: 'How to get more local nail clients. Strategies covering local SEO, Google Business, community groups, referrals, collaborations, and Instagram location targeting.',
   category: 'get-clients',
   tags: ['local clients', 'local marketing', 'nail business', 'Google Business'],
@@ -25,19 +25,19 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-get-more-nail-clients', 'how-to-get-nail-clients-from-instagram', 'how-to-get-booked-out-as-nail-tech'],
   faq: [
-    { q: 'Does Google Business Profile help nail techs get clients?', a: 'Yes — significantly. When someone searches "nail tech near me" or "nail tech [your area]", Google Business Profiles are one of the first results. A complete profile with reviews, photos, and accurate information can drive consistent new client enquiries without any ongoing work.' },
+    { q: 'Does Google Business Profile help nail techs get clients?', a: 'Yes: significantly. When someone searches "nail tech near me" or "nail tech [your area]", Google Business Profiles are one of the first results. A complete profile with reviews, photos, and accurate information can drive consistent new client enquiries without any ongoing work.' },
     { q: 'Are Facebook groups still useful for getting nail clients?', a: 'Yes, especially local community groups. "Recommendations" posts in local Facebook groups are high-intent: the person asking is actively looking for a recommendation, not passively browsing. Having previous clients mention you in these threads is very effective.' },
-    { q: 'How do I ask for referrals without feeling awkward?', a: 'Make it specific: "I\'m looking to take on a few new clients — if you know anyone who\'s looking for a nail tech in [area], I\'d really appreciate a recommendation." Most clients are genuinely happy to help if you like their work. The awkwardness is in your head — they don\'t find it pushy.' },
+    { q: 'How do I ask for referrals without feeling awkward?', a: 'Make it specific: "I\'m looking to take on a few new clients, if you know anyone who\'s looking for a nail tech in [area], I\'d really appreciate a recommendation." Most clients are genuinely happy to help if you like their work. The awkwardness is in your head: they don\'t find it pushy.' },
   ],
   relatedFeatureSlugs: ['link-in-bio', 'bookings', 'audience-capture'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="google-business">
         <h2 className="font-serif text-2xl font-bold mb-4">Google Business Profile</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Most nail techs focus entirely on Instagram and miss one of the highest-intent local marketing channels: Google. When someone searches "nail tech near me" or "nail tech [your area]", a Google Business Profile appears in the results. This is someone actively searching for a nail tech — far higher intent than an Instagram scroll.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Most nail techs focus entirely on Instagram and miss one of the highest-intent local marketing channels: Google. When someone searches "nail tech near me" or "nail tech [your area]", a Google Business Profile appears in the results. This is someone actively searching for a nail tech: far higher intent than an Instagram scroll.</p>
         <ArticleSteps steps={[
           { title: 'Create a free Google Business Profile', body: 'Go to Google Business and create a profile. Choose "Beauty & spas" as your category, with "Nail salon" as a more specific type.' },
-          { title: 'Complete every section', body: 'Add your area (you don\'t need to show your home address — use a general area), phone number or booking link, business hours, services, and photos of your work.' },
+          { title: 'Complete every section', body: 'Add your area (you don\'t need to show your home address: use a general area), phone number or booking link, business hours, services, and photos of your work.' },
           { title: 'Get your first Google reviews', body: 'Ask 5–10 satisfied clients to leave a Google review. Reviews are the biggest factor in local search ranking. A message like: "If you\'ve loved your nails, would you mind leaving me a Google review? It really helps me grow!" works well.' },
           { title: 'Post updates regularly', body: 'Google Business lets you post updates. Post new nail photos and availability updates to keep your profile active.' },
         ]} />
@@ -87,14 +87,14 @@ registerArticle({
         <ArticleCallout variant="tip" title="Simple referral programme">
           "Refer a friend and you both get £5 off your next appointment." Give clients a unique code to share, or simply ask them to mention their name when their referral books.
         </ArticleCallout>
-        <p className="text-gray-700 mt-4 leading-relaxed">The financial incentive isn't the main driver — most clients who refer do it because they like you. But an explicit programme gives clients a reason to actively mention you rather than passively thinking "oh, they might like my nail tech."</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">The financial incentive isn't the main driver: most clients who refer do it because they like you. But an explicit programme gives clients a reason to actively mention you rather than passively thinking "oh, they might like my nail tech."</p>
       </section>
 
       <section id="word-of-mouth">
         <h2 className="font-serif text-2xl font-bold mb-4">Maximising word of mouth</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Word of mouth is powerful but passive by default. You can make it more active:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>At the end of every appointment: "I'm taking on new clients — if anyone you know needs a nail tech, I'd love a referral."</li>
+          <li>At the end of every appointment: "I'm taking on new clients, if anyone you know needs a nail tech, I'd love a referral."</li>
           <li>Make the nails photo-worthy: clean finish, good shape, something worth photographing. A client who's excited about their nails naturally shows people.</li>
           <li>Make it easy for clients to share: "Would you mind posting these on Instagram and tagging me?"</li>
         </ul>

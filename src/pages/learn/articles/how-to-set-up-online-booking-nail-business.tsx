@@ -6,8 +6,8 @@ registerArticle({
   slug: 'how-to-set-up-online-booking-nail-business',
   title: 'How to Set Up Online Booking for Your Nail Business',
   seoTitle: 'How to Set Up Online Booking for Your Nail Business',
-  excerpt: 'Setting up online booking is one of the most impactful things you can do for your nail business. Here\'s how to do it in a few hours — from choosing a platform to your first booking.',
-  seoDescription: 'How to set up online booking for your nail business. Step-by-step guide to getting your nail booking page live — platform choice, services setup, deposits, and sharing your link.',
+  excerpt: 'Setting up online booking is one of the most impactful things you can do for your nail business. Here\'s how to do it in a few hours, from choosing a platform to your first booking.',
+  seoDescription: 'How to set up online booking for your nail business, step by step: platform choice, services, deposits and sharing your booking link.',
   category: 'booking-software',
   tags: ['set up online booking nail tech', 'nail tech booking page setup', 'how to set up nail booking'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
@@ -26,7 +26,7 @@ registerArticle({
   relatedSlugs: ['how-online-booking-works-nail-techs', 'nail-tech-deposit-policy', 'how-to-move-from-instagram-dms-to-online-booking'],
   faq: [
     { q: 'How long does it take to set up online booking?', a: 'Most nail techs can set up a complete booking page in 2–4 hours: 30 minutes choosing and signing up for a platform, 30–60 minutes setting up services and availability, 30 minutes configuring deposits and policies, and 30 minutes on the profile. Allow extra time for testing the client experience and setting up payment.' },
-    { q: 'Should I set up online booking before or after I have clients?', a: 'Before — even if you have zero clients, launching with online booking from the start is much easier than migrating clients from DM booking later. Share your booking link in your first Instagram post about your nail business.' },
+    { q: 'Should I set up online booking before or after I have clients?', a: 'Before, even if you have zero clients, launching with online booking from the start is much easier than migrating clients from DM booking later. Share your booking link in your first Instagram post about your nail business.' },
     { q: 'What if clients still want to book through Instagram DMs?', a: 'It\'s fine to respond to DM enquiries and direct them to your booking link. Over time, as clients get used to the system, fewer will try to book through DMs. Consistently directing all bookings to your link trains clients to use it.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
@@ -50,7 +50,7 @@ registerArticle({
           <li><strong>Business name:</strong> Your trading name, exactly as it appears everywhere else</li>
           <li><strong>Location:</strong> Your salon address, or for home/mobile techs: your area with exact address sent to confirmed clients only</li>
           <li><strong>Description:</strong> 2–3 sentences on who you serve, your specialty, and your booking approach</li>
-          <li><strong>Portfolio photos:</strong> Add your best nail sets — this is what converts profile views to bookings</li>
+          <li><strong>Portfolio photos:</strong> Add your best nail sets. This is what converts profile views to bookings</li>
         </ul>
       </section>
 
@@ -60,10 +60,10 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Clear service name (as you'd say it to a client)</li>
           <li>Price (match exactly what you charge)</li>
-          <li>Duration — be accurate; allow buffer for cleaning between clients</li>
+          <li>Duration: be accurate; allow buffer for cleaning between clients</li>
           <li>Short description if needed (e.g. what's included, what's not)</li>
         </ul>
-        <ArticleTip>Keep your service menu concise — 8–12 services is enough to start. Too many options overwhelm clients. You can add more later.</ArticleTip>
+        <ArticleTip>Keep your service menu concise: 8–12 services is enough to start. Too many options overwhelm clients. You can add more later.</ArticleTip>
       </section>
 
       <section id="setup-availability">
@@ -72,14 +72,14 @@ registerArticle({
           <li>Set your standard working days and hours</li>
           <li>Add buffer time between appointments (cleaning and setup time)</li>
           <li>Block any known dates off in advance (holidays, training days)</li>
-          <li>Set your booking window — how far in advance clients can book (e.g. up to 8 weeks)</li>
-          <li>Set minimum notice — how far in advance clients must book (e.g. at least 24 hours)</li>
+          <li>Set your booking window, how far in advance clients can book (e.g. up to 8 weeks)</li>
+          <li>Set minimum notice, how far in advance clients must book (e.g. at least 24 hours)</li>
         </ul>
       </section>
 
       <section id="setup-deposits">
         <h2 className="font-serif text-2xl font-bold mb-4">Step 5: Configure deposits and policies</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Turn on deposit collection — this is one of the most impactful steps for reducing no-shows:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Turn on deposit collection. This is one of the most impactful steps for reducing no-shows:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Set deposit amount (20–50% of service price, or a flat fee)</li>
           <li>Set your cancellation window (e.g. deposit non-refundable if cancelling within 48 hours)</li>
@@ -90,7 +90,7 @@ registerArticle({
 
       <section id="launch">
         <h2 className="font-serif text-2xl font-bold mb-4">Step 6: Launch and share your link</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Before going live — test the full booking flow yourself as a client. Make a test booking, pay a deposit, check the confirmation and reminder. Fix anything that looks wrong.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Before going live: test the full booking flow yourself as a client. Make a test booking, pay a deposit, check the confirmation and reminder. Fix anything that looks wrong.</p>
         <p className="text-gray-700 mb-4 leading-relaxed">Then share your booking link:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Instagram bio link</li>
@@ -99,7 +99,7 @@ registerArticle({
           <li>Anywhere else you promote your nail business</li>
         </ul>
         <ArticleCallout variant="info" title="Tell existing clients">
-          If you have existing clients who book via DMs, send them a message with your new booking link. "I've set up online booking — you can now book and pay your deposit directly at [link]." Most clients appreciate the simplicity.
+          If you have existing clients who book via DMs, send them a message with your new booking link. "I've set up online booking: you can now book and pay your deposit directly at [link]." Most clients appreciate the simplicity.
         </ArticleCallout>
       </section>
     </div>

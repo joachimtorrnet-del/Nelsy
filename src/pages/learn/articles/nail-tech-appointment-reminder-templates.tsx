@@ -5,8 +5,8 @@ registerArticle({
   slug: 'nail-tech-appointment-reminder-templates',
   title: 'Nail Tech Appointment Reminder Templates',
   seoTitle: 'Nail Tech Appointment Reminder Message Templates (Copy & Paste)',
-  excerpt: 'Send reminders that reduce no-shows and don\'t annoy your clients. Copy-paste templates for appointment reminders — SMS, WhatsApp, DM, and automated messages.',
-  seoDescription: 'Nail tech appointment reminder message templates. Copy-paste SMS, WhatsApp, and DM reminder templates for nail appointments — friendly, professional, and firm versions.',
+  excerpt: 'Send reminders that reduce no-shows and don\'t annoy your clients. Copy-paste templates for appointment reminders: SMS, WhatsApp, DM, and automated messages.',
+  seoDescription: 'Nail tech appointment reminder templates: copy-paste SMS, WhatsApp and DM reminders for nail appointments in friendly, professional and firm versions.',
   category: 'policies-clients',
   tags: ['nail tech appointment reminder templates', 'nail appointment reminder message', 'appointment reminder nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
@@ -24,9 +24,9 @@ registerArticle({
   ],
   relatedSlugs: ['nail-tech-no-show-message-templates', 'nail-tech-cancellation-message-templates', 'nail-tech-booking-confirmation-templates', 'how-to-deal-with-nail-client-no-shows'],
   faq: [
-    { q: 'Should reminders be automated or manual?', a: 'Use automated reminders through your booking app for every appointment — this is reliable and saves time. Send a manual follow-up only if you have a specific reason (new client, complex service, first appointment after a long gap).' },
+    { q: 'Should reminders be automated or manual?', a: 'Use automated reminders through your booking app for every appointment: this is reliable and saves time. Send a manual follow-up only if you have a specific reason (new client, complex service, first appointment after a long gap).' },
     { q: 'How many reminders should I send?', a: 'One or two is usually enough. A 48-hour reminder gives clients time to reschedule if needed; a 24-hour reminder is the last chance. Sending more than two starts to feel like harassment and can cause clients to disengage.' },
-    { q: 'What should a reminder include?', a: 'At minimum: client name, appointment date and time, service, your name/business, and a note about your cancellation policy (or a link to it). Keep it short — a reminder is not a newsletter.' },
+    { q: 'What should a reminder include?', a: 'At minimum: client name, appointment date and time, service, your name/business, and a note about your cancellation policy (or a link to it). Keep it short: a reminder is not a newsletter.' },
   ],
   relatedFeatureSlugs: ['bookings', 'crm', 'email-newsletters'],
   content: () => (
@@ -55,7 +55,7 @@ registerArticle({
         </blockquote>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Same-day friendly reminder (new client):</strong></p>
         <blockquote className="border-l-4 border-[#F4C2C2] pl-4 italic text-gray-600">
-          Hi [Name], just a quick note — so excited to have you in today at [time]! My address is [address]. See you soon! [Your name]
+          Hi [Name], just a quick note, so excited to have you in today at [time]! My address is [address]. See you soon! [Your name]
         </blockquote>
       </section>
 
@@ -91,7 +91,7 @@ registerArticle({
           <li>Confirms name, service, date, time, and address</li>
           <li>Mentions your cancellation policy timeframe</li>
           <li>Gives them a way to contact you if needed</li>
-          <li>Is professional but warm — not cold or robotic</li>
+          <li>Is professional but warm, not cold or robotic</li>
         </ul>
         <ArticleTip>Check your booking app's reminder email/SMS template after setting it up. Send yourself a test appointment to see exactly what clients receive. The defaults are often too generic.</ArticleTip>
       </section>
@@ -99,10 +99,10 @@ registerArticle({
       <section id="tips">
         <h2 className="font-serif text-2xl font-bold mb-4">Reminder tips</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>Always include the cancellation policy timeframe in at least the 24-hour reminder — so there's no "I didn't know" if they no-show</li>
-          <li>Use first name — reminders that start with "Dear Valued Client" feel automated and impersonal</li>
-          <li>Keep it short — 3–5 sentences is enough</li>
-          <li>Don't send more than 2 reminders — after that it feels like harassment</li>
+          <li>Always include the cancellation policy timeframe in at least the 24-hour reminder, so there's no "I didn't know" if they no-show</li>
+          <li>Use first name: reminders that start with "Dear Valued Client" feel automated and impersonal</li>
+          <li>Keep it short: 3–5 sentences is enough</li>
+          <li>Don't send more than 2 reminders: after that it feels like harassment</li>
           <li>For SMS and WhatsApp reminders, skip the emoji if you're going for a professional tone</li>
         </ul>
       </section>

@@ -6,7 +6,7 @@ registerArticle({
   slug: 'how-to-fill-nail-appointment-book',
   title: 'How to Fill Your Nail Appointment Book',
   seoTitle: 'How to Fill Your Nail Appointment Book: A Complete Guide',
-  excerpt: 'Empty slots cost money. A practical guide to keeping your nail appointment book consistently full — through regulars, rebooking, and smart promotion.',
+  excerpt: 'Empty slots cost money. A practical guide to keeping your nail appointment book consistently full: through regulars, rebooking, and smart promotion.',
   seoDescription: 'How to fill your nail appointment book: strategies for nail techs covering regulars, rebooking systems, last-minute slots, and Instagram promotion.',
   category: 'get-clients',
   tags: ['appointment book', 'fully booked', 'nail clients', 'fill slots'],
@@ -27,7 +27,7 @@ registerArticle({
   faq: [
     { q: 'How far in advance should nail clients book?', a: 'Most nail techs find the sweet spot is 2–4 weeks ahead for regular clients. Very far-advance booking (6+ weeks) works well for new sets but can lead to more reschedules. Infill clients typically book 3 weeks out. Having online booking lets clients self-serve rather than waiting for you to respond.' },
     { q: 'What is the best way to fill last-minute cancellations?', a: 'An Instagram story with "slot available today/this week" is the fastest way. If you have a waitlist through your booking system, the system can automatically notify the next person. Some nail techs use a WhatsApp group for last-minute slots.' },
-    { q: 'Should I offer discounts to fill empty slots?', a: 'Avoid blanket discounts — they attract price-sensitive clients and devalue your work. Last-minute slot promotions are different: they\'re tactical, time-limited, and serve clients who specifically want a quick appointment. "Slot available tomorrow — first to book gets 10% off" is fine. "Always 20% off" is not.' },
+    { q: 'Should I offer discounts to fill empty slots?', a: 'Avoid blanket discounts: they attract price-sensitive clients and devalue your work. Last-minute slot promotions are different: they\'re tactical, time-limited, and serve clients who specifically want a quick appointment. "Slot available tomorrow: first to book gets 10% off" is fine. "Always 20% off" is not.' },
   ],
   relatedFeatureSlugs: ['bookings', 'instagram-autodm', 'link-in-bio'],
   content: () => (
@@ -52,10 +52,10 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">The rebooking system</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">The most reliable way to keep your appointment book full is to have clients rebook before they leave. A client who rebooks at the end of their appointment is far more likely to return than one who says "I'll message you when I need my next infill."</p>
         <ArticleChecklist title="Rebooking system steps" items={[
-          'Near the end of every appointment, suggest when they should return ("Your infill should be around 3 weeks — want to book now while you\'re here?")',
+          'Near the end of every appointment, suggest when they should return ("Your infill should be around 3 weeks: want to book now while you\'re here?")',
           'Have your booking page or calendar open and ready to show them',
-          'If they can\'t commit to a date, say "I can text you when I have new slots open — what\'s your number?" — they just became a waitlist client',
-          'For clients who don\'t rebook, send a message at the 2-week mark: "Your infill should be coming up soon — here\'s my booking link"',
+          'If they can\'t commit to a date, say "I can text you when I have new slots open, what\'s your number?": they just became a waitlist client',
+          'For clients who don\'t rebook, send a message at the 2-week mark: "Your infill should be coming up soon: here\'s my booking link"',
         ]} />
         <ArticleCallout variant="info" title="Rebooking vs retention">
           Rebooking isn't just about filling slots. It's about retention. A client who books 3 consecutive appointments is a regular. A client who waits until their nails are damaged and then books is an occasional client. Regulars generate 3–5x more revenue per year than occasional clients.
@@ -66,7 +66,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Filling last-minute slots</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Cancellations happen even with deposits. The goal is to replace them quickly:</p>
         <ol className="list-decimal list-inside space-y-3 text-gray-700">
-          <li><strong>Instagram story:</strong> "I have a slot available tomorrow at [time] — first to book gets it!" This converts quickly because stories create urgency and reach people already engaged with your content.</li>
+          <li><strong>Instagram story:</strong> "I have a slot available tomorrow at [time]. First to book gets it!" This converts quickly because stories create urgency and reach people already engaged with your content.</li>
           <li><strong>Waitlist notification:</strong> If your booking platform has waitlist functionality, anyone who tried to book that slot gets automatically notified.</li>
           <li><strong>WhatsApp broadcast:</strong> If you have a WhatsApp list of interested clients, a quick message gets fast responses.</li>
         </ol>
@@ -77,7 +77,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Managing slow periods</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Most nail businesses have predictable slow periods: January after the Christmas rush, school holiday weeks, and sometimes mid-week lulls. Strategies that work:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li><strong>Pre-book campaigns in November/December:</strong> "January is filling up — book your January appointment now." This shifts demand forward.</li>
+          <li><strong>Pre-book campaigns in November/December:</strong> "January is filling up. Book your January appointment now." This shifts demand forward.</li>
           <li><strong>Seasonal promotions:</strong> Not discounts, but specific campaigns. "January reset" sets for clients wanting a fresh start, promoted as a specific service rather than a discount.</li>
           <li><strong>Use slow time for training:</strong> Deliberately quieter weeks are good for learning new techniques without the pressure of a full diary.</li>
         </ul>
@@ -90,7 +90,7 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>When your calendar is full, add a "join waitlist" option to your booking page (some platforms support this natively)</li>
           <li>When a cancellation opens, notify waitlist clients first before posting publicly</li>
-          <li>Keep the waitlist short and active — a waitlist with stale names doesn't serve you</li>
+          <li>Keep the waitlist short and active: a waitlist with stale names doesn't serve you</li>
         </ul>
       </section>
 
@@ -99,9 +99,9 @@ registerArticle({
         <p className="text-gray-700 mb-4 leading-relaxed">Regular availability posts on Instagram are one of the most direct ways to fill your book. They convert well because they combine social proof (your followers know your work) with a specific call to action.</p>
         <p className="text-gray-700 mb-4 leading-relaxed">Effective availability posts:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
-          <li>"I have a few slots open this week — link in bio to book"</li>
-          <li>"New slots just opened for [month] — grab yours before they go"</li>
-          <li>"Cancellation: slot available [day] at [time] — first to book gets it"</li>
+          <li>"I have a few slots open this week: link in bio to book"</li>
+          <li>"New slots just opened for [month]: grab yours before they go"</li>
+          <li>"Cancellation: slot available [day] at [time]. First to book gets it"</li>
         </ul>
         <p className="text-gray-700 mt-4 leading-relaxed">See also: <Link to="/blog/how-to-get-booked-out-as-nail-tech" className="underline text-[#F52B8C]">How to get booked out as a nail tech</Link>.</p>
       </section>

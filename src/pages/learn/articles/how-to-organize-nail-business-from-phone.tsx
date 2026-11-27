@@ -24,8 +24,8 @@ registerArticle({
   ],
   relatedSlugs: ['best-business-apps-nail-techs', 'best-tools-running-nail-business', 'nail-tech-expense-list', 'how-to-batch-nail-content'],
   faq: [
-    { q: 'Should I have a separate phone for my nail business?', a: 'Most solo nail techs use their personal phone for their nail business — a second phone is rarely necessary or practical. A better approach: a separate WhatsApp Business account, a professional email address (not your personal Gmail), and organised folders/albums on your existing phone keep the business organised without needing separate hardware.' },
-    { q: 'How do I stop business messages taking over my phone?', a: 'WhatsApp Business allows you to separate business messages from personal WhatsApp. For Instagram, check DMs at set times rather than having notifications on all day — constant DM notifications fragment your focus. Use your booking app to handle routine booking communication, so fewer things reach your personal DMs.' },
+    { q: 'Should I have a separate phone for my nail business?', a: 'Most solo nail techs use their personal phone for their nail business: a second phone is rarely necessary or practical. A better approach: a separate WhatsApp Business account, a professional email address (not your personal Gmail), and organised folders/albums on your existing phone keep the business organised without needing separate hardware.' },
+    { q: 'How do I stop business messages taking over my phone?', a: 'WhatsApp Business allows you to separate business messages from personal WhatsApp. For Instagram, check DMs at set times rather than having notifications on all day: constant DM notifications fragment your focus. Use your booking app to handle routine booking communication, so fewer things reach your personal DMs.' },
   ],
   relatedFeatureSlugs: ['bookings', 'crm', 'analytics'],
   content: () => (
@@ -64,10 +64,10 @@ registerArticle({
       <section id="content-phone">
         <h2 className="font-serif text-2xl font-bold mb-4">Creating and scheduling content from your phone</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Photo albums:</strong> Keep a dedicated album called "Content" — move good shots here immediately after taking them so they don't get buried</li>
+          <li><strong>Photo albums:</strong> Keep a dedicated album called "Content". Move good shots here immediately after taking them so they don't get buried</li>
           <li><strong>Lightroom presets:</strong> Saved presets mean you can edit a photo in 30 seconds on your phone</li>
           <li><strong>CapCut or Instagram's editor:</strong> Edit Reels directly from your phone without a laptop</li>
-          <li><strong>Caption drafts:</strong> Keep a Notes document with caption drafts — write them in a quiet moment and paste when posting</li>
+          <li><strong>Caption drafts:</strong> Keep a Notes document with caption drafts. Write them in a quiet moment and paste when posting</li>
           <li><strong>Schedule from Instagram:</strong> Instagram's native scheduler lets you prepare posts in advance from your phone</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">Batching guide: <Link to="/blog/how-to-batch-nail-content" className="underline text-[#F52B8C]">how to batch nail content for a whole month</Link>.</p>

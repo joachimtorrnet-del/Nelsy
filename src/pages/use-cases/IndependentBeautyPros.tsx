@@ -5,7 +5,7 @@ export default function IndependentBeautyPros() {
     <UseCasePage
       seo={{
         title: 'Booking App for Independent Beauty Pros: Deposits and Payments',
-        description: 'Nelsy is the booking page for independent nail techs, lash and brow artists, makeup artists and estheticians: online booking, deposits, pay on arrival and 0% commission.',
+        description: 'The booking page for independent nail techs, lash and brow artists, makeup artists and estheticians: online booking, deposits, pay on arrival, 0% commission.',
         canonical: '/use-cases/independent-beauty-pros',
       }}
       hero={{

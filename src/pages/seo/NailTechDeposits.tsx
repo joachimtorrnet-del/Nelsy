@@ -68,7 +68,7 @@ export default function NailTechDeposits() {
   return (
     <div className="font-sans min-h-screen bg-white antialiased">
       <SEOMeta
-        title="How to Collect Deposits as a Nail Tech — Stop No-Shows | Nelsy"
+        title="How to Collect Deposits as a Nail Tech: Stop No-Shows | Nelsy"
         description="Learn how to require deposits as a nail tech. Set the right deposit amount, protect your schedule from no-shows and collect payments automatically with Nelsy."
         canonical="/nail-tech-deposits"
         jsonLd={JSON_LD}
@@ -97,7 +97,7 @@ export default function NailTechDeposits() {
               initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.45, delay: 0.1 }}
               className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto leading-relaxed mb-8"
             >
-              No-shows cost independent nail techs hundreds of dollars every month. Requiring a deposit before confirming any appointment is the most effective way to protect your schedule — and your income.
+              No-shows cost independent nail techs hundreds of dollars every month. Requiring a deposit before confirming any appointment is the most effective way to protect your schedule, and your income.
             </motion.p>
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4, delay: 0.2 }}>
               <SeoCTA label="Create my booking page →" position="hero" />
@@ -113,7 +113,7 @@ export default function NailTechDeposits() {
                 Why Nail Techs Require Deposits
               </h2>
               <p className="text-gray-500 mt-4 text-base sm:text-lg max-w-xl mx-auto">
-                A deposit policy isn't just about money — it's about protecting your time, your income and your energy.
+                A deposit policy isn't just about money: it's about protecting your time, your income and your energy.
               </p>
             </motion.div>
             <div className="grid gap-6 sm:grid-cols-3">
@@ -142,7 +142,7 @@ export default function NailTechDeposits() {
                 How Much Deposit Should You Charge?
               </h2>
               <p className="text-gray-500 mt-4 text-base max-w-lg mx-auto">
-                There's no single right answer — it depends on your market, your services and how often you experience no-shows.
+                There's no single right answer: it depends on your market, your services and how often you experience no-shows.
               </p>
             </motion.div>
             <div className="space-y-4">
@@ -176,7 +176,7 @@ export default function NailTechDeposits() {
                 How Nelsy Automates Your Deposit Collection
               </h2>
               <p className="text-gray-500 text-base sm:text-lg max-w-xl mx-auto">
-                You set it once. Nelsy enforces it every time — no reminders, no awkward conversations, no chasing clients.
+                You set it once. Nelsy enforces it every time: no reminders, no awkward conversations, no chasing clients.
               </p>
             </motion.div>
             <div className="space-y-5">
@@ -215,7 +215,7 @@ export default function NailTechDeposits() {
                 Communicating Your Deposit Policy
               </h2>
               <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-4">
-                Be upfront. Add your deposit requirement to your Instagram bio, your booking page description and your confirmation messages. Most clients will respect a clear policy — the ones who push back are often the ones who would have no-showed anyway.
+                Be upfront. Add your deposit requirement to your Instagram bio, your booking page description and your confirmation messages. Most clients will respect a clear policy: the ones who push back are often the ones who would have no-showed anyway.
               </p>
               <p className="text-gray-500 text-sm sm:text-base leading-relaxed">
                 With Nelsy, your deposit policy is visible on your booking page before a client selects a time. They agree to it by completing their booking.
@@ -234,7 +234,7 @@ export default function NailTechDeposits() {
               Ready to stop no-shows?
             </motion.h2>
             <motion.p {...fadeUp(0.06)} className="text-lg sm:text-xl text-white/80 mb-8 max-w-lg mx-auto">
-              Set up your deposit requirements in minutes. Your Nelsy booking page handles the rest — automatically.
+              Set up your deposit requirements in minutes. Your Nelsy booking page handles the rest: automatically.
             </motion.p>
             <motion.div {...fadeUp(0.12)}>
               <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />
@@ -251,7 +251,7 @@ export default function NailTechDeposits() {
             <p className="text-xs font-bold tracking-widest text-gray-400 uppercase mb-4">ALSO ON NELSY</p>
             <div className="flex flex-wrap gap-3">
               <Link to="/" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
-                Nelsy — Nail Tech Booking App
+                Nelsy: Nail Tech Booking App
               </Link>
               <span className="text-gray-300">·</span>
               <Link to="/instagram-booking-for-nail-techs" className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">

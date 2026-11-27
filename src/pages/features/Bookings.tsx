@@ -5,7 +5,7 @@ export default function BookingsPage() {
   return (
     <FeaturePage
       title="Online Booking for Beauty Professionals | Nelsy"
-      metaDescription="Let clients book your nail and beauty services 24/7 with Nelsy's online booking. No phone tag, no DM chaos — just a clean booking page that works while you sleep."
+      metaDescription="Let clients book your nail and beauty services 24/7 with Nelsy's online booking. No phone tag, no DM chaos, just a clean booking page that works while you sleep."
       canonical="/features/bookings"
       h1="Online booking for beauty professionals"
       heroDescription="Stop managing bookings over Instagram DMs. Give clients a professional booking page they can use any time, and spend your energy on your craft instead of your inbox."
@@ -13,7 +13,7 @@ export default function BookingsPage() {
       benefits={[
         {
           title: 'Book while you sleep',
-          desc: 'Your booking page is open 24/7. Clients can pick a service, choose a time, and confirm — all without you lifting a finger.',
+          desc: 'Your booking page is open 24/7. Clients can pick a service, choose a time, and confirm: all without you lifting a finger.',
         },
         {
           title: 'No more back-and-forth',
@@ -21,7 +21,7 @@ export default function BookingsPage() {
         },
         {
           title: 'Professional first impression',
-          desc: 'A clean, branded booking page signals that you run a real business — not a side hustle managed from DMs.',
+          desc: 'A clean, branded booking page signals that you run a real business, not a side hustle managed from DMs.',
         },
         {
           title: 'Fewer no-shows',

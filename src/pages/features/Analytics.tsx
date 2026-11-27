@@ -8,7 +8,7 @@ export default function AnalyticsPage() {
       metaDescription="See your booking trends, top services, and revenue patterns in one dashboard. Nelsy Analytics helps beauty professionals make smarter decisions without spreadsheets."
       canonical="/features/analytics"
       h1="Understand what's working in your beauty business"
-      heroDescription="Running a beauty business without data is guesswork. Nelsy shows you which services are most popular, when your busiest periods are, and how your income is trending — so you can make decisions based on facts."
+      heroDescription="Running a beauty business without data is guesswork. Nelsy shows you which services are most popular, when your busiest periods are, and how your income is trending, so you can make decisions based on facts."
       icon={BarChart3}
       benefits={[
         {
@@ -37,7 +37,7 @@ export default function AnalyticsPage() {
         {
           step: '2',
           title: 'Check your dashboard',
-          desc: 'Open your Nelsy dashboard and see your stats at a glance — bookings, revenue, new clients, and more.',
+          desc: 'Open your Nelsy dashboard and see your stats at a glance: bookings, revenue, new clients, and more.',
         },
         {
           step: '3',

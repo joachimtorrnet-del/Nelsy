@@ -6,7 +6,7 @@ registerArticle({
   slug: 'nail-tech-content-pillars',
   title: 'Nail Tech Content Pillars: What Should You Post About?',
   seoTitle: 'Nail Tech Content Pillars: What to Post on Instagram (Framework)',
-  excerpt: 'Stop staring at a blank caption box. Content pillars give your Instagram a strategy — so you always know what to post, why, and for whom.',
+  excerpt: 'Stop staring at a blank caption box. Content pillars give your Instagram a strategy, so you always know what to post, why, and for whom.',
   seoDescription: 'Nail tech content pillars explained. The 5 content types every nail tech should post, with examples for each pillar and a weekly planning framework.',
   category: 'instagram-content',
   tags: ['content pillars', 'nail tech content strategy', 'instagram strategy', 'nail tech social media'],
@@ -25,8 +25,8 @@ registerArticle({
   relatedSlugs: ['nail-content-that-gets-bookings', 'how-often-should-nail-techs-post', '100-nail-tech-content-ideas', 'nail-tech-caption-ideas'],
   faq: [
     { q: 'How many content pillars should a nail tech have?', a: '3–5 is the ideal range. Fewer than 3 and your content becomes repetitive. More than 5 and it\'s hard to stay consistent across all of them. Most nail techs work well with 4 pillars: portfolio, booking/CTAs, education, and personal/BTS. Add a fifth if you have a specific content strength (e.g. humour, tutorials, reviews).' },
-    { q: 'Do I need to stick rigidly to content pillars?', a: 'No — they\'re a guide, not a cage. Use them to break out of creative blocks and ensure you\'re covering the right ground each week. If a spontaneous idea doesn\'t fit a pillar, post it anyway. The pillars are there to help you plan, not to stop you being yourself.' },
-    { q: 'What\'s the most important content pillar for getting bookings?', a: 'The booking/conversion pillar — the content with direct CTAs. This is the thing that most nail techs underpost. They post lots of portfolio content but rarely include explicit booking prompts. You need to ask for the booking regularly and specifically, not just post your work and hope clients figure it out.' },
+    { q: 'Do I need to stick rigidly to content pillars?', a: 'No: they\'re a guide, not a cage. Use them to break out of creative blocks and ensure you\'re covering the right ground each week. If a spontaneous idea doesn\'t fit a pillar, post it anyway. The pillars are there to help you plan, not to stop you being yourself.' },
+    { q: 'What\'s the most important content pillar for getting bookings?', a: 'The booking/conversion pillar: the content with direct CTAs. This is the thing that most nail techs underpost. They post lots of portfolio content but rarely include explicit booking prompts. You need to ask for the booking regularly and specifically, not just post your work and hope clients figure it out.' },
   ],
   relatedFeatureSlugs: ['instagram-autodm', 'link-in-bio'],
   content: () => (
@@ -34,7 +34,7 @@ registerArticle({
       <section id="what-are-pillars">
         <h2 className="font-serif text-2xl font-bold mb-4">What content pillars are (and why they matter)</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Content pillars are the 3–5 recurring themes your Instagram content returns to. Instead of deciding from scratch what to post every day, you choose a pillar and generate ideas within it. The result: a more coherent account, less creative fatigue, and content that serves different client needs rather than just repeating the same type of post.</p>
-        <p className="text-gray-700 leading-relaxed">A nail tech with no content strategy tends to post only portfolio content (nail photos) and occasionally a booking reminder. A nail tech with clear pillars posts a variety that builds trust, educates potential clients, shows personality, and directly drives bookings — which reaches different types of followers at different stages of deciding to book.</p>
+        <p className="text-gray-700 leading-relaxed">A nail tech with no content strategy tends to post only portfolio content (nail photos) and occasionally a booking reminder. A nail tech with clear pillars posts a variety that builds trust, educates potential clients, shows personality, and directly drives bookings, which reaches different types of followers at different stages of deciding to book.</p>
       </section>
 
       <section id="five-pillars">
@@ -56,16 +56,16 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Each pillar in detail</h2>
 
         <h3 className="font-semibold text-lg mb-2">1. Portfolio</h3>
-        <p className="text-gray-700 mb-4 leading-relaxed">Your most natural content: the nail sets you're proud of. To make it work harder, vary the format (close-up, full hand, process, before/after) and add a caption that names the look and invites action. Don't just post a photo with "obsessed 💅" as the caption — that's a missed CTA.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Your most natural content: the nail sets you're proud of. To make it work harder, vary the format (close-up, full hand, process, before/after) and add a caption that names the look and invites action. Don't just post a photo with "obsessed 💅" as the caption, that's a missed CTA.</p>
 
         <h3 className="font-semibold text-lg mb-2 mt-4">2. Education</h3>
-        <p className="text-gray-700 mb-4 leading-relaxed">Teach something your clients or potential clients genuinely want to know. The best educational content pre-answers questions clients ask in DMs: "How do I stop my gel from lifting?", "What's the difference between gel and acrylic?", "Should I have my nails done while pregnant?" These build your authority and get saved — which is a strong signal to the algorithm.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Teach something your clients or potential clients genuinely want to know. The best educational content pre-answers questions clients ask in DMs: "How do I stop my gel from lifting?", "What's the difference between gel and acrylic?", "Should I have my nails done while pregnant?" These build your authority and get saved, which is a strong signal to the algorithm.</p>
 
         <h3 className="font-semibold text-lg mb-2 mt-4">3. Behind the scenes</h3>
         <p className="text-gray-700 mb-4 leading-relaxed">The day-in-the-life content that shows who you are beyond the nails. Your desk setup, your favourite products, a funny moment from a client session (anonymised), the struggle of ordering supplies at midnight. This content builds the relationship that turns a follower into a loyal client who rebooks every 3 weeks.</p>
 
         <h3 className="font-semibold text-lg mb-2 mt-4">4. Booking / conversion</h3>
-        <p className="text-gray-700 mb-4 leading-relaxed">The content that explicitly asks for the booking. Availability posts ("2 slots left this week — link in bio"), seasonal prompts ("get your Christmas nails sorted — book before October"), limited-offer content, and rebooking reminders. These feel obvious but most nail techs don't post enough of them.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">The content that explicitly asks for the booking. Availability posts ("2 slots left this week: link in bio"), seasonal prompts ("get your Christmas nails sorted. Book before October"), limited-offer content, and rebooking reminders. These feel obvious but most nail techs don't post enough of them.</p>
         <ArticleCallout variant="info" title="Aim for 20–25% of your posts to include a direct booking CTA">
           If you post 5 times a week, at least 1 should be directly about booking. A profile that only shows work but never asks for the booking leaves conversions on the table.
         </ArticleCallout>
@@ -80,14 +80,14 @@ registerArticle({
         <ArticleTable
           headers={['Day', 'Pillar', 'Example post']}
           rows={[
-            ['Monday', 'Booking', 'Story: "Slots open this week — link in bio to grab one"'],
+            ['Monday', 'Booking', 'Story: "Slots open this week: link in bio to grab one"'],
             ['Tuesday', 'Portfolio', 'Feed post: your best set from last week, strong caption + CTA'],
             ['Wednesday', 'Behind the scenes', 'Story: desk setup, new product arrival, or relatable work moment'],
             ['Thursday', 'Education', 'Reel or carousel: "Why your gel lifts (and how to fix it)"'],
             ['Friday', 'Social proof', 'Feed post or Story: client review screenshot or before/after'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">This isn't a formula to follow rigidly — it's a starting point. Adjust based on what you're comfortable creating and what your audience responds to best.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">This isn't a formula to follow rigidly: it's a starting point. Adjust based on what you're comfortable creating and what your audience responds to best.</p>
       </section>
 
       <section id="common-mistakes">
@@ -98,7 +98,7 @@ registerArticle({
             ['Only portfolio content', 'Every post is a nail photo, rarely a CTA', 'Add 1 booking post + 1 social proof post per week'],
             ['No booking CTAs', 'Beautiful posts, no mention of how to book', 'End every portfolio caption with a CTA'],
             ['Posting to post', 'Daily posts, inconsistent quality', 'Reduce frequency, increase quality'],
-            ['No content plan', 'Post randomly; dry spells followed by floods', 'Plan a week ahead — 30 minutes on Sunday'],
+            ['No content plan', 'Post randomly; dry spells followed by floods', 'Plan a week ahead: 30 minutes on Sunday'],
             ['Ignoring Stories', 'Only posts, no Stories', 'Stories convert warmer followers; post availability there especially'],
           ]}
         />

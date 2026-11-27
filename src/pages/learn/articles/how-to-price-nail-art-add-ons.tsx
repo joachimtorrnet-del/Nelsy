@@ -6,8 +6,8 @@ registerArticle({
   slug: 'how-to-price-nail-art-add-ons',
   title: 'How to Price Nail Art Add-Ons',
   seoTitle: 'How to Price Nail Art Add-Ons as a Nail Tech',
-  excerpt: 'Nail art add-ons are one of the best ways to increase your average appointment value — but only if you price them correctly. Here\'s how to calculate and communicate add-on pricing.',
-  seoDescription: 'How to price nail art add-ons as a nail tech. Pricing formulas for nail art, chrome, glitter, and custom designs — plus how to present add-ons at booking.',
+  excerpt: 'Nail art add-ons are one of the best ways to increase your average appointment value, but only if you price them correctly. Here\'s how to calculate and communicate add-on pricing.',
+  seoDescription: 'How to price nail art add-ons as a nail tech. Pricing formulas for nail art, chrome, glitter, and custom designs, plus how to present add-ons at booking.',
   category: 'pricing-money',
   tags: ['nail art pricing', 'nail art add-ons', 'nail tech pricing', 'service pricing'],
   heroImage: 'linear-gradient(135deg, #FFF0F9 0%, #FBCFE8 100%)',
@@ -24,8 +24,8 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-create-nail-service-menu', 'nail-tech-price-list-examples', 'how-to-increase-appointment-value', 'how-to-price-nail-services-for-profit'],
   faq: [
-    { q: 'Should I charge per nail or per set for nail art?', a: 'Both models work — choose based on how you deliver the service. Per-nail pricing is clear and scalable: clients choose how many nails, you charge accordingly. Per-set pricing is simpler for clients who want all nails done. A hybrid works well: "nail art — from £15 for 2 accent nails, full set from £35." The key is clarity at booking, not mid-appointment surprises.' },
-    { q: 'How do I charge for time-intensive nail art like 3D or hand-painted designs?', a: 'For time-intensive nail art, price by the hour is the most honest method: calculate your hourly rate, estimate the time, and price accordingly. Alternatively, create a fixed "bespoke nail art" service at a premium price that covers your anticipated time. Always quote the client before starting — "this design will be an additional £X" — so there are no surprises at payment.' },
+    { q: 'Should I charge per nail or per set for nail art?', a: 'Both models work: choose based on how you deliver the service. Per-nail pricing is clear and scalable: clients choose how many nails, you charge accordingly. Per-set pricing is simpler for clients who want all nails done. A hybrid works well: "nail art, from £15 for 2 accent nails, full set from £35." The key is clarity at booking, not mid-appointment surprises.' },
+    { q: 'How do I charge for time-intensive nail art like 3D or hand-painted designs?', a: 'For time-intensive nail art, price by the hour is the most honest method: calculate your hourly rate, estimate the time, and price accordingly. Alternatively, create a fixed "bespoke nail art" service at a premium price that covers your anticipated time. Always quote the client before starting: "this design will be an additional £X", so there are no surprises at payment.' },
     { q: 'What\'s the minimum I should charge for a chrome add-on?', a: 'Chrome powder application takes roughly 10–15 additional minutes (prep, application, buffing). At a minimum, charge for the time at your hourly rate plus a small materials markup. For most nail techs, £8–£15 for a chrome add-on is appropriate depending on location and positioning.' },
   ],
   relatedFeatureSlugs: ['payments', 'bookings'],
@@ -33,8 +33,8 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="why-add-ons-matter">
         <h2 className="font-serif text-2xl font-bold mb-4">Why nail art add-ons matter for income</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Add-ons increase your revenue per appointment without requiring additional marketing or new clients. If 30% of your clients choose a £15 nail art add-on, and you see 20 clients per week, that\'s an additional £90/week — over £4,500 per year — without a single new booking.</p>
-        <p className="text-gray-700 leading-relaxed">Under-priced add-ons are one of the most common income losses for nail techs. Charging £3 for chrome that takes 15 minutes means you\'re earning £12/hour for that part of the appointment — probably below your standard hourly rate. Correct add-on pricing means you earn your target rate throughout the entire appointment, not just for the base service.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Add-ons increase your revenue per appointment without requiring additional marketing or new clients. If 30% of your clients choose a £15 nail art add-on, and you see 20 clients per week, that\'s an additional £90/week (over £4,500 per year) without a single new booking.</p>
+        <p className="text-gray-700 leading-relaxed">Under-priced add-ons are one of the most common income losses for nail techs. Charging £3 for chrome that takes 15 minutes means you\'re earning £12/hour for that part of the appointment: probably below your standard hourly rate. Correct add-on pricing means you earn your target rate throughout the entire appointment, not just for the base service.</p>
       </section>
 
       <section id="pricing-formula">
@@ -68,7 +68,7 @@ registerArticle({
             ['Cuticle oil treatment', '5 min', '£5', 'Minimal time; good upsell for natural nail clients'],
           ]}
         />
-        <ArticleTip>Create named add-ons on your booking platform — "Chrome Effect Add-on — £12" — rather than letting clients describe what they want in a notes field. Named add-ons are chosen at booking, which gives you planning time and eliminates mid-appointment price negotiations.</ArticleTip>
+        <ArticleTip>Create named add-ons on your booking platform: "Chrome Effect Add-on: £12", rather than letting clients describe what they want in a notes field. Named add-ons are chosen at booking, which gives you planning time and eliminates mid-appointment price negotiations.</ArticleTip>
       </section>
 
       <section id="presenting-add-ons">
@@ -79,11 +79,11 @@ registerArticle({
             ['Booking page', 'Add-ons as separate bookable items or selectable upgrades during booking flow'],
             ['Service menu', '"Add-ons" section with names and prices clearly listed'],
             ['Consultation (in-appointment)', '"Would you like to add chrome to this? It\'s an additional £12 and takes about 10 minutes"'],
-            ['Instagram', 'Post the nail art as content; caption "this chrome was added as a £12 upgrade — ask me about add-ons at booking"'],
+            ['Instagram', 'Post the nail art as content; caption "this chrome was added as a £12 upgrade: ask me about add-ons at booking"'],
           ]}
         />
         <ArticleCallout variant="tip" title="The in-appointment upsell">
-          Ask at the start of the appointment, not partway through: "Are you thinking about any extras today — chrome, nail art, or any special finishes?" Asking at the start allows you to factor the time into your service flow. Asking when you\'re already halfway through the appointment creates time pressure.
+          Ask at the start of the appointment, not partway through: "Are you thinking about any extras today: chrome, nail art, or any special finishes?" Asking at the start allows you to factor the time into your service flow. Asking when you\'re already halfway through the appointment creates time pressure.
         </ArticleCallout>
       </section>
 

@@ -7,7 +7,7 @@ registerArticle({
   title: 'How to Get Nail Clients During Slow Season',
   seoTitle: 'How to Get Nail Clients During Slow Season (Practical Strategies)',
   excerpt: 'January and early autumn are notoriously quiet for nail techs. Here\'s how to fill your calendar during slow periods without slashing your prices or panicking.',
-  seoDescription: 'How to get nail clients during slow season. Practical strategies for filling your nail calendar in January, autumn, and other quiet periods — without cutting your prices.',
+  seoDescription: 'How to get nail clients in slow season: practical ways to fill your calendar in January, autumn and other quiet periods without cutting prices.',
   category: 'get-clients',
   tags: ['slow season nail tech', 'nail clients January', 'quiet period nail business', 'nail tech slow month'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
@@ -48,10 +48,10 @@ registerArticle({
 
       <section id="win-back">
         <h2 className="font-serif text-2xl font-bold mb-4">Re-engage dormant clients</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Your most efficient slow-season strategy is reaching existing past clients who've drifted. They know your work — they don't need to be convinced from scratch:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Your most efficient slow-season strategy is reaching existing past clients who've drifted. They know your work. They don't need to be convinced from scratch:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
           <li>Run a "January refresh" campaign to clients who haven't booked since before Christmas</li>
-          <li>Frame it as a treat, not a discount: "You deserve a January glow-up — here's my link"</li>
+          <li>Frame it as a treat, not a discount: "You deserve a January glow-up: here's my link"</li>
           <li>A personal message to your top 10 most regular clients converts better than any broadcast</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">Full win-back guide: <Link to="/blog/how-to-bring-back-old-nail-clients" className="underline text-[#F52B8C]">how to bring back old nail clients</Link>.</p>
@@ -61,21 +61,21 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Content strategy for slow season</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Quiet calendar = more time to create content. Use it:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>New season nail inspo:</strong> "Winter nail trends I'm loving right now" — creates demand before clients even thought about booking</li>
-          <li><strong>Behind the scenes:</strong> Show your setup, your products, your process — content that builds connection rather than just showcasing nails</li>
-          <li><strong>"New year, new nails" content:</strong> January clients respond to fresh-start framing — "treat yourself to a clean slate for the new year"</li>
+          <li><strong>New season nail inspo:</strong> "Winter nail trends I'm loving right now". Creates demand before clients even thought about booking</li>
+          <li><strong>Behind the scenes:</strong> Show your setup, your products, your process. Content that builds connection rather than just showcasing nails</li>
+          <li><strong>"New year, new nails" content:</strong> January clients respond to fresh-start framing. "Treat yourself to a clean slate for the new year"</li>
           <li><strong>Educational content:</strong> Nail care tips for winter (dryness, cuticle care) positions you as the expert and naturally leads to booking CTAs</li>
         </ul>
-        <ArticleTip>Post consistently during slow season even if engagement feels low. Staying visible means you\'re the first nail tech clients think of when they\'re ready to book — which may be two weeks after they saw your post.</ArticleTip>
+        <ArticleTip>Post consistently during slow season even if engagement feels low. Staying visible means you\'re the first nail tech clients think of when they\'re ready to book, which may be two weeks after they saw your post.</ArticleTip>
       </section>
 
       <section id="packages">
         <h2 className="font-serif text-2xl font-bold mb-4">Slow-season packages</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Adding value rather than cutting price creates bookings without devaluing your work:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>"New year nail health" package:</strong> Gel manicure + cuticle treatment + aftercare pack — bundled slightly below individual prices, framed as a fresh-start treatment</li>
-          <li><strong>Prepay package:</strong> Buy 4 appointments upfront at a small discount — good for January when clients are committed to better self-care and prefer predictable spending</li>
-          <li><strong>Refer-a-friend January deal:</strong> Bring a friend this month and you both get a free add-on — fills two slots at once</li>
+          <li><strong>"New year nail health" package:</strong> Gel manicure + cuticle treatment + aftercare pack. Bundled slightly below individual prices, framed as a fresh-start treatment</li>
+          <li><strong>Prepay package:</strong> Buy 4 appointments upfront at a small discount. Good for January when clients are committed to better self-care and prefer predictable spending</li>
+          <li><strong>Refer-a-friend January deal:</strong> Bring a friend this month and you both get a free add-on. Fills two slots at once</li>
         </ul>
         <ArticleCallout variant="info" title="Added value vs discount">
           "Free cuticle treatment with every booking in January" feels more premium than "10% off in January." Both cost you something, but the first maintains your price integrity and feels like a gift rather than a markdown.
@@ -86,10 +86,10 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Planning for next season</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Use slow periods to prepare for busy ones:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Build your waitlist aggressively — ask every client to go on the waitlist so you can offer them first access to popular booking periods</li>
-          <li>Prepare seasonal content in advance — batch-create 4 weeks of February/spring content in January</li>
-          <li>Review your pricing — slow season is a less disruptive time to update your price list than peak season</li>
-          <li>Invest in training or a new skill — a new service (e.g. nail art, BIAB) to announce as the season picks up</li>
+          <li>Build your waitlist aggressively: ask every client to go on the waitlist so you can offer them first access to popular booking periods</li>
+          <li>Prepare seasonal content in advance: batch-create 4 weeks of February/spring content in January</li>
+          <li>Review your pricing: slow season is a less disruptive time to update your price list than peak season</li>
+          <li>Invest in training or a new skill: a new service (e.g. nail art, BIAB) to announce as the season picks up</li>
         </ul>
       </section>
 

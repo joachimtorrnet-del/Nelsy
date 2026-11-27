@@ -6,8 +6,8 @@ registerArticle({
   slug: 'square-appointments-alternatives-nail-techs',
   title: 'Square Appointments Alternatives for Nail Techs',
   seoTitle: 'Square Appointments Alternatives for Nail Techs',
-  excerpt: 'Square Appointments is a solid general tool — but it wasn\'t built with nail techs in mind. Here are the alternatives worth considering if Square Appointments doesn\'t meet your needs.',
-  seoDescription: 'Square Appointments alternatives for nail techs. Who Square Appointments suits, where it falls short, and the booking software options that fit nail tech businesses better.',
+  excerpt: 'Square Appointments is a solid general tool, but it wasn\'t built with nail techs in mind. Here are the alternatives worth considering if Square Appointments doesn\'t meet your needs.',
+  seoDescription: 'Square Appointments alternatives for nail techs: who Square suits, where it falls short and the booking software that fits nail businesses better.',
   category: 'comparisons',
   tags: ['Square Appointments alternatives', 'nail tech booking software', 'Square vs nail booking apps'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
@@ -23,8 +23,8 @@ registerArticle({
   ],
   relatedSlugs: ['square-vs-fresha-nail-techs', 'how-to-choose-booking-app-nail-business', 'best-booking-apps-nail-salons'],
   faq: [
-    { q: 'Is Square Appointments good for solo nail techs?', a: 'Square Appointments works for solo nail techs who are already embedded in the Square ecosystem — using Square for payments, potentially with a card reader. For nail techs who aren\'t already using Square, the added complexity of setting up the broader Square system to use Appointments may not be worth it compared to booking-specialist alternatives. It\'s most valuable when you need POS integration.' },
-    { q: 'Does Square Appointments have a marketplace for client discovery?', a: 'Square Appointments is primarily a direct booking tool — it doesn\'t have the same client marketplace as Fresha or Booksy where potential new clients browse and discover providers. For discovery-led client acquisition, marketplace platforms have an advantage.' },
+    { q: 'Is Square Appointments good for solo nail techs?', a: 'Square Appointments works for solo nail techs who are already embedded in the Square ecosystem: using Square for payments, potentially with a card reader. For nail techs who aren\'t already using Square, the added complexity of setting up the broader Square system to use Appointments may not be worth it compared to booking-specialist alternatives. It\'s most valuable when you need POS integration.' },
+    { q: 'Does Square Appointments have a marketplace for client discovery?', a: 'Square Appointments is primarily a direct booking tool: it doesn\'t have the same client marketplace as Fresha or Booksy where potential new clients browse and discover providers. For discovery-led client acquisition, marketplace platforms have an advantage.' },
   ],
   relatedFeatureSlugs: ['bookings', 'deposits', 'payments'],
   content: () => (
@@ -47,7 +47,7 @@ registerArticle({
       <section id="where-it-falls-short">
         <h2 className="font-serif text-2xl font-bold mb-4">Where it falls short for nail techs</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>No beauty marketplace:</strong> Square doesn't have a client-facing marketplace for new client discovery — your booking page only works if you direct people to it</li>
+          <li><strong>No beauty marketplace:</strong> Square doesn't have a client-facing marketplace for new client discovery. Your booking page only works if you direct people to it</li>
           <li><strong>Not beauty-specific:</strong> Square serves all appointment-based businesses; it lacks nail-specific features like patch test tracking, product cost calculators, or nail-tech-specific client consultation fields</li>
           <li><strong>Complexity for solo techs:</strong> The full Square ecosystem is built for businesses; solo nail techs often find it more than they need</li>
           <li><strong>Geographic variable:</strong> Square Appointments availability and features vary significantly by country</li>
@@ -57,9 +57,9 @@ registerArticle({
       <section id="alternatives">
         <h2 className="font-serif text-2xl font-bold mb-4">Alternatives to consider</h2>
         <p className="text-gray-700 mb-4 leading-relaxed"><strong>Fresha</strong>: from €14.95/month; client marketplace; strong globally. Better for nail techs who want discovery alongside booking. <Link to="/blog/square-vs-fresha-nail-techs" className="underline text-[#F52B8C]">Square vs Fresha comparison →</Link></p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong> — Subscription with marketplace; strong client-side app. Good where Booksy has client adoption in your area.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong> — Feature-rich; marketplace and management in one. US-focused. More comparable to Square in scope but beauty-specific.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong> — Built for nail techs. Booking page, deposits, payments. Simpler than Square for solo nail techs who don't need POS hardware. <Link to="/" className="underline text-[#F52B8C]">See Nelsy →</Link></p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Booksy</strong>: Subscription with marketplace; strong client-side app. Good where Booksy has client adoption in your area.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Vagaro</strong>: Feature-rich; marketplace and management in one. US-focused. More comparable to Square in scope but beauty-specific.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed"><strong>Nelsy</strong>: Built for nail techs. Booking page, deposits, payments. Simpler than Square for solo nail techs who don't need POS hardware. <Link to="/" className="underline text-[#F52B8C]">See Nelsy →</Link></p>
       </section>
 
       <section id="comparison">

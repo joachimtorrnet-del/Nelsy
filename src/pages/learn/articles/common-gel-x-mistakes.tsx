@@ -6,7 +6,7 @@ registerArticle({
   slug: 'common-gel-x-mistakes',
   title: 'Common Gel-X Mistakes and How to Fix Them',
   seoTitle: 'Common Gel-X Mistakes and How to Fix Them',
-  excerpt: 'Gel-X is a system with specific technique requirements. Here are the most common Gel-X mistakes nail techs make — and how to approach fixing each one.',
+  excerpt: 'Gel-X is a system with specific technique requirements. Here are the most common Gel-X mistakes nail techs make, and how to approach fixing each one.',
   seoDescription: 'Common Gel-X mistakes and how to fix them: lifting at the cuticle, air bubbles, tips popping off, sizing errors and prep problems, with a quick fix table.',
   category: 'nail-education',
   tags: ['gel-x mistakes', 'gel-x application tips', 'gel-x lifting', 'gel-x nail technique'],
@@ -43,7 +43,7 @@ registerArticle({
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <ArticleCallout variant="warning" title="A note on technique specifics">
-        Gel-X products vary by brand — Apres, Kiara Sky, and other systems each have specific instructions for prep, adhesive application, cure time and position, and removal. This article covers general principles and common problem areas. Always follow your specific product's training materials and manufacturer instructions for technique details. Do not substitute steps or products across systems without verifying compatibility.
+        Gel-X products vary by brand: Apres, Kiara Sky, and other systems each have specific instructions for prep, adhesive application, cure time and position, and removal. This article covers general principles and common problem areas. Always follow your specific product's training materials and manufacturer instructions for technique details. Do not substitute steps or products across systems without verifying compatibility.
       </ArticleCallout>
 
       <section id="quick-fixes">
@@ -79,17 +79,17 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Prep and surface mistakes</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Gel-X adhesion depends heavily on how the natural nail is prepared:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Skipping or rushing cuticle work:</strong> Lifted or excess cuticle on the nail plate creates a barrier between the extension and the nail — product won't adhere to cuticle tissue</li>
+          <li><strong>Skipping or rushing cuticle work:</strong> Lifted or excess cuticle on the nail plate creates a barrier between the extension and the nail. Product won't adhere to cuticle tissue</li>
           <li><strong>Insufficient dehydration:</strong> Natural nail moisture and oil interfere with adhesion. Dehydrating properly removes surface moisture and oil. See your product's recommended prep for their specific dehydrator guidance.</li>
           <li><strong>Leaving a glossy nail surface:</strong> A light buff of the natural nail creates texture for the adhesive to grip. A completely smooth, glossy nail surface reduces mechanical adhesion</li>
-          <li><strong>Getting product on skin or cuticle:</strong> Even a small amount of adhesive contacting skin lifts immediately — the adhesive doesn't bond to skin the way it bonds to the nail plate</li>
+          <li><strong>Getting product on skin or cuticle:</strong> Even a small amount of adhesive contacting skin lifts immediately. The adhesive doesn't bond to skin the way it bonds to the nail plate</li>
         </ul>
       </section>
 
       <section id="application">
         <h2 className="font-serif text-2xl font-bold mb-4">Application mistakes</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Incorrect adhesive amount:</strong> Too little means insufficient coverage and bond; too much creates flooding of the sidewalls and cuticle area. Your product's instructions will specify the recommended amount — follow them precisely.</li>
+          <li><strong>Incorrect adhesive amount:</strong> Too little means insufficient coverage and bond; too much creates flooding of the sidewalls and cuticle area. Your product's instructions will specify the recommended amount: follow them precisely.</li>
           <li><strong>Not applying even pressure during bonding:</strong> The moment of bonding the tip to the nail requires firm, even pressure across the entire tip surface to eliminate air gaps</li>
           <li><strong>Moving the tip after initial contact:</strong> Repositioning after the tip touches the nail creates air pockets. Size and position correctly before contact.</li>
           <li><strong>Incorrect cure position:</strong> Each brand specifies whether the nail faces up, down, or at a specific angle during curing. Incorrect position during cure can affect the set of the adhesive.</li>
@@ -105,7 +105,7 @@ registerArticle({
             ['Cuticle edge', 'Product touching skin/cuticle; insufficient cuticle prep; product flooding'],
             ['Side walls', 'Tip too wide; product contacting skin at sides'],
             ['Centre / body of tip', 'Air gap from insufficient pressure; C-curve mismatch; incorrect adhesive application'],
-            ['All edges simultaneously', 'Surface prep issue — insufficient dehydration or buff'],
+            ['All edges simultaneously', 'Surface prep issue: insufficient dehydration or buff'],
           ]}
         />
       </section>
@@ -113,11 +113,11 @@ registerArticle({
       <section id="removal">
         <h2 className="font-serif text-2xl font-bold mb-4">Removal mistakes</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Forcing or prying:</strong> Gel-X should be removed by soaking and gentle technique — forcing removal causes nail plate damage and is one of the most harmful things a nail tech can do</li>
+          <li><strong>Forcing or prying:</strong> Gel-X should be removed by soaking and gentle technique. Forcing removal causes nail plate damage and is one of the most harmful things a nail tech can do</li>
           <li><strong>Using incorrect remover:</strong> Gel-X uses a specific remover system (usually acetone-based); your product's removal instructions specify the correct product and technique</li>
-          <li><strong>Rushing removal time:</strong> Insufficient soak time means the adhesive hasn't released — don't force it; re-wrap and continue soaking</li>
+          <li><strong>Rushing removal time:</strong> Insufficient soak time means the adhesive hasn't released. Don't force it; re-wrap and continue soaking</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">For understanding the difference between dehydrators and primers: <Link to="/blog/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer — what's the difference</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">For understanding the difference between dehydrators and primers: <Link to="/blog/nail-dehydrator-vs-primer" className="underline text-[#F52B8C]">nail dehydrator vs primer, what's the difference</Link>.</p>
       </section>
 
       <section id="checklist">

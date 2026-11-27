@@ -7,7 +7,7 @@ registerArticle({
   title: 'Local SEO for Nail Techs: The Complete Guide',
   seoTitle: 'Local SEO for Nail Techs: Complete Guide to Getting Found Locally',
   excerpt: 'Local SEO is how clients in your area find you on Google without Instagram. This guide covers everything: Google Business Profile, local content, reviews, citations, and NAP consistency.',
-  seoDescription: 'Local SEO for nail techs explained. How to rank in local Google search, optimise your Google Business Profile, get reviews, and attract nearby clients searching for nail services.',
+  seoDescription: 'Local SEO for nail techs: how to rank in local Google search, optimise your Google Business Profile, get reviews and attract nearby clients.',
   category: 'get-clients',
   tags: ['local SEO nail tech', 'nail tech Google ranking', 'nail business local search', 'nail tech near me'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #BFDBFE 100%)',
@@ -26,17 +26,17 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-get-nail-clients-from-google-business-profile', 'how-to-ask-nail-clients-for-reviews', 'how-to-get-more-local-nail-clients', 'how-to-build-nail-tech-website'],
   faq: [
-    { q: 'How long does local SEO take to work?', a: 'Most nail techs start seeing measurable results — more profile views, calls, and new client enquiries — within 6–12 weeks of optimising their Google Business Profile and building reviews. Consistency matters more than intensity: a fully optimised profile with regular reviews will outperform a one-time setup. Local SEO compounds over time; the nail tech who started 6 months ago has an advantage over one starting today.' },
+    { q: 'How long does local SEO take to work?', a: 'Most nail techs start seeing measurable results (more profile views, calls, and new client enquiries) within 6–12 weeks of optimising their Google Business Profile and building reviews. Consistency matters more than intensity: a fully optimised profile with regular reviews will outperform a one-time setup. Local SEO compounds over time; the nail tech who started 6 months ago has an advantage over one starting today.' },
     { q: 'Do I need a website for local SEO?', a: 'A Google Business Profile alone can rank you in local search without a website. But a website adds additional ranking signals, gives you space to describe services in detail, and provides a destination to send clients who click through. For most nail techs, optimising the Google Business Profile first is the higher-leverage starting point.' },
-    { q: 'What\'s more important for nail techs — local SEO or Instagram?', a: 'They serve different purposes. Instagram builds a following and gets organic discovery over time. Local SEO captures clients who are already searching for a nail tech in your area right now. The clients from local search tend to have higher purchase intent — they\'re searching specifically to book. Both are worth investing in, but for a new nail tech, local SEO often drives bookings faster than growing an Instagram following from zero.' },
+    { q: 'What\'s more important for nail techs: local SEO or Instagram?', a: 'They serve different purposes. Instagram builds a following and gets organic discovery over time. Local SEO captures clients who are already searching for a nail tech in your area right now. The clients from local search tend to have higher purchase intent: they\'re searching specifically to book. Both are worth investing in, but for a new nail tech, local SEO often drives bookings faster than growing an Instagram following from zero.' },
   ],
   relatedFeatureSlugs: ['link-in-bio', 'bookings', 'audience-capture'],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="what-local-seo-is">
         <h2 className="font-serif text-2xl font-bold mb-4">What local SEO is</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Local SEO (search engine optimisation) is the process of making your business appear prominently when people in your area search Google for nail services. When someone types "nail tech near me" or "gel nails [your town]", local SEO determines which businesses appear — and in what order.</p>
-        <p className="text-gray-700 leading-relaxed">Unlike Instagram, where you build an audience, local SEO captures active search intent — clients who are already looking for someone to book, right now. Google ranks local businesses based on three factors: <strong>relevance</strong> (does your profile match what they searched?), <strong>distance</strong> (how close are you?), and <strong>prominence</strong> (how established and trusted does your business appear?). You can influence all three.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Local SEO (search engine optimisation) is the process of making your business appear prominently when people in your area search Google for nail services. When someone types "nail tech near me" or "gel nails [your town]", local SEO determines which businesses appear, and in what order.</p>
+        <p className="text-gray-700 leading-relaxed">Unlike Instagram, where you build an audience, local SEO captures active search intent: clients who are already looking for someone to book, right now. Google ranks local businesses based on three factors: <strong>relevance</strong> (does your profile match what they searched?), <strong>distance</strong> (how close are you?), and <strong>prominence</strong> (how established and trusted does your business appear?). You can influence all three.</p>
       </section>
 
       <section id="google-business-profile">
@@ -45,12 +45,12 @@ registerArticle({
         <ArticleTable
           headers={['Profile element', 'What to do']}
           rows={[
-            ['Business name', 'Your actual business name — no keyword stuffing ("Maya\'s Nails" not "Maya\'s Nails | Best Gel Nails London")'],
-            ['Category', 'Primary: "Nail Salon" — this is the most important signal for nail-related searches'],
+            ['Business name', 'Your actual business name: no keyword stuffing ("Maya\'s Nails" not "Maya\'s Nails | Best Gel Nails London")'],
+            ['Category', 'Primary: "Nail Salon": this is the most important signal for nail-related searches'],
             ['Address / service area', 'Home-based: set a service area (city or radius). Salon: full address. Keep it accurate.'],
-            ['Phone & website', 'Include your booking link as your website URL — this gets clients to book directly'],
+            ['Phone & website', 'Include your booking link as your website URL: this gets clients to book directly'],
             ['Description', 'Write a clear 250-word description using natural language about your services, location, and approach'],
-            ['Services', 'List each service you offer by name — "Gel Manicure", "BIAB", "Nail Extensions", "Nail Art"'],
+            ['Services', 'List each service you offer by name: "Gel Manicure", "BIAB", "Nail Extensions", "Nail Art"'],
             ['Photos', '20+ high-quality nail photos; workspace photos; update regularly'],
             ['Hours', 'Accurate hours including holiday closures'],
           ]}
@@ -62,10 +62,10 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Reviews</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Reviews are the single most impactful prominence signal. A profile with 40 genuine 5-star reviews outranks a profile with zero reviews almost universally, regardless of other optimisation. Prioritise review collection above almost everything else.</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Ask every satisfied client directly — with a link, at the end of the appointment or in a follow-up message</li>
-          <li>Respond to every review, positive and negative — this signals an active business</li>
-          <li>Aim for specific, detailed reviews ("4-week retention, perfect French tip") — they carry more weight than one-word reviews</li>
-          <li>Never buy or incentivise reviews — this violates Google's terms and risks profile removal</li>
+          <li>Ask every satisfied client directly, with a link, at the end of the appointment or in a follow-up message</li>
+          <li>Respond to every review, positive and negative: this signals an active business</li>
+          <li>Aim for specific, detailed reviews ("4-week retention, perfect French tip"): they carry more weight than one-word reviews</li>
+          <li>Never buy or incentivise reviews: this violates Google's terms and risks profile removal</li>
         </ul>
         <p className="text-gray-700 leading-relaxed">Full review strategy: <Link to="/blog/how-to-ask-nail-clients-for-reviews" className="underline text-[#F52B8C]">how to ask nail clients for reviews</Link>.</p>
       </section>
@@ -73,14 +73,14 @@ registerArticle({
       <section id="nap-consistency">
         <h2 className="font-serif text-2xl font-bold mb-4">NAP consistency</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">NAP stands for Name, Address, Phone number. Google cross-references your business information across the web to verify legitimacy. Inconsistent NAP (different spellings, old addresses, different phone numbers) weakens your local ranking signals.</p>
-        <ArticleTip>Check that your business name, address/area, and phone number are identical on Google Business Profile, your website, Instagram bio, Fresha/Booksy listing (if applicable), and any directories. Even small differences — "St." vs "Street" — matter.</ArticleTip>
+        <ArticleTip>Check that your business name, address/area, and phone number are identical on Google Business Profile, your website, Instagram bio, Fresha/Booksy listing (if applicable), and any directories. Even small differences: "St." vs "Street": matter.</ArticleTip>
       </section>
 
       <section id="local-content">
         <h2 className="font-serif text-2xl font-bold mb-4">Local content on your website</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">If you have a website (or booking page), local content helps Google understand your location and service area:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>Include your city/area name naturally in your page title, heading, and description: "Gel Nail Tech in Edinburgh — Online Booking"</li>
+          <li>Include your city/area name naturally in your page title, heading, and description: "Gel Nail Tech in Edinburgh: Online Booking"</li>
           <li>Write a clear "About" section that mentions your location and the areas you serve</li>
           <li>List specific services with names matching what clients search: "BIAB", "Gel-X", "Acrylic Nails"</li>
         </ul>

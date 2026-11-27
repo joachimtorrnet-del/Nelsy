@@ -6,7 +6,7 @@ registerArticle({
   slug: 'nail-tech-no-show-policy-examples',
   title: 'Nail Tech No-Show Policy Examples',
   seoTitle: 'Nail Tech No-Show Policy Examples (Copy & Adapt)',
-  excerpt: 'Ready-to-use no-show and cancellation policy templates for nail techs — plus how to communicate them without feeling awkward.',
+  excerpt: 'Ready-to-use no-show and cancellation policy templates for nail techs, plus how to communicate them without feeling awkward.',
   seoDescription: 'Nail tech no-show policy examples you can copy and adapt. Cancellation policy templates, deposit policies, and how to communicate them professionally.',
   category: 'policies-clients',
   tags: ['no-show policy', 'cancellation policy', 'nail tech policies', 'client management'],
@@ -25,7 +25,7 @@ registerArticle({
   ],
   relatedSlugs: ['nail-tech-deposit-policy', 'how-much-deposit-should-nail-tech-charge', 'why-booking-through-dms-costs-nail-techs-clients'],
   faq: [
-    { q: 'Can a nail tech keep a deposit if a client cancels?', a: 'Yes — if you have a clearly stated cancellation policy that was visible before booking, and the client cancelled within the notice period you specified, you\'re entitled to keep the deposit. This is why it\'s important to have your policy in writing and visible before clients book.' },
+    { q: 'Can a nail tech keep a deposit if a client cancels?', a: 'Yes, if you have a clearly stated cancellation policy that was visible before booking, and the client cancelled within the notice period you specified, you\'re entitled to keep the deposit. This is why it\'s important to have your policy in writing and visible before clients book.' },
     { q: 'How strict should a nail tech\'s cancellation policy be?', a: 'Strict enough to protect your income, flexible enough to retain good clients. A 48-hour notice requirement with deposit forfeiture for late cancellations/no-shows is the standard. Many nail techs add discretion: a genuine emergency from a long-term client is different from a habitual last-minute canceller.' },
     { q: 'What should I do when a client no-shows without contacting me?', a: 'Wait the appropriate period (usually 15–30 minutes past appointment time), then send a message: "Hi, I had you booked for [time] today. I\'ve had to open the slot for someone else. Please note that no-shows result in your deposit being forfeit. Happy to rebook for a future date." Keep it factual, not emotional.' },
   ],
@@ -34,7 +34,7 @@ registerArticle({
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="why-you-need-one">
         <h2 className="font-serif text-2xl font-bold mb-4">Why you need a no-show policy</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">A no-show costs you the appointment fee, the time you held in your diary, and potentially another client you could have booked. Without a policy, there's no financial consequence for the client — so the behaviour continues.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">A no-show costs you the appointment fee, the time you held in your diary, and potentially another client you could have booked. Without a policy, there's no financial consequence for the client, so the behaviour continues.</p>
         <p className="text-gray-700 leading-relaxed">A clear policy, communicated before booking, sets expectations and creates accountability. Most clients never test it. The ones who would have no-showed anyway are deterred by the deposit requirement.</p>
       </section>
 
@@ -54,7 +54,7 @@ registerArticle({
         </ArticleCallout>
 
         <ArticleCallout variant="info" title="Warm version (for client-focused brands)">
-          To secure your appointment, a small deposit of £[X] is required. This comes off your final price — so think of it as paying a little early! If you need to reschedule, just give me 48 hours' notice and we'll move it no problem. Cancellations within 48 hours or no-shows mean the deposit is non-refundable, as I won't be able to fill the slot at short notice. Thank you for understanding — it helps me keep my diary running smoothly for everyone!
+          To secure your appointment, a small deposit of £[X] is required. This comes off your final price, so think of it as paying a little early! If you need to reschedule, just give me 48 hours' notice and we'll move it no problem. Cancellations within 48 hours or no-shows mean the deposit is non-refundable, as I won't be able to fill the slot at short notice. Thank you for understanding: it helps me keep my diary running smoothly for everyone!
         </ArticleCallout>
 
         <ArticleCallout variant="info" title="Premium / formal version">
@@ -79,7 +79,7 @@ registerArticle({
 
       <section id="where-to-put-it">
         <h2 className="font-serif text-2xl font-bold mb-4">Where to put your policy</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Your policy needs to be visible before booking — not tucked away where clients can claim they didn't see it:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Your policy needs to be visible before booking, not tucked away where clients can claim they didn't see it:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li><strong>Booking page:</strong> A visible policy section before the booking confirmation step</li>
           <li><strong>Booking confirmation message:</strong> "Just a reminder of my cancellation policy: 48 hours' notice required..."</li>
@@ -91,9 +91,9 @@ registerArticle({
 
       <section id="enforcing">
         <h2 className="font-serif text-2xl font-bold mb-4">Enforcing your policy</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">A policy you don't enforce isn't a policy — it's a suggestion. Many nail techs write a clear policy and then feel too awkward to actually keep the deposit when a client cancels late.</p>
-        <p className="text-gray-700 mb-4 leading-relaxed">Enforce your policy every time. If you make exceptions for some clients and not others, you create inconsistency that clients notice and take advantage of. The policy exists to protect you — use it.</p>
-        <p className="text-gray-700 leading-relaxed">Genuine emergencies (serious illness, bereavement, accident) are different — use your judgement. But "I forgot" and "something came up" are not emergencies.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">A policy you don't enforce isn't a policy: it's a suggestion. Many nail techs write a clear policy and then feel too awkward to actually keep the deposit when a client cancels late.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Enforce your policy every time. If you make exceptions for some clients and not others, you create inconsistency that clients notice and take advantage of. The policy exists to protect you: use it.</p>
+        <p className="text-gray-700 leading-relaxed">Genuine emergencies (serious illness, bereavement, accident) are different: use your judgement. But "I forgot" and "something came up" are not emergencies.</p>
       </section>
 
       <section id="awkward-clients">

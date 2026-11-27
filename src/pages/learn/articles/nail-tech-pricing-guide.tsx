@@ -12,11 +12,11 @@ import {
 registerArticle({
   slug: 'nail-tech-pricing-guide',
   title: 'Nail Tech Pricing Guide: How to Set Your Rates and Charge What You\'re Worth',
-  seoTitle: 'Nail Tech Pricing Guide: How to Set Your Rates and Charge What You\'re Worth',
+  seoTitle: 'Nail Tech Pricing Guide: How to Set Your Rates',
   excerpt:
-    'A complete guide to pricing your nail services — cost-based pricing, market positioning, structuring your service menu, pricing nail art, and how to raise your prices.',
+    'A complete guide to pricing your nail services: cost-based pricing, market positioning, structuring your service menu, pricing nail art, and how to raise your prices.',
   seoDescription:
-    'How to price your nail tech services correctly — from cost-based pricing and market positioning to structuring your menu, pricing nail art, and raising your rates without losing clients.',
+    'Nail tech pricing guide: cost-based pricing, market positioning, structuring your menu, pricing nail art and raising rates without losing clients.',
   category: 'pricing-money',
   tags: ['pricing', 'rates', 'service menu', 'nail art', 'raise prices', 'income'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 70%, #FDBA74 100%)',
@@ -41,7 +41,7 @@ registerArticle({
   faq: [
     {
       q: 'How do I know if my nail prices are too low?',
-      a: "If you're fully booked but feel underpaid, if you're turning away bookings more than a week out, or if your prices haven't changed in over a year while your costs have, your prices are likely too low. Being fully booked at low prices means you've underpriced yourself — demand is high enough to support an increase.",
+      a: "If you're fully booked but feel underpaid, if you're turning away bookings more than a week out, or if your prices haven't changed in over a year while your costs have, your prices are likely too low. Being fully booked at low prices means you've underpriced yourself: demand is high enough to support an increase.",
     },
     {
       q: 'Should I list my prices on Instagram?',
@@ -53,7 +53,7 @@ registerArticle({
     },
     {
       q: 'How do I raise my prices without losing clients?',
-      a: "Give 4–8 weeks notice via your booking page, Instagram and confirmation messages. Explain that your costs have increased. Most loyal clients will stay — and the ones who leave at a modest increase were the price-sensitive clients least likely to become long-term regulars anyway.",
+      a: "Give 4–8 weeks notice via your booking page, Instagram and confirmation messages. Explain that your costs have increased. Most loyal clients will stay, and the ones who leave at a modest increase were the price-sensitive clients least likely to become long-term regulars anyway.",
     },
   ],
   relatedFeatureSlugs: ['payments', 'bookings', 'deposits'],
@@ -63,7 +63,7 @@ registerArticle({
       <section id="why-pricing-matters">
         <h2 className="font-serif text-2xl font-bold mb-4">1. Why pricing matters beyond income</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          Pricing signals positioning. A nail tech charging £20 for a full gel set is not competing with one charging £55 — they attract different clients, have different expectations, and deliver different experiences. Underpricing doesn't just hurt your income; it attracts clients who are harder to retain, more likely to complain, and least likely to respect your time.
+          Pricing signals positioning. A nail tech charging £20 for a full gel set is not competing with one charging £55: they attract different clients, have different expectations, and deliver different experiences. Underpricing doesn't just hurt your income; it attracts clients who are harder to retain, more likely to complain, and least likely to respect your time.
         </p>
         <ArticleCallout variant="info" title="The underpricing trap">
           Most nail techs underprice when they start to attract clients and never raise prices because they fear losing them. The result: a fully booked calendar at rates that don't support a sustainable business. Getting off this treadmill is harder than starting at the right price.
@@ -73,7 +73,7 @@ registerArticle({
       <section id="cost-based-pricing">
         <h2 className="font-serif text-2xl font-bold mb-4">2. Start with cost-based pricing</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          Cost-based pricing means setting a minimum floor — the price below which you lose money. Your actual price will be above this floor based on positioning, but you need to know the floor first.
+          Cost-based pricing means setting a minimum floor: the price below which you lose money. Your actual price will be above this floor based on positioning, but you need to know the floor first.
         </p>
         <ArticleSteps
           steps={[
@@ -83,7 +83,7 @@ registerArticle({
             },
             {
               title: 'Add product cost per service',
-              body: 'Estimate the product cost for each service type (gel polish, tips, nail art supplies). Many nail techs undercount this — include everything: files, forms, nail prep, top coat.',
+              body: 'Estimate the product cost for each service type (gel polish, tips, nail art supplies). Many nail techs undercount this. Include everything: files, forms, nail prep, top coat.',
             },
             {
               title: 'Factor in your time target',
@@ -135,7 +135,7 @@ registerArticle({
           ]}
         />
         <p className="text-gray-700 mt-4 leading-relaxed">
-          Positioning in the premium tier doesn't require a salon. Many of the highest-earning nail techs in the UK are home or mobile based. Premium positioning is about quality, presentation, and consistency — not location.
+          Positioning in the premium tier doesn't require a salon. Many of the highest-earning nail techs in the UK are home or mobile based. Premium positioning is about quality, presentation, and consistency, not location.
         </p>
       </section>
 
@@ -149,8 +149,8 @@ registerArticle({
           items={[
             'Too many overlapping services with confusing names (infill vs. refill vs. infills vs. maintenance)',
             'No clear distinction between new set and maintenance pricing',
-            'Missing price for nail art — clients assume it\'s included in the base price',
-            'No indication of service duration — clients don\'t know how to plan their day',
+            'Missing price for nail art: clients assume it\'s included in the base price',
+            'No indication of service duration: clients don\'t know how to plan their day',
             'Outdated prices still showing on booking page after a price increase',
           ]}
         />
@@ -179,7 +179,7 @@ registerArticle({
           ]}
         />
         <ArticleTip>
-          Charge per finger for complex nail art, not as a flat fee per set. Charging £5/finger for a 10-finger detailed design gives you £50 extra — appropriate for 1–2 hours of additional work. A flat "£20 nail art fee" for the same job undervalues your time significantly.
+          Charge per finger for complex nail art, not as a flat fee per set. Charging £5/finger for a 10-finger detailed design gives you £50 extra: appropriate for 1–2 hours of additional work. A flat "£20 nail art fee" for the same job undervalues your time significantly.
         </ArticleTip>
       </section>
 
@@ -209,7 +209,7 @@ registerArticle({
           ]}
         />
         <ArticleCallout variant="tip" title="How often should you raise prices?">
-          Review your prices annually. If your costs have increased, your prices should too. The goal isn't to maximise price — it's to maintain a viable margin. A small annual increase (£2–5 per service) is far less disruptive than a large catch-up increase every 3 years.
+          Review your prices annually. If your costs have increased, your prices should too. The goal isn't to maximise price: it's to maintain a viable margin. A small annual increase (£2–5 per service) is far less disruptive than a large catch-up increase every 3 years.
         </ArticleCallout>
       </section>
 
@@ -224,7 +224,7 @@ registerArticle({
             'Every service has a price visible before the client enters their details',
             'Nail art pricing is explained clearly (e.g. "from £10 depending on complexity")',
             'Deposit amount is shown before confirmation',
-            'Prices match what you charge — no surprises at checkout',
+            'Prices match what you charge: no surprises at checkout',
             'Updated within 24 hours of any price change',
           ]}
         />
@@ -237,7 +237,7 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Useful resources</h2>
         <ul className="space-y-2 text-sm">
           {[
-            ['/tools/nail-tech-pricing-calculator', 'Free nail tech pricing calculator — work out your minimum viable price'],
+            ['/tools/nail-tech-pricing-calculator', 'Free nail tech pricing calculator: work out your minimum viable price'],
             ['/nail-tech-deposits', 'How to take deposits as a nail tech'],
             ['/tools/nail-tech-cancellation-policy-generator', 'Free cancellation policy generator'],
             ['/blog/how-to-get-more-nail-clients', 'How to get more nail clients'],

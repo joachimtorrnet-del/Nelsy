@@ -7,7 +7,7 @@ registerArticle({
   title: 'Why Your Nail Page Gets Likes But No Bookings',
   seoTitle: 'Why Your Nail Page Gets Likes But No Bookings (And How to Fix It)',
   excerpt: 'If your nail content gets lots of engagement but your DMs are quiet, something specific is going wrong. Here\'s how to diagnose and fix it.',
-  seoDescription: 'Why nail techs get Instagram likes but no bookings — the 6 most common reasons and how to fix each one. Diagnose your conversion problem and start getting clients.',
+  seoDescription: 'Why nail techs get Instagram likes but no bookings: the 6 most common reasons and how to fix each one. Diagnose your conversion problem and start getting clients.',
   category: 'instagram-content',
   tags: ['Instagram', 'likes no bookings', 'Instagram strategy', 'nail content'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #F9A8D4 100%)',
@@ -26,9 +26,9 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-get-nail-clients-from-instagram', 'how-to-turn-instagram-followers-into-nail-clients', 'nail-content-that-gets-bookings'],
   faq: [
-    { q: 'Why does my nail content go viral but I still don\'t get clients?', a: 'Viral nail content typically reaches a global audience of nail enthusiasts who admire the art — not local clients who can book you. Virality on Instagram rarely translates to local service bookings unless your profile is specifically optimised to convert viewers into bookings.' },
-    { q: 'I have a booking link in my bio but clients still DM me — why?', a: 'Two common causes: the link goes to a generic link page (Linktree with many options) rather than directly to booking, or the booking page requires too many steps before clients see availability. Make your bio link go directly to your booking page and test the flow on a phone.' },
-    { q: 'What\'s more important — engagement rate or follower count for getting nail bookings?', a: 'Neither, really. What matters most for local nail bookings is follower location. 1,000 engaged local followers are worth more than 50,000 followers spread globally. Check your Insights to see where your audience is based.' },
+    { q: 'Why does my nail content go viral but I still don\'t get clients?', a: 'Viral nail content typically reaches a global audience of nail enthusiasts who admire the art, not local clients who can book you. Virality on Instagram rarely translates to local service bookings unless your profile is specifically optimised to convert viewers into bookings.' },
+    { q: 'I have a booking link in my bio but clients still DM me, why?', a: 'Two common causes: the link goes to a generic link page (Linktree with many options) rather than directly to booking, or the booking page requires too many steps before clients see availability. Make your bio link go directly to your booking page and test the flow on a phone.' },
+    { q: 'What\'s more important: engagement rate or follower count for getting nail bookings?', a: 'Neither, really. What matters most for local nail bookings is follower location. 1,000 engaged local followers are worth more than 50,000 followers spread globally. Check your Insights to see where your audience is based.' },
   ],
   relatedFeatureSlugs: ['instagram-autodm', 'link-in-bio', 'bookings'],
   content: () => (
@@ -50,24 +50,24 @@ registerArticle({
 
       <section id="wrong-audience">
         <h2 className="font-serif text-2xl font-bold mb-4">Wrong audience: non-local followers</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">This is the most common cause of likes without bookings. Your content is attracting nail enthusiasts and other nail techs — people who love nails but can't book you because they're not local.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">This is the most common cause of likes without bookings. Your content is attracting nail enthusiasts and other nail techs: people who love nails but can't book you because they're not local.</p>
         <ArticleCallout variant="warning" title="Check this right now">
-          Go to Instagram Insights → Audience → Top Cities. If your top cities are places you don't serve, your content is reaching the wrong people. This isn't your content's fault — it's a distribution problem.
+          Go to Instagram Insights → Audience → Top Cities. If your top cities are places you don't serve, your content is reaching the wrong people. This isn't your content's fault: it's a distribution problem.
         </ArticleCallout>
         <p className="text-gray-700 mt-4 leading-relaxed">Fix: location tags on every post, location in your name field and bio, and local hashtags. These make your content more likely to reach people in your area. See: <Link to="/blog/how-to-get-nail-clients-from-instagram" className="underline text-[#F52B8C]">How to get nail clients from Instagram</Link>.</p>
       </section>
 
       <section id="unclear-booking">
         <h2 className="font-serif text-2xl font-bold mb-4">No clear path to booking</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Many nail tech profiles are beautiful to look at but provide no clear instruction on how to book. Potential clients have to figure it out themselves — and many won't bother.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Many nail tech profiles are beautiful to look at but provide no clear instruction on how to book. Potential clients have to figure it out themselves, and many won't bother.</p>
         <p className="text-gray-700 mb-4 leading-relaxed">The fix is simple: be explicit. Your bio should contain the words "Book via link below" or equivalent. Your posts should end with "Book via link in bio." Your Stories should link directly to your booking page.</p>
         <ArticleTip>Test your own profile as if you know nothing about you. Open it on your phone, pretend you're a client. How quickly can you figure out how to book? If it takes more than 10 seconds, something's missing.</ArticleTip>
       </section>
 
       <section id="no-prices">
         <h2 className="font-serif text-2xl font-bold mb-4">Prices nowhere to be found</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Not having your prices visible is one of the fastest ways to lose potential clients. Most people won't DM to ask — they'll assume you're out of their budget and move on.</p>
-        <p className="text-gray-700 leading-relaxed">Put prices on your booking page. If you don't want them on your main Instagram profile, add a "Pricing" highlight. When people DM to ask for prices, respond immediately — delayed replies on pricing questions are almost always lost bookings.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Not having your prices visible is one of the fastest ways to lose potential clients. Most people won't DM to ask: they'll assume you're out of their budget and move on.</p>
+        <p className="text-gray-700 leading-relaxed">Put prices on your booking page. If you don't want them on your main Instagram profile, add a "Pricing" highlight. When people DM to ask for prices, respond immediately: delayed replies on pricing questions are almost always lost bookings.</p>
       </section>
 
       <section id="booking-friction">
@@ -76,7 +76,7 @@ registerArticle({
         <ul className="list-disc list-inside space-y-2 text-gray-700">
           <li>Bio link goes to a Linktree with 10 options (add one more click to the path)</li>
           <li>Booking page requires account creation before showing availability</li>
-          <li>Booking through DMs — requires back-and-forth over hours</li>
+          <li>Booking through DMs: requires back-and-forth over hours</li>
           <li>Deposit collected manually after booking (adds an extra step)</li>
           <li>Mobile booking experience is slow or confusing</li>
         </ul>
@@ -85,7 +85,7 @@ registerArticle({
 
       <section id="content-vs-business">
         <h2 className="font-serif text-2xl font-bold mb-4">Content account vs booking machine</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Some nail techs have accidentally built content accounts — pages that get engagement from the nail art community — rather than business pages that attract clients. The difference:</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Some nail techs have accidentally built content accounts, pages that get engagement from the nail art community, rather than business pages that attract clients. The difference:</p>
         <ArticleTable
           headers={['Content account', 'Business page']}
           rows={[
@@ -95,7 +95,7 @@ registerArticle({
             ['Engagement comes from non-local admirers', 'Engagement comes from local people interested in booking'],
           ]}
         />
-        <p className="text-gray-700 mt-4 leading-relaxed">Both are fine — but only the second one fills your appointment book.</p>
+        <p className="text-gray-700 mt-4 leading-relaxed">Both are fine, but only the second one fills your appointment book.</p>
       </section>
 
       <section id="action-plan">
@@ -105,7 +105,7 @@ registerArticle({
           <li>Update bio: add location, add "Book via link below"</li>
           <li>Set bio link to go directly to your booking page</li>
           <li>Add location tags to your next 10 posts</li>
-          <li>Post one availability CTA this week: "I have slots this week — link in bio to book"</li>
+          <li>Post one availability CTA this week: "I have slots this week: link in bio to book"</li>
         </ol>
         <p className="text-gray-700 mt-6 leading-relaxed">Do these five things before anything else. The results are usually visible within 2–4 weeks.</p>
       </section>

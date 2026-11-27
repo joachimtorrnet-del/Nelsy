@@ -24,9 +24,9 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-increase-appointment-value', 'how-to-price-nail-art-add-ons', 'how-to-create-nail-service-menu', 'nail-tech-price-list-examples'],
   faq: [
-    { q: 'Should packages be cheaper than individual services?', a: 'A small discount (5–10%) for a package is common — it creates a sense of value and makes the bundle easier to say yes to. But don\'t discount so deeply that the package is unprofitable. The goal of a package is to increase total spend and encourage repeat bookings, not to reduce your margin. A "perceived value" package — bundled at the same total as individual prices but presented as a named offer — can work as well as one with a small discount.' },
-    { q: 'How do I sell packages to existing clients?', a: 'Mention them naturally at the appointment: "I\'ve just started doing a summer package — it\'s [service] plus [add-on] for £X, which saves you a bit. Want to try it?" Or add them to your booking page and mention them in your Instagram Stories. Existing clients who trust your work are the easiest audience for packages.' },
-    { q: 'Do packages work for solo nail techs or just salons?', a: 'Packages work well for solo nail techs — they simplify the client decision, increase average spend, and can build in advance payment (great for cashflow). They\'re particularly useful for seasonal events (Christmas, valentines, summer) and for targeting specific client segments (brides, birthday groups).' },
+    { q: 'Should packages be cheaper than individual services?', a: 'A small discount (5–10%) for a package is common: it creates a sense of value and makes the bundle easier to say yes to. But don\'t discount so deeply that the package is unprofitable. The goal of a package is to increase total spend and encourage repeat bookings, not to reduce your margin. A "perceived value" package, bundled at the same total as individual prices but presented as a named offer, can work as well as one with a small discount.' },
+    { q: 'How do I sell packages to existing clients?', a: 'Mention them naturally at the appointment: "I\'ve just started doing a summer package: it\'s [service] plus [add-on] for £X, which saves you a bit. Want to try it?" Or add them to your booking page and mention them in your Instagram Stories. Existing clients who trust your work are the easiest audience for packages.' },
+    { q: 'Do packages work for solo nail techs or just salons?', a: 'Packages work well for solo nail techs: they simplify the client decision, increase average spend, and can build in advance payment (great for cashflow). They\'re particularly useful for seasonal events (Christmas, valentines, summer) and for targeting specific client segments (brides, birthday groups).' },
   ],
   relatedFeatureSlugs: ['payments', 'bookings'],
   content: () => (
@@ -34,7 +34,7 @@ registerArticle({
       <section id="why-packages">
         <h2 className="font-serif text-2xl font-bold mb-4">Why packages work</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">A named package does three things: it simplifies the decision (instead of choosing from a menu, the client picks a package), it anchors a higher spend expectation (the package price feels like the starting point), and it often includes add-ons the client wouldn't have asked for individually.</p>
-        <p className="text-gray-700 leading-relaxed">Packages also work as marketing assets — "The Bridal Package" or "The Summer Set" is shareable and memorable in a way that "gel manicure + chrome + nail art" isn't.</p>
+        <p className="text-gray-700 leading-relaxed">Packages also work as marketing assets: "The Bridal Package" or "The Summer Set" is shareable and memorable in a way that "gel manicure + chrome + nail art" isn't.</p>
       </section>
 
       <section id="types">
@@ -42,7 +42,7 @@ registerArticle({
         <ArticleTable
           headers={['Package type', 'What it includes', 'Use case']}
           rows={[
-            ['Seasonal package', 'A service plus seasonal add-on — e.g. autumn gel set + nail art accent', 'Promotes timely bookings; seasonal content opportunity'],
+            ['Seasonal package', 'A service plus seasonal add-on: e.g. autumn gel set + nail art accent', 'Promotes timely bookings; seasonal content opportunity'],
             ['Bridal package', 'Bridal gel/acrylic + French or specified design + nail art', 'High-value bookings; worth creating a specific bridal menu'],
             ['New client trial package', 'First appointment special: gel + cuticle treatment + aftercare card', 'Lowers barrier for first-time clients; builds habit with add-ons'],
             ['Loyalty/anniversary package', 'Special set for returning clients hitting a milestone', 'Rewards loyal clients; great Instagram content'],
@@ -55,22 +55,22 @@ registerArticle({
         <h2 className="font-serif text-2xl font-bold mb-4">Pricing packages</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Two approaches:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>Bundled price = sum of parts:</strong> No discount — but the package name and presentation creates a sense of it being curated and special. "The Autumn Edit" at £65 = gel £40 + nail art £15 + cuticle oil £10. Client sees a named offer, not three add-ons.</li>
+          <li><strong>Bundled price = sum of parts:</strong> No discount, but the package name and presentation creates a sense of it being curated and special. "The Autumn Edit" at £65 = gel £40 + nail art £15 + cuticle oil £10. Client sees a named offer, not three add-ons.</li>
           <li><strong>Bundled price = slight discount:</strong> £65 for services that individually total £70. The £5 discount is meaningful enough to feel like value but small enough to protect your margin.</li>
         </ul>
-        <ArticleTip>Always calculate the package price from your actual costs and time. A package that takes 2.5 hours and costs you significantly in materials should price accordingly — don\'t create a "deal" that undervalues your time.</ArticleTip>
+        <ArticleTip>Always calculate the package price from your actual costs and time. A package that takes 2.5 hours and costs you significantly in materials should price accordingly: don\'t create a "deal" that undervalues your time.</ArticleTip>
       </section>
 
       <section id="naming">
         <h2 className="font-serif text-2xl font-bold mb-4">Naming and presenting packages</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Names matter. "Gel + chrome + cuticle oil" is forgettable. Names that work:</p>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li>"The Bridal Edit" — aspirational, occasion-specific</li>
-          <li>"The Autumn Set" — seasonal, timely</li>
-          <li>"The Glow Package" — outcome-focused</li>
-          <li>"The Full Treatment" — completeness</li>
+          <li>"The Bridal Edit": aspirational, occasion-specific</li>
+          <li>"The Autumn Set": seasonal, timely</li>
+          <li>"The Glow Package": outcome-focused</li>
+          <li>"The Full Treatment": completeness</li>
         </ul>
-        <p className="text-gray-700 leading-relaxed">List each package on your booking page with a clear name, what's included, and the total price. Don't make clients calculate whether it's a deal — tell them.</p>
+        <p className="text-gray-700 leading-relaxed">List each package on your booking page with a clear name, what's included, and the total price. Don't make clients calculate whether it's a deal: tell them.</p>
       </section>
 
       <section id="examples">

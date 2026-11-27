@@ -6,7 +6,7 @@ registerArticle({
   slug: 'nail-tech-branding-ideas',
   title: 'Nail Tech Branding Ideas That Make You Look Premium',
   seoTitle: 'Nail Tech Branding Ideas That Make You Look Premium',
-  excerpt: 'Practical branding ideas for nail techs who want to look established and attract premium clients — without a big budget.',
+  excerpt: 'Practical branding ideas for nail techs who want to look established and attract premium clients, without a big budget.',
   seoDescription: 'Nail tech branding ideas that make you look premium. Colour palettes, Instagram aesthetics, bio styles, photography props, and communication tips for nail techs.',
   category: 'branding-growth',
   tags: ['nail tech branding', 'premium nail brand', 'nail business aesthetic', 'nail branding ideas'],
@@ -85,7 +85,7 @@ registerArticle({
           headers={['Positioning', 'Bio style', 'Example']}
           rows={[
             ['Quiet luxury', 'Minimal, no emojis or few, location clear', 'Nail artist · East London\nBy appointment only · link below'],
-            ['Warm professional', 'One emoji, friendly tone, clear CTA', 'Gel nails & art 💅 Manchester\nTaking new clients — book below ↓'],
+            ['Warm professional', 'One emoji, friendly tone, clear CTA', 'Gel nails & art 💅 Manchester\nTaking new clients: book below ↓'],
             ['Creative studio', 'Bold, distinctive, personality-led', 'nail art that makes people look twice 🔥\nEast London · book via link'],
           ]}
         />

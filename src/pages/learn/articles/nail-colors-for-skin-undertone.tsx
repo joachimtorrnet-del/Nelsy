@@ -5,8 +5,8 @@ registerArticle({
   slug: 'nail-colors-for-skin-undertone',
   title: 'Best Nail Colours for Your Skin Undertone',
   seoTitle: 'Best Nail Colours for Your Skin Undertone (Warm, Cool, Neutral)',
-  excerpt: 'The right nail colour for your skin isn\'t just about what\'s trending — it\'s about undertone. Here\'s how to find shades that genuinely flatter your complexion.',
-  seoDescription: 'Best nail colours for skin undertone. How to choose nail polish colours for warm, cool, and neutral undertones — with specific shade recommendations for each.',
+  excerpt: 'The right nail colour for your skin isn\'t just about what\'s trending: it\'s about undertone. Here\'s how to find shades that genuinely flatter your complexion.',
+  seoDescription: 'Best nail colours for skin undertone. How to choose nail polish colours for warm, cool, and neutral undertones, with specific shade recommendations for each.',
   category: 'nail-inspo',
   tags: ['nail colors for skin undertone', 'nail polish for skin tone', 'best nail colors skin undertone'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
@@ -23,20 +23,20 @@ registerArticle({
   ],
   relatedSlugs: ['best-nail-colors-every-season', 'nail-trends-2027', 'luxury-nail-ideas', 'bridal-nail-ideas'],
   faq: [
-    { q: 'How do I find out my skin undertone?', a: 'Three quick methods: (1) Look at the veins on your inner wrist — green or olive veins suggest warm undertone; blue or purple veins suggest cool. (2) How does your skin react to sun? Warm undertones tan easily; cool undertones burn more easily. (3) What jewellery suits you — gold tends to flatter warm undertones; silver tends to flatter cool. Neither clearly better = neutral.' },
-    { q: 'Does skin depth (light, medium, deep) matter for nail colour?', a: 'Both undertone and depth matter. Undertone determines which hues flatter you; depth affects how shades read — a nude that works on deep skin may look washed out on very fair skin. The undertone guide here applies across depths, but shades may need adjustment based on how light or dark your skin is.' },
+    { q: 'How do I find out my skin undertone?', a: 'Three quick methods: (1) Look at the veins on your inner wrist. Green or olive veins suggest warm undertone; blue or purple veins suggest cool. (2) How does your skin react to sun? Warm undertones tan easily; cool undertones burn more easily. (3) What jewellery suits you: gold tends to flatter warm undertones; silver tends to flatter cool. Neither clearly better = neutral.' },
+    { q: 'Does skin depth (light, medium, deep) matter for nail colour?', a: 'Both undertone and depth matter. Undertone determines which hues flatter you; depth affects how shades read: a nude that works on deep skin may look washed out on very fair skin. The undertone guide here applies across depths, but shades may need adjustment based on how light or dark your skin is.' },
   ],
   content: () => (
     <div className="space-y-12 text-[#1A1A1A]">
       <section id="what-is-undertone">
         <h2 className="font-serif text-2xl font-bold mb-4">What is skin undertone?</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Skin undertone is the subtle colour beneath the surface of your skin — warm (yellow, peachy, golden tones), cool (pink, red, bluish tones), or neutral (a mix of both). It doesn't change with tanning or seasons; it's your baseline hue.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Skin undertone is the subtle colour beneath the surface of your skin: warm (yellow, peachy, golden tones), cool (pink, red, bluish tones), or neutral (a mix of both). It doesn't change with tanning or seasons; it's your baseline hue.</p>
         <p className="text-gray-700 leading-relaxed">Undertone matters for nail colour because colours that share your undertone harmonise with your skin, while clashing undertones can make nails look jarring or hands look washed out.</p>
       </section>
 
       <section id="warm-undertone">
         <h2 className="font-serif text-2xl font-bold mb-4">Best nail colours for warm undertones</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Warm undertones — yellow, peachy, golden. Warm nail shades with orange, yellow, or golden leanings complement this.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Warm undertones: yellow, peachy, golden. Warm nail shades with orange, yellow, or golden leanings complement this.</p>
         <ArticleTable
           headers={['Shade', 'Why it flatters']}
           rows={[
@@ -53,7 +53,7 @@ registerArticle({
 
       <section id="cool-undertone">
         <h2 className="font-serif text-2xl font-bold mb-4">Best nail colours for cool undertones</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Cool undertones — pink, red, blue. Cool nail shades with blue, purple, or grey leanings enhance this.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Cool undertones: pink, red, blue. Cool nail shades with blue, purple, or grey leanings enhance this.</p>
         <ArticleTable
           headers={['Shade', 'Why it flatters']}
           rows={[
@@ -70,15 +70,15 @@ registerArticle({
 
       <section id="neutral-undertone">
         <h2 className="font-serif text-2xl font-bold mb-4">Best nail colours for neutral undertones</h2>
-        <p className="text-gray-700 mb-4 leading-relaxed">Neutral undertones — a mix of warm and cool, or neither dominant. This is the most flexible undertone — most colours work, including shades that clash for warmer or cooler skin.</p>
+        <p className="text-gray-700 mb-4 leading-relaxed">Neutral undertones: a mix of warm and cool, or neither dominant. This is the most flexible undertone: most colours work, including shades that clash for warmer or cooler skin.</p>
         <ArticleTable
           headers={['Shade', 'Notes']}
           rows={[
-            ['Warm nudes and cool nudes', 'Both work — pick based on the season or outfit'],
+            ['Warm nudes and cool nudes', 'Both work: pick based on the season or outfit'],
             ['Mauve / greige', 'A straddling shade between warm and cool; perfect for neutral undertones'],
-            ['Classic red', 'Neutral reds work particularly well — neither orange nor blue leaning'],
+            ['Classic red', 'Neutral reds work particularly well, neither orange nor blue leaning'],
             ['Soft pink', 'Most pinks flatter neutral undertones'],
-            ['Most earth tones', 'Brown, khaki, caramel — all work well'],
+            ['Most earth tones', 'Brown, khaki, caramel: all work well'],
           ]}
         />
       </section>
@@ -93,7 +93,7 @@ registerArticle({
           <li><strong>Sheer/glazed finish:</strong> A high-shine sheer layer enhances any undertone rather than fighting it</li>
         </ul>
         <ArticleCallout variant="info" title="Nudes are not universal">
-          The idea of a "universal nude" is a myth. A nude that works beautifully on one skin tone can look ashy, washed out, or orange on another. Nudes need to be matched to undertone carefully — often requiring testing a few shades.
+          The idea of a "universal nude" is a myth. A nude that works beautifully on one skin tone can look ashy, washed out, or orange on another. Nudes need to be matched to undertone carefully, often requiring testing a few shades.
         </ArticleCallout>
       </section>
     </div>
