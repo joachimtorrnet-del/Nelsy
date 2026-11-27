@@ -80,7 +80,7 @@ function Hero({ variant }: { variant: Variant }) {
     >
       <div className={`relative ${WRAP} pt-24 lg:pt-32 pb-11 lg:pb-16 grid lg:grid-cols-[minmax(0,545px)_1fr] gap-10 lg:gap-0 items-center`}>
         <div>
-          <p className="text-sm lg:text-base font-bold mb-4" style={{ color: PINK }}>The Beauty Creator Store</p>
+          <p className="text-sm lg:text-base font-bold mb-4" style={{ color: PINK }}>Your all-in-one link for nail techs</p>
           <h1 className="font-bold tracking-tight leading-[1.1] mb-5 text-[36px] sm:text-[48px] lg:text-[60px]" style={{ color: INK, letterSpacing: '-0.03em' }}>
             {copy.title}
           </h1>

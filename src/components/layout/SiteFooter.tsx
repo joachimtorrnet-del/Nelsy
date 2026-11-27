@@ -102,7 +102,7 @@ export default function SiteFooter() {
           <Link to="/" className={`flex items-center gap-2 ${LINK}`}>
             <span className="w-6 h-6 rounded-md" style={{ backgroundColor: PINK }} aria-hidden="true" />
             <span className="font-bold text-white">Nelsy</span>
-            <span className="text-xs text-gray-500 ml-2 hidden sm:inline">The Beauty Creator Store</span>
+            <span className="text-xs text-gray-500 ml-2 hidden sm:inline">Your all-in-one link for nail techs</span>
           </Link>
           <nav aria-label="Legal" className="flex flex-wrap items-center justify-center gap-5 text-sm text-gray-500">
             <Link to="/privacy" className={LINK}>Privacy</Link>
