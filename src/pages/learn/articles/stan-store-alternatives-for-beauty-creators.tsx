@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Five Stan Store alternatives for beauty creators and educators: Beacons, Linktree, Kajabi, Teachable and Nelsy, compared on price, seller fees, courses and bookings.',
   seoDescription: 'Stan Store alternatives for beauty creators: Beacons, Linktree, Kajabi, Teachable and Nelsy compared on price, fees, courses and client bookings.',
   category: 'beauty-creators',
+  audience: ['creators'],
+  craft: 'all',
   tags: ['Stan Store alternatives', 'Stan alternative', 'Stan vs Beacons', 'Stan vs Kajabi', 'creator store for beauty'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #F5D0FE 100%)',
   heroImageAlt: 'Stan Store alternatives for beauty creators compared',

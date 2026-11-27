@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Professionalism isn\'t about having a studio in a fancy location. It\'s about the details clients notice at every touchpoint: here\'s what actually matters.',
   seoDescription: 'How to make your nail business look professional: booking system, messages, photos, workspace and online presence, the details clients notice.',
   category: 'branding-growth',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['professional nail business', 'nail business credibility', 'nail business appearance', 'nail tech professionalism'],
   heroImage: 'linear-gradient(135deg, #F0F4FF 0%, #A5B4FC 100%)',
   heroImageAlt: 'How to make your nail business look more professional',

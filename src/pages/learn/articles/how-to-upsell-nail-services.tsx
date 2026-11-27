@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Upselling doesn\'t have to feel like selling. Done well, it feels like great client service: offering something the client actually wants. Here\'s how to do it naturally.',
   seoDescription: 'How to upsell nail services without being pushy: natural upsell language, the add-ons that work best and how to raise appointment value.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to upsell nail services', 'nail service upsell', 'increase nail appointment value'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to upsell nail services without being pushy',

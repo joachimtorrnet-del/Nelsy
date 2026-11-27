@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Back to school season marks the end of summer and the return of routine bookings. Here\'s how nail techs can use the September shift to fill the calendar.',
   seoDescription: 'Back to school marketing ideas for nail techs. Use September to re-engage lapsed clients, promote autumn designs and fill your post-summer calendar.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['back to school nail tech marketing', 'september nail marketing', 'autumn nail marketing ideas'],
   heroImage: 'linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%)',
   heroImageAlt: 'Back to school marketing ideas for nail techs',

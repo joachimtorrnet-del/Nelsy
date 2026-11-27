@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Christmas is the busiest nail season of the year. Here\'s how to market your nail business in the lead-up, fill your festive slots fast, and avoid the December panic.',
   seoDescription: 'Christmas marketing ideas for nail techs. Fill your festive slots, promote seasonal sets, manage the holiday rush, and make the most of the busiest nail season.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['christmas marketing nail tech', 'festive nail marketing', 'christmas nail bookings'],
   heroImage: 'linear-gradient(135deg, #FEF2F2 0%, #FCA5A5 100%)',
   heroImageAlt: 'Christmas marketing ideas for nail techs',

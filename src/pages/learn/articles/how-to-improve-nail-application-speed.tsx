@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Speed and quality aren\'t opposites: the fastest nail techs are usually the cleanest. Here\'s how to work faster without sacrificing results.',
   seoDescription: 'How to improve nail application speed. Workflow efficiency, station setup, practice strategies, and which parts of a nail appointment to work on speeding up first.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail application speed', 'nail tech efficiency', 'nail tech workflow', 'work faster nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'How to improve nail application speed',

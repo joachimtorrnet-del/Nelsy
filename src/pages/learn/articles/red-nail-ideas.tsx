@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Red nails never go out of style, but there are more ways to wear red than a classic creme. Here are 50 red nail ideas from timeless to trend-forward.',
   seoDescription: '50 red nail ideas. Classic red, deep crimson, brick red, cherry, red chrome, red ombré, and red nail art: inspiration for every shade of red.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['red nail ideas', 'red nails', 'red nail designs'],
   heroImage: 'linear-gradient(135deg, #FFF1F1 0%, #FEE2E2 100%)',
   heroImageAlt: '50 red nail ideas',

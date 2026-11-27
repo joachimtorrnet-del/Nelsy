@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Builder gel lifting is more complex than gel polish: the thicker product, longer cure, and infill cycle all create more opportunities for failure. Here\'s exactly what causes it.',
   seoDescription: 'Why does builder gel lift? Causes of BIAB and hard gel lifting, from prep and application to infill technique, with specific fixes for each scenario.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['why does builder gel lift', 'BIAB lifting causes', 'builder gel lifting fix'],
   heroImage: 'linear-gradient(135deg, #F0F9FF 0%, #BAE6FD 100%)',
   heroImageAlt: 'Why does builder gel lift',

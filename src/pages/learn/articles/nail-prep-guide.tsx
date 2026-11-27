@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Gel lifting, peeling, and chipping almost always come back to prep. This guide covers every step of nail preparation (in order, with reasons) for both gel and acrylic.',
   seoDescription: 'Nail prep guide for better retention. Step-by-step nail preparation for gel and acrylic, why each step matters and the most common prep mistakes that cause lifting.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail prep', 'nail retention', 'gel lifting', 'nail preparation steps'],
   heroImage: 'linear-gradient(135deg, #F0FFF4 0%, #A7F3D0 100%)',
   heroImageAlt: 'Nail prep guide for better retention',

@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Nail lifting is one of the most common complaints clients bring to nail techs. A thorough guide to the causes, the fixes, and what to tell clients.',
   seoDescription: 'How to prevent nail lifting: causes, prep techniques, application tips, and client aftercare advice for nail techs to reduce lifting complaints.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail lifting', 'gel lifting', 'nail education', 'nail technique'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'How to prevent nail lifting',

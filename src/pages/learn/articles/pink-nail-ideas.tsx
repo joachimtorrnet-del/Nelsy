@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'From barely-there blush to bold hot pink, there\'s a pink nail look for every client. Here are 50 pink nail ideas to inspire your next set.',
   seoDescription: '50 pink nail ideas for every style. Baby pink, dusty rose, hot pink, neon, chrome, and ombré pink nails: inspiration for clients who love pink.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['pink nail ideas', 'pink nails', 'pink nail designs'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FDDDE6 100%)',
   heroImageAlt: '50 pink nail ideas',

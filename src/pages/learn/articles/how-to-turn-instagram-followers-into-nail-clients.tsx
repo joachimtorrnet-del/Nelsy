@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'You have followers but they\'re not booking. Here\'s why, and exactly how to fix the gap between engagement and actual bookings.',
   seoDescription: 'How to convert Instagram followers into nail clients. Fix the profile, add the right CTAs, and turn your engaged audience into a steady stream of bookings.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Instagram', 'followers to clients', 'conversion', 'nail clients'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FBBF24 100%)',
   heroImageAlt: 'Turn Instagram followers into nail clients',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A step-by-step guide to acrylic nail application, from prep through finishing, with technique tips, common mistakes, and what to focus on as a beginner.',
   seoDescription: 'Acrylic nail application step-by-step guide for beginner nail techs. Full process from prep to finish, bead placement, apex building, shaping, and common mistakes.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['acrylic nail application', 'acrylic nails step by step', 'nail tech beginner', 'acrylic technique'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #93C5FD 100%)',
   heroImageAlt: 'Acrylic nail application step by step for beginners',

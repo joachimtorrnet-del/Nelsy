@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Example price lists for nail techs at different business stages, with structure, naming conventions, and advice on presenting your pricing.',
   seoDescription: 'Nail tech price list examples for gel manicures, acrylics, Gel-X, BIAB, nail art and add-ons, with example menus for different business stages.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech price list', 'nail tech pricing', 'nail prices', 'nail service menu'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
   heroImageAlt: 'Nail tech price list examples',

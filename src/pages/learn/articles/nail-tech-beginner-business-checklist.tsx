@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A complete checklist for new nail techs starting their business: covering training, insurance, equipment, booking, marketing, and first clients.',
   seoDescription: 'Nail tech beginner business checklist. Everything you need to do before, during, and after launching your nail business, from insurance to Instagram.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail business checklist', 'beginner nail tech', 'starting nail business', 'nail tech setup'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
   heroImageAlt: 'Nail tech beginner business checklist',

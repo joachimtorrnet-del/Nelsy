@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Air bubbles in gel polish ruin an otherwise great set. Here\'s why they happen and how to prevent and fix them before the colour cures.',
   seoDescription: 'How to prevent and fix air bubbles in gel polish: what causes them, a bubble-free application method, and how to fix bubbles before curing.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['air bubbles gel polish', 'gel polish air bubbles', 'gel nail application tips', 'gel polish mistakes'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'How to get rid of air bubbles in gel polish',

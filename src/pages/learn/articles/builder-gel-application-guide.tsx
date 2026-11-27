@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Builder gel (BIAB) is one of the most in-demand nail services. This guide covers the application process, layering technique, self-levelling, and how to get a consistent result.',
   seoDescription: 'Builder gel application guide for nail techs. Step-by-step BIAB technique: application, self-levelling, filing, apex, and troubleshooting common issues.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['builder gel', 'BIAB', 'builder gel application', 'nail technique'],
   heroImage: 'linear-gradient(135deg, #ECFDF5 0%, #6EE7B7 100%)',
   heroImageAlt: 'Builder gel BIAB application guide',

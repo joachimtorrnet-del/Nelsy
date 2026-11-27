@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Coffin nails are one of the most popular extension shapes: bold, tapered, and flat-tipped. Here\'s the exact technique to get the taper and flat tip right every time.',
   seoDescription: 'How to shape coffin nails step by step. Filing technique for coffin / ballerina nail shape, how to taper the sides and create a flat tip on extensions.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to shape coffin nails', 'coffin nail shape', 'coffin nail filing technique'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FDDDE6 100%)',
   heroImageAlt: 'How to shape coffin nails step by step',

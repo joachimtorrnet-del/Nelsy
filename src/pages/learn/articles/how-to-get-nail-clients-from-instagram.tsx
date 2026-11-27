@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Instagram can be your best client acquisition tool, but likes don\'t pay bills. Here\'s how to turn your nail content into actual bookings.',
   seoDescription: 'How to get nail clients from Instagram: what content to post, how to optimise your profile, convert followers into bookings, and use DMs strategically.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Instagram', 'nail clients', 'social media', 'Instagram strategy'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FFB3C1 100%)',
   heroImageAlt: 'How to get nail clients from Instagram',

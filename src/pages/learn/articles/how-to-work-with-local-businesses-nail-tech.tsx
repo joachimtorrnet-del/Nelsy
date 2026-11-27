@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Cross-referrals with complementary local businesses can be one of the most efficient client acquisition channels for nail techs. Here\'s how to build partnerships that actually work.',
   seoDescription: 'How to work with local businesses as a nail tech. Cross-referral partnerships with hair salons, wedding vendors, and beauty businesses to grow your nail client base.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech local partnerships', 'nail business collaboration', 'nail tech marketing', 'local business nail tech'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #D1FAE5 100%)',
   heroImageAlt: 'How to work with local businesses as a nail tech',

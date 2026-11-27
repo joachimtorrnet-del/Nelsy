@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Most nail techs run their entire business from their phone. Here\'s how to set it up so you\'re not drowning in messages, missed bookings, and admin.',
   seoDescription: 'How to organise your nail business from your phone. Apps, systems, and habits for managing bookings, clients, finances, and content from your phone efficiently.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['organise nail business phone', 'nail tech business organisation', 'nail business admin phone'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to organise your nail business from your phone',

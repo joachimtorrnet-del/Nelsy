@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Not sure what to wear on your nails? Here\'s a guide to the best nail colours for every season, and how to pick one that works for you.',
   seoDescription: 'Best nail colours for every season. Spring, summer, autumn, and winter nail colour guides, from classics to trending shades, for every style and skin tone.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['best nail colors every season', 'seasonal nail colors', 'nail colors by season'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FEF3C7 100%)',
   heroImageAlt: 'Best nail colours for every season',

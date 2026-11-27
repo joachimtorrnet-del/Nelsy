@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Most acrylic problems come back to the same handful of mistakes. This guide covers the most common issues nail techs encounter, what causes them and how to fix them.',
   seoDescription: 'Common acrylic nail mistakes and how to fix them. Lifting, bubbles, cracking, cloudy product, rough surface: causes and solutions for nail techs.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['acrylic mistakes', 'acrylic troubleshooting', 'acrylic nails problems', 'nail tech education'],
   heroImage: 'linear-gradient(135deg, #FEF2F2 0%, #FECACA 100%)',
   heroImageAlt: 'Common acrylic nail mistakes and fixes',

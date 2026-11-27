@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Peak seasons make or break a nail tech\'s year. Here\'s how to build a booking strategy around the key holiday seasons, so you\'re prepared, not panicked.',
   seoDescription: 'Holiday booking strategy for nail techs. Plan availability, pricing, deposits and marketing around Christmas, Valentine\'s Day, summer and other peaks.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['holiday booking strategy nail tech', 'seasonal nail booking plan', 'nail tech peak season strategy'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'Holiday booking strategy for nail techs',

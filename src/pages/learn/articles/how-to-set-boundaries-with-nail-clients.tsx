@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Setting boundaries with nail clients doesn\'t have to cost you bookings. Here\'s how to communicate limits professionally and build a better client base in the process.',
   seoDescription: 'How to set boundaries with nail clients professionally. Scripts, examples, and advice for handling common boundary violations, without losing good clients.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['client boundaries', 'nail tech client management', 'difficult clients', 'professional boundaries'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #DDD6FE 100%)',
   heroImageAlt: 'How to set professional boundaries with nail clients',

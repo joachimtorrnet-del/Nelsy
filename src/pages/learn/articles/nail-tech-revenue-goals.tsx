@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A revenue goal without a plan is a wish. Here\'s how to set meaningful revenue goals as a nail tech and break them down into the daily and weekly numbers that actually drive action.',
   seoDescription: 'How to set nail tech revenue goals. Working backwards from annual income targets to weekly client counts: a practical goal-setting framework for nail techs.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech revenue goals', 'nail business goals', 'nail tech income targets', 'nail business planning'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'Nail tech revenue goals: how to set them',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Everything a client needs to see before booking, and the things nail techs most often forget to include on their booking pages.',
   seoDescription: 'What to include on your nail tech booking page: services, pricing, deposit info, cancellation policy, location, and what makes clients actually book.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking page', 'nail tech setup', 'online booking', 'client experience'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'What to include on a nail tech booking page',

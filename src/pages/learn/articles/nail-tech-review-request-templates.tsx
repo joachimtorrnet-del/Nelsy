@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Reviews build trust and bring in new clients. Here\'s how to ask for them without feeling awkward: templates for WhatsApp, Instagram, Google, and email.',
   seoDescription: 'Nail tech review request message templates. Ask clients for reviews via WhatsApp, DM, Google, and email: copy-paste templates for nail techs that actually work.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech review request template', 'ask for review nail tech', 'nail tech google review message'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: 'Nail tech review request message templates',

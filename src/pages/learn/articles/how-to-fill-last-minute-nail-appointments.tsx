@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A cancellation with 24 hours\' notice doesn\'t have to be lost revenue. Here are the fastest ways to fill a last-minute nail appointment slot.',
   seoDescription: 'How to fill last-minute nail appointments. Fast tactics for filling cancelled slots: Instagram Stories, waitlists, flash offers, and direct client messaging.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['last minute nail appointments', 'fill nail appointments', 'nail cancellation slot', 'nail tech appointment gaps'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%)',
   heroImageAlt: 'How to fill last-minute nail appointments',

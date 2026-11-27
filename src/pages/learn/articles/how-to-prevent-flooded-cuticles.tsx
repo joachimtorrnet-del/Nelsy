@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Flooded cuticles are one of the most common technique issues for nail techs, and one of the most fixable. Here\'s why it happens and exactly how to stop it.',
   seoDescription: "What causes flooded cuticles with gel polish, builder gel and extensions, how to avoid flooding the cuticle, and how to fix it before curing.",
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to prevent flooded cuticles', 'flooded cuticles fix', 'nail product flooding cuticle'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'How to prevent flooded cuticles',

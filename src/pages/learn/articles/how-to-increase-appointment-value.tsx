@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Increasing average appointment value means earning more from the same number of clients. Here are the most effective ways nail techs can do this without cutting corners or adding hours.',
   seoDescription: 'How to increase your average nail appointment value: add-ons, upselling, pricing and rebooking techniques that raise revenue per client.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['average appointment value', 'nail tech income', 'upsell nail services', 'nail business revenue'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to increase nail appointment value',

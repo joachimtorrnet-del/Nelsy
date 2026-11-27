@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'A good weekly schedule protects your income, your energy, and your time. Here\'s how to structure your working week as a nail tech, from booking windows to recovery days.',
   seoDescription: 'How to build a weekly schedule as a nail tech: booking hours, working days, time blocks and a week structure for steady income and work-life balance.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech weekly schedule', 'nail tech schedule', 'nail tech working hours'],
   heroImage: 'linear-gradient(135deg, #FFF9FB 0%, #FCE4F5 100%)',
   heroImageAlt: 'How to build a weekly schedule as a nail tech',

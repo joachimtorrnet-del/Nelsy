@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Summer brings new demand: holiday nails, wedding season, festival looks. Here\'s how to market your nail business through the summer months and stay fully booked.',
   seoDescription: 'Summer marketing ideas for nail techs: promote holiday nails, wedding season, summer designs and outdoor events with seasonal strategies.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['summer nail business marketing', 'summer nail tech marketing', 'summer nail ideas marketing'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
   heroImageAlt: 'Summer nail business marketing ideas',

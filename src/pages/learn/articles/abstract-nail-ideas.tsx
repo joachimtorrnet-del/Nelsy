@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Abstract nail art is one of the most creative and wearable styles: no two sets need to look the same. Here are 50 abstract nail ideas from minimal to maximalist.',
   seoDescription: '50 abstract nail ideas. Swirls, geometric, paint-stroke, and negative space abstract nails: inspiration for creative nail art that isn\'t tied to a specific motif.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['abstract nail ideas', 'abstract nail art', 'abstract nail designs'],
   heroImage: 'linear-gradient(135deg, #FFF9FB 0%, #EDE9FE 100%)',
   heroImageAlt: '50 abstract nail ideas',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Coffin nails (long, tapered sides with a squared-off tip) are one of the most popular nail shapes. Here are 50 coffin nail ideas across every style.',
   seoDescription: '50 coffin nail ideas to save for your next set: short and long coffin nails, ombré, chrome, French tips and minimalist designs for gel or acrylic.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['coffin nail ideas', 'coffin nail designs', 'coffin nail art', 'ballerina nail ideas'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: '50 coffin nail ideas to save for your next set',

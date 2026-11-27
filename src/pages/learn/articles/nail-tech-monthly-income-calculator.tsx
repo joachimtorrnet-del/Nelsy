@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Knowing how much you actually take home (after products, overheads, and tax) is the starting point for making smarter business decisions. Here\'s the calculation.',
   seoDescription: 'How to calculate your nail tech monthly income. Step-by-step formula for working out your take-home pay after expenses and tax as a self-employed nail technician.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech monthly income', 'nail tech take home pay', 'nail tech income', 'nail business finances'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'How to calculate nail tech monthly income',

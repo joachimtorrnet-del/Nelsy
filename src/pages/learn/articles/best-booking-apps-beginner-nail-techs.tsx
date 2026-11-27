@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Just starting out as a nail tech? The right booking app sets professional expectations from day one. Here\'s what beginners need, and which apps deliver it.',
   seoDescription: 'Best booking apps for beginner nail techs. What new nail techs need from booking software, which apps are easiest to set up, and what to avoid.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking apps beginner nail tech', 'nail tech booking software starter', 'new nail tech booking app'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'Best booking apps for beginner nail techs',

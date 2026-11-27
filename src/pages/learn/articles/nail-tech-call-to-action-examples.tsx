@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A great post with a weak call to action is a wasted opportunity. Here are nail tech CTA examples that actually prompt bookings, with caption copy you can adapt.',
   seoDescription: 'Nail tech call-to-action examples for Instagram, TikTok and captions. Booking CTAs, enquiry CTAs, link in bio prompts, and direct message CTAs with copy you can use.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech call to action', 'nail tech instagram captions', 'nail tech booking CTA', 'nail tech social media'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'Nail tech call-to-action examples for more bookings',

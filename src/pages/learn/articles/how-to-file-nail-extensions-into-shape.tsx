@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Filing extensions into shape is one of the most skill-intensive parts of nail work. Here\'s how to approach length, shape, surface, and symmetry with confidence.',
   seoDescription: 'How to file nail extensions into shape. Technique for filing acrylic, Gel-X, and builder gel extensions: length, shape, surface, symmetry, and finishing steps.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to file nail extensions', 'file nail extensions into shape', 'nail extension filing technique'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'How to file nail extensions into shape',

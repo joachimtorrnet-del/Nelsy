@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Switching booking platforms feels risky, but it doesn\'t have to be. Here\'s how to migrate from one booking system to another without losing clients or creating confusion.',
   seoDescription: 'How to switch nail booking software without losing clients: a step-by-step migration covering client data, links, communication and timing.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['switch nail booking software', 'migrate nail booking app', 'change booking system nail tech'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'How to switch nail booking software without losing clients',

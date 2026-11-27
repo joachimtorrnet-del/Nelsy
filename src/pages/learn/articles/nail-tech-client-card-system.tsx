@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Knowing your clients\' history (their nail shape, sensitivities, what they liked last time) creates the personalised experience that builds loyalty. Here\'s what to record and how.',
   seoDescription: 'How to create a nail tech client card system: what to record, paper vs digital, consultation forms and how client history builds loyalty.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client card', 'nail client record', 'nail tech consultation form', 'nail client history'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #D1FAE5 100%)',
   heroImageAlt: 'How to create a nail tech client card system',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'The apex is the foundation of a strong nail extension. Without it, nails snap. Here\'s what the apex is, where it sits, and how to build it correctly in acrylic, gel, and builder gel.',
   seoDescription: 'How to build a nail apex. What the apex is, where it sits, how to build it in acrylic and gel, and how to check your apex placement is correct.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail apex', 'apex nail technique', 'acrylic apex', 'nail structure'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'How to build a nail apex correctly',

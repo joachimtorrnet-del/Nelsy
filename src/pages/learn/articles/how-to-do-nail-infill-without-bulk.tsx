@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Bulky infills are one of the most common client complaints. Here\'s how to do nail infills that stay balanced and slim, not thicker with every appointment.',
   seoDescription: 'How to do nail infills without making them look thick. Infill technique for acrylic and builder gel, how to remove old product correctly, and rebalancing the apex.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail infill technique', 'nail infill without bulk', 'acrylic infill tips', 'builder gel infill'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to do a nail infill without making it look thick',

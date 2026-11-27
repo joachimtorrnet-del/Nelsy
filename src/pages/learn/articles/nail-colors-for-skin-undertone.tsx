@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'The right nail colour for your skin isn\'t just about what\'s trending: it\'s about undertone. Here\'s how to find shades that genuinely flatter your complexion.',
   seoDescription: 'Best nail colours for skin undertone. How to choose nail polish colours for warm, cool, and neutral undertones, with specific shade recommendations for each.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail colors for skin undertone', 'nail polish for skin tone', 'best nail colors skin undertone'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'Best nail colours for skin undertone',

@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Black nails are one of the most versatile and enduring nail colours: minimal, dramatic, and works with everything. Here are 50 black nail ideas from classic to editorial.',
   seoDescription: '50 black nail ideas. Classic black, black nail art, black chrome, black ombré, and black accent nails: inspiration for bold black nail designs.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['black nail ideas', 'black nails', 'black nail designs'],
   heroImage: 'linear-gradient(135deg, #F4F4F5 0%, #E4E4E7 100%)',
   heroImageAlt: '50 black nail ideas',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Great nail video doesn\'t require a camera crew. Here\'s how to set up your phone to film nail process videos, reels, and TikToks that look professional and perform well.',
   seoDescription: 'How to film nail tech TikTok and Reels videos. Phone setup, angles, lighting, filming tips, and what to capture during appointments for high-quality nail content.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech filming tips', 'nail tech tiktok setup', 'nail tech reels filming', 'nail video content'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FECDD3 100%)',
   heroImageAlt: 'How to film nail tech TikTok and Reels videos',

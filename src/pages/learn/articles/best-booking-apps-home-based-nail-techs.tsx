@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Working from home means managing your own bookings, deposits, and client communication without a front desk. Here are the best booking apps for home-based nail techs.',
   seoDescription: 'Best booking apps for home-based nail techs. What home-based nail techs specifically need from booking software, and which platforms suit the home-salon setup.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking apps home based nail tech', 'home nail salon booking', 'nail tech booking software home'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'Best booking apps for home-based nail techs',

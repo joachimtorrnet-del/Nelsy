@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Birthday bookings are one of the easiest repeating events to capture on your calendar. 40 birthday nail ideas across every style, age group, and nail length.',
   seoDescription: 'Birthday nail ideas for nail techs. 40 ideas (glam, fun, minimal, colourful) with advice on marketing birthday appointments and what to post around them.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['birthday nail ideas', 'birthday nails', 'nail inspo', 'occasion nails'],
   heroImage: 'linear-gradient(135deg, #FFF0F9 0%, #F0ABFC 100%)',
   heroImageAlt: '40 birthday nail ideas for clients',

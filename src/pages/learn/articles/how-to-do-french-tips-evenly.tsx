@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Uneven french tips are one of the most visible technique problems. Here\'s how to get a consistent smile line, whether you\'re painting freehand, using guides, or working with gel.',
   seoDescription: 'How to do French tips evenly: freehand, guide tape and gel techniques for a consistent smile line, plus fixes for uneven or wobbly French tips.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to do french tips evenly', 'even french tip', 'french manicure technique'],
   heroImage: 'linear-gradient(135deg, #FAFAFA 0%, #F4F4F5 100%)',
   heroImageAlt: 'How to do french tips more evenly',

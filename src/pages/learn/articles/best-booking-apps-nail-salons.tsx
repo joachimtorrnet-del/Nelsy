@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Running a nail salon with multiple techs means very different booking needs from a solo nail tech. Here are the best booking platforms for nail salons.',
   seoDescription: 'Best booking apps for nail salons. What nail salons need from booking software, multi-staff scheduling, and the platforms that handle salon-scale booking well.',
   category: 'booking-software',
+  audience: ['salons', 'pros'],
+  craft: 'nails',
   tags: ['booking apps nail salon', 'nail salon booking software', 'multi-tech nail booking app'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'Best booking apps for nail salons',

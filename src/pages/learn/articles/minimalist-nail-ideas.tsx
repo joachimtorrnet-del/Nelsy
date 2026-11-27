@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Minimalist nails are the definition of quiet luxury: precision application, deliberate design choices, and a refusal to overdo it. 40 ideas across every minimalist direction.',
   seoDescription: 'Minimalist nail ideas for nail techs. 40 clean, luxury nail designs (neutrals, negative space, single-detail art, monochrome, and minimal chrome) with client tips.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['minimalist nail ideas', 'minimalist nails', 'quiet luxury nails', 'clean nail ideas'],
   heroImage: 'linear-gradient(135deg, #FAFAF9 0%, #E7E5E4 100%)',
   heroImageAlt: '40 minimalist nail ideas for a luxury look',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Being fully booked sounds like the goal, but managing a packed schedule without burning out is a skill. Here\'s how to do it sustainably.',
   seoDescription: 'How to manage a fully booked nail schedule without burning out. Time blocks, cancellation management, waitlists, pricing up, and protecting your physical health.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['fully booked nail tech schedule', 'manage nail tech schedule', 'nail tech fully booked burnout'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'How to manage a fully booked nail schedule',

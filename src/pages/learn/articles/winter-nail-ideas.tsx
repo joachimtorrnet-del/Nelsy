@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Winter is the most booked nail season of the year. Here are 50 winter nail ideas, from festive reds to icy blues and everything elegant in between.',
   seoDescription: "50 winter nail ideas: festive red, dark green, midnight blue, silver chrome and glitter winter nail designs for short and long nails.",
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['winter nail ideas', 'winter nails', 'winter nail designs'],
   heroImage: 'linear-gradient(135deg, #F8F9FF 0%, #E0E7FF 100%)',
   heroImageAlt: '50 winter nail ideas',

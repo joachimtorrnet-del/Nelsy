@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Giveaways can grow your audience, or fill it with people who never book. Here are giveaway ideas designed to attract followers who genuinely want nail services, not just free things.',
   seoDescription: 'Nail tech giveaway ideas that attract real clients. What to give away, how to structure entry requirements, and how to convert giveaway entrants into paying clients.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech giveaway ideas', 'nail tech instagram giveaway', 'nail tech social media growth', 'nail tech marketing ideas'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'Nail tech giveaway ideas that attract the right clients',

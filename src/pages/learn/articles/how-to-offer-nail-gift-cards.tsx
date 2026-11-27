@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Gift cards are one of the easiest ways to earn income between appointment slots and attract new clients. Here\'s how to set them up and sell them effectively.',
   seoDescription: 'How to offer nail gift cards as a nail tech. Setting up gift vouchers, pricing, selling online and in person, and turning gift card holders into regular clients.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail gift cards', 'nail gift vouchers', 'gift cards nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF9FB 0%, #FDDDE6 100%)',
   heroImageAlt: 'How to offer nail gift cards as a nail tech',

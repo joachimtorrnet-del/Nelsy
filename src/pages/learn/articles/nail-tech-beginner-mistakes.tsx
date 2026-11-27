@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Every nail tech makes mistakes when starting out. Here are the most common ones, and exactly what to do differently.',
   seoDescription: 'Common nail tech beginner mistakes: undercharging, no deposit policy, poor portfolio photos, inconsistent posting, and 15 more mistakes to avoid.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['beginner nail tech', 'nail tech mistakes', 'starting nail business', 'nail tech advice'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #E879F9 50%, #C084FC 100%)',
   heroImageAlt: 'Nail tech beginner mistakes to avoid',

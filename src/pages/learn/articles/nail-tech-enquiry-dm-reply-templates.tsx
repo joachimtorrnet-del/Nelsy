@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Nail tech DMs move fast. Here are ready-to-use templates for the most common enquiries: pricing questions, availability requests, new client queries, and more.',
   seoDescription: 'Nail tech enquiry and DM reply templates: copy-paste Instagram and WhatsApp replies for pricing, availability, new clients and custom designs.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech DM reply template', 'nail tech enquiry reply', 'Instagram DM reply nail tech'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'Nail tech enquiry and DM reply templates',

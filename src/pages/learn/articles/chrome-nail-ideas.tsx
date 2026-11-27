@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Chrome nails are one of the most eye-catching effects you can offer: a mirror-like finish that turns heads. Here are 50 chrome nail ideas across every colour and style.',
   seoDescription: "50 chrome nail ideas and inspo: silver, gold, rose gold, holographic and color-shifting chrome nails, from minimalist looks to bold designs.",
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['chrome nail ideas', 'chrome nails', 'mirror nail designs'],
   heroImage: 'linear-gradient(135deg, #F8F9FF 0%, #E0E7FF 100%)',
   heroImageAlt: '50 chrome nail ideas',

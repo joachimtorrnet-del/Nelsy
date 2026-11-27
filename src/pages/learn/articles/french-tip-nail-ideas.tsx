@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'The French manicure has completely reinvented itself. Beyond the classic white tip, there are now dozens of variations nail techs should know: here are 50.',
   seoDescription: "50 French tip nail ideas: classic white, micro, colored, chrome and reverse French tips for short, square, almond and coffin nails.",
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['french tip nail ideas', 'French manicure', 'nail inspo', 'nail designs'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: '50 French tip nail ideas for nail techs',

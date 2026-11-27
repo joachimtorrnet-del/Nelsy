@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Black Friday doesn\'t have to mean discounting your services. Here\'s how nail techs can take part in the biggest shopping weekend of the year, on their own terms.',
   seoDescription: 'Black Friday ideas for nail techs. Run a Black Friday promotion without slashing prices: gift cards, add-ons, product bundles, and smart ways to use the weekend.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['black friday nail tech', 'black friday nail business', 'nail tech black friday ideas'],
   heroImage: 'linear-gradient(135deg, #1F2937 0%, #374151 100%)',
   heroImageAlt: 'Black Friday ideas for nail techs',

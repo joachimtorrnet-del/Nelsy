@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Wedding nails are one of the most considered nail appointments of a client\'s life. Here are 40 bridal nail ideas, from classic to contemporary, plus what to discuss at the consultation.',
   seoDescription: '40 bridal nail ideas for the wedding day: classic white, French, nude and statement sets, with advice on consultations, timing and what brides need.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['bridal nail ideas', 'wedding nail ideas', 'bride nails ideas'],
   heroImage: 'linear-gradient(135deg, #FFF9FB 0%, #FCE4F5 100%)',
   heroImageAlt: '40 bridal nail ideas',

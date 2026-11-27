@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Posting frequency matters, but not as much as you think. Here\'s a practical guide to how often nail techs should actually post, based on what drives bookings.',
   seoDescription: 'How often should nail techs post on Instagram? The honest answer, plus posting schedules for busy nail techs, what to post, and when consistency matters most.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['instagram posting frequency', 'nail tech instagram', 'social media strategy', 'posting schedule'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #BFDBFE 100%)',
   heroImageAlt: 'How often should nail techs post on Instagram',

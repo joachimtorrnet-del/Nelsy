@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Instagram Highlights are the first thing a potential client checks before booking. Here\'s exactly what to include, what to name them, and how to make them work for you.',
   seoDescription: 'Nail tech Instagram highlight ideas. Which highlights to create, what to put in each one, and how to use them to turn profile visitors into booked clients.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['instagram highlights', 'nail tech instagram', 'instagram strategy', 'nail tech social media'],
   heroImage: 'linear-gradient(135deg, #FFF0F9 0%, #FBCFE8 100%)',
   heroImageAlt: 'Nail tech Instagram highlight ideas',

@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'How to turn your nail skills into an online course: picking the topic, recording it, pricing it, and selling it from your Instagram link in bio, with or without a large following.',
   seoDescription: 'How to create and sell an online nail course: choose a topic people pay for, record it with a phone, set your price, and sell it from your link in bio.',
   category: 'beauty-creators',
+  audience: ['creators', 'pros'],
+  craft: 'nails',
   tags: ['how to sell a nail course online', 'online nail course', 'nail tech course', 'sell nail tutorials', 'nail educator'],
   heroImage: 'linear-gradient(135deg, #F5F0FF 0%, #E9D5FF 100%)',
   heroImageAlt: 'How to create and sell a nail course online',
@@ -102,7 +104,7 @@ registerArticle({
       <section id="sell">
         <h2 className="font-serif text-2xl font-bold mb-4">6. Sell it from your link in bio</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Your students find you on Instagram and TikTok, so sell where they already click: your link in bio. Keep the course next to your bookings so clients and students land on the same page, and use a checkout that delivers access automatically after payment.</p>
-        <p className="text-gray-700 leading-relaxed">Nelsy lets you sell courses, digital products and coaching next to your bookings, from one page, with 0% Nelsy commission. See <Link to="/blog/how-to-set-up-nail-tech-link-in-bio" className={a}>how to set up your link in bio</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">With Nelsy you can start with bookings today: services, deposits and payments behind your link in bio, on the Independent plan ($29/month, 14-day free trial, 0% Nelsy commission). Selling guides and courses is part of the upcoming Creator plan; <a href="mailto:hello@getnelsy.com?subject=Creator%20waitlist" className={a}>join the waitlist</a>. See <Link to="/blog/how-to-set-up-nail-tech-link-in-bio" className={a}>how to set up your link in bio</Link>.</p>
       </section>
 
       <section id="launch">

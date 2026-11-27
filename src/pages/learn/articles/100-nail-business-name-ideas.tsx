@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A curated list of 100 nail business name ideas, from minimal and elegant to bold and personal. Use them as-is or as inspiration for your own.',
   seoDescription: '100 nail business name ideas for nail techs. Creative, elegant, minimal, location-based, and personal name ideas you can use or adapt for your nail brand.',
   category: 'branding-growth',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail business name ideas', 'nail business names', 'nail brand names', 'nail studio names'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
   heroImageAlt: '100 nail business name ideas',

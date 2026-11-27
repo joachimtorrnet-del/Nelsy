@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A complete guide to nail drill bits, what each type does, when to use it, and how to choose the right bit for prep, removal, and finishing.',
   seoDescription: 'Nail drill bits explained. A complete guide to e-file drill bit types (carbide, diamond, ceramic) what each does, when to use them, and grit guide for nail techs.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail drill bits', 'e-file bits', 'nail drill guide', 'nail tech tools'],
   heroImage: 'linear-gradient(135deg, #F8FAFC 0%, #CBD5E1 100%)',
   heroImageAlt: 'Nail drill bits guide for nail techs',

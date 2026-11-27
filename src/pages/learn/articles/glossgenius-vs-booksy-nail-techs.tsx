@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'GlossGenius vs Booksy compared for nail techs in the US: plans, card fees, new-client commission, payouts, texts and deposits, with a monthly cost example. Figures from each official pricing page.',
   seoDescription: 'GlossGenius vs Booksy for nail techs: $24 to $148 plans vs $29.99, card fees, Boost commission, payouts and texts compared, with a cost example and a clear verdict.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['GlossGenius vs Booksy', 'Booksy vs GlossGenius', 'GlossGenius pricing', 'Booksy pricing', 'nail tech booking app'],
   heroImage: 'linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%)',
   heroImageAlt: 'GlossGenius vs Booksy for nail techs: prices and fees compared',

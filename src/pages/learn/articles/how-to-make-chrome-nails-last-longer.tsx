@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Chrome that fades, chips, or dulls within days is almost always a prep or sealing issue. Here\'s how to apply chrome correctly so it stays mirror-bright for weeks.',
   seoDescription: 'How to make chrome nails last longer. Correct application technique, gel base requirements, sealing chrome powder, and aftercare to keep chrome mirror-bright.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to make chrome nails last longer', 'chrome nail technique', 'chrome powder application'],
   heroImage: 'linear-gradient(135deg, #F8F9FF 0%, #E0E7FF 100%)',
   heroImageAlt: 'How to make chrome nails last longer',

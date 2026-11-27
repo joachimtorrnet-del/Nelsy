@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Acuity Scheduling is a general appointment tool, but nail techs often outgrow it or find it lacks beauty-specific features. Here are the alternatives.',
   seoDescription: 'Acuity Scheduling alternatives for nail techs. Who Acuity suits, its limitations for nail businesses, and better-fit booking software alternatives.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Acuity Scheduling alternatives', 'nail tech booking software', 'Acuity vs nail booking apps'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'Acuity Scheduling alternatives for nail techs',

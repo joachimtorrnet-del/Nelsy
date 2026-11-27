@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Client retention, keeping clients coming back, is the foundation of a stable nail business. Here\'s what actually drives long-term loyalty and how to build it deliberately.',
   seoDescription: 'How to increase nail client retention: what makes clients loyal, retention strategies that work and how to stop losing clients to price or convenience.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client retention', 'loyal nail clients', 'keep nail clients', 'nail business retention'],
   heroImage: 'linear-gradient(135deg, #FFF5F5 0%, #FECACA 100%)',
   heroImageAlt: 'How to increase nail client retention',

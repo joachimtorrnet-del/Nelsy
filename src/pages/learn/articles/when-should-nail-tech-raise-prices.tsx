@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Most nail techs wait far too long to raise prices. Here are the clear signals that tell you it\'s time, and how to do it without losing your best clients.',
   seoDescription: 'When to raise nail tech prices: the clear signals, how much to raise by, how to tell clients, and what to expect when you do.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['raise prices', 'nail tech pricing', 'price increase', 'nail business'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #BFDBFE 100%)',
   heroImageAlt: 'When should a nail tech raise prices',

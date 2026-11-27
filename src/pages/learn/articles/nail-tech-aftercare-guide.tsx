@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A clear aftercare guide sent after every appointment reduces lifting, breakage, and repair requests, and shows clients you care about how their nails last.',
   seoDescription: 'Nail tech aftercare guide to send clients. Ready-to-use aftercare instructions for gel, acrylic, gel-X, and BIAB: copy and send after every appointment.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail aftercare guide', 'nail tech client aftercare', 'gel nail aftercare', 'acrylic nail aftercare'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #D1FAE5 100%)',
   heroImageAlt: 'Nail tech aftercare guide for clients',

@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Removing nail extensions incorrectly is one of the biggest causes of nail damage. Here\'s how to remove acrylic, Gel-X, builder gel, and gel polish cleanly and safely.',
   seoDescription: 'How to remove nail extensions without damage. Safe removal technique for acrylic, Gel-X, builder gel, and gel polish: soak off, e-file, and manual methods explained.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to remove nail extensions without damage', 'safe nail extension removal', 'nail extension removal technique'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to remove nail extensions without damage',

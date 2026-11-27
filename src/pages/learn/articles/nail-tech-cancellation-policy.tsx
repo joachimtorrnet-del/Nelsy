@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'A complete guide to writing, communicating, and enforcing your nail tech cancellation policy, with ready-to-use templates you can adapt.',
   seoDescription: 'Nail tech cancellation policy guide and templates. What to include, how to communicate it, when to enforce it, and how to handle disputes professionally.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['cancellation policy', 'nail tech policy', 'cancellation template', 'client management'],
   heroImage: 'linear-gradient(135deg, #FFF0F5 0%, #FBCFE8 100%)',
   heroImageAlt: 'Nail tech cancellation policy guide',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'The bead ratio, the amount of liquid monomer relative to acrylic powder in your bead, affects everything from workability to finished strength. Here\'s how to get it right.',
   seoDescription: "Acrylic bead ratio explained: what a wet, medium and dry bead look like, the ideal liquid and powder mix, and how to pick up a consistent bead.",
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['acrylic bead ratio', 'acrylic consistency', 'acrylic technique', 'nail tech education'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #DDD6FE 100%)',
   heroImageAlt: 'Acrylic bead ratio explained for nail techs',

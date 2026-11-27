@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Is GlossGenius good for nail techs and nail salons? A 2026 review with its real plan prices ($24 to $148/month), card fees, payouts, what each plan includes and who it suits.',
   seoDescription: 'Is GlossGenius worth it? 2026 review for nail techs, salons and estheticians: plans from $24/month, card fees, payouts, pros, cons and alternatives.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['is GlossGenius worth it', 'GlossGenius review', 'is GlossGenius good for nail salons', 'GlossGenius pricing', 'GlossGenius reviews'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'Is GlossGenius worth it for nail techs and salons',

@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Never run out of content ideas again. 100 post ideas for nail techs, organised by type, with tips on which formats convert best.',
   seoDescription: '100 nail tech content ideas for Instagram: portfolio posts, Reels, educational content, booking CTAs, behind the scenes, and more. Never post a blank again.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['content ideas', 'Instagram', 'nail tech content', 'social media'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
   heroImageAlt: '100 nail tech content ideas for Instagram',

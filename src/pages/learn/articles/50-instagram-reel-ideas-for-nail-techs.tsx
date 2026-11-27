@@ -9,6 +9,8 @@ registerArticle({
   excerpt: '50 ready-to-film Instagram Reel ideas for nail techs, from easy 30-second clips to slightly more involved videos that consistently get reach.',
   seoDescription: '50 Instagram Reel ideas for nail techs. From quick process clips to educational Reels: ideas that work for solo nail techs and don\'t require video production skills.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Instagram Reels', 'Reel ideas', 'nail tech content', 'Instagram growth'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
   heroImageAlt: '50 Instagram Reel ideas for nail techs',

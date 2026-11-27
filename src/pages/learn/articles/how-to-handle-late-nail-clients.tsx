@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Late clients are one of the most common frustrations for nail techs. Here\'s exactly what to do, in the moment and in your booking system, to protect your day.',
   seoDescription: 'How to handle late nail clients. What to say, when to turn them away, how to shorten the appointment, and how to stop lateness from cascading through your day.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['late clients', 'nail tech client management', 'lateness', 'appointment management'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
   heroImageAlt: 'How to handle late nail clients',

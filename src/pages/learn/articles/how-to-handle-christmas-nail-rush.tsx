@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'December is the most demanding month for nail techs. Here\'s how to stay sane, stay booked, and actually enjoy Christmas while running a full schedule.',
   seoDescription: 'How to handle the Christmas nail rush as a nail tech. Manage your December schedule, avoid burnout, handle the client surge, and finish the year strong.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['christmas nail rush', 'december nail tech schedule', 'handle christmas bookings nail tech'],
   heroImage: 'linear-gradient(135deg, #FEF2F2 0%, #FCA5A5 100%)',
   heroImageAlt: 'How to handle the Christmas nail rush',

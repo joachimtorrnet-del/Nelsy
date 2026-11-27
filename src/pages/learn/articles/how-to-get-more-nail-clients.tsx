@@ -19,6 +19,8 @@ registerArticle({
   seoDescription:
     'Practical ways to grow your nail tech client base: Instagram, photography, easier booking, deposits, referrals and retention, with templates you can copy.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['get clients', 'instagram', 'referrals', 'retention', 'deposits', 'photography'],
   heroImage: 'linear-gradient(135deg, #FDF0F7 0%, #FBCFE8 70%, #F9A8D4 100%)',
   heroImageAlt: 'How to get more nail clients',

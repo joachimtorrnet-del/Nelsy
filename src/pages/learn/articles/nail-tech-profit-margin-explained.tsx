@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Revenue is what you charge. Profit is what you keep. Understanding the difference, and the expenses that sit between them, is the foundation of a financially healthy nail business.',
   seoDescription: 'Nail tech profit margin explained. How to calculate your gross and net profit margin, what typical nail tech margins look like, and how to improve yours.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech profit margin', 'nail business profit', 'nail tech finances', 'nail business income'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: 'Nail tech profit margin explained',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Poor retention frustrates both nail techs and clients. This guide covers every factor that affects how long gel and acrylic stays on, from prep through aftercare.',
   seoDescription: "What nail retention means, why gel and acrylic lift or pop off early, and how to improve retention with better prep, product application and client aftercare.",
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail retention', 'improve nail retention', 'gel lifting', 'nail prep'],
   heroImage: 'linear-gradient(135deg, #ECFDF5 0%, #6EE7B7 100%)',
   heroImageAlt: 'How to improve nail retention guide for nail techs',

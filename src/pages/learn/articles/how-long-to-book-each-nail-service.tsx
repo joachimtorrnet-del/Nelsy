@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Booking the wrong appointment length creates problems all day. Here\'s a realistic guide to how long to book for each nail service, including buffer time and variables.',
   seoDescription: 'How long to book each nail service: recommended times for gel polish, infills, extensions, acrylics and nail art, plus what makes services run longer.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how long to book nail service', 'nail appointment times', 'nail service duration'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'How long to book each nail service',

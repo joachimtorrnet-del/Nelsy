@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Lifting is one of the most common acrylic problems, but it\'s almost always preventable. Here are 12 causes of acrylic lifting and how to fix each one.',
   seoDescription: 'Why do acrylic nails lift? 12 common causes including prep mistakes, product errors, application issues, and aftercare problems, with practical fixes for each.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['why do acrylic nails lift', 'acrylic nail lifting causes', 'acrylic lifting fix'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%)',
   heroImageAlt: 'Why do acrylic nails lift',

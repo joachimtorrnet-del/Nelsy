@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Short nails are having a moment, and clients are booking them on purpose, not just by necessity. 50 ideas for clean, elevated short nail looks across every style.',
   seoDescription: 'Short nail ideas for nail techs. 50 design ideas for short nails (neutrals, minimal art, textures, chrome, and seasonal looks) with client consultation tips.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['short nail ideas', 'short nails', 'nail inspo', 'minimal nails'],
   heroImage: 'linear-gradient(135deg, #F0FFF4 0%, #A7F3D0 100%)',
   heroImageAlt: '50 short nail ideas for nail techs',

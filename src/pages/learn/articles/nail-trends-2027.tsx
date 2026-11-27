@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'The nail trends shaping 2027: colours, finishes, nail art styles, and what clients will be asking for at the salon.',
   seoDescription: 'Nail trends 2027: the colours, finishes, shapes and nail art techniques set to take over this year, and how nail techs can get ahead of them.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail trends 2027', '2027 nail trends', 'nail art trends 2027'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #F3E8FF 100%)',
   heroImageAlt: 'Nail trends 2027',

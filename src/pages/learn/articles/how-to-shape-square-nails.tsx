@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Square is one of the most popular nail shapes: clean, modern, and strong. Here\'s how to file a perfectly flat top edge with sharp, even corners every time.',
   seoDescription: 'How to shape square nails step by step. How to file perfectly flat edges, sharp corners, and symmetrical square nails on extensions and natural nails.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to shape square nails', 'square nail shape', 'square nail filing technique'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'How to shape square nails step by step',

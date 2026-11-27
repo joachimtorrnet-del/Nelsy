@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'If you\'re not tracking your expenses, you don\'t know your profit. Here\'s a complete expense list for nail techs: categorised, explained, and ready to adapt for your own records.',
   seoDescription: 'Nail tech expense list. Every business expense a nail tech should track (products, insurance, rent, equipment, training, software, and more) with tracking tips.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech expenses', 'nail business costs', 'nail tech bookkeeping', 'nail business finance'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #D1FAE5 100%)',
   heroImageAlt: 'Nail tech expense list: what to track',

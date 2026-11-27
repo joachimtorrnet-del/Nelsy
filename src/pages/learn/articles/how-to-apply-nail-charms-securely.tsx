@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Nail charms that pop off within days are a client service issue. Here\'s how to set 3D charms, rhinestones, and nail art embellishments so they stay on for the full wear time.',
   seoDescription: "How to put on nail charms, rhinestones and 3D embellishments so they stay on: products, placement, curing and the mistakes that make charms fall off.",
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to apply nail charms', 'nail charms technique', 'rhinestone nail art'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to apply nail charms securely',

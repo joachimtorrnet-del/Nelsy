@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Packages bundle services into a single offer that\'s easier to say yes to, increases average spend, and encourages repeat bookings. Here\'s how to build packages that work.',
   seoDescription: 'How to create nail tech service packages. Bundle strategies, pricing, naming, and how to present packages to clients to increase average appointment value.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech service packages', 'nail service bundles', 'nail package pricing', 'nail tech packages'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'How to create nail tech service packages',

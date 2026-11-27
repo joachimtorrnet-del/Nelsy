@@ -24,7 +24,8 @@ const MID_CTA_COPY: Partial<Record<ArticleCategory, { title: string; body: strin
   comparisons: { title: 'Compare it yourself for 14 days', body: 'Set up your services, deposits and booking link on Nelsy, then decide.' },
   'instagram-content': { title: 'Turn your posts into bookings', body: 'Put one Nelsy link in your bio: clients pick a service, a time and pay a deposit.' },
   'get-clients': { title: 'Make it easy for new clients to book', body: 'One link with your services, prices and free slots. No more back and forth in DMs.' },
-  'beauty-creators': { title: 'Sell and book from the same link', body: 'Courses, digital products and appointments on one Nelsy page.' },
+  'beauty-creators': { title: 'Start with bookings on one link', body: 'Put your services, deposits and payments behind your link in bio. Selling guides and courses is part of the upcoming Creator plan.' },
+  salons: { title: 'Try it on your own chair first', body: 'Nelsy is built for independent pros today: services, deposits and payments on one booking link. Team features are part of the upcoming Salon plan.' },
 };
 const DEFAULT_MID_CTA = { title: 'Your booking page, ready in minutes', body: 'Clients book and pay a deposit from your link in bio. You keep your schedule in one place.' };
 

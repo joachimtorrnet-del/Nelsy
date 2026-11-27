@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Branding is more than a logo: it\'s everything a client sees and feels about your business. A practical guide to building a nail brand that attracts the right clients.',
   seoDescription: 'How to brand your nail business. Build a cohesive nail brand: choosing your visual style, colour palette, voice, and Instagram aesthetic that attracts ideal clients.',
   category: 'branding-growth',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail business branding', 'nail brand', 'visual identity', 'nail business marketing'],
   heroImage: 'linear-gradient(135deg, #FFF9F0 0%, #FCA5A5 100%)',
   heroImageAlt: 'How to brand your nail business',

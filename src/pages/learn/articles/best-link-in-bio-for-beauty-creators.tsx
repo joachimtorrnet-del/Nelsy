@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Linktree, Beacons, Stan and Nelsy compared for beauty creators: monthly price, fees on sales, bookings, courses and digital products. Every figure comes from the official vendor pages.',
   seoDescription: 'Linktree, Beacons, Stan and Nelsy compared for beauty creators: prices, seller fees, bookings, courses and digital products, from official pricing pages.',
   category: 'beauty-creators',
+  audience: ['creators', 'pros'],
+  craft: 'all',
   tags: ['best link in bio for beauty creators', 'link in bio for makeup artists', 'Linktree vs Beacons', 'Linktree vs Stan', 'link in bio with booking'],
   heroImage: 'linear-gradient(135deg, #F5F0FF 0%, #E9D5FF 100%)',
   heroImageAlt: 'Best link in bio tools for beauty creators compared',

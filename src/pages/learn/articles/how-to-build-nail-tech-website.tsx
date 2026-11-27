@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A nail tech website doesn\'t need to be complicated, but it does need to do one job: convert visitors into booked clients. Here\'s what to include and what to leave out.',
   seoDescription: 'How to build a nail tech website that gets bookings. What pages and content you need, what platforms to use, and how to connect online booking to your site.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech website', 'nail business website', 'nail tech booking page', 'nail tech online presence'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'How to build a nail tech website that gets bookings',

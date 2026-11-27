@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Moving from your home setup to a rented studio is one of the biggest steps in a nail tech\'s career. Here\'s how to do it without losing clients or hitting a cash flow crisis.',
   seoDescription: 'How to transition from home nail tech to a studio. Plan the move, communicate with clients, manage the finances, and set up your new nail studio space.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['home nail tech to studio transition', 'nail tech move to studio', 'nail studio setup transition'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #F3E8FF 100%)',
   heroImageAlt: 'How to transition from home nail tech to a studio',

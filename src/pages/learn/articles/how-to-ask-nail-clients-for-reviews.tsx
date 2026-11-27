@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Reviews are one of the strongest trust signals for potential nail clients. Here\'s when and how to ask for them, without feeling awkward about it.',
   seoDescription: 'How to ask nail clients for reviews. When to ask, what to say, where to direct clients (Google, Instagram), and how to use reviews in your marketing.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client reviews', 'nail tech reviews', 'Google reviews nail tech', 'nail business testimonials'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to ask nail clients for reviews',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'White nails are crisp, modern, and endlessly versatile. From clean minimalist to detailed nail art, here are 50 white nail ideas to save for your next set.',
   seoDescription: "50 white nail ideas and inspo: milky white, off-white, white French tips, white chrome and simple white nail art for short and long nails.",
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['white nail ideas', 'white nails', 'white nail designs'],
   heroImage: 'linear-gradient(135deg, #FAFAFA 0%, #F4F4F5 100%)',
   heroImageAlt: '50 white nail ideas',

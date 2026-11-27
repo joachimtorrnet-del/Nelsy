@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Not sure which nail shape is right for you, or how to describe what you want? Here\'s a complete guide to every nail shape, what makes each distinct, and who it suits.',
   seoDescription: 'Nail shapes explained: almond, square, coffin, oval, round, stiletto and squoval. What each shape looks like, who it suits and which is easiest to maintain.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail shapes explained', 'nail shape guide', 'different nail shapes'],
   heroImage: 'linear-gradient(135deg, #FFF9FB 0%, #FCE4F5 100%)',
   heroImageAlt: 'Nail shapes explained',

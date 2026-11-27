@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Discounts can fill your calendar or devalue your brand: depending entirely on how you use them. Here\'s a clear framework for when discounts make sense and when they cost you more than they earn.',
   seoDescription: 'Should nail techs offer discounts? When discounts help, when they hurt, which types work best, and alternatives to discounting that add value without cutting prices.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech discounts', 'nail pricing', 'nail tech promotions', 'nail business pricing'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'Should nail techs offer discounts',

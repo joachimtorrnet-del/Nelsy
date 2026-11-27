@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A nail service menu is more than a price list: it\'s what clients use to decide whether to book. Here\'s how to structure, name, and present a menu that works.',
   seoDescription: 'How to create a nail service menu. How to structure services, name them clearly, set pricing, and present your menu on a booking page and Instagram.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail service menu', 'nail tech menu', 'nail services list', 'nail tech pricing'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
   heroImageAlt: 'How to create a nail service menu',

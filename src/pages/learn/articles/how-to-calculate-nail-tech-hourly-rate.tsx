@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Your hourly rate isn\'t just your service price divided by time: it\'s a function of your costs, target income, available hours, and efficiency. Here\'s how to work it out properly.',
   seoDescription: 'How to calculate your nail tech hourly rate. Formula and worked example for calculating what you need to charge per hour to hit your income goals after expenses.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech hourly rate', 'nail tech income', 'nail pricing formula', 'nail tech wages'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'How to calculate your nail tech hourly rate',

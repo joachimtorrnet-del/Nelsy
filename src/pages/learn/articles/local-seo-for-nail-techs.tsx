@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Local SEO is how clients in your area find you on Google without Instagram. This guide covers everything: Google Business Profile, local content, reviews, citations, and NAP consistency.',
   seoDescription: 'Local SEO for nail techs: how to rank in local Google search, optimise your Google Business Profile, get reviews and attract nearby clients.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['local SEO nail tech', 'nail tech Google ranking', 'nail business local search', 'nail tech near me'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #BFDBFE 100%)',
   heroImageAlt: 'Local SEO for nail techs',

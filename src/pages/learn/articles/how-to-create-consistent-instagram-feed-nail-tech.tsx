@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A consistent Instagram feed looks more professional and builds brand recognition. Here\'s how to create a cohesive nail tech feed without spending hours on aesthetics.',
   seoDescription: 'How to create a consistent nail tech Instagram feed: colour palette, photo style, editing and layout tips for a professional, cohesive feed.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech instagram feed', 'consistent instagram feed nail tech', 'nail tech instagram aesthetic', 'nail tech social media'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to create a consistent nail tech Instagram feed',

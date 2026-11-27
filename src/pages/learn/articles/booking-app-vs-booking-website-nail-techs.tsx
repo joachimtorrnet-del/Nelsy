@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Should you use a booking app or build a dedicated booking website? Here\'s the honest comparison for nail techs, and when you might need both.',
   seoDescription: 'Booking app vs booking website for nail techs. What each option offers, their trade-offs, and which is right for your nail business at different stages.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking app vs website nail tech', 'nail tech booking website', 'nail tech booking app'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'Booking app vs booking website for nail techs',

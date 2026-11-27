@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Nail art is a skill that compounds: every hour of deliberate practice builds speed and accuracy. Here\'s a practical framework for getting significantly better, faster.',
   seoDescription: 'How to improve nail art skills. Deliberate practice methods, skill-building framework, product knowledge, and how to expand your nail art menu over time.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to improve nail art skills', 'nail art practice', 'nail tech skill building'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'How to improve your nail art skills',

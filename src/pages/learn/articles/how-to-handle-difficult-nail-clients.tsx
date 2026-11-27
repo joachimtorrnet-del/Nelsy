@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Difficult clients come in different forms: rude, indecisive, scope-creeping, or constantly unhappy. Here\'s how to handle each type professionally without losing your cool.',
   seoDescription: 'How to handle difficult nail clients professionally: scripts for rude and indecisive clients, scope creep, chronic complainers and ending the relationship.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['difficult nail clients', 'nail client problems', 'nail tech client management', 'nail client scripts'],
   heroImage: 'linear-gradient(135deg, #FFF5F5 0%, #FED7D7 100%)',
   heroImageAlt: 'How to handle difficult nail clients professionally',

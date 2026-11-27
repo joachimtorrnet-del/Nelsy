@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Where should a nail tech, lash artist or makeup artist sell an online course? Kajabi, Teachable, Stan, Beacons and Nelsy compared on price, transaction fees, product limits and bookings.',
   seoDescription: 'Kajabi, Teachable, Stan, Beacons and Nelsy compared for beauty educators: price, transaction fees, product limits, coaching and bookings.',
   category: 'beauty-creators',
+  audience: ['creators'],
+  craft: 'all',
   tags: ['best platform to sell beauty courses', 'sell nail course online', 'sell lash course online', 'Kajabi vs Teachable', 'Kajabi vs Stan'],
   heroImage: 'linear-gradient(135deg, #EEF2FF 0%, #C7D2FE 100%)',
   heroImageAlt: 'Best platforms to sell beauty courses compared',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Clean nail sets are what separate professional results from amateur ones. Here are the technique details that make the biggest difference to cleanliness and finish.',
   seoDescription: 'How to make nail sets look cleaner. Cuticle work, product control, sidewall cleanliness, finishing technique, and the details that make nail sets look professional.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['clean nail sets', 'nail tech technique', 'nail set finishing', 'nail application tips'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to make nail sets look cleaner',

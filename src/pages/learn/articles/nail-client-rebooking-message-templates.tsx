@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'The right rebooking message at the right time converts clients who\'ve gone quiet into booked appointments. Here are templates for every rebooking scenario.',
   seoDescription: 'Nail client rebooking message templates: copy-ready scripts for rebooking reminders, win-back messages, seasonal re-engagement and waitlists.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail rebooking message', 'nail tech message templates', 'nail client re-engagement', 'nail booking reminder'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'Nail client rebooking message templates',
