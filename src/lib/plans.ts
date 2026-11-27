@@ -15,6 +15,7 @@ export type Feature =
   | 'memberships'
   | 'email_marketing'
   | 'auto_dm'
+  /** Shop my kit: the pro recommends the products she uses, with her own affiliate links. */
   | 'affiliates'
   | 'team'
   | 'custom_domain';
@@ -78,7 +79,7 @@ export const PLANS: Record<PlanTier, Plan> = {
       'Digital products, courses and coaching',
       'Memberships',
       'Email marketing and Instagram AutoDM',
-      'Affiliate program for your products',
+      'Shop my kit with your affiliate links',
     ],
   },
   salon: {

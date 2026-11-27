@@ -25,7 +25,7 @@ const HIGHLIGHT_DETAILS: { match: string; icon: LucideIcon; title: string; detai
   { match: 'digital products', icon: BookOpen, title: 'Digital products and courses', detail: 'Sell guides, courses and 1:1 coaching calls' },
   { match: 'memberships', icon: Repeat, title: 'Memberships', detail: 'Monthly clubs and subscriptions for your community' },
   { match: 'email marketing', icon: Mail, title: 'Email and Instagram AutoDM', detail: 'Grow your list and send your link automatically' },
-  { match: 'affiliate', icon: Handshake, title: 'Affiliate program', detail: 'Let others promote your products for a share' },
+  { match: 'shop my kit', icon: Handshake, title: 'Shop my kit', detail: 'Recommend the products you use with your affiliate links' },
   { match: 'team member', icon: Users, title: 'Your whole team', detail: '' },
   { match: 'custom domain', icon: Globe, title: 'Custom domain', detail: 'Your page on your own web address' },
 ];

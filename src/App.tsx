@@ -77,6 +77,7 @@ const ProductDownload = lazy(() => import('./pages/ProductDownload'));
 const Unsubscribe = lazy(() => import('./pages/Unsubscribe'));
 // DEV-only sandboxes (digital products). import.meta.env.DEV is false in production builds.
 const ProductsSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.ProductsSandbox }))) : null;
+const KitSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.KitSandbox }))) : null;
 const StudioSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.StudioSandbox }))) : null;
 const AudienceSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.AudienceSandbox }))) : null;
 const CoachingSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/CoachingSandbox').then((m) => ({ default: m.CoachingSandbox }))) : null;
@@ -342,6 +343,7 @@ export default function App() {
             {AudienceSandbox && <Route path="/dev/audience" element={<AudienceSandbox />} />}
             {StudioSandbox && <Route path="/dev/studio" element={<StudioSandbox />} />}
             {CoachingSandbox && <Route path="/dev/coaching" element={<CoachingSandbox />} />}
+            {KitSandbox && <Route path="/dev/kit" element={<KitSandbox />} />}
 
             {/* ── Catch-all studio slug (must stay last) ─────────────────── */}
             <Route path="/:slug" element={<Studio />} />

@@ -16,6 +16,8 @@ import Audience from '@/pages/dashboard/Audience';
 import { createDemoContactsApi } from '@/lib/contactsDemo';
 import { PublicStudioView } from '@/components/studio/PublicStudioView';
 import { createDemoProductsApi } from '@/lib/productsDemo';
+import Kit from '@/pages/dashboard/Kit';
+import { createDemoKitApi } from '@/lib/kitDemo';
 import { getMerchantBySlug } from '@/lib/mockData';
 
 export function ProductsSandbox() {
@@ -70,5 +72,26 @@ export function StudioSandbox() {
         <PublicStudioView merchant={merchant} mode="live" />
       </div>
     </div>
+  );
+}
+
+export function KitSandbox() {
+  const [params] = useSearchParams();
+  const empty = params.get('empty') === '1';
+  const gated = params.get('gated') === '1';
+  const api = useMemo(() => createDemoKitApi(empty), [empty]);
+  const [tab, setTab] = useState('kit');
+  const profile = {
+    id: 'demo', full_name: 'Maya Laurent', slug: 'studio-maya', subscription_status: 'active',
+    plan: gated ? 'independent_monthly' : 'creator_monthly',
+  };
+  return (
+    <DashboardLayout profile={profile} activeTab={tab} setActiveTab={setTab}>
+      {tab === 'kit' ? (
+        <Kit profile={profile} api={api} forceLocked={gated} />
+      ) : (
+        <p className="p-8 text-sm text-gray-500">Sandbox: only the Shop my kit tab is wired.</p>
+      )}
+    </DashboardLayout>
   );
 }

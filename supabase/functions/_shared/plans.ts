@@ -65,7 +65,7 @@ export type Feature =
   | 'memberships'
   | 'email_marketing'
   | 'auto_dm'
-  | 'affiliates'
+  | 'affiliates' // Shop my kit (the pro's own affiliate links), not an affiliate program
   | 'team'
   | 'custom_domain'
 

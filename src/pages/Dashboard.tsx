@@ -16,6 +16,7 @@ import Customers from './dashboard/Customers';
 import Help from './dashboard/Help';
 import Products from './dashboard/Products';
 import Audience from './dashboard/Audience';
+import Kit from './dashboard/Kit';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
 import { ComingSoonPlaceholder } from '../components/dashboard/ComingSoonPlaceholder';
 import { ShoppingBag, Megaphone, Globe, Gift } from 'lucide-react';
@@ -34,7 +35,7 @@ interface Profile {
 
 const VALID_TABS = [
   'home', 'calendar', 'preview', 'analytics', 'revenue', 'stripe', 'settings',
-  'products', 'audience', 'orders', 'customers', 'marketing', 'community', 'referrals', 'help',
+  'products', 'audience', 'kit', 'orders', 'customers', 'marketing', 'community', 'referrals', 'help',
 ];
 
 function tabFromPath(pathname: string): string {
@@ -165,6 +166,7 @@ export default function Dashboard() {
       )}
       {activeTab === 'products' && <Products profile={profile} onNavigate={handleSetTab} />}
       {activeTab === 'audience' && <Audience profile={profile} onNavigate={handleSetTab} />}
+      {activeTab === 'kit' && <Kit profile={profile} />}
       {activeTab === 'orders' && (
         <ComingSoonPlaceholder
           title="Orders"
