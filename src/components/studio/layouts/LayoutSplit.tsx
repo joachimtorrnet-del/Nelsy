@@ -5,6 +5,7 @@ import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { useMoney } from '@/lib/currency';
 import { PoweredByNelsy } from '../PlgCTA';
+import { StudioTitle } from '../StudioTitle';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -102,12 +103,12 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook, produc
         }}>
           {/* Top: name + specialty */}
           <div>
-            <h1 style={{
+            <StudioTitle style={{
               fontSize: 18, fontWeight: 800, letterSpacing: '-0.02em',
               color: theme.accentText, margin: '0 0 5px', lineHeight: 1.15,
             }}>
               {merchant.salon_name}
-            </h1>
+            </StudioTitle>
             {(merchant.specialty || merchant.location) && (
               <p style={{
                 fontSize: 12, color: `${theme.accentText}cc`,

@@ -5,6 +5,7 @@ import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { useMoney } from '@/lib/currency';
 import { PoweredByNelsy } from '../PlgCTA';
+import { StudioTitle } from '../StudioTitle';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -116,12 +117,12 @@ export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook, pr
         </div>
 
         {/* Name */}
-        <h1 style={{
+        <StudioTitle style={{
           fontSize: 30, fontWeight: 700, letterSpacing: '-0.02em',
           color: textWhite, margin: '0 0 12px', lineHeight: 1.15,
         }}>
           {merchant.salon_name}
-        </h1>
+        </StudioTitle>
 
         {/* Bio */}
         {merchant.bio && (
