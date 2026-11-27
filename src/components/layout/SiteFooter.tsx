@@ -67,6 +67,7 @@ const COLUMNS: { title: string; links: (NavLink & { subheading?: string })[] }[]
     title: 'Company',
     links: [
       { label: 'Pricing', to: '/pricing' },
+      { label: 'Affiliates', to: '/affiliates' },
       { label: 'Contact', to: '/contact' },
       { label: 'Log in', to: '/login' },
       { label: NAV_CTA.label, to: NAV_CTA.to },

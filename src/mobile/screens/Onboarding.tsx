@@ -9,6 +9,7 @@ import { track, identify } from '@/lib/analytics';
 import { AVAILABLE_PLANS, PLANS, TRIAL_DAYS, planKey } from '@/lib/plans';
 import type { PlanTier } from '@/lib/plans';
 import { updateProfile } from '@/lib/supabase-queries';
+import { claimReferral } from '@/lib/referrals';
 import { validatePassword } from '@/utils/validation';
 import { Logo } from '../components/Logo';
 import { FAINT, FIELD, MUTED, PillInput, PrimaryPill, TINT, Title } from '../components/onboardingUi';
@@ -295,6 +296,11 @@ export default function Onboarding() {
       if (e) track('app_onboarding_backend_error', { step: name, operation: 'answers' });
     } catch {
       track('app_onboarding_backend_error', { step: name, operation: 'answers' });
+    }
+    // Referral program: when the handle is a Nelsy pro (her slug or referral code), she becomes the
+    // referrer. Unknown handles, self-referrals and a missing migration are ignored silently.
+    if (referredBy && (await claimReferral(referredBy, 'app_handle'))) {
+      track('referral_claimed', { source: 'app_handle' });
     }
   };
 

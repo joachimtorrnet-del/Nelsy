@@ -15,6 +15,7 @@ const MOBILE_LINKS = [
   { label: 'Home', to: '/' },
   { label: 'Pricing', to: '/pricing' },
   { label: 'Blog', to: '/blog' },
+  { label: 'Affiliates', to: '/affiliates' },
 ];
 
 function MobileMenu({ onClose, onCta, drawerRef }: { onClose: () => void; onCta: () => void; drawerRef: React.RefObject<HTMLDivElement | null> }) {
@@ -139,6 +140,13 @@ export default function SiteNav() {
               className={`rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition-colors duration-150 ${FOCUS} ${pricingActive ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
             >
               Pricing
+            </Link>
+            <Link
+              to="/affiliates"
+              aria-current={pathname === '/affiliates' ? 'page' : undefined}
+              className={`rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition-colors duration-150 ${FOCUS} ${pathname === '/affiliates' ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
+            >
+              Affiliates
             </Link>
           </div>
 
