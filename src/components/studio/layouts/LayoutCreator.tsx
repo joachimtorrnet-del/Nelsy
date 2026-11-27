@@ -7,6 +7,7 @@ import { useMoney } from '@/lib/currency';
 import { getStudioFont, ensureStudioFontLoaded } from '@/lib/studioFonts';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { PoweredByNelsy } from '../PlgCTA';
+import { StudioTitle } from '../StudioTitle';
 
 interface GalleryPhoto { image_url: string }
 
@@ -142,11 +143,11 @@ export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onB
   );
 
   const nameEl = (color: string, size: number, align: 'left' | 'center' = 'center') => (
-    <h1 style={{
+    <StudioTitle style={{
       fontFamily: nameFont, fontStyle: italic ? 'italic' : 'normal', textAlign: align,
       fontSize: size, fontWeight: variant.nameStyle === 'sans' ? 800 : italic ? 500 : 600, lineHeight: 1.08,
       letterSpacing: variant.nameStyle === 'sans' ? '-0.025em' : '-0.01em', color, margin: 0,
-    }}>{name}</h1>
+    }}>{name}</StudioTitle>
   );
 
   const bioEl = (color: string, align: 'left' | 'center' = 'center') => merchant.bio ? (

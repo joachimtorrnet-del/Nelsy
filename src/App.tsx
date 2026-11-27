@@ -49,6 +49,7 @@ import Demo from './pages/Demo';
 import NailTechsPage from './pages/use-cases/NailTechs';
 import BeautyCreatorsPage from './pages/use-cases/BeautyCreators';
 import IndependentBeautyProsPage from './pages/use-cases/IndependentBeautyPros';
+import NailSalonsPage from './pages/use-cases/NailSalons';
 import LashTechsPage from './pages/use-cases/LashTechs';
 import ReduceNoShowsPage from './pages/use-cases/ReduceNoShows';
 import TurnFollowersPage from './pages/use-cases/TurnFollowersIntoBookings';
@@ -169,6 +170,7 @@ export default function App() {
             <Route path="/use-cases/nail-techs" element={<NailTechsPage />} />
             <Route path="/use-cases/beauty-creators" element={<BeautyCreatorsPage />} />
             <Route path="/use-cases/independent-beauty-pros" element={<IndependentBeautyProsPage />} />
+            <Route path="/use-cases/nail-salons" element={<NailSalonsPage />} />
             <Route path="/use-cases/lash-techs" element={<LashTechsPage />} />
             <Route path="/use-cases/reduce-no-shows" element={<ReduceNoShowsPage />} />
             <Route path="/use-cases/turn-followers-into-bookings" element={<TurnFollowersPage />} />

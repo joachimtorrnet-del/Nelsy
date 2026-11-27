@@ -48,6 +48,7 @@ export const PAGE_LINKS = {
   '/use-cases/lash-techs': { label: 'Nelsy for lash techs', desc: 'Fills, full sets and deposits on one page.' },
   '/use-cases/beauty-creators': { label: 'Nelsy for beauty creators', desc: 'Start with bookings today; the Creator plan is on the way.' },
   '/use-cases/independent-beauty-pros': { label: 'Nelsy for independent beauty pros', desc: 'Everything a solo beauty business needs.' },
+  '/use-cases/nail-salons': { label: 'Nelsy for nail salons', desc: 'Bookings and deposits today; the Salon plan for teams.' },
   '/use-cases/reduce-no-shows': { label: 'Reduce no-shows', desc: 'Deposits, reminders and a clear policy.' },
   '/use-cases/turn-followers-into-bookings': { label: 'Turn followers into bookings', desc: 'From Instagram to a booked appointment.' },
 } as const;
@@ -67,7 +68,7 @@ export const CATEGORY_LINKS: Record<ArticleCategory, { tool: ToolPath; pages: Pa
   comparisons:           { tool: '/tools/nail-tech-appointment-reminder-templates', pages: ['/features/bookings', '/features/deposits'] },
   'branding-growth':     { tool: '/tools/instagram-engagement-calculator', pages: ['/features/link-in-bio', '/use-cases/independent-beauty-pros'] },
   'beauty-creators':     { tool: '/tools/creator-rate-calculator', pages: ['/features/link-in-bio', '/features/bookings'] },
-  salons:                { tool: '/tools/no-show-cost-calculator', pages: ['/features/bookings', '/use-cases/reduce-no-shows'] },
+  salons:                { tool: '/tools/no-show-cost-calculator', pages: ['/use-cases/nail-salons', '/features/bookings'] },
 };
 
 // ─── In-body photos (Unsplash) ───────────────────────────────────────────────

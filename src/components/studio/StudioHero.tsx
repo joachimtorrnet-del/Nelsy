@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Share2 } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
+import { StudioTitle } from './StudioTitle';
 
 // ── Social icons ──────────────────────────────────────────────────────────────
 
@@ -100,9 +101,9 @@ export function StudioHero({ merchant, theme, isPreview = false }: Props) {
       <AvatarFrame src={merchant.logo_url} name={merchant.salon_name} accent={accent} />
 
       {/* Name */}
-      <h1 style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.25, margin: 0, marginTop: 16 }}>
+      <StudioTitle style={{ color: theme.textPrimary, fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', lineHeight: 1.25, margin: 0, marginTop: 16 }}>
         {merchant.salon_name}
-      </h1>
+      </StudioTitle>
 
       {/* Bio */}
       {merchant.bio && (

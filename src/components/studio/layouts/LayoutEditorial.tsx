@@ -5,6 +5,7 @@ import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { useMoney } from '@/lib/currency';
 import { PoweredByNelsy } from '../PlgCTA';
+import { StudioTitle } from '../StudioTitle';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -239,7 +240,7 @@ export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook, pr
           padding: '28px 20px 0',
           textAlign: 'center',
         }}>
-          <h1 style={{
+          <StudioTitle style={{
             fontSize: 30, fontWeight: 800,
             fontFamily: theme.fontFamily ?? 'Playfair Display, Georgia, serif',
             letterSpacing: '-0.01em',
@@ -249,7 +250,7 @@ export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook, pr
             textShadow: '0 1px 6px rgba(0,0,0,0.3)',
           }}>
             {merchant.salon_name}
-          </h1>
+          </StudioTitle>
 
           {/* Social icons */}
           {hasSocials && (

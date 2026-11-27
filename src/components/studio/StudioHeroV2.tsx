@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Share2, Star, Globe } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
+import { StudioTitle } from './StudioTitle';
 
 // ── Social icons ──────────────────────────────────────────────────────────────
 
@@ -211,12 +212,12 @@ export function StudioHeroV2({ merchant, theme, isPreview = false, ctaRef, heroP
         </div>
 
         {/* Name */}
-        <h1 style={{
+        <StudioTitle style={{
           fontSize: 22, fontWeight: 800, letterSpacing: '-0.03em',
           lineHeight: 1.1, color: theme.textPrimary, margin: 0,
         }}>
           {merchant.salon_name}
-        </h1>
+        </StudioTitle>
 
         {/* Specialty · Location */}
         {(merchant.specialty || merchant.location) && (
