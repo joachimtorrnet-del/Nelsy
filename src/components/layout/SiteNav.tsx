@@ -299,31 +299,11 @@ function Dropdown({ id, label, isActive, open, onToggle, anchorToTrigger = false
 
 // ─── Mobile drawer ────────────────────────────────────────────────────────────
 
-const M_ROW = `flex min-h-[44px] items-center gap-2.5 px-3 rounded-xl text-[14px] font-medium text-gray-800 hover:bg-[#FFF5F9] transition ${FOCUS}`;
-
-function MobileSection({ id, label, children }: { id: string; label: string; children: ReactNode }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="border-b border-gray-100 last:border-b-0">
-      <button
-        type="button"
-        id={`m-${id}-btn`}
-        aria-expanded={open}
-        aria-controls={`m-${id}-panel`}
-        onClick={() => setOpen((v) => !v)}
-        className={`flex w-full min-h-[48px] items-center justify-between px-3 rounded-xl text-[15px] font-semibold text-gray-900 hover:bg-gray-50 transition ${FOCUS}`}
-      >
-        {label}
-        <ChevronDown size={16} strokeWidth={2} aria-hidden="true" className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
-      </button>
-      {open && <div id={`m-${id}-panel`} className="pb-2 pl-1">{children}</div>}
-    </div>
-  );
-}
-
-function MobileLabel({ children }: { children: ReactNode }) {
-  return <p className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">{children}</p>;
-}
+const MOBILE_LINKS = [
+  { label: 'Home', to: '/' },
+  { label: 'Pricing', to: '/pricing' },
+  { label: 'Blog', to: '/blog' },
+];
 
 function MobileMenu({ onClose, onCta, drawerRef }: { onClose: () => void; onCta: () => void; drawerRef: React.RefObject<HTMLDivElement | null> }) {
   // Lock page scroll while the drawer is open.
@@ -337,75 +317,18 @@ function MobileMenu({ onClose, onCta, drawerRef }: { onClose: () => void; onCta:
     <div ref={drawerRef} id="mobile-menu" className="lg:hidden fixed inset-0 z-40">
       <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" aria-hidden="true" onClick={onClose} />
       <div className="relative bg-white w-full pt-[72px] pb-4 rounded-b-2xl shadow-lg max-h-[100dvh] overflow-y-auto overscroll-contain">
+        {/* Stan-style mobile menu: a few big links. The full map of pages lives in the footer. */}
         <nav aria-label="Mobile" className="px-3">
-          <MobileSection id="product" label="Product">
-            {PRODUCT_COLUMNS.map((col) => (
-              <div key={col.key}>
-                <MobileLabel>{col.label}</MobileLabel>
-                {col.items.map((f) => {
-                  const Icon = FEATURE_ICONS[f.slug] ?? Layers;
-                  return (
-                    <Link key={f.slug} to={f.route} onClick={onClose} className={M_ROW}>
-                      <Icon size={16} strokeWidth={1.75} color={INK} aria-hidden="true" />
-                      <span className="flex-1">{f.title}</span>
-                      {f.plan === 'creator' && <CreatorBadge />}
-                    </Link>
-                  );
-                })}
-              </div>
-            ))}
-          </MobileSection>
-
-          <MobileSection id="solutions" label="Who it's for">
-            <MobileLabel>Built for</MobileLabel>
-            {NAV_AUDIENCES.map((a) => (
-              <Link key={a.slug} to={a.route} onClick={onClose} className={M_ROW}>
-                <a.icon size={16} strokeWidth={1.75} color={INK} aria-hidden="true" />
-                {a.title}
-              </Link>
-            ))}
-            {CRAFTS.length > 0 && <MobileLabel>By craft</MobileLabel>}
-            {CRAFTS.map((c) => (
-              <Link key={c.slug} to={c.route} onClick={onClose} className={M_ROW}>
-                <c.icon size={16} strokeWidth={1.75} color={INK} aria-hidden="true" />
-                {c.title}
-              </Link>
-            ))}
-            <MobileLabel>By goal</MobileLabel>
-            {USE_CASE_GOALS.map((g) => (
-              <Link key={g.slug} to={g.route} onClick={onClose} className={M_ROW}>{g.title}</Link>
-            ))}
-          </MobileSection>
-
-          <MobileSection id="tools" label="Free tools">
-            {TOOL_GROUPS.map((g) => (
-              <div key={g.key}>
-                <MobileLabel>{g.label}</MobileLabel>
-                {g.tools.map((t) => (
-                  <Link key={t.slug} to={t.route} onClick={onClose} className={M_ROW}>{t.title}</Link>
-                ))}
-              </div>
-            ))}
-            <Link to="/tools" onClick={onClose} className={`${M_ROW} font-semibold`} style={{ color: PINK }}>
-              All free tools <ArrowRight size={14} aria-hidden="true" />
+          {MOBILE_LINKS.map((l) => (
+            <Link
+              key={l.to}
+              to={l.to}
+              onClick={onClose}
+              className={`flex min-h-[56px] items-center px-3 rounded-xl text-[22px] font-bold text-[#1A1A1A] hover:bg-gray-50 transition ${FOCUS}`}
+            >
+              {l.label}
             </Link>
-          </MobileSection>
-
-          <MobileSection id="resources" label="Resources">
-            {NAV_RESOURCES.map((r) => {
-              const Icon = RESOURCE_ICONS[r.to] ?? BookOpen;
-              return (
-                <Link key={r.to} to={r.to} onClick={onClose} className={M_ROW}>
-                  <Icon size={16} strokeWidth={1.75} color={INK} aria-hidden="true" />
-                  {r.label}
-                </Link>
-              );
-            })}
-          </MobileSection>
-
-          <Link to="/pricing" onClick={onClose} className={`flex min-h-[48px] items-center px-3 rounded-xl text-[15px] font-semibold text-gray-900 hover:bg-gray-50 transition ${FOCUS}`}>
-            Pricing
-          </Link>
+          ))}
 
           <div className="border-t border-gray-100 pt-3 mt-2 space-y-2 px-1">
             <Link to="/login" onClick={onClose} className={`flex min-h-[48px] items-center justify-center rounded-xl bg-gray-100 text-[15px] font-medium text-gray-800 hover:bg-gray-200 transition ${FOCUS}`}>
