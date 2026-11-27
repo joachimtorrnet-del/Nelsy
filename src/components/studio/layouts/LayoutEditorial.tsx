@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { ArrowRight, Globe } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
@@ -13,6 +14,8 @@ interface Props {
   isPreview: boolean;
   photos: GalleryPhoto[];
   onBook?: (serviceId: string) => void;
+  /** Products section (digital products), rendered after the services. */
+  productsSlot?: ReactNode;
 }
 
 function InstagramIcon() {
@@ -174,7 +177,7 @@ function ImageLedCard({ service, thumb, accent, accentText, isPreview, onBook }:
 
 // ── Main component ─────────────────────────────────────────────────────────────
 
-export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook }: Props) {
+export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook, productsSlot }: Props) {
   const accent = theme.defaultAccent;
   const accentText = theme.accentText;
 
@@ -337,6 +340,8 @@ export function LayoutEditorial({ merchant, theme, isPreview, photos, onBook }: 
           <ServiceCollectionCard collection={col} theme={theme} isPreview={isPreview} onBook={onBook} />
         </div>
       ))}
+
+      {productsSlot}
 
       {/* Footer */}
       <div style={{ textAlign: 'center', padding: '28px 0 32px' }}>

@@ -63,6 +63,10 @@ const OnboardingStripe = lazy(() => import('./pages/OnboardingStripe'));
 const StripeReturn = lazy(() => import('./pages/StripeReturn'));
 const Login = lazy(() => import('./pages/Login'));
 const BookingConfirmed = lazy(() => import('./pages/BookingConfirmed'));
+const ProductDownload = lazy(() => import('./pages/ProductDownload'));
+// DEV-only sandboxes (digital products). import.meta.env.DEV is false in production builds.
+const ProductsSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.ProductsSandbox }))) : null;
+const StudioSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.StudioSandbox }))) : null;
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('./pages/ResetPassword'));
 
@@ -284,6 +288,18 @@ export default function App() {
                 </>
               }
             />
+
+            <Route
+              path="/d/:orderId"
+              element={
+                <>
+                  <SEOMeta title="Download your purchase" description="" noindex />
+                  <ProductDownload />
+                </>
+              }
+            />
+            {ProductsSandbox && <Route path="/dev/products" element={<ProductsSandbox />} />}
+            {StudioSandbox && <Route path="/dev/studio" element={<StudioSandbox />} />}
 
             {/* ── Catch-all studio slug (must stay last) ─────────────────── */}
             <Route path="/:slug" element={<Studio />} />

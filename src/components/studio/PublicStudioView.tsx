@@ -18,6 +18,11 @@ import { LayoutSpotlight } from './layouts/LayoutSpotlight';
 import { LayoutCreator, CREATOR_VARIANTS } from './layouts/LayoutCreator';
 import { useBookingStore } from '@/store/bookingStore';
 import { CurrencyProvider } from '@/lib/currency';
+import { StudioProducts } from './StudioProducts';
+import { useStudioProducts } from '@/hooks/useStudioProducts';
+import type { ProductsTone } from './StudioProducts';
+import { ProductCheckoutModal } from './ProductCheckoutModal';
+import type { PublicProduct } from '@/lib/products';
 
 // Theme presets that use a standalone layout component (no StudioHeroV2 sections)
 const LAYOUT_PRESETS: Record<string, 'split' | 'editorial' | 'spotlight'> = {
@@ -93,6 +98,26 @@ function PublicStudioViewInner({ merchant, mode = 'live' }: Props) {
   // Merge live collections into the merchant object for layout components
   const merchantWithCollections = { ...merchant, collections: merchant.collections ?? collections };
 
+  // Digital products (Creator plan): shown after the services on every template
+  const products = useStudioProducts(merchant.id);
+  const [openProduct, setOpenProduct] = useState<PublicProduct | null>(null);
+  const productsSection = (tone: ProductsTone, padding?: string) =>
+    products.length > 0 ? (
+      <StudioProducts products={products} tone={tone} isPreview={isPreview} onOpen={setOpenProduct} padding={padding} />
+    ) : null;
+  const themeTone: ProductsTone = {
+    text: theme.textPrimary, muted: theme.textSecondary, cardBg: theme.cardBg, cardBorder: theme.cardBorder,
+    accent, accentText: theme.accentText, cardBlur: theme.cardBlur,
+  };
+  const productModal = !isPreview && (
+    <ProductCheckoutModal
+      product={openProduct}
+      sellerName={merchant.salon_name || merchant.name}
+      accent={accent}
+      onClose={() => setOpenProduct(null)}
+    />
+  );
+
   // Hero photo: explicit cover takes priority, then first gallery photo
   const heroPhotoUrl = merchant.cover_url ?? photos[0]?.image_url;
 
@@ -118,32 +143,43 @@ function PublicStudioViewInner({ merchant, mode = 'live' }: Props) {
   if (creatorVariant) {
     return (
       <>
-        <LayoutCreator merchant={merchantWithCollections} theme={theme} variant={creatorVariant} isPreview={isPreview} photos={photos} onBook={onBook} />
+        <LayoutCreator merchant={merchantWithCollections} theme={theme} variant={creatorVariant} isPreview={isPreview} photos={photos} onBook={onBook}
+          productsSlot={productsSection({ ...themeTone, text: theme.textPrimary }, '20px 14px 0')} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
+        {productModal}
       </>
     );
   }
   if (layoutVariant === 'split') {
     return (
       <>
-        <LayoutSplit merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook} />
+        <LayoutSplit merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook}
+          productsSlot={productsSection(themeTone)} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
+        {productModal}
       </>
     );
   }
   if (layoutVariant === 'editorial') {
     return (
       <>
-        <LayoutEditorial merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook} />
+        <LayoutEditorial merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook}
+          productsSlot={productsSection(themeTone)} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
+        {productModal}
       </>
     );
   }
   if (layoutVariant === 'spotlight') {
     return (
       <>
-        <LayoutSpotlight merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook} />
+        <LayoutSpotlight merchant={merchantWithCollections} theme={theme} isPreview={isPreview} photos={photos} onBook={onBook}
+          productsSlot={productsSection({
+            text: '#FFFFFF', muted: 'rgba(255,255,255,0.72)', cardBg: 'rgba(255,255,255,0.14)', cardBorder: 'rgba(255,255,255,0.12)',
+            accent: 'rgba(255,255,255,0.88)', accentText: '#1A1A1A',
+          })} />
         {!isPreview && <StickyBookCTA merchant={merchant} show={true} />}
+        {productModal}
       </>
     );
   }
@@ -210,6 +246,9 @@ function PublicStudioViewInner({ merchant, mode = 'live' }: Props) {
         </div>
       )}
 
+      {/* ── Products (digital, Creator plan) ─────────────────── */}
+      {productsSection(themeTone)}
+
       {/* ── Reviews — real data only ──────────────────────────── */}
       {testimonials.length > 0 && (
         <StudioTestimonials testimonials={testimonials} accentColor={accent} />
@@ -243,6 +282,7 @@ function PublicStudioViewInner({ merchant, mode = 'live' }: Props) {
       {!isPreview && (
         <StickyBookCTA merchant={merchant} show={!heroCTAVisible} />
       )}
+      {productModal}
     </div>
   );
 }

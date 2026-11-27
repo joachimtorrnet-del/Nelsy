@@ -49,3 +49,46 @@ export function resolvePlan(raw: unknown): ResolvedPlan | null {
 
   return { tier, interval, key: `${tier}_${interval}`, envVar, priceId: Deno.env.get(envVar) }
 }
+
+// ── Feature gating (server mirror of hasFeature in src/lib/plans.ts) ─────────
+// Independent of PURCHASABLE: a pro whose profile already holds a tier keeps its
+// features even while that tier is not on sale. Keep the lists in sync with the client.
+
+export type Feature =
+  | 'booking_page'
+  | 'online_payments'
+  | 'deposits'
+  | 'reminders'
+  | 'digital_products'
+  | 'courses'
+  | 'coaching'
+  | 'memberships'
+  | 'email_marketing'
+  | 'auto_dm'
+  | 'affiliates'
+  | 'team'
+  | 'custom_domain'
+
+const INDEPENDENT_FEATURES: Feature[] = ['booking_page', 'online_payments', 'deposits', 'reminders']
+const CREATOR_FEATURES: Feature[] = [
+  ...INDEPENDENT_FEATURES,
+  'digital_products', 'courses', 'coaching', 'memberships', 'email_marketing', 'auto_dm', 'affiliates',
+]
+const TIER_FEATURES: Record<PlanTier, Feature[]> = {
+  independent: INDEPENDENT_FEATURES,
+  creator: CREATOR_FEATURES,
+  salon: [...CREATOR_FEATURES, 'team', 'custom_domain'],
+}
+
+/** Tier stored on a profile. Legacy values ("pro", "monthly", "yearly") are Independent. */
+export function tierFromProfilePlan(plan: string | null | undefined): PlanTier | null {
+  if (!plan || plan === 'free') return null
+  const tier = plan.toLowerCase().split('_')[0]
+  if (tier === 'creator' || tier === 'salon' || tier === 'independent') return tier
+  return 'independent'
+}
+
+export function planHasFeature(plan: string | null | undefined, feature: Feature): boolean {
+  const tier = tierFromProfilePlan(plan)
+  return tier ? TIER_FEATURES[tier].includes(feature) : false
+}

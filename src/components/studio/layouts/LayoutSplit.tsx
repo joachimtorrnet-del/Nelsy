@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { Globe } from 'lucide-react';
 import type { Merchant } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
@@ -13,6 +14,8 @@ interface Props {
   isPreview: boolean;
   photos: GalleryPhoto[];
   onBook?: (serviceId: string) => void;
+  /** Products section (digital products), rendered after the services. */
+  productsSlot?: ReactNode;
 }
 
 function InstagramIcon() {
@@ -32,7 +35,7 @@ function TikTokIcon() {
 }
 
 
-export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Props) {
+export function LayoutSplit({ merchant, theme, isPreview, photos, onBook, productsSlot }: Props) {
   const fmt = useMoney();
   const accent = theme.defaultAccent;
   const accentText = theme.accentOnBg ?? accent;
@@ -289,6 +292,8 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook }: Prop
           <ServiceCollectionCard collection={col} theme={theme} isPreview={isPreview} onBook={onBook} />
         </div>
       ))}
+
+      {productsSlot}
 
       {/* Footer */}
       <div style={{ textAlign: 'center', paddingBottom: 28 }}>

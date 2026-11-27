@@ -60,6 +60,8 @@ interface Props {
   isPreview: boolean;
   photos: GalleryPhoto[];
   onBook?: (serviceId: string) => void;
+  /** Products section (digital products), rendered after the services. */
+  productsSlot?: ReactNode;
 }
 
 const SERIF = "'Playfair Display', Georgia, serif";
@@ -90,7 +92,7 @@ function onDark(hex: string) {
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 < 0.55;
 }
 
-export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onBook }: Props) {
+export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onBook, productsSlot }: Props) {
   const formatCurrency = useMoney();
   const nameFontDef = getStudioFont(variant.nameFont);
   const bodyFontDef = getStudioFont(variant.bodyFont);
@@ -405,6 +407,8 @@ export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onB
             <ServiceCollectionCard key={col.id} collection={col} theme={theme} isPreview={isPreview} onBook={onBook} />
           ))}
         </div>
+
+        {productsSlot}
 
         <p style={{ textAlign: 'center', marginTop: 28 }}>
           <PoweredByNelsy profileId={merchant.id} isPreview={isPreview} color={footerColor} brandColor={variant.header === 'photo-bg' ? '#FFFFFF' : (theme.accentOnBg ?? accent)} />
