@@ -11,7 +11,7 @@ import { Calculator, CalendarCheck, ArrowRight } from 'lucide-react';
 import type { Article, ArticleCategory } from '@/lib/articles';
 import { CORE_TOOLS, TOOL_LINKS, PAGE_LINKS, CATEGORY_LINKS, coverPhotoFor, pickArticlePhotos } from '@/lib/blogLinks';
 import type { PagePath, ToolPath } from '@/lib/blogLinks';
-import { ArticleImage, ExampleBookingMockup, TRIAL_PATH } from './ArticleBodyComponents';
+import { ArticleImage, HeroMockupImage, TRIAL_PATH } from './ArticleBodyComponents';
 
 const PINK = '#F52B8C';
 
@@ -35,7 +35,7 @@ export function ArticleMidCTA({ category, onClick }: { category: ArticleCategory
       <span className="absolute top-0 left-0 rounded-br-2xl bg-[#F52B8C] px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white">
         Nelsy
       </span>
-      <div className="grid sm:grid-cols-[1fr_190px] items-center gap-4 p-6 pt-12 sm:p-8 sm:pt-12">
+      <div className="grid sm:grid-cols-[1fr_260px] items-center gap-4 p-6 pt-12 sm:p-8 sm:pt-12">
         <div>
           <p className="font-serif text-2xl font-bold text-[#1A1A1A] leading-tight mb-2">{copy.title}</p>
           <p className="text-sm text-gray-700 leading-relaxed mb-5">{copy.body}</p>
@@ -49,7 +49,7 @@ export function ArticleMidCTA({ category, onClick }: { category: ArticleCategory
           </Link>
           <p className="mt-3 text-xs text-gray-500">14 days free, then $29/month. 0% Nelsy commission.</p>
         </div>
-        <ExampleBookingMockup className="hidden sm:block justify-self-center" />
+        <HeroMockupImage className="justify-self-center" />
       </div>
     </aside>
   );

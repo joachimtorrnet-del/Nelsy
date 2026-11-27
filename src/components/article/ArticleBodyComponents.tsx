@@ -323,6 +323,23 @@ const EXAMPLE_SERVICES = [
   { name: 'Nail art add-on', meta: '15 min', price: '$10' },
 ];
 
+/** Same booking-page mockup as the landing hero, reused in the article CTAs. */
+export function HeroMockupImage({ className = '' }: { className?: string }) {
+  return (
+    <img
+      src="/hero-mockup-540.webp"
+      srcSet="/hero-mockup-540.webp 540w, /hero-mockup.webp 900w"
+      sizes="260px"
+      width={900}
+      height={962}
+      loading="lazy"
+      decoding="async"
+      alt="A Nelsy beauty creator page with bookings, a coaching session and a downloadable guide"
+      className={`w-full max-w-[220px] sm:max-w-[260px] h-auto ${className}`}
+    />
+  );
+}
+
 export function ExampleBookingMockup({ className = '' }: { className?: string }) {
   return (
     <div className={`relative w-[168px] shrink-0 ${className}`} aria-hidden>
@@ -372,7 +389,7 @@ export function ArticleCTABlock({
   return (
     <section
       aria-label="Try Nelsy"
-      className="not-prose my-12 overflow-hidden rounded-3xl bg-[#1A1A1A] text-white grid sm:grid-cols-[1fr_220px] items-center"
+      className="not-prose my-12 overflow-hidden rounded-3xl bg-[#1A1A1A] text-white grid sm:grid-cols-[1fr_280px] items-center"
     >
       <div className="p-7 sm:p-10">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#F52B8C] mb-3">Nelsy</p>
@@ -387,7 +404,7 @@ export function ArticleCTABlock({
           {ctaLabel} <span aria-hidden>→</span>
         </Link>
       </div>
-      <ExampleBookingMockup className="hidden sm:block self-center mx-auto my-8" />
+      <HeroMockupImage className="block self-center mx-auto mb-8 sm:my-6" />
     </section>
   );
 }
