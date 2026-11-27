@@ -4,6 +4,7 @@ import { ArticleCallout } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'nail-tech-no-show-message-templates',
   title: 'Nail Tech No-Show Message Templates',
+  coverTitle: 'No-Show Message Templates',
   seoTitle: 'Nail Tech No-Show Message Templates (Copy & Paste)',
   excerpt: 'A no-show is frustrating. Here\'s how to handle it professionally: templates for reaching out, retaining the deposit, and deciding whether to rebook the client.',
   seoDescription: 'Nail tech no-show message templates. Copy-paste no-show messages for nail techs: reach out, retain deposit, and handle repeat no-shows professionally.',

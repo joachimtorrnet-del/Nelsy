@@ -5,6 +5,7 @@ import { ArticleTip, ArticleTable } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'nail-tech-instagram-highlight-ideas',
   title: 'Nail Tech Instagram Highlight Ideas (That Actually Get Bookings)',
+  coverTitle: 'Highlights That Book',
   seoTitle: 'Nail Tech Instagram Highlight Ideas That Get Bookings',
   excerpt: 'Instagram Highlights are the first thing a potential client checks before booking. Here\'s exactly what to include, what to name them, and how to make them work for you.',
   seoDescription: 'Nail tech Instagram highlight ideas. Which highlights to create, what to put in each one, and how to use them to turn profile visitors into booked clients.',

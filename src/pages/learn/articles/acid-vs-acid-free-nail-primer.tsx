@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps, ArticleChecklis
 registerArticle({
   slug: 'acid-vs-acid-free-nail-primer',
   title: 'Acid vs Acid-Free Nail Primer: Which Should You Use?',
+  coverTitle: 'Acid vs Acid-Free Primer',
   seoTitle: "Acid vs Acid-Free Nail Primer: Differences and When to Use",
   excerpt: 'Not all nail primers are the same: acid and non-acid primers work differently, suit different systems, and have different safety considerations. Here\'s what you need to know about each.',
   seoDescription: "Acid-based vs acid-free nail primer: what methacrylic acid does, how to apply each safely, and which primer to use for acrylic or gel.",

@@ -4,6 +4,7 @@ import { ArticleSteps, ArticleTip } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'how-to-create-nail-tech-waitlist',
   title: 'How to Create a Nail Tech Waitlist That Actually Works',
+  coverTitle: 'Build a Waitlist That Works',
   seoTitle: 'How to Create a Nail Tech Waitlist That Actually Works',
   excerpt: 'A waitlist isn\'t just a list: it\'s a system. Here\'s how to set up a waitlist that converts cancellations into full appointments and makes clients feel looked after, not rejected.',
   seoDescription: 'How to create a nail tech waitlist that works. Setting up a waitlist system, managing waitlist clients, and converting cancellations into filled appointments.',

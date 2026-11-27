@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/compon
 registerArticle({
   slug: 'how-to-name-your-nail-business',
   title: 'How to Name Your Nail Business',
+  coverTitle: 'Name Your Nail Business',
   seoTitle: 'How to Name Your Nail Business (Without Overthinking It)',
   excerpt: 'Your nail business name matters, but not as much as the work. Here\'s how to choose a name that works, check it\'s available, and avoid common mistakes.',
   seoDescription: 'How to name your nail business. What makes a good nail business name, how to check availability, and what to avoid, with examples and naming frameworks.',

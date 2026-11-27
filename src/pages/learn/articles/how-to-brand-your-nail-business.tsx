@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-to-brand-your-nail-business',
   title: 'How to Brand Your Nail Business',
+  coverTitle: 'Brand Your Nail Business',
   seoTitle: 'How to Brand Your Nail Business (Step-by-Step Guide)',
   excerpt: 'Branding is more than a logo: it\'s everything a client sees and feels about your business. A practical guide to building a nail brand that attracts the right clients.',
   seoDescription: 'How to brand your nail business. Build a cohesive nail brand: choosing your visual style, colour palette, voice, and Instagram aesthetic that attracts ideal clients.',

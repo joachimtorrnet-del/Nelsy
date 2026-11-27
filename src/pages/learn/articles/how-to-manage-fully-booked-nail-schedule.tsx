@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-manage-fully-booked-nail-schedule',
   title: 'How to Manage a Fully Booked Nail Schedule',
+  coverTitle: 'Manage a Full Book',
   seoTitle: 'How to Manage a Fully Booked Nail Schedule (Without Burning Out)',
   excerpt: 'Being fully booked sounds like the goal, but managing a packed schedule without burning out is a skill. Here\'s how to do it sustainably.',
   seoDescription: 'How to manage a fully booked nail schedule without burning out. Time blocks, cancellation management, waitlists, pricing up, and protecting your physical health.',

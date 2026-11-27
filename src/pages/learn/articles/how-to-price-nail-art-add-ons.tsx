@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-price-nail-art-add-ons',
   title: 'How to Price Nail Art Add-Ons',
+  coverTitle: 'Price Nail Art Add-Ons',
   seoTitle: 'How to Price Nail Art Add-Ons as a Nail Tech',
   excerpt: 'Nail art add-ons are one of the best ways to increase your average appointment value, but only if you price them correctly. Here\'s how to calculate and communicate add-on pricing.',
   seoDescription: 'How to price nail art add-ons as a nail tech. Pricing formulas for nail art, chrome, glitter, and custom designs, plus how to present add-ons at booking.',

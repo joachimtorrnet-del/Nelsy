@@ -4,6 +4,7 @@ import { ArticleTip, ArticleCallout } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-create-clean-nail-art-lines',
   title: 'How to Create Clean Nail Art Lines',
+  coverTitle: 'Clean Nail Art Lines',
   seoTitle: 'How to Create Clean Nail Art Lines',
   excerpt: 'Clean lines are the mark of professional nail art. Here\'s exactly how to control a liner brush, manage your product load, and fix mistakes before they cure.',
   seoDescription: 'How to create clean nail art lines. Liner brush technique, product loading, stabilising your hand, and correcting mistakes for sharp, precise nail art lines.',

@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'booth-rental-vs-commission-nail-techs',
   title: 'Booth Rental vs Commission for Nail Techs',
+  coverTitle: 'Booth Rent vs Commission',
   seoTitle: 'Booth Rental vs Commission for Nail Techs: Which Is Better?',
   excerpt: 'Booth rental and commission are two very different ways to work inside a salon. Here\'s what each model actually means for your income, freedom, and career.',
   seoDescription: 'Booth rental vs commission for nail techs. Compare both salon models on income, freedom and risk, and see which suits each stage of a nail tech career.',

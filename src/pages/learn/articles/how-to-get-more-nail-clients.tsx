@@ -13,6 +13,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-to-get-more-nail-clients',
   title: 'How to Get More Nail Clients: A Practical Guide',
+  coverTitle: 'Get More Nail Clients',
   seoTitle: 'How to Get More Nail Clients: A Practical Guide for Nail Techs',
   excerpt:
     'Practical strategies to grow your nail tech client base: Instagram, photography, booking friction, deposits, referrals, retention and more.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'best-booking-apps-nail-salons',
   title: 'Best Booking Apps for Nail Salons',
+  coverTitle: 'Booking Apps for Salons',
   seoTitle: 'Best Booking Apps for Nail Salons (Multi-Tech)',
   excerpt: 'Running a nail salon with multiple techs means very different booking needs from a solo nail tech. Here are the best booking platforms for nail salons.',
   seoDescription: 'Best booking apps for nail salons. What nail salons need from booking software, multi-staff scheduling, and the platforms that handle salon-scale booking well.',

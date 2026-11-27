@@ -20,6 +20,7 @@ function Bio({ title, lines }: { title: string; lines: string[] }) {
 registerArticle({
   slug: 'best-instagram-bio-ideas-for-nail-techs',
   title: 'Best Instagram Bio Ideas for Nail Techs',
+  coverTitle: 'Instagram Bio Ideas',
   seoTitle: "30+ Instagram Bio Ideas for Nail Techs (Copy & Paste)",
   excerpt: '30+ ready-to-use Instagram bio ideas for nail techs, from minimal to detailed, with tips on what every booking-focused bio needs to include.',
   seoDescription: "Instagram bio ideas for nail techs and nail artists you can copy: examples by style, what to include, and how to turn your bio into bookings.",

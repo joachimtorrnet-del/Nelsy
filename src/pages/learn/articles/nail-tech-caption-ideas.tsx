@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'nail-tech-caption-ideas',
   title: 'Nail Tech Caption Ideas for Instagram (50+ Examples)',
+  coverTitle: '50+ Caption Ideas',
   seoTitle: "50+ Nail Tech Caption Ideas for Instagram (Copy & Paste)",
   excerpt: 'Caption ideas for every type of nail tech Instagram post: portfolio posts, booking prompts, behind the scenes, educational, and seasonal content.',
   seoDescription: "Copy-and-paste Instagram captions for nail techs: nail photo captions, booking posts, new set reveals and seasonal captions that get clients to book.",

@@ -4,6 +4,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps, ArticleChecklis
 registerArticle({
   slug: 'how-to-prevent-nail-lifting',
   title: 'How to Prevent Nail Lifting',
+  coverTitle: 'Stop Nail Lifting',
   seoTitle: 'How to Prevent Nail Lifting: A Complete Guide for Nail Techs',
   excerpt: 'Nail lifting is one of the most common complaints clients bring to nail techs. A thorough guide to the causes, the fixes, and what to tell clients.',
   seoDescription: 'How to prevent nail lifting: causes, prep techniques, application tips, and client aftercare advice for nail techs to reduce lifting complaints.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleSteps, ArticleTable, ArticleChecklis
 registerArticle({
   slug: 'builder-gel-application-guide',
   title: 'Builder Gel Application Guide for Beginners',
+  coverTitle: 'Builder Gel Basics',
   seoTitle: 'Builder Gel (BIAB) Application Guide for Beginner Nail Techs',
   excerpt: 'Builder gel (BIAB) is one of the most in-demand nail services. This guide covers the application process, layering technique, self-levelling, and how to get a consistent result.',
   seoDescription: 'Builder gel application guide for nail techs. Step-by-step BIAB technique: application, self-levelling, filing, apex, and troubleshooting common issues.',

@@ -7,6 +7,7 @@ const a = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-to-sell-a-nail-course-online',
   title: 'How to Sell a Nail Course Online (Step by Step)',
+  coverTitle: 'Sell Your Nail Course',
   seoTitle: 'How to Create and Sell a Nail Course Online: Step by Step',
   excerpt: 'How to turn your nail skills into an online course: picking the topic, recording it, pricing it, and selling it from your Instagram link in bio, with or without a large following.',
   seoDescription: 'How to create and sell an online nail course: choose a topic people pay for, record it with a phone, set your price, and sell it from your link in bio.',

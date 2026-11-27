@@ -7,6 +7,7 @@ const a = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-to-make-money-as-a-beauty-creator',
   title: 'How to Make Money as a Beauty Creator: 10 Income Streams',
+  coverTitle: '10 Income Streams',
   seoTitle: 'How to Make Money as a Beauty Creator: 10 Income Streams',
   excerpt: 'The 10 ways nail techs, lash artists, makeup artists and beauty creators turn an audience into income: bookings, courses, digital products, coaching, brand deals, UGC and more, with how to start each one.',
   seoDescription: 'How beauty creators make money: client bookings, online courses, digital products, coaching, brand deals, UGC, affiliate links and more, with how to start each.',

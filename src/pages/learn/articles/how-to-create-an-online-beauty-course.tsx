@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-to-create-an-online-beauty-course',
   title: 'How to Create and Sell an Online Beauty Course',
+  coverTitle: 'Build a Beauty Course',
   seoTitle: 'How to Create an Online Beauty Course (Makeup, Lash, Nails)',
   excerpt: 'How to plan, film and sell an online makeup, lash, brow, nail or skincare course: choosing the outcome, structuring modules, filming with a phone, pricing, and launching to your audience.',
   seoDescription: 'How to create and sell an online beauty course: pick the outcome, plan modules, film with your phone, set a price and launch. Makeup, lash, nails.',

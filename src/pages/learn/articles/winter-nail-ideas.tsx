@@ -4,6 +4,7 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'winter-nail-ideas',
   title: '50 Winter Nail Ideas',
+  coverTitle: '50 Winter Nail Ideas',
   seoTitle: "50 Winter Nail Ideas: Red, Dark Green, Chrome & Glitter",
   excerpt: 'Winter is the most booked nail season of the year. Here are 50 winter nail ideas, from festive reds to icy blues and everything elegant in between.',
   seoDescription: "50 winter nail ideas: festive red, dark green, midnight blue, silver chrome and glitter winter nail designs for short and long nails.",

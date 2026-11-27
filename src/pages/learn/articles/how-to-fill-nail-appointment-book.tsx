@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'how-to-fill-nail-appointment-book',
   title: 'How to Fill Your Nail Appointment Book',
+  coverTitle: 'Fill Your Appointment Book',
   seoTitle: 'How to Fill Your Nail Appointment Book: A Complete Guide',
   excerpt: 'Empty slots cost money. A practical guide to keeping your nail appointment book consistently full: through regulars, rebooking, and smart promotion.',
   seoDescription: 'How to fill your nail appointment book: strategies for nail techs covering regulars, rebooking systems, last-minute slots, and Instagram promotion.',

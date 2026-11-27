@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'local-seo-for-nail-techs',
   title: 'Local SEO for Nail Techs: The Complete Guide',
+  coverTitle: 'Local SEO for Nail Techs',
   seoTitle: 'Local SEO for Nail Techs: Complete Guide to Getting Found Locally',
   excerpt: 'Local SEO is how clients in your area find you on Google without Instagram. This guide covers everything: Google Business Profile, local content, reviews, citations, and NAP consistency.',
   seoDescription: 'Local SEO for nail techs: how to rank in local Google search, optimise your Google Business Profile, get reviews and attract nearby clients.',

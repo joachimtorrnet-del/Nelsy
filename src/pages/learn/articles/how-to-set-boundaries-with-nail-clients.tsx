@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-set-boundaries-with-nail-clients',
   title: 'How to Set Boundaries With Nail Clients',
+  coverTitle: 'Set Client Boundaries',
   seoTitle: 'How to Set Boundaries With Nail Clients (Without Losing Them)',
   excerpt: 'Setting boundaries with nail clients doesn\'t have to cost you bookings. Here\'s how to communicate limits professionally and build a better client base in the process.',
   seoDescription: 'How to set boundaries with nail clients professionally. Scripts, examples, and advice for handling common boundary violations, without losing good clients.',

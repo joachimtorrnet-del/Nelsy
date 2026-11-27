@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-take-better-nail-photos',
   title: 'How to Take Better Nail Photos With Your Phone',
+  coverTitle: 'Better Nail Photos',
   seoTitle: 'How to Take Better Nail Photos With Your Phone',
   excerpt: 'You don\'t need a professional camera to take nail photos that get attention. Here\'s how to use your phone to capture nails that look as good as they do in person.',
   seoDescription: 'How to take better nail photos with your phone: lighting, composition, backgrounds, camera settings and the common mistakes nail techs make.',

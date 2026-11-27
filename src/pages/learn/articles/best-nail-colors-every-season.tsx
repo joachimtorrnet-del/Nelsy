@@ -4,6 +4,7 @@ import { ArticleTable } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'best-nail-colors-every-season',
   title: 'Best Nail Colours for Every Season',
+  coverTitle: 'Colours for Every Season',
   seoTitle: 'Best Nail Colours for Every Season: Spring to Winter',
   excerpt: 'Not sure what to wear on your nails? Here\'s a guide to the best nail colours for every season, and how to pick one that works for you.',
   seoDescription: 'Best nail colours for every season. Spring, summer, autumn, and winter nail colour guides, from classics to trending shades, for every style and skin tone.',

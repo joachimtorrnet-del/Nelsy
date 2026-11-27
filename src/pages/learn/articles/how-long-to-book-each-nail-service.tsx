@@ -4,6 +4,7 @@ import { ArticleTable, ArticleTip } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'how-long-to-book-each-nail-service',
   title: 'How Much Time Should You Book for Each Nail Service?',
+  coverTitle: 'Time Every Nail Service',
   seoTitle: 'How Much Time Should You Book for Each Nail Service?',
   excerpt: 'Booking the wrong appointment length creates problems all day. Here\'s a realistic guide to how long to book for each nail service, including buffer time and variables.',
   seoDescription: 'How long to book each nail service: recommended times for gel polish, infills, extensions, acrylics and nail art, plus what makes services run longer.',

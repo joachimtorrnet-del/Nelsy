@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'best-booking-app-for-brow-artists',
   title: 'Best Booking App for Brow Artists: From Quick Shapes to Microblading',
+  coverTitle: 'Booking Apps for Brow Artists',
   seoTitle: 'Best Booking App for Brow Artists (2026)',
   excerpt: 'The best booking apps for brow artists compared: Acuity Scheduling, GlossGenius, Square Appointments, Booksy, Fresha and Nelsy, for short brow appointments and high-ticket microblading with deposits.',
   seoDescription: 'Best booking app for brow artists: Acuity, GlossGenius, Square, Booksy, Fresha and Nelsy compared for brow shaping, lamination and microblading deposits.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-monthly-income-calculator',
   title: 'Nail Tech Monthly Income: How to Calculate What You Actually Make',
+  coverTitle: 'What You Really Make',
   seoTitle: 'Nail Tech Monthly Income: How to Calculate What You Actually Make',
   excerpt: 'Knowing how much you actually take home (after products, overheads, and tax) is the starting point for making smarter business decisions. Here\'s the calculation.',
   seoDescription: 'How to calculate your nail tech monthly income. Step-by-step formula for working out your take-home pay after expenses and tax as a self-employed nail technician.',

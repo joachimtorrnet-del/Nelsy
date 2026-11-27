@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable, ArticleTip } from '@/components/article/A
 registerArticle({
   slug: 'holiday-booking-strategy-nail-techs',
   title: 'Holiday Booking Strategy for Nail Techs',
+  coverTitle: 'Plan Your Holiday Bookings',
   seoTitle: 'Holiday Booking Strategy for Nail Techs (Seasonal Planning Guide)',
   excerpt: 'Peak seasons make or break a nail tech\'s year. Here\'s how to build a booking strategy around the key holiday seasons, so you\'re prepared, not panicked.',
   seoDescription: 'Holiday booking strategy for nail techs. Plan availability, pricing, deposits and marketing around Christmas, Valentine\'s Day, summer and other peaks.',

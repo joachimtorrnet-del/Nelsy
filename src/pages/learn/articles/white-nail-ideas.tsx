@@ -5,6 +5,7 @@ import { ArticleImage, ArticleTable, ArticleChecklist } from '@/components/artic
 registerArticle({
   slug: 'white-nail-ideas',
   title: '50 White Nail Ideas for a Clean Look',
+  coverTitle: '50 White Nail Ideas',
   seoTitle: "50 White Nail Ideas: Milky, French, Chrome & Nail Art",
   excerpt: 'White nails are crisp, modern, and endlessly versatile. From clean minimalist to detailed nail art, here are 50 white nail ideas to save for your next set.',
   seoDescription: "50 white nail ideas and inspo: milky white, off-white, white French tips, white chrome and simple white nail art for short and long nails.",

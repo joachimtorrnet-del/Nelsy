@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-handle-nail-repair-request',
   title: 'How to Handle a Nail Repair Request',
+  coverTitle: 'Handling Repair Requests',
   seoTitle: 'How to Handle a Nail Repair Request (Policy + Scripts)',
   excerpt: 'How you handle repair requests (who pays, when you fix for free, and how to assess what happened) is one of the most practical policy decisions in a nail business.',
   seoDescription: 'How to handle nail repair requests. When to fix for free, when to charge, assessment scripts, repair policy wording, and how to reduce repair requests going forward.',

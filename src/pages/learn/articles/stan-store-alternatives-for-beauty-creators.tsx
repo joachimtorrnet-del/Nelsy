@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'stan-store-alternatives-for-beauty-creators',
   title: 'Stan Store Alternatives for Beauty Creators: 5 Options Compared',
+  coverTitle: 'Stan Store Alternatives',
   seoTitle: 'Stan Store Alternatives for Beauty Creators',
   excerpt: 'Five Stan Store alternatives for beauty creators and educators: Beacons, Linktree, Kajabi, Teachable and Nelsy, compared on price, seller fees, courses and bookings.',
   seoDescription: 'Stan Store alternatives for beauty creators: Beacons, Linktree, Kajabi, Teachable and Nelsy compared on price, fees, courses and client bookings.',

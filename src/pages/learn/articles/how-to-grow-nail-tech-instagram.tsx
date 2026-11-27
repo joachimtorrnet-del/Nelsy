@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/compon
 registerArticle({
   slug: 'how-to-grow-nail-tech-instagram',
   title: 'How to Grow Your Nail Tech Instagram',
+  coverTitle: 'Grow Your Instagram',
   seoTitle: 'How to Grow Your Nail Tech Instagram (Strategies That Work)',
   excerpt: 'A practical guide to building an Instagram following that actually translates into nail bookings, not just likes from other nail techs.',
   seoDescription: 'How to grow your nail tech Instagram account. Content strategy, posting schedule, Reels approach, hashtags, and how to attract local followers who actually book.',

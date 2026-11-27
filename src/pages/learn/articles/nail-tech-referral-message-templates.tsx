@@ -4,6 +4,7 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'nail-tech-referral-message-templates',
   title: 'Nail Tech Referral Message Templates',
+  coverTitle: 'Referral Message Templates',
   seoTitle: 'Nail Tech Referral Message Templates (Copy & Paste)',
   excerpt: 'Word of mouth is the most powerful way nail techs grow. Templates for asking existing clients to refer friends: naturally, warmly, and without feeling salesy.',
   seoDescription: 'Nail tech referral message templates: copy-paste WhatsApp, DM and Instagram scripts to ask clients to refer friends, formally or informally.',

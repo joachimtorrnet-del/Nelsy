@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'best-booking-apps-mobile-nail-techs',
   title: 'Best Booking Apps for Mobile Nail Techs',
+  coverTitle: 'Booking Apps for Mobile Techs',
   seoTitle: 'Best Booking Apps for Mobile Nail Techs',
   excerpt: 'Mobile nail techs have unique scheduling and logistics needs. Here\'s what to look for in a booking app when you travel to clients, and which platforms handle it best.',
   seoDescription: 'Best booking apps for mobile nail techs. What mobile nail techs need from booking software, travel time management and the best apps for home visits.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-branding-ideas',
   title: 'Nail Tech Branding Ideas That Make You Look Premium',
+  coverTitle: 'Branding That Looks Premium',
   seoTitle: 'Nail Tech Branding Ideas That Make You Look Premium',
   excerpt: 'Practical branding ideas for nail techs who want to look established and attract premium clients, without a big budget.',
   seoDescription: 'Nail tech branding ideas that make you look premium. Colour palettes, Instagram aesthetics, bio styles, photography props, and communication tips for nail techs.',

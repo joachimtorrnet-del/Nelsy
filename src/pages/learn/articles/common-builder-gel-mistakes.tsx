@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'common-builder-gel-mistakes',
   title: 'Common Builder Gel Mistakes and How to Fix Them',
+  coverTitle: 'Builder Gel Mistakes',
   seoTitle: 'Common Builder Gel (BIAB) Mistakes and How to Fix Them',
   excerpt: 'Builder gel is a rewarding system to master, but it has common technique pitfalls. Here are the mistakes nail techs most frequently make with builder gel / BIAB and how to address them.',
   seoDescription: 'Common builder gel and BIAB mistakes and how to fix them. Heat spikes, lifting, flooding, apex problems, and infill mistakes nail techs encounter with builder gel.',

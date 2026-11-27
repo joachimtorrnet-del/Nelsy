@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-batch-nail-content',
   title: 'How to Batch Nail Content for a Whole Month',
+  coverTitle: 'Batch a Month of Content',
   seoTitle: 'How to Batch Nail Content for a Whole Month',
   excerpt: 'Creating content every day is exhausting. Batching lets you shoot, edit and schedule a month of posts in a few focused sessions. Here\'s how to do it.',
   seoDescription: 'How to batch nail tech content for a whole month. How to plan, shoot, edit and schedule nail photos and videos in batches to save time and post consistently.',

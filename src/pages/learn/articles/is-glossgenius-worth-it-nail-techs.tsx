@@ -7,6 +7,7 @@ const ext = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'is-glossgenius-worth-it-nail-techs',
   title: 'Is GlossGenius Worth It? Honest Review for Nail Techs and Salons (2026)',
+  coverTitle: 'Is GlossGenius Worth It?',
   seoTitle: 'Is GlossGenius Worth It? 2026 Review for Nail Techs & Salons',
   excerpt: 'Is GlossGenius good for nail techs and nail salons? A 2026 review with its real plan prices ($24 to $148/month), card fees, payouts, what each plan includes and who it suits.',
   seoDescription: 'Is GlossGenius worth it? 2026 review for nail techs, salons and estheticians: plans from $24/month, card fees, payouts, pros, cons and alternatives.',

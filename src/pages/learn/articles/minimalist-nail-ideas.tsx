@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'minimalist-nail-ideas',
   title: '40 Minimalist Nail Ideas for a Clean, Luxury Look',
+  coverTitle: '40 Minimalist Nail Ideas',
   seoTitle: '40 Minimalist Nail Ideas for a Clean Luxury Look',
   excerpt: 'Minimalist nails are the definition of quiet luxury: precision application, deliberate design choices, and a refusal to overdo it. 40 ideas across every minimalist direction.',
   seoDescription: 'Minimalist nail ideas for nail techs. 40 clean, luxury nail designs (neutrals, negative space, single-detail art, monochrome, and minimal chrome) with client tips.',

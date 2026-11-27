@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-content-calendar-30-day',
   title: 'How to Create a 30-Day Nail Tech Content Calendar',
+  coverTitle: '30-Day Content Calendar',
   seoTitle: 'How to Create a 30-Day Nail Tech Content Calendar',
   excerpt: 'A content calendar removes the daily "what do I post?" stress and helps you stay consistent without scrambling. Here\'s how to build one that actually works for a busy nail tech.',
   seoDescription: 'How to create a 30-day nail tech content calendar. Content mix, posting schedule, planning your content categories, and a week-by-week framework you can follow.',

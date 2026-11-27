@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'how-much-should-nail-tech-charge',
   title: 'How Much Should a Nail Tech Charge?',
+  coverTitle: 'What Should You Charge?',
   seoTitle: 'How Much Should a Nail Tech Charge? (2026 UK Pricing Guide)',
   excerpt: 'Setting your prices is one of the most important decisions in your nail business. Here\'s a practical guide to working out your nail tech prices in 2026.',
   seoDescription: 'How much should a nail tech charge in 2026? Work out your price for gel sets, extensions, infills and nail art from your costs, time and local market.',

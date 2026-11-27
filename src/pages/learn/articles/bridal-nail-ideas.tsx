@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'bridal-nail-ideas',
   title: '40 Bridal Nail Ideas for Your Wedding Day',
+  coverTitle: '40 Bridal Nail Ideas',
   seoTitle: '40 Bridal Nail Ideas for Your Wedding Day',
   excerpt: 'Wedding nails are one of the most considered nail appointments of a client\'s life. Here are 40 bridal nail ideas, from classic to contemporary, plus what to discuss at the consultation.',
   seoDescription: '40 bridal nail ideas for the wedding day: classic white, French, nude and statement sets, with advice on consultations, timing and what brides need.',

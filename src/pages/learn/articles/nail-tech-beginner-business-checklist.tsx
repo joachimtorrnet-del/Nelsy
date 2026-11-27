@@ -5,6 +5,7 @@ import { ArticleChecklist, ArticleCallout } from '@/components/article/ArticleBo
 registerArticle({
   slug: 'nail-tech-beginner-business-checklist',
   title: 'Nail Tech Beginner Business Checklist',
+  coverTitle: 'Beginner Business Checklist',
   seoTitle: 'Nail Tech Beginner Business Checklist (Everything You Need)',
   excerpt: 'A complete checklist for new nail techs starting their business: covering training, insurance, equipment, booking, marketing, and first clients.',
   seoDescription: 'Nail tech beginner business checklist. Everything you need to do before, during, and after launching your nail business, from insurance to Instagram.',

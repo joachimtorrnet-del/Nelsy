@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'nail-client-rebooking-message-templates',
   title: 'Nail Client Rebooking Message Templates',
+  coverTitle: 'Rebooking Message Templates',
   seoTitle: 'Nail Client Rebooking Message Templates (Copy-Ready Scripts)',
   excerpt: 'The right rebooking message at the right time converts clients who\'ve gone quiet into booked appointments. Here are templates for every rebooking scenario.',
   seoDescription: 'Nail client rebooking message templates: copy-ready scripts for rebooking reminders, win-back messages, seasonal re-engagement and waitlists.',

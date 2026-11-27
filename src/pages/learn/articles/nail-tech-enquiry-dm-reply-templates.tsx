@@ -4,6 +4,7 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'nail-tech-enquiry-dm-reply-templates',
   title: 'Nail Tech Enquiry and DM Reply Templates',
+  coverTitle: 'DM Reply Templates',
   seoTitle: 'Nail Tech Enquiry and DM Reply Templates (Copy & Paste)',
   excerpt: 'Nail tech DMs move fast. Here are ready-to-use templates for the most common enquiries: pricing questions, availability requests, new client queries, and more.',
   seoDescription: 'Nail tech enquiry and DM reply templates: copy-paste Instagram and WhatsApp replies for pricing, availability, new clients and custom designs.',

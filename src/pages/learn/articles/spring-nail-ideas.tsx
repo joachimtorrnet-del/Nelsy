@@ -4,6 +4,7 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'spring-nail-ideas',
   title: '50 Spring Nail Ideas',
+  coverTitle: '50 Spring Nail Ideas',
   seoTitle: "50 Spring Nail Ideas: Pastel, Floral & Light Pink Designs",
   excerpt: 'Spring nails are soft, fresh, and full of possibility. Here are 50 spring nail ideas, from delicate florals to pale pastels and bright early-season colours.',
   seoDescription: "50 spring nail ideas: pastel colors, floral nail art, light pink, mint, lavender and fresh spring nail designs for short and long nails.",

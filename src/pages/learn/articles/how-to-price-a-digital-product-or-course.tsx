@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'how-to-price-a-digital-product-or-course',
   title: 'How to Price a Digital Product or Online Course',
+  coverTitle: 'Price Your Digital Product',
   seoTitle: 'How to Price a Digital Product or Online Course',
   excerpt: 'A step-by-step method to price a beauty guide, template, video class or online course: value to the buyer, your costs and time, comparable offers, tiers, launch prices and payment plans, with worked examples.',
   seoDescription: 'How to price your digital products and online course: a 6-step method with worked examples, tiers, launch pricing, payment plans and when to raise your price.',

@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'ugc-for-beauty-brands',
   title: 'UGC for Beauty Brands: How to Start and What to Charge',
+  coverTitle: 'UGC for Beauty Brands',
   seoTitle: 'Beauty UGC Creator: How to Start and What to Charge',
   excerpt: 'How to become a beauty UGC creator: what brands want, how to build a portfolio with no clients, how to find beauty brands, and how to calculate your rate for videos, raw footage and usage rights.',
   seoDescription: 'How to become a beauty UGC creator: build a portfolio, find brands and calculate your rate per video, with usage rights and raw footage. Worked examples.',

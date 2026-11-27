@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'how-online-booking-works-nail-techs',
   title: 'How Online Booking Works for Nail Techs',
+  coverTitle: 'How Online Booking Works',
   seoTitle: 'How Online Booking Works for Nail Techs (Explained Simply)',
   excerpt: 'Online booking sounds complicated but it\'s not. Here\'s how it actually works for nail techs, from setting up your booking page to how clients pay and confirm.',
   seoDescription: 'How online booking works for nail techs. A plain-English explanation of the booking flow, what nail techs and clients see, deposits, confirmations, and reminders.',

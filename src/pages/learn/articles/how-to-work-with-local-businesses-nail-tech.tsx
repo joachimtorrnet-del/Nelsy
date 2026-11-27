@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'how-to-work-with-local-businesses-nail-tech',
   title: 'How to Work With Local Businesses as a Nail Tech',
+  coverTitle: 'Partner With Local Businesses',
   seoTitle: 'How to Work With Local Businesses as a Nail Tech',
   excerpt: 'Cross-referrals with complementary local businesses can be one of the most efficient client acquisition channels for nail techs. Here\'s how to build partnerships that actually work.',
   seoDescription: 'How to work with local businesses as a nail tech. Cross-referral partnerships with hair salons, wedding vendors, and beauty businesses to grow your nail client base.',

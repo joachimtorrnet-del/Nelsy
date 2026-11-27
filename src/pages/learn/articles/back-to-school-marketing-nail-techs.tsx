@@ -4,6 +4,7 @@ import { ArticleTip } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'back-to-school-marketing-nail-techs',
   title: 'Back to School Marketing Ideas for Nail Techs',
+  coverTitle: 'Back to School Marketing',
   seoTitle: 'Back to School Marketing Ideas for Nail Techs',
   excerpt: 'Back to school season marks the end of summer and the return of routine bookings. Here\'s how nail techs can use the September shift to fill the calendar.',
   seoDescription: 'Back to school marketing ideas for nail techs. Use September to re-engage lapsed clients, promote autumn designs and fill your post-summer calendar.',

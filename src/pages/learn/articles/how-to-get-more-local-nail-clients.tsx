@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/compon
 registerArticle({
   slug: 'how-to-get-more-local-nail-clients',
   title: 'How to Get More Local Nail Clients',
+  coverTitle: 'Win More Local Clients',
   seoTitle: 'How to Get More Local Nail Clients (Proven Strategies)',
   excerpt: 'Local clients are the lifeblood of every nail business. A practical guide to building a steady stream of clients in your area: beyond just Instagram.',
   seoDescription: 'How to get more local nail clients. Strategies covering local SEO, Google Business, community groups, referrals, collaborations, and Instagram location targeting.',

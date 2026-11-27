@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: '50-instagram-reel-ideas-for-nail-techs',
   title: '50 Instagram Reel Ideas for Nail Techs',
+  coverTitle: '50 Reel Ideas',
   seoTitle: '50 Instagram Reel Ideas for Nail Techs (That Get Views)',
   excerpt: '50 ready-to-film Instagram Reel ideas for nail techs, from easy 30-second clips to slightly more involved videos that consistently get reach.',
   seoDescription: '50 Instagram Reel ideas for nail techs. From quick process clips to educational Reels: ideas that work for solo nail techs and don\'t require video production skills.',

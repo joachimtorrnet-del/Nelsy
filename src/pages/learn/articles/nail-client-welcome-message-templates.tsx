@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'nail-client-welcome-message-templates',
   title: 'Nail Client Welcome Message Templates',
+  coverTitle: 'Welcome Message Templates',
   seoTitle: 'Nail Client Welcome Message Templates (Copy-Ready)',
   excerpt: 'A warm, professional welcome message sets the tone for the whole client relationship. Here are templates for every new client scenario: copy and personalise.',
   seoDescription: 'Nail client welcome message templates: copy-ready messages for booking confirmation, the first appointment, after the appointment and follow-ups.',

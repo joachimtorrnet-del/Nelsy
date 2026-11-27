@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'how-to-create-nail-service-menu',
   title: 'How to Create a Nail Service Menu',
+  coverTitle: 'Build Your Service Menu',
   seoTitle: 'How to Create a Nail Service Menu (That Converts Bookings)',
   excerpt: 'A nail service menu is more than a price list: it\'s what clients use to decide whether to book. Here\'s how to structure, name, and present a menu that works.',
   seoDescription: 'How to create a nail service menu. How to structure services, name them clearly, set pricing, and present your menu on a booking page and Instagram.',

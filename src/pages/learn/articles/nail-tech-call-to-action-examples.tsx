@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-call-to-action-examples',
   title: 'Nail Tech Call-to-Action Examples That Get More Bookings',
+  coverTitle: 'CTAs That Get Bookings',
   seoTitle: 'Nail Tech Call-to-Action Examples That Get More Bookings',
   excerpt: 'A great post with a weak call to action is a wasted opportunity. Here are nail tech CTA examples that actually prompt bookings, with caption copy you can adapt.',
   seoDescription: 'Nail tech call-to-action examples for Instagram, TikTok and captions. Booking CTAs, enquiry CTAs, link in bio prompts, and direct message CTAs with copy you can use.',

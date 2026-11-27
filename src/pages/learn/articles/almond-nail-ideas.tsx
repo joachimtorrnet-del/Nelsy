@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'almond-nail-ideas',
   title: '50 Almond Nail Ideas to Save for Your Next Set',
+  coverTitle: '50 Almond Nail Ideas',
   seoTitle: '50 Almond Nail Ideas for Nail Techs to Offer Clients',
   excerpt: 'Almond nails suit almost every client: elongating fingers, offering plenty of design real estate, and staying wearable across seasons. 50 ideas by style, colour, and occasion.',
   seoDescription: 'Almond nail ideas for nail techs. 50 almond nail designs by style (neutral, glazed, ombre, floral, seasonal) with client consultation tips and shape guidance.',

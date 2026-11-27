@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'why-booking-through-dms-costs-nail-techs-clients',
   title: 'Why Booking Through DMs Costs Nail Techs Clients',
+  coverTitle: 'DMs Are Costing You Clients',
   seoTitle: 'Why Booking Through DMs Costs Nail Techs Clients',
   excerpt: 'DM bookings feel personal but they quietly lose you clients every week. Here\'s what\'s actually happening, and what to do about it.',
   seoDescription: 'Booking through Instagram DMs costs nail techs clients, time, and money. Learn why and how to switch to online booking without losing your personal touch.',

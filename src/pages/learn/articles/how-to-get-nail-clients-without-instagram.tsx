@@ -5,6 +5,7 @@ import { ArticleTable, ArticleTip } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'how-to-get-nail-clients-without-instagram',
   title: 'How to Get Nail Clients Without Instagram',
+  coverTitle: 'Clients Without Instagram',
   seoTitle: 'How to Get Nail Clients Without Instagram (7 Channels That Work)',
   excerpt: 'Instagram isn\'t the only way to fill your nail calendar. Here are seven client acquisition channels that work without social media, and how to use each one.',
   seoDescription: 'How to get nail clients without Instagram: Google, referrals, local partnerships, email and marketplaces, the channels beyond social media.',

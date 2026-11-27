@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleSteps } from '@/compon
 registerArticle({
   slug: 'how-to-choose-booking-app-nail-business',
   title: 'How to Choose a Booking App for Your Nail Business',
+  coverTitle: 'Choose Your Booking App',
   seoTitle: 'How to Choose a Booking App for Your Nail Business',
   excerpt: 'A step-by-step decision guide for nail techs evaluating booking apps, what questions to ask, what to test, and how to avoid wasting time on the wrong platform.',
   seoDescription: 'How to choose the right booking app for your nail business. A decision guide covering setup, deposits, service menus, fees, and what to test before committing.',

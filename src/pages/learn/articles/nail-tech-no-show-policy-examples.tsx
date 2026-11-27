@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-no-show-policy-examples',
   title: 'Nail Tech No-Show Policy Examples',
+  coverTitle: 'No-Show Policy Examples',
   seoTitle: 'Nail Tech No-Show Policy Examples (Copy & Adapt)',
   excerpt: 'Ready-to-use no-show and cancellation policy templates for nail techs, plus how to communicate them without feeling awkward.',
   seoDescription: 'Nail tech no-show policy examples you can copy and adapt. Cancellation policy templates, deposit policies, and how to communicate them professionally.',

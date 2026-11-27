@@ -4,6 +4,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-apply-gel-polish-without-streaks',
   title: 'How to Apply Gel Polish Without Streaks',
+  coverTitle: 'Streak-Free Gel Polish',
   seoTitle: 'How to Apply Gel Polish Without Streaks',
   excerpt: 'Streaky gel polish is usually a product loading or technique problem, not a product quality issue. Here\'s exactly how to get smooth, even gel colour every time.',
   seoDescription: 'How to apply gel polish without streaks. Technique, brush loading, layer thickness, and application order that give you smooth, even gel polish colour every time.',

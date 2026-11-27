@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'is-booksy-worth-it-nail-techs',
   title: 'Is Booksy Worth It for Nail Techs?',
+  coverTitle: 'Is Booksy Worth It?',
   seoTitle: 'Is Booksy Worth It for Nail Techs? Honest Review',
   excerpt: 'Booksy charges a monthly subscription. Is it worth it for nail techs? Here\'s an honest assessment of what Booksy offers, where it excels, and when you should consider alternatives.',
   seoDescription: 'Is Booksy worth it for nail techs? Honest review of Booksy, what the subscription gets you, who it suits, where it falls short, and whether the cost is justified.',

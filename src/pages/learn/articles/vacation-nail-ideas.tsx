@@ -4,6 +4,7 @@ import { ArticleTip, ArticleImage, ArticleTable } from '@/components/article/Art
 registerArticle({
   slug: 'vacation-nail-ideas',
   title: '40 Vacation Nail Ideas',
+  coverTitle: '40 Vacation Nail Ideas',
   seoTitle: '40 Vacation Nail Ideas: Beach, Tropical & Holiday Nails',
   excerpt: 'Holiday nails should be as exciting as the trip itself. Here are 40 vacation nail ideas, from beach-ready brights to resort-chic nudes, with durability tips for travel.',
   seoDescription: '40 vacation nail ideas for your next trip: beach and tropical nails, resort designs and city break sets, with tips to make your nails last the whole holiday.',

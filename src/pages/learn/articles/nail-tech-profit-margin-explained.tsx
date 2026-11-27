@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-tech-profit-margin-explained',
   title: 'Nail Tech Profit Margin Explained',
+  coverTitle: 'Profit Margin Explained',
   seoTitle: 'Nail Tech Profit Margin Explained: What You Actually Keep',
   excerpt: 'Revenue is what you charge. Profit is what you keep. Understanding the difference, and the expenses that sit between them, is the foundation of a financially healthy nail business.',
   seoDescription: 'Nail tech profit margin explained. How to calculate your gross and net profit margin, what typical nail tech margins look like, and how to improve yours.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-do-nail-infill-without-bulk',
   title: 'How to Do a Nail Infill Without Making It Look Thick',
+  coverTitle: 'Infills Without Bulk',
   seoTitle: 'How to Do a Nail Infill Without Making It Look Thick',
   excerpt: 'Bulky infills are one of the most common client complaints. Here\'s how to do nail infills that stay balanced and slim, not thicker with every appointment.',
   seoDescription: 'How to do nail infills without making them look thick. Infill technique for acrylic and builder gel, how to remove old product correctly, and rebalancing the apex.',

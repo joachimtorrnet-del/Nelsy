@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'how-to-build-nail-tech-website',
   title: 'How to Build a Nail Tech Website That Gets Bookings',
+  coverTitle: 'A Website That Books',
   seoTitle: 'How to Build a Nail Tech Website That Actually Gets Bookings',
   excerpt: 'A nail tech website doesn\'t need to be complicated, but it does need to do one job: convert visitors into booked clients. Here\'s what to include and what to leave out.',
   seoDescription: 'How to build a nail tech website that gets bookings. What pages and content you need, what platforms to use, and how to connect online booking to your site.',

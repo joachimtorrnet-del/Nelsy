@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'why-nail-page-gets-likes-but-no-bookings',
   title: 'Why Your Nail Page Gets Likes But No Bookings',
+  coverTitle: 'Likes but No Bookings?',
   seoTitle: 'Why Your Nail Page Gets Likes But No Bookings (And How to Fix It)',
   excerpt: 'If your nail content gets lots of engagement but your DMs are quiet, something specific is going wrong. Here\'s how to diagnose and fix it.',
   seoDescription: 'Why nail techs get Instagram likes but no bookings: the 6 most common reasons and how to fix each one. Diagnose your conversion problem and start getting clients.',

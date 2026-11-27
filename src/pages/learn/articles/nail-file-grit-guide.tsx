@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'nail-file-grit-guide',
   title: 'Nail File Grit Guide for Nail Techs',
+  coverTitle: 'Nail File Grit Guide',
   seoTitle: "Nail File Grit Chart: Which Grit to Use (80, 100, 180, 240)",
   excerpt: 'Understanding nail file grit numbers is one of the first things to get right as a nail tech. The wrong grit damages nails or won\'t do the job. Here\'s the complete guide.',
   seoDescription: "Nail file grit chart: what 80, 100, 180 and 240 grit are for, which grit to use on natural nails, gel and acrylic, and how to avoid damage.",

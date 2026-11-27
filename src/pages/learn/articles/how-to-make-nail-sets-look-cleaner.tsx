@@ -5,6 +5,7 @@ import { ArticleTip, ArticleTable } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'how-to-make-nail-sets-look-cleaner',
   title: 'How to Make Nail Sets Look Cleaner',
+  coverTitle: 'Cleaner Nail Sets',
   seoTitle: 'How to Make Nail Sets Look Cleaner',
   excerpt: 'Clean nail sets are what separate professional results from amateur ones. Here are the technique details that make the biggest difference to cleanliness and finish.',
   seoDescription: 'How to make nail sets look cleaner. Cuticle work, product control, sidewall cleanliness, finishing technique, and the details that make nail sets look professional.',

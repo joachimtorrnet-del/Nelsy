@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-create-nail-client-experience',
   title: 'How to Create a Better Nail Client Experience',
+  coverTitle: 'A Better Client Experience',
   seoTitle: 'How to Create a Better Nail Client Experience (Every Touchpoint)',
   excerpt: 'The nail service is only part of what clients pay for. The experience around it, from booking to walking out the door, is what determines whether they come back and refer others.',
   seoDescription: 'How to create a better nail client experience: every touchpoint from booking to follow-up, what excellent looks like and how to improve each stage.',

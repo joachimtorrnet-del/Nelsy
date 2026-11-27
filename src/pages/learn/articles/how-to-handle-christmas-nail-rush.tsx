@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-handle-christmas-nail-rush',
   title: 'How to Handle the Christmas Nail Rush',
+  coverTitle: 'Survive the Christmas Rush',
   seoTitle: 'How to Handle the Christmas Nail Rush as a Nail Tech',
   excerpt: 'December is the most demanding month for nail techs. Here\'s how to stay sane, stay booked, and actually enjoy Christmas while running a full schedule.',
   seoDescription: 'How to handle the Christmas nail rush as a nail tech. Manage your December schedule, avoid burnout, handle the client surge, and finish the year strong.',

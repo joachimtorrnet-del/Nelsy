@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-increase-nail-client-retention',
   title: 'How to Increase Nail Client Retention',
+  coverTitle: 'Keep Clients Coming Back',
   seoTitle: 'How to Increase Nail Client Retention (Strategies That Work)',
   excerpt: 'Client retention, keeping clients coming back, is the foundation of a stable nail business. Here\'s what actually drives long-term loyalty and how to build it deliberately.',
   seoDescription: 'How to increase nail client retention: what makes clients loyal, retention strategies that work and how to stop losing clients to price or convenience.',

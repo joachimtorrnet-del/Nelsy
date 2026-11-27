@@ -81,6 +81,8 @@ export interface TocSection {
 export interface ArticleMeta {
   slug: string;
   title: string;
+  /** Short headline (2 to 6 words) printed on the generated cover image in public/blog-covers/. */
+  coverTitle?: string;
   seoTitle?: string;
   excerpt: string;
   seoDescription?: string;

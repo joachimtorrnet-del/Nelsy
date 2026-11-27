@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-edit-nail-photos',
   title: 'How to Edit Nail Photos Without Making Them Look Fake',
+  coverTitle: 'Edit Nail Photos Naturally',
   seoTitle: 'How to Edit Nail Photos Without Making Them Look Fake',
   excerpt: 'Light editing makes nail photos better. Heavy editing makes them misleading. Here\'s a simple editing workflow that enhances your nail photos without distorting what the nails actually look like.',
   seoDescription: 'How to edit nail photos without making them look fake. Editing adjustments for brightness, colour, and clarity, and what over-editing does to client trust and brand.',

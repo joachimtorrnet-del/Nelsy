@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'what-to-do-when-nail-client-complains',
   title: 'What to Do When a Nail Client Complains',
+  coverTitle: 'When a Client Complains',
   seoTitle: 'What to Do When a Nail Client Complains (How to Handle It Right)',
   excerpt: 'How you handle a nail client complaint determines whether you lose that client forever or turn a difficult moment into lasting loyalty. Here\'s the approach that works.',
   seoDescription: 'What to do when a nail client complains: respond professionally in person, by message and to online reviews, with scripts and a decision framework.',

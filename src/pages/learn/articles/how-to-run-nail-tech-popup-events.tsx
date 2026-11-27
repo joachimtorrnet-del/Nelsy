@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'how-to-run-nail-tech-popup-events',
   title: 'How to Run Nail Tech Pop-Up Events',
+  coverTitle: 'Run a Pop-Up Event',
   seoTitle: 'How to Run a Nail Tech Pop-Up Event (Step-by-Step Guide)',
   excerpt: 'A well-run pop-up puts you in front of a room full of potential new clients in one afternoon. Here\'s how to plan, promote, and execute a nail tech pop-up that actually converts.',
   seoDescription: 'How to run a nail tech pop-up event. Planning, promotion, pricing, and converting pop-up clients into regular bookings: a practical guide for independent nail techs.',

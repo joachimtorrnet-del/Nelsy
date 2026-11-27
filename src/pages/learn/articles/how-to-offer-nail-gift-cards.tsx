@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-offer-nail-gift-cards',
   title: 'How to Offer Nail Gift Cards as a Nail Tech',
+  coverTitle: 'Sell Nail Gift Cards',
   seoTitle: 'How to Offer Nail Gift Cards as a Nail Tech',
   excerpt: 'Gift cards are one of the easiest ways to earn income between appointment slots and attract new clients. Here\'s how to set them up and sell them effectively.',
   seoDescription: 'How to offer nail gift cards as a nail tech. Setting up gift vouchers, pricing, selling online and in person, and turning gift card holders into regular clients.',

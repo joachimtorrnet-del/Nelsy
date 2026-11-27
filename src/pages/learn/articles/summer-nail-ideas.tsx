@@ -5,6 +5,7 @@ import { ArticleImage, ArticleTable, ArticleTip } from '@/components/article/Art
 registerArticle({
   slug: 'summer-nail-ideas',
   title: '50 Summer Nail Ideas',
+  coverTitle: '50 Summer Nail Ideas',
   seoTitle: "50 Summer Nail Ideas: Bright, Neon & Tropical Designs",
   excerpt: 'Summer nails are bright, fun, and unapologetically colourful. Here are 50 summer nail ideas, from resort-ready neutrals to full neon statement sets.',
   seoDescription: "50 summer nail ideas: neon and bright colors, tropical and resort-inspired designs, and summer nail inspo for short and long nails.",

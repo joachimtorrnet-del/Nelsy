@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-price-acrylic-gel-x-builder-gel',
   title: 'How to Price Acrylic, Gel-X and Builder Gel Differently',
+  coverTitle: 'Price Each System Right',
   seoTitle: 'How to Price Acrylic, Gel-X and Builder Gel Services',
   excerpt: 'Acrylic, Gel-X, and builder gel (BIAB) are different products with different costs, application times, and client outcomes. Here\'s how to price them to reflect that.',
   seoDescription: 'How to price acrylic, Gel-X and builder gel services: what affects the price of each enhancement, worked examples and how to structure your price list.',

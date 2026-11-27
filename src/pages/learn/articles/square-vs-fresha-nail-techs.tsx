@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'square-vs-fresha-nail-techs',
   title: 'Square Appointments vs Fresha for Nail Techs',
+  coverTitle: 'Square vs Fresha',
   seoTitle: 'Square Appointments vs Fresha for Nail Techs',
   excerpt: 'Square Appointments and Fresha serve different nail tech needs. Here\'s an honest comparison, who each platform suits, and which one to choose.',
   seoDescription: 'Square Appointments vs Fresha for nail techs: features, pricing model, marketplace and which platform suits different nail tech setups.',

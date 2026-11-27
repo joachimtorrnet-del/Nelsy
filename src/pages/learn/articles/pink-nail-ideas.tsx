@@ -4,6 +4,7 @@ import { registerArticle } from '@/lib/articles';
 registerArticle({
   slug: 'pink-nail-ideas',
   title: '50 Pink Nail Ideas for Every Style',
+  coverTitle: '50 Pink Nail Ideas',
   seoTitle: '50 Pink Nail Ideas for Every Style',
   excerpt: 'From barely-there blush to bold hot pink, there\'s a pink nail look for every client. Here are 50 pink nail ideas to inspire your next set.',
   seoDescription: '50 pink nail ideas for every style. Baby pink, dusty rose, hot pink, neon, chrome, and ombré pink nails: inspiration for clients who love pink.',

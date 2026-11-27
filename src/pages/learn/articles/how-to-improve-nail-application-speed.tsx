@@ -5,6 +5,7 @@ import { ArticleTip, ArticleTable } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'how-to-improve-nail-application-speed',
   title: 'How to Improve Your Nail Application Speed',
+  coverTitle: 'Work Faster, Stay Neat',
   seoTitle: 'How to Improve Your Nail Application Speed',
   excerpt: 'Speed and quality aren\'t opposites: the fastest nail techs are usually the cleanest. Here\'s how to work faster without sacrificing results.',
   seoDescription: 'How to improve nail application speed. Workflow efficiency, station setup, practice strategies, and which parts of a nail appointment to work on speeding up first.',

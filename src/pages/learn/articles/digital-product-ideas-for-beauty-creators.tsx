@@ -10,6 +10,7 @@ const WAITLIST = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
 registerArticle({
   slug: 'digital-product-ideas-for-beauty-creators',
   title: '35 Digital Product Ideas for Beauty Creators and Beauty Pros',
+  coverTitle: '35 Digital Product Ideas',
   seoTitle: '35 Digital Product Ideas for Beauty Creators',
   excerpt: '35 digital products beauty creators and beauty pros can sell: guides, templates, video classes, presets and toolkits for makeup, skincare, hair, lashes, brows and nails, with how to pick and validate your first one.',
   seoDescription: '35 beauty digital products to sell: guides, templates, mini-courses and toolkits for makeup artists, estheticians, hairstylists, lash, brow and nail pros.',

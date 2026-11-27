@@ -5,6 +5,7 @@ import { ArticleTable, ArticleImage } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'nail-shapes-explained',
   title: 'Nail Shapes Explained: Almond, Square, Coffin, Oval and More',
+  coverTitle: 'Nail Shapes Explained',
   seoTitle: 'Nail Shapes Explained: Almond, Square, Coffin, Oval and More',
   excerpt: 'Not sure which nail shape is right for you, or how to describe what you want? Here\'s a complete guide to every nail shape, what makes each distinct, and who it suits.',
   seoDescription: 'Nail shapes explained: almond, square, coffin, oval, round, stiletto and squoval. What each shape looks like, who it suits and which is easiest to maintain.',

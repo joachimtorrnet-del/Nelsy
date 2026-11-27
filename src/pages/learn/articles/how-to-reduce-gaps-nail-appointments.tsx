@@ -4,6 +4,7 @@ import { ArticleTip, ArticleCallout } from '@/components/article/ArticleBodyComp
 registerArticle({
   slug: 'how-to-reduce-gaps-nail-appointments',
   title: 'How to Reduce Gaps Between Nail Appointments',
+  coverTitle: 'Close the Gaps',
   seoTitle: 'How to Reduce Gaps Between Nail Appointments',
   excerpt: 'Empty appointment slots cost you income. Here\'s how to fill gaps before they appear: through client retention, rebooking, and a few practical scheduling habits.',
   seoDescription: 'How to reduce gaps between nail appointments: rebooking habits, waitlists, last-minute slots and scheduling practices that keep your calendar full.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'why-does-gel-polish-peel-off',
   title: 'Why Does Gel Polish Peel Off? Common Causes and Fixes',
+  coverTitle: 'Why Gel Polish Peels',
   seoTitle: 'Why Does Gel Polish Peel Off? Causes and Fixes',
   excerpt: 'Gel polish that peels within days is frustrating, but nearly always fixable. Here are the most common reasons gel polish fails and exactly how to address each one.',
   seoDescription: 'Why does gel polish peel off? Common causes of gel polish peeling (prep issues, curing problems, application errors, and aftercare mistakes) with practical fixes.',

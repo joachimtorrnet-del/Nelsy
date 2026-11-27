@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-handle-late-nail-clients',
   title: 'How to Handle Late Nail Clients',
+  coverTitle: 'Handle Late Clients',
   seoTitle: 'How to Handle Late Nail Clients (Scripts + What to Do)',
   excerpt: 'Late clients are one of the most common frustrations for nail techs. Here\'s exactly what to do, in the moment and in your booking system, to protect your day.',
   seoDescription: 'How to handle late nail clients. What to say, when to turn them away, how to shorten the appointment, and how to stop lateness from cascading through your day.',

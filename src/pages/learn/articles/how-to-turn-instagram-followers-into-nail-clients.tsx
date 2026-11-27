@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'how-to-turn-instagram-followers-into-nail-clients',
   title: 'How to Turn Instagram Followers Into Nail Clients',
+  coverTitle: 'Followers Into Clients',
   seoTitle: 'How to Turn Instagram Followers Into Nail Clients',
   excerpt: 'You have followers but they\'re not booking. Here\'s why, and exactly how to fix the gap between engagement and actual bookings.',
   seoDescription: 'How to convert Instagram followers into nail clients. Fix the profile, add the right CTAs, and turn your engaged audience into a steady stream of bookings.',

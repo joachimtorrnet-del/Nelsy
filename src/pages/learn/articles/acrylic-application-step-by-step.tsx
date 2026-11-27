@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleSteps, ArticleTable } from '@/compon
 registerArticle({
   slug: 'acrylic-application-step-by-step',
   title: 'Acrylic Application Step-by-Step for Beginners',
+  coverTitle: 'Acrylic Step by Step',
   seoTitle: 'Acrylic Nail Application Step-by-Step Guide for Beginners',
   excerpt: 'A step-by-step guide to acrylic nail application, from prep through finishing, with technique tips, common mistakes, and what to focus on as a beginner.',
   seoDescription: 'Acrylic nail application step-by-step guide for beginner nail techs. Full process from prep to finish, bead placement, apex building, shaping, and common mistakes.',

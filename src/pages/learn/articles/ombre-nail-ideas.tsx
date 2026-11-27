@@ -5,6 +5,7 @@ import { ArticleImage, ArticleTable, ArticleSteps, ArticleChecklist } from '@/co
 registerArticle({
   slug: 'ombre-nail-ideas',
   title: '50 Ombré Nail Ideas to Save',
+  coverTitle: '50 Ombré Nail Ideas',
   seoTitle: '50 Ombre Nail Ideas: Pink, French, Sunset & Dark Designs',
   excerpt: 'Ombré nails are one of the most requested nail effects: a gradient that blends two or more colours across each nail. Here are 50 ombré ideas to inspire your next set.',
   seoDescription: '50 ombre nail ideas: soft pink and French ombré, sunset gradients, dark-to-light and multi-colour designs, with the colour combinations that work best.',

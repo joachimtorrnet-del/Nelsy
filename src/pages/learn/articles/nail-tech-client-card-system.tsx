@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable, ArticleChecklist } from '@/components/art
 registerArticle({
   slug: 'nail-tech-client-card-system',
   title: 'How to Create a Nail Tech Client Card System',
+  coverTitle: 'Your Client Card System',
   seoTitle: 'How to Create a Nail Tech Client Card System (What to Track)',
   excerpt: 'Knowing your clients\' history (their nail shape, sensitivities, what they liked last time) creates the personalised experience that builds loyalty. Here\'s what to record and how.',
   seoDescription: 'How to create a nail tech client card system: what to record, paper vs digital, consultation forms and how client history builds loyalty.',

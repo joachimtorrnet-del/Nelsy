@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleTable } from '@/components/article/A
 registerArticle({
   slug: 'nail-drill-bits-explained',
   title: 'Nail Drill Bits Explained: Which Bit Does What',
+  coverTitle: 'Drill Bits Explained',
   seoTitle: 'Nail Drill Bits Explained: A Complete Guide for Nail Techs',
   excerpt: 'A complete guide to nail drill bits, what each type does, when to use it, and how to choose the right bit for prep, removal, and finishing.',
   seoDescription: 'Nail drill bits explained. A complete guide to e-file drill bit types (carbide, diamond, ceramic) what each does, when to use them, and grit guide for nail techs.',

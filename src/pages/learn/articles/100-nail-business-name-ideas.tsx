@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTip, ArticleSteps, ArticleTable, ArticleChecklis
 registerArticle({
   slug: '100-nail-business-name-ideas',
   title: '100 Nail Business Name Ideas',
+  coverTitle: '100 Nail Business Names',
   seoTitle: '100 Nail Business Name Ideas (Creative, Elegant & Unique)',
   excerpt: 'A curated list of 100 nail business name ideas, from minimal and elegant to bold and personal. Use them as-is or as inspiration for your own.',
   seoDescription: '100 nail business name ideas for nail techs. Creative, elegant, minimal, location-based, and personal name ideas you can use or adapt for your nail brand.',

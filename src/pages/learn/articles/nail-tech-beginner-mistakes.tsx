@@ -5,6 +5,7 @@ import { ArticleTip, ArticleTable } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'nail-tech-beginner-mistakes',
   title: 'Nail Tech Beginner Mistakes to Avoid',
+  coverTitle: 'Beginner Mistakes to Avoid',
   seoTitle: 'Nail Tech Beginner Mistakes to Avoid (And How to Fix Them)',
   excerpt: 'Every nail tech makes mistakes when starting out. Here are the most common ones, and exactly what to do differently.',
   seoDescription: 'Common nail tech beginner mistakes: undercharging, no deposit policy, poor portfolio photos, inconsistent posting, and 15 more mistakes to avoid.',

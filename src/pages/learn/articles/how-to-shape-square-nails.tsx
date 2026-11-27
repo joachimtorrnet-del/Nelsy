@@ -4,6 +4,7 @@ import { ArticleSteps, ArticleTip } from '@/components/article/ArticleBodyCompon
 registerArticle({
   slug: 'how-to-shape-square-nails',
   title: 'How to Shape Square Nails Step by Step',
+  coverTitle: 'Shape Square Nails',
   seoTitle: 'How to Shape Square Nails Step by Step',
   excerpt: 'Square is one of the most popular nail shapes: clean, modern, and strong. Here\'s how to file a perfectly flat top edge with sharp, even corners every time.',
   seoDescription: 'How to shape square nails step by step. How to file perfectly flat edges, sharp corners, and symmetrical square nails on extensions and natural nails.',

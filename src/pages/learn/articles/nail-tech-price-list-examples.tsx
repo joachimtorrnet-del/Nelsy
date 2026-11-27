@@ -7,6 +7,7 @@ const link = 'underline text-[#F52B8C]';
 registerArticle({
   slug: 'nail-tech-price-list-examples',
   title: 'Nail Tech Price List Examples',
+  coverTitle: 'Price List Examples',
   seoTitle: 'Nail Tech Price List Examples (UK Pricing Guide)',
   excerpt: 'Example price lists for nail techs at different business stages, with structure, naming conventions, and advice on presenting your pricing.',
   seoDescription: 'Nail tech price list examples for gel manicures, acrylics, Gel-X, BIAB, nail art and add-ons, with example menus for different business stages.',

@@ -5,6 +5,7 @@ import { ArticleCallout, ArticleTable } from '@/components/article/ArticleBodyCo
 registerArticle({
   slug: 'how-to-transition-home-nail-tech-to-studio',
   title: 'How to Transition From Home Nail Tech to Your Own Studio',
+  coverTitle: 'From Home to Studio',
   seoTitle: 'How to Transition From Home Nail Tech to a Studio',
   excerpt: 'Moving from your home setup to a rented studio is one of the biggest steps in a nail tech\'s career. Here\'s how to do it without losing clients or hitting a cash flow crisis.',
   seoDescription: 'How to transition from home nail tech to a studio. Plan the move, communicate with clients, manage the finances, and set up your new nail studio space.',

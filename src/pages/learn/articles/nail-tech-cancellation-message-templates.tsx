@@ -4,6 +4,7 @@ import { ArticleCallout } from '@/components/article/ArticleBodyComponents';
 registerArticle({
   slug: 'nail-tech-cancellation-message-templates',
   title: 'Nail Tech Cancellation Message Templates',
+  coverTitle: 'Cancellation Messages',
   seoTitle: 'Nail Tech Cancellation Message Templates (Copy & Paste)',
   excerpt: 'Templates for every cancellation scenario, when the client cancels, when you need to cancel, and how to handle last-minute cancellations professionally.',
   seoDescription: 'Nail tech cancellation message templates for when clients cancel, when you cancel, last-minute cancellations and keeping deposits.',
