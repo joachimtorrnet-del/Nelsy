@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Your break-even point is the minimum you need to earn to cover your costs. Once you know it, you can price with confidence and plan with clarity.',
   seoDescription: 'How to calculate your break-even point as a nail tech. Formula, worked example, and how to use your break-even to make better pricing and capacity decisions.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech break-even', 'nail business costs', 'nail tech pricing', 'nail business finances'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'How to calculate break-even point as a nail tech',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Gel polish that peels within days is frustrating, but nearly always fixable. Here are the most common reasons gel polish fails and exactly how to address each one.',
   seoDescription: 'Why does gel polish peel off? Common causes of gel polish peeling (prep issues, curing problems, application errors, and aftercare mistakes) with practical fixes.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['why does gel polish peel off', 'gel polish peeling causes', 'gel polish lifting fix'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #F3E8FF 100%)',
   heroImageAlt: 'Why does gel polish peel off',

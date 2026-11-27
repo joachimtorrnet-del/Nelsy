@@ -14,7 +14,8 @@ export type ArticleCategory =
   | 'nail-inspo'
   | 'comparisons'
   | 'branding-growth'
-  | 'beauty-creators';
+  | 'beauty-creators'
+  | 'salons';
 
 export const CATEGORY_LABELS: Record<ArticleCategory, string> = {
   'get-clients': 'Get Clients',
@@ -28,6 +29,7 @@ export const CATEGORY_LABELS: Record<ArticleCategory, string> = {
   comparisons: 'Comparisons',
   'branding-growth': 'Branding & Growth',
   'beauty-creators': 'Beauty Creators',
+  salons: 'Salons & Teams',
 };
 
 export const CATEGORY_COLORS: Record<ArticleCategory, { bg: string; text: string }> = {
@@ -42,6 +44,29 @@ export const CATEGORY_COLORS: Record<ArticleCategory, { bg: string; text: string
   comparisons:          { bg: '#F0FFFE', text: '#0D6E6E' },
   'branding-growth':    { bg: '#FFF8F0', text: '#9A3412' },
   'beauty-creators':    { bg: '#F5F0FF', text: '#6D28D9' },
+  salons:               { bg: '#EEF6FF', text: '#1E5A8C' },
+};
+
+// ─── Audience and craft ──────────────────────────────────────────────────────
+// Who an article is written for, and which beauty craft it is about. Both are
+// filters on the blog home (/blog?audience=creators, /blog?craft=lashes).
+
+export type ArticleAudience = 'pros' | 'creators' | 'salons';
+export type ArticleCraft = 'nails' | 'lashes' | 'brows' | 'makeup' | 'hair' | 'skin' | 'all';
+
+export const AUDIENCE_LABELS: Record<ArticleAudience, string> = {
+  pros: 'Beauty pros',
+  creators: 'Beauty creators',
+  salons: 'Salons',
+};
+
+export const CRAFT_LABELS: Record<Exclude<ArticleCraft, 'all'>, string> = {
+  nails: 'Nails',
+  lashes: 'Lashes',
+  brows: 'Brows',
+  makeup: 'Makeup',
+  hair: 'Hair',
+  skin: 'Skin',
 };
 
 // ─── TOC section ─────────────────────────────────────────────────────────────
@@ -60,6 +85,10 @@ export interface ArticleMeta {
   excerpt: string;
   seoDescription?: string;
   category: ArticleCategory;
+  /** Who the article is for. Defaults to ['creators'] for beauty-creators, ['salons'] for salons, ['pros'] otherwise. */
+  audience?: ArticleAudience | ArticleAudience[];
+  /** Craft the article is about ('all' = every craft). Defaults to 'nails'. */
+  craft?: ArticleCraft;
   tags: string[];
   // Hero image: public path (e.g. '/og-image.png') or gradient CSS string
   heroImage: string;
@@ -107,6 +136,23 @@ export function getAllArticles(): Article[] {
   return Array.from(registry.values()).sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
+}
+
+export function getAudiences(a: ArticleMeta): ArticleAudience[] {
+  if (a.audience) return Array.isArray(a.audience) ? a.audience : [a.audience];
+  if (a.category === 'beauty-creators') return ['creators'];
+  if (a.category === 'salons') return ['salons'];
+  return ['pros'];
+}
+
+export function getCraft(a: ArticleMeta): ArticleCraft {
+  return a.craft ?? 'nails';
+}
+
+/** An article matches a craft filter when it is about that craft or about every craft. */
+export function matchesCraft(a: ArticleMeta, craft: ArticleCraft): boolean {
+  const c = getCraft(a);
+  return craft === 'all' || c === craft || c === 'all';
 }
 
 export function getArticlesByCategory(category: ArticleCategory): Article[] {
@@ -185,7 +231,7 @@ export const PRO_GUIDES: { path: string; label: string }[] = [
 
 /** Client-facing inspiration content doesn't get the pro guides block. */
 export function isProArticle(article: Article): boolean {
-  return article.category !== 'nail-inspo';
+  return article.category !== 'nail-inspo' && getAudiences(article).includes('pros');
 }
 
 export function searchArticles(query: string): Article[] {

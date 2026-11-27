@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A warm, professional welcome message sets the tone for the whole client relationship. Here are templates for every new client scenario: copy and personalise.',
   seoDescription: 'Nail client welcome message templates: copy-ready messages for booking confirmation, the first appointment, after the appointment and follow-ups.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client welcome message', 'nail tech client message', 'new nail client message', 'nail tech templates'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'Nail client welcome message templates',

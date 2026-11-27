@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A practical guide to building an Instagram following that actually translates into nail bookings, not just likes from other nail techs.',
   seoDescription: 'How to grow your nail tech Instagram account. Content strategy, posting schedule, Reels approach, hashtags, and how to attract local followers who actually book.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Instagram growth', 'nail tech Instagram', 'social media strategy', 'grow followers'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #C4B5FD 100%)',
   heroImageAlt: 'How to grow your nail tech Instagram',

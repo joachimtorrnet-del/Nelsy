@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Getting your own studio is a dream for many nail techs, but timing it wrong can cost you. Here\'s how to know when you\'re actually ready.',
   seoDescription: 'When should you get your own nail studio? Signs you\'re ready, the financial checklist, what to look for, and what nail techs get wrong about studio timing.',
   category: 'start-your-business',
+  audience: ['pros', 'salons'],
+  craft: 'nails',
   tags: ['when to get nail studio', 'own nail studio signs ready', 'nail tech own studio'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'When to get your own nail studio',

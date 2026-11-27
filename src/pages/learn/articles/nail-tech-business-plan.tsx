@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A practical business plan for nail techs, not a corporate document, but a clear picture of what you\'re building, what it costs, and how to grow it.',
   seoDescription: 'How to write a nail tech business plan. A practical, jargon-free guide covering your offer, target clients, pricing, costs, revenue projections, and growth strategy.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail business plan', 'business plan', 'nail tech strategy', 'nail business finances'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #BFDBFE 100%)',
   heroImageAlt: 'Nail tech business plan guide',

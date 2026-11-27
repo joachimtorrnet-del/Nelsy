@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'A waitlist isn\'t just a list: it\'s a system. Here\'s how to set up a waitlist that converts cancellations into full appointments and makes clients feel looked after, not rejected.',
   seoDescription: 'How to create a nail tech waitlist that works. Setting up a waitlist system, managing waitlist clients, and converting cancellations into filled appointments.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech waitlist', 'how to create nail waitlist', 'nail booking waitlist'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)',
   heroImageAlt: 'How to create a nail tech waitlist',

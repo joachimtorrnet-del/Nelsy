@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Empty appointment slots cost you income. Here\'s how to fill gaps before they appear: through client retention, rebooking, and a few practical scheduling habits.',
   seoDescription: 'How to reduce gaps between nail appointments: rebooking habits, waitlists, last-minute slots and scheduling practices that keep your calendar full.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['reduce gaps nail appointments', 'fill nail appointment slots', 'keep nail calendar full'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FDDDE6 100%)',
   heroImageAlt: 'How to reduce gaps between nail appointments',

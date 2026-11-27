@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A well-run pop-up puts you in front of a room full of potential new clients in one afternoon. Here\'s how to plan, promote, and execute a nail tech pop-up that actually converts.',
   seoDescription: 'How to run a nail tech pop-up event. Planning, promotion, pricing, and converting pop-up clients into regular bookings: a practical guide for independent nail techs.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech pop-up', 'nail pop-up event', 'nail tech event', 'nail business events'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FAD2E8 100%)',
   heroImageAlt: 'How to run a nail tech pop-up event',

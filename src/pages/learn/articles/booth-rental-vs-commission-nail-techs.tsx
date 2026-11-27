@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Booth rental and commission are two very different ways to work inside a salon. Here\'s what each model actually means for your income, freedom, and career.',
   seoDescription: 'Booth rental vs commission for nail techs. Compare both salon models on income, freedom and risk, and see which suits each stage of a nail tech career.',
   category: 'start-your-business',
+  audience: ['pros', 'salons'],
+  craft: 'nails',
   tags: ['booth rental vs commission nail tech', 'nail tech booth rental', 'nail tech commission model'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'Booth rental vs commission for nail techs',

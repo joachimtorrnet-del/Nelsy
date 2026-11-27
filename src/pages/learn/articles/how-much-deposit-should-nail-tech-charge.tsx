@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'The right deposit amount reduces no-shows without deterring genuine clients. Here\'s the maths and the reasoning behind common deposit strategies.',
   seoDescription: 'How much deposit should a nail tech charge? The right amount, percentage vs flat fee, how to collect it, and what happens if a client refuses.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['deposit', 'nail tech deposit', 'no-shows', 'deposit amount'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #86EFAC 100%)',
   heroImageAlt: 'How much deposit should nail tech charge',

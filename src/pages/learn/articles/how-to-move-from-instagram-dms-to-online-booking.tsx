@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A practical step-by-step guide for nail techs who want to switch from DM booking to a proper online booking system, without disrupting existing clients.',
   seoDescription: 'Step-by-step guide to moving your nail bookings from Instagram DMs to an online booking page. Scripts, templates, and what to tell existing clients.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['online booking', 'Instagram booking', 'booking transition', 'nail tech admin'],
   heroImage: 'linear-gradient(135deg, #FDF2F8 0%, #FBCFE8 100%)',
   heroImageAlt: 'Moving from Instagram DMs to online booking for nail techs',

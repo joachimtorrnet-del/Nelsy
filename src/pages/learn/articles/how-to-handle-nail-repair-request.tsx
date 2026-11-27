@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'How you handle repair requests (who pays, when you fix for free, and how to assess what happened) is one of the most practical policy decisions in a nail business.',
   seoDescription: 'How to handle nail repair requests. When to fix for free, when to charge, assessment scripts, repair policy wording, and how to reduce repair requests going forward.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail repair request', 'nail tech repairs', 'nail lifting repair', 'nail breakage repair'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to handle a nail repair request',

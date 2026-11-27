@@ -18,6 +18,8 @@ registerArticle({
   seoDescription:
     'How to write and enforce a nail tech deposit policy: deposit amounts, refundable vs non-refundable, templates, objection scripts and collecting payment.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['deposits', 'policy', 'no-shows', 'cancellations', 'booking'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 70%, #86EFAC 100%)',
   heroImageAlt: 'Nail tech deposit policy guide',

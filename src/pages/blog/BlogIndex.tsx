@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
+import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Search } from 'lucide-react';
+import { Calculator, Search, Scissors, Sparkles, Users } from 'lucide-react';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
@@ -10,11 +11,14 @@ import { TRIAL_PATH } from '@/components/article/ArticleBodyComponents';
 import {
   getAllArticles,
   getFeaturedArticle,
-  getSpotlightArticles,
   searchArticles,
+  getAudiences,
+  matchesCraft,
   CATEGORY_LABELS,
+  AUDIENCE_LABELS,
+  CRAFT_LABELS,
 } from '@/lib/articleRegistry';
-import type { ArticleCategory } from '@/lib/articles';
+import type { Article, ArticleAudience, ArticleCategory, ArticleCraft } from '@/lib/articles';
 import { CORE_TOOLS, TOOL_LINKS } from '@/lib/blogLinks';
 import { track } from '@/lib/analytics';
 
@@ -33,6 +37,7 @@ const NAV_CATEGORIES: ArticleCategory[] = [
   'start-your-business',
   'branding-growth',
   'beauty-creators',
+  'salons',
   'nail-education',
   'nail-inspo',
 ];
@@ -42,7 +47,7 @@ const JSON_LD = [
     '@context': 'https://schema.org',
     '@type': 'Blog',
     name: 'The Nelsy Blog',
-    description: 'Practical guides for nail techs and beauty pros: getting clients, pricing, deposits, policies, booking apps and content.',
+    description: 'Practical guides for beauty pros, beauty creators and salons: getting clients, pricing, deposits, policies, booking apps, content and selling what you know.',
     url: `${ORIGIN}/blog`,
     publisher: { '@type': 'Organization', name: 'Nelsy', url: ORIGIN },
   },
@@ -56,20 +61,63 @@ const JSON_LD = [
   },
 ];
 
+// The three audiences the blog is written for (entry doors near the top)
+const DOORS: Array<{ audience: ArticleAudience; line: string; icon: typeof Sparkles }> = [
+  { audience: 'pros', line: 'Nails, lashes, brows, makeup, hair and skin: clients, pricing, deposits and policies.', icon: Scissors },
+  { audience: 'creators', line: 'Turn what you know into income: guides, courses, brand deals, UGC and your email list.', icon: Sparkles },
+  { audience: 'salons', line: 'Booth rent, commission, schedules and running a salon or studio with a team.', icon: Users },
+];
+
+const CRAFTS = Object.keys(CRAFT_LABELS) as Array<Exclude<ArticleCraft, 'all'>>;
+
+/** "Start here": one pick per audience, spotlight articles first, then the most recent. */
+function startHerePicks(all: Article[], featuredSlug?: string): Article[] {
+  const used = new Set<string>(featuredSlug ? [featuredSlug] : []);
+  const pick = (aud: ArticleAudience, exclusive: boolean) => {
+    const fits = (a: Article) =>
+      !used.has(a.slug) && getAudiences(a).includes(aud) && (!exclusive || getAudiences(a).length === 1);
+    const hit = all.find((a) => a.spotlight && fits(a)) ?? all.find(fits);
+    if (hit) used.add(hit.slug);
+    return hit;
+  };
+  // Salons and creators first so an article shared with pros doesn't take the pros slot
+  const salons = pick('salons', false);
+  const creators = pick('creators', false);
+  const pros = pick('pros', true);
+  return [pros, creators, salons].filter((a): a is Article => !!a);
+}
+
+function blogUrl(category: ArticleCategory | 'all', audience: ArticleAudience | 'all', craft: ArticleCraft) {
+  const params = new URLSearchParams();
+  if (category !== 'all') params.set('category', category);
+  if (audience !== 'all') params.set('audience', audience);
+  if (craft !== 'all') params.set('craft', craft);
+  const q = params.toString();
+  return q ? `/blog?${q}` : '/blog';
+}
+
 export default function BlogIndex() {
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<ArticleCategory | 'all'>('all');
+  const [activeAudience, setActiveAudience] = useState<ArticleAudience | 'all'>('all');
+  const [activeCraft, setActiveCraft] = useState<ArticleCraft>('all');
   const [visible, setVisible] = useState(PAGE_SIZE);
 
-  // Deep link: /blog?category=pricing-money (read after mount, the prerendered page shows "All")
+  // Deep links: /blog?category=pricing-money, ?audience=creators, ?craft=lashes
+  // (read after mount, the prerendered page shows "All")
   useEffect(() => {
-    const c = new URLSearchParams(window.location.search).get('category');
+    const params = new URLSearchParams(window.location.search);
+    const c = params.get('category');
+    const au = params.get('audience');
+    const cr = params.get('craft');
     if (c && c in CATEGORY_LABELS) setActiveCategory(c as ArticleCategory);
+    if (au && au in AUDIENCE_LABELS) setActiveAudience(au as ArticleAudience);
+    if (cr && cr in CRAFT_LABELS) setActiveCraft(cr as ArticleCraft);
   }, []);
 
   const featured = getFeaturedArticle();
-  const spotlight = getSpotlightArticles();
   const all = getAllArticles();
+  const spotlight = useMemo(() => startHerePicks(all, featured?.slug), [all, featured]);
 
   const counts = useMemo(() => {
     const m = new Map<ArticleCategory, number>();
@@ -78,28 +126,52 @@ export default function BlogIndex() {
   }, [all]);
 
   const filtered = useMemo(() => {
-    let articles = query ? searchArticles(query) : all.filter((a) => a.slug !== featured?.slug);
+    // Unfiltered grid skips the featured story and the "Start here" picks shown above it
+    const shown = new Set([featured?.slug, ...spotlight.map((a) => a.slug)]);
+    const browsing = activeCategory === 'all' && activeAudience === 'all' && activeCraft === 'all';
+    let articles = query ? searchArticles(query) : all.filter((a) => a.slug !== featured?.slug && (!browsing || !shown.has(a.slug)));
     if (activeCategory !== 'all') articles = articles.filter((a) => a.category === activeCategory);
+    if (activeAudience !== 'all') articles = articles.filter((a) => getAudiences(a).includes(activeAudience));
+    if (activeCraft !== 'all') articles = articles.filter((a) => matchesCraft(a, activeCraft));
     return articles;
-  }, [query, activeCategory, all, featured]);
+  }, [query, activeCategory, activeAudience, activeCraft, all, featured, spotlight]);
 
-  function pick(cat: ArticleCategory | 'all') {
+  const craftCounts = useMemo(() => {
+    const m = new Map<ArticleCraft, number>();
+    for (const c of CRAFTS) m.set(c, all.filter((a) => matchesCraft(a, c)).length);
+    return m;
+  }, [all]);
+
+  function apply(next: { category?: ArticleCategory | 'all'; audience?: ArticleAudience | 'all'; craft?: ArticleCraft }) {
+    const cat = next.category ?? activeCategory;
+    const aud = next.audience ?? activeAudience;
+    const cr = next.craft ?? activeCraft;
     setActiveCategory(cat);
+    setActiveAudience(aud);
+    setActiveCraft(cr);
     setQuery('');
     setVisible(PAGE_SIZE);
     try {
-      const url = cat === 'all' ? '/blog' : `/blog?category=${cat}`;
-      window.history.replaceState(null, '', url);
+      window.history.replaceState(null, '', blogUrl(cat, aud, cr));
     } catch { /* ignore */ }
   }
 
-  const isFiltered = query.trim().length > 0 || activeCategory !== 'all';
+  const pick = (cat: ArticleCategory | 'all') => apply({ category: cat });
+
+  function openDoor(e: MouseEvent, aud: ArticleAudience) {
+    e.preventDefault();
+    apply({ audience: aud, category: 'all', craft: 'all' });
+    track('seo_cta_clicked', { landing_page: '/blog', page_type: 'blog_index', cta_position: 'hero', cta_label: `audience_${aud}` });
+    document.getElementById('explore-articles')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  const isFiltered = query.trim().length > 0 || activeCategory !== 'all' || activeAudience !== 'all' || activeCraft !== 'all';
 
   return (
     <>
       <SEOMeta
-        title="Nail Tech Business Tips, Guides & Inspiration | Nelsy"
-        description="Practical ideas, strategies and inspiration for growing a better nail business."
+        title="Beauty Business Guides for Pros, Creators and Salons | Nelsy"
+        description="Practical guides for beauty pros, beauty creators and salon owners: getting clients, pricing, deposits, policies, booking apps, content and what to sell."
         canonical="/blog"
         jsonLd={JSON_LD}
       />
@@ -114,10 +186,10 @@ export default function BlogIndex() {
           <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-14 md:py-20 text-center">
             <p className="text-xs font-bold uppercase tracking-[0.25em] mb-4" style={{ color: PINK }}>The Nelsy Blog</p>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-[#1A1A1A] leading-[1.05] tracking-tight mb-5">
-              The Nail Business Edit
+              The Beauty Business Edit
             </h1>
             <p className="text-gray-600 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-              Practical guides for nail techs and beauty pros: getting clients, pricing, deposits, policies, booking apps and content that books.
+              Practical guides for beauty pros, beauty creators and salons: getting clients, pricing, deposits, policies, content and selling what you know.
             </p>
             <p className="mt-6 text-xs text-gray-500">{all.length} guides · Free tools</p>
           </div>
@@ -125,9 +197,41 @@ export default function BlogIndex() {
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
+          {/* ── Audience doors ────────────────────────────────────────── */}
+          <nav aria-label="Guides by audience" className="pt-10 md:pt-12">
+            <ul className="grid sm:grid-cols-3 gap-4">
+              {DOORS.map(({ audience, line, icon: Icon }) => {
+                const active = activeAudience === audience;
+                return (
+                  <li key={audience}>
+                    <a
+                      href={`/blog?audience=${audience}`}
+                      onClick={(e) => openDoor(e, audience)}
+                      aria-current={active ? 'true' : undefined}
+                      className={`group flex h-full items-start gap-4 rounded-3xl border p-4 sm:p-5 transition ${
+                        active ? 'border-[#F52B8C] bg-[#FDF0F7]' : 'border-[#1A1A1A]/10 bg-white hover:border-[#F52B8C]/60'
+                      }`}
+                    >
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#FDF0F7] text-[#F52B8C]">
+                        <Icon size={20} aria-hidden />
+                      </span>
+                      <span className="min-w-0">
+                        <span className="block font-serif text-xl font-bold text-[#1A1A1A]">{AUDIENCE_LABELS[audience]}</span>
+                        <span className="mt-1 block text-sm leading-snug text-gray-600">{line}</span>
+                        <span className="mt-3 inline-block text-sm font-bold text-[#F52B8C]">
+                          See {all.filter((a) => getAudiences(a).includes(audience)).length} guides <span aria-hidden>→</span>
+                        </span>
+                      </span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </nav>
+
           {/* ── Featured ──────────────────────────────────────────────── */}
           {featured && (
-            <section aria-label="Featured article" className="pt-10 md:pt-14">
+            <section aria-label="Featured article" className="pt-10 md:pt-12">
               <ArticleCard article={featured} size="featured" />
             </section>
           )}
@@ -189,11 +293,51 @@ export default function BlogIndex() {
                   type="search"
                   placeholder="Search guides"
                   value={query}
-                  onChange={(e) => { setQuery(e.target.value); setActiveCategory('all'); setVisible(PAGE_SIZE); }}
+                  onChange={(e) => { setQuery(e.target.value); setActiveCategory('all'); setActiveAudience('all'); setActiveCraft('all'); setVisible(PAGE_SIZE); }}
                   className="w-full pl-10 pr-4 py-2.5 text-sm rounded-full border border-[#1A1A1A]/15 bg-[#F7F3F3] focus:bg-white focus:outline-none focus:border-[#F52B8C] transition"
                 />
               </label>
             </div>
+
+            <div className="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto mb-8 -mt-4">
+              <div className="flex items-center gap-2 w-max md:w-auto md:flex-wrap" role="group" aria-label="Filter by craft">
+                <span className="text-xs font-bold uppercase tracking-wider text-gray-400 mr-1">Craft</span>
+                <button
+                  aria-pressed={activeCraft === 'all'}
+                  onClick={() => apply({ craft: 'all' })}
+                  className={`whitespace-nowrap text-xs font-semibold px-3 py-1.5 rounded-full border transition ${
+                    activeCraft === 'all' ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]' : 'bg-white text-[#1A1A1A] border-[#1A1A1A]/15 hover:border-[#1A1A1A]/40'
+                  }`}
+                >
+                  Every craft
+                </button>
+                {CRAFTS.map((c) => {
+                  const active = activeCraft === c;
+                  return (
+                    <button
+                      key={c}
+                      aria-pressed={active}
+                      onClick={() => apply({ craft: c })}
+                      className={`whitespace-nowrap text-xs font-semibold px-3 py-1.5 rounded-full border transition ${
+                        active ? 'bg-[#F52B8C] text-white border-[#F52B8C]' : 'bg-[#FFFBFB] text-[#1A1A1A] border-[#F4C2C2] hover:border-[#F52B8C]/60'
+                      }`}
+                    >
+                      {CRAFT_LABELS[c]}
+                      <span className={`ml-1 ${active ? 'text-white/80' : 'text-gray-400'}`}>{craftCounts.get(c)}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {activeAudience !== 'all' && (
+              <p className="flex flex-wrap items-center gap-2 text-sm text-gray-600 mb-5">
+                Showing guides for <strong className="text-[#1A1A1A]">{AUDIENCE_LABELS[activeAudience]}</strong>
+                <button onClick={() => apply({ audience: 'all' })} className="rounded-full border border-[#1A1A1A]/15 px-3 py-1 text-xs font-semibold hover:border-[#F52B8C]">
+                  Show all audiences
+                </button>
+              </p>
+            )}
 
             {query && (
               <p className="text-sm text-gray-500 mb-5">
@@ -202,7 +346,7 @@ export default function BlogIndex() {
             )}
 
             {filtered.length === 0 ? (
-              <p className="text-center py-16 text-gray-400 text-sm">No articles found. Try a different search or category.</p>
+              <p className="text-center py-16 text-gray-400 text-sm">No articles found. Try a different search, craft or category.</p>
             ) : (
               <>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

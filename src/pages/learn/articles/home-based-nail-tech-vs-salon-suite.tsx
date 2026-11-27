@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Home studio or rented salon suite: both are popular models for independent nail techs. Here\'s an honest comparison to help you decide which fits your situation.',
   seoDescription: 'Home-based nail tech vs salon suite. Compare working from home vs renting a salon suite: costs, client experience, privacy, professionalism, and career stage.',
   category: 'start-your-business',
+  audience: ['pros', 'salons'],
+  craft: 'nails',
   tags: ['home nail tech vs salon suite', 'nail salon suite vs home studio', 'home based nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'Home-based nail tech vs salon suite',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Mobile nail techs have unique scheduling and logistics needs. Here\'s what to look for in a booking app when you travel to clients, and which platforms handle it best.',
   seoDescription: 'Best booking apps for mobile nail techs. What mobile nail techs need from booking software, travel time management and the best apps for home visits.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking apps mobile nail tech', 'mobile nail tech software', 'nail to you booking app'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'Best booking apps for mobile nail techs',

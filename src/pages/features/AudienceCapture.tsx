@@ -4,11 +4,12 @@ import FeaturePage from './FeaturePage';
 export default function AudienceCapturePage() {
   return (
     <FeaturePage
-      title="Own Your Audience Beyond Social Media | Nelsy"
-      metaDescription="Collect emails and phone numbers from potential clients before they leave. Audience Capture turns Instagram followers and browsers into a list you own."
+      upcomingPlan="Creator"
+      title="Audience Capture for Beauty Pros: Nelsy Creator Plan"
+      metaDescription="Audience Capture, which turns followers and page visitors into a contact list you own, is part of the upcoming Nelsy Creator plan. Join the waitlist."
       canonical="/features/audience-capture"
       h1="Own your audience beyond social media"
-      heroDescription="Social media followers are rented. An email list is yours. Audience Capture turns every interaction (a post view, a bio click, a booking) into a contact you can reach again."
+      heroDescription="Social media followers are rented. An email list is yours. Audience Capture, part of the upcoming Nelsy Creator plan, will turn page visits and bookings into contacts you can reach again."
       icon={UserPlus}
       benefits={[
         {
@@ -21,11 +22,11 @@ export default function AudienceCapturePage() {
         },
         {
           title: 'Turn casual interest into real clients',
-          desc: 'Most people who discover your work are not ready to book that day. Audience Capture keeps you in the conversation.',
+          desc: 'Plenty of people who discover your work are not ready to book that day. Audience Capture will keep you in the conversation.',
         },
         {
           title: 'Feed your email and SMS channels',
-          desc: 'Every email or number you capture goes straight into your Nelsy contact list, ready for your next newsletter or promotion.',
+          desc: 'Every email or number you capture will go into your Nelsy contact list, ready for your next newsletter or promotion.',
         },
       ]}
       steps={[
@@ -54,12 +55,16 @@ export default function AudienceCapturePage() {
       ]}
       faq={[
         {
+          q: 'Is Audience Capture available on Nelsy today?',
+          a: 'Not yet. It is part of the upcoming Creator plan. Today, on the Independent plan, Nelsy handles bookings, deposits and payments from your link in bio. Join the waitlist at hello@getnelsy.com.',
+        },
+        {
           q: 'What information do I collect?',
           a: 'Typically a name and email address. You can also capture phone numbers if you plan to use SMS. Keep it short to maximise signups.',
         },
         {
           q: 'Does this work with my Instagram AutoDM?',
-          a: 'Yes. AutoDM can drive people to your link in bio, where a capture form collects their email before or after they browse your services.',
+          a: 'That is the plan: AutoDM sends people to your link in bio, where a capture form collects their email. Both are part of the upcoming Creator plan.',
         },
         {
           q: 'How do I encourage people to sign up?',
@@ -67,7 +72,7 @@ export default function AudienceCapturePage() {
         },
         {
           q: 'Where do captured contacts go?',
-          a: 'They go into your Nelsy contact list and are available for email campaigns, rebooking flows, and segmented outreach.',
+          a: 'They will go into your Nelsy contact list, ready for email campaigns and rebooking messages.',
         },
       ]}
       relatedFeatures={[

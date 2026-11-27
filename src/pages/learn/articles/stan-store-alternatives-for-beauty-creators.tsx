@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Five Stan Store alternatives for beauty creators and educators: Beacons, Linktree, Kajabi, Teachable and Nelsy, compared on price, seller fees, courses and bookings.',
   seoDescription: 'Stan Store alternatives for beauty creators: Beacons, Linktree, Kajabi, Teachable and Nelsy compared on price, fees, courses and client bookings.',
   category: 'beauty-creators',
+  audience: ['creators'],
+  craft: 'all',
   tags: ['Stan Store alternatives', 'Stan alternative', 'Stan vs Beacons', 'Stan vs Kajabi', 'creator store for beauty'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #F5D0FE 100%)',
   heroImageAlt: 'Stan Store alternatives for beauty creators compared',
@@ -19,12 +21,12 @@ registerArticle({
   publishedAt: '2026-11-26',
   tldr: {
     answer: 'Stan is a good creator store; the right alternative depends on what Stan does not do for you.',
-    detail: 'Stan costs $29/month (or $25/month yearly) with 0% transaction fees. Linktree has a free plan. Kajabi and Teachable go deeper on courses, at a higher price or with product limits. Nelsy matches Stan\'s entry price and adds in-person service bookings with deposits.',
+    detail: 'Stan costs $29/month (or $25/month yearly) with 0% transaction fees. Linktree has a free plan. Kajabi and Teachable go deeper on courses, at a higher price or with product limits. Nelsy matches Stan\'s entry price for in-person service bookings with deposits; selling products on Nelsy is part of its upcoming Creator plan.',
     points: [
       { label: 'Beacons', text: 'Best for a media kit and brand deals.' },
       { label: 'Kajabi', text: 'Best for established educators running a full course business.' },
       { label: 'Teachable', text: 'Best for creators who want a dedicated course school.' },
-      { label: 'Nelsy', text: 'Best for beauty pros who sell products and also book clients in person.' },
+      { label: 'Nelsy', text: 'Best for beauty pros who book clients in person; product selling is part of the upcoming Creator plan.' },
     ],
   },
   toc: [
@@ -41,7 +43,7 @@ registerArticle({
   faq: [
     { q: 'How much does Stan cost?', a: 'Stan lists Creator at $29/month or $25/month billed yearly, Creator Pro at $99/month or $79/month yearly, and Creator Max at $299/month or $250/month yearly ($3,000/year). Stan lists 0% transaction fees, and there is no free plan.' },
     { q: 'Is there a free alternative to Stan?', a: 'Linktree has a free plan, but selling paid digital products requires its Pro or Premium plan. Beacons does not show its prices on a public page we could check; see its site for current plans.' },
-    { q: 'Is Kajabi better than Stan for courses?', a: 'Kajabi is a full course and community platform with coaching, memberships and email, but it starts at $179/month ($143/month billed annually). For a first course, Stan or Nelsy cost far less. Kajabi makes more sense once courses are your main income.' },
+    { q: 'Is Kajabi better than Stan for courses?', a: 'Kajabi is a full course and community platform with coaching, memberships and email, but it starts at $179/month ($143/month billed annually). For a first course, Stan costs far less. Kajabi makes more sense once courses are your main income.' },
     { q: 'Can I take beauty appointments on Stan?', a: 'Stan sells bookings for your time, such as 1:1 calls. If you need a service menu for in-person clients with deposits or pay on arrival, a booking-first tool like Nelsy fits better.' },
   ],
   relatedFeatureSlugs: ['courses', 'digital-products', 'bookings'],
@@ -75,7 +77,7 @@ registerArticle({
             ['Linktree', 'Free plan; paid plan prices not published on its pricing page', 'Plan-dependent % of the sale price; paid products need Pro or Premium', 'Free plan', 'Links first, selling second'],
             ['Kajabi', 'Basic $179/month ($143/month yearly)', 'Card processing from 2.9% + 30¢ (US)', '14-day trial', 'Full course business'],
             ['Teachable', 'Starter $39/month ($29/month yearly)', '7.5% on Starter, 0% on Builder and up with Teachable Payments', '7-day trial on Starter', 'Dedicated course school'],
-            ['Nelsy', '$29/month or $25/month yearly', '0% Nelsy commission', '14-day trial', 'Products plus in-person bookings'],
+            ['Nelsy', '$29/month or $25/month yearly (Independent)', '0% Nelsy commission', '14-day trial', 'In-person bookings today; products: Creator plan (waitlist)'],
           ]}
         />
         <p className="text-gray-700 mt-4 leading-relaxed text-sm">
@@ -142,13 +144,13 @@ registerArticle({
       <section id="nelsy">
         <h2 className="font-serif text-2xl font-bold mb-4">5. Nelsy</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          Nelsy is a booking page and link-in-bio store for beauty pros and beauty creators. Like Stan, you can sell courses, digital products, coaching and memberships. The difference is the booking side: clients book your services online, and each service can be set to pay on arrival, a deposit or full payment upfront. You can also record cash or card paid at the studio. It costs $29/month or $25/month billed yearly, with a 14-day trial and 0% Nelsy commission (standard Stripe fees apply).
+          Nelsy is a booking page for your link in bio, built for beauty pros and beauty creators. Unlike Stan, it does not sell courses or digital products today: that is part of the upcoming Creator plan, and you can <a href="mailto:hello@getnelsy.com?subject=Creator%20waitlist" className={ext}>join the waitlist</a>. What it does today is the booking side: clients book your services online, and each service can be set to pay on arrival, a deposit or full payment upfront. You can also record cash or card paid at the studio. The Independent plan costs $29/month or $25/month billed yearly, with a 14-day trial and 0% Nelsy commission (standard Stripe fees apply).
         </p>
-        <p className="text-gray-700 mb-4"><strong>Best for:</strong> lash artists, makeup artists, nail techs and hairstylists who teach or sell online and still take clients.</p>
+        <p className="text-gray-700 mb-4"><strong>Best for:</strong> lash artists, makeup artists, nail techs and hairstylists whose audience books them for services.</p>
         <ArticleComparison
           items={[
-            { label: 'Pros', pros: ['Same entry price as Stan', 'Service bookings with deposits', 'Products and appointments on one page'], cons: [] },
-            { label: 'Cons', pros: [], cons: ['No free plan', 'No media kit or brand deal tools', 'Less course depth than Kajabi or Teachable'] },
+            { label: 'Pros', pros: ['Same entry price as Stan', 'Service bookings with deposits', 'Pay on arrival, deposit or full payment per service'], cons: [] },
+            { label: 'Cons', pros: [], cons: ['No free plan', 'No product or course selling yet (upcoming Creator plan)', 'No media kit or brand deal tools'] },
           ]}
         />
       </section>
@@ -156,11 +158,11 @@ registerArticle({
       <section id="verdict">
         <h2 className="font-serif text-2xl font-bold mb-4">Verdict</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          If Stan already does what you need, there is no strong reason to move. Pick <strong>Beacons</strong> for brand deals and a media kit, <strong>Kajabi</strong> or <strong>Teachable</strong> once courses are your main income, and <strong>Nelsy</strong> if your audience also books you for services.
+          If Stan already does what you need, there is no strong reason to move. Pick <strong>Beacons</strong> for brand deals and a media kit, <strong>Kajabi</strong> or <strong>Teachable</strong> once courses are your main income, and <strong>Nelsy</strong> for the bookings side if your audience also books you for services (keep selling products on Stan or another store until Nelsy&apos;s Creator plan opens).
         </p>
         <ArticleTip>Before you switch, list the products you sell today and check each one is supported on the plan you are looking at, not just on the top tier.</ArticleTip>
         <p className="text-gray-700 mt-4 leading-relaxed">
-          See a Nelsy page with services and products in the <Link to="/demo" className={ext}>live demo</Link>, or compare plans on the <Link to="/pricing" className={ext}>pricing page</Link>.
+          See a Nelsy booking page in the <Link to="/demo" className={ext}>live demo</Link>, or compare plans on the <Link to="/pricing" className={ext}>pricing page</Link>.
         </p>
       </section>
     </div>

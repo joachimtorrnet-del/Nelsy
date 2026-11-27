@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Most nail content is created to get likes. Content that gets bookings requires a different approach. Here\'s exactly what to post and why.',
   seoDescription: 'What nail content actually gets bookings on Instagram. The difference between viral content and booking-generating content, and how to do both.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail content', 'Instagram strategy', 'content that converts', 'nail bookings'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FCA5A5 100%)',
   heroImageAlt: 'Nail content that gets bookings',

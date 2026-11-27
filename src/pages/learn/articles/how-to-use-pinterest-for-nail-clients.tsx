@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Pinterest is one of the most underused client acquisition tools for nail techs. Unlike Instagram, your content keeps driving traffic for months after you post. Here\'s how to use it.',
   seoDescription: 'How to use Pinterest to get nail clients. Pinterest strategy for nail techs, what to pin, how to optimise boards, and how to convert Pinterest views into bookings.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['pinterest for nail techs', 'nail tech pinterest strategy', 'get nail clients pinterest'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FDDDE6 100%)',
   heroImageAlt: 'How to use Pinterest to get nail clients',

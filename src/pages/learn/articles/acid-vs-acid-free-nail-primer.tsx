@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Not all nail primers are the same: acid and non-acid primers work differently, suit different systems, and have different safety considerations. Here\'s what you need to know about each.',
   seoDescription: "Acid-based vs acid-free nail primer: what methacrylic acid does, how to apply each safely, and which primer to use for acrylic or gel.",
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['acid primer nails', 'acid free nail primer', 'nail primer types', 'nail primer comparison'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'Acid vs acid-free nail primer',

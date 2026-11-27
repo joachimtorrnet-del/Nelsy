@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'January is notoriously slow for beauty businesses. Here\'s how to fill your diary after Christmas, without discounting your prices or panicking.',
   seoDescription: 'How to fill January nail appointments. Beat the post-Christmas slump with smart marketing, re-engagement campaigns, and strategies that work for nail techs.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['fill january nail appointments', 'january nail tech marketing', 'slow january nail business'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'How to fill January nail appointments',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Most nail techs price based on what others charge, not what they need to earn. Here\'s how to build a pricing strategy that actually pays you properly.',
   seoDescription: 'How to price nail services for profit. Calculate your costs, set minimum hourly rates, price each service correctly, and avoid the undercharging trap.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail pricing', 'profit', 'pricing strategy', 'nail business finances'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FCD34D 100%)',
   heroImageAlt: 'How to price nail services for profit',

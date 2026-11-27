@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'GlossGenius isn\'t the right fit for every nail tech. Here are the most relevant alternatives, what they offer, who they suit, and how they compare.',
   seoDescription: 'GlossGenius alternatives for nail techs. Compare booking software if GlossGenius doesn\'t suit your nail business: features, pricing model and best use.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['GlossGenius alternatives', 'nail tech booking software alternatives', 'GlossGenius vs', 'booking software nail techs'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'GlossGenius alternatives for nail techs',

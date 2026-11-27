@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'You don\'t need a professional camera to take nail photos that get attention. Here\'s how to use your phone to capture nails that look as good as they do in person.',
   seoDescription: 'How to take better nail photos with your phone: lighting, composition, backgrounds, camera settings and the common mistakes nail techs make.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech photography', 'nail photos phone', 'how to photograph nails', 'nail tech content creation'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'How to take better nail photos with your phone',

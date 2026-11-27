@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'First impressions start at confirmation. Copy-paste booking confirmation templates for nail techs: for automated systems and manual messages.',
   seoDescription: 'Nail tech booking confirmation message templates. Copy-paste confirmation messages for nail appointments: automated and manual, friendly and professional versions.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech booking confirmation template', 'nail appointment confirmation message', 'booking confirmed message nail tech'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'Nail tech booking confirmation message templates',

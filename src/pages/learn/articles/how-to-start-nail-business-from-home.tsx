@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A home nail business has lower startup costs and more flexibility, but requires specific setup, insurance, and client management considerations.',
   seoDescription: 'How to start a nail business from home in the UK. Setup checklist, insurance requirements, planning permission, pricing, and getting your first home nail clients.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['home nail business', 'nail business from home', 'home nail tech', 'start nail business'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #A7F3D0 100%)',
   heroImageAlt: 'How to start a nail business from home',

@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'The best booking apps for lash techs compared: GlossGenius, Square Appointments, Booksy, Fresha and Nelsy, on monthly price, card fees, deposits and marketplace commission.',
   seoDescription: 'Best booking app for lash techs: GlossGenius, Square, Booksy, Fresha and Nelsy compared on price, card fees, deposits and commission on new clients.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'lashes',
   tags: ['best booking app for lash techs', 'lash tech booking app', 'lash booking software', 'lash artist scheduling app', 'lash deposits'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
   heroImageAlt: 'Best booking apps for lash techs compared',

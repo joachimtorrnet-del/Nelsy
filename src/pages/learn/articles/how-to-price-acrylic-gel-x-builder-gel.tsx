@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Acrylic, Gel-X, and builder gel (BIAB) are different products with different costs, application times, and client outcomes. Here\'s how to price them to reflect that.',
   seoDescription: 'How to price acrylic, Gel-X and builder gel services: what affects the price of each enhancement, worked examples and how to structure your price list.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail enhancement pricing', 'acrylic nail pricing', 'gel-x pricing', 'builder gel pricing'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'How to price acrylic, gel-x and builder gel',

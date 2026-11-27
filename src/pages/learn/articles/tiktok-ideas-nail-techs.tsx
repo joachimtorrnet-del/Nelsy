@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Running out of TikTok ideas? Here are 50 nail tech TikTok video concepts, from process videos to educational content, organised by format and goal.',
   seoDescription: '50 TikTok ideas for nail techs. Process videos, transformations, day-in-the-life, educational, trending audio, and business content ideas for nail tech TikTok.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['TikTok ideas nail tech', 'nail tech TikTok content', 'nail TikTok video ideas', 'nail tech social media ideas'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: '50 TikTok ideas for nail techs',

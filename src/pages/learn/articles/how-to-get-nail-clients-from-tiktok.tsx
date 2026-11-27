@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'TikTok can send a wave of new nail enquiries, but only if you approach it differently from Instagram. Here\'s how to convert TikTok reach into actual bookings.',
   seoDescription: 'How to get nail clients from TikTok: content that drives bookings, turning viewers into clients, and how TikTok differs from Instagram for nail techs.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['TikTok nail tech', 'nail clients TikTok', 'nail tech social media', 'nail business TikTok'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
   heroImageAlt: 'How to get nail clients from TikTok',

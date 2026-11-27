@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Setting up online booking is one of the most impactful things you can do for your nail business. Here\'s how to do it in a few hours, from choosing a platform to your first booking.',
   seoDescription: 'How to set up online booking for your nail business, step by step: platform choice, services, deposits and sharing your booking link.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['set up online booking nail tech', 'nail tech booking page setup', 'how to set up nail booking'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'How to set up online booking for your nail business',

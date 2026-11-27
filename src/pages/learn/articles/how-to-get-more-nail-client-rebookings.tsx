@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Rebooking is the simplest way to grow a stable nail business. Here\'s how to ask for the next appointment naturally, and build systems that keep your calendar full.',
   seoDescription: 'How to get more nail client rebookings: when to ask, what to say, reminder systems and how to fill your calendar with returning clients.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client rebooking', 'nail client retention', 'rebooking strategy', 'nail business growth'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'How to get more nail client rebookings',

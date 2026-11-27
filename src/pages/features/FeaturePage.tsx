@@ -4,6 +4,8 @@ import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
 import type { LucideIcon } from 'lucide-react';
+import { UpcomingPlanBadge, UpcomingPlanButtons, IndependentTodayNote } from '@/components/UpcomingPlanCTA';
+import type { UpcomingPlan } from '@/components/UpcomingPlanCTA';
 
 const PINK = '#F52B8C';
 
@@ -26,12 +28,14 @@ export interface FeaturePageProps {
   faq: Array<{ q: string; a: string }>;
   // Related features
   relatedFeatures: Array<{ slug: string; title: string; route: string }>;
+  /** Feature not on sale yet: shows the plan badge and waitlist CTAs instead of signup. */
+  upcomingPlan?: UpcomingPlan;
 }
 
 export default function FeaturePage({
   title, metaDescription, canonical,
   h1, heroDescription, icon: Icon,
-  benefits, steps, useCases, faq, relatedFeatures,
+  benefits, steps, useCases, faq, relatedFeatures, upcomingPlan,
 }: FeaturePageProps) {
   const jsonLd = [
     {
@@ -74,19 +78,31 @@ export default function FeaturePage({
             >
               <Icon size={26} strokeWidth={1.75} color={PINK} />
             </div>
+            {upcomingPlan && (
+              <div>
+                <UpcomingPlanBadge plan={upcomingPlan} />
+              </div>
+            )}
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#1A1A1A] leading-snug mb-5">
               {h1}
             </h1>
             <p className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-8">
               {heroDescription}
             </p>
-            <Link
-              to="/onboarding"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
-              style={{ background: PINK }}
-            >
-              Start for free
-            </Link>
+            {upcomingPlan ? (
+              <>
+                <UpcomingPlanButtons plan={upcomingPlan} />
+                <IndependentTodayNote />
+              </>
+            ) : (
+              <Link
+                to="/onboarding"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
+                style={{ background: PINK }}
+              >
+                Start for free
+              </Link>
+            )}
           </div>
         </header>
 
@@ -114,7 +130,7 @@ export default function FeaturePage({
         <section className="bg-white border-y border-[#F4C2C2]/30 py-14">
           <div className="max-w-4xl mx-auto px-4 sm:px-6">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-10 text-center">
-              How it works
+              {upcomingPlan ? 'How it will work' : 'How it works'}
             </h2>
             <div className="space-y-8">
               {steps.map((s, i) => (
@@ -157,16 +173,24 @@ export default function FeaturePage({
         >
           <div className="max-w-2xl mx-auto px-4">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-4">
-              Ready to get started?
+              {upcomingPlan ? `Be first when the ${upcomingPlan} plan opens` : 'Ready to get started?'}
             </h2>
-            <p className="text-gray-500 mb-8">Set up in minutes. No tech skills needed.</p>
-            <Link
-              to="/onboarding"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
-              style={{ background: PINK }}
-            >
-              Start for free
-            </Link>
+            <p className="text-gray-500 mb-8">
+              {upcomingPlan
+                ? 'Join the waitlist and we will email you when it opens. Meanwhile, start taking bookings and deposits from your link in bio.'
+                : 'Set up in minutes. No tech skills needed.'}
+            </p>
+            {upcomingPlan ? (
+              <UpcomingPlanButtons plan={upcomingPlan} large />
+            ) : (
+              <Link
+                to="/onboarding"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
+                style={{ background: PINK }}
+              >
+                Start for free
+              </Link>
+            )}
           </div>
         </section>
 

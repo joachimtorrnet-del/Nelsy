@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Ready-to-use no-show and cancellation policy templates for nail techs, plus how to communicate them without feeling awkward.',
   seoDescription: 'Nail tech no-show policy examples you can copy and adapt. Cancellation policy templates, deposit policies, and how to communicate them professionally.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['no-show policy', 'cancellation policy', 'nail tech policies', 'client management'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 50%, #F9A8D4 100%)',
   heroImageAlt: 'Nail tech no-show policy examples',

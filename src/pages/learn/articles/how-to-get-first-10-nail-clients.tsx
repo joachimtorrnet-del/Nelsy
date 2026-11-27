@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Getting your first 10 paying clients is the hardest part. Here\'s a realistic, step-by-step approach that doesn\'t require a big following or paid ads.',
   seoDescription: 'How to get your first 10 nail clients as a new nail tech. Practical steps covering portfolio building, Instagram, word of mouth, and pricing your first clients.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['first clients', 'new nail tech', 'getting started', 'nail clients'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #E879F9 30%, #C084FC 100%)',
   heroImageAlt: 'How to get first 10 nail clients',

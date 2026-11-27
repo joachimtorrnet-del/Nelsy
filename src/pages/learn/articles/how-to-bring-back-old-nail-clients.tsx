@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Past clients who stopped booking are one of the easiest wins in a nail business. They already know your work: they just need the right reason to come back.',
   seoDescription: 'How to bring back old nail clients. Win-back message templates, when to reach out, what to say, and how to re-engage past nail clients who stopped booking.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['win back nail clients', 'old nail clients', 'nail client re-engagement', 'nail tech client retention'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'How to bring back old nail clients',

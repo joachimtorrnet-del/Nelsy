@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Your nail business name matters, but not as much as the work. Here\'s how to choose a name that works, check it\'s available, and avoid common mistakes.',
   seoDescription: 'How to name your nail business. What makes a good nail business name, how to check availability, and what to avoid, with examples and naming frameworks.',
   category: 'branding-growth',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail business name', 'nail business branding', 'nail business naming', 'nail tech brand'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #DDD6FE 100%)',
   heroImageAlt: 'How to name your nail business',

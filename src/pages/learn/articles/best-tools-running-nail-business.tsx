@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'The right tools reduce admin, protect your income, and free you to focus on your craft. Here are the tools that actually make a difference to how a nail business runs.',
   seoDescription: 'Best tools for running a nail business. Software, systems and physical tools that make booking, finance, admin and content easier for nail techs.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail business tools', 'tools for nail tech business', 'nail tech software', 'running a nail business'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'Best tools for running a nail business',

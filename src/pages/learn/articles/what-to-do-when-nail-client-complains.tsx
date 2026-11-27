@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'How you handle a nail client complaint determines whether you lose that client forever or turn a difficult moment into lasting loyalty. Here\'s the approach that works.',
   seoDescription: 'What to do when a nail client complains: respond professionally in person, by message and to online reviews, with scripts and a decision framework.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client complaint', 'nail complaint handling', 'nail tech client dispute', 'nail service complaint'],
   heroImage: 'linear-gradient(135deg, #FFF5F5 0%, #FFE4E4 100%)',
   heroImageAlt: 'What to do when a nail client complains',

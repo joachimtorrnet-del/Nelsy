@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Working at full capacity every day sounds like the goal, but it\'s usually not sustainable. Here\'s how to figure out the right number of clients for your set-up and service mix.',
   seoDescription: 'How many nail clients per day can you take? A realistic capacity guide for nail techs by service type, with a simple formula to find your own number.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how many nail clients per day', 'nail tech capacity', 'nail tech schedule'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)',
   heroImageAlt: 'How many nail clients per day as a nail tech',

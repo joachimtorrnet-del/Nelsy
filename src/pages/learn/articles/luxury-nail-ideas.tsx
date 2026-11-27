@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Luxury nails aren\'t about how much you spend: they\'re about the quality of execution, the choice of palette, and the attention to detail. Here are 50 ideas for an elevated nail look.',
   seoDescription: '50 luxury nail ideas for an elevated, high-end look. Premium nail sets from minimalist elegance to maximalist statement: inspiration for every aesthetic.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['luxury nail ideas', 'high end nail ideas', 'luxury nail sets'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: '50 luxury nail ideas',

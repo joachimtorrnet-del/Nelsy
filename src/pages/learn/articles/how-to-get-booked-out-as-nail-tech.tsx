@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Being booked out isn\'t luck: it\'s a system. Here\'s what consistently fully-booked nail techs do differently.',
   seoDescription: 'How to get booked out as a nail tech. The strategies, systems, and mindset shifts that turn a part-time nail business into a fully booked calendar.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booked out', 'fully booked', 'nail business growth', 'nail clients'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #DDD6FE 100%)',
   heroImageAlt: 'How to get booked out as a nail tech',

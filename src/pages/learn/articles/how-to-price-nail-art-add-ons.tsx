@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Nail art add-ons are one of the best ways to increase your average appointment value, but only if you price them correctly. Here\'s how to calculate and communicate add-on pricing.',
   seoDescription: 'How to price nail art add-ons as a nail tech. Pricing formulas for nail art, chrome, glitter, and custom designs, plus how to present add-ons at booking.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail art pricing', 'nail art add-ons', 'nail tech pricing', 'service pricing'],
   heroImage: 'linear-gradient(135deg, #FFF0F9 0%, #FBCFE8 100%)',
   heroImageAlt: 'How to price nail art add-ons',

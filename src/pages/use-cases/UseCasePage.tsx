@@ -1,6 +1,8 @@
 // Shared layout for /use-cases/* landing pages
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { UpcomingPlanBadge, UpcomingPlanButtons, IndependentTodayNote } from '@/components/UpcomingPlanCTA';
+import type { UpcomingPlan } from '@/components/UpcomingPlanCTA';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
@@ -57,6 +59,8 @@ export interface UseCasePageProps {
   relatedFeatures?: string[];
   relatedUseCases?: string[];
   relatedPostSlugs?: string[];
+  /** Main offer not on sale yet: waitlist CTA plus "Start with bookings". */
+  upcomingPlan?: UpcomingPlan;
 }
 
 function FAQItem({ q, a }: { q: string; a: string }) {
@@ -83,7 +87,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 
 export default function UseCasePage({
   seo, hero, sections, faq,
-  relatedFeatures, relatedUseCases, relatedPostSlugs,
+  relatedFeatures, relatedUseCases, relatedPostSlugs, upcomingPlan,
 }: UseCasePageProps) {
   const ctaLabel = hero.ctaLabel ?? 'Start for free';
 
@@ -138,19 +142,31 @@ export default function UseCasePage({
         {/* Hero */}
         <header className="bg-white border-b border-[#F4C2C2]/30">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-14 md:py-20 text-center">
+            {upcomingPlan && (
+              <div>
+                <UpcomingPlanBadge plan={upcomingPlan} />
+              </div>
+            )}
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-[#1A1A1A] leading-snug mb-5">
               {hero.headline}
             </h1>
             <p className="text-gray-500 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto mb-8">
               {hero.subheadline}
             </p>
-            <Link
-              to="/onboarding"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
-              style={{ background: PINK }}
-            >
-              {ctaLabel}
-            </Link>
+            {upcomingPlan ? (
+              <>
+                <UpcomingPlanButtons plan={upcomingPlan} />
+                <IndependentTodayNote />
+              </>
+            ) : (
+              <Link
+                to="/onboarding"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
+                style={{ background: PINK }}
+              >
+                {ctaLabel}
+              </Link>
+            )}
           </div>
         </header>
 
@@ -198,16 +214,24 @@ export default function UseCasePage({
         >
           <div className="max-w-2xl mx-auto px-4">
             <h2 className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-4">
-              Ready to get started?
+              {upcomingPlan ? `Be first when the ${upcomingPlan} plan opens` : 'Ready to get started?'}
             </h2>
-            <p className="text-gray-500 mb-8">Set up in minutes. No tech skills needed.</p>
-            <Link
-              to="/onboarding"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
-              style={{ background: PINK }}
-            >
-              {ctaLabel}
-            </Link>
+            <p className="text-gray-500 mb-8">
+              {upcomingPlan
+                ? 'Join the waitlist and we will email you when it opens. Meanwhile, start taking bookings and deposits from your link in bio.'
+                : 'Set up in minutes. No tech skills needed.'}
+            </p>
+            {upcomingPlan ? (
+              <UpcomingPlanButtons plan={upcomingPlan} large />
+            ) : (
+              <Link
+                to="/onboarding"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl text-white font-bold text-[15px] transition hover:opacity-90"
+                style={{ background: PINK }}
+              >
+                {ctaLabel}
+              </Link>
+            )}
           </div>
         </section>
 

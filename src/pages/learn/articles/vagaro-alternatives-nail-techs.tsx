@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Vagaro is a capable platform, but it\'s not the right choice for every nail tech. Here are the alternatives worth looking at if Vagaro doesn\'t suit your business.',
   seoDescription: 'Vagaro alternatives for nail techs. Who Vagaro suits, where it falls short, and the booking software alternatives for solo nail techs and nail salons.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Vagaro alternatives', 'Vagaro nail techs', 'nail booking software alternative'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FECDD3 100%)',
   heroImageAlt: 'Vagaro alternatives for nail techs',

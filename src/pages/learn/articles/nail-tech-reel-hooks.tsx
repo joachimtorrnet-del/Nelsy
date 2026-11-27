@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'The hook is the first 1–2 seconds of your Reel, and it determines whether anyone watches. Here are 100 proven hook formulas for nail tech Reels and TikToks.',
   seoDescription: '100 nail tech reel hooks to get more views. Hook formulas for nail TikTok and Instagram Reels: text-on-screen hooks, spoken hooks, and seasonal hook ideas.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech reel hooks', 'reel hooks nail tech', 'tiktok hooks nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF9FB 0%, #FCE4F5 100%)',
   heroImageAlt: '100 nail tech reel hooks',

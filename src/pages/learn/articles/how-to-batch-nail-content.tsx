@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Creating content every day is exhausting. Batching lets you shoot, edit and schedule a month of posts in a few focused sessions. Here\'s how to do it.',
   seoDescription: 'How to batch nail tech content for a whole month. How to plan, shoot, edit and schedule nail photos and videos in batches to save time and post consistently.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['batch nail content', 'nail tech content creation', 'nail tech social media batching', 'nail tech Instagram tips'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'How to batch nail tech content for a whole month',

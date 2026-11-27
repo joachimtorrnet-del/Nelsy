@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Square Appointments and Fresha serve different nail tech needs. Here\'s an honest comparison, who each platform suits, and which one to choose.',
   seoDescription: 'Square Appointments vs Fresha for nail techs: features, pricing model, marketplace and which platform suits different nail tech setups.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Square vs Fresha nail techs', 'Square Appointments Fresha comparison', 'nail tech booking software'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'Square Appointments vs Fresha for nail techs',

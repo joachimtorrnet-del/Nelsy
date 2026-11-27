@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Fresha vs Booksy compared on what nail techs actually pay: monthly plans, marketplace commission on new clients, card fees, text messages and deposits. Figures taken from each official pricing page.',
   seoDescription: 'Fresha vs Booksy for nail techs: monthly price, new-client commission, card fees, SMS and deposits compared side by side, with a cost example and a clear verdict.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Fresha vs Booksy', 'Booksy vs Fresha', 'Fresha pricing', 'Booksy pricing', 'nail tech booking software'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #DDD6FE 100%)',
   heroImageAlt: 'Fresha vs Booksy for nail techs: prices and fees compared',

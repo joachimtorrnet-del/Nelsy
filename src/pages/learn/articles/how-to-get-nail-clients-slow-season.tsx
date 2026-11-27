@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'January and early autumn are notoriously quiet for nail techs. Here\'s how to fill your calendar during slow periods without slashing your prices or panicking.',
   seoDescription: 'How to get nail clients in slow season: practical ways to fill your calendar in January, autumn and other quiet periods without cutting prices.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['slow season nail tech', 'nail clients January', 'quiet period nail business', 'nail tech slow month'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'How to get nail clients during slow season',

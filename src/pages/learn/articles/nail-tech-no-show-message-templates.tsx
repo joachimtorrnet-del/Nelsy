@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'A no-show is frustrating. Here\'s how to handle it professionally: templates for reaching out, retaining the deposit, and deciding whether to rebook the client.',
   seoDescription: 'Nail tech no-show message templates. Copy-paste no-show messages for nail techs: reach out, retain deposit, and handle repeat no-shows professionally.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech no-show message template', 'nail appointment no show message', 'client no show nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)',
   heroImageAlt: 'Nail tech no-show message templates',

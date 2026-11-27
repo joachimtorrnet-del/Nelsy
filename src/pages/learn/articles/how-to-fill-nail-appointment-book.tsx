@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Empty slots cost money. A practical guide to keeping your nail appointment book consistently full: through regulars, rebooking, and smart promotion.',
   seoDescription: 'How to fill your nail appointment book: strategies for nail techs covering regulars, rebooking systems, last-minute slots, and Instagram promotion.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['appointment book', 'fully booked', 'nail clients', 'fill slots'],
   heroImage: 'linear-gradient(135deg, #ECFDF5 0%, #6EE7B7 100%)',
   heroImageAlt: 'How to fill your nail appointment book',

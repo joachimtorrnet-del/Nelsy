@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Instagram isn\'t the only way to fill your nail calendar. Here are seven client acquisition channels that work without social media, and how to use each one.',
   seoDescription: 'How to get nail clients without Instagram: Google, referrals, local partnerships, email and marketplaces, the channels beyond social media.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail clients without Instagram', 'nail business marketing', 'nail tech without social media', 'get nail clients'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'How to get nail clients without Instagram',

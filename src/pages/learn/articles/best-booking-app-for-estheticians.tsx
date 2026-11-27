@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'The best booking apps for estheticians and skin therapists compared: Acuity Scheduling, GlossGenius, Mangomint, Square Appointments and Nelsy, on price, intake forms, packages and deposits.',
   seoDescription: 'Best booking app for estheticians: Acuity, GlossGenius, Mangomint, Square and Nelsy compared on price, intake forms, packages and deposits.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'skin',
   tags: ['best booking app for estheticians', 'esthetician booking software', 'skin care booking app', 'esthetician scheduling', 'facial booking app'],
   heroImage: 'linear-gradient(135deg, #F0FDFA 0%, #CCFBF1 100%)',
   heroImageAlt: 'Best booking apps for estheticians compared',

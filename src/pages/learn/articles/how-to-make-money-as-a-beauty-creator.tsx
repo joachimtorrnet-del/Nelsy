@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'The 10 ways nail techs, lash artists, makeup artists and beauty creators turn an audience into income: bookings, courses, digital products, coaching, brand deals, UGC and more, with how to start each one.',
   seoDescription: 'How beauty creators make money: client bookings, online courses, digital products, coaching, brand deals, UGC, affiliate links and more, with how to start each.',
   category: 'beauty-creators',
+  audience: ['creators', 'pros'],
+  craft: 'all',
   tags: ['how to make money as a beauty creator', 'beauty influencer income', 'monetize beauty content', 'beauty creator business'],
   heroImage: 'linear-gradient(135deg, #F5F0FF 0%, #DDD6FE 100%)',
   heroImageAlt: 'How to make money as a beauty creator',
@@ -127,7 +129,7 @@ registerArticle({
       <section id="one-link">
         <h2 className="font-serif text-2xl font-bold mb-4">Put everything behind one link</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">Your audience arrives through one place: the link in your bio. If it only leads to a booking app, your guide and coaching offer stay invisible; if it leads to a list of five links, people drop off.</p>
-        <p className="text-gray-700 leading-relaxed">Nelsy is a Beauty Creator Store built for this: bookings with deposits, coaching, courses and digital products on one page, with 0% Nelsy commission and a 14-day free trial. See also <Link to="/blog/how-to-set-up-nail-tech-link-in-bio" className={a}>how to set up your link in bio</Link>.</p>
+        <p className="text-gray-700 leading-relaxed">With Nelsy you can start with bookings today: services, deposits and payments behind your link in bio, on the Independent plan ($29/month, 14-day free trial, 0% Nelsy commission). Selling guides and courses is part of the upcoming Creator plan; <a href="mailto:hello@getnelsy.com?subject=Creator%20waitlist" className={a}>join the waitlist</a>. See also <Link to="/blog/how-to-set-up-nail-tech-link-in-bio" className={a}>how to set up your link in bio</Link>.</p>
       </section>
     </div>
   ),

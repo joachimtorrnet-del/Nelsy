@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Summer nails are bright, fun, and unapologetically colourful. Here are 50 summer nail ideas, from resort-ready neutrals to full neon statement sets.',
   seoDescription: "50 summer nail ideas: neon and bright colors, tropical and resort-inspired designs, and summer nail inspo for short and long nails.",
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['summer nail ideas', 'summer nails', 'summer nail designs'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%)',
   heroImageAlt: '50 summer nail ideas',

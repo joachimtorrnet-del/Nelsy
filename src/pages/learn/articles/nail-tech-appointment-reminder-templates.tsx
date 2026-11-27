@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Send reminders that reduce no-shows and don\'t annoy your clients. Copy-paste templates for appointment reminders: SMS, WhatsApp, DM, and automated messages.',
   seoDescription: 'Nail tech appointment reminder templates: copy-paste SMS, WhatsApp and DM reminders for nail appointments in friendly, professional and firm versions.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech appointment reminder templates', 'nail appointment reminder message', 'appointment reminder nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'Nail tech appointment reminder message templates',

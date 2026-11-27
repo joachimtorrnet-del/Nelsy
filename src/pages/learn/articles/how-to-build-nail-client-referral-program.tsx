@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Word of mouth is still the most powerful way for nail techs to grow. A simple referral program formalises what already happens naturally, and accelerates it.',
   seoDescription: 'How to build a nail client referral program. Simple referral schemes for nail techs: reward structures, how to ask for referrals, and tracking new referral clients.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client referral', 'nail referral program', 'word of mouth nail', 'nail business growth'],
   heroImage: 'linear-gradient(135deg, #F0FFF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'How to build a nail client referral program',

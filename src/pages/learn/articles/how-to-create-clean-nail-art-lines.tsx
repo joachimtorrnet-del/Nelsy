@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Clean lines are the mark of professional nail art. Here\'s exactly how to control a liner brush, manage your product load, and fix mistakes before they cure.',
   seoDescription: 'How to create clean nail art lines. Liner brush technique, product loading, stabilising your hand, and correcting mistakes for sharp, precise nail art lines.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to create clean nail art lines', 'nail art lines technique', 'nail liner brush technique'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)',
   heroImageAlt: 'How to create clean nail art lines',

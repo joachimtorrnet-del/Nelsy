@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Builder gel is a rewarding system to master, but it has common technique pitfalls. Here are the mistakes nail techs most frequently make with builder gel / BIAB and how to address them.',
   seoDescription: 'Common builder gel and BIAB mistakes and how to fix them. Heat spikes, lifting, flooding, apex problems, and infill mistakes nail techs encounter with builder gel.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['builder gel mistakes', 'BIAB mistakes', 'builder gel technique', 'BIAB lifting', 'builder gel tips'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'Common builder gel BIAB mistakes and how to fix them',

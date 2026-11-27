@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'DM bookings feel personal but they quietly lose you clients every week. Here\'s what\'s actually happening, and what to do about it.',
   seoDescription: 'Booking through Instagram DMs costs nail techs clients, time, and money. Learn why and how to switch to online booking without losing your personal touch.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking through DMs', 'online booking', 'nail tech admin', 'Instagram booking'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'Why DM booking costs nail techs clients',

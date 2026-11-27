@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Your link in bio is where followers become clients. Here\'s what to put on your nail tech link in bio page and how to set it up so it actually converts.',
   seoDescription: 'How to set up a nail tech link in bio page. What to include, which tools to use, how to structure it for bookings, and what to avoid on your nail tech link page.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech link in bio', 'nail tech linktree', 'nail tech instagram bio', 'nail tech booking page'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'How to set up a nail tech link in bio page',

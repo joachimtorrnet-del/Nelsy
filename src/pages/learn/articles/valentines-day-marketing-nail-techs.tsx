@@ -8,6 +8,8 @@ registerArticle({
   excerpt: "Valentine's Day is one of the best seasonal opportunities for nail techs. Here's how to market your nail business in February: designs, promotions, and content.",
   seoDescription: "Valentine's Day marketing ideas for nail techs: fill your February bookings with festive designs, promotions and a content plan.",
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ["valentines day nail tech marketing", "february nail marketing", "valentines nail ideas nail tech"],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: "Valentine's Day marketing ideas for nail techs",

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A loyalty program gives clients a structural reason to keep coming back to you rather than trying other nail techs. Here are the simplest schemes that actually work for independent nail techs.',
   seoDescription: 'Nail tech loyalty program ideas. Simple loyalty schemes for nail techs: stamp cards, points systems, VIP tiers, and how to set one up without it becoming a headache.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech loyalty program', 'nail loyalty scheme', 'nail client loyalty', 'nail business retention'],
   heroImage: 'linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%)',
   heroImageAlt: 'Nail tech loyalty program ideas',

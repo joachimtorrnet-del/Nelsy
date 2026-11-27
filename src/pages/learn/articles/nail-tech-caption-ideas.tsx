@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Caption ideas for every type of nail tech Instagram post: portfolio posts, booking prompts, behind the scenes, educational, and seasonal content.',
   seoDescription: "Copy-and-paste Instagram captions for nail techs: nail photo captions, booking posts, new set reveals and seasonal captions that get clients to book.",
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['instagram captions', 'nail tech captions', 'instagram content', 'nail tech social media'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FECDD3 100%)',
   heroImageAlt: 'Nail tech Instagram caption ideas',

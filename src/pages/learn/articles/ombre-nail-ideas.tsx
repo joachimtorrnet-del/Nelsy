@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Ombré nails are one of the most requested nail effects: a gradient that blends two or more colours across each nail. Here are 50 ombré ideas to inspire your next set.',
   seoDescription: '50 ombre nail ideas: soft pink and French ombré, sunset gradients, dark-to-light and multi-colour designs, with the colour combinations that work best.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['ombre nail ideas', 'gradient nails', 'ombre nail designs'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #E0E7FF 100%)',
   heroImageAlt: '50 ombré nail ideas',

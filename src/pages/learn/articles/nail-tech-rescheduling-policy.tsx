@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Rescheduling is different from cancelling, but without a clear policy, clients treat them the same way. Templates and guidance for nail techs.',
   seoDescription: 'Nail tech rescheduling policy examples and templates. How to handle reschedule requests, protect your diary, and what to do with deposits when clients reschedule.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['rescheduling policy', 'nail tech policy', 'reschedule', 'client management'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #BAE6FD 100%)',
   heroImageAlt: 'Nail tech rescheduling policy examples',

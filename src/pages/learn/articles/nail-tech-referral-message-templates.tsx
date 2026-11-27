@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Word of mouth is the most powerful way nail techs grow. Templates for asking existing clients to refer friends: naturally, warmly, and without feeling salesy.',
   seoDescription: 'Nail tech referral message templates: copy-paste WhatsApp, DM and Instagram scripts to ask clients to refer friends, formally or informally.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech referral message template', 'nail tech referral programme', 'referral message nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'Nail tech referral message templates',

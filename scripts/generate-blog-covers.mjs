@@ -1,7 +1,7 @@
 /**
  * Blog cover generator for Nelsy.
  *
- * Design: editorial minimal — inspired by Trendtrack.
+ * Design: editorial minimal, inspired by Trendtrack.
  * Category-colored soft background, centered category label + title,
  * generous whitespace, moderate type size. No poster effect.
  *
@@ -40,6 +40,7 @@ const CATEGORY_STYLES = {
   comparisons:           { bg: '#EAF8F6', accent: '#0A6E68' },
   'branding-growth':     { bg: '#FDEEE8', accent: '#B03808' },
   'beauty-creators':     { bg: '#F1EBFD', accent: '#6D28D9' },
+  salons:                { bg: '#E9F2FB', accent: '#1E5A8C' },
 };
 const FALLBACK_STYLE = { bg: '#FCEEF5', accent: '#B83070' };
 
@@ -56,6 +57,7 @@ const CATEGORY_LABELS = {
   comparisons:           'Comparisons',
   'branding-growth':     'Branding & Growth',
   'beauty-creators':     'Beauty Creators',
+  salons:                'Salons & Teams',
 };
 
 // ── Fonts ─────────────────────────────────────────────────────────────────────
@@ -183,7 +185,7 @@ function readArticles() {
       const src = readFileSync(join(ARTICLES_DIR, f), 'utf8');
       const slugM  = src.match(/slug:\s*"([^"]+)"|slug:\s*'([^']+)'/);
       const catM   = src.match(/category:\s*"([^"]+)"|category:\s*'([^']+)'/);
-      // Title may contain apostrophes — match double-quoted and single-quoted separately
+      // Title may contain apostrophes: match double-quoted and single-quoted separately
       const titleDQ = src.match(/title:\s*"([^"]+)"/);
       const titleSQ = src.match(/title:\s*'((?:[^'\\]|\\.)+)'/);
       const slug    = slugM  ? (slugM[1]  ?? slugM[2])  : null;
@@ -259,11 +261,11 @@ async function main() {
       genOk.push(slug);
       if ((i + 1) % 20 === 0 || i === toGenerate.length - 1) {
         const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
-        console.log(`  [${i + 1}/${toGenerate.length}] ${slug} — ${title.length}ch → ${fs}px (${elapsed}s)`);
+        console.log(`  [${i + 1}/${toGenerate.length}] ${slug}: ${title.length}ch → ${fs}px (${elapsed}s)`);
       }
     } catch (err) {
       genFailed.push({ slug, error: err.message });
-      console.error(`  ✗ FAILED: ${slug} — ${err.message}`);
+      console.error(`  ✗ FAILED: ${slug}: ${err.message}`);
     }
   }
 

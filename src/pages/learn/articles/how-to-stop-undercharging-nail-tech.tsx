@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Most nail techs know they\'re undercharging. The challenge is doing something about it: the fear of losing clients, the imposter syndrome, the uncomfortable conversations. Here\'s how to address all of it.',
   seoDescription: 'How to stop undercharging as a nail tech: why it happens, mindset shifts, raising prices without losing clients and scripts to announce price changes.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech undercharging', 'nail tech prices', 'raise nail prices', 'nail tech confidence'],
   heroImage: 'linear-gradient(135deg, #FFF5F5 0%, #FECACA 100%)',
   heroImageAlt: 'How to stop undercharging as a nail tech',

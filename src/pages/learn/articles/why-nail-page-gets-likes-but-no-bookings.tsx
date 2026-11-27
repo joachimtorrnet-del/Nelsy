@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'If your nail content gets lots of engagement but your DMs are quiet, something specific is going wrong. Here\'s how to diagnose and fix it.',
   seoDescription: 'Why nail techs get Instagram likes but no bookings: the 6 most common reasons and how to fix each one. Diagnose your conversion problem and start getting clients.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Instagram', 'likes no bookings', 'Instagram strategy', 'nail content'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #F9A8D4 100%)',
   heroImageAlt: 'Why nail page gets likes but no bookings',

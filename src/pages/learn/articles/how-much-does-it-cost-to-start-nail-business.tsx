@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A realistic cost breakdown for starting a nail business in the UK, from training and insurance to equipment, products, and marketing.',
   seoDescription: 'How much does it cost to start a nail business in the UK? Realistic startup cost breakdown: training, insurance, equipment, products, and what to prioritise.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail business startup costs', 'cost to start nail business', 'nail tech investment', 'nail business budget'],
   heroImage: 'linear-gradient(135deg, #ECFDF5 0%, #6EE7B7 100%)',
   heroImageAlt: 'How much does it cost to start a nail business',

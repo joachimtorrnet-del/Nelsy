@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Setting your prices is one of the most important decisions in your nail business. Here\'s a practical guide to working out your nail tech prices in 2026.',
   seoDescription: 'How much should a nail tech charge in 2026? Work out your price for gel sets, extensions, infills and nail art from your costs, time and local market.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech pricing', 'how much to charge', 'nail prices', 'UK nail pricing'],
   heroImage: 'linear-gradient(135deg, #ECFDF5 0%, #86EFAC 100%)',
   heroImageAlt: 'How much should a nail tech charge',

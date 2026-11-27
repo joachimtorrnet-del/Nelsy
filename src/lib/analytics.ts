@@ -60,7 +60,7 @@ export function trackPlgCtaClick(profileId: string) {
 // ── SEO acquisition funnel ────────────────────────────────────────────────────
 
 type PageType = 'homepage' | 'how_to' | 'alternative' | 'comparison' | 'tool' | 'policy_guide' | 'article' | 'blog_index';
-type SeoCluster = 'core_booking' | 'deposits_policies' | 'instagram_growth' | 'pricing' | 'competitor_alt' | 'nail_education' | 'nail_inspo' | 'get_clients' | 'start_business' | 'branding_growth' | 'policies_clients' | 'creator_monetization';
+type SeoCluster = 'core_booking' | 'deposits_policies' | 'instagram_growth' | 'pricing' | 'competitor_alt' | 'nail_education' | 'nail_inspo' | 'get_clients' | 'start_business' | 'branding_growth' | 'policies_clients' | 'creator_monetization' | 'salon_business';
 type CtaPosition = 'hero' | 'inline' | 'footer_cta' | 'nav' | 'mid_article' | 'sidebar';
 
 const SEO_SESSION_KEY = 'nelsy_seo_source';
@@ -78,6 +78,7 @@ const CATEGORY_CLUSTER: Record<string, SeoCluster> = {
   'comparisons':          'competitor_alt',
   'branding-growth':      'branding_growth',
   'beauty-creators':      'creator_monetization',
+  salons:                 'salon_business',
 };
 
 const PAGE_META: Record<string, { page_type: PageType; seo_cluster: SeoCluster }> = {

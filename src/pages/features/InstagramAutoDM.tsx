@@ -4,20 +4,21 @@ import FeaturePage from './FeaturePage';
 export default function InstagramAutoDMPage() {
   return (
     <FeaturePage
-      title="Turn Instagram Comments into Bookings | Nelsy"
-      metaDescription="Automatically reply to Instagram comments and DMs with your booking link. Convert engagement into confirmed appointments without spending all day in your inbox."
+      upcomingPlan="Creator"
+      title="Instagram AutoDM for Beauty Pros: Nelsy Creator Plan"
+      metaDescription="Instagram AutoDM, which replies to comments with your booking link, is part of the upcoming Nelsy Creator plan. Join the waitlist; start with bookings today."
       canonical="/features/instagram-autodm"
       h1="Turn Instagram comments into bookings"
-      heroDescription="You post a nail set, the comments come in, and then you spend the next hour answering the same question in DMs. Instagram AutoDM handles the replies so you can stay behind the desk, not behind the phone."
+      heroDescription="You post a nail set, the comments come in, and then you spend the next hour answering the same question in DMs. Instagram AutoDM, part of the upcoming Nelsy Creator plan, will handle those replies so you can stay behind the desk, not behind the phone."
       icon={MessageCircle}
       benefits={[
         {
           title: 'Respond instantly, every time',
-          desc: 'When someone comments on your posts, they get your booking link immediately, not hours later when you find the time to reply.',
+          desc: 'When someone comments on your posts, they will get your booking link immediately, not hours later when you find the time to reply.',
         },
         {
           title: 'Stop losing warm leads',
-          desc: "Every comment asking about your work is a potential client. Without a fast reply, they move on. AutoDM catches them before they do.",
+          desc: "Every comment asking about your work is a potential client. Without a fast reply, they move on.",
         },
         {
           title: 'Consistent, professional replies',
@@ -25,7 +26,7 @@ export default function InstagramAutoDMPage() {
         },
         {
           title: 'Free up your time',
-          desc: 'Managing DMs is a job in itself. AutoDM handles the repetitive parts so you can focus on doing the actual work.',
+          desc: 'Managing DMs is a job in itself. AutoDM will handle the repetitive parts so you can focus on the actual work.',
         },
       ]}
       steps={[
@@ -42,7 +43,7 @@ export default function InstagramAutoDMPage() {
         {
           step: '3',
           title: 'Watch bookings come in',
-          desc: 'Followers who engage with your posts get your booking link instantly. Many will go straight to booking.',
+          desc: 'Followers who engage with your posts get your booking link instantly, and can book without waiting for you.',
         },
       ]}
       useCases={[
@@ -54,20 +55,24 @@ export default function InstagramAutoDMPage() {
       ]}
       faq={[
         {
-          q: 'Does this work with Instagram Reels and Stories too?',
-          a: 'AutoDM is designed to respond to comments on your posts. Story interactions work differently given Instagram restrictions.',
+          q: 'Is Instagram AutoDM available on Nelsy today?',
+          a: 'Not yet. It is part of the upcoming Creator plan. Today, on the Independent plan, you can put your Nelsy booking link in your bio and send it in DM replies yourself. Join the waitlist at hello@getnelsy.com.',
+        },
+        {
+          q: 'Will it work with Reels and Stories too?',
+          a: 'AutoDM is designed to respond to comments on your posts. Story interactions work differently because of Instagram restrictions.',
         },
         {
           q: 'Will my followers know the reply is automated?',
-          a: 'You write the message, so it can sound exactly like you. Most automated replies feel natural if they are written in your voice.',
+          a: 'You write the message, so it can sound exactly like you.',
         },
         {
           q: 'Can I reply with more than just a booking link?',
-          a: 'Yes. You can include pricing info, a brief description of your services, or anything else that helps move the conversation forward.',
+          a: 'Yes. You will be able to include pricing info, a brief description of your services, or anything else that helps move the conversation forward.',
         },
         {
           q: "What if someone comments on an old post?",
-          a: 'AutoDM responds based on the trigger word, regardless of when the post was published. Your older content can still generate new bookings.',
+          a: 'AutoDM is planned to respond based on the trigger word, regardless of when the post was published, so older content can still bring bookings.',
         },
       ]}
       relatedFeatures={[

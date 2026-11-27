@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Almond nails suit almost every client: elongating fingers, offering plenty of design real estate, and staying wearable across seasons. 50 ideas by style, colour, and occasion.',
   seoDescription: 'Almond nail ideas for nail techs. 50 almond nail designs by style (neutral, glazed, ombre, floral, seasonal) with client consultation tips and shape guidance.',
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['almond nail ideas', 'almond nails', 'nail inspo', 'nail designs'],
   heroImage: 'linear-gradient(135deg, #FFF5F5 0%, #FECACA 100%)',
   heroImageAlt: '50 almond nail ideas for nail techs',

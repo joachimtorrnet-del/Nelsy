@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Streaky gel polish is usually a product loading or technique problem, not a product quality issue. Here\'s exactly how to get smooth, even gel colour every time.',
   seoDescription: 'How to apply gel polish without streaks. Technique, brush loading, layer thickness, and application order that give you smooth, even gel polish colour every time.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to apply gel polish without streaks', 'streaky gel polish fix', 'smooth gel polish application'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'How to apply gel polish without streaks',

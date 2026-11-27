@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Gel-X extensions offer natural-looking length without acrylic. Here\'s the full application process, from prep to finishing, with tips on sizing, adhesion, and removal.',
   seoDescription: 'Gel-X application step-by-step guide for nail techs. Full process from prep to cure, tip sizing, adhesion gel, shaping, and how to get the best retention on Gel-X.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['gel-x application', 'gel-x nails', 'nail extension technique', 'soft gel extensions'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #C4B5FD 100%)',
   heroImageAlt: 'Gel-X application step by step for nail techs',

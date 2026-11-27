@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Almond nails are one of the most flattering and elegant shapes, but they require filing precision to get right. Here\'s the exact technique, step by step.',
   seoDescription: 'How to shape almond nails step by step. Filing technique for almond nail shape on extensions and natural nails: taper, symmetry, and how to nail the rounded tip.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how to shape almond nails', 'almond nail shape', 'almond nail filing technique'],
   heroImage: 'linear-gradient(135deg, #FFF9FB 0%, #FDDDE6 100%)',
   heroImageAlt: 'How to shape almond nails step by step',

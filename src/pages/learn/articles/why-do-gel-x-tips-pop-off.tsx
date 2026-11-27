@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Gel-X is popular for a reason, but tips that pop off within days signal a fixable problem. Here\'s what actually causes Gel-X failure and how to address each cause.',
   seoDescription: 'Why do Gel-X tips pop off? Common causes of Gel-X tip failure (sizing, prep, adhesive issues, and application problems) with practical fixes for each.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['why do gel x tips pop off', 'gel x popping off causes', 'gel x tip failure fix'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%)',
   heroImageAlt: 'Why do Gel-X tips pop off',

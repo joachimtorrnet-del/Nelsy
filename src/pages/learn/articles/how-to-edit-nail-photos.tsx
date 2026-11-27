@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Light editing makes nail photos better. Heavy editing makes them misleading. Here\'s a simple editing workflow that enhances your nail photos without distorting what the nails actually look like.',
   seoDescription: 'How to edit nail photos without making them look fake. Editing adjustments for brightness, colour, and clarity, and what over-editing does to client trust and brand.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail photo editing', 'edit nail photos', 'nail tech photo tips', 'nail tech content editing'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'How to edit nail photos without making them look fake',

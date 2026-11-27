@@ -4,17 +4,18 @@ import FeaturePage from './FeaturePage';
 export default function DigitalProductsPage() {
   return (
     <FeaturePage
-      title='Sell Digital Products as a Beauty Creator'
-      metaDescription='Sell guides, templates, price lists and presets from your Nelsy page. Clients pay in a few taps and you keep your revenue with 0% Nelsy commission.'
+      upcomingPlan="Creator"
+      title='Sell Digital Products as a Beauty Creator: Creator Plan'
+      metaDescription='Selling guides, templates and presets from your Nelsy page is part of the upcoming Creator plan. Join the waitlist, and start with bookings and deposits today.'
       canonical='/features/digital-products'
       h1='Sell digital products from your link in bio'
-      heroDescription='Guides, aftercare cards, price list templates, content calendars, photo presets: create a file once and sell it as many times as you want.'
+      heroDescription='Digital products are part of the upcoming Nelsy Creator plan: guides, aftercare cards, price list templates and photo presets, created once and sold from your link in bio. Join the waitlist to hear when it opens.'
       icon={FileDown}
       benefits={[
         { title: 'Earn while you are not working', desc: 'A digital product sells at night, on weekends and while you are with a client.' },
         { title: 'Start small', desc: 'A low-price guide is often a creator\'s first online sale, and it shows you what your audience will pay for.' },
-        { title: 'Next to your bookings', desc: 'Your products sit on the same page as your services, so clients discover them when they book.' },
-        { title: '0% Nelsy commission', desc: 'You keep your revenue. Standard payment processing fees apply.' },
+        { title: 'Next to your bookings', desc: 'With the Creator plan, your products will sit on the same page as your services.' },
+        { title: 'Bookings today', desc: 'Services, deposits and payments from your link in bio are available now on the Independent plan, with 0% Nelsy commission.' },
       ]}
       steps={[
         { step: '1', title: 'Upload your file', desc: 'Add your guide, template or preset with a title, a cover and a price.' },
@@ -28,14 +29,14 @@ export default function DigitalProductsPage() {
         'Educators selling a step-by-step guide before launching a full course',
       ]}
       faq={[
-        { q: 'What can I sell as a digital product?', a: 'Any file you have the rights to: PDF guides, templates, checklists, presets, design packs or content calendars.' },
-        { q: 'Does Nelsy take a commission?', a: 'No. Nelsy charges 0% commission on your sales. Standard payment processing fees apply.' },
-        { q: 'Do I need a separate shop or website?', a: 'No. Your products live on your Nelsy page, the same link you already share in your bio.' },
+        { q: 'Can I sell digital products on Nelsy today?', a: 'Not yet. Digital products are part of the upcoming Creator plan. Today, on the Independent plan, you can take bookings, deposits and payments from your link in bio. Join the waitlist at hello@getnelsy.com to hear when the Creator plan opens.' },
+        { q: 'What can I sell as a digital product?', a: 'Any file you have the rights to: PDF guides, templates, checklists, presets, design packs or content calendars. See our list of 35 digital product ideas for beauty creators.' },
+        { q: 'Does Nelsy take a commission?', a: 'Nelsy takes 0% commission on bookings on the Independent plan. Standard payment processing fees apply.' },
       ]}
       relatedFeatures={[
         { slug: 'courses', title: 'Courses', route: '/features/courses' },
         { slug: 'link-in-bio', title: 'Link in Bio', route: '/features/link-in-bio' },
-        { slug: 'payments', title: 'Payments', route: '/features/payments' },
+        { slug: 'bookings', title: 'Bookings', route: '/features/bookings' },
       ]}
     />
   );

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Online booking sounds complicated but it\'s not. Here\'s how it actually works for nail techs, from setting up your booking page to how clients pay and confirm.',
   seoDescription: 'How online booking works for nail techs. A plain-English explanation of the booking flow, what nail techs and clients see, deposits, confirmations, and reminders.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['how online booking works nail tech', 'nail tech online booking explained', 'booking system nail tech'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'How online booking works for nail techs',

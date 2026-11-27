@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Working independently or in a salon are fundamentally different careers. Here\'s an honest breakdown of both: income, freedom, risk, and what each path looks like day to day.',
   seoDescription: 'Independent nail tech vs nail salon: what\'s the difference? Compare income, freedom, workload, and risk between going independent and working in a salon.',
   category: 'start-your-business',
+  audience: ['pros', 'salons'],
+  craft: 'nails',
   tags: ['independent nail tech vs salon', 'nail tech vs salon employee', 'should I work in a salon or independently'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'Independent nail tech vs nail salon',

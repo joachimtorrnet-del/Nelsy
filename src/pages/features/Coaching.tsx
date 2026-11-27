@@ -4,17 +4,18 @@ import FeaturePage from './FeaturePage';
 export default function CoachingPage() {
   return (
     <FeaturePage
-      title='Sell 1:1 Coaching and Consultations'
-      metaDescription='Sell 1:1 coaching calls, portfolio reviews and consultations from your Nelsy page, with online booking and payment upfront. 0% Nelsy commission.'
+      upcomingPlan="Creator"
+      title='1:1 Coaching and Consultations for Beauty Pros: Creator Plan'
+      metaDescription='Coaching tools for beauty pros are part of the upcoming Nelsy Creator plan. Join the waitlist; today you can book paid sessions as services with payment upfront.'
       canonical='/features/coaching'
       h1='Sell 1:1 coaching from your link in bio'
-      heroDescription='New techs pay for shortcuts: how you priced your services, how you found your first clients, how you set up your studio. Offer a call and get paid before it starts.'
+      heroDescription='Dedicated coaching tools are part of the upcoming Nelsy Creator plan. Today, on the Independent plan, you can already add a paid session as a service on your booking page, with payment at booking. Join the waitlist to hear when the Creator plan opens.'
       icon={UserRound}
       benefits={[
-        { title: 'No product to create', desc: 'A coaching call sells your experience directly. You can launch it today.' },
-        { title: 'Booked and paid upfront', desc: 'Clients pick a slot on your calendar and pay when they book, so no unpaid calls.' },
-        { title: 'Same calendar as your services', desc: 'Coaching sessions use your Nelsy booking calendar, so you never double-book.' },
-        { title: '0% Nelsy commission', desc: 'You keep your revenue. Standard payment processing fees apply.' },
+        { title: 'No product to create', desc: 'A coaching call sells your experience directly: how you priced your services, found your first clients or set up your studio.' },
+        { title: 'Booked and paid upfront, today', desc: 'Add a session as a service with full payment at booking, so there are no unpaid calls.' },
+        { title: 'Same calendar as your services', desc: 'Sessions booked as services use your Nelsy booking calendar, so you never double-book.' },
+        { title: '0% Nelsy commission', desc: 'Nelsy takes no commission on bookings. Standard payment processing fees apply.' },
       ]}
       steps={[
         { step: '1', title: 'Create a coaching offer', desc: 'Set the length, the price and what the session covers.' },
@@ -28,13 +29,13 @@ export default function CoachingPage() {
         'Video or in-person skill sessions',
       ]}
       faq={[
-        { q: 'Can I do coaching sessions by video?', a: 'Yes. You decide whether a session happens by video or in person and add the details to your offer.' },
-        { q: 'Do clients pay before the session?', a: 'Yes, clients pay when they book, so your time is protected.' },
+        { q: 'Can I sell coaching on Nelsy today?', a: 'Yes, as a regular service: add the session to your booking page with a length, a price and full payment at booking, on the Independent plan. Dedicated coaching tools are part of the upcoming Creator plan; join the waitlist at hello@getnelsy.com.' },
+        { q: 'Can I do coaching sessions by video?', a: 'Yes. Say in the service description that the session happens by video. Nelsy does not add a meeting link to the booking yet, so send the link to the email or phone number the client gives when booking.' },
         { q: 'Does Nelsy take a commission?', a: 'No. Nelsy charges 0% commission. Standard payment processing fees apply.' },
       ]}
       relatedFeatures={[
         { slug: 'bookings', title: 'Bookings', route: '/features/bookings' },
-        { slug: 'courses', title: 'Courses', route: '/features/courses' },
+        { slug: 'payments', title: 'Payments', route: '/features/payments' },
         { slug: 'deposits', title: 'Deposits', route: '/features/deposits' },
       ]}
     />

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Understanding nail file grit numbers is one of the first things to get right as a nail tech. The wrong grit damages nails or won\'t do the job. Here\'s the complete guide.',
   seoDescription: "Nail file grit chart: what 80, 100, 180 and 240 grit are for, which grit to use on natural nails, gel and acrylic, and how to avoid damage.",
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail file grit', 'nail files', 'nail tech tools', 'nail file guide'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'Nail file grit guide for nail techs',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A content calendar removes the daily "what do I post?" stress and helps you stay consistent without scrambling. Here\'s how to build one that actually works for a busy nail tech.',
   seoDescription: 'How to create a 30-day nail tech content calendar. Content mix, posting schedule, planning your content categories, and a week-by-week framework you can follow.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech content calendar', 'nail tech social media planning', 'nail tech instagram schedule', 'nail tech content ideas'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'How to create a nail tech content calendar',

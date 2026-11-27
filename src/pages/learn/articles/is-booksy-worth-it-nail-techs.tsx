@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Booksy charges a monthly subscription. Is it worth it for nail techs? Here\'s an honest assessment of what Booksy offers, where it excels, and when you should consider alternatives.',
   seoDescription: 'Is Booksy worth it for nail techs? Honest review of Booksy, what the subscription gets you, who it suits, where it falls short, and whether the cost is justified.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['is Booksy worth it nail tech', 'Booksy review nail tech', 'Booksy nail tech booking'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FECDD3 100%)',
   heroImageAlt: 'Is Booksy worth it for nail techs',

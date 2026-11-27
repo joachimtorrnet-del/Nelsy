@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Gel-X is a system with specific technique requirements. Here are the most common Gel-X mistakes nail techs make, and how to approach fixing each one.',
   seoDescription: 'Common Gel-X mistakes and how to fix them: lifting at the cuticle, air bubbles, tips popping off, sizing errors and prep problems, with a quick fix table.',
   category: 'nail-education',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['gel-x mistakes', 'gel-x application tips', 'gel-x lifting', 'gel-x nail technique'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FECDD3 100%)',
   heroImageAlt: 'Common Gel-X mistakes and how to fix them',

@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Where should a nail tech, lash artist or makeup artist sell an online course? Kajabi, Teachable, Stan, Beacons and Nelsy compared on price, transaction fees, product limits and bookings.',
   seoDescription: 'Kajabi, Teachable, Stan, Beacons and Nelsy compared for beauty educators: price, transaction fees, product limits, coaching and bookings.',
   category: 'beauty-creators',
+  audience: ['creators'],
+  craft: 'all',
   tags: ['best platform to sell beauty courses', 'sell nail course online', 'sell lash course online', 'Kajabi vs Teachable', 'Kajabi vs Stan'],
   heroImage: 'linear-gradient(135deg, #EEF2FF 0%, #C7D2FE 100%)',
   heroImageAlt: 'Best platforms to sell beauty courses compared',
@@ -19,12 +21,12 @@ registerArticle({
   publishedAt: '2026-11-26',
   tldr: {
     answer: 'For a first beauty course, a link-in-bio store is usually enough; a full course platform pays off later.',
-    detail: 'Stan and Nelsy both let you sell a course for $25 to $29 a month with 0% platform fees (Stan lists 0% transaction fees; Nelsy charges 0% Nelsy commission). Kajabi and Teachable go deeper on course delivery, community and marketing, at a higher price or with product limits.',
+    detail: 'Stan lets you sell a course for $25 to $29 a month with 0% transaction fees. Kajabi and Teachable go deeper on course delivery, community and marketing, at a higher price or with product limits. Nelsy covers bookings today; selling courses on Nelsy is part of the upcoming Creator plan.',
     points: [
       { label: 'Kajabi', text: 'Best for established educators running courses, community and email in one place.' },
       { label: 'Teachable', text: 'Best for a dedicated course school with a low entry plan.' },
       { label: 'Stan / Beacons', text: 'Best for creators selling a course alongside other digital products.' },
-      { label: 'Nelsy', text: 'Best for working pros who sell a course and still take clients and in-person training.' },
+      { label: 'Nelsy', text: 'Best for booking in-person training and clients today; course selling is part of the upcoming Creator plan.' },
     ],
   },
   toc: [
@@ -39,10 +41,10 @@ registerArticle({
   ],
   relatedSlugs: ['how-to-sell-a-nail-course-online', 'stan-store-alternatives-for-beauty-creators', 'how-to-make-money-as-a-beauty-creator', 'best-link-in-bio-for-beauty-creators'],
   faq: [
-    { q: 'What is the best platform to sell a nail or lash course?', a: 'For a first course, a store like Stan or Nelsy keeps costs at $25 to $29 a month with 0% platform fees. Once courses are a major income, Kajabi or Teachable offer more advanced course and community tools.' },
+    { q: 'What is the best platform to sell a nail or lash course?', a: 'For a first course, a store like Stan keeps costs at $25 to $29 a month with 0% transaction fees. Once courses are a major income, Kajabi or Teachable offer more advanced course and community tools. Nelsy does not sell courses yet: that is part of its upcoming Creator plan.' },
     { q: 'Is Kajabi worth it for beauty educators?', a: 'Kajabi starts at $179/month ($143/month billed annually) for 5 products and 2,500 contacts. It is worth it when you have an audience, several courses and a community to run. For one course, it is expensive.' },
     { q: 'Does Teachable take a cut of course sales?', a: 'Teachable\'s Starter plan ($39/month, or $29/month billed annually) has a 7.5% transaction fee. Builder and Growth list 0% transaction fees when you use Teachable Payments. Card processing still applies.' },
-    { q: 'Can I sell a course and in-person training on the same page?', a: 'With Nelsy you can sell an online course and list in-person training or client services as bookable services, each with pay on arrival, a deposit or full payment upfront.' },
+    { q: 'Can I sell a course and in-person training on the same page?', a: 'Not on Nelsy yet. Today Nelsy lists in-person training or client services as bookable services, each with pay on arrival, a deposit or full payment upfront. Selling online courses next to them is part of the upcoming Creator plan. Meanwhile, you can sell the course on a course platform and link both from your bio.' },
   ],
   relatedFeatureSlugs: ['courses', 'coaching', 'memberships'],
   relatedLinks: { tool: '/tools/creator-rate-calculator', pages: ['/features/courses', '/features/coaching', '/use-cases/beauty-creators'] },
@@ -71,7 +73,7 @@ registerArticle({
             ['Teachable', 'Starter $39/month ($29 billed annually)', '7.5% on Starter; 0% on Builder and up with Teachable Payments', '5 published products', '7 days on Starter'],
             ['Stan', 'Creator $29/month ($25 billed yearly)', '0% transaction fees', 'Payment plans (Afterpay, Klarna) need Creator Pro', 'No free plan'],
             ['Beacons', 'Not shown on a public page we could check', 'Not verified', 'Not verified', 'Not verified'],
-            ['Nelsy', '$29/month ($25 billed yearly)', '0% Nelsy commission', 'Courses, digital products, coaching and memberships', '14 days'],
+            ['Nelsy', '$29/month ($25 billed yearly), Independent plan', '0% Nelsy commission', 'Bookings, deposits and payments today; courses: Creator plan (waitlist)', '14 days'],
           ]}
         />
         <p className="text-gray-700 mt-4 leading-relaxed text-sm">Payment processing fees apply on every platform. Prices checked on November 27, 2026 on each vendor&apos;s official pricing page.</p>
@@ -124,13 +126,13 @@ registerArticle({
       <section id="nelsy">
         <h2 className="font-serif text-2xl font-bold mb-4">5. Nelsy</h2>
         <p className="text-gray-700 mb-4 leading-relaxed">
-          Nelsy is built for beauty pros who teach while still working with clients. You sell courses, digital products, coaching and memberships on the same page as your bookable services. In-person training days or client appointments can each be set to pay on arrival, a deposit or full payment upfront. $29/month or $25/month billed yearly, 14-day trial, 0% Nelsy commission (standard Stripe fees apply).
+          Nelsy is built for beauty pros who teach while still working with clients. Today, on the Independent plan, it handles the booking side: in-person training days or client appointments can each be set to pay on arrival, a deposit or full payment upfront, from your link in bio. $29/month or $25/month billed yearly, 14-day trial, 0% Nelsy commission (standard Stripe fees apply). Selling online courses, digital products and coaching is part of the upcoming Creator plan; you can <a href="mailto:hello@getnelsy.com?subject=Creator%20waitlist" className={ext}>join the waitlist</a>.
         </p>
-        <p className="text-gray-700 mb-4"><strong>Best for:</strong> nail techs, lash artists and makeup artists who sell an online course and in-person training from one link.</p>
+        <p className="text-gray-700 mb-4"><strong>Best for:</strong> nail techs, lash artists and makeup artists who want bookings and deposits for in-person training and clients, alongside a course sold elsewhere for now.</p>
         <ArticleComparison
           items={[
-            { label: 'Pros', pros: ['Course and bookings on one page', 'Deposit option for in-person training', '0% Nelsy commission'], cons: [] },
-            { label: 'Cons', pros: [], cons: ['Less course depth than Kajabi or Teachable', 'No community features like Kajabi', 'No free plan'] },
+            { label: 'Pros', pros: ['Bookings with deposits for in-person training', 'Pay on arrival, deposit or full payment per service', '0% Nelsy commission'], cons: [] },
+            { label: 'Cons', pros: [], cons: ['No course selling yet (upcoming Creator plan)', 'No community features like Kajabi', 'No free plan'] },
           ]}
         />
       </section>
@@ -138,14 +140,14 @@ registerArticle({
       <section id="verdict">
         <h2 className="font-serif text-2xl font-bold mb-4">Verdict</h2>
         <ul className="list-disc list-inside space-y-2 text-gray-700 mb-4">
-          <li><strong>First course, small audience:</strong> Stan or Nelsy.</li>
-          <li><strong>Course plus clients and in-person training:</strong> Nelsy.</li>
+          <li><strong>First course, small audience:</strong> Stan.</li>
+          <li><strong>Course plus clients and in-person training:</strong> sell the course on Stan, Kajabi or Teachable, and take bookings and deposits on Nelsy.</li>
           <li><strong>Several courses and a community:</strong> Kajabi.</li>
           <li><strong>A school with a low entry price:</strong> Teachable, moving to Builder once sales justify it.</li>
         </ul>
         <ArticleTip>Validate demand before you pay for a big platform: pre-sell the course or run a live class first. Our guide on <Link to="/blog/how-to-sell-a-nail-course-online" className={ext}>how to sell a nail course online</Link> walks through it.</ArticleTip>
         <p className="text-gray-700 mt-4 leading-relaxed">
-          See how courses and bookings look together in the <Link to="/demo" className={ext}>Nelsy demo</Link>.
+          See how a Nelsy booking page looks in the <Link to="/demo" className={ext}>live demo</Link>.
         </p>
       </section>
     </div>

@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'No-shows are one of the most frustrating parts of running a nail business. Here\'s how to respond professionally, enforce your policy fairly, and reduce no-shows in the first place.',
   seoDescription: 'How to handle nail client no-shows professionally. How to respond, enforce your cancellation policy, message scripts, and systems to reduce no-shows going forward.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client no-show', 'nail no-show policy', 'nail cancellation', 'nail tech no-show'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FDDBB5 100%)',
   heroImageAlt: 'How to handle nail client no-shows professionally',

@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Announcing a price increase feels awkward, but most clients are fine with it when it\'s communicated well. Templates for announcing your price rise with confidence.',
   seoDescription: 'Nail tech price increase message templates. Copy-paste messages for announcing a nail price increase: to existing clients, on social media, and in your bio.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech price increase message', 'nail tech raising prices template', 'price increase message nail tech'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #F3E8FF 100%)',
   heroImageAlt: 'Nail tech price increase message templates',

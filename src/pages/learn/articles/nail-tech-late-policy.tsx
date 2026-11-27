@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Late clients affect your whole day. Here\'s how to handle lateness professionally, with policy templates, communication scripts, and when to turn clients away.',
   seoDescription: 'Nail tech late policy examples and templates. How to handle late clients professionally, when to turn them away, and how to communicate your policy clearly.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['late clients', 'nail tech late policy', 'client management', 'lateness policy'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 100%)',
   heroImageAlt: 'Nail tech late policy examples',

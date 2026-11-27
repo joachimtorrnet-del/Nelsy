@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Templates for every cancellation scenario, when the client cancels, when you need to cancel, and how to handle last-minute cancellations professionally.',
   seoDescription: 'Nail tech cancellation message templates for when clients cancel, when you cancel, last-minute cancellations and keeping deposits.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech cancellation message template', 'nail appointment cancellation message', 'cancellation message nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%)',
   heroImageAlt: 'Nail tech cancellation message templates',

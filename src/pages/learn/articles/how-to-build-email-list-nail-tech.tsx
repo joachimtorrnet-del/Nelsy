@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'An email list is the only marketing channel you fully own. Unlike Instagram, you\'re not at the mercy of an algorithm, when you want to fill your calendar, you email your list.',
   seoDescription: 'How to build an email list as a nail tech: why email matters for nail businesses, how to collect emails, what to send and how to fill your calendar.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['email marketing nail tech', 'nail tech email list', 'nail business marketing', 'nail tech client list'],
   heroImage: 'linear-gradient(135deg, #FFFBEB 0%, #FDE68A 100%)',
   heroImageAlt: 'How to build an email list as a nail tech',

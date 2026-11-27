@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Following up with clients after an appointment builds loyalty and drives rebooking. Templates for post-appointment follow-ups, win-back messages, and checking in.',
   seoDescription: 'Nail tech client follow-up message templates. Post-appointment follow-up, win-back messages, and check-in templates for nail techs to boost rebooking and retention.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech follow-up message template', 'nail appointment follow-up', 'client follow-up nail tech'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FCE4F5 100%)',
   heroImageAlt: 'Nail tech client follow-up message templates',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A complete booking policy template for nail techs: covering deposits, cancellations, rescheduling, late arrivals, and no-shows in one place.',
   seoDescription: 'Nail tech booking policy template. Complete policy covering deposits, cancellations, rescheduling, late arrivals, and no-shows: copy, edit, and use immediately.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking policy', 'nail tech policy template', 'nail policy', 'client booking policy'],
   heroImage: 'linear-gradient(135deg, #F0FDFA 0%, #99F6E4 100%)',
   heroImageAlt: 'Nail tech booking policy template',

@@ -40,13 +40,13 @@ export const PAGE_LINKS = {
   '/features/link-in-bio': { label: 'Link in bio', desc: 'One link for your services, products and socials.' },
   '/features/crm': { label: 'Client list', desc: 'Every client, visit and note in one place.' },
   '/features/analytics': { label: 'Analytics', desc: 'See bookings, revenue and where clients come from.' },
-  '/features/courses': { label: 'Courses', desc: 'Sell an online course from the same page.' },
-  '/features/digital-products': { label: 'Digital products', desc: 'Sell guides, presets and templates.' },
-  '/features/coaching': { label: 'Coaching', desc: 'Sell 1:1 sessions with other pros.' },
-  '/features/memberships': { label: 'Memberships', desc: 'Recurring income from your community.' },
+  '/features/courses': { label: 'Courses', desc: 'Part of the upcoming Creator plan.' },
+  '/features/digital-products': { label: 'Digital products', desc: 'Guides and templates: part of the upcoming Creator plan.' },
+  '/features/coaching': { label: 'Coaching', desc: 'Coaching tools: part of the upcoming Creator plan.' },
+  '/features/memberships': { label: 'Memberships', desc: 'Part of the upcoming Creator plan.' },
   '/use-cases/nail-techs': { label: 'Nelsy for nail techs', desc: 'Booking page, deposits and client list for nail techs.' },
   '/use-cases/lash-techs': { label: 'Nelsy for lash techs', desc: 'Fills, full sets and deposits on one page.' },
-  '/use-cases/beauty-creators': { label: 'Nelsy for beauty creators', desc: 'Sell courses and products next to your bookings.' },
+  '/use-cases/beauty-creators': { label: 'Nelsy for beauty creators', desc: 'Start with bookings today; the Creator plan is on the way.' },
   '/use-cases/independent-beauty-pros': { label: 'Nelsy for independent beauty pros', desc: 'Everything a solo beauty business needs.' },
   '/use-cases/reduce-no-shows': { label: 'Reduce no-shows', desc: 'Deposits, reminders and a clear policy.' },
   '/use-cases/turn-followers-into-bookings': { label: 'Turn followers into bookings', desc: 'From Instagram to a booked appointment.' },
@@ -66,7 +66,8 @@ export const CATEGORY_LINKS: Record<ArticleCategory, { tool: ToolPath; pages: Pa
   'nail-inspo':          { tool: '/tools/nail-tech-pricing-calculator', pages: ['/use-cases/nail-techs', '/features/link-in-bio'] },
   comparisons:           { tool: '/tools/nail-tech-appointment-reminder-templates', pages: ['/features/bookings', '/features/deposits'] },
   'branding-growth':     { tool: '/tools/instagram-engagement-calculator', pages: ['/features/link-in-bio', '/use-cases/independent-beauty-pros'] },
-  'beauty-creators':     { tool: '/tools/creator-rate-calculator', pages: ['/use-cases/beauty-creators', '/features/courses'] },
+  'beauty-creators':     { tool: '/tools/creator-rate-calculator', pages: ['/features/link-in-bio', '/features/bookings'] },
+  salons:                { tool: '/tools/no-show-cost-calculator', pages: ['/features/bookings', '/use-cases/reduce-no-shows'] },
 };
 
 // ─── In-body photos (Unsplash) ───────────────────────────────────────────────
@@ -143,6 +144,19 @@ export const PHOTO_POOLS = {
     p('1678695692040-e9a39502c357', 'Makeup brushes arranged on a pink and burgundy background'),
     p('1631730486572-226d1f595b68', 'Makeup and skincare bottles on a pink surface'),
   ],
+  creator: [
+    p('1596704017254-9b121068fb31', 'Hand holding a makeup brush over an eyeshadow palette next to a laptop'),
+    p('1631214540553-ff044a3ff1d4', 'Open mascara tube and wand on a pink background'),
+    p('1617897903246-719242758050', 'Dropper bottle of oil on a round wooden board with eucalyptus leaves'),
+    p('1499750310107-5fef28a66643', 'Laptop, coffee cup, notepad and phone on a wooden desk'),
+    p('1460925895917-afdab827c52f', 'Laptop showing an analytics dashboard with charts'),
+    p('1563986768609-322da13575f3', 'Hand holding a phone in front of a laptop in a cafe'),
+    p('1586281380349-632531db7ed4', 'Clipboard with a blank checklist next to a laptop on a marble desk'),
+    p('1484480974693-6ca0a78fb36b', 'Hand writing a checklist in an open notebook'),
+    p('1593642632559-0c6d3fc62b89', 'Bright home office with a laptop and monitor by a large window'),
+    p('1554224155-6726b3ff858f', 'Hands sorting paperwork next to a calculator on a white desk'),
+    p('1607082348824-0a96f2a4b9da', 'Red and black gift shopping bags with ribbon handles on a dark background'),
+  ],
   skincare: [
     p('1583209814683-c023dd293cc6', 'Pink skincare jars and tubes laid out on a light background'),
     p('1608571423902-eed4a5ad8108', 'Amber dropper bottle on a wooden stand'),
@@ -163,7 +177,8 @@ const CATEGORY_POOLS: Record<ArticleCategory, PoolName[]> = {
   'nail-inspo':          ['nails'],
   comparisons:           ['desk', 'payments', 'studio'],
   'branding-growth':     ['studio', 'desk', 'nails'],
-  'beauty-creators':     ['desk', 'makeup', 'skincare'],
+  'beauty-creators':     ['creator', 'makeup', 'skincare', 'desk'],
+  salons:                ['studio', 'planning', 'payments'],
 };
 
 // Topic words in the slug that call for a more specific pool (checked in order)

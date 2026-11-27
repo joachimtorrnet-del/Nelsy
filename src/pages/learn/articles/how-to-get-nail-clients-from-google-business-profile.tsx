@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A well-optimised Google Business Profile puts your nail business in front of local clients actively searching for nail services. Here\'s how to set it up and make it work.',
   seoDescription: 'How to get nail clients from Google Business Profile: set up, optimise and get found on Google Maps with reviews, photos and local SEO.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Google Business Profile nail tech', 'local SEO nail tech', 'Google Maps nail', 'nail business local search'],
   heroImage: 'linear-gradient(135deg, #F0F9FF 0%, #BAE6FD 100%)',
   heroImageAlt: 'How to get nail clients from Google Business Profile',

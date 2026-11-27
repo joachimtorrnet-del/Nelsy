@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Running a nail business means managing more than just bookings. Here are the business apps nail techs use for finances, photos, content, communication, and admin.',
   seoDescription: 'Best business apps for nail techs. Apps for finances, scheduling, photos, editing, social media, client communication, and running a nail business from your phone.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['business apps nail techs', 'nail tech apps', 'nail business tools', 'apps for nail techs'],
   heroImage: 'linear-gradient(135deg, #F5F3FF 0%, #EDE9FE 100%)',
   heroImageAlt: 'Best business apps for nail techs',

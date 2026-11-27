@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'The nail service is only part of what clients pay for. The experience around it, from booking to walking out the door, is what determines whether they come back and refer others.',
   seoDescription: 'How to create a better nail client experience: every touchpoint from booking to follow-up, what excellent looks like and how to improve each stage.',
   category: 'policies-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail client experience', 'nail tech client service', 'nail appointment experience', 'nail client satisfaction'],
   heroImage: 'linear-gradient(135deg, #FFF0F6 0%, #FBCFE8 100%)',
   heroImageAlt: 'How to create a better nail client experience',

@@ -18,6 +18,8 @@ registerArticle({
   seoDescription:
     'Nail tech pricing guide: cost-based pricing, market positioning, structuring your menu, pricing nail art and raising rates without losing clients.',
   category: 'pricing-money',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['pricing', 'rates', 'service menu', 'nail art', 'raise prices', 'income'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FED7AA 70%, #FDBA74 100%)',
   heroImageAlt: 'Nail tech pricing guide',

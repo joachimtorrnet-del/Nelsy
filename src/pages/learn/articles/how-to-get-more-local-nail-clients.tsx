@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Local clients are the lifeblood of every nail business. A practical guide to building a steady stream of clients in your area: beyond just Instagram.',
   seoDescription: 'How to get more local nail clients. Strategies covering local SEO, Google Business, community groups, referrals, collaborations, and Instagram location targeting.',
   category: 'get-clients',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['local clients', 'local marketing', 'nail business', 'Google Business'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #93C5FD 100%)',
   heroImageAlt: 'How to get more local nail clients',

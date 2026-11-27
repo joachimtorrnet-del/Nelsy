@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Square Appointments is a solid general tool, but it wasn\'t built with nail techs in mind. Here are the alternatives worth considering if Square Appointments doesn\'t meet your needs.',
   seoDescription: 'Square Appointments alternatives for nail techs: who Square suits, where it falls short and the booking software that fits nail businesses better.',
   category: 'comparisons',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['Square Appointments alternatives', 'nail tech booking software', 'Square vs nail booking apps'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'Square Appointments alternatives for nail techs',

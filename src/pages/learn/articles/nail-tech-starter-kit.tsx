@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A practical guide to building your nail tech starter kit, what\'s essential, what can wait, and what to avoid buying before you know what you need.',
   seoDescription: 'Nail tech starter kit guide: essential equipment, products, tools, and what to buy first. Avoid overspending on gear you don\'t need as a beginner nail tech.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['nail tech starter kit', 'nail tech equipment', 'nail supplies', 'starter kit'],
   heroImage: 'linear-gradient(135deg, #FFF7ED 0%, #FDBA74 100%)',
   heroImageAlt: 'Nail tech starter kit essentials',

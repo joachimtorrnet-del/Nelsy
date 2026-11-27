@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A step-by-step guide to launching a nail business in 2026, from training and insurance to your first clients and booking system.',
   seoDescription: 'How to start a nail business in 2026. Everything you need: training, insurance, equipment, pricing, Instagram, booking software, and getting your first clients.',
   category: 'start-your-business',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['start nail business', 'nail business 2026', 'new nail tech', 'nail business setup'],
   heroImage: 'linear-gradient(135deg, #FDF4FF 0%, #E9D5FF 100%)',
   heroImageAlt: 'How to start a nail business in 2026',

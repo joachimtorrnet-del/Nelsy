@@ -11,6 +11,8 @@ registerArticle({
   excerpt: 'Before you sign up for any booking platform, know which features actually matter for a nail business, and which ones you can safely ignore.',
   seoDescription: 'What features should nail tech booking software have? A practical checklist covering deposits, service menus, reminders, payments, and what to avoid.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking software', 'booking features', 'nail tech tools', 'deposits', 'reminders'],
   heroImage: 'linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%)',
   heroImageAlt: 'Nail tech booking software features guide',

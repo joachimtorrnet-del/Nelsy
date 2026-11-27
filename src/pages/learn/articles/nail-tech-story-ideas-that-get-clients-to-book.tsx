@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Instagram Stories are where nail clients make their decision to book. These story ideas are designed to drive direct bookings, not just views.',
   seoDescription: 'Nail tech Instagram story ideas that get clients to book. 50+ story ideas for nail techs: booking prompts, behind the scenes, availability posts, and more.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['instagram stories', 'nail tech instagram', 'nail tech content ideas', 'booking prompts'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #BBF7D0 100%)',
   heroImageAlt: 'Nail tech Instagram story ideas',

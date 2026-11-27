@@ -8,6 +8,8 @@ registerArticle({
   excerpt: 'Spring nails are soft, fresh, and full of possibility. Here are 50 spring nail ideas, from delicate florals to pale pastels and bright early-season colours.',
   seoDescription: "50 spring nail ideas: pastel colors, floral nail art, light pink, mint, lavender and fresh spring nail designs for short and long nails.",
   category: 'nail-inspo',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['spring nail ideas', 'spring nails', 'spring nail designs'],
   heroImage: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)',
   heroImageAlt: '50 spring nail ideas',

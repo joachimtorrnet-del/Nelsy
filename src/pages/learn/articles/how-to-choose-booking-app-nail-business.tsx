@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'A step-by-step decision guide for nail techs evaluating booking apps, what questions to ask, what to test, and how to avoid wasting time on the wrong platform.',
   seoDescription: 'How to choose the right booking app for your nail business. A decision guide covering setup, deposits, service menus, fees, and what to test before committing.',
   category: 'booking-software',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['booking app', 'decision guide', 'nail tech tools', 'switching booking systems'],
   heroImage: 'linear-gradient(135deg, #F0F4FF 0%, #C7D2FE 100%)',
   heroImageAlt: 'How to choose a booking app for nail techs',

@@ -9,6 +9,8 @@ registerArticle({
   excerpt: 'Stop staring at a blank caption box. Content pillars give your Instagram a strategy, so you always know what to post, why, and for whom.',
   seoDescription: 'Nail tech content pillars explained. The 5 content types every nail tech should post, with examples for each pillar and a weekly planning framework.',
   category: 'instagram-content',
+  audience: ['pros'],
+  craft: 'nails',
   tags: ['content pillars', 'nail tech content strategy', 'instagram strategy', 'nail tech social media'],
   heroImage: 'linear-gradient(135deg, #FAF5FF 0%, #E9D5FF 100%)',
   heroImageAlt: 'Nail tech content pillars framework',
