@@ -11,12 +11,41 @@ export default function ResetPassword() {
   const [error, setError] = useState('');
   const [ready, setReady] = useState(false);
 
+  const [linkError, setLinkError] = useState('');
+
   useEffect(() => {
     if (!supabase) return;
-    supabase.auth.onAuthStateChange((event) => {
-      if (event === 'PASSWORD_RECOVERY') setReady(true);
+
+    // Expired or already-used links come back with the error in the URL (hash or query)
+    const params = new URLSearchParams(window.location.hash.slice(1) || window.location.search);
+    const urlError = params.get('error_description') || params.get('error');
+    if (urlError) {
+      setLinkError(urlError.replace(/\+/g, ' '));
+      return;
+    }
+
+    // The recovery event can fire before this page mounts, so also accept an existing session
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY' || (event === 'SIGNED_IN' && session)) setReady(true);
     });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) setReady(true);
+    });
+
+    // Never spin forever: after 8 seconds without a session, the link is not valid
+    const timer = window.setTimeout(() => {
+      setLinkError((prev) => prev || 'This reset link is invalid or has expired.');
+    }, 8000);
+
+    return () => {
+      subscription.unsubscribe();
+      window.clearTimeout(timer);
+    };
   }, []);
+
+  useEffect(() => {
+    if (ready) setLinkError('');
+  }, [ready]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,6 +67,26 @@ export default function ResetPassword() {
       setLoading(false);
     }
   };
+
+  if (!ready && linkError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#F52B8C] to-[#E0167A] flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">This link has expired</h1>
+          <p className="text-gray-600 mb-6">
+            Reset links work once and expire after a while. Request a new one and use the most recent email.
+          </p>
+          <button
+            type="button"
+            onClick={() => navigate('/forgot-password')}
+            className="w-full bg-[#F52B8C] text-white font-semibold py-4 rounded-2xl hover:bg-[#E0167A] transition"
+          >
+            Send me a new link
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (!ready) {
     return (
