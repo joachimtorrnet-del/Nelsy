@@ -40,6 +40,8 @@ export interface DbProfileRow {
     new_bookings: boolean;
     purchase_confirmations: boolean;
     reminders: boolean;
+    /** Client email reminder 24h before each booking. Absent = on. */
+    client_reminders?: boolean;
   } | null;
   created_at: string;
   updated_at: string;

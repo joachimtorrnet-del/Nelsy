@@ -28,7 +28,7 @@ export default function IndependentBeautyPros() {
         },
         {
           heading: 'Fewer no-shows',
-          body: 'Deposits make clients commit, and confirmations go out automatically to you and your client. Set your own cancellation policy and keep your calendar protected.',
+          body: 'Deposits make clients commit, confirmations go out automatically to you and your client, and clients get an email reminder 24 hours before each appointment. Add your cancellation policy to your service descriptions so clients see it before they book.',
         },
         {
           heading: 'Your brand, not a marketplace listing',
@@ -36,7 +36,7 @@ export default function IndependentBeautyPros() {
         },
         {
           heading: 'Built for your craft',
-          body: 'Nail techs, lash artists, brow artists, makeup artists, hairstylists and estheticians use the same booking page, with services, add-ons and durations set the way your work actually runs.',
+          body: 'Nail techs, lash artists, brow artists, makeup artists, hairstylists and estheticians use the same booking page, with services, prices and durations set the way your work actually runs.',
         },
       ]}
       faq={[

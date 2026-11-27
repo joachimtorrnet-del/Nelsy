@@ -13,12 +13,12 @@ export default function NailTechs() {
       crumb="Nail techs"
       seo={{
         title: 'Nail Tech Booking App: Deposits, Reminders, Link in Bio',
-        description: `Booking app for independent nail techs: clients book from your link in bio, pay a deposit and get automatic reminders. 0% commission, ${TRIAL_DAYS}-day free trial.`,
+        description: `Booking app for independent nail techs: clients book from your link in bio, pay a deposit and get an email reminder 24 hours before. 0% commission, ${TRIAL_DAYS}-day free trial.`,
       }}
       hero={{
         eyebrow: 'For independent nail techs',
         title: <>Get booked, get paid, and stop chasing <span className="whitespace-nowrap">no-shows.</span></>,
-        sub: 'One booking page for your link in bio, with deposits, online payments and automatic reminders. Made for nail techs working from home, a suite, a salon chair or on the road.',
+        sub: 'One booking page for your link in bio, with deposits, online payments and email reminders 24 hours before each appointment. Made for nail techs working from home, a suite, a salon chair or on the road.',
         checks: [
           'Clients book 24/7 from your Instagram or TikTok bio',
           'Pay on arrival, a deposit or full payment, per service',
@@ -55,7 +55,7 @@ export default function NailTechs() {
             pain: 'Bookings stuck in your DMs',
             painText: '"How much for a Gel-X full set?" "Are you free Saturday?" You answer between clients, and people who wait too long for a reply book someone else.',
             fix: 'A booking page that answers for you',
-            fixText: 'Clients see your sets, add-ons, prices and real open times, pick a slot and confirm without messaging you. You get the booking, they get a confirmation.',
+            fixText: 'Clients see your sets, prices and real open times, pick a slot and confirm without messaging you. You get the booking, they get a confirmation.',
             link: { label: 'How online booking works', to: '/features/bookings' },
           },
           {
@@ -63,7 +63,7 @@ export default function NailTechs() {
             pain: 'No-shows on two-hour sets',
             painText: 'An empty slot for a full set or nail art is income you cannot sell twice, and asking for a deposit by bank transfer feels awkward every time.',
             fix: 'Deposits taken at booking',
-            fixText: 'Set a deposit per service, a fixed amount or a percentage, or ask for full payment upfront. The slot is confirmed once it is paid, and an automatic reminder goes out before the appointment.',
+            fixText: 'Set a fixed deposit amount per service, or ask for full payment upfront. The slot is confirmed once it is paid, and clients get an email reminder 24 hours before the appointment.',
             link: { label: 'Deposits on Nelsy', to: '/features/deposits' },
           },
           {
@@ -80,9 +80,9 @@ export default function NailTechs() {
         title: 'Set up in an afternoon',
         sub: 'No website, no code. If you can post your sets on Instagram, you can set up Nelsy.',
         items: [
-          { title: 'Add your services', text: 'Pick a template, add your sets, fills and add-ons with prices, durations and photos, and choose pay on arrival, a deposit or full payment for each one.' },
-          { title: 'Set your hours', text: 'Add your working hours, days off and buffer time between appointments. Clients only see the times you can actually take.' },
-          { title: 'Share your link', text: 'Put your Nelsy link in your Instagram and TikTok bio, stories and DMs. Bookings, deposits and reminders run on their own.' },
+          { title: 'Add your services', text: 'Pick a template, add your sets and fills with prices, durations and photos, and choose pay on arrival, a deposit or full payment for each one.' },
+          { title: 'Set your hours', text: 'Add the days and hours you work. Clients only see the times you can actually take.' },
+          { title: 'Share your link', text: 'Put your Nelsy link in your Instagram and TikTok bio, stories and DMs. Bookings, deposits and email reminders run on their own.' },
         ],
         cta: START,
       }}
@@ -90,8 +90,8 @@ export default function NailTechs() {
         title: 'Everything you need to run your books',
         sub: 'All of this is included in the Independent plan today.',
         items: [
-          { icon: Calendar, title: 'Online booking', text: 'Clients pick a service and a time 24/7, with no app or account to create. Automatic reminders before each visit.', to: '/features/bookings', availability: 'today' },
-          { icon: Wallet, title: 'Deposits', text: 'A fixed or percentage deposit per service, collected at booking, so every slot is a real commitment.', to: '/features/deposits', availability: 'today' },
+          { icon: Calendar, title: 'Online booking', text: 'Clients pick a service and a time 24/7, with no app or account to create. Email reminder 24 hours before each appointment.', to: '/features/bookings', availability: 'today' },
+          { icon: Wallet, title: 'Deposits', text: 'A fixed deposit amount per service, collected at booking, so every slot is a real commitment.', to: '/features/deposits', availability: 'today' },
           { icon: CreditCard, title: 'Payments', text: 'Pay on arrival, a deposit or full payment upfront by card, paid out to your own account.', to: '/features/payments', availability: 'today' },
           { icon: Link2, title: 'Link in bio', text: 'One branded page with your sets, photos and socials, ready for your Instagram and TikTok bio.', to: '/features/link-in-bio', availability: 'today' },
           { icon: UsersRound, title: 'Client list', text: 'Every client who books lands in your list, with their visits, so rebooking regulars for fills is easy.', to: '/features/crm', availability: 'today' },
@@ -132,14 +132,14 @@ export default function NailTechs() {
       faq={[
         { q: 'Is Nelsy made for nail techs?', a: 'Yes. Nelsy is built nail-first: independent nail techs working from home, a suite, a rented chair or on the road. Lash, brow, makeup, hair and skin pros use it too.' },
         { q: 'Do my clients need an app or an account to book?', a: 'No. Clients open your link, pick a service and a time, and confirm. There is nothing to download and no account to create.' },
-        { q: 'How do deposits work?', a: 'For each service you choose pay on arrival, a deposit (a fixed amount or a percentage) or full payment upfront. Clients pay by card when they book, and the appointment is confirmed once the deposit is paid. The rest is collected at the appointment.' },
+        { q: 'How do deposits work?', a: 'For each service you choose pay on arrival, a deposit (a fixed amount you set per service) or full payment upfront. Clients pay by card when they book, and the appointment is confirmed once the deposit is paid. The rest is collected at the appointment.' },
         { q: 'Does Nelsy take a commission on my bookings?', a: 'No. Nelsy charges 0% commission on bookings. You pay your plan, and standard payment processing fees apply to online payments.' },
         { q: 'Can I use Nelsy as my Instagram link in bio?', a: 'Yes. Your Nelsy page has its own link (getnelsy.com/yourname) for your Instagram or TikTok bio, stories and DMs. It shows your services, photos and socials on one page.' },
         { q: 'How does the free trial work?', a: `You get ${TRIAL_DAYS} days free. A card is saved at signup and you pay $0 today. Your plan starts after the trial, and you can cancel anytime before it ends.` },
       ]}
       final={{
         title: 'Your nail chair, fully booked',
-        sub: 'Bookings, deposits, payments and reminders from one link in your bio.',
+        sub: 'Bookings, deposits, payments and email reminders from one link in your bio.',
         primary: START,
         secondary: EXAMPLE,
         note: `${TRIAL_DAYS}-day free trial · $0 today · Cancel anytime`,

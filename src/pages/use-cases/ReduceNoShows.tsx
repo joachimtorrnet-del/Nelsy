@@ -28,11 +28,11 @@ export default function ReduceNoShows() {
         },
         {
           heading: 'Automated reminders catch the rest',
-          body: 'Some clients simply forget. Automated appointment reminders sent before the appointment reduce those accidental no-shows without requiring any manual effort from you.',
+          body: 'Some clients simply forget. Nelsy emails each client a reminder 24 hours before the appointment, which catches those accidental no-shows without any manual effort from you.',
         },
         {
           heading: 'Set a clear cancellation policy',
-          body: 'Nelsy helps you communicate your cancellation policy at booking time, so clients know the rules before they confirm. No awkward conversations after the fact.',
+          body: 'Write your policy with the free cancellation policy generator and add it to your service descriptions, so clients see the rules on your booking page before they confirm. No awkward conversations after the fact.',
         },
       ]}
       faq={[
@@ -42,7 +42,7 @@ export default function ReduceNoShows() {
         },
         {
           q: 'What happens if a client cancels with enough notice?',
-          a: 'You can configure your cancellation policy in Nelsy. If a client cancels within your refund window, the deposit can be returned. If they cancel late or do not show, you keep it.',
+          a: 'That depends on your own policy. Nelsy does not refund deposits automatically: if your policy says the deposit is returned, you refund it from your Stripe dashboard. If they cancel late or do not show, you keep it.',
         },
         {
           q: 'Will requiring deposits hurt my bookings?',
@@ -50,7 +50,7 @@ export default function ReduceNoShows() {
         },
         {
           q: 'How do automated reminders work?',
-          a: 'Nelsy sends reminders to clients before their appointment automatically. You set the timing and the message is sent without any manual action from you.',
+          a: 'Nelsy emails each client a reminder 24 hours before their appointment, with the date, time and your studio page link. It is on by default and you can switch it off in Settings. Reminders are sent by email only, not by text message.',
         },
       ]}
       relatedFeatures={['deposits', 'bookings', 'payments', 'crm']}

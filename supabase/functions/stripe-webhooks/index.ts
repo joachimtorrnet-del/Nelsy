@@ -25,6 +25,8 @@ function createPostHogClient() {
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 import { esc, row, layout } from '../_shared/email.ts'
 import { markProductOrderPaid } from '../_shared/product-orders.ts'
+// Pro's own policy when stored, else neutral "contact the studio" wording (no invented policy).
+import { policyNoteHtml } from '../_shared/booking-reminders.ts'
 
 const FROM_EMAIL = 'Nelsy <hello@getnelsy.com>'
 
@@ -180,9 +182,7 @@ serve(async (req) => {
                       <tr><td style="color:#6b7280;padding:8px 0">Amount paid</td><td style="text-align:right;font-weight:700;color:#F52B8C;font-size:18px;padding:8px 0">${checkoutAmountDisplay}</td></tr>
                     </table>
                   </div>
-                  <div style="background:#eff6ff;border-radius:12px;padding:16px;margin-bottom:24px">
-                    <p style="color:#1d4ed8;font-size:14px;margin:0">📋 <strong>Free cancellation</strong> up to 24h before your appointment.</p>
-                  </div>
+                  ${policyNoteHtml(checkoutSalonProfile?.salon_name || checkoutSalonProfile?.full_name || 'your beauty pro')}
                   <p style="color:#9ca3af;font-size:12px;text-align:center;margin:0">Nelsy — Beauty booking platform</p>
                 </div>
                 `
@@ -743,9 +743,7 @@ serve(async (req) => {
                       <tr><td style="color:#6b7280;padding:8px 0">Amount paid</td><td style="text-align:right;font-weight:700;color:#F52B8C;font-size:18px;padding:8px 0">${amountDisplay}</td></tr>
                     </table>
                   </div>
-                  <div style="background:#eff6ff;border-radius:12px;padding:16px;margin-bottom:24px">
-                    <p style="color:#1d4ed8;font-size:14px;margin:0">📋 <strong>Free cancellation</strong> up to 24h before your appointment.</p>
-                  </div>
+                  ${policyNoteHtml(salonProfile?.salon_name || salonProfile?.full_name || 'your beauty pro')}
                   <p style="color:#9ca3af;font-size:12px;text-align:center;margin:0">Nelsy — Beauty booking platform</p>
                 </div>`
               )

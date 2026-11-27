@@ -31,6 +31,8 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
     purchase_confirmations: true,
     new_bookings: true,
     reminders: false,
+    // Email reminder to clients 24h before each appointment (send-booking-reminders). On unless switched off.
+    client_reminders: true,
   });
   const [loadingPortal, setLoadingPortal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -42,7 +44,7 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
     if (profileProp) {
       setProfile(profileProp);
       if (profileProp.notification_preferences) {
-        setNotifications(profileProp.notification_preferences as typeof notifications);
+        setNotifications((prev) => ({ ...prev, ...(profileProp.notification_preferences as Partial<typeof notifications>) }));
       }
     } else {
       void loadProfile();
@@ -54,7 +56,12 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
       const { data } = await supabase.from('profiles').select('*').eq('id', user.id).single();
-      if (data) setProfile(data as SettingsProfile);
+      if (data) {
+        setProfile(data as SettingsProfile);
+        if (data.notification_preferences) {
+          setNotifications((prev) => ({ ...prev, ...(data.notification_preferences as Partial<typeof notifications>) }));
+        }
+      }
     }
   };
 
@@ -263,7 +270,7 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
               {[
                 { key: 'purchase_confirmations', label: 'New Bookings', desc: 'Receive a notification each time a client books' },
                 { key: 'new_bookings', label: 'Booking Confirmations', desc: 'Notify when a client confirms their appointment' },
-                { key: 'reminders', label: 'Appointment Reminders', desc: 'Get reminded 1h before each appointment' },
+                { key: 'client_reminders', label: 'Client Reminders', desc: 'Email your clients a reminder 24 hours before each appointment' },
               ].map(({ key, label, desc }) => (
                 <div key={key} className="flex items-start justify-between gap-4">
                   <div className="flex-1">
