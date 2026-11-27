@@ -9,6 +9,8 @@ import { useToast } from '../../hooks/useToast';
 import { supabase } from '../../lib/supabase';
 import type { DbServiceRow } from '../../lib/supabase';
 import { getBookings, confirmBooking, cancelBooking, updateBooking } from '../../lib/supabase-queries';
+import { fetchVideoLinksForProfile, isValidVideoUrl } from '../../lib/onlineSessions';
+import { Video } from 'lucide-react';
 
 interface Profile {
   id?: string;
@@ -27,6 +29,9 @@ interface Appointment {
   status: 'pending' | 'paid' | 'confirmed' | 'completed' | 'cancelled' | 'refunded';
   phone: string;
   notes: string;
+  /** Online video session (Creator plan). Display only. */
+  online: boolean;
+  videoUrl: string | null;
 }
 
 type FilterType = 'all' | 'pending' | 'confirmed' | 'completed';
@@ -116,6 +121,10 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
 
       setServicesArr((servicesData ?? []) as DbServiceRow[]);
       const servicesMap = new Map((servicesData ?? []).map((s) => [s.id, s]));
+      // Private video links of online services (empty before the migration is applied)
+      const videoLinks = (servicesData ?? []).some((s) => s.location_type === 'online')
+        ? await fetchVideoLinksForProfile(profile.id)
+        : new Map<string, string>();
 
       // Load all bookings (no date filter for full calendar)
       const { data: bookings, error } = await getBookings(profile.id);
@@ -142,6 +151,8 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
             status: statusMap[b.status] ?? 'pending',
             phone: b.client_phone ?? '',
             notes: '',
+            online: service?.location_type === 'online',
+            videoUrl: videoLinks.get(b.service_id ?? '') ?? null,
           };
         });
         setAppointments(transformed);
@@ -481,6 +492,22 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
                 <span className="text-gray-500">Service</span>
                 <span className="font-semibold">{selectedAppointment.service}</span>
               </div>
+              {selectedAppointment.online && (
+                <div className="flex justify-between gap-3">
+                  <span className="text-gray-500">Location</span>
+                  <span className="text-right min-w-0">
+                    <VideoBadge />
+                    {selectedAppointment.videoUrl && isValidVideoUrl(selectedAppointment.videoUrl) ? (
+                      <a href={selectedAppointment.videoUrl} target="_blank" rel="noopener noreferrer"
+                        className="block mt-1 text-sm font-semibold text-[#F52B8C] hover:underline break-all">
+                        Open video link
+                      </a>
+                    ) : (
+                      <span className="block mt-1 text-xs text-gray-500">No link saved: send it to your client</span>
+                    )}
+                  </span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span className="text-gray-500">Date</span>
                 <span className="font-semibold">{formatDateFull(selectedAppointment.date, profile?.timezone)}</span>
@@ -640,6 +667,14 @@ export default function Calendar({ profile }: { profile: Profile | null }) {
   );
 }
 
+function VideoBadge() {
+  return (
+    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-pink-50 text-[#C2186F] border border-pink-100">
+      <Video className="w-3 h-3" /> Video call
+    </span>
+  );
+}
+
 function AppointmentCard({
   apt,
   showActions = false,
@@ -663,6 +698,17 @@ function AppointmentCard({
             <div>
               <p className="font-bold text-gray-900">{apt.client}</p>
               <p className="text-sm text-gray-600">{apt.service}</p>
+              {apt.online && (
+                <div className="flex items-center gap-2 mt-1 flex-wrap">
+                  <VideoBadge />
+                  {apt.videoUrl && isValidVideoUrl(apt.videoUrl) && (
+                    <a href={apt.videoUrl} target="_blank" rel="noopener noreferrer"
+                      className="text-xs font-semibold text-[#F52B8C] hover:underline">
+                      Join link
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
             <p className="text-sm font-bold text-[#F52B8C]">€{apt.price.toFixed(2)}</p>
           </div>

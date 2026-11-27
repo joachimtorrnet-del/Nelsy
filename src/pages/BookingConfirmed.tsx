@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { CheckCircle, Calendar, Clock, Mail } from 'lucide-react';
+import { CheckCircle, Calendar, Clock, Mail, Video } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { isValidVideoUrl, timezoneLabel } from '../lib/onlineSessions';
 
-function downloadIcs(booking: { id: string; booking_datetime: string; duration?: number | null; service_name?: string }) {
+function downloadIcs(booking: { id: string; booking_datetime: string; duration?: number | null; service_name?: string; video_url?: string | null }) {
   const start = new Date(booking.booking_datetime);
   const end = new Date(start.getTime() + (booking.duration ?? 60) * 60_000);
   const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
@@ -15,6 +16,8 @@ function downloadIcs(booking: { id: string; booking_datetime: string; duration?:
     `DTSTART:${stamp(start)}`,
     `DTEND:${stamp(end)}`,
     `SUMMARY:${(booking.service_name ?? 'Appointment').replace(/[,;\n]/g, ' ')}`,
+    // Online session: the video link as the event location
+    ...(booking.video_url && isValidVideoUrl(booking.video_url) ? [`LOCATION:${booking.video_url.replace(/([,;\\])/g, '\\$1')}`] : []),
     'END:VEVENT', 'END:VCALENDAR',
   ].join('\r\n');
   const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
@@ -25,11 +28,14 @@ function downloadIcs(booking: { id: string; booking_datetime: string; duration?:
   URL.revokeObjectURL(url);
 }
 
-export default function BookingConfirmed() {
+/** DEV-only: /dev/coaching renders this page with an in-memory booking (never routed in production). */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function BookingConfirmed({ devBooking }: { devBooking?: any } = {}) {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const [booking, setBooking] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
+  const sandboxBooking = import.meta.env.DEV ? devBooking : undefined;
+  const [booking, setBooking] = useState<any>(sandboxBooking ?? null);
+  const [loading, setLoading] = useState(!sandboxBooking);
 
   const sessionId = searchParams.get('session_id');
   const bookingId = searchParams.get('booking_id');
@@ -39,6 +45,7 @@ export default function BookingConfirmed() {
   const paymentFailed = redirectStatus === 'failed';
 
   useEffect(() => {
+    if (sandboxBooking) return;
     loadBookingDetails();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -142,6 +149,11 @@ export default function BookingConfirmed() {
                   timeZone: booking.salon_timezone ?? undefined,
                 })}
               </p>
+              {booking.location_type === 'online' && booking.salon_timezone && (
+                <p className="text-xs text-gray-500 mt-1">
+                  Time zone: {timezoneLabel(booking.salon_timezone, new Date(booking.booking_datetime))}
+                </p>
+              )}
             </div>
           </div>
 
@@ -157,6 +169,31 @@ export default function BookingConfirmed() {
               )}
             </div>
           </div>
+
+          {booking.location_type === 'online' && (
+            <>
+              <div className="border-t border-gray-200" />
+              <div className="flex items-start gap-3">
+                <Video className="w-5 h-5 text-[#F52B8C] mt-0.5" />
+                <div className="min-w-0">
+                  <p className="text-sm text-gray-500">Location</p>
+                  <p className="font-semibold text-gray-900">Video call</p>
+                  {typeof booking.video_url === 'string' && isValidVideoUrl(booking.video_url) ? (
+                    <a
+                      href={booking.video_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-semibold text-[#F52B8C] hover:underline break-all"
+                    >
+                      {booking.video_url}
+                    </a>
+                  ) : (
+                    <p className="text-sm text-gray-600">Your pro will send you the video link before the session.</p>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
 
           <div className="border-t border-gray-200" />
 

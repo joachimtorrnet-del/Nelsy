@@ -5,6 +5,7 @@ import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { useMoney } from '@/lib/currency';
 import { PoweredByNelsy } from '../PlgCTA';
+import { VideoCallBadge } from '@/components/studio/VideoCallBadge';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -220,6 +221,7 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook, produc
                     <div>
                       <span style={{ fontSize: 15, fontWeight: 800, color: accentText }}>{fmt(service.price)}</span>
                       {service.duration > 0 && <span style={{ fontSize: 12, color: theme.textSecondary, marginLeft: 6 }}>{service.duration} min</span>}
+                      {service.location_type === 'online' && <span style={{ marginLeft: 6 }}><VideoCallBadge color={theme.textPrimary} background="rgba(128,128,128,0.14)" /></span>}
                     </div>
                     <button
                       onClick={isPreview ? undefined : () => onBook?.(service.id)}
@@ -266,6 +268,7 @@ export function LayoutSplit({ merchant, theme, isPreview, photos, onBook, produc
                 <p style={{ fontSize: 13, margin: '3px 0 0' }}>
                   <span style={{ color: accentText, fontWeight: 700 }}>{fmt(service.price)}</span>
                   {service.duration > 0 && <span style={{ color: theme.textSecondary, marginLeft: 8 }}>{service.duration} min</span>}
+                  {service.location_type === 'online' && <span style={{ marginLeft: 8 }}><VideoCallBadge color={theme.textPrimary} background="rgba(128,128,128,0.14)" /></span>}
                 </p>
               </div>
               <button

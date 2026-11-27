@@ -7,6 +7,7 @@ import { useMoney } from '@/lib/currency';
 import { getStudioFont, ensureStudioFontLoaded } from '@/lib/studioFonts';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { PoweredByNelsy } from '../PlgCTA';
+import { VideoCallBadge } from '@/components/studio/VideoCallBadge';
 
 interface GalleryPhoto { image_url: string }
 
@@ -308,6 +309,7 @@ export function LayoutCreator({ merchant, theme, variant, isPreview, photos, onB
     <p style={{ margin: '6px 0 0', fontSize: 14, color: cardText }}>
       <strong style={{ fontWeight: 700 }}>{formatCurrency(s.price)}</strong>
       {s.duration > 0 && <span style={{ color: cardMuted, fontSize: 12.5 }}> · {s.duration} min</span>}
+      {s.location_type === 'online' && <span style={{ marginLeft: 6 }}><VideoCallBadge color={cardText} background="rgba(128,128,128,0.14)" /></span>}
     </p>
   );
   const image = (s: Service, style: CSSProperties) => (

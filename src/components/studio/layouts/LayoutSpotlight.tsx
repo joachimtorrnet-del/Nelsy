@@ -5,6 +5,7 @@ import type { NelsyTheme } from '@/lib/themes';
 import { ServiceCollectionCard } from '../ServiceCollectionCard';
 import { useMoney } from '@/lib/currency';
 import { PoweredByNelsy } from '../PlgCTA';
+import { VideoCallBadge } from '@/components/studio/VideoCallBadge';
 
 interface GalleryPhoto { image_url: string; }
 
@@ -237,6 +238,7 @@ export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook, pr
                       {service.duration > 0 && (
                         <span style={{ fontWeight: 400, color: textSoft, marginLeft: 8 }}>{service.duration} min</span>
                       )}
+                      {service.location_type === 'online' && <span style={{ marginLeft: 8 }}><VideoCallBadge color={textWhite} background="rgba(255,255,255,0.18)" /></span>}
                     </p>
                   )}
                 </div>
@@ -303,6 +305,7 @@ export function LayoutSpotlight({ merchant, theme, isPreview, photos, onBook, pr
                       {service.duration > 0 && (
                         <span style={{ fontWeight: 400, color: textSoft, marginLeft: 6 }}>{service.duration} min</span>
                       )}
+                      {service.location_type === 'online' && <span style={{ marginLeft: 6 }}><VideoCallBadge color={textWhite} background="rgba(255,255,255,0.18)" /></span>}
                     </p>
                   )}
                   {/* Rating — only if real data */}

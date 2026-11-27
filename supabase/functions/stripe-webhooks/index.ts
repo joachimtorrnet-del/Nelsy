@@ -25,6 +25,7 @@ function createPostHogClient() {
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 import { esc, row, layout } from '../_shared/email.ts'
 import { markProductOrderPaid } from '../_shared/product-orders.ts'
+import { fetchOnlineSession, onlineSessionRows, onlineSessionNote } from '../_shared/online-session.ts'
 
 const FROM_EMAIL = 'Nelsy <hello@getnelsy.com>'
 
@@ -725,6 +726,9 @@ serve(async (req) => {
             const timeStr = bookingDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', timeZone: salonTimezone })
             const rawAmount = isZeroDecimal ? paymentIntent.amount : paymentIntent.amount / 100
             const amountDisplay = new Intl.NumberFormat('en-US', { style: 'currency', currency: currency.toUpperCase(), minimumFractionDigits: isZeroDecimal ? 0 : 2 }).format(rawAmount)
+            // Online session (Creator plan): display-only rows, best-effort read after the ledger write.
+            const online = await fetchOnlineSession(supabase, booking.service_id)
+            const proDisplayName = salonProfile?.salon_name || salonProfile?.full_name || 'your pro'
 
             if (booking.client_email) {
               await sendEmail(
@@ -739,10 +743,11 @@ serve(async (req) => {
                     <table style="width:100%;border-collapse:collapse">
                       <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Service</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${serviceName}</td></tr>
                       <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Date</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${dateStr}</td></tr>
-                      <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Time</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${timeStr}</td></tr>
+                      <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Time</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${timeStr}</td></tr>${onlineSessionRows(online, salonTimezone, bookingDate, 'client')}
                       <tr><td style="color:#6b7280;padding:8px 0">Amount paid</td><td style="text-align:right;font-weight:700;color:#F52B8C;font-size:18px;padding:8px 0">${amountDisplay}</td></tr>
                     </table>
                   </div>
+                  ${onlineSessionNote(online, 'client', proDisplayName)}
                   <div style="background:#eff6ff;border-radius:12px;padding:16px;margin-bottom:24px">
                     <p style="color:#1d4ed8;font-size:14px;margin:0">📋 <strong>Free cancellation</strong> up to 24h before your appointment.</p>
                   </div>
@@ -765,10 +770,11 @@ serve(async (req) => {
                       <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Client</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${booking.client_name ?? '—'}</td></tr>
                       <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Service</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${serviceName}</td></tr>
                       <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Date</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${dateStr}</td></tr>
-                      <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Time</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${timeStr}</td></tr>
+                      <tr><td style="color:#6b7280;padding:8px 0;border-bottom:1px solid #e5e7eb">Time</td><td style="text-align:right;font-weight:600;color:#111827;padding:8px 0;border-bottom:1px solid #e5e7eb">${timeStr}</td></tr>${onlineSessionRows(online, salonTimezone, bookingDate, 'pro')}
                       <tr><td style="color:#6b7280;padding:8px 0">Amount received</td><td style="text-align:right;font-weight:700;color:#F52B8C;font-size:18px;padding:8px 0">${amountDisplay}</td></tr>
                     </table>
                   </div>
+                  ${onlineSessionNote(online, 'pro')}
                   <div style="text-align:center">
                     <a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">View in dashboard →</a>
                   </div>

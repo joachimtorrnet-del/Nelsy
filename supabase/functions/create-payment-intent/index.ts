@@ -3,6 +3,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import Stripe from 'npm:stripe@13.11.0'
 import { PostHog } from 'npm:posthog-node'
 import { sendEmail, esc, row, layout } from '../_shared/email.ts'
+import { fetchOnlineSession, onlineSessionRows, onlineSessionNote } from '../_shared/online-session.ts'
 
 // ── Stripe client ─────────────────────────────────────────────────────────────
 
@@ -326,9 +327,11 @@ serve(async (req) => {
       // No Stripe payment means no webhook: send the confirmation emails here.
       // Email failures must never fail a booking that is already confirmed.
       try {
-        const [{ data: pro }, { data: svc }] = await Promise.all([
+        const [{ data: pro }, { data: svc }, online] = await Promise.all([
           supabase.from('profiles').select('email, full_name, salon_name, slug').eq('id', profileId).single(),
           supabase.from('services').select('name, on_arrival_methods').eq('id', serviceId).single(),
+          // Display only (video call badge + link). Best-effort, never affects the booking.
+          fetchOnlineSession(supabase, serviceId),
         ])
         const when = new Intl.DateTimeFormat('en-US', { weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit', timeZone: tz }).format(bookingDt)
         const amount = new Intl.NumberFormat('en-US', { style: 'currency', currency: currency.toUpperCase(), minimumFractionDigits: isZeroDecimal ? 0 : 2 }).format(dbPrice)
@@ -338,6 +341,7 @@ serve(async (req) => {
         const proName = esc(pro?.salon_name || pro?.full_name || 'your beauty pro')
         const serviceName = esc(svc?.name ?? 'Your appointment')
         const clientName = esc(bd.client_name)
+        const payWhere = online.online ? 'To pay at the session' : 'To pay at the studio'
 
         await Promise.all([
           sendEmail(
@@ -346,8 +350,9 @@ serve(async (req) => {
             layout(
               'Your booking is confirmed',
               `With ${proName}. Nothing to pay now: you pay at the appointment.`,
-              row('Service', serviceName) + row('When', esc(when)) + row('To pay at the studio', esc(amount)) + row('Payment', esc(methods), true),
-              pro?.slug ? `<div style="text-align:center"><a href="https://getnelsy.com/${encodeURIComponent(pro.slug)}" style="color:#F52B8C;font-weight:600">View ${proName}&rsquo;s page</a></div>` : '',
+              row('Service', serviceName) + row('When', esc(when)) + onlineSessionRows(online, tz, bookingDt, 'client') + row(payWhere, esc(amount)) + row('Payment', esc(methods), true),
+              onlineSessionNote(online, 'client', pro?.salon_name || pro?.full_name || 'your pro') +
+                (pro?.slug ? `<div style="text-align:center"><a href="https://getnelsy.com/${encodeURIComponent(pro.slug)}" style="color:#F52B8C;font-weight:600">View ${proName}&rsquo;s page</a></div>` : ''),
             ),
           ),
           pro?.email
@@ -357,8 +362,8 @@ serve(async (req) => {
                 layout(
                   'New booking',
                   'Pay on arrival: collect the payment at the appointment and record it in Nelsy.',
-                  row('Client', clientName) + row('Service', serviceName) + row('When', esc(when)) + row('To collect', esc(amount)) + row('Client phone', esc(bd.client_phone || 'Not given'), true),
-                  `<div style="text-align:center"><a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">View in dashboard</a></div>`,
+                  row('Client', clientName) + row('Service', serviceName) + row('When', esc(when)) + onlineSessionRows(online, tz, bookingDt, 'pro') + row('To collect', esc(amount)) + row('Client phone', esc(bd.client_phone || 'Not given'), true),
+                  onlineSessionNote(online, 'pro') + `<div style="text-align:center"><a href="https://getnelsy.com/dashboard" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">View in dashboard</a></div>`,
                 ),
               )
             : Promise.resolve(),

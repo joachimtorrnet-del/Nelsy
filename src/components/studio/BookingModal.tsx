@@ -14,6 +14,7 @@ import {
   Clock,
   CalendarDays,
   X,
+  Video,
 } from 'lucide-react';
 import { useMoney } from '@/lib/currency';
 import { useBookingStore } from '@/store/bookingStore';
@@ -30,6 +31,7 @@ import { createBooking, getAvailableSlots } from '@/lib/bookings';
 import { supabase, isSupabaseConfigured } from '@/lib/supabase';
 import { getStripe, getStripeForAccount, isStripeConfigured } from '@/lib/stripe';
 import PaymentForm from './PaymentForm';
+import { isOnline, timezoneLabel } from '@/lib/onlineSessions';
 
 // ── Schema ────────────────────────────────────────────────────────────────────
 
@@ -257,6 +259,10 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
   const chargeAmount = hasDeposit ? selectedService.deposit : selectedService.price;
   const methods = selectedService.on_arrival_methods ?? ['cash', 'card'];
   const onSiteLabel = methods.length === 1 ? (methods[0] === 'cash' ? 'Cash' : 'Card') : 'Cash or card';
+  // Online video session (Creator plan): display only, the booking flow itself is unchanged
+  const online = isOnline(selectedService);
+  const payPlace = online ? 'at the session' : 'at the studio';
+  const proTz = merchant.timezone ?? 'Europe/Paris';
 
   const stepLabels = ['Date', 'Time', 'Details', 'Payment'];
 
@@ -303,6 +309,13 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     <p className="text-xs text-gray-400 mt-0.5 flex items-center gap-1">
                       <Clock className="w-3 h-3" />
                       {selectedService.duration} min
+                      {online && (
+                        <>
+                          <span className="mx-1 text-gray-300">·</span>
+                          <Video className="w-3 h-3" />
+                          Online
+                        </>
+                      )}
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0">
@@ -475,6 +488,9 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       <span className="capitalize">{selectedDate ? formatDate(selectedDate) : ''}</span>
                       <ChevronLeft className="w-4 h-4 rotate-180 text-gray-400" />
                     </button>
+                    {online && (
+                      <p className="-mt-3 mb-4 text-xs text-gray-400">Video call. Times are in {timezoneLabel(proTz)}.</p>
+                    )}
 
                     {slotsLoading ? (
                       <div className="flex flex-col items-center justify-center py-16 gap-3 text-gray-400">
@@ -617,7 +633,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                               <span className="font-bold text-gray-900">Total</span>
                               <span className="font-bold" style={{ color: accent }}>{formatCurrency(selectedService.price)}</span>
                             </div>
-                            <p className="text-xs text-gray-400">Nothing to pay now. {onSiteLabel} at the studio.</p>
+                            <p className="text-xs text-gray-400">Nothing to pay now. {onSiteLabel} {payPlace}.</p>
                           </>
                         ) : hasDeposit ? (
                           <>
@@ -760,7 +776,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                     >
                       <h2 className="text-2xl font-extrabold text-gray-900 mb-1">You're booked!</h2>
                       <p className="text-gray-500 text-sm mb-6">
-                        {payOnArrival ? `See you soon. ${onSiteLabel} at the studio.` : 'A confirmation email has been sent.'}
+                        {payOnArrival ? `See you soon. ${onSiteLabel} ${payPlace}.` : 'A confirmation email has been sent.'}
                       </p>
 
                       <div className="bg-gray-50 rounded-2xl p-4 text-sm text-left space-y-2.5 mb-6">
@@ -782,15 +798,35 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                           <span className="text-gray-400">Time</span>
                           <span className="font-semibold text-gray-900">{selectedTime}</span>
                         </div>
+                        {online && (
+                          <>
+                            <div className="flex justify-between gap-3">
+                              <span className="text-gray-400">Time zone</span>
+                              <span className="font-semibold text-gray-900 text-right">{timezoneLabel(proTz)}</span>
+                            </div>
+                            <div className="flex justify-between">
+                              <span className="text-gray-400">Location</span>
+                              <span className="font-semibold text-gray-900 inline-flex items-center gap-1.5">
+                                <Video className="w-3.5 h-3.5" style={{ color: accent }} /> Video call
+                              </span>
+                            </div>
+                          </>
+                        )}
                         {(payOnArrival || hasDeposit) && (
                           <div className="flex justify-between border-t border-gray-100 pt-2.5">
-                            <span className="text-gray-400">To pay at the studio</span>
+                            <span className="text-gray-400">To pay {payPlace}</span>
                             <span className="font-semibold text-gray-900">
                               {formatCurrency(payOnArrival ? selectedService.price : selectedService.price - chargeAmount)}
                             </span>
                           </div>
                         )}
                       </div>
+
+                      {online && (
+                        <p className="text-xs text-gray-500 bg-gray-50 rounded-xl px-4 py-3 mb-4 text-left">
+                          This is an online session. How to join (the video link) is in your confirmation email.
+                        </p>
+                      )}
 
                       <motion.a
                         href={`https://wa.me/?text=${encodeURIComponent(

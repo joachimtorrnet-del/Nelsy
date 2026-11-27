@@ -3,7 +3,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, Copy, CheckCheck, ChevronDown, ChevronUp,
   Loader2, Trash2, Eye, Smartphone, Monitor, AlertTriangle,
-  ArrowRight, Clock, Tag,
+  ArrowRight, Clock, Tag, Video, MapPin, Mail, Link2, Send,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { updateService, createService, deleteService, uploadImage } from '@/lib/supabase-queries';
@@ -12,6 +12,10 @@ import { Sidebar } from '@/components/dashboard/Sidebar';
 import { PublicStudioView } from '@/components/studio/PublicStudioView';
 import { formatCurrency } from '@/lib/utils';
 import type { Merchant } from '@/types';
+import { hasFeature } from '@/lib/plans';
+import { isProductsDemo } from '@/lib/productsDemo';
+import { isValidVideoUrl, fetchVideoLink, saveVideoLink } from '@/lib/onlineSessions';
+import type { LocationType } from '@/lib/onlineSessions';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -33,6 +37,8 @@ interface ServiceRow {
   card_cta_text: string | null;
   payment_mode: PaymentMode | null;
   on_arrival_methods: OnSiteMethod[] | null;
+  // added by migration 20261128_02_online_services (absent until applied)
+  location_type?: LocationType | null;
 }
 
 type PaymentMode = 'on_arrival' | 'deposit' | 'full';
@@ -61,6 +67,18 @@ interface ProfileRow {
   theme_preset?: string;
   color_accent?: string;
   subscription_status?: string;
+  plan?: string | null;
+}
+
+type VideoMode = 'link' | 'later';
+
+const CREATOR_WAITLIST_HREF = 'mailto:hello@getnelsy.com?subject=Creator%20waitlist';
+
+/** DEV-only: lets /dev/offer render the editor with in-memory data (never routed in production). */
+export interface OfferEditorSandbox {
+  profile: ProfileRow;
+  service?: Partial<ServiceRow>;
+  videoUrl?: string | null;
 }
 
 // ── Constants ──────────────────────────────────────────────────────────────────
@@ -214,9 +232,10 @@ interface CheckoutPreviewProps {
   duration: number;
   accent: string;
   cta: string;
+  online?: boolean;
 }
 
-function CheckoutPagePreview({ name, description, heroUrl, price, deposit, duration, accent, cta }: CheckoutPreviewProps) {
+function CheckoutPagePreview({ name, description, heroUrl, price, deposit, duration, accent, cta, online = false }: CheckoutPreviewProps) {
   const priceNum = parseFloat(price);
   const depositNum = parseFloat(deposit);
   const hasDeposit = deposit.trim() !== '' && !isNaN(depositNum) && depositNum > 0;
@@ -259,6 +278,13 @@ function CheckoutPagePreview({ name, description, heroUrl, price, deposit, durat
               borderRadius: 8, padding: '5px 10px', fontSize: 12, color: '#374151', fontWeight: 500 }}>
               <Tag size={12} />
               {priceLabel}
+            </div>
+          )}
+          {online && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 5, background: '#f3f4f6',
+              borderRadius: 8, padding: '5px 10px', fontSize: 12, color: '#374151', fontWeight: 600 }}>
+              <Video size={12} />
+              Video call
             </div>
           )}
         </div>
@@ -377,8 +403,10 @@ function DeleteConfirm({ onConfirm, onCancel, loading }: { onConfirm: () => void
 
 // ── Main ───────────────────────────────────────────────────────────────────────
 
-export default function OfferEditor() {
-  const { serviceId } = useParams<{ serviceId: string }>();
+export default function OfferEditor({ devSandbox }: { devSandbox?: OfferEditorSandbox } = {}) {
+  const params = useParams<{ serviceId: string }>();
+  const sandbox = import.meta.env.DEV ? devSandbox : undefined;
+  const serviceId = sandbox ? (sandbox.service?.id ?? 'new') : params.serviceId;
   const navigate = useNavigate();
   const isNew = serviceId === 'new';
 
@@ -414,6 +442,14 @@ export default function OfferEditor() {
   const [durationMinutes, setDurationMinutes] = useState(60);
   const [category, setCategory] = useState('Nails');
 
+  // Location (online video sessions are a Creator plan feature)
+  const [locationType, setLocationType] = useState<LocationType>('in_person');
+  const [videoMode, setVideoMode] = useState<VideoMode>('link');
+  const [videoUrl, setVideoUrl] = useState('');
+  // Whether the services table already has location_type (migration applied)
+  const [hasLocationColumn, setHasLocationColumn] = useState(false);
+  const [savedVideoUrl, setSavedVideoUrl] = useState<string | null>(null);
+
   // Options tab
   const [isActive, setIsActive] = useState(true);
   const [isFeatured, setIsFeatured] = useState(false);
@@ -430,7 +466,42 @@ export default function OfferEditor() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // ── Load ──
+  const hydrate = useCallback((row: ServiceRow, link: string | null) => {
+    setName(row.name);
+    setDescription(row.description ?? '');
+    setThumbnailUrl(row.image_url ?? '');
+    setHeroUrl(row.image_url ?? '');
+    setPriceTotal(row.price_total?.toString() ?? '');
+    setDepositAmount(row.deposit_amount > 0 ? row.deposit_amount.toString() : '');
+    setPaymentMode(row.payment_mode ?? (row.deposit_amount > 0 ? 'deposit' : 'full'));
+    setOnSiteMethods(row.on_arrival_methods?.length ? row.on_arrival_methods : ['cash', 'card']);
+    setDurationMinutes(row.duration_minutes ?? 60);
+    setCategory(row.category ?? 'Nails');
+    setIsActive(row.active ?? true);
+    setIsFeatured(row.is_featured ?? false);
+    setHasLocationColumn('location_type' in row && row.location_type != null);
+    setLocationType(row.location_type === 'online' ? 'online' : 'in_person');
+    setSavedVideoUrl(link);
+    setVideoUrl(link ?? '');
+    setVideoMode(row.location_type === 'online' && !link ? 'later' : 'link');
+  }, []);
+
   const load = useCallback(async () => {
+    if (sandbox) {
+      setProfileId(sandbox.profile.id);
+      setProfile(sandbox.profile);
+      if (sandbox.service) {
+        hydrate({
+          id: 'sandbox', profile_id: sandbox.profile.id, name: '', description: null, category: 'Other',
+          duration_minutes: 60, price_total: 0, deposit_amount: 0, active: true, is_featured: false, image_url: null,
+          card_style: 'callout', card_subtitle: null, card_cta_text: null, payment_mode: 'full', on_arrival_methods: null,
+          ...sandbox.service,
+        } as ServiceRow, sandbox.videoUrl ?? null);
+      }
+      setLoading(false);
+      setTimeout(() => { loadedRef.current = true; }, 0);
+      return;
+    }
     if (!supabase) { navigate('/login'); return; }
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { navigate('/login'); return; }
@@ -448,18 +519,8 @@ export default function OfferEditor() {
         .single();
       if (error || !svc) { navigate('/dashboard/preview'); return; }
       const row = svc as ServiceRow;
-      setName(row.name);
-      setDescription(row.description ?? '');
-      setThumbnailUrl(row.image_url ?? '');
-      setHeroUrl(row.image_url ?? '');
-      setPriceTotal(row.price_total?.toString() ?? '');
-      setDepositAmount(row.deposit_amount > 0 ? row.deposit_amount.toString() : '');
-      setPaymentMode(row.payment_mode ?? (row.deposit_amount > 0 ? 'deposit' : 'full'));
-      setOnSiteMethods(row.on_arrival_methods?.length ? row.on_arrival_methods : ['cash', 'card']);
-      setDurationMinutes(row.duration_minutes ?? 60);
-      setCategory(row.category ?? 'Nails');
-      setIsActive(row.active ?? true);
-      setIsFeatured(row.is_featured ?? false);
+      const link = row.location_type === 'online' ? await fetchVideoLink(row.id) : null;
+      hydrate(row, link);
 
       // DB is authoritative for card_style. Fall back to localStorage cache only if DB column is null
       // (i.e. migration not yet applied on this instance).
@@ -478,7 +539,8 @@ export default function OfferEditor() {
     setLoading(false);
     // Mark hydration complete on next tick so state setters above don't trip dirty
     setTimeout(() => { loadedRef.current = true; }, 0);
-  }, [serviceId, isNew, navigate]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [serviceId, isNew, navigate, hydrate]);
 
   useEffect(() => { void load(); }, [load]);
 
@@ -487,7 +549,8 @@ export default function OfferEditor() {
     if (!loadedRef.current) return;
     setDirty(true);
   }, [name, description, thumbnailUrl, heroUrl, priceTotal, depositAmount, durationMinutes,
-      category, isActive, isFeatured, cardStyle, cardSubtitle, cardCta, paymentMode, onSiteMethods]);
+      category, isActive, isFeatured, cardStyle, cardSubtitle, cardCta, paymentMode, onSiteMethods,
+      locationType, videoMode, videoUrl]);
 
   // Warn on unload with unsaved changes
   useEffect(() => {
@@ -534,9 +597,24 @@ export default function OfferEditor() {
     }
   };
 
+  // Online sessions: Creator plan (server enforces it too, see 20261128_02_online_services.sql)
+  const coachingUnlocked = hasFeature(profile?.plan, 'coaching') || isProductsDemo();
+  const [showOnlineUpsell, setShowOnlineUpsell] = useState(false);
+  const pickLocation = (next: LocationType) => {
+    if (next === 'online' && !coachingUnlocked) { setShowOnlineUpsell(true); return; }
+    setShowOnlineUpsell(false);
+    setLocationType(next);
+  };
+
   // ── Validation ──
   const validate = (switchToTab?: (tab: ActiveTab) => void) => {
     const e: Record<string, string> = {};
+    if (locationType === 'online' && !coachingUnlocked) {
+      e.location = 'Online sessions are part of the Creator plan. Switch this service to in person to save it.';
+    }
+    if (locationType === 'online' && videoMode === 'link' && !isValidVideoUrl(videoUrl)) {
+      e.video = 'Paste a full https link, for example https://zoom.us/j/123456789, or choose to send it after booking.';
+    }
     if (!name.trim()) { e.name = 'Service name is required.'; }
     const price = parseFloat(priceTotal);
     if (!priceTotal || isNaN(price) || !validatePrice(price)) {
@@ -556,7 +634,7 @@ export default function OfferEditor() {
 
     // Navigate to the tab that has the first error
     if (switchToTab && Object.keys(e).length > 0) {
-      if (e.name || e.price || e.deposit || e.methods || e.upload) switchToTab('checkout');
+      if (e.name || e.price || e.deposit || e.methods || e.upload || e.location || e.video) switchToTab('checkout');
     }
     return Object.keys(e).length === 0;
   };
@@ -585,12 +663,33 @@ export default function OfferEditor() {
       card_subtitle: cardSubtitle.trim() || null,
       card_cta_text: cardCta.trim() || null,
     };
+    // Only send location_type once the column exists (or when it is needed), so saving
+    // an in-person service keeps working before the migration is applied.
+    if (hasLocationColumn || locationType === 'online') payload.location_type = locationType;
+
+    const linkToSave = locationType === 'online' && videoMode === 'link' ? videoUrl.trim() : null;
+    const syncVideoLink = async (id: string) => {
+      if (linkToSave) {
+        if (linkToSave !== savedVideoUrl) await saveVideoLink(id, profileId, linkToSave);
+      } else if (savedVideoUrl) {
+        await saveVideoLink(id, profileId, null);
+      }
+      setSavedVideoUrl(linkToSave);
+    };
+
+    if (sandbox) {
+      setDirty(false);
+      setSaveState('saved');
+      setTimeout(() => setSaveState('idle'), 2500);
+      return;
+    }
 
     try {
       if (isNew) {
         const { data, error } = await createService(payload);
         if (error) throw error;
         const newId = (data as ServiceRow).id;
+        await syncVideoLink(newId);
         cacheLocalStyle(newId, cardStyle); // keep local in sync
         setDirty(false);
         setSaveState('saved');
@@ -598,6 +697,8 @@ export default function OfferEditor() {
       } else if (serviceId) {
         const { error } = await updateService(serviceId, payload);
         if (error) throw error;
+        await syncVideoLink(serviceId);
+        if (payload.location_type) setHasLocationColumn(true);
         cacheLocalStyle(serviceId, cardStyle);
         setDirty(false);
         setSaveState('saved');
@@ -607,7 +708,11 @@ export default function OfferEditor() {
       setSaveState('error');
       const raw = err instanceof Error ? err.message : String(err);
       // PostgREST PGRST204: schema cache doesn't know this column — migration not applied
-      const msg = raw.includes('PGRST204') || raw.includes('column') && raw.includes('schema cache')
+      const msg = raw.includes('Creator plan')
+        ? 'Online sessions are part of the Creator plan. Switch this service to in person to save it.'
+        : raw.includes('location_type') || raw.includes('service_video_links')
+        ? 'Online sessions need the latest database update (20261128_02_online_services.sql). Your edits are preserved.'
+        : raw.includes('PGRST204') || raw.includes('column') && raw.includes('schema cache')
         ? 'Database schema is out of date. Ask your admin to apply the latest migration (20261101_01_service_card_fields.sql) and try again. Your edits are preserved.'
         : raw || 'Save failed. Please try again.';
       setSaveError(msg);
@@ -653,6 +758,7 @@ export default function OfferEditor() {
       category,
       image_url: thumbnailUrl || undefined,
       is_featured: isFeatured,
+      location_type: locationType,
     }],
     rating: 0,
     review_count: 0,
@@ -663,7 +769,8 @@ export default function OfferEditor() {
     previewMode === 'phone' ? (
       <PhoneMockup>
         <CheckoutPagePreview name={name} description={description} heroUrl={heroUrl}
-          price={priceTotal} deposit={paymentMode === 'deposit' ? depositAmount : ''} duration={durationMinutes} accent={accent} cta={cardCta} />
+          price={priceTotal} deposit={paymentMode === 'deposit' ? depositAmount : ''} duration={durationMinutes} accent={accent} cta={cardCta}
+          online={locationType === 'online'} />
       </PhoneMockup>
     ) : (
       // Desktop: render at 1024px viewport, scaled to fit the 240px preview column
@@ -993,6 +1100,98 @@ export default function OfferEditor() {
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
                         <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">3</span>
+                        Location
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2" role="radiogroup" aria-label="Location">
+                        {([
+                          { id: 'in_person' as LocationType, title: 'In person', desc: 'At your studio or address.', icon: MapPin },
+                          { id: 'online' as LocationType, title: 'Online video call', desc: 'Zoom, Google Meet or any video link.', icon: Video },
+                        ]).map((opt) => {
+                          const selected = locationType === opt.id;
+                          const locked = opt.id === 'online' && !coachingUnlocked;
+                          const Icon = opt.icon;
+                          return (
+                            <button key={opt.id} type="button" role="radio" aria-checked={selected} onClick={() => pickLocation(opt.id)}
+                              className={`flex items-start gap-3 p-3.5 rounded-xl border text-left transition ${selected ? 'border-[#F52B8C] bg-[#fff8fb]' : 'border-gray-200 hover:border-gray-300'}`}>
+                              <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${selected ? 'text-[#F52B8C]' : 'text-gray-400'}`} />
+                              <span className="min-w-0">
+                                <span className="flex items-center gap-2 text-sm font-semibold text-[#1A1A1A]">
+                                  {opt.title}
+                                  {locked && <span className="text-[10px] font-bold uppercase tracking-wider text-[#C2186F] bg-pink-50 px-1.5 py-0.5 rounded">Creator</span>}
+                                </span>
+                                <span className="block text-xs text-gray-500 mt-0.5 leading-relaxed">{opt.desc}</span>
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                      {errors.location && <p className="text-red-500 text-xs mt-2">{errors.location}</p>}
+
+                      {(showOnlineUpsell || (locationType === 'online' && !coachingUnlocked)) && (
+                        <div className="mt-4 rounded-2xl border border-gray-100 bg-gradient-to-b from-[#fff4f9] to-white p-5 text-center">
+                          <div className="w-11 h-11 rounded-xl bg-white shadow-sm flex items-center justify-center mx-auto mb-3">
+                            <Video className="w-5 h-5 text-[#F52B8C]" strokeWidth={1.8} />
+                          </div>
+                          <p className="text-[11px] font-bold uppercase tracking-wider text-[#C2186F] mb-1.5">Creator plan</p>
+                          <p className="text-base font-bold text-[#1A1A1A] mb-1.5">1:1 coaching by video</p>
+                          <p className="text-[13px] text-gray-600 leading-relaxed max-w-sm mx-auto mb-4">
+                            Online sessions are part of the Creator plan. Sell video consultations, lessons and mentoring
+                            from your page: clients book a slot, pay, and get the video link by email.
+                          </p>
+                          <a href={CREATOR_WAITLIST_HREF}
+                            className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-[#F52B8C] text-white text-sm font-bold hover:opacity-90 transition">
+                            <Mail className="w-4 h-4" /> Join the waitlist
+                          </a>
+                          <p className="text-xs text-gray-400 mt-2">We will email you as soon as the Creator plan opens.</p>
+                        </div>
+                      )}
+
+                      {locationType === 'online' && coachingUnlocked && (
+                        <div className="mt-4 space-y-3">
+                          <p className="text-sm font-medium text-gray-700">Video link</p>
+                          <div className="space-y-2" role="radiogroup" aria-label="Video link">
+                            {([
+                              { id: 'link' as VideoMode, title: 'Use this link for every session', icon: Link2 },
+                              { id: 'later' as VideoMode, title: "I'll send the link after booking", icon: Send },
+                            ]).map((opt) => {
+                              const selected = videoMode === opt.id;
+                              const Icon = opt.icon;
+                              return (
+                                <button key={opt.id} type="button" role="radio" aria-checked={selected} onClick={() => setVideoMode(opt.id)}
+                                  className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl border text-left transition ${selected ? 'border-[#F52B8C] bg-[#fff8fb]' : 'border-gray-200 hover:border-gray-300'}`}>
+                                  <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 flex items-center justify-center ${selected ? 'border-[#F52B8C]' : 'border-gray-300'}`}>
+                                    {selected && <span className="w-2 h-2 rounded-full bg-[#F52B8C]" />}
+                                  </span>
+                                  <Icon className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                                  <span className="text-sm font-semibold text-[#1A1A1A]">{opt.title}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                          {videoMode === 'link' ? (
+                            <div>
+                              <input
+                                type="url" inputMode="url" value={videoUrl} maxLength={2048}
+                                onChange={(e) => setVideoUrl(e.target.value)}
+                                placeholder="https://zoom.us/j/123456789"
+                                className={`w-full px-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.video ? 'border-red-400' : 'border-gray-200'}`}
+                              />
+                              {errors.video
+                                ? <p className="text-red-500 text-xs mt-1">{errors.video}</p>
+                                : <p className="text-xs text-gray-400 mt-1">Private: only sent to clients who booked, in their confirmation email.</p>}
+                            </div>
+                          ) : (
+                            <p className="text-xs text-gray-500 leading-relaxed">
+                              Clients are told you will send the link before the session. You will see a reminder on the booking in your calendar.
+                            </p>
+                          )}
+                        </div>
+                      )}
+                    </section>
+
+                    <section>
+                      <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
+                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">4</span>
                         Price
                       </p>
                       <div className="max-w-[220px]">
@@ -1008,6 +1207,19 @@ export default function OfferEditor() {
                       </div>
 
                       <p className="text-sm font-medium text-gray-700 mt-6 mb-2">Payment</p>
+                      {locationType === 'online' && (
+                        <div className="mb-3 p-3 rounded-xl bg-[#fff8fb] border border-pink-100 flex items-start gap-2.5">
+                          <Video className="w-4 h-4 text-[#C2186F] flex-shrink-0 mt-0.5" />
+                          <p className="text-xs text-[#9D174D] leading-relaxed">
+                            For online sessions we recommend <strong>Full payment upfront</strong>: there is no studio visit to collect the rest, and it protects you from no-shows.
+                            {paymentMode !== 'full' && (
+                              <button type="button" onClick={() => setPaymentMode('full')} className="ml-1 font-semibold underline hover:no-underline">
+                                Use full payment
+                              </button>
+                            )}
+                          </p>
+                        </div>
+                      )}
                       <div className="space-y-2" role="radiogroup" aria-label="Payment">
                         {PAYMENT_MODES.map((m) => {
                           const selected = paymentMode === m.id;
@@ -1039,7 +1251,7 @@ export default function OfferEditor() {
                           {errors.deposit && <p className="text-red-500 text-xs mt-1">{errors.deposit}</p>}
                           {parseFloat(priceTotal) > 0 && parseFloat(depositAmount) > 0 && parseFloat(depositAmount) < parseFloat(priceTotal) && (
                             <p className="text-xs text-gray-500 mt-1.5">
-                              Balance at the studio: €{(parseFloat(priceTotal) - parseFloat(depositAmount)).toFixed(2)}
+                              Balance {locationType === 'online' ? 'at the session' : 'at the studio'}: €{(parseFloat(priceTotal) - parseFloat(depositAmount)).toFixed(2)}
                             </p>
                           )}
                         </div>
@@ -1047,7 +1259,7 @@ export default function OfferEditor() {
 
                       {paymentMode !== 'full' && (
                         <div className="mt-4">
-                          <p className="text-sm font-medium text-gray-700 mb-2">Accepted at the studio</p>
+                          <p className="text-sm font-medium text-gray-700 mb-2">Accepted {locationType === 'online' ? 'at the session' : 'at the studio'}</p>
                           <div className="flex gap-2">
                             {(['cash', 'card'] as OnSiteMethod[]).map((m) => {
                               const on = onSiteMethods.includes(m);
@@ -1067,7 +1279,7 @@ export default function OfferEditor() {
 
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
-                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">4</span>
+                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">5</span>
                         Client info collected
                       </p>
                       <div className="border border-gray-200 rounded-xl overflow-hidden">
@@ -1086,7 +1298,7 @@ export default function OfferEditor() {
 
                     <section>
                       <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">
-                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">5</span>
+                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold mr-2">6</span>
                         Service details
                       </p>
                       <div className="grid grid-cols-2 gap-4">

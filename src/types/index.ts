@@ -15,6 +15,8 @@ export interface Service {
   card_cta_text?: string;
   payment_mode?: 'on_arrival' | 'deposit' | 'full';
   on_arrival_methods?: ('cash' | 'card')[];
+  /** 'online' = video call (Creator plan). Missing means in person. */
+  location_type?: 'in_person' | 'online';
 }
 
 export interface CollectionSubcategory {

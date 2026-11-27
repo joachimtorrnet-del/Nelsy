@@ -1,6 +1,7 @@
 import { serve } from 'https://deno.land/std@0.208.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3'
 import Stripe from 'npm:stripe@13.11.0'
+import { fetchOnlineSession } from '../_shared/online-session.ts'
 
 const stripeSecretKey = Deno.env.get('STRIPE_SECRET_KEY')
 if (!stripeSecretKey) throw new Error('STRIPE_SECRET_KEY is not set')
@@ -80,6 +81,10 @@ serve(async (req) => {
       .eq('id', booking.profile_id)
       .single()
 
+    // Online session (Creator plan): display only. The caller already proved it is the payer
+    // (PaymentIntent id or Checkout Session), so the video link can be shown here.
+    const online = await fetchOnlineSession(supabase, booking.service_id)
+
     return new Response(
       JSON.stringify({
         booking: {
@@ -96,6 +101,8 @@ serve(async (req) => {
           duration: service?.duration_minutes ?? null,
           salon_timezone: salonProfile?.timezone ?? 'Europe/Paris',
           salon_currency: (salonProfile?.business_currency ?? 'eur').toLowerCase(),
+          location_type: online.online ? 'online' : 'in_person',
+          video_url: online.videoUrl,
         },
       }),
       { headers: { 'Content-Type': 'application/json', ...corsHeaders } },

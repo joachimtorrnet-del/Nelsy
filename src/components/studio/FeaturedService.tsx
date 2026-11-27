@@ -4,6 +4,7 @@ import type { Service } from '@/types';
 import type { NelsyTheme } from '@/lib/themes';
 import { useMoney } from '@/lib/currency';
 import { useBookingStore } from '@/store/bookingStore';
+import { VideoCallBadge } from '@/components/studio/VideoCallBadge';
 
 interface Props {
   service: Service;
@@ -129,6 +130,7 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
                 <span style={{ fontSize: 13, fontWeight: 700, color: theme.textPrimary }}>
                   {formatCurrency(service.price)}
                 </span>
+                {service.location_type === 'online' && <span style={{ marginLeft: 4 }}><VideoCallBadge color={theme.textPrimary} background="rgba(128,128,128,0.14)" /></span>}
               </div>
 
               <motion.button
@@ -209,6 +211,7 @@ export function FeaturedService({ service, theme, isPreview = false }: Props) {
             <span style={{ fontSize: 17, fontWeight: 800, color: theme.textPrimary, letterSpacing: '-0.025em' }}>
               {formatCurrency(service.price)}
             </span>
+            {service.location_type === 'online' && <span style={{ marginLeft: 4 }}><VideoCallBadge color={theme.textPrimary} background="rgba(128,128,128,0.14)" /></span>}
           </div>
 
           <motion.button
