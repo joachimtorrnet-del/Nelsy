@@ -43,8 +43,10 @@ serve(async (req) => {
     if (session_id) {
       // Legacy Checkout Session flow. For direct charges the session lives on the
       // connected account, passed from the success_url query param set by create-checkout.
-      const stripeOpts = stripe_account_id ? { stripeAccount: stripe_account_id } : {}
-      const session = await stripe.checkout.sessions.retrieve(session_id, {}, stripeOpts)
+      // stripe-node rejects an empty options object ("Unknown arguments"), so only pass it with an account.
+      const session = stripe_account_id
+        ? await stripe.checkout.sessions.retrieve(session_id, {}, { stripeAccount: stripe_account_id })
+        : await stripe.checkout.sessions.retrieve(session_id)
       meta = (session.metadata ?? {}) as Record<string, string>
       bookingId = meta.booking_id
     } else if (booking_id && payment_intent) {
