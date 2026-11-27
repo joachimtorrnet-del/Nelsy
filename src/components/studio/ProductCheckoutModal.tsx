@@ -9,6 +9,7 @@ import { track } from '@/lib/analytics';
 import { startProductCheckout, getProductDownload, formatProductPrice, PRODUCT_MAX_DOWNLOADS } from '@/lib/products';
 import type { PublicProduct, ProductCheckout } from '@/lib/products';
 import { ProductCover } from './StudioProducts';
+import { FreeResourceModal } from './FreeResourceModal';
 
 interface Props {
   product: PublicProduct | null;
@@ -23,7 +24,15 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 // Local dev without Supabase/Stripe: walk through the flow without charging anything.
 const LOCAL_DEMO = import.meta.env.DEV && (!isSupabaseConfigured || !isStripeConfigured);
 
-export function ProductCheckoutModal({ product, sellerName, accent, onClose }: Props) {
+/** Opens the right modal for a studio product: free resource (email capture) or paid checkout. */
+export function ProductCheckoutModal(props: Props) {
+  if (props.product?.type === 'free_resource') {
+    return <FreeResourceModal product={props.product} sellerName={props.sellerName} accent={props.accent} onClose={props.onClose} />;
+  }
+  return <PaidProductModal {...props} />;
+}
+
+function PaidProductModal({ product, sellerName, accent, onClose }: Props) {
   const [step, setStep] = useState<Step>('details');
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');

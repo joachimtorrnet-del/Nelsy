@@ -1,4 +1,5 @@
 // Returns a short-lived signed URL for a paid product order (deploy with --no-verify-jwt).
+// Also serves free resource claims ({ claim_id, email }, link /r/:claimId).
 //
 // The buyer proves ownership with (order_id OR payment_intent_id) + the checkout email.
 // Each successful call counts as one download, capped at MAX_DOWNLOADS.
@@ -42,6 +43,49 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 const PI_RE = /^pi_[A-Za-z0-9]{8,64}$/
 // Same answer for "no such order" and "wrong email": never confirm an order exists.
 const NOT_FOUND = { error: 'not_found', message: 'We could not find a purchase with these details.' }
+const LIMIT_REACHED = { error: 'limit_reached', message: `This file was already downloaded ${MAX_DOWNLOADS} times. Contact the seller for a new link.` }
+
+/** Free resource download: claim id + the email it was sent to. Same cap and signed URL as paid orders. */
+async function downloadFreeResource(claimId: string, email: string): Promise<Response> {
+  const { data: claim } = await supabase
+    .from('free_resource_claims')
+    .select('id, product_id, email, download_count')
+    .eq('id', claimId)
+    .maybeSingle()
+  if (!claim || claim.email !== email) return json(NOT_FOUND, 404)
+  if (claim.download_count >= MAX_DOWNLOADS) return json(LIMIT_REACHED, 429)
+
+  const { data: product } = await supabase
+    .from('products')
+    .select('title, type, file_path, file_name')
+    .eq('id', claim.product_id)
+    .single()
+  if (!product?.file_path || product.type !== 'free_resource') {
+    return json({ error: 'file_missing', message: 'This file is no longer available. Contact the studio directly.' }, 410)
+  }
+
+  const { data: newCount, error: claimErr } = await supabase.rpc('claim_free_resource_download', {
+    p_claim_id: claim.id,
+    p_max: MAX_DOWNLOADS,
+  })
+  if (claimErr) throw claimErr
+  if (newCount === null || newCount === undefined) return json(LIMIT_REACHED, 429)
+
+  const { data: signed, error: signErr } = await supabase.storage
+    .from('product-files')
+    .createSignedUrl(product.file_path, SIGNED_URL_TTL_SECONDS, { download: product.file_name || true })
+  if (signErr || !signed?.signedUrl) throw signErr ?? new Error('signed url failed')
+
+  return json({
+    url: signed.signedUrl,
+    expires_in: SIGNED_URL_TTL_SECONDS,
+    order_id: claim.id,
+    product_title: product.title,
+    file_name: product.file_name,
+    downloads_used: newCount,
+    downloads_left: Math.max(0, MAX_DOWNLOADS - Number(newCount)),
+  })
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { headers: corsHeaders })
@@ -54,6 +98,14 @@ serve(async (req) => {
     const email = String(body.email ?? '').trim().toLowerCase()
 
     if (!isValidEmail(email)) return json({ error: 'Invalid email address' }, 400)
+
+    // ── Free resource claim (/r/:claimId): no payment involved ───────────────
+    const claimId = typeof body.claim_id === 'string' ? body.claim_id : ''
+    if (claimId) {
+      if (!UUID_RE.test(claimId)) return json(NOT_FOUND, 404)
+      return await downloadFreeResource(claimId, email)
+    }
+
     if (!UUID_RE.test(orderId) && !PI_RE.test(paymentIntentId)) return json(NOT_FOUND, 404)
 
     let query = supabase

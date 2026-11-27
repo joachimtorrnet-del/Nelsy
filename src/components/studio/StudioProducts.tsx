@@ -30,12 +30,15 @@ export function StudioProducts({ products, tone, isPreview = false, onOpen, padd
         Shop
       </p>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 10 }}>
-        {products.map((p) => (
+        {products.map((p) => {
+          const free = p.type === 'free_resource';
+          const priceLabel = free ? 'Free' : formatProductPrice(p.price_cents, p.currency);
+          return (
           <button
             key={p.id}
             type="button"
             onClick={isPreview ? undefined : () => onOpen(p)}
-            aria-label={`${p.title}, ${formatProductPrice(p.price_cents, p.currency)}`}
+            aria-label={`${p.title}, ${priceLabel}`}
             style={{
               textAlign: 'left', padding: 8, display: 'flex', flexDirection: 'column',
               backgroundColor: tone.cardBg, border: `1px solid ${tone.cardBorder}`, borderRadius: 16,
@@ -51,13 +54,14 @@ export function StudioProducts({ products, tone, isPreview = false, onOpen, padd
               {p.title}
             </span>
             <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6, margin: 'auto 2px 2px', paddingTop: 8 }}>
-              <span style={{ fontSize: 14, fontWeight: 800, color: tone.text }}>{formatProductPrice(p.price_cents, p.currency)}</span>
-              <span style={{ fontSize: 12, fontWeight: 700, padding: '6px 12px', borderRadius: 10, backgroundColor: tone.accent, color: tone.accentText }}>
-                Buy
+              <span style={{ fontSize: 14, fontWeight: 800, color: tone.text }}>{priceLabel}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, padding: '6px 12px', borderRadius: 10, backgroundColor: tone.accent, color: tone.accentText, whiteSpace: 'nowrap' }}>
+                {free ? 'Get it' : 'Buy'}
               </span>
             </span>
           </button>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -10,7 +10,7 @@
 // import.meta.env.DEV is false in production builds, so isProductsDemo() is always
 // false there and the plan gate cannot be bypassed.
 // ─────────────────────────────────────────────────────────────────────────────
-import type { Product, ProductInput, ProductOrder, PublicProduct } from './products';
+import type { CreatableProductType, Product, ProductInput, ProductOrder, PublicProduct } from './products';
 
 /** DEV-only override: ?demo=1 in the URL or VITE_PRODUCTS_DEMO=1. Always false in production. */
 export function isProductsDemo(): boolean {
@@ -64,13 +64,22 @@ const MAYA_PRODUCTS: Product[] = [
     file_size_bytes: 18_500_000,
     position: 1,
   }),
+  demoProduct('demo-p4', '1', {
+    type: 'free_resource',
+    title: 'Free nail aftercare guide',
+    description: 'A one page checklist to keep your manicure perfect for longer: what to do the first 24 hours, oils, gloves and when to come back.',
+    price_cents: 0,
+    file_name: 'nail-aftercare-checklist.pdf',
+    file_size_bytes: 640_000,
+    position: 2,
+  }),
   demoProduct('demo-p3', '1', {
     title: 'Chrome nail tutorial (video)',
     description: 'A 25 minute video walking through prep, base, chrome powder and top coat on a full set.',
     price_cents: 2900,
     file_name: 'chrome-tutorial.mp4',
     file_size_bytes: 96_000_000,
-    position: 2,
+    position: 3,
   }),
 ];
 
@@ -86,7 +95,7 @@ export const DEMO_PUBLIC_PRODUCTS: Record<string, PublicProduct[]> = {
 
 export interface ProductsApi {
   list: (profileId: string) => Promise<Product[]>;
-  create: (profileId: string, input: ProductInput, position: number) => Promise<Product>;
+  create: (profileId: string, input: ProductInput, position: number, type?: CreatableProductType) => Promise<Product>;
   update: (id: string, updates: Partial<ProductInput>) => Promise<Product>;
   remove: (product: Product) => Promise<'deleted' | 'archived'>;
   reorder: (items: { id: string; position: number }[]) => Promise<void>;
@@ -107,8 +116,10 @@ export function createDemoProductsApi(empty = false): ProductsApi {
   const wait = <T,>(v: T) => new Promise<T>((r) => setTimeout(() => r(v), 150));
   return {
     list: async () => wait([...products].sort((a, b) => a.position - b.position)),
-    create: async (profileId, input, position) => {
-      const p = demoProduct(`demo-${Math.random().toString(36).slice(2, 8)}`, profileId, { ...input, position, created_at: new Date().toISOString() });
+    create: async (profileId, input, position, type = 'digital') => {
+      const p = demoProduct(`demo-${Math.random().toString(36).slice(2, 8)}`, profileId, {
+        ...input, type, price_cents: type === 'free_resource' ? 0 : input.price_cents, position, created_at: new Date().toISOString(),
+      });
       products = [...products, p];
       return wait(p);
     },
