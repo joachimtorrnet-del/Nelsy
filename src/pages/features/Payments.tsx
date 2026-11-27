@@ -5,74 +5,79 @@ export default function PaymentsPage() {
   return (
     <FeaturePage
       title="Get Paid for Every Appointment | Nelsy"
-      metaDescription="Accept payments directly through Nelsy. Collect deposits, balances and tips without cash or separate payment apps. Built for nail techs and beauty pros."
+      metaDescription="Take full payments or deposits online when clients book, record cash and card payments at the studio, and withdraw to your bank. 0% Nelsy commission."
       canonical="/features/payments"
       h1="Get paid for every appointment"
-      heroDescription="Chase less, earn more. Nelsy handles payments for your beauty business, from the initial deposit to the final balance, so money lands where it should."
+      heroDescription="Chase less, earn more. Clients pay online when they book, in full or as a deposit, through your own Stripe account. Payments taken at the studio are recorded next to the booking, so you always know what is paid and what is left."
       icon={CreditCard}
       benefits={[
         {
-          title: 'One place for all your income',
-          desc: 'Deposits, service payments, and tips all flow through Nelsy. No more juggling Venmo, cash, and card terminals.',
+          title: 'Choose how each service is paid',
+          desc: 'Full payment online at booking, a deposit online with the balance at the studio, or everything at the appointment.',
         },
         {
-          title: 'Get paid before you start',
-          desc: 'Collect deposits at booking and the balance before or after the appointment. You decide the flow.',
+          title: 'Your own Stripe account',
+          desc: 'Online payments go to your connected Stripe account. Nelsy takes 0% commission; only Stripe processing fees apply.',
         },
         {
-          title: 'Secure card payments',
-          desc: 'Clients pay by card using a checkout they recognise and trust. No apps to download, no friction.',
+          title: 'Cash and card at the studio',
+          desc: 'Record balances paid in cash or on your own card terminal against the booking, so each appointment shows what is paid and what is left.',
         },
         {
-          title: 'Track what you have earned',
-          desc: 'Your payment history is in your dashboard. See what has come in, what is outstanding, and how your income is trending.',
+          title: 'See what you have earned',
+          desc: 'The Income tab shows your balance, your transactions and your payouts, and exports transactions to CSV.',
         },
       ]}
       steps={[
         {
           step: '1',
-          title: 'Connect your payout account',
-          desc: 'Link your bank account once. Payments from bookings go directly to you, on a schedule that works for your business.',
+          title: 'Connect Stripe',
+          desc: 'Create or connect your Stripe account from your Nelsy dashboard. Stripe verifies your identity and your bank account.',
         },
         {
           step: '2',
           title: 'Clients pay when they book',
-          desc: 'If you require a deposit, clients pay it to confirm. The remainder can be collected however you prefer.',
+          desc: 'Depending on the service, clients pay in full or a deposit online at booking, or nothing until the appointment.',
         },
         {
           step: '3',
-          title: 'Money lands in your account',
-          desc: 'Payouts are processed automatically. Check your dashboard to see income, upcoming payouts, and payment history.',
+          title: 'Withdraw to your bank',
+          desc: 'Online payments add to your balance. Withdraw it to your bank account from the Income tab.',
         },
       ]}
       useCases={[
-        'Nail techs who want to stop handling cash or using personal payment apps',
+        'Nail techs who want clients to pay before the appointment',
         'Beauty pros running their business from home or a salon suite',
-        'Anyone who wants a clear view of their income without spreadsheets',
-        'Professionals who take deposits and want a clean end-to-end payment flow',
-        'Lash, brow, and beauty artists ready to look more professional to clients',
+        'Anyone who wants a clear view of income without spreadsheets',
+        'Pros who take a deposit online and the balance at the studio',
+        'Lash, brow and beauty artists ready to look more professional to clients',
       ]}
       faq={[
         {
           q: 'How quickly do I get my money?',
-          a: 'Payout timing depends on your setup, but payments processed through Nelsy are designed to reach your account quickly. You can see the status of every payout in your dashboard.',
+          a: 'Online payments land in your Stripe balance. Stripe makes funds available on its own schedule, which depends on your country and account. Once available, you withdraw them to your bank from the Income tab.',
         },
         {
-          q: 'What card types do clients need?',
-          a: 'Clients can pay with most major debit and credit cards. The checkout is handled securely and requires no app or account.',
+          q: 'How can clients pay?',
+          a: 'Online through Stripe\'s secure checkout, by card or any other payment method Stripe offers for your account. Clients do not need an app or an account.',
         },
         {
           q: 'Can I still accept cash?',
-          a: 'Yes. Nelsy handles card payments but you can still take cash for any appointment if you prefer. You can mark those manually in your dashboard.',
+          a: 'Yes. Set a service to be paid at the appointment, or take the balance after a deposit in cash or by card on your own terminal, and record it in Nelsy. These payments show in your income but are not added to your Nelsy balance, since you already hold the money.',
         },
         {
           q: 'Is there a transaction fee?',
-          a: "Nelsy uses Stripe for payments, which charges a small per-transaction fee. Check the pricing page for current rates.",
+          a: 'Nelsy charges 0% commission. The Independent plan is $29 a month, or $25 a month billed yearly. Stripe charges its standard processing fee on online payments.',
+        },
+        {
+          q: 'Can clients leave a tip?',
+          a: 'Not through Nelsy yet. Clients can tip you in person at the appointment.',
         },
       ]}
       relatedFeatures={[
         { slug: 'bookings', title: 'Bookings', route: '/features/bookings' },
         { slug: 'deposits', title: 'Deposits', route: '/features/deposits' },
+        { slug: 'analytics', title: 'Analytics', route: '/features/analytics' },
       ]}
     />
   );

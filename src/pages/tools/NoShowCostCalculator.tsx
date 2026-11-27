@@ -73,7 +73,7 @@ export default function NoShowCostCalculator() {
         { q: 'How much would a deposit recover?', a: 'In this calculator, the deposit is counted once for every slot that stays empty, as if your policy lets you keep it in that case. Your real result depends on your policy and on how often you choose to waive it.' },
         { q: 'Is the result exact?', a: 'No. It is an estimate based only on the numbers you enter, and it does not assume that a deposit changes how often clients miss appointments. Use your own counts from the last few months for a figure that reflects your business.' },
       ]}
-      cta={{ title: 'Protect your time with deposits', text: 'Clients pay a deposit when they book from your Nelsy page, and reminders go out automatically. 0% Nelsy commission on every booking.' }}
+      cta={{ title: 'Protect your time with deposits', text: 'Clients pay a deposit when they book from your Nelsy page and get an email confirmation right away. 0% Nelsy commission on every booking.' }}
       related={[
         { label: 'How to handle nail client no-shows', href: '/blog/how-to-handle-nail-client-no-shows' },
         { label: 'Nail tech no-show policy examples', href: '/blog/nail-tech-no-show-policy-examples' },

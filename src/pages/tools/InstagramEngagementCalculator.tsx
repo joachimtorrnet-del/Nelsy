@@ -72,7 +72,7 @@ export default function InstagramEngagementCalculator() {
         { q: 'Do saves and shares count in engagement rate?', a: 'They should. Saves and shares are visible in Instagram Insights and show stronger intent than a like, especially for tutorials, nail inspo and before-and-after posts. Some tools only count likes and comments, so say which method you used when you share your rate with a brand.' },
         { q: 'Why is my engagement rate dropping as I grow?', a: 'Engagement rate by followers usually falls as an account grows, because a smaller share of followers sees each post. Compare yourself with your own past months and with accounts of a similar size in your niche rather than with a single benchmark.' },
       ]}
-      cta={{ title: 'Turn engagement into bookings and sales', text: 'Your Nelsy page puts your services, bookings, deposits and digital products behind one link in bio, so followers who love your work can book or buy in a few taps.' }}
+      cta={{ title: 'Turn engagement into bookings and sales', text: 'Your Nelsy page puts your services, online booking and deposits behind one link in bio, so followers who love your work can book in a few taps. Digital products are coming with the Creator plan.' }}
       related={[
         { label: 'How to grow your nail tech Instagram', href: '/blog/how-to-grow-nail-tech-instagram' },
         { label: '50 Instagram Reel ideas for nail techs', href: '/blog/50-instagram-reel-ideas-for-nail-techs' },
@@ -120,7 +120,7 @@ export default function InstagramEngagementCalculator() {
 
       <Prose id="bookings" title="From engagement to bookings and sales">
         <p>Engagement only pays when followers can act on it. Put one link in your bio that lets them book a service, pay a deposit or buy your guide in a few taps, instead of sending DMs back and forth.</p>
-        <p>Nelsy gives you that page with 0% Nelsy commission. Next step: work out <Link to="/tools/creator-rate-calculator" className={link}>what to charge brands</Link> with the creator rate calculator.</p>
+        <p>Nelsy gives you that page for bookings and deposits today, with 0% Nelsy commission; selling guides and other digital products is part of the upcoming Creator plan. Next step: work out <Link to="/tools/creator-rate-calculator" className={link}>what to charge brands</Link> with the creator rate calculator.</p>
         <p className="text-sm" style={{ color: PINK }}>Tip: note your engagement rate monthly in the same spreadsheet as your bookings to see which content brings clients, not just likes.</p>
       </Prose>
     </ToolPage>

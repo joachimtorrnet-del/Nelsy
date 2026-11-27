@@ -23,6 +23,11 @@ import CreatorRateCalculator from './pages/tools/CreatorRateCalculator';
 import DepositCalculator from './pages/tools/DepositCalculator';
 import NoShowCostCalculator from './pages/tools/NoShowCostCalculator';
 import BookingAppFeeCalculator from './pages/tools/BookingAppFeeCalculator';
+import ProfitCalculator from './pages/tools/ProfitCalculator';
+import BusinessNameGenerator from './pages/tools/BusinessNameGenerator';
+import InstagramBioGenerator from './pages/tools/InstagramBioGenerator';
+import CaptionGenerator from './pages/tools/CaptionGenerator';
+import UsernameGenerator from './pages/tools/UsernameGenerator';
 import GlossaryIndex from './pages/glossary/GlossaryIndex';
 import GlossaryTermPage from './pages/glossary/GlossaryTermPage';
 import CancellationPolicyGenerator from './pages/tools/CancellationPolicyGenerator';
@@ -43,6 +48,9 @@ import CoursesPage from './pages/features/Courses';
 import DigitalProductsPage from './pages/features/DigitalProducts';
 import CoachingPage from './pages/features/Coaching';
 import MembershipsPage from './pages/features/Memberships';
+import GiftCardsPage from './pages/features/GiftCards';
+import PackagesPage from './pages/features/Packages';
+import CustomProductsPage from './pages/features/CustomProducts';
 import Pricing from './pages/Pricing';
 import Contact from './pages/Contact';
 import Demo from './pages/Demo';
@@ -144,6 +152,11 @@ export default function App() {
             <Route path="/tools/deposit-calculator" element={<DepositCalculator />} />
             <Route path="/tools/no-show-cost-calculator" element={<NoShowCostCalculator />} />
             <Route path="/tools/booking-app-fee-calculator" element={<BookingAppFeeCalculator />} />
+            <Route path="/tools/profit-calculator" element={<ProfitCalculator />} />
+            <Route path="/tools/beauty-business-name-generator" element={<BusinessNameGenerator />} />
+            <Route path="/tools/instagram-bio-generator" element={<InstagramBioGenerator />} />
+            <Route path="/tools/beauty-caption-generator" element={<CaptionGenerator />} />
+            <Route path="/tools/username-generator" element={<UsernameGenerator />} />
             <Route path="/glossary" element={<GlossaryIndex />} />
             <Route path="/glossary/:term" element={<GlossaryTermPage />} />
 
@@ -161,6 +174,9 @@ export default function App() {
             <Route path="/features/digital-products" element={<DigitalProductsPage />} />
             <Route path="/features/coaching" element={<CoachingPage />} />
             <Route path="/features/memberships" element={<MembershipsPage />} />
+            <Route path="/features/gift-cards" element={<GiftCardsPage />} />
+            <Route path="/features/packages" element={<PackagesPage />} />
+            <Route path="/features/custom-products" element={<CustomProductsPage />} />
 
             {/* ── Use case pages ─────────────────────────────────────────── */}
             <Route path="/pricing" element={<Pricing />} />

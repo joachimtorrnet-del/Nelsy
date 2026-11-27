@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import SEOMeta from '@/components/SEOMeta';
@@ -446,10 +446,10 @@ export default function CancellationPolicyGenerator() {
           style={{ background: `linear-gradient(to bottom right, ${PINK}, #9333EA)` }}>
           <div className="max-w-2xl mx-auto">
             <motion.h2 {...fadeUp()} className="text-3xl sm:text-4xl font-bold mb-4">
-              Enforce your policy automatically with deposit collection.
+              Back your policy with a deposit at booking.
             </motion.h2>
             <motion.p {...fadeUp(0.06)} className="text-base sm:text-lg text-white/80 mb-8 max-w-lg mx-auto">
-              Nelsy collects deposits at booking and shows your policy before the client confirms. No-shows are already covered before the appointment day.
+              Nelsy collects the deposit when the client books, so a no-show no longer costs you the whole slot. Paste your policy into your page bio or service descriptions so clients read it before they book.
             </motion.p>
             <motion.div {...fadeUp(0.12)}>
               <SeoCTA label="Start your 14-day free trial →" position="footer_cta" variant="primary-dark" />
@@ -472,12 +472,12 @@ export default function CancellationPolicyGenerator() {
                 { to: '/blog/how-to-get-more-nail-clients', label: 'How to Get More Nail Clients' },
                 { to: '/tools/nail-tech-appointment-reminder-templates', label: 'Appointment Reminder Templates' },
               ].map((link, i) => (
-                <>
-                  {i > 0 && <span key={`dot-${i}`} className="text-gray-300">·</span>}
-                  <Link key={link.to} to={link.to} className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
+                <Fragment key={link.to}>
+                  {i > 0 && <span className="text-gray-300">·</span>}
+                  <Link to={link.to} className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-2">
                     {link.label}
                   </Link>
-                </>
+                </Fragment>
               ))}
             </div>
           </div>

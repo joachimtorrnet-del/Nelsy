@@ -56,7 +56,7 @@ export default function EmailNewslettersPage() {
       faq={[
         {
           q: 'Can I send email campaigns from Nelsy today?',
-          a: 'Not yet. Email marketing is part of the upcoming Creator plan. Today, on the Independent plan, Nelsy handles bookings, deposits, payments and automatic appointment reminders. Join the waitlist at hello@getnelsy.com.',
+          a: 'Not yet. Email marketing is part of the upcoming Creator plan. Today, on the Independent plan, Nelsy handles bookings, deposits and payments, and emails each client a booking confirmation. Join the waitlist at hello@getnelsy.com.',
         },
         {
           q: 'How do I grow my email list in the meantime?',

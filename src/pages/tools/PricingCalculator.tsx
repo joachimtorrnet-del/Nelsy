@@ -81,7 +81,11 @@ function NumberInput({
           max={max}
           step={step ?? 1}
           value={value}
-          onChange={(e) => onChange(Math.max(min ?? 0, Number(e.target.value)))}
+          onChange={(e) => {
+            const n = Number(e.target.value);
+            const v = Math.max(min ?? 0, Number.isFinite(n) ? n : 0);
+            onChange(max !== undefined ? Math.min(max, v) : v);
+          }}
           className="flex-1 px-3 py-2.5 text-sm font-medium text-gray-900 outline-none bg-white min-w-0"
         />
         {suffix && (
@@ -123,7 +127,7 @@ export default function PricingCalculator() {
   const laborCost = (duration / 60) * targetHourly;
   const overheadPerAppt = monthlyAppts > 0 ? monthlyOverhead / monthlyAppts : 0;
   const basePrice = laborCost + overheadPerAppt + materialCost;
-  const finalPrice = profitMargin > 0 ? basePrice / (1 - profitMargin / 100) : basePrice;
+  const finalPrice = profitMargin > 0 ? basePrice / (1 - Math.min(profitMargin, 90) / 100) : basePrice;
   const effectiveHourly = duration > 0 ? (finalPrice / duration) * 60 : 0;
 
   const fmt = (n: number) => `$${n.toFixed(2)}`;

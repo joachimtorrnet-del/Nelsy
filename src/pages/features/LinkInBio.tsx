@@ -17,7 +17,7 @@ export default function LinkInBioPage() {
         },
         {
           title: 'Converts followers into clients',
-          desc: 'Someone who discovers your nail work on Instagram can become a booked client in under two minutes. No DMs, no friction.',
+          desc: 'Someone who discovers your nail work on Instagram can become a booked client in a few taps, without a single DM.',
         },
         {
           title: 'Looks professional from day one',

@@ -173,7 +173,7 @@ export default function BookingAppFeeCalculator() {
         { q: 'What is Booksy Boost?', a: 'Boost is Booksy’s marketplace promotion. According to Booksy’s US pricing page, it costs 30% of a new marketplace client’s first visit, capped at $100. The calculator applies it to the share of appointments you mark as first visits from new marketplace clients.' },
         { q: 'What does Nelsy charge?', a: 'Nelsy costs $29 a month, or $25 a month billed yearly, with 0% Nelsy commission on bookings and sales. Payments go through Stripe at Stripe’s standard processing rates, which you can enter in the calculator.' },
       ]}
-      cta={{ title: 'One flat price, 0% commission', text: 'Nelsy is $29 a month, or $25 a month billed yearly, with bookings, deposits and your link-in-bio store on one page. Try it free for 14 days.' }}
+      cta={{ title: 'One flat price, 0% commission', text: 'Nelsy is $29 a month, or $25 a month billed yearly, with bookings, deposits and payments on one link-in-bio page. Try it free for 14 days.' }}
       related={[
         { label: 'Fresha vs Booksy for nail techs', href: '/blog/fresha-vs-booksy-for-nail-techs' },
         { label: 'GlossGenius vs Booksy', href: '/blog/glossgenius-vs-booksy-nail-techs' },

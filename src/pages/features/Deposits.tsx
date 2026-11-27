@@ -5,69 +5,69 @@ export default function DepositsPage() {
   return (
     <FeaturePage
       title="Collect Booking Deposits Automatically | Nelsy"
-      metaDescription="Require a deposit before confirming appointments. Protect your schedule from no-shows and late cancellations with automatic deposits for beauty pros."
+      metaDescription="Require a deposit when clients book. Protect your schedule from no-shows and late cancellations with deposits paid online at booking, for beauty pros."
       canonical="/features/deposits"
       h1="Collect booking deposits automatically"
-      heroDescription="No-shows cost beauty professionals real money. Requiring a deposit before confirming appointments protects your time and ensures clients show up committed."
+      heroDescription="No-shows cost beauty professionals real money. With Nelsy, clients pay a deposit online when they book, so the appointment is confirmed by a real commitment."
       icon={Wallet}
       benefits={[
         {
-          title: 'Stop losing income to no-shows',
-          desc: 'A client who has paid a deposit has made a real commitment. No-show rates drop when money is already on the line.',
+          title: 'Less income lost to no-shows',
+          desc: 'If a client does not show up, the deposit you already collected covers part of the empty slot, according to your policy.',
         },
         {
-          title: 'No awkward conversations',
-          desc: "Deposits are collected automatically when a client books. There's nothing to chase and no policy to explain in person.",
+          title: 'Nothing to chase',
+          desc: 'The deposit is paid online at booking, before the appointment exists in your calendar. There is no payment request to send.',
         },
         {
-          title: 'Protect your highest-value slots',
-          desc: 'Nail art, special occasion sets, and premium services take more time to prepare. Deposits make sure that time is respected.',
+          title: 'Per service',
+          desc: 'Set a deposit on the services that need one, such as long sets or bridal appointments, and keep others pay-at-the-studio.',
         },
         {
-          title: 'Clients know you mean business',
-          desc: "Requiring a deposit signals professionalism. It tells clients your time has value, and that's a message worth sending.",
+          title: 'Paid to your own Stripe account',
+          desc: 'Deposits go to your connected Stripe account with 0% Nelsy commission. Only Stripe processing fees apply.',
         },
       ]}
       steps={[
         {
           step: '1',
-          title: 'Set your deposit amount',
-          desc: 'Choose a fixed amount or a percentage of the service price. You decide what feels right for your business.',
+          title: 'Set a deposit on a service',
+          desc: 'Choose "Require a deposit" and enter a fixed amount below the service price. Use our deposit calculator if you think in percentages.',
         },
         {
           step: '2',
           title: 'Client pays at booking',
-          desc: 'When a client books, they pay the deposit to confirm. No deposit means no confirmed appointment.',
+          desc: 'The client pays the deposit online to confirm the booking. The balance due at the studio is shown before they pay.',
         },
         {
           step: '3',
           title: 'Collect the balance at the appointment',
-          desc: 'The remaining balance is collected when the client arrives, either through Nelsy or however you prefer.',
+          desc: 'Take the rest in cash or by card on your own terminal, and record it in Nelsy so the booking shows as fully paid.',
         },
       ]}
       useCases={[
         'Nail techs doing nail art or long sets worth protecting',
-        'Beauty pros who have experienced repeated no-shows or last-minute cancellations',
-        'Lash artists and brow techs whose appointments require significant prep time',
+        'Beauty pros who have had repeated no-shows or last-minute cancellations',
+        'Lash artists and brow techs whose appointments take real prep time',
         'Anyone tired of holding slots for clients who never show up',
-        'Beauty professionals who want a consistent, professional booking policy',
+        'Beauty professionals who want a consistent booking policy',
       ]}
       faq={[
         {
           q: 'How much should I charge as a deposit?',
-          a: 'Most beauty professionals charge between 20% and 50% of the service price, or a flat amount like £20. The goal is enough to make cancellation feel costly without creating friction for genuine clients.',
+          a: 'Many beauty professionals charge between 20% and 50% of the service price, or a flat amount such as $20. The goal is enough to make a no-show costly without putting off genuine clients. In Nelsy you enter the deposit as a fixed amount per service.',
         },
         {
           q: 'What happens to the deposit if a client cancels?',
-          a: 'Your cancellation policy determines what happens. You can keep the deposit if a client cancels within a certain timeframe, or refund it if they give enough notice. You set the rules.',
+          a: 'Your cancellation policy decides. Write it in your page bio or service descriptions so clients read it before they book. If your policy gives a refund, you make it from your Stripe dashboard.',
         },
         {
-          q: 'Is it difficult for clients to pay a deposit?',
-          a: "Clients pay securely at the time of booking using a card. It's a familiar checkout experience and takes less than a minute.",
+          q: 'How do clients pay the deposit?',
+          a: 'Online, at booking, through Stripe\'s secure checkout. It takes about a minute and no account is needed.',
         },
         {
-          q: "Can I waive the deposit for regular clients?",
-          a: "Yes. You have flexibility in how you apply your deposit policy. For trusted regulars you can manage this through your dashboard.",
+          q: 'Can I skip the deposit for regular clients?',
+          a: 'A deposit applies to everyone who books that service online. For a trusted regular, you can add the booking yourself from your dashboard, with no deposit.',
         },
       ]}
       relatedFeatures={[
