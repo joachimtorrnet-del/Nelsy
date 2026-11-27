@@ -13,6 +13,8 @@ export type NavFeature = {
   route: string;
   category: FeatureCategory;
   status?: FeatureStatus;
+  /** 'creator' = ships with the upcoming Creator plan (page is live, feature is not in the current plan) */
+  plan?: 'creator';
 };
 
 export type NavPersona = {
@@ -36,9 +38,9 @@ export type NavTool = {
 
 export const FEATURES: NavFeature[] = [
   // SELL
-  { slug: 'courses',          title: 'Courses',          desc: 'Upcoming Creator plan: sell online courses.',            icon: '🎓', route: '/features/courses',          category: 'sell' },
-  { slug: 'digital-products', title: 'Digital Products', desc: 'Upcoming Creator plan: sell guides and templates.',      icon: '📄', route: '/features/digital-products', category: 'sell' },
-  { slug: 'memberships',      title: 'Memberships',      desc: 'Upcoming Creator plan: recurring memberships.',          icon: '💎', route: '/features/memberships',      category: 'sell' },
+  { slug: 'courses',          title: 'Courses',          desc: 'Upcoming Creator plan: sell online courses.',            icon: '🎓', route: '/features/courses',          category: 'sell', plan: 'creator' },
+  { slug: 'digital-products', title: 'Digital Products', desc: 'Upcoming Creator plan: sell guides and templates.',      icon: '📄', route: '/features/digital-products', category: 'sell', plan: 'creator' },
+  { slug: 'memberships',      title: 'Memberships',      desc: 'Upcoming Creator plan: recurring memberships.',          icon: '💎', route: '/features/memberships',      category: 'sell', plan: 'creator' },
   { slug: 'coaching',         title: 'Coaching',         desc: 'Book paid sessions today; coaching tools in Creator plan.', icon: '👤', route: '/features/coaching',         category: 'sell' },
   { slug: 'custom-products',  title: 'Custom Products',  desc: 'Sell personalized and custom offers.',                   icon: '✨', route: '/features/custom-products',  category: 'sell', status: 'coming-soon' },
   // BOOK & GET PAID
@@ -49,9 +51,9 @@ export const FEATURES: NavFeature[] = [
   { slug: 'packages',         title: 'Packages',         desc: 'Bundle services and offers.',                            icon: '📦', route: '/features/packages',         category: 'book', status: 'coming-soon' },
   // GROW
   { slug: 'link-in-bio',      title: 'Link in Bio',      desc: 'One branded page for your whole business.',              icon: '🔗', route: '/features/link-in-bio',      category: 'grow' },
-  { slug: 'instagram-autodm', title: 'Instagram AutoDM', desc: 'Upcoming Creator plan: auto-reply to comments.',         icon: '💬', route: '/features/instagram-autodm', category: 'grow' },
-  { slug: 'email',            title: 'Email & Newsletters', desc: 'Upcoming Creator plan: email your audience.',        icon: '📧', route: '/features/email-newsletters', category: 'grow' },
-  { slug: 'audience-capture', title: 'Audience Capture', desc: 'Upcoming Creator plan: collect contacts you own.',       icon: '👥', route: '/features/audience-capture', category: 'grow' },
+  { slug: 'instagram-autodm', title: 'Instagram AutoDM', desc: 'Upcoming Creator plan: auto-reply to comments.',         icon: '💬', route: '/features/instagram-autodm', category: 'grow', plan: 'creator' },
+  { slug: 'email',            title: 'Email & Newsletters', desc: 'Upcoming Creator plan: email your audience.',        icon: '📧', route: '/features/email-newsletters', category: 'grow', plan: 'creator' },
+  { slug: 'audience-capture', title: 'Audience Capture', desc: 'Upcoming Creator plan: collect contacts you own.',       icon: '👥', route: '/features/audience-capture', category: 'grow', plan: 'creator' },
   // RUN YOUR BUSINESS
   { slug: 'crm',              title: 'CRM & Clients',    desc: 'Manage your clients and relationships.',                 icon: '🗂️', route: '/features/crm',              category: 'run' },
   { slug: 'analytics',        title: 'Analytics',        desc: 'Understand bookings, sales and performance.',            icon: '📊', route: '/features/analytics',        category: 'run' },
@@ -224,3 +226,59 @@ export const USE_CASE_GOALS: UseCaseGoal[] = [
   { slug: 'turn-followers-into-bookings', title: 'Get Booked from Instagram', route: '/use-cases/turn-followers-into-bookings' },
   { slug: 'reduce-no-shows',              title: 'Reduce No-Shows',           route: '/use-cases/reduce-no-shows' },
 ];
+
+// ─── Nav helpers (header + footer) ────────────────────────────────────────────
+// Menus are generated from the data above so they only ever link pages that exist.
+// A missing `status` means the page is live.
+
+export const isLive = (item: { status?: FeatureStatus }) => item.status !== 'coming-soon';
+
+/** Live features in a category, in data order. */
+export const liveFeatures = (category: FeatureCategory) =>
+  FEATURES.filter((f) => f.category === category && isLive(f));
+
+/** Feature blurb for menus: drops the "Upcoming Creator plan:" prefix, the menu shows a badge instead. */
+export const featureBlurb = (f: NavFeature) => {
+  const s = f.desc.replace(/^Upcoming Creator plan:\s*/i, '');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+};
+
+/** Product menu columns, in order. "Sell" holds the Creator plan offers; each Creator plan item carries a badge. */
+export const NAV_PRODUCT_GROUPS: { key: FeatureCategory; label: string }[] = [
+  { key: 'book', label: 'Book & get paid' },
+  { key: 'grow', label: 'Grow' },
+  { key: 'run',  label: 'Run your business' },
+  { key: 'sell', label: 'Sell' },
+];
+
+/** Live tools grouped by category; empty categories are dropped. */
+export const liveToolGroups = () =>
+  TOOL_CATEGORIES
+    .map((c) => ({ ...c, tools: TOOLS.filter((t) => t.category === c.key && isLive(t)) }))
+    .filter((c) => c.tools.length > 0);
+
+/** The three audiences Nelsy is built for. Fixed routes; the pages own their copy. */
+export type NavAudience = { slug: string; title: string; desc: string; route: string; icon: LucideIcon };
+export const NAV_AUDIENCES: NavAudience[] = [
+  { slug: 'nail-techs',      title: 'Nail Techs',       desc: 'Get booked and paid from your link in bio.',  route: '/use-cases/nail-techs',      icon: Sparkles },
+  { slug: 'beauty-creators', title: 'Nail Tech Creators', desc: 'Turn your followers into clients and sales.', route: '/use-cases/beauty-creators', icon: Palette },
+  // Nail salons page is being built; add it back here once /use-cases/nail-salons is live:
+  // { slug: 'nail-salons', title: 'Nail Salons', desc: 'Bookings and payments for your whole team.', route: '/use-cases/nail-salons', icon: Store },
+];
+
+/** Live craft pages (nail techs, lash techs, ...). */
+export const liveCrafts = () => USE_CASE_PERSONAS.filter((p) => p.group === 'craft' && p.live);
+
+export type NavLink = { label: string; to: string };
+
+/** Resources: learning content and ways to see the product. Only routes that exist. */
+export const NAV_RESOURCES: (NavLink & { desc: string })[] = [
+  { label: 'Blog',                       to: '/blog',                            desc: 'Guides for beauty pros and creators.' },
+  { label: 'Glossary',                   to: '/glossary',                        desc: 'Beauty business terms, explained.' },
+  { label: 'Booking apps compared',      to: '/best-booking-app-for-nail-techs', desc: 'How the main booking apps stack up.' },
+  { label: 'Live demo',                  to: '/demo',                            desc: 'See a Nelsy booking page in action.' },
+  { label: 'Contact us',                 to: '/contact',                         desc: 'Questions? We answer fast.' },
+];
+
+/** Primary call to action: same label everywhere in the header and footer. */
+export const NAV_CTA: NavLink = { label: 'Start free trial', to: '/onboarding' };

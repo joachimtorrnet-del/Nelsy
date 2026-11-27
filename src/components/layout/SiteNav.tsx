@@ -1,25 +1,25 @@
-import { useState, useRef, useEffect, useCallback, type ReactNode } from 'react';
+import { useState, useRef, useEffect, useCallback, type ReactNode, type CSSProperties } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Calendar, Wallet, CreditCard, Gift, Layers,
   GraduationCap, FileDown, Gem, Video, PackageCheck,
   Link2, MessageCircle, Mail, UserPlus,
   UsersRound, BarChart3,
-  ChevronDown,
+  BookOpen, BookA, Scale, PlayCircle, MessageSquare,
+  ChevronDown, ArrowRight,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import SeoCTA from '@/components/SeoCTA';
+import { trackSeoCTAClicked } from '@/lib/analytics';
 import {
-  FEATURES, NAV_FEATURE_CATEGORIES, TOOLS, TOOL_CATEGORIES,
-  USE_CASE_PERSONAS,
-  USE_CASE_GOALS,
-  type NavFeature, type NavTool,
+  NAV_PRODUCT_GROUPS, NAV_AUDIENCES, NAV_RESOURCES, NAV_CTA, USE_CASE_GOALS,
+  liveFeatures, featureBlurb, liveToolGroups, liveCrafts,
 } from '@/lib/navData';
+import type { NavFeature } from '@/lib/navData';
 
 const PINK = '#F52B8C';
 const INK  = '#1A1A1A';
 
-// ─── Icon mapping ─────────────────────────────────────────────────────────────
+// ─── Icons ────────────────────────────────────────────────────────────────────
 
 const FEATURE_ICONS: Record<string, LucideIcon> = {
   courses:            GraduationCap,
@@ -40,34 +40,75 @@ const FEATURE_ICONS: Record<string, LucideIcon> = {
   analytics:          BarChart3,
 };
 
-// ─── NavIcon ─────────────────────────────────────────────────────────────────
+const RESOURCE_ICONS: Record<string, LucideIcon> = {
+  '/blog':                            BookOpen,
+  '/glossary':                        BookA,
+  '/best-booking-app-for-nail-techs': Scale,
+  '/demo':                            PlayCircle,
+  '/contact':                         MessageSquare,
+};
 
-function NavIcon({ icon: Icon, pink = false }: { icon: LucideIcon; pink?: boolean }) {
+// Computed once: menus only list pages that exist.
+const PRODUCT_COLUMNS = NAV_PRODUCT_GROUPS
+  .map((g) => ({ ...g, items: liveFeatures(g.key) }))
+  .filter((g) => g.items.length > 0);
+const TOOL_GROUPS = liveToolGroups();
+const CRAFTS = liveCrafts();
+
+const FEATURE_ROUTES = PRODUCT_COLUMNS.flatMap((c) => c.items.map((f) => f.route));
+const SOLUTION_ROUTES = [...NAV_AUDIENCES.map((a) => a.route), ...CRAFTS.map((c) => c.route), ...USE_CASE_GOALS.map((g) => g.route)];
+const RESOURCE_ROUTES = NAV_RESOURCES.map((r) => r.to);
+
+const matches = (pathname: string, route: string) => pathname === route || pathname.startsWith(route + '/');
+
+const FOCUS = 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F52B8C]';
+const ITEM = `rounded-xl transition-colors duration-150 hover:bg-[#FFF5F9] ${FOCUS}`;
+
+// ─── Small parts ──────────────────────────────────────────────────────────────
+
+function NavIcon({ icon: Icon }: { icon: LucideIcon }) {
   return (
-    <span
-      className="shrink-0 flex items-center justify-center rounded-[8px] w-[34px] h-[34px]"
-      style={{ background: pink ? `${PINK}12` : '#F5F5F5' }}
-    >
-      <Icon size={15} strokeWidth={1.75} color={pink ? PINK : INK} />
+    <span className="shrink-0 flex items-center justify-center rounded-[8px] w-[34px] h-[34px] bg-[#F5F5F5]" aria-hidden="true">
+      <Icon size={15} strokeWidth={1.75} color={INK} />
     </span>
   );
 }
 
-// ─── Mega menu panel ─────────────────────────────────────────────────────────
+function CreatorBadge() {
+  return (
+    <span
+      className="shrink-0 rounded-full px-1.5 py-[2px] text-[9px] font-bold uppercase tracking-wide whitespace-nowrap"
+      style={{ background: '#FFE4F1', color: '#B3125F' }}
+    >
+      Creator plan
+    </span>
+  );
+}
 
-function MenuPanel({
-  children,
-  className = '',
-  style,
-}: {
-  children: ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
+function GroupLabel({ children }: { children: ReactNode }) {
+  return <p className="mb-1.5 px-2 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">{children}</p>;
+}
+
+function PanelFooter({ children }: { children: ReactNode }) {
+  return <div className="mt-3 border-t border-gray-100 pt-3 px-2 flex flex-wrap items-center gap-x-6 gap-y-2">{children}</div>;
+}
+
+function PinkLink({ to, children }: { to: string; children: ReactNode }) {
+  return (
+    <Link to={to} className={`inline-flex items-center gap-1 rounded text-[12.5px] font-semibold hover:opacity-80 ${FOCUS}`} style={{ color: PINK }}>
+      {children} <ArrowRight size={13} strokeWidth={2} aria-hidden="true" />
+    </Link>
+  );
+}
+
+function MenuPanel({ id, labelledBy, children, className = '', style }: {
+  id: string; labelledBy: string; children: ReactNode; className?: string; style?: CSSProperties;
 }) {
   return (
     <div
-      role="menu"
-      className={`absolute top-[calc(100%+10px)] z-50 rounded-[22px] bg-white ${className}`}
+      id={id}
+      aria-labelledby={labelledBy}
+      className={`absolute z-50 rounded-[22px] bg-white p-4 ${className}`}
       style={{
         boxShadow: '0 4px 32px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06)',
         border: '1px solid rgba(0,0,0,0.06)',
@@ -79,268 +120,235 @@ function MenuPanel({
   );
 }
 
-// ─── Feature menu item ───────────────────────────────────────────────────────
-
-function FeatureItem({ f }: { f: NavFeature }) {
-  const Icon = FEATURE_ICONS[f.slug];
-  const dimmed = f.status === 'coming-soon';
+function FeatureLink({ f, pathname }: { f: NavFeature; pathname: string }) {
+  const Icon = FEATURE_ICONS[f.slug] ?? Layers;
+  const current = matches(pathname, f.route);
   return (
     <Link
       to={f.route}
-      role="menuitem"
-      className={`group flex items-start gap-2.5 rounded-xl px-2 py-1.5 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-[#F52B8C] ${
-        dimmed ? 'pointer-events-none opacity-40' : 'hover:bg-[#FFF5F9]'
-      }`}
+      aria-current={current ? 'page' : undefined}
+      className={`flex items-start gap-2.5 px-2 py-2 ${ITEM} ${current ? 'bg-[#FFF5F9]' : ''}`}
     >
-      {Icon && <NavIcon icon={Icon} />}
-      <div className="min-w-0 pt-0.5">
-        <p className="flex items-center gap-1.5 text-[13px] font-semibold leading-tight text-gray-900">
-          {f.title}
-          {dimmed && (
-            <span className="rounded-full bg-gray-100 px-1.5 py-[2px] text-[9px] font-bold uppercase tracking-wide text-gray-400">
-              Soon
-            </span>
-          )}
-        </p>
-        <p className="mt-0.5 text-[11.5px] leading-snug text-gray-400 line-clamp-1">{f.desc}</p>
-      </div>
+      <NavIcon icon={Icon} />
+      <span className="min-w-0 pt-0.5">
+        <span className="block text-[13px] font-semibold leading-tight text-gray-900">{f.title}</span>
+        {f.plan === 'creator' && <span className="mt-1 flex"><CreatorBadge /></span>}
+        <span className="mt-0.5 block text-[11.5px] leading-snug text-gray-500 line-clamp-2">{featureBlurb(f)}</span>
+      </span>
     </Link>
   );
 }
 
-// ─── Tool menu item ───────────────────────────────────────────────────────────
+// ─── Desktop menus ────────────────────────────────────────────────────────────
 
-function ToolItem({ t }: { t: NavTool }) {
-  if (t.status === 'coming-soon') {
-    return (
-      <div className="flex items-center justify-between px-3 py-1.5 opacity-40 cursor-default">
-        <p className="text-[12.5px] font-medium text-gray-700 leading-snug">{t.title}</p>
-        <span className="shrink-0 rounded-full bg-gray-100 px-1.5 py-[2px] text-[9px] font-bold uppercase tracking-wide text-gray-400">
-          Soon
+function ProductMenu({ pathname }: { pathname: string }) {
+  return (
+    <MenuPanel id="product-menu" labelledBy="product-btn" className="left-1/2 -translate-x-1/2 top-[calc(100%+10px)]" style={{ width: 'min(calc(100vw - 40px), 940px)' }}>
+      <div className="grid gap-x-2" style={{ gridTemplateColumns: `repeat(${PRODUCT_COLUMNS.length}, minmax(0, 1fr))` }}>
+        {PRODUCT_COLUMNS.map((col) => (
+          <div key={col.key} className={col.key === 'sell' ? 'rounded-2xl bg-[#FFFAFC] -my-1 py-1' : ''}>
+            <GroupLabel>{col.label}</GroupLabel>
+            <div>{col.items.map((f) => <FeatureLink key={f.slug} f={f} pathname={pathname} />)}</div>
+          </div>
+        ))}
+      </div>
+      <PanelFooter>
+        <PinkLink to="/pricing">Compare plans</PinkLink>
+        <PinkLink to="/demo">See the live demo</PinkLink>
+        <span className="ml-auto text-[11.5px] text-gray-500">
+          <span className="font-semibold text-gray-700">Creator plan</span> features are part of our upcoming plan for creators.
         </span>
-      </div>
-    );
-  }
-  return (
-    <Link
-      to={t.route}
-      role="menuitem"
-      className="block rounded-xl px-3 py-1.5 transition-colors duration-150 hover:bg-[#FFF5F9] focus-visible:outline-2 focus-visible:outline-[#F52B8C]"
-    >
-      <p className="text-[12.5px] font-medium text-gray-800 leading-snug">{t.title}</p>
-    </Link>
+      </PanelFooter>
+    </MenuPanel>
   );
 }
 
-// ─── Product mega menu ───────────────────────────────────────────────────────
-
-function ProductMenu() {
+function SolutionsMenu({ pathname }: { pathname: string }) {
   return (
-    <MenuPanel
-      className="left-1/2 -translate-x-1/2 p-4"
-      style={{ width: 'min(calc(100vw - 40px), 720px)' }}
-    >
-      <div className="grid grid-cols-3 gap-x-2">
-        {NAV_FEATURE_CATEGORIES.map(cat => {
-          const items = FEATURES.filter(f => f.category === cat.key);
-          return (
-            <div key={cat.key}>
-              <p className="mb-1.5 px-2.5 text-[9.5px] font-bold uppercase tracking-[0.1em] text-gray-400">
-                {cat.label}
-              </p>
-              <div className="space-y-0">
-                {items.map(f => <FeatureItem key={f.slug} f={f} />)}
-              </div>
+    <MenuPanel id="solutions-menu" labelledBy="solutions-btn" className="left-1/2 -translate-x-1/2 top-[calc(100%+10px)]" style={{ width: 'min(calc(100vw - 40px), 680px)' }}>
+      <div className="grid grid-cols-[1.25fr_1fr] gap-x-4">
+        <div>
+          <GroupLabel>Built for</GroupLabel>
+          {NAV_AUDIENCES.map((a) => {
+            const current = matches(pathname, a.route);
+            return (
+              <Link
+                key={a.slug}
+                to={a.route}
+                aria-current={current ? 'page' : undefined}
+                className={`flex items-start gap-2.5 px-2 py-2.5 ${ITEM} ${current ? 'bg-[#FFF5F9]' : ''}`}
+              >
+                <NavIcon icon={a.icon} />
+                <span className="min-w-0 pt-0.5">
+                  <span className="block text-[13.5px] font-semibold leading-tight text-gray-900">{a.title}</span>
+                  <span className="mt-0.5 block text-[11.5px] leading-snug text-gray-500">{a.desc}</span>
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+        <div className="border-l border-gray-100 pl-4">
+          {CRAFTS.length > 0 && (
+            <div className="mb-3">
+              <GroupLabel>By craft</GroupLabel>
+              {CRAFTS.map((c) => (
+                <Link
+                  key={c.slug}
+                  to={c.route}
+                  aria-current={matches(pathname, c.route) ? 'page' : undefined}
+                  className={`flex items-center gap-2 px-2 py-2 text-[13px] font-medium text-gray-800 ${ITEM}`}
+                >
+                  <c.icon size={14} strokeWidth={1.75} color={INK} aria-hidden="true" />
+                  {c.title}
+                </Link>
+              ))}
             </div>
-          );
-        })}
-      </div>
-      <div className="mt-3 border-t border-gray-100 pt-2.5 px-1">
-        <Link to="/features" className="text-[12px] font-semibold transition-colors hover:opacity-80" style={{ color: PINK }}>
-          View all features →
-        </Link>
+          )}
+          <GroupLabel>By goal</GroupLabel>
+          {USE_CASE_GOALS.map((g) => (
+            <Link
+              key={g.slug}
+              to={g.route}
+              aria-current={matches(pathname, g.route) ? 'page' : undefined}
+              className={`block px-2 py-2 text-[13px] font-medium text-gray-800 ${ITEM}`}
+            >
+              {g.title}
+            </Link>
+          ))}
+        </div>
       </div>
     </MenuPanel>
   );
 }
 
-// ─── Use Cases mega menu ─────────────────────────────────────────────────────
-
-function PersonaItem({ p }: { p: (typeof USE_CASE_PERSONAS)[number] }) {
-  const Icon = p.icon;
-  const inner = (
-    <>
-      <span className="shrink-0 flex items-center justify-center rounded-[8px] w-[34px] h-[34px]" style={{ background: '#F5F5F5' }}>
-        <Icon size={15} strokeWidth={1.75} color={INK} />
-      </span>
-      <div className="min-w-0 pt-0.5">
-        <p className="text-[13.5px] font-semibold leading-tight text-gray-900">{p.title}</p>
-        <p className="mt-0.5 text-[11.5px] leading-snug text-gray-400 line-clamp-1">{p.subtitle}</p>
-      </div>
-    </>
-  );
-  if (!p.live) {
-    return <div className="flex items-start gap-2.5 rounded-xl px-2 py-1.5 opacity-50 pointer-events-none cursor-default">{inner}</div>;
-  }
+function ToolsMenu({ pathname }: { pathname: string }) {
   return (
-    <Link
-      to={p.route}
-      role="menuitem"
-      className="flex items-start gap-2.5 rounded-xl px-2 py-1.5 transition-colors duration-150 hover:bg-[#FFF5F9] focus-visible:outline-2 focus-visible:outline-[#F52B8C]"
-    >
-      {inner}
-    </Link>
-  );
-}
-
-function UseCasesMenu() {
-  const segments = USE_CASE_PERSONAS.filter((p) => p.group === 'segment');
-  const crafts = USE_CASE_PERSONAS.filter((p) => p.group === 'craft');
-  return (
-    <MenuPanel
-      className="left-1/2 -translate-x-1/2 p-5"
-      style={{ width: 'min(calc(100vw - 40px), 720px)' }}
-    >
-      <p className="mb-2 px-2 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">Who it&apos;s for</p>
-      <div className="grid grid-cols-3 gap-x-3 gap-y-0.5 mb-4">
-        {segments.map((p) => <PersonaItem key={p.slug} p={p} />)}
-      </div>
-      <div className="grid grid-cols-3 gap-x-3 border-t border-gray-100 pt-4">
-        <div className="col-span-2">
-          <p className="mb-2 px-2 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">By craft</p>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
-            {crafts.map((p) => <PersonaItem key={p.slug} p={p} />)}
-          </div>
-        </div>
-        <div>
-          <p className="mb-2 px-2 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">Goals</p>
-          <div className="space-y-0.5">
-            {USE_CASE_GOALS.map((g) => (
-              <Link key={g.slug} to={g.route} role="menuitem" className="block rounded-xl px-2 py-2 text-[13.5px] font-semibold text-gray-900 hover:bg-[#FFF5F9] transition-colors">
-                {g.title}
+    <MenuPanel id="tools-menu" labelledBy="tools-btn" className="left-1/2 -translate-x-1/2 top-[calc(100%+10px)]" style={{ width: `min(calc(100vw - 40px), ${Math.max(TOOL_GROUPS.length, 2) * 230}px)` }}>
+      <div className="grid gap-x-2" style={{ gridTemplateColumns: `repeat(${TOOL_GROUPS.length}, minmax(0, 1fr))` }}>
+        {TOOL_GROUPS.map((g) => (
+          <div key={g.key}>
+            <GroupLabel>{g.label}</GroupLabel>
+            {g.tools.map((t) => (
+              <Link
+                key={t.slug}
+                to={t.route}
+                aria-current={matches(pathname, t.route) ? 'page' : undefined}
+                className={`block px-2 py-2 text-[12.5px] font-medium leading-snug text-gray-800 ${ITEM}`}
+              >
+                {t.title}
               </Link>
             ))}
           </div>
-        </div>
+        ))}
       </div>
+      <PanelFooter>
+        <PinkLink to="/tools">All free tools</PinkLink>
+      </PanelFooter>
     </MenuPanel>
   );
 }
 
-// ─── Free Tools mega menu ────────────────────────────────────────────────────
-
-function ToolsMenu() {
+function ResourcesMenu({ pathname }: { pathname: string }) {
   return (
-    <MenuPanel
-      className="left-1/2 -translate-x-1/2 p-5"
-      style={{ width: 'min(calc(100vw - 40px), 620px)' }}
-    >
-      <div className="grid grid-cols-3 gap-x-2">
-        {TOOL_CATEGORIES.map(cat => {
-          const items = TOOLS.filter(t => t.category === cat.key);
-          return (
-            <div key={cat.key}>
-              <p className="mb-2 px-3 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">
-                {cat.label}
-              </p>
-              <div className="space-y-0.5">
-                {items.map(t => <ToolItem key={t.slug} t={t} />)}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-      <div className="mt-3 border-t border-gray-100 pt-3 px-1">
-        <Link to="/tools" className="text-[12px] font-semibold transition-colors hover:opacity-80" style={{ color: PINK }}>
-          View all free tools →
+    // Anchored to its trigger (not the pill), so the offset adds the gap between button and pill bottom.
+    <MenuPanel id="resources-menu" labelledBy="resources-btn" className="left-0 top-[calc(100%+21px)]" style={{ width: 320 }}>
+      {NAV_RESOURCES.map((r) => (
+        <Link
+          key={r.to}
+          to={r.to}
+          aria-current={matches(pathname, r.to) ? 'page' : undefined}
+          className={`flex items-start gap-2.5 px-2 py-2 ${ITEM}`}
+        >
+          <NavIcon icon={RESOURCE_ICONS[r.to] ?? BookOpen} />
+          <span className="min-w-0 pt-0.5">
+            <span className="block text-[13px] font-semibold leading-tight text-gray-900">{r.label}</span>
+            <span className="mt-0.5 block text-[11.5px] leading-snug text-gray-500">{r.desc}</span>
+          </span>
         </Link>
-      </div>
+      ))}
     </MenuPanel>
   );
 }
 
-// ─── Desktop dropdown trigger ────────────────────────────────────────────────
+// ─── Desktop dropdown trigger ─────────────────────────────────────────────────
 
-interface DropdownProps {
-  id: string;
-  label: string;
-  isActive: boolean;
-  open: boolean;
-  onToggle: () => void;
-  children: ReactNode;
-}
-
-function Dropdown({ id, label, isActive, open, onToggle, children }: DropdownProps) {
+function Dropdown({ id, label, isActive, open, onToggle, anchorToTrigger = false, children }: {
+  id: string; label: string; isActive: boolean; open: boolean; onToggle: () => void;
+  /** true: panel opens under its trigger; false: panel centers on the nav pill */
+  anchorToTrigger?: boolean; children: ReactNode;
+}) {
   return (
-    <div>
+    <div className={anchorToTrigger ? 'relative' : undefined}>
       <button
+        type="button"
         id={`${id}-btn`}
-        aria-haspopup="true"
         aria-expanded={open}
         aria-controls={`${id}-menu`}
         onClick={onToggle}
-        className={`inline-flex items-center gap-1 rounded px-2 py-1.5 text-[13px] font-medium transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F52B8C] ${
+        className={`inline-flex items-center gap-1 rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition-colors duration-150 ${FOCUS} ${
           isActive || open ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'
         }`}
       >
         {label}
-        <ChevronDown
-          size={12}
-          strokeWidth={2}
-          className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-        />
+        <ChevronDown size={12} strokeWidth={2} aria-hidden="true" className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
-      {open && <div id={`${id}-menu`}>{children}</div>}
+      {open && children}
     </div>
   );
 }
 
-// ─── Mobile accordion section ─────────────────────────────────────────────────
+// ─── Mobile drawer ────────────────────────────────────────────────────────────
 
-function MobileSection({ label, children }: { label: string; children: ReactNode }) {
+const M_ROW = `flex min-h-[44px] items-center gap-2.5 px-3 rounded-xl text-[14px] font-medium text-gray-800 hover:bg-[#FFF5F9] transition ${FOCUS}`;
+
+function MobileSection({ id, label, children }: { id: string; label: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   return (
-    <div>
+    <div className="border-b border-gray-100 last:border-b-0">
       <button
+        type="button"
+        id={`m-${id}-btn`}
         aria-expanded={open}
-        onClick={() => setOpen(v => !v)}
-        className="flex w-full items-center justify-between px-3 py-2.5 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition focus-visible:outline-2 focus-visible:outline-[#F52B8C]"
+        aria-controls={`m-${id}-panel`}
+        onClick={() => setOpen((v) => !v)}
+        className={`flex w-full min-h-[48px] items-center justify-between px-3 rounded-xl text-[15px] font-semibold text-gray-900 hover:bg-gray-50 transition ${FOCUS}`}
       >
         {label}
-        <ChevronDown size={14} strokeWidth={2} className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+        <ChevronDown size={16} strokeWidth={2} aria-hidden="true" className={`transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
-      {open && <div className="mt-1 pl-2">{children}</div>}
+      {open && <div id={`m-${id}-panel`} className="pb-2 pl-1">{children}</div>}
     </div>
   );
 }
 
-// ─── Mobile menu drawer ───────────────────────────────────────────────────────
+function MobileLabel({ children }: { children: ReactNode }) {
+  return <p className="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">{children}</p>;
+}
 
-function MobileMenu({ onClose }: { onClose: () => void }) {
+function MobileMenu({ onClose, onCta, drawerRef }: { onClose: () => void; onCta: () => void; drawerRef: React.RefObject<HTMLDivElement | null> }) {
+  // Lock page scroll while the drawer is open.
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = prev; };
+  }, []);
+
   return (
-    <div role="dialog" aria-modal="true" aria-label="Navigation menu" className="fixed inset-0 z-40">
-      <div className="absolute inset-0 bg-black/15 backdrop-blur-sm" aria-hidden="true" onClick={onClose} />
-      <div className="relative bg-white w-full mt-[52px] rounded-b-2xl shadow-lg max-h-[calc(100vh-52px)] overflow-y-auto">
-        <nav className="px-3 py-3 space-y-0.5">
-
-          <MobileSection label="Features">
-            {NAV_FEATURE_CATEGORIES.map(cat => (
-              <div key={cat.key} className="mt-2 first:mt-1">
-                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">{cat.label}</p>
-                {FEATURES.filter(f => f.category === cat.key).map(f => {
-                  const Icon = FEATURE_ICONS[f.slug];
+    <div ref={drawerRef} id="mobile-menu" className="lg:hidden fixed inset-0 z-40">
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" aria-hidden="true" onClick={onClose} />
+      <div className="relative bg-white w-full pt-[72px] pb-4 rounded-b-2xl shadow-lg max-h-[100dvh] overflow-y-auto overscroll-contain">
+        <nav aria-label="Mobile" className="px-3">
+          <MobileSection id="product" label="Product">
+            {PRODUCT_COLUMNS.map((col) => (
+              <div key={col.key}>
+                <MobileLabel>{col.label}</MobileLabel>
+                {col.items.map((f) => {
+                  const Icon = FEATURE_ICONS[f.slug] ?? Layers;
                   return (
-                    <Link
-                      key={f.slug}
-                      to={f.route}
-                      onClick={onClose}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-gray-700 hover:bg-[#FFF5F9] transition"
-                    >
-                      {Icon && <Icon size={14} strokeWidth={1.75} color={INK} />}
-                      {f.title}
-                      {f.status === 'coming-soon' && (
-                        <span className="ml-auto text-[9px] font-bold uppercase text-gray-400">Soon</span>
-                      )}
+                    <Link key={f.slug} to={f.route} onClick={onClose} className={M_ROW}>
+                      <Icon size={16} strokeWidth={1.75} color={INK} aria-hidden="true" />
+                      <span className="flex-1">{f.title}</span>
+                      {f.plan === 'creator' && <CreatorBadge />}
                     </Link>
                   );
                 })}
@@ -348,90 +356,68 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
             ))}
           </MobileSection>
 
-          <MobileSection label="Use cases">
-            <div className="mt-1">
-              {USE_CASE_PERSONAS.map(p => {
-                const Icon = p.icon;
-                if (!p.live) {
-                  return (
-                    <div
-                      key={p.slug}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl opacity-50 pointer-events-none cursor-default"
-                    >
-                      <Icon size={14} strokeWidth={1.75} color={INK} />
-                      <div className="min-w-0">
-                        <span className="text-[13px] font-medium text-gray-700">{p.title}</span>
-                        <span className="ml-2 text-[11px] text-gray-400 truncate">{p.subtitle}</span>
-                      </div>
-                    </div>
-                  );
-                }
-                return (
-                  <Link
-                    key={p.slug}
-                    to={p.route}
-                    onClick={onClose}
-                    className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[13px] font-medium text-gray-700 hover:bg-[#FFF5F9] transition"
-                  >
-                    <Icon size={14} strokeWidth={1.75} color={INK} />
-                    <div className="min-w-0">
-                      <span>{p.title}</span>
-                      <span className="ml-2 text-[11px] text-gray-400 truncate">{p.subtitle}</span>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
+          <MobileSection id="solutions" label="Who it's for">
+            <MobileLabel>Built for</MobileLabel>
+            {NAV_AUDIENCES.map((a) => (
+              <Link key={a.slug} to={a.route} onClick={onClose} className={M_ROW}>
+                <a.icon size={16} strokeWidth={1.75} color={INK} aria-hidden="true" />
+                {a.title}
+              </Link>
+            ))}
+            {CRAFTS.length > 0 && <MobileLabel>By craft</MobileLabel>}
+            {CRAFTS.map((c) => (
+              <Link key={c.slug} to={c.route} onClick={onClose} className={M_ROW}>
+                <c.icon size={16} strokeWidth={1.75} color={INK} aria-hidden="true" />
+                {c.title}
+              </Link>
+            ))}
+            <MobileLabel>By goal</MobileLabel>
+            {USE_CASE_GOALS.map((g) => (
+              <Link key={g.slug} to={g.route} onClick={onClose} className={M_ROW}>{g.title}</Link>
+            ))}
           </MobileSection>
 
-          <MobileSection label="Free Tools">
-            {TOOL_CATEGORIES.map(cat => (
-              <div key={cat.key} className="mt-2 first:mt-1">
-                <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-gray-400">{cat.label}</p>
-                {TOOLS.filter(t => t.category === cat.key).map(t => (
-                  t.status === 'coming-soon'
-                    ? (
-                      <div key={t.slug} className="flex items-center justify-between px-3 py-2 text-[13px] text-gray-400">
-                        {t.title}
-                        <span className="text-[9px] font-bold uppercase">Soon</span>
-                      </div>
-                    )
-                    : (
-                      <Link
-                        key={t.slug}
-                        to={t.route}
-                        onClick={onClose}
-                        className="block px-3 py-2 rounded-xl text-[13px] font-medium text-gray-700 hover:bg-[#FFF5F9] transition"
-                      >
-                        {t.title}
-                      </Link>
-                    )
+          <MobileSection id="tools" label="Free tools">
+            {TOOL_GROUPS.map((g) => (
+              <div key={g.key}>
+                <MobileLabel>{g.label}</MobileLabel>
+                {g.tools.map((t) => (
+                  <Link key={t.slug} to={t.route} onClick={onClose} className={M_ROW}>{t.title}</Link>
                 ))}
               </div>
             ))}
-            <Link to="/tools" onClick={onClose} className="block px-3 py-2 text-[13px] font-semibold" style={{ color: PINK }}>
-              View all free tools →
+            <Link to="/tools" onClick={onClose} className={`${M_ROW} font-semibold`} style={{ color: PINK }}>
+              All free tools <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </MobileSection>
 
-          <Link to="/pricing" onClick={onClose} className="flex items-center px-3 py-2.5 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
+          <MobileSection id="resources" label="Resources">
+            {NAV_RESOURCES.map((r) => {
+              const Icon = RESOURCE_ICONS[r.to] ?? BookOpen;
+              return (
+                <Link key={r.to} to={r.to} onClick={onClose} className={M_ROW}>
+                  <Icon size={16} strokeWidth={1.75} color={INK} aria-hidden="true" />
+                  {r.label}
+                </Link>
+              );
+            })}
+          </MobileSection>
+
+          <Link to="/pricing" onClick={onClose} className={`flex min-h-[48px] items-center px-3 rounded-xl text-[15px] font-semibold text-gray-900 hover:bg-gray-50 transition ${FOCUS}`}>
             Pricing
           </Link>
-          <Link to="/blog" onClick={onClose} className="flex items-center px-3 py-2.5 rounded-xl text-[14px] font-medium text-gray-700 hover:bg-gray-50 transition">
-            Blog
-          </Link>
 
-          <div className="border-t border-gray-100 pt-3 mt-3 space-y-2 px-1">
-            <Link to="/login" onClick={onClose} className="block text-center py-2.5 rounded-xl text-[14px] font-medium text-gray-600 hover:bg-gray-50 transition">
+          <div className="border-t border-gray-100 pt-3 mt-2 space-y-2 px-1">
+            <Link to="/login" onClick={onClose} className={`flex min-h-[48px] items-center justify-center rounded-xl bg-gray-100 text-[15px] font-medium text-gray-800 hover:bg-gray-200 transition ${FOCUS}`}>
               Log in
             </Link>
             <Link
-              to="/onboarding"
-              onClick={onClose}
-              className="block text-center py-3 rounded-xl text-[14px] font-bold text-white transition hover:opacity-90"
+              to={NAV_CTA.to}
+              onClick={() => { onCta(); onClose(); }}
+              className={`flex min-h-[48px] items-center justify-center rounded-xl text-[15px] font-bold text-white transition hover:opacity-90 ${FOCUS}`}
               style={{ background: PINK }}
             >
-              Start for free
+              {NAV_CTA.label}
             </Link>
           </div>
         </nav>
@@ -440,42 +426,80 @@ function MobileMenu({ onClose }: { onClose: () => void }) {
   );
 }
 
-// ─── Main export ─────────────────────────────────────────────────────────────
+// ─── Main export ──────────────────────────────────────────────────────────────
+
+type MenuId = 'product' | 'solutions' | 'tools' | 'resources';
 
 export default function SiteNav() {
   const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [openMenu, setOpenMenu] = useState<MenuId | null>(null);
   const navRef = useRef<HTMLDivElement>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
+  const burgerRef = useRef<HTMLButtonElement>(null);
 
-  const toggle = useCallback((id: string) => {
-    setOpenMenu(prev => prev === id ? null : id);
+  const toggle = useCallback((id: MenuId) => {
+    setOpenMenu((prev) => (prev === id ? null : id));
   }, []);
 
-  const closeAll = useCallback(() => {
-    setOpenMenu(null);
-    setMobileOpen(false);
-  }, []);
+  const trackCta = useCallback(() => trackSeoCTAClicked(pathname, 'nav', NAV_CTA.label), [pathname]);
 
-  useEffect(() => { closeAll(); }, [pathname, closeAll]);
+  // Close everything on navigation.
+  useEffect(() => { setOpenMenu(null); setMobileOpen(false); }, [pathname]);
 
+  // Escape closes and returns focus to the control that opened the menu.
   useEffect(() => {
     if (openMenu === null && !mobileOpen) return;
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeAll(); };
-    const onMouse = (e: MouseEvent) => {
-      if (navRef.current && !navRef.current.contains(e.target as Node)) closeAll();
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      if (openMenu) {
+        document.getElementById(`${openMenu}-btn`)?.focus();
+        setOpenMenu(null);
+      }
+      if (mobileOpen) {
+        setMobileOpen(false);
+        burgerRef.current?.focus();
+      }
     };
     document.addEventListener('keydown', onKey);
-    document.addEventListener('mousedown', onMouse);
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      document.removeEventListener('mousedown', onMouse);
-    };
-  }, [openMenu, mobileOpen, closeAll]);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [openMenu, mobileOpen]);
 
-  const isProductActive   = FEATURES.some(f => pathname.startsWith(f.route));
-  const isUseCasesActive  = pathname.startsWith('/use-cases');
-  const isToolsActive     = pathname.startsWith('/tools');
+  // Desktop dropdowns: close on click outside the bar or when focus leaves it (Tab past the last item).
+  useEffect(() => {
+    if (openMenu === null) return;
+    const inside = (t: EventTarget | null) => !!t && !!navRef.current?.contains(t as Node);
+    const onMouse = (e: MouseEvent) => { if (!inside(e.target)) setOpenMenu(null); };
+    const onFocus = (e: FocusEvent) => { if (!inside(e.target)) setOpenMenu(null); };
+    document.addEventListener('mousedown', onMouse);
+    document.addEventListener('focusin', onFocus);
+    return () => {
+      document.removeEventListener('mousedown', onMouse);
+      document.removeEventListener('focusin', onFocus);
+    };
+  }, [openMenu]);
+
+  // Move focus into the drawer when it opens.
+  useEffect(() => {
+    if (mobileOpen) drawerRef.current?.querySelector<HTMLElement>('button, a')?.focus();
+  }, [mobileOpen]);
+
+  // Leaving mobile width with the drawer open: close it so the scroll lock is released.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const mq = window.matchMedia('(min-width: 1024px)');
+    const onChange = () => { if (mq.matches) setMobileOpen(false); };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, [mobileOpen]);
+
+  const active = {
+    product:   FEATURE_ROUTES.some((r) => matches(pathname, r)),
+    solutions: SOLUTION_ROUTES.some((r) => matches(pathname, r)),
+    tools:     matches(pathname, '/tools'),
+    resources: RESOURCE_ROUTES.some((r) => matches(pathname, r)),
+  };
+  const pricingActive = matches(pathname, '/pricing');
 
   return (
     <>
@@ -484,91 +508,90 @@ export default function SiteNav() {
         aria-label="Main navigation"
         className="fixed top-0 w-full z-50 px-4 pt-3 pointer-events-none"
       >
-        {/* Pill — position:relative anchors mega menus so left:50% centers against the pill */}
+        {/* Pill: position:relative anchors the wide menus so left-1/2 centers them on the pill */}
         <div
-          className="relative max-w-6xl mx-auto px-5 h-[52px] flex items-center gap-5 pointer-events-auto bg-white/95 shadow-[0_8px_24px_-12px_rgba(26,26,26,0.25)] backdrop-blur-md rounded-2xl"
+          className="relative max-w-6xl mx-auto pl-5 pr-2 lg:pr-3 h-[52px] flex items-center gap-4 pointer-events-auto bg-white/95 backdrop-blur-md rounded-2xl"
           style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.08)' }}
         >
-          {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 shrink-0 focus-visible:outline-2 focus-visible:outline-[#F52B8C] rounded">
-            <div className="w-5 h-5 rounded" style={{ backgroundColor: PINK }} aria-hidden="true" />
+          <Link to="/" aria-label="Nelsy home" className={`flex items-center gap-2 shrink-0 rounded ${FOCUS}`}>
+            <span className="w-5 h-5 rounded" style={{ backgroundColor: PINK }} aria-hidden="true" />
             <span className="text-[15px] font-extrabold text-gray-900 tracking-tight">Nelsy</span>
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-0.5 flex-1">
-            <Dropdown
-              id="product" label="Features"
-              isActive={isProductActive} open={openMenu === 'product'}
-              onToggle={() => toggle('product')}
-            >
-              <ProductMenu />
+          {/* Desktop */}
+          <div className="hidden lg:flex items-center gap-0.5 flex-1">
+            <Dropdown id="product" label="Product" isActive={active.product} open={openMenu === 'product'} onToggle={() => toggle('product')}>
+              <ProductMenu pathname={pathname} />
             </Dropdown>
-
-            <Dropdown
-              id="use-cases" label="Use cases"
-              isActive={isUseCasesActive} open={openMenu === 'use-cases'}
-              onToggle={() => toggle('use-cases')}
-            >
-              <UseCasesMenu />
+            <Dropdown id="solutions" label="Who it's for" isActive={active.solutions} open={openMenu === 'solutions'} onToggle={() => toggle('solutions')}>
+              <SolutionsMenu pathname={pathname} />
             </Dropdown>
-
-            <Dropdown
-              id="tools" label="Free Tools"
-              isActive={isToolsActive} open={openMenu === 'tools'}
-              onToggle={() => toggle('tools')}
-            >
-              <ToolsMenu />
+            <Dropdown id="tools" label="Free tools" isActive={active.tools} open={openMenu === 'tools'} onToggle={() => toggle('tools')}>
+              <ToolsMenu pathname={pathname} />
             </Dropdown>
-
-            <Link to="/pricing" className="px-2 py-1.5 text-[13px] font-medium text-gray-500 hover:text-gray-900 transition-colors duration-150 rounded focus-visible:outline-2 focus-visible:outline-[#F52B8C]">
-              Pricing
-            </Link>
+            <Dropdown id="resources" label="Resources" isActive={active.resources} open={openMenu === 'resources'} onToggle={() => toggle('resources')} anchorToTrigger>
+              <ResourcesMenu pathname={pathname} />
+            </Dropdown>
             <Link
-              to="/blog"
-              className={`px-2 py-1.5 text-[13px] font-medium transition-colors duration-150 rounded focus-visible:outline-2 focus-visible:outline-[#F52B8C] ${pathname.startsWith('/blog') ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
+              to="/pricing"
+              aria-current={pricingActive ? 'page' : undefined}
+              className={`rounded-lg px-2.5 py-1.5 text-[13px] font-medium transition-colors duration-150 ${FOCUS} ${pricingActive ? 'text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
             >
-              Blog
+              Pricing
             </Link>
           </div>
 
-          {/* Right actions */}
-          <div className="hidden md:flex items-center gap-2 ml-auto shrink-0">
+          <div className="hidden lg:flex items-center gap-2 ml-auto shrink-0">
             <Link
               to="/login"
-              className="text-[13px] font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 px-4 py-[7px] rounded-xl transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F52B8C]"
+              className={`text-[13px] font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 px-4 py-[7px] rounded-xl transition-colors duration-150 ${FOCUS}`}
             >
               Log in
             </Link>
-            <SeoCTA
-              label="Start for free"
-              position="nav"
-              variant="nav"
-              className="text-[13px] font-bold text-white px-4 py-[7px] rounded-xl"
-            />
+            <Link
+              to={NAV_CTA.to}
+              onClick={trackCta}
+              className={`text-[13px] font-bold text-white px-4 py-[7px] rounded-xl transition hover:opacity-90 ${FOCUS}`}
+              style={{ backgroundColor: PINK }}
+            >
+              {NAV_CTA.label}
+            </Link>
           </div>
 
-          {/* Mobile hamburger */}
-          <button
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
-            onClick={() => { setMobileOpen(v => !v); setOpenMenu(null); }}
-            className="md:hidden ml-auto flex items-center justify-center w-8 h-8 rounded-lg text-gray-500 hover:bg-gray-100 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#F52B8C]"
-          >
-            {mobileOpen ? (
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-                <path d="M3 3l12 12M15 3L3 15" />
-              </svg>
-            ) : (
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-                <path d="M3 5h12M3 9h12M3 13h12" />
-              </svg>
-            )}
-          </button>
+          {/* Mobile: CTA stays visible, everything else lives in the drawer */}
+          <div className="lg:hidden ml-auto flex items-center gap-1">
+            <Link
+              to={NAV_CTA.to}
+              onClick={trackCta}
+              className={`inline-flex min-h-[40px] items-center text-[13px] font-bold text-white px-3.5 rounded-xl transition hover:opacity-90 ${FOCUS}`}
+              style={{ backgroundColor: PINK }}
+            >
+              {NAV_CTA.label}
+            </Link>
+            <button
+              ref={burgerRef}
+              type="button"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              onClick={() => { setMobileOpen((v) => !v); setOpenMenu(null); }}
+              className={`flex items-center justify-center w-11 h-11 rounded-xl text-gray-700 hover:bg-gray-100 transition ${FOCUS}`}
+            >
+              {mobileOpen ? (
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                  <path d="M3 3l12 12M15 3L3 15" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+                  <path d="M3 5h12M3 9h12M3 13h12" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
       </nav>
 
-      {mobileOpen && <MobileMenu onClose={() => setMobileOpen(false)} />}
+      {mobileOpen && <MobileMenu drawerRef={drawerRef} onClose={() => setMobileOpen(false)} onCta={trackCta} />}
     </>
   );
 }
