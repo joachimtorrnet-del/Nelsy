@@ -2,6 +2,7 @@
 // and stripe-webhooks. Everything here runs with the service_role client.
 import type Stripe from 'npm:stripe@13.11.0'
 import { sendEmail, esc, row, layout } from './email.ts'
+import { upsertContact, unsubscribeLinks, unsubscribeHeaders, unsubscribeFooter } from './contacts.ts'
 
 // Callers use different supabase-js versions (webhook pins 2.39.3), so keep this structural.
 // deno-lint-ignore no-explicit-any
@@ -117,8 +118,23 @@ export async function markProductOrderPaid(
     .select('id')
 
   if (claim && claim.length > 0) {
+    // The buyer joins the pro's contacts list (no marketing consent: a purchase is
+    // not an opt-in). Non-blocking: a failure here never affects the order.
+    let contactId: string | null = null
     try {
-      await sendProductOrderEmails(supabase, order)
+      contactId = await upsertContact(supabase, {
+        profileId: order.profile_id,
+        email: order.buyer_email,
+        firstName: order.buyer_name ? String(order.buyer_name).trim().split(/\s+/)[0] : null,
+        source: 'product_purchase',
+        sourceRef: order.id,
+        consent: false,
+      })
+    } catch (err) {
+      console.error('[product_order] contact upsert failed (non-blocking):', err)
+    }
+    try {
+      await sendProductOrderEmails(supabase, order, contactId)
     } catch (err) {
       console.error('[product_order] emails failed (non-blocking):', err)
     }
@@ -137,7 +153,7 @@ interface OrderForEmail {
   buyer_name: string | null
 }
 
-async function sendProductOrderEmails(supabase: SupabaseClient, order: OrderForEmail) {
+async function sendProductOrderEmails(supabase: SupabaseClient, order: OrderForEmail, contactId: string | null) {
   const [{ data: product }, { data: pro }] = await Promise.all([
     supabase.from('products').select('title').eq('id', order.product_id).single(),
     supabase.from('profiles').select('email, full_name, salon_name, slug').eq('id', order.profile_id).single(),
@@ -146,6 +162,7 @@ async function sendProductOrderEmails(supabase: SupabaseClient, order: OrderForE
   const proName = esc(pro?.salon_name || pro?.full_name || 'your beauty pro')
   const amount = esc(formatAmount(order.amount_cents, order.currency))
   const downloadUrl = `${appUrl()}/d/${encodeURIComponent(order.id)}`
+  const unsub = contactId ? await unsubscribeLinks(contactId) : null
   const button = (href: string, label: string) =>
     `<div style="text-align:center"><a href="${href}" style="display:inline-block;background:#F52B8C;color:#ffffff;font-weight:700;padding:14px 28px;border-radius:12px;text-decoration:none">${label}</a></div>`
 
@@ -158,8 +175,10 @@ async function sendProductOrderEmails(supabase: SupabaseClient, order: OrderForE
         `From ${proName}. Your file is ready to download.`,
         row('Product', title) + row('Amount paid', amount, true),
         button(downloadUrl, 'Download my file') +
-          `<p style="color:#6b7280;font-size:13px;text-align:center;margin:16px 0 0">Keep this email: the link works up to ${MAX_DOWNLOADS} times. You will be asked for the email address you used at checkout.</p>`,
+          `<p style="color:#6b7280;font-size:13px;text-align:center;margin:16px 0 0">Keep this email: the link works up to ${MAX_DOWNLOADS} times. You will be asked for the email address you used at checkout.</p>` +
+          unsubscribeFooter(unsub, pro?.salon_name || pro?.full_name || 'this beauty pro'),
       ),
+      { headers: unsubscribeHeaders(unsub) },
     ),
     pro?.email
       ? sendEmail(

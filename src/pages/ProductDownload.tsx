@@ -8,12 +8,14 @@ import type { ProductDownload as DownloadResult } from '@/lib/products';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Buyer re-download page: /d/:orderId (link sent in the purchase email).
+ * Buyer re-download page: /d/:orderId (link sent in the purchase email), and
+ * /r/:claimId for free resources (link sent by claim-free-resource).
  * The URL carries no personal data; the buyer proves the purchase by typing the
  * email used at checkout. Stripe redirect-based payments also return here.
  */
 export default function ProductDownload() {
-  const { orderId = '' } = useParams<{ orderId: string }>();
+  const { orderId = '', claimId = '' } = useParams<{ orderId: string; claimId: string }>();
+  const isFree = !!claimId;
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -22,11 +24,11 @@ export default function ProductDownload() {
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     const clean = email.trim().toLowerCase();
-    if (!EMAIL_RE.test(clean)) { setError('Enter the email you used at checkout.'); return; }
+    if (!EMAIL_RE.test(clean)) { setError(isFree ? 'Enter the email this link was sent to.' : 'Enter the email you used at checkout.'); return; }
     setError(null);
     setLoading(true);
     try {
-      const res = await getProductDownload({ orderId, email: clean });
+      const res = await getProductDownload(isFree ? { claimId, email: clean } : { orderId, email: clean });
       setResult(res);
       window.location.assign(res.url);
     } catch (err) {
@@ -59,8 +61,10 @@ export default function ProductDownload() {
           </>
         ) : (
           <>
-            <h1 className="text-xl font-bold text-[#1A1A1A]">Download your purchase</h1>
-            <p className="text-sm text-gray-600 mt-2">Enter the email you used at checkout to get your file.</p>
+            <h1 className="text-xl font-bold text-[#1A1A1A]">{isFree ? 'Download your free resource' : 'Download your purchase'}</h1>
+            <p className="text-sm text-gray-600 mt-2">
+              {isFree ? 'Enter the email this link was sent to, to get your file.' : 'Enter the email you used at checkout to get your file.'}
+            </p>
             <form onSubmit={submit} className="mt-5 space-y-3">
               <label htmlFor="dl-email" className="sr-only">Email</label>
               <input id="dl-email" type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)}
@@ -73,11 +77,13 @@ export default function ProductDownload() {
                 Get my file
               </button>
             </form>
-            <p className="text-xs text-gray-400 mt-4">Each purchase can be downloaded up to {PRODUCT_MAX_DOWNLOADS} times.</p>
+            <p className="text-xs text-gray-400 mt-4">
+              {isFree ? 'This link' : 'Each purchase'} can be downloaded up to {PRODUCT_MAX_DOWNLOADS} times.
+            </p>
           </>
         )}
         <p className="text-center text-xs text-gray-400 mt-6">
-          Sold with <Link to="/" className="font-semibold text-[#F52B8C]">Nelsy</Link>
+          {isFree ? 'Shared' : 'Sold'} with <Link to="/" className="font-semibold text-[#F52B8C]">Nelsy</Link>
         </p>
       </div>
     </div>

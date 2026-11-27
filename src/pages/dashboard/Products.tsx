@@ -2,15 +2,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ChangeEvent, ReactNode } from 'react';
 import {
   Package, Plus, Upload, FileDown, ImageIcon, Trash2, ArrowUp, ArrowDown, Loader2,
-  Mail, X, AlertTriangle, ShoppingBag, Sparkles, Pencil, CheckCircle2, Link2,
+  Mail, X, AlertTriangle, ShoppingBag, Sparkles, Pencil, CheckCircle2, Link2, Gift, Users,
 } from 'lucide-react';
 import { hasFeature } from '@/lib/plans';
 import { track } from '@/lib/analytics';
 import {
   productsApi, formatProductPrice, formatBytes, centsToMajor, majorToCents,
-  PRODUCT_FILE_MAX_BYTES, PRODUCT_COVER_MAX_BYTES, PRODUCT_MAX_DOWNLOADS, removeProductFile,
+  PRODUCT_FILE_MAX_BYTES, PRODUCT_COVER_MAX_BYTES, PRODUCT_MAX_DOWNLOADS, removeProductFile, isFreeResource,
 } from '@/lib/products';
-import type { Product, ProductInput, ProductOrder } from '@/lib/products';
+import type { CreatableProductType, Product, ProductInput, ProductOrder } from '@/lib/products';
 import { isProductsDemo } from '@/lib/productsDemo';
 import type { ProductsApi } from '@/lib/productsDemo';
 
@@ -92,7 +92,7 @@ function ProductsManager({ profile, api, onNavigate }: { profile: ProductsProfil
   const [orders, setOrders] = useState<ProductOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [editing, setEditing] = useState<Product | 'new' | null>(null);
+  const [editing, setEditing] = useState<Product | 'new' | 'new_free' | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const currency = (profile.business_currency ?? 'eur').toLowerCase();
 
@@ -158,7 +158,8 @@ function ProductsManager({ profile, api, onNavigate }: { profile: ProductsProfil
         profile={profile}
         api={api}
         currency={currency}
-        product={editing === 'new' ? null : editing}
+        product={editing === 'new' || editing === 'new_free' ? null : editing}
+        newType={editing === 'new_free' ? 'free_resource' : 'digital'}
         nextPosition={products.length}
         onClose={() => setEditing(null)}
         onSaved={(saved, created) => {
@@ -169,7 +170,11 @@ function ProductsManager({ profile, api, onNavigate }: { profile: ProductsProfil
         onDeleted={(product, how) => {
           setProducts((ps) => ps.filter((p) => p.id !== product.id));
           setEditing(null);
-          setNotice(how === 'archived' ? 'This product has orders, so it was hidden instead of deleted.' : 'Product deleted.');
+          setNotice(how === 'archived'
+            ? (isFreeResource(product)
+              ? 'People already claimed this free resource, so it was hidden instead of deleted.'
+              : 'This product has orders, so it was hidden instead of deleted.')
+            : 'Product deleted.');
         }}
       />
     );
@@ -182,12 +187,20 @@ function ProductsManager({ profile, api, onNavigate }: { profile: ProductsProfil
           <h2 className="text-2xl font-bold text-[#1A1A1A] tracking-tight">Products</h2>
           <p className="text-sm text-gray-500 mt-1">Sell guides, templates and videos from your studio page. Clients get the file by email.</p>
         </div>
-        <button
-          onClick={() => setEditing('new')}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#F52B8C] text-white text-sm font-bold hover:opacity-90 transition self-start sm:self-auto"
-        >
-          <Plus className="w-4 h-4" /> New product
-        </button>
+        <div className="flex flex-wrap gap-2 self-start sm:self-auto">
+          <button
+            onClick={() => setEditing('new_free')}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-gray-200 bg-white text-[#1A1A1A] text-sm font-bold hover:bg-gray-50 transition"
+          >
+            <Gift className="w-4 h-4 text-[#F52B8C]" /> New free resource
+          </button>
+          <button
+            onClick={() => setEditing('new')}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#F52B8C] text-white text-sm font-bold hover:opacity-90 transition"
+          >
+            <Plus className="w-4 h-4" /> New product
+          </button>
+        </div>
       </div>
 
       {!profile.stripe_onboarding_complete && (
@@ -304,12 +317,22 @@ function ProductRow({ product, sales, first, last, onUp, onDown, onEdit, onToggl
       <div className="flex-1 min-w-0">
         <p className="text-[15px] font-semibold text-[#1A1A1A] line-clamp-2 sm:truncate">{product.title}</p>
         <p className="text-sm text-gray-500 mt-0.5">
-          <span className="font-semibold text-[#1A1A1A]">{formatProductPrice(product.price_cents, product.currency)}</span>
-          <span className="mx-1.5 text-gray-300">|</span>
-          {sales} {sales === 1 ? 'sale' : 'sales'}
+          {isFreeResource(product) ? (
+            <>
+              <span className="font-semibold text-[#1A1A1A]">Free</span>
+              <span className="mx-1.5 text-gray-300">|</span>
+              <span className="inline-flex items-center gap-1 text-[#C2186F] font-medium align-middle"><Gift className="w-3.5 h-3.5" /> Free resource</span>
+            </>
+          ) : (
+            <>
+              <span className="font-semibold text-[#1A1A1A]">{formatProductPrice(product.price_cents, product.currency)}</span>
+              <span className="mx-1.5 text-gray-300">|</span>
+              {sales} {sales === 1 ? 'sale' : 'sales'}
+            </>
+          )}
           {product.file_name && <span className="hidden md:inline"><span className="mx-1.5 text-gray-300">|</span>{product.file_name}</span>}
         </p>
-        {!product.file_path && <p className="text-xs font-medium text-amber-700 mt-1">Add a file to publish this product</p>}
+        {!product.file_path && <p className="text-xs font-medium text-amber-700 mt-1">Add a file to publish this {isFreeResource(product) ? 'free resource' : 'product'}</p>}
       </div>
       <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
         <Switch checked={product.is_active} onChange={onToggle} label={product.is_active ? 'Visible on your page' : 'Hidden'} />
@@ -408,17 +431,21 @@ function OrdersList({ orders, products }: { orders: ProductOrder[]; products: Pr
 
 // ── Editor ───────────────────────────────────────────────────────────────────
 
-function ProductEditor({ profile, api, currency, product, nextPosition, onClose, onSaved, onDeleted }: {
+function ProductEditor({ profile, api, currency, product, newType, nextPosition, onClose, onSaved, onDeleted }: {
   profile: ProductsProfile;
   api: ProductsApi;
   currency: string;
   product: Product | null;
+  /** Type used when creating (product === null). */
+  newType: CreatableProductType;
   nextPosition: number;
   onClose: () => void;
   onSaved: (p: Product, created: boolean) => void;
   onDeleted: (p: Product, how: 'deleted' | 'archived') => void;
 }) {
   const productCurrency = product?.currency ?? currency;
+  const isFree = product ? isFreeResource(product) : newType === 'free_resource';
+  const noun = isFree ? 'free resource' : 'product';
   const [title, setTitle] = useState(product?.title ?? '');
   const [description, setDescription] = useState(product?.description ?? '');
   const [price, setPrice] = useState(product ? String(centsToMajor(product.price_cents, productCurrency)) : '');
@@ -439,8 +466,8 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
   const isDemoApi = api !== productsApi;
 
   const priceNumber = Number(price.replace(',', '.'));
-  const priceCents = Number.isFinite(priceNumber) ? majorToCents(priceNumber, productCurrency) : NaN;
-  const canPublish = !!file && priceCents > 0;
+  const priceCents = isFree ? 0 : Number.isFinite(priceNumber) ? majorToCents(priceNumber, productCurrency) : NaN;
+  const canPublish = !!file && (isFree || priceCents > 0);
 
   const cleanup = (keep?: string | null) => {
     if (isDemoApi) return;
@@ -486,9 +513,9 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
 
   const save = async () => {
     const cleanTitle = title.trim();
-    if (!cleanTitle) { setError('Give your product a title.'); return; }
-    if (!Number.isFinite(priceCents) || priceCents <= 0) { setError('Set a price above zero.'); return; }
-    if (isActive && !file) { setError('Upload the file before making the product visible.'); return; }
+    if (!cleanTitle) { setError(`Give your ${noun} a title.`); return; }
+    if (!isFree && (!Number.isFinite(priceCents) || priceCents <= 0)) { setError('Set a price above zero.'); return; }
+    if (isActive && !file) { setError(`Upload the file before making the ${noun} visible.`); return; }
     setError(null);
     setSaving(true);
     const input: ProductInput = {
@@ -511,13 +538,13 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
         cleanup(input.file_path);
         onSaved(saved, false);
       } else {
-        const saved = await api.create(profile.id, input, nextPosition);
-        track('product_created', { product_id: saved.id, price_cents: saved.price_cents, currency: saved.currency, has_cover: !!saved.cover_url, is_active: saved.is_active });
+        const saved = await api.create(profile.id, input, nextPosition, isFree ? 'free_resource' : 'digital');
+        track('product_created', { product_id: saved.id, type: saved.type, price_cents: saved.price_cents, currency: saved.currency, has_cover: !!saved.cover_url, is_active: saved.is_active });
         cleanup(input.file_path);
         onSaved(saved, true);
       }
     } catch {
-      setError('Your product could not be saved. Please try again.');
+      setError(`Your ${noun} could not be saved. Please try again.`);
     } finally {
       setSaving(false);
     }
@@ -531,7 +558,7 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
       cleanup();
       onDeleted(product, how);
     } catch {
-      setError('This product could not be deleted.');
+      setError(`This ${noun} could not be deleted.`);
       setSaving(false);
     }
   };
@@ -544,21 +571,29 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
         <button onClick={() => { cleanup(product?.file_path); onClose(); }} aria-label="Back to products" className="p-2 -ml-2 rounded-lg text-gray-500 hover:text-[#1A1A1A] hover:bg-gray-100">
           <X className="w-5 h-5" />
         </button>
-        <h2 className="text-xl font-bold text-[#1A1A1A] tracking-tight flex-1">{product ? 'Edit product' : 'New product'}</h2>
+        <h2 className="text-xl font-bold text-[#1A1A1A] tracking-tight flex-1">{product ? `Edit ${noun}` : `New ${noun}`}</h2>
       </div>
 
       <div className="grid lg:grid-cols-[1fr_300px] gap-6 lg:gap-8">
         <div className="space-y-5">
           <Field label="Title" htmlFor="p-title">
-            <input id="p-title" value={title} maxLength={120} onChange={(e) => setTitle(e.target.value)} placeholder="Aftercare guide for gel extensions" className={inputCls} />
+            <input id="p-title" value={title} maxLength={120} onChange={(e) => setTitle(e.target.value)}
+              placeholder={isFree ? 'Free nail aftercare guide' : 'Aftercare guide for gel extensions'} className={inputCls} />
           </Field>
 
           <Field label="Description" htmlFor="p-desc" hint="What your client gets, in a few lines.">
             <textarea id="p-desc" value={description} maxLength={5000} rows={5} onChange={(e) => setDescription(e.target.value)}
-              placeholder="A 12 page PDF with daily care tips, what to avoid, and when to book a fill."
+              placeholder={isFree ? 'A one page checklist to keep your nails perfect between appointments.' : 'A 12 page PDF with daily care tips, what to avoid, and when to book a fill.'}
               className={`${inputCls} resize-none`} />
           </Field>
 
+          {isFree ? (
+            <Field label="Price" hint="Clients get it for free in exchange for their email. They are added to your Audience.">
+              <div className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm font-semibold text-[#1A1A1A]">
+                <Gift className="w-4 h-4 text-[#F52B8C]" /> Free
+              </div>
+            </Field>
+          ) : (
           <Field label="Price" htmlFor="p-price">
             <div className="relative max-w-[220px]">
               <input id="p-price" inputMode="decimal" value={price} onChange={(e) => setPrice(e.target.value.replace(/[^\d.,]/g, ''))}
@@ -566,6 +601,7 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
               <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">{productCurrency.toUpperCase()}</span>
             </div>
           </Field>
+          )}
 
           <Field label="File" hint="The download your client receives. Any format, up to 50 MB.">
             <input ref={fileInput} type="file" className="hidden" onChange={onFile} />
@@ -615,7 +651,11 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
           <div className="flex items-center justify-between gap-4 rounded-xl border border-gray-200 px-4 py-3">
             <div>
               <p className="text-sm font-semibold text-[#1A1A1A]">Visible on your studio page</p>
-              <p className="text-xs text-gray-500">{canPublish ? 'Clients can buy it as soon as you save.' : 'Add a file and a price to publish.'}</p>
+              <p className="text-xs text-gray-500">
+                {canPublish
+                  ? (isFree ? 'Clients can get it as soon as you save.' : 'Clients can buy it as soon as you save.')
+                  : (isFree ? 'Add a file to publish.' : 'Add a file and a price to publish.')}
+              </p>
             </div>
             <Switch checked={isActive && canPublish} disabled={!canPublish} onChange={() => setIsActive((v) => !v)} label="Visible on your studio page" />
           </div>
@@ -628,7 +668,7 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
             <button onClick={() => void save()} disabled={busy}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#F52B8C] text-white text-sm font-bold hover:opacity-90 transition disabled:opacity-50">
               {saving && <Loader2 className="w-4 h-4 animate-spin" />}
-              {product ? 'Save changes' : 'Create product'}
+              {product ? 'Save changes' : `Create ${noun}`}
             </button>
             <button onClick={() => { cleanup(product?.file_path); onClose(); }} disabled={saving} className="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-100">
               Cancel
@@ -636,7 +676,7 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
             {product && (
               confirmDelete ? (
                 <span className="ml-auto inline-flex items-center gap-2 text-sm">
-                  <span className="text-gray-600">Delete this product?</span>
+                  <span className="text-gray-600">Delete this {noun}?</span>
                   <button onClick={() => void remove()} disabled={saving} className="px-3 py-1.5 rounded-lg bg-red-600 text-white font-semibold">Delete</button>
                   <button onClick={() => setConfirmDelete(false)} className="px-3 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100">Keep</button>
                 </span>
@@ -654,18 +694,27 @@ function ProductEditor({ profile, api, currency, product, nextPosition, onClose,
           <p className="text-xs font-semibold uppercase tracking-wide text-gray-400 mb-2">Preview</p>
           <div className="rounded-2xl border border-gray-100 bg-white p-3 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
             <CoverThumb url={coverUrl} title={title} size="lg" />
-            <p className="text-[15px] font-bold text-[#1A1A1A] mt-3 line-clamp-2">{title || 'Product title'}</p>
+            <p className="text-[15px] font-bold text-[#1A1A1A] mt-3 line-clamp-2">{title || (isFree ? 'Free resource title' : 'Product title')}</p>
             {description && <p className="text-[13px] text-gray-500 mt-1 line-clamp-2">{description}</p>}
             <div className="flex items-center justify-between mt-3">
               <span className="text-[15px] font-bold text-[#1A1A1A]">
-                {priceCents > 0 ? formatProductPrice(priceCents, productCurrency) : formatProductPrice(0, productCurrency)}
+                {isFree ? 'Free' : formatProductPrice(priceCents > 0 ? priceCents : 0, productCurrency)}
               </span>
-              <span className="px-3 py-1.5 rounded-lg bg-[#F52B8C] text-white text-xs font-bold">Buy</span>
+              <span className="px-3 py-1.5 rounded-lg bg-[#F52B8C] text-white text-xs font-bold">{isFree ? 'Get it' : 'Buy'}</span>
             </div>
           </div>
           <div className="mt-4 space-y-2 text-[13px] text-gray-500">
-            <p className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" /> Paid straight to your Stripe account, 0% Nelsy commission.</p>
-            <p className="flex items-start gap-2"><Mail className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" /> Your client gets a download link by email, valid for {PRODUCT_MAX_DOWNLOADS} downloads.</p>
+            {isFree ? (
+              <>
+                <p className="flex items-start gap-2"><Users className="w-4 h-4 text-[#F52B8C] flex-shrink-0 mt-0.5" /> Each email joins your Audience. Clients choose whether you can send them emails.</p>
+                <p className="flex items-start gap-2"><Mail className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" /> The download link is sent to the email they type, valid for {PRODUCT_MAX_DOWNLOADS} downloads.</p>
+              </>
+            ) : (
+              <>
+                <p className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 text-green-600 flex-shrink-0 mt-0.5" /> Paid straight to your Stripe account, 0% Nelsy commission.</p>
+                <p className="flex items-start gap-2"><Mail className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" /> Your client gets a download link by email, valid for {PRODUCT_MAX_DOWNLOADS} downloads.</p>
+              </>
+            )}
             {profile.slug && (
               <p className="flex items-start gap-2"><Link2 className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" /> Shown on getnelsy.com/{profile.slug}, after your services.</p>
             )}

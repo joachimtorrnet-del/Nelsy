@@ -20,6 +20,7 @@ const PAGE_TITLES: Record<string, string> = {
   preview:   'My Studio',
   calendar:  'Bookings',
   products:  'Products',
+  audience:  'Audience',
   orders:    'Orders',
   marketing: 'Marketing',
   community: 'Community',

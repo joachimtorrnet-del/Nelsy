@@ -7,6 +7,12 @@ import type { ProductsApi } from './productsDemo';
 
 export type ProductType = 'digital' | 'course' | 'coaching' | 'membership' | 'free_resource';
 export type ProductOrderStatus = 'pending' | 'paid' | 'refunded';
+/** Types a pro can create from the dashboard today. */
+export type CreatableProductType = Extract<ProductType, 'digital' | 'free_resource'>;
+
+export function isFreeResource(p: Pick<Product, 'type'>): boolean {
+  return p.type === 'free_resource';
+}
 
 export interface Product {
   id: string;
@@ -108,10 +114,17 @@ export async function getMyProducts(profileId: string): Promise<Product[]> {
   return (data ?? []) as Product[];
 }
 
-export async function createProduct(profileId: string, input: ProductInput, position: number): Promise<Product> {
+export async function createProduct(
+  profileId: string,
+  input: ProductInput,
+  position: number,
+  type: CreatableProductType = 'digital',
+): Promise<Product> {
+  // A free resource is always free (also enforced by a CHECK constraint).
+  const row = type === 'free_resource' ? { ...input, price_cents: 0 } : input;
   const { data, error } = await client()
     .from('products')
-    .insert({ ...input, profile_id: profileId, type: 'digital', position })
+    .insert({ ...row, profile_id: profileId, type, position })
     .select('*')
     .single();
   if (error) throw error;
@@ -248,13 +261,34 @@ export interface ProductDownload {
 }
 
 export async function getProductDownload(
-  params: { orderId?: string; paymentIntentId?: string; email: string },
+  params: { orderId?: string; paymentIntentId?: string; claimId?: string; email: string },
 ): Promise<ProductDownload> {
   const { data, error } = await client().functions.invoke('get-product-download', {
-    body: { order_id: params.orderId, payment_intent_id: params.paymentIntentId, email: params.email },
+    body: params.claimId
+      ? { claim_id: params.claimId, email: params.email }
+      : { order_id: params.orderId, payment_intent_id: params.paymentIntentId, email: params.email },
   });
   if (error) throw await invokeError(error, 'Download is not available. Please try again.');
   return data as ProductDownload;
+}
+
+/**
+ * Free resource (lead magnet): the server checks the product, records the contact and
+ * emails the download link. Only an explicit `consentMarketing: true` is an opt-in.
+ */
+export async function claimFreeResource(
+  productId: string,
+  params: { email: string; firstName: string; consentMarketing: boolean },
+): Promise<void> {
+  const { error } = await client().functions.invoke('claim-free-resource', {
+    body: {
+      product_id: productId,
+      email: params.email,
+      first_name: params.firstName,
+      consent_marketing: params.consentMarketing === true,
+    },
+  });
+  if (error) throw await invokeError(error, 'This free resource could not be sent. Please try again.');
 }
 
 /** Real dashboard API (the /dev/products sandbox swaps in createDemoProductsApi). */

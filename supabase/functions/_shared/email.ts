@@ -2,12 +2,17 @@
 const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 const FROM = 'Nelsy <hello@getnelsy.com>' // same sender as stripe-webhooks (verified in Resend)
 
-export async function sendEmail(to: string, subject: string, html: string): Promise<void> {
+export async function sendEmail(
+  to: string,
+  subject: string,
+  html: string,
+  opts: { headers?: Record<string, string> } = {},
+): Promise<void> {
   if (!RESEND_API_KEY || !to) return
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${RESEND_API_KEY}` },
-    body: JSON.stringify({ from: FROM, to, subject, html }),
+    body: JSON.stringify({ from: FROM, to, subject, html, ...(opts.headers ? { headers: opts.headers } : {}) }),
   })
   if (!res.ok) console.error(`[email] Resend ${res.status}: ${await res.text().catch(() => '')}`)
 }
