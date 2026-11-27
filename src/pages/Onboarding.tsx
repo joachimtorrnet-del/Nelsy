@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { loadStripe } from '@stripe/stripe-js';
+import { loadStripe } from '@stripe/stripe-js/pure';
 import { Elements, PaymentElement, ExpressCheckoutElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { supabase } from '../lib/supabase';
 import { validatePassword } from '../utils/validation';
@@ -627,7 +627,7 @@ function Step1({ formData, setFormData, nextStep }: StepProps) {
                   setFormData({ ...formData, username: value });
                   if (value.length >= 3) clearError('username');
                 }}
-                className={`w-full pl-24 pr-10 py-4 text-base ${inputClass(errors.username, usernameAvailable === true)}`}
+                className={`w-full pl-[118px] pr-10 py-4 text-base ${inputClass(errors.username, usernameAvailable === true)}`}
               />
               <div className="absolute right-3 top-1/2 -translate-y-1/2">
                 {checkingUsername && (

@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route, useLocation, Navigate, useParams } from '
 import CookieBanner from './components/CookieBanner';
 import { Elements } from '@stripe/react-stripe-js';
 import { getStripe } from '@/lib/stripe';
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
+import type { ReactNode } from 'react';
 import posthog from 'posthog-js';
 import SEOMeta from './components/SEOMeta';
 import { trackSeoLandingView, trackSeoSignupStarted } from './lib/analytics';
@@ -129,10 +130,29 @@ function AppFallback() {
   return <div style={{ minHeight: '100vh', background: '#fff' }} aria-hidden="true" />;
 }
 
+// Stripe.js (~1 MB) is only needed where money moves (studio pages, onboarding, dashboard, checkout).
+// Marketing pages skip it; Elements accepts going from null to a promise once, on first navigation
+// to a page that needs it.
+const NO_STRIPE_PREFIXES = ['/blog', '/tools', '/features', '/glossary', '/use-cases', '/pricing', '/best-', '/contact', '/privacy', '/terms'];
+function needsStripe(pathname: string): boolean {
+  if (pathname === '/') return false;
+  if (/-alternative-|-for-nail-techs$/.test(pathname)) return false;
+  return !NO_STRIPE_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`) || (p.endsWith('-') && pathname.startsWith(p)));
+}
+
+function StripeProvider({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  const [stripe, setStripe] = useState<ReturnType<typeof getStripe> | null>(() => (needsStripe(pathname) ? getStripe() : null));
+  useEffect(() => {
+    if (!stripe && needsStripe(pathname)) setStripe(getStripe());
+  }, [pathname, stripe]);
+  return <Elements stripe={stripe}>{children}</Elements>;
+}
+
 export default function App() {
   return (
-    <Elements stripe={getStripe()}>
-      <BrowserRouter>
+    <BrowserRouter>
+      <StripeProvider>
         <ScrollToTop />
         <PageviewTracker />
         <Suspense fallback={<AppFallback />}>
@@ -352,7 +372,7 @@ export default function App() {
           </Routes>
         </Suspense>
         <CookieBanner />
-      </BrowserRouter>
-    </Elements>
+      </StripeProvider>
+    </BrowserRouter>
   );
 }
