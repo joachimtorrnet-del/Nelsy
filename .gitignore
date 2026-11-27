@@ -35,3 +35,20 @@ dist-ssr
 NELSY_*.md
 SEO_*.md
 .mcp.json
+
+# Capacitor (pro mobile app)
+dist-app
+ios/App/Pods
+ios/App/output
+ios/DerivedData
+ios/App/App/public
+ios/App/App/capacitor.config.json
+ios/App/App/config.xml
+android/.gradle
+android/build
+android/app/build
+android/app/src/main/assets/public
+android/app/src/main/assets/capacitor.config.json
+android/app/src/main/assets/capacitor.plugins.json
+android/local.properties
+android/capacitor-cordova-android-plugins

@@ -27,7 +27,7 @@ function dbServiceToService(s: DbService): Service {
   };
 }
 
-function dbProfileToMerchant(profile: DbProfile, services: DbService[]): Merchant {
+export function dbProfileToMerchant(profile: DbProfile, services: DbService[]): Merchant {
   return {
     id: profile.id,
     slug: profile.slug,
