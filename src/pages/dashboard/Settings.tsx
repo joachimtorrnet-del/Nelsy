@@ -34,6 +34,8 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
     reminders: false,
     // Email reminder to clients 24h before each appointment (send-booking-reminders). On unless switched off.
     client_reminders: true,
+    // Trial activation emails from Nelsy to the pro (send-lifecycle-emails). On unless switched off or unsubscribed.
+    lifecycle_emails: true,
   });
   const [loadingPortal, setLoadingPortal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
@@ -285,6 +287,7 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
                 { key: 'purchase_confirmations', label: 'New Bookings', desc: 'Receive a notification each time a client books' },
                 { key: 'new_bookings', label: 'Booking Confirmations', desc: 'Notify when a client confirms their appointment' },
                 { key: 'client_reminders', label: 'Client Reminders', desc: 'Email your clients a reminder 24 hours before each appointment' },
+                { key: 'lifecycle_emails', label: 'Setup Tips from Nelsy', desc: 'Short emails during your free trial to help you set up your page' },
               ].map(({ key, label, desc }) => (
                 <div key={key} className="flex items-start justify-between gap-4">
                   <div className="flex-1">

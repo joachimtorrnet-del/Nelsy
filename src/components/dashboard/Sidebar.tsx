@@ -33,7 +33,7 @@ export const GROW_NAV: NavItem[] = [
   { id: 'orders',    label: 'Orders',    icon: ShoppingBag, live: false },
   { id: 'marketing', label: 'Marketing', icon: Megaphone,   live: false },
   { id: 'community', label: 'Community', icon: Globe,       live: false },
-  { id: 'referrals', label: 'Referrals', icon: Gift,        live: false },
+  { id: 'referrals', label: 'Referrals', icon: Gift,        live: true },
 ];
 
 export const BOTTOM_NAV: NavItem[] = [

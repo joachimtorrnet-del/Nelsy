@@ -10,13 +10,17 @@ export async function sendEmail(
   to: string,
   subject: string,
   html: string,
-  opts: { headers?: Record<string, string> } = {},
+  opts: { headers?: Record<string, string>; replyTo?: string } = {},
 ): Promise<boolean> {
   if (!RESEND_API_KEY || !to) return false
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${RESEND_API_KEY}` },
-    body: JSON.stringify({ from: FROM, to, subject, html, ...(opts.headers ? { headers: opts.headers } : {}) }),
+    body: JSON.stringify({
+      from: FROM, to, subject, html,
+      ...(opts.headers && Object.keys(opts.headers).length ? { headers: opts.headers } : {}),
+      ...(opts.replyTo ? { reply_to: opts.replyTo } : {}),
+    }),
   })
   if (!res.ok) console.error(`[email] Resend ${res.status}: ${await res.text().catch(() => '')}`)
   return res.ok

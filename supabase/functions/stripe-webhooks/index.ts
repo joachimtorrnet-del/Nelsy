@@ -32,6 +32,8 @@ import { policyNoteHtml } from '../_shared/booking-reminders.ts'
 import { fetchOnlineSession, onlineSessionRows, onlineSessionNote } from '../_shared/online-session.ts'
 // Pro push notifications: feature-flagged (PUSH_ENABLED), never throws, runs after ledger + emails.
 import { notifyPro, proPushPrefs, paidBookingMessage, cancellationMessage, pushAllowed, pushFeatureEnabled } from '../_shared/push.ts'
+// Referral program: commissions, reversals, referral status. Runs after the switch below, never throws out.
+import { handleReferralEvent } from '../_shared/referral-webhook.ts'
 
 const FROM_EMAIL = 'Nelsy <hello@getnelsy.com>'
 
@@ -1210,6 +1212,15 @@ serve(async (req) => {
 
       default:
         break
+    }
+
+    // ── Referral program (docs/features/referrals.md) ───────────────────────
+    // After everything above, whatever branch it took. Only touches referral tables; an error
+    // here is logged and the event is still acknowledged.
+    try {
+      await handleReferralEvent(event, supabase, stripe)
+    } catch (referralErr) {
+      console.error('[referrals] webhook hook failed:', referralErr instanceof Error ? referralErr.message : referralErr)
     }
 
     return new Response(JSON.stringify({ received: true }), {
