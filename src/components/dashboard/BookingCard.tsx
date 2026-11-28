@@ -1,88 +1,60 @@
-import { motion } from 'framer-motion';
-import { Phone, MessageCircle, MoreVertical, Clock } from 'lucide-react';
-import type { Booking } from '../../types';
-import { formatDate, formatCurrency, getInitials } from '../../lib/utils';
+import { Video } from 'lucide-react';
+import { formatDuration, formatMinutes, minutesInTz, paymentSummary, STATUS_META } from '../../lib/agenda';
+import type { AgendaBooking } from '../../lib/agenda';
+import { formatMoney } from '../../lib/currency';
+import { TONE } from './agenda/tones';
 
 interface BookingCardProps {
-  booking: Booking;
-  index?: number;
+  booking: AgendaBooking;
+  timezone: string;
+  currency: string;
+  hour12: boolean;
+  onOpen: (booking: AgendaBooking) => void;
 }
 
-const statusConfig = {
-  paid: { label: 'Paid', class: 'bg-emerald-100 text-emerald-700' },
-  confirmed: { label: 'Confirmed', class: 'bg-blue-100 text-blue-700' },
-  pending: { label: 'Pending', class: 'bg-amber-100 text-amber-700' },
-  cancelled: { label: 'Cancelled', class: 'bg-red-100 text-red-600' },
-};
-
-export function BookingCard({ booking, index = 0 }: BookingCardProps) {
-  const status = statusConfig[booking.status];
+/** One appointment in the List view: time, client, service, status and what is left to pay. */
+export function BookingCard({ booking, timezone, currency, hour12, onOpen }: BookingCardProps) {
+  const meta = STATUS_META[booking.status];
+  const tone = TONE[meta.tone];
+  const payment = paymentSummary(booking);
+  const inactive = booking.status === 'cancelled' || booking.status === 'refunded' || booking.status === 'no_show';
+  const time = formatMinutes(minutesInTz(booking.start, timezone), hour12);
 
   return (
-    <motion.div
-      className="bg-white rounded-2xl p-4 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.06 }}
-      whileHover={{ y: -1 }}
+    <button
+      type="button"
+      onClick={() => onOpen(booking)}
+      className="flex min-h-[76px] w-full items-center gap-3 rounded-2xl border border-gray-100 bg-white px-4 py-3 text-left transition hover:border-gray-200 hover:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] active:scale-[0.99]"
     >
-      <div className="flex items-center gap-3">
-        {/* Client avatar */}
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#667eea] to-[#764ba2] flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
-          {getInitials(booking.client_name)}
-        </div>
+      <span className="w-[68px] flex-shrink-0">
+        <span className="block text-[15px] font-bold tabular-nums leading-tight text-[#1A1A1A]">{time}</span>
+        <span className="block text-[12px] text-gray-500">{formatDuration(booking.durationMin)}</span>
+      </span>
 
-        {/* Info */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 flex-wrap">
-            <p className="font-semibold text-espresso text-sm">{booking.client_name}</p>
-            <span className={`inline-block text-xs px-2 py-0.5 rounded-full font-medium ${status.class}`}>
-              {status.label}
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-1.5">
+          <span className={`truncate text-[15px] font-semibold leading-tight text-[#1A1A1A] ${inactive ? 'line-through decoration-1 opacity-60' : ''}`}>
+            {booking.clientName || 'Client'}
+          </span>
+          {booking.online && <Video className="h-4 w-4 flex-shrink-0 text-[#C2186F]" aria-label="Video call" />}
+        </span>
+        <span className="block truncate text-[13px] text-gray-500">{booking.serviceName}</span>
+        <span className="mt-0.5 flex items-center gap-1.5 text-[12px] font-medium">
+          <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full ${tone.dot}`} aria-hidden="true" />
+          <span className={meta.tone === 'accent' ? 'text-gray-700' : tone.text}>{meta.label}</span>
+          {!inactive && payment.state !== 'free' && (
+            <span className="truncate text-gray-500">
+              · {payment.state === 'unpaid' ? payment.label
+                : payment.state === 'deposit' ? `${formatMoney(payment.remaining, currency)} left`
+                : payment.label}
             </span>
-          </div>
-          <p className="text-xs text-gray-500 truncate">{booking.service.name}</p>
-          <div className="flex items-center gap-1 mt-0.5">
-            <Clock className="w-3 h-3 text-gray-300" />
-            <p className="text-xs text-gray-400 capitalize">
-              {formatDate(booking.date)} à {booking.time}
-            </p>
-          </div>
-        </div>
+          )}
+        </span>
+      </span>
 
-        {/* Amount */}
-        <div className="text-right flex-shrink-0">
-          <p className="font-bold text-espresso">{formatCurrency(booking.deposit)}</p>
-          <p className="text-xs text-gray-400">acompte</p>
-        </div>
-
-        {/* Actions */}
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-            aria-label="Appeler"
-          >
-            <Phone className="w-4 h-4 text-gray-400" />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-            aria-label="Message"
-          >
-            <MessageCircle className="w-4 h-4 text-gray-400" />
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors"
-            aria-label="Plus d'actions"
-          >
-            <MoreVertical className="w-4 h-4 text-gray-400" />
-          </motion.button>
-        </div>
-      </div>
-    </motion.div>
+      <span className={`flex-shrink-0 text-[15px] font-bold tabular-nums text-[#1A1A1A] ${inactive ? 'opacity-50' : ''}`}>
+        {formatMoney(booking.price, currency)}
+      </span>
+    </button>
   );
 }
