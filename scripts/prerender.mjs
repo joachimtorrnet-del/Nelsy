@@ -68,7 +68,8 @@ async function prerender() {
   // vercel.json rewrites unknown paths to app.html instead.
   copyFileSync(resolve(DIST, 'index.html'), resolve(DIST, 'app.html'))
 
-  const PORT = 7788
+  // PRERENDER_PORT lets two builds run at the same time (CI and local agents) without colliding
+  const PORT = Number(process.env.PRERENDER_PORT) || 7788
   const server = await startServer(PORT)
   console.log(`Static server listening on http://127.0.0.1:${PORT}`)
 
