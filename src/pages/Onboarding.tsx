@@ -517,7 +517,8 @@ function StepLink({ formData, set, state }: StepProps & { state: SlugState }) {
   return (
     <>
       <Heading title="Claim your link" sub="This is the link you put in your bio. Clients book you here." />
-      <div className={`flex h-14 items-center rounded-2xl border-2 bg-white pl-4 pr-3 transition ${border}`}>
+      {/* A label, so tapping anywhere in the box (the grey "getnelsy.com/" included) opens the keyboard */}
+      <label className={`flex h-14 cursor-text items-center rounded-2xl border-2 bg-white pl-4 pr-3 transition ${border}`}>
         <span className="shrink-0 text-[16px] font-medium text-gray-400 select-none">getnelsy.com/</span>
         <input
           aria-label="Your link"
@@ -538,7 +539,7 @@ function StepLink({ formData, set, state }: StepProps & { state: SlugState }) {
           </svg>
         )}
         {state === 'free' && <CheckIcon className="h-5 w-5 shrink-0 text-[#11733F]" />}
-      </div>
+      </label>
       {msg && <p className={`mt-2 text-[13px] font-medium ${msg.c}`} aria-live="polite">{msg.t}</p>}
     </>
   );

@@ -79,8 +79,8 @@ function JoinButton({ signedIn, position, className = '' }: { signedIn: boolean;
 
 // Earnings simulator: the centre of the hero.
 
-const SLIDER_MIN = 1;
-const SLIDER_MAX = 200;
+const SLIDER_MIN = 0;
+const SLIDER_MAX = 500;
 const THUMB = 28;
 
 function Simulator() {

@@ -44,6 +44,7 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
   const [cancelSuccess, setCancelSuccess] = useState<{ periodEnd: number } | null>(null);
   const [addingCard, setAddingCard] = useState(false);
   const feeCur = currencySymbol((profile as { business_currency?: string | null } | null)?.business_currency ?? 'EUR');
+  const isTrialing = (profile?.subscription_status as string | undefined) === 'trialing';
   const trialCard = useTrialCard(profile?.subscription_status as string | undefined);
 
   // Sync from parent prop, or load independently if not provided
@@ -190,7 +191,9 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
     },
     { label: 'Stripe Payments', desc: 'Connected account, payouts, configuration', action: () => onNavigate ? onNavigate('stripe') : navigate('/onboarding-stripe') },
     { label: 'Income', desc: 'Balance, history, withdraw funds', action: () => onNavigate ? onNavigate('revenue') : navigate('/dashboard') },
-    { label: 'Cancel subscription', desc: 'End your Nelsy plan at period end', action: () => setShowCancelModal(true), danger: true },
+    isTrialing
+      ? { label: 'Cancel free trial', desc: 'You will not be charged', action: () => setShowCancelModal(true), danger: true }
+      : { label: 'Cancel subscription', desc: 'End your Nelsy plan at period end', action: () => setShowCancelModal(true), danger: true },
   ];
 
   if (!profile) {
@@ -479,23 +482,26 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
                     <X className="w-5 h-5" />
                   </button>
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 mb-1">Cancel your subscription?</h2>
+                <h2 className="text-lg font-bold text-gray-900 mb-1">{isTrialing ? 'Cancel your free trial?' : 'Cancel your subscription?'}</h2>
                 <p className="text-sm text-gray-500 mb-5">
-                  You will keep full access until the end of your current billing period. After that, your studio page will be deactivated and clients won't be able to book.
+                  {isTrialing
+                    ? 'You will not be charged. Your page stays live until the end of your free trial, then it is paused.'
+                    : "You will keep full access until the end of your current billing period. After that, your studio page will be deactivated and clients won't be able to book."}
                 </p>
+                {/* The cancel action comes first and is the clear one: nobody should have to hunt for it */}
                 <div className="space-y-2">
-                  <button
-                    onClick={() => setShowCancelModal(false)}
-                    className="w-full py-3 bg-[#F52B8C] text-white rounded-xl font-semibold text-sm hover:opacity-90 transition"
-                  >
-                    Keep my subscription
-                  </button>
                   <button
                     onClick={() => void handleCancelSubscription()}
                     disabled={cancelLoading}
-                    className="w-full py-3 border border-red-200 text-red-500 rounded-xl font-semibold text-sm hover:bg-red-50 transition disabled:opacity-50"
+                    className="w-full min-h-[48px] bg-[#1A1A1A] text-white rounded-xl font-semibold text-sm hover:opacity-90 transition disabled:opacity-50"
                   >
-                    {cancelLoading ? 'Cancelling…' : 'Yes, cancel subscription'}
+                    {cancelLoading ? 'Cancelling...' : isTrialing ? 'Yes, cancel my free trial' : 'Yes, cancel my subscription'}
+                  </button>
+                  <button
+                    onClick={() => setShowCancelModal(false)}
+                    className="w-full min-h-[48px] border border-gray-200 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-50 transition"
+                  >
+                    {isTrialing ? 'Keep my free trial' : 'Keep my subscription'}
                   </button>
                 </div>
               </>
