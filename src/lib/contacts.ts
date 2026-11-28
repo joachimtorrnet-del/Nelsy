@@ -105,3 +105,19 @@ export async function unsubscribeContact(contactId: string, token: string): Prom
   }
   return { studioName: (data as { studio_name?: string | null })?.studio_name ?? null };
 }
+
+/** Public page /u/emails/:profileId?t=token: a pro stops the trial setup emails from Nelsy. */
+export async function unsubscribeLifecycleEmails(profileId: string, token: string): Promise<void> {
+  if (!supabase) throw new Error('Supabase not initialized');
+  const { error } = await supabase.functions.invoke('unsubscribe-lifecycle', {
+    body: { profile_id: profileId, token },
+  });
+  if (error) {
+    let msg = 'This unsubscribe link is not valid.';
+    try {
+      const body = await (error as { context?: Response }).context?.json();
+      msg = body?.message ?? msg;
+    } catch { /* ignore */ }
+    throw new Error(msg);
+  }
+}
