@@ -324,6 +324,8 @@ describe('list and defaults', () => {
     expect(defaultStartMinutes('2026-11-28', '2026-11-28', 10 * 60 + 30, windows)).toBe(11 * 60);
     expect(defaultStartMinutes('2026-11-24', '2026-11-28', 10 * 60, windows)).toBe(9 * 60 + 30);
     expect(defaultStartMinutes('2026-11-25', '2026-11-28', 10 * 60, windows)).toBe(9 * 60);
+    // before she opens, propose her opening time, not 5:30 in the morning
+    expect(defaultStartMinutes('2026-11-24', '2026-11-24', 5 * 60 + 17, windows)).toBe(9 * 60 + 30);
   });
 
   it('skips busy blocks when proposing a time', () => {

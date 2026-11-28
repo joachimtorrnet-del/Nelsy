@@ -452,15 +452,15 @@ export function groupByDay<T extends { start: Date }>(bookings: T[], tz: string)
 // ── Add booking defaults ─────────────────────────────────────────────────────
 
 /**
- * Time proposed by the "+" button: the next half hour when adding for today, otherwise the
- * opening time of that day (09:00 on a day without working hours).
+ * Time proposed by the "+" button: the next half hour when adding for today (never before she
+ * opens), otherwise the opening time of that day (09:00 on a day without working hours).
  */
 export function defaultStartMinutes(day: DayKey, today: DayKey, nowMin: number, windows: AvailabilityWindow[]): number {
   const w = workingWindow(windows, day);
   const opening = w?.startMin ?? FALLBACK_HOURS.startMin;
   if (day !== today) return opening;
   const next = Math.ceil((nowMin + 1) / SLOT_MINUTES) * SLOT_MINUTES;
-  return Math.min(Math.max(next, 0), 23 * 60 + 30);
+  return Math.min(Math.max(next, opening), 23 * 60 + 30);
 }
 
 /**

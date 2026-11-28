@@ -44,9 +44,10 @@ export default function AgendaHeader({
   return (
     <div data-agenda-header className="sticky top-0 z-20 border-b border-gray-100 bg-white">
       {/* Month + Today + view switch */}
-      <div className="flex flex-wrap items-center gap-x-2 gap-y-2 px-4 pb-2.5 pt-3 lg:gap-x-3 lg:gap-y-3 lg:px-8 lg:pb-1 lg:pt-5">
+      <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 px-4 pb-2 pt-2 lg:gap-x-3 lg:gap-y-3 lg:px-8 lg:pb-1 lg:pt-5">
         <h2 className="min-w-0 flex-1 truncate text-[22px] font-bold leading-tight tracking-tight text-[#1A1A1A] lg:flex-none lg:text-2xl" aria-live="polite">
-          {label}
+          <span className="min-[400px]:hidden">{label.replace(/^(\p{L}{3})\p{L}+/u, '$1')}</span>
+          <span className="hidden min-[400px]:inline">{label}</span>
         </h2>
         <div className="flex flex-shrink-0 items-center">
           <button type="button" onClick={() => shift(-1)} aria-label="Previous week"
@@ -123,7 +124,7 @@ export default function AgendaHeader({
                       aria-label={`${formatDay(day, { weekday: 'long', month: 'long', day: 'numeric' })}${isToday ? ', today' : ''}, ${
                         isClosed ? 'day off' : count === 0 ? 'no bookings' : `${count} booking${count === 1 ? '' : 's'}`
                       }`}
-                      className="group flex min-h-[60px] flex-col items-center justify-start gap-0.5 rounded-2xl pb-1 pt-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#1A1A1A]"
+                      className="group flex min-h-[56px] flex-col items-center justify-start gap-0.5 rounded-2xl pb-1 pt-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#1A1A1A]"
                     >
                       <span className={`text-[11px] font-semibold uppercase tracking-wide ${isSelected ? 'text-[#1A1A1A]' : 'text-gray-400'}`}>
                         {formatDay(day, { weekday: 'short' })}

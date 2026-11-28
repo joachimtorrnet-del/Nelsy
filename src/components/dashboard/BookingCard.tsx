@@ -39,11 +39,11 @@ export function BookingCard({ booking, timezone, currency, hour12, onOpen }: Boo
           {booking.online && <Video className="h-4 w-4 flex-shrink-0 text-[#C2186F]" aria-label="Video call" />}
         </span>
         <span className="block truncate text-[13px] text-gray-500">{booking.serviceName}</span>
-        <span className="mt-0.5 flex items-center gap-1.5 text-[12px] font-medium">
+        <span className="mt-0.5 flex flex-wrap items-center gap-x-1.5 text-[12px] font-medium">
           <span className={`h-1.5 w-1.5 flex-shrink-0 rounded-full ${tone.dot}`} aria-hidden="true" />
           <span className={meta.tone === 'accent' ? 'text-gray-700' : tone.text}>{meta.label}</span>
           {!inactive && payment.state !== 'free' && (
-            <span className="truncate text-gray-500">
+            <span className="text-gray-500">
               · {payment.state === 'unpaid' ? payment.label
                 : payment.state === 'deposit' ? `${formatMoney(payment.remaining, currency)} left`
                 : payment.label}

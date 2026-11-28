@@ -114,7 +114,7 @@ export default function DashboardLayout({ profile, activeTab, setActiveTab, pend
         <TrialBanner subscriptionStatus={profile?.subscription_status} trialEndsAt={profile?.trial_ends_at} plan={profile?.plan} activeTab={activeTab} />
 
         <header className="h-16 flex-shrink-0 bg-white/90 backdrop-blur border-b border-black/[0.06] flex items-center px-4 lg:px-8 gap-3">
-          <button onClick={() => setMobileOpen(true)} className="lg:hidden p-2 -ml-1 rounded-lg hover:bg-gray-100 text-gray-600" aria-label="Open menu">
+          <button onClick={() => setMobileOpen(true)} className="lg:hidden flex h-11 w-11 items-center justify-center -ml-2.5 rounded-lg hover:bg-gray-100 text-gray-600" aria-label="Open menu">
             <Menu className="w-5 h-5" />
           </button>
           <AnimatePresence mode="wait" initial={false}>
@@ -139,7 +139,7 @@ export default function DashboardLayout({ profile, activeTab, setActiveTab, pend
               {studioUrl}
             </a>
             <button onClick={copyLink} title="Copy studio link" aria-label="Copy studio link"
-              className="px-2.5 py-1.5 sm:border-l border-gray-200 text-gray-500 hover:text-[#F52B8C] hover:bg-[#fff4f9] transition active:scale-95">
+              className="flex min-h-[40px] min-w-[44px] items-center justify-center px-2.5 py-1.5 sm:border-l border-gray-200 text-gray-500 hover:text-[#F52B8C] hover:bg-[#fff4f9] transition active:scale-95">
               {copied ? <CheckCheck className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
             </button>
           </div>

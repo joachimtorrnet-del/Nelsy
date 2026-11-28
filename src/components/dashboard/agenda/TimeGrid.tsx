@@ -200,7 +200,7 @@ export default function TimeGrid({
 
               {/* Current time */}
               {showNow && day === today && (
-                <div className="pointer-events-none absolute inset-x-0 z-10 flex items-center" style={{ top: nowY }} aria-hidden="true">
+                <div className="pointer-events-none absolute inset-x-0 z-[4] flex items-center" style={{ top: nowY }} aria-hidden="true">
                   <span className="-ml-1 h-2 w-2 -translate-y-1/2 rounded-full bg-[#F52B8C]" />
                   <span className="h-0.5 flex-1 -translate-y-1/2 bg-[#F52B8C]" />
                 </div>

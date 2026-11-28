@@ -115,6 +115,10 @@ export function TrialBanner({ subscriptionStatus, trialEndsAt, plan, activeTab }
   const n = state.daysLeft ?? 0;
   const dayWord = n === 1 ? 'day' : 'days';
 
+  // Phones, outside Home: the headline and the button only (Home keeps the full message and progress)
+  const compact = activeTab !== 'home';
+  const tail = compact ? 'hidden sm:inline' : '';
+
   let message: ReactNode;
   let action: ReactNode = null;
   if (state.kind === 'paused') {
@@ -137,13 +141,13 @@ export function TrialBanner({ subscriptionStatus, trialEndsAt, plan, activeTab }
     );
   } else {
     message = state.kind === 'last_day'
-      ? <><span className="font-bold">Your trial ends today.</span> Add a card now to keep your page live.</>
+      ? <><span className="font-bold">Your trial ends today.</span><span className={tail}> Add a card now to keep your page live.</span></>
       : state.kind === 'urgent'
-        ? <><span className="font-bold">Only {n} {dayWord} left in your free trial.</span> Add a card before {date} or your page will be paused.</>
-        : <><span className="font-bold">{n} {dayWord} left in your free trial.</span> Add a card to keep your page live after {date}.</>;
+        ? <><span className="font-bold">Only {n} {dayWord} left in your free trial.</span><span className={tail}> Add a card before {date} or your page will be paused.</span></>
+        : <><span className="font-bold">{n} {dayWord} left in your free trial.</span><span className={tail}> Add a card to keep your page live after {date}.</span></>;
     action = (
       <button onClick={() => void run(openAddCard, 'trial_add_card_clicked', { source: 'banner' })} disabled={busy}
-        className={`flex-shrink-0 inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-[12px] font-bold transition whitespace-nowrap disabled:opacity-60 ${s.button}`}>
+        className={`flex-shrink-0 inline-flex min-h-[36px] items-center gap-1.5 px-4 py-1.5 rounded-lg text-[12px] font-bold transition whitespace-nowrap disabled:opacity-60 ${s.button}`}>
         <CreditCard className="w-3.5 h-3.5" />
         {busy ? 'Opening...' : 'Add card'}
       </button>
@@ -168,14 +172,14 @@ export function TrialBanner({ subscriptionStatus, trialEndsAt, plan, activeTab }
               track('trial_banner_dismissed', { state: state.kind, days_left: state.daysLeft });
             }}
             aria-label="Hide for now"
-            className="flex-shrink-0 -mr-1 p-1 rounded opacity-60 hover:opacity-100"
+            className="flex-shrink-0 -mr-2 flex h-9 w-9 items-center justify-center rounded opacity-60 hover:opacity-100"
           >
             <X className="w-4 h-4" />
           </button>
         )}
       </div>
       {showProgress && (
-        <div className="mt-2 flex items-center gap-2.5">
+        <div className={`mt-2 items-center gap-2.5 ${compact ? 'hidden sm:flex' : 'flex'}`}>
           <span className="text-[11px] font-semibold opacity-70 whitespace-nowrap">Day {state.day} of {state.totalDays}</span>
           <div className={`h-1.5 flex-1 rounded-full overflow-hidden ${s.track}`} aria-hidden="true">
             <div className={`h-full rounded-full ${s.bar}`} style={{ width: `${Math.round(((state.day ?? 0) / state.totalDays) * 100)}%` }} />
