@@ -26,7 +26,7 @@ export function ArticleCallout({
   const s = CALLOUT_STYLES[variant];
   return (
     <aside
-      className="my-8 rounded-2xl px-5 py-4 text-sm leading-relaxed"
+      className="my-8 rounded-2xl px-5 py-4 text-[15px] sm:text-sm leading-relaxed"
       style={{ background: s.bg, borderLeft: `3px solid ${s.border}` }}
     >
       <p className="font-bold text-[#1A1A1A] mb-1 text-xs uppercase tracking-wide">
@@ -86,7 +86,7 @@ export function ArticleTable({
   const nelsyCol = headers.findIndex((h, i) => i > 0 && isNelsy(h));
   return (
     <div className="not-prose my-8 overflow-x-auto rounded-2xl border border-[#1A1A1A]/10 bg-white shadow-sm">
-      <table className="w-full min-w-[560px] text-sm border-collapse">
+      <table className="w-full min-w-[520px] sm:min-w-[560px] text-sm border-collapse">
         {caption && (
           <caption className="text-xs text-gray-500 pb-2 text-left px-4 pt-3">
             {caption}
@@ -98,7 +98,7 @@ export function ArticleTable({
               <th
                 key={h + j}
                 scope="col"
-                className={`text-left px-4 py-3.5 font-bold text-[11px] uppercase tracking-wider ${
+                className={`text-left px-3.5 sm:px-4 py-3.5 font-bold text-[11px] uppercase tracking-wider ${
                   j === nelsyCol ? 'bg-[#F52B8C] text-white' : 'bg-[#1A1A1A] text-white'
                 } ${j === 0 ? 'sticky left-0 z-10' : ''}`}
               >
@@ -115,7 +115,7 @@ export function ArticleTable({
                 {row.map((cell, j) => (
                   <td
                     key={j}
-                    className={`px-4 py-3 align-top border-b border-[#1A1A1A]/5 ${
+                    className={`px-3.5 sm:px-4 py-3.5 sm:py-3 align-top leading-snug border-b border-[#1A1A1A]/5 ${
                       j === 0
                         ? `sticky left-0 font-semibold text-[#1A1A1A] ${nelsyRow ? 'bg-[#FDF0F7]' : i % 2 === 0 ? 'bg-white' : 'bg-[#FFFBFB]'}`
                         : j === nelsyCol
@@ -161,7 +161,7 @@ export function ArticleChecklist({
       )}
       <ul className="space-y-2">
         {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-2.5 text-sm text-gray-700">
+          <li key={i} className="flex items-start gap-2.5 text-[15px] sm:text-sm leading-relaxed text-gray-700">
             <span className="mt-0.5 text-green-600 flex-shrink-0 font-bold">✓</span>
             <span>{item}</span>
           </li>
@@ -190,7 +190,7 @@ export function ArticleSteps({
           </div>
           <div className="flex-1 pb-5 border-b border-[#F4C2C2]/20 last:border-b-0">
             <p className="font-semibold text-[#1A1A1A] mb-1">{step.title}</p>
-            <div className="text-gray-600 text-sm leading-relaxed">{step.body}</div>
+            <div className="text-gray-600 text-[15px] sm:text-sm leading-relaxed">{step.body}</div>
           </div>
         </li>
       ))}
@@ -391,14 +391,14 @@ export function ArticleCTABlock({
       aria-label="Try Nelsy"
       className="not-prose my-12 overflow-hidden rounded-3xl bg-[#1A1A1A] text-white grid sm:grid-cols-[1fr_280px] items-center"
     >
-      <div className="p-7 sm:p-10">
+      <div className="px-5 pt-8 pb-7 sm:p-10">
         <p className="text-xs font-bold uppercase tracking-[0.18em] text-[#F52B8C] mb-3">Nelsy</p>
         <h2 className="font-serif text-2xl sm:text-3xl font-bold leading-tight mb-3">{heading}</h2>
-        <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">{body}</p>
+        <p className="text-white/70 text-[15px] sm:text-sm leading-relaxed mb-6 max-w-md">{body}</p>
         <Link
           to={TRIAL_PATH}
           onClick={onCtaClick}
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
+          className="inline-flex min-h-[48px] items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white transition-opacity hover:opacity-90"
           style={{ background: PINK }}
         >
           {ctaLabel} <span aria-hidden>→</span>
@@ -415,16 +415,16 @@ export function ArticleCTABlock({
 
 export function ArticleTLDR({ answer, detail, points }: { answer: string; detail?: string; points?: Array<{ label: string; text: string }> }) {
   return (
-    <section aria-label="TL;DR" className="not-prose mb-12 rounded-3xl border-2 border-[#1A1A1A] bg-[#FBF7F8] p-6 sm:p-8">
+    <section aria-label="TL;DR" className="not-prose mb-10 sm:mb-12 rounded-3xl border-2 border-[#1A1A1A] bg-[#FBF7F8] px-5 py-6 sm:p-8">
       <span className="inline-block text-xs font-bold text-white bg-[#F52B8C] rounded-full px-3 py-1 mb-4">TL;DR</span>
-      <p className="font-bold text-[#1A1A1A] text-2xl sm:text-3xl leading-tight tracking-tight mb-3">{answer}</p>
+      <p className="font-bold text-[#1A1A1A] text-[21px] leading-[1.3] sm:text-3xl sm:leading-tight tracking-tight mb-3">{answer}</p>
       {detail && <p className="text-gray-700 leading-relaxed">{detail}</p>}
       {points?.length ? (
         <dl className="mt-5 border-t-2 border-[#1A1A1A] divide-y divide-gray-200">
           {points.map((p) => (
-            <div key={p.label} className="py-3">
+            <div key={p.label} className="py-3.5 sm:py-3">
               <dt className="font-bold text-[#1A1A1A]">{p.label}</dt>
-              <dd className="text-sm text-gray-600 leading-relaxed">{p.text}</dd>
+              <dd className="text-[15px] sm:text-sm text-gray-600 leading-relaxed mt-0.5">{p.text}</dd>
             </div>
           ))}
         </dl>
@@ -447,7 +447,7 @@ export function SummarizeWithAI({ url, title, onClick }: { url: string; title: s
   const q = encodeURIComponent(`Summarize the key takeaways of "${title}" for a beauty professional, from this article by Nelsy: ${url}`);
   return (
     <div className="mt-5">
-      <p className="text-xs text-gray-400 mb-2">Summarize with:</p>
+      <p className="text-[13px] sm:text-xs text-gray-500 mb-2">Summarize with:</p>
       <div className="flex flex-wrap gap-2">
         {AI_TOOLS.map((t) => (
           <a
@@ -456,7 +456,7 @@ export function SummarizeWithAI({ url, title, onClick }: { url: string; title: s
             target="_blank"
             rel="noopener nofollow"
             onClick={() => onClick?.(t.name)}
-            className="text-xs font-semibold text-gray-700 bg-white border border-gray-200 rounded-full px-3 py-1.5 hover:border-gray-400 transition"
+            className="inline-flex min-h-[40px] sm:min-h-0 items-center text-[13px] sm:text-xs font-semibold text-gray-700 bg-white border border-gray-200 rounded-full px-4 sm:px-3 sm:py-1.5 hover:border-gray-400 transition"
           >
             {t.name}
           </a>
