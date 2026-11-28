@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { currencySymbol } from '@/lib/currency';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import {
   ArrowLeft, Copy, CheckCheck, ChevronDown, ChevronUp,
@@ -729,6 +730,9 @@ export default function OfferEditor({ devSandbox }: { devSandbox?: OfferEditorSa
     } catch { setDeleting(false); setShowDelete(false); }
   };
 
+  // Prices are shown in the pro's own currency (never a hardcoded euro sign)
+  const cur = currencySymbol((profile as { business_currency?: string | null } | null)?.business_currency ?? 'EUR');
+
   // ── Preview merchant ──
   const accent = profile?.color_accent ?? '#F52B8C';
   const slug = profile?.slug ?? 'my-studio';
@@ -814,7 +818,7 @@ export default function OfferEditor({ devSandbox }: { devSandbox?: OfferEditorSa
                     )}
                     {priceTotal && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, background: accent + '18',
                       borderRadius: 8, padding: '5px 12px', fontSize: 13, color: accent, fontWeight: 600 }}>
-                      {priceTotal ? `€${parseFloat(priceTotal).toFixed(0)}` : ''}
+                      {priceTotal ? `${cur}${parseFloat(priceTotal).toFixed(0)}` : ''}
                     </span>}
                   </div>
                 </div>
@@ -831,11 +835,11 @@ export default function OfferEditor({ devSandbox }: { devSandbox?: OfferEditorSa
                     padding: '12px 14px', marginBottom: 10, fontSize: 13 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
                       <span style={{ color: '#6b7280' }}>Deposit due now</span>
-                      <span style={{ fontWeight: 600 }}>€{parseFloat(depositAmount).toFixed(0)}</span>
+                      <span style={{ fontWeight: 600 }}>{cur}{parseFloat(depositAmount).toFixed(0)}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                       <span style={{ color: '#6b7280' }}>Balance due on the day</span>
-                      <span style={{ color: '#6b7280' }}>€{(parseFloat(priceTotal) - parseFloat(depositAmount)).toFixed(0)}</span>
+                      <span style={{ color: '#6b7280' }}>{cur}{(parseFloat(priceTotal) - parseFloat(depositAmount)).toFixed(0)}</span>
                     </div>
                   </div>
                 )}
@@ -1195,9 +1199,9 @@ export default function OfferEditor({ devSandbox }: { devSandbox?: OfferEditorSa
                         Price
                       </p>
                       <div className="max-w-[220px]">
-                        <label className="text-sm font-medium text-gray-700 block mb-1.5">Price (€) <span className="text-red-500">*</span></label>
+                        <label className="text-sm font-medium text-gray-700 block mb-1.5">Price ({cur}) <span className="text-red-500">*</span></label>
                         <div className="relative">
-                          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
+                          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">{cur}</span>
                           <input type="number" value={priceTotal} step="0.01" min="0.01"
                             onChange={(e) => setPriceTotal(e.target.value)} placeholder="65"
                             className={`w-full pl-7 pr-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.price ? 'border-red-400' : 'border-gray-200'}`}
@@ -1240,9 +1244,9 @@ export default function OfferEditor({ devSandbox }: { devSandbox?: OfferEditorSa
 
                       {paymentMode === 'deposit' && (
                         <div className="max-w-[220px] mt-4">
-                          <label className="text-sm font-medium text-gray-700 block mb-1.5">Deposit (€) <span className="text-red-500">*</span></label>
+                          <label className="text-sm font-medium text-gray-700 block mb-1.5">Deposit ({cur}) <span className="text-red-500">*</span></label>
                           <div className="relative">
-                            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
+                            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-sm">{cur}</span>
                             <input type="number" value={depositAmount} step="0.01" min="0.5"
                               onChange={(e) => setDepositAmount(e.target.value)} placeholder="15"
                               className={`w-full pl-7 pr-3.5 py-2.5 border rounded-xl text-sm focus:ring-2 focus:ring-[#F52B8C] focus:border-transparent outline-none ${errors.deposit ? 'border-red-400' : 'border-gray-200'}`}
@@ -1251,7 +1255,7 @@ export default function OfferEditor({ devSandbox }: { devSandbox?: OfferEditorSa
                           {errors.deposit && <p className="text-red-500 text-xs mt-1">{errors.deposit}</p>}
                           {parseFloat(priceTotal) > 0 && parseFloat(depositAmount) > 0 && parseFloat(depositAmount) < parseFloat(priceTotal) && (
                             <p className="text-xs text-gray-500 mt-1.5">
-                              Balance {locationType === 'online' ? 'at the session' : 'at the studio'}: €{(parseFloat(priceTotal) - parseFloat(depositAmount)).toFixed(2)}
+                              Balance {locationType === 'online' ? 'at the session' : 'at the studio'}: {cur}{(parseFloat(priceTotal) - parseFloat(depositAmount)).toFixed(2)}
                             </p>
                           )}
                         </div>

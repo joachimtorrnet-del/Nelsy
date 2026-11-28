@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { currencySymbol } from '@/lib/currency';
 import { useNavigate } from 'react-router-dom';
 import { Bell, ChevronRight, ChevronDown, LogOut, Edit2, Clock, AlertTriangle, X } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
@@ -42,6 +43,7 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
   const [cancelLoading, setCancelLoading] = useState(false);
   const [cancelSuccess, setCancelSuccess] = useState<{ periodEnd: number } | null>(null);
   const [addingCard, setAddingCard] = useState(false);
+  const feeCur = currencySymbol((profile as { business_currency?: string | null } | null)?.business_currency ?? 'EUR');
   const trialCard = useTrialCard(profile?.subscription_status as string | undefined);
 
   // Sync from parent prop, or load independently if not provided
@@ -373,28 +375,28 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
                 </ul>
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-900 mb-2">Real example:</p>
+                <p className="text-sm font-semibold text-gray-900 mb-2">Example:</p>
                 <div className="bg-white border border-gray-200 rounded-xl p-3 space-y-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-gray-500">Your client pays</span>
-                    <span className="font-semibold text-gray-900">€65.00</span>
+                    <span className="font-semibold text-gray-900">{feeCur}65.00</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-gray-500">Stripe fees (~2.9% + €0.25)</span>
-                    <span className="text-red-500 font-medium">−€2.14</span>
+                    <span className="text-gray-500">Stripe fees (example: 2.9% + {feeCur}0.25)</span>
+                    <span className="text-red-500 font-medium">−{feeCur}2.14</span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-500">Nelsy commission</span>
-                    <span className="text-green-600 font-semibold">€0.00 ✨</span>
+                    <span className="text-green-600 font-semibold">{feeCur}0.00 ✨</span>
                   </div>
                   <div className="border-t border-gray-200 pt-2 flex justify-between">
                     <span className="font-bold text-gray-900">You receive</span>
-                    <span className="font-bold text-[#F52B8C]">€62.86</span>
+                    <span className="font-bold text-[#F52B8C]">{feeCur}62.86</span>
                   </div>
                 </div>
               </div>
               <p className="text-xs text-gray-400">
-                Payment fees (~2.9% + €0.25) go to Stripe, the industry standard for secure payments. Nelsy takes 0% commission — just the monthly subscription.
+                Payment fees go to Stripe, the industry standard for secure payments, and depend on your country and the card used. Nelsy takes 0% commission: you only pay the monthly subscription.
               </p>
             </div>
           )}
