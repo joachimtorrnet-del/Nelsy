@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { track } from '@/lib/analytics';
 import { currencySymbol } from '@/lib/currency';
 import { useNavigate } from 'react-router-dom';
 import { Bell, ChevronRight, ChevronDown, LogOut, Edit2, Clock, AlertTriangle, X } from 'lucide-react';
@@ -19,6 +20,49 @@ export interface SettingsProfile {
   logo_url?: string;
   [key: string]: unknown;
 }
+
+// ── Cancellation: ask why first, answer with one concrete offer, then let her cancel ──────────
+type CancelReasonKey = 'setup' | 'missing' | 'other_app' | 'price' | 'other';
+const CANCEL_REASONS: { key: CancelReasonKey; label: string }[] = [
+  { key: 'setup', label: 'I do not know how to set it up' },
+  { key: 'missing', label: 'Something I need is missing' },
+  { key: 'other_app', label: 'I prefer the app I already use' },
+  { key: 'price', label: 'It is too expensive for me' },
+  { key: 'other', label: 'Another reason' },
+];
+const mailto = (subject: string, body: string) => `mailto:hello@getnelsy.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+const CANCEL_OFFERS: Record<CancelReasonKey, { title: string; text: string; cta: string; href: string }> = {
+  setup: {
+    title: 'We can set it up for you',
+    text: 'Send us your services and prices (a photo of your price list is enough) and we will build your page for you, for free.',
+    cta: 'Set up my page for me',
+    href: mailto('Please set up my Nelsy page', 'Hi, here are my services and prices:\n\n'),
+  },
+  missing: {
+    title: 'Tell us what is missing',
+    text: 'Nelsy is new and we add what nail techs ask for. Tell us what you need and we will answer you personally.',
+    cta: 'Tell Nelsy what I need',
+    href: mailto('What I need in Nelsy', 'Hi, what I need is:\n\n'),
+  },
+  other_app: {
+    title: 'We can move you over',
+    text: 'Tell us which app you use. We will copy your services and prices into Nelsy so you can compare without redoing everything.',
+    cta: 'Move my services for me',
+    href: mailto('Move me to Nelsy', 'Hi, the app I use today is:\n\n'),
+  },
+  price: {
+    title: 'Write to us before you go',
+    text: 'Tell us what would make Nelsy worth it for you. We read every message and answer personally.',
+    cta: 'Write to Nelsy',
+    href: mailto('About the Nelsy price', 'Hi,\n\n'),
+  },
+  other: {
+    title: 'Can we help first?',
+    text: 'Tell us what went wrong. We read every message and answer personally.',
+    cta: 'Write to Nelsy',
+    href: mailto('Feedback before I cancel', 'Hi,\n\n'),
+  },
+};
 
 export default function Settings({ profile: profileProp, onNavigate }: { profile?: SettingsProfile | null; onNavigate?: (tab: string) => void }) {
   const navigate = useNavigate();
@@ -41,10 +85,12 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
   const [loadingPortal, setLoadingPortal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [cancelLoading, setCancelLoading] = useState(false);
+  const [cancelReason, setCancelReason] = useState<CancelReasonKey | null>(null);
   const [cancelSuccess, setCancelSuccess] = useState<{ periodEnd: number } | null>(null);
   const [addingCard, setAddingCard] = useState(false);
   const feeCur = currencySymbol((profile as { business_currency?: string | null } | null)?.business_currency ?? 'EUR');
   const isTrialing = (profile?.subscription_status as string | undefined) === 'trialing';
+  const cancelOffer = CANCEL_OFFERS[cancelReason ?? 'other'];
   const trialCard = useTrialCard(profile?.subscription_status as string | undefined);
 
   // Sync from parent prop, or load independently if not provided
@@ -478,32 +524,55 @@ export default function Settings({ profile: profileProp, onNavigate }: { profile
                   <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
                     <AlertTriangle className="w-5 h-5 text-red-500" />
                   </div>
-                  <button onClick={() => setShowCancelModal(false)} className="text-gray-400 hover:text-gray-600 p-1">
+                  <button onClick={() => { setShowCancelModal(false); setCancelReason(null); }} aria-label="Close" className="text-gray-400 hover:text-gray-600 p-1">
                     <X className="w-5 h-5" />
                   </button>
                 </div>
-                <h2 className="text-lg font-bold text-gray-900 mb-1">{isTrialing ? 'Cancel your free trial?' : 'Cancel your subscription?'}</h2>
-                <p className="text-sm text-gray-500 mb-5">
-                  {isTrialing
-                    ? 'You will not be charged. Your page stays live until the end of your free trial, then it is paused.'
-                    : "You will keep full access until the end of your current billing period. After that, your studio page will be deactivated and clients won't be able to book."}
-                </p>
-                {/* The cancel action comes first and is the clear one: nobody should have to hunt for it */}
-                <div className="space-y-2">
-                  <button
-                    onClick={() => void handleCancelSubscription()}
-                    disabled={cancelLoading}
-                    className="w-full min-h-[48px] bg-[#1A1A1A] text-white rounded-xl font-semibold text-sm hover:opacity-90 transition disabled:opacity-50"
-                  >
-                    {cancelLoading ? 'Cancelling...' : isTrialing ? 'Yes, cancel my free trial' : 'Yes, cancel my subscription'}
-                  </button>
-                  <button
-                    onClick={() => setShowCancelModal(false)}
-                    className="w-full min-h-[48px] border border-gray-200 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-50 transition"
-                  >
-                    {isTrialing ? 'Keep my free trial' : 'Keep my subscription'}
-                  </button>
-                </div>
+                {cancelReason === null ? (
+                  <>
+                    {/* Step 1: ask why, so we can help before she leaves (and learn from every cancellation) */}
+                    <h2 className="text-lg font-bold text-gray-900 mb-1">Before you go, what is not working?</h2>
+                    <p className="text-sm text-gray-500 mb-4">Pick one. We may be able to fix it today.</p>
+                    <div className="space-y-2">
+                      {CANCEL_REASONS.map((r) => (
+                        <button
+                          key={r.key}
+                          onClick={() => { setCancelReason(r.key); track('cancel_reason_selected', { reason: r.key, trialing: isTrialing }); }}
+                          className="w-full min-h-[48px] px-4 text-left border border-gray-200 text-gray-800 rounded-xl font-medium text-sm hover:border-[#F52B8C] hover:bg-pink-50 transition"
+                        >
+                          {r.label}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Step 2: one concrete offer for that reason, then a clear way to cancel anyway */}
+                    <h2 className="text-lg font-bold text-gray-900 mb-1">{cancelOffer.title}</h2>
+                    <p className="text-sm text-gray-500 mb-5">{cancelOffer.text}</p>
+                    <div className="space-y-2">
+                      <a
+                        href={cancelOffer.href}
+                        onClick={() => { track('cancel_offer_accepted', { reason: cancelReason, trialing: isTrialing }); setShowCancelModal(false); setCancelReason(null); }}
+                        className="flex w-full min-h-[48px] items-center justify-center bg-[#F52B8C] text-white rounded-xl font-semibold text-sm hover:opacity-90 transition"
+                      >
+                        {cancelOffer.cta}
+                      </a>
+                      <button
+                        onClick={() => { track('cancel_confirmed', { reason: cancelReason, trialing: isTrialing }); void handleCancelSubscription(); }}
+                        disabled={cancelLoading}
+                        className="w-full min-h-[48px] border border-gray-300 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-50 transition disabled:opacity-50"
+                      >
+                        {cancelLoading ? 'Cancelling...' : isTrialing ? 'Cancel my free trial' : 'Cancel my subscription'}
+                      </button>
+                    </div>
+                    <p className="text-xs text-gray-400 mt-3 text-center">
+                      {isTrialing
+                        ? 'If you cancel, you will not be charged. Your page stays live until the end of your free trial.'
+                        : 'If you cancel, you keep full access until the end of your current billing period.'}
+                    </p>
+                  </>
+                )}
               </>
             )}
           </div>
