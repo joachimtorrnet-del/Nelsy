@@ -7,6 +7,7 @@ import {
   ArrowRight, Clock, Tag, Video, MapPin, Mail, Link2, Send,
 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import { track } from '@/lib/analytics';
 import { updateService, createService, deleteService, uploadImage } from '@/lib/supabase-queries';
 import { validatePrice } from '@/utils/validation';
 import { Sidebar } from '@/components/dashboard/Sidebar';
@@ -690,6 +691,10 @@ export default function OfferEditor({ devSandbox }: { devSandbox?: OfferEditorSa
         const { data, error } = await createService(payload);
         if (error) throw error;
         const newId = (data as ServiceRow).id;
+        if (supabase) {
+          const { count } = await supabase.from('services').select('id', { count: 'exact', head: true }).eq('profile_id', profileId);
+          if (count === 1) track('first_service_created', { source: 'offer_editor' });
+        }
         await syncVideoLink(newId);
         cacheLocalStyle(newId, cardStyle); // keep local in sync
         setDirty(false);

@@ -19,6 +19,8 @@ import Audience from './dashboard/Audience';
 import Kit from './dashboard/Kit';
 import Referrals from './dashboard/Referrals';
 import DashboardLayout from '../components/dashboard/DashboardLayout';
+import FirstRunSetup from '../components/dashboard/FirstRunSetup';
+import { readSetupState, shouldShowSetup } from '../lib/setup';
 import { ComingSoonPlaceholder } from '../components/dashboard/ComingSoonPlaceholder';
 import { ShoppingBag, Megaphone, Globe } from 'lucide-react';
 
@@ -32,6 +34,8 @@ interface Profile {
   business_currency?: string;
   plan?: string | null;
   stripe_onboarding_complete?: boolean;
+  /** jsonb; first-run setup progress lives under its `setup` key (src/lib/setup.ts). */
+  onboarding_answers?: unknown;
 }
 
 const VALID_TABS = [
@@ -52,6 +56,7 @@ export default function Dashboard() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [pendingCount, setPendingCount] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [showSetup, setShowSetup] = useState(false);
 
   // Sync tab when user navigates back/forward
   useEffect(() => {
@@ -95,6 +100,19 @@ export default function Dashboard() {
         .in('status', ['pending', 'confirmed']);
       setPendingCount(count ?? 0);
 
+      // Brand-new pro (no service, setup never done): guided setup instead of the empty dashboard
+      const { count: servicesCount, error: servicesError } = await supabase
+        .from('services')
+        .select('id', { count: 'exact', head: true })
+        .eq('profile_id', user.id);
+      if (!servicesError && servicesCount !== null) {
+        setShowSetup(shouldShowSetup({
+          servicesCount,
+          setup: readSetupState(profileData),
+          subscriptionStatus: profileData?.subscription_status,
+        }));
+      }
+
       if (sessionStorage.getItem('nelsy_onboarding_just_completed')) {
         sessionStorage.removeItem('nelsy_onboarding_just_completed');
         track('dashboard_first_view', { plan: profileData?.subscription_status });
@@ -113,6 +131,15 @@ export default function Dashboard() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#F52B8C] border-t-transparent" />
       </div>
+    );
+  }
+
+  if (showSetup && profile) {
+    return (
+      <FirstRunSetup
+        profile={profile}
+        onDone={() => { setShowSetup(false); navigate('/dashboard'); }}
+      />
     );
   }
 
