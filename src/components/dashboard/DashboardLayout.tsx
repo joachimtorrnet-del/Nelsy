@@ -9,6 +9,8 @@ import { PausedPanel, TrialBanner } from './TrialBanner';
 import { CommandPalette } from './CommandPalette';
 import type { PaletteItem } from './CommandPalette';
 import type { ReactNode } from 'react';
+import { track } from '../../lib/analytics';
+import { saveSetupState } from '../../lib/setup';
 
 interface Profile {
   id?: string;
@@ -61,6 +63,9 @@ export default function DashboardLayout({ profile, activeTab, setActiveTab, pend
   const copyLink = () => {
     navigator.clipboard.writeText(`https://${studioUrl}`).catch(() => {});
     setCopied(true);
+    track('link_copied', { source: 'header' });
+    // Ticks "link in bio" in the Home checklist (real accounts only, not the dev sandboxes)
+    if (profile?.id && profile.id !== 'demo') void saveSetupState(profile.id, { link_copied_at: new Date().toISOString() });
     setTimeout(() => setCopied(false), 2000);
   };
 

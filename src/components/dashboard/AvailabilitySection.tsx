@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { CheckCircle2 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
+import { saveSetupState } from '../../lib/setup';
 
 const DAYS = [
   { label: 'Monday', value: 1 },
@@ -77,6 +78,8 @@ export default function AvailabilitySection({ profileId }: { profileId: string }
 
       if (upsertError) throw upsertError;
       setSaved(true);
+      // Ticks "Set your opening hours" in the Home checklist
+      void saveSetupState(profileId, { hours_set_at: new Date().toISOString() });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to save');
     } finally {

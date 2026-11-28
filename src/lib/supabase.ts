@@ -45,6 +45,8 @@ export interface DbProfileRow {
     /** Trial activation emails from Nelsy to the pro. Absent = on. */
     lifecycle_emails?: boolean;
   } | null;
+  /** Signup answers and first-run setup progress (see src/lib/setup.ts). */
+  onboarding_answers?: Record<string, unknown> | null;
   created_at: string;
   updated_at: string;
 }

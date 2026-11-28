@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   TrendingDown, TrendingUp, Plus, ArrowRight, Eye, CalendarDays, Wallet,
   AlertCircle, RefreshCw, Lightbulb, Sparkles, Clock, UserRound, Share2, CalendarPlus, Pencil,
+  Check, X, ChevronRight, BarChart3,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -17,6 +18,8 @@ import { StudioPhonePreview } from '../../components/dashboard/StudioPhonePrevie
 import { useToast } from '../../hooks/useToast';
 import Toast from '../../components/dashboard/Toast';
 import AddBookingModal from '../../components/dashboard/AddBookingModal';
+import { SETUP_CHANGED_EVENT, checklistStatus, readSetupState, saveSetupState } from '../../lib/setup';
+import type { AvailabilityRowLike, ChecklistItemId, SetupState } from '../../lib/setup';
 
 interface Service {
   id: string;
@@ -88,6 +91,8 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
   const [payments, setPayments] = useState<{ t: number; amount: number; online: boolean }[]>([]);
   const [balance, setBalance] = useState<{ available: number; pending: number }>({ available: 0, pending: 0 });
   const [hasHours, setHasHours] = useState(true);
+  const [hoursRows, setHoursRows] = useState<AvailabilityRowLike[]>([]);
+  const [setupState, setSetupState] = useState<SetupState>({});
   const [profileId, setProfileId] = useState('');
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -117,7 +122,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
         { data: servicesData },
         { data: bookingsData },
         { data: balanceData },
-        { count: hoursCount },
+        { data: hoursData },
         { data: viewsData },
         { data: upcomingData },
         { data: paymentsData },
@@ -126,7 +131,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
         supabase.from('services').select('*').eq('profile_id', user.id).eq('active', true).order('display_order', { ascending: true }),
         supabase.from('bookings').select('*').eq('profile_id', user.id),
         supabase.from('pro_balance').select('available_balance, pending_balance').eq('profile_id', user.id).maybeSingle(),
-        supabase.from('availabilities').select('id', { count: 'exact', head: true }).eq('profile_id', user.id).eq('active', true),
+        supabase.from('availabilities').select('day_of_week, start_time, end_time, active').eq('profile_id', user.id),
         supabase.from('page_views').select('created_at').eq('profile_id', user.id).gte('created_at', visitsSince.toISOString()),
         getBookings(user.id, todayStart, in30Days),
         supabase.from('booking_payments').select('amount, method, created_at').eq('profile_id', user.id).gte('created_at', visitsSince.toISOString()),
@@ -139,7 +144,10 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
         available: Number(balanceData?.available_balance ?? 0),
         pending: Number(balanceData?.pending_balance ?? 0),
       });
-      setHasHours((hoursCount ?? 0) > 0);
+      const hours = (hoursData ?? []) as AvailabilityRowLike[];
+      setHoursRows(hours);
+      setHasHours(hours.some((h) => h.active !== false));
+      setSetupState(readSetupState(profileData as DbProfileRow));
       setVisitTimes((viewsData ?? []).map((v: { created_at: string }) => new Date(v.created_at).getTime()));
       setUpcoming(((upcomingData ?? []) as DbBookingRow[]).filter((b) => UPCOMING.has(b.status)));
       setPayments(((paymentsData ?? []) as { amount: number; method: string; created_at: string }[]).map((p) => ({
@@ -154,6 +162,13 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
   }, []);
 
   useEffect(() => { void loadData(); }, [loadData]);
+
+  // Setup progress saved elsewhere on the page (header copy button, checklist) updates the checklist live
+  useEffect(() => {
+    const onChange = (e: Event) => setSetupState((s) => ({ ...s, ...((e as CustomEvent<SetupState>).detail ?? {}) }));
+    window.addEventListener(SETUP_CHANGED_EVENT, onChange);
+    return () => window.removeEventListener(SETUP_CHANGED_EVENT, onChange);
+  }, []);
 
   // Activation metric: fires once per account when the 4 setup steps are done
   // (PostHog: studio_setup_completed, minutes_since_signup → goal: page live in under 10 minutes)
@@ -246,9 +261,34 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
 
   const copyLink = () => {
     navigator.clipboard.writeText(studioUrl)
-      .then(() => showSuccess('Studio link copied'))
+      .then(() => {
+        showSuccess('Link copied. Paste it in your Instagram bio.');
+        track('link_copied', { source: 'home' });
+        if (!setupState.link_copied_at) void saveSetupState(profile.id, { link_copied_at: new Date().toISOString() });
+      })
       .catch(() => showError('Could not copy the link'));
   };
+
+  // Getting started: one short list until everything is done or she hides it
+  const done = checklistStatus({ servicesCount: services.length, hoursRows, setup: setupState, stripeReady });
+  const checklist: { id: ChecklistItemId; title: string; hint: string; cta: string; run: () => void }[] = [
+    { id: 'services', title: 'Add your services', hint: 'Clients book from your services.', cta: 'Add', run: () => onNavigate?.('preview') },
+    { id: 'hours', title: 'Set your opening hours', hint: 'Clients can only book inside your hours.', cta: 'Set', run: () => onNavigate?.('settings') },
+    { id: 'link', title: 'Put your link in your Instagram bio', hint: `getnelsy.com/${profile.slug}`, cta: 'Copy', run: copyLink },
+    { id: 'payments', title: 'Connect payments', hint: 'Take deposits when clients book.', cta: 'Connect', run: () => onNavigate?.('stripe') },
+  ];
+  const checklistDone = checklist.filter((c) => done[c.id]).length;
+  // One primary action at a time: the first step still open
+  const nextStep = checklist.find((c) => !done[c.id]);
+  const showChecklist = !setupState.checklist_dismissed_at && checklistDone < checklist.length;
+  const dismissChecklist = () => {
+    track('getting_started_dismissed', { done: checklistDone });
+    void saveSetupState(profile.id, { checklist_dismissed_at: new Date().toISOString() });
+  };
+  // Nothing to chart yet: no visit, no booking, no payment
+  const hasActivity = visitTimes.length > 0 || allBookings.length > 0 || payments.length > 0;
+  // The checklist already covers "connect payments" for a pro with no activity
+  const showBalance = stripeReady || hasActivity || !showChecklist;
 
   // Setup first, then everyday actions; only real features
   const setup: (Action & { done: boolean })[] = [
@@ -284,10 +324,60 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
         {/* ── Main column ─────────────────────────────────────────────── */}
         <div className="min-w-0 space-y-6">
           <motion.h2 {...rise(0)} className="text-2xl lg:text-[32px] font-bold text-[#1A1A1A] tracking-tight leading-tight">
-            Hey {firstName}, welcome back!
+            {showChecklist && !hasActivity ? `Welcome, ${firstName}. Let's get you booked.` : `Hey ${firstName}, welcome back!`}
           </motion.h2>
 
+          {showChecklist && (
+            <motion.section {...rise(1)} aria-label="Getting started" className="bg-white border border-gray-100 rounded-3xl p-5">
+              <div className="flex items-center gap-3">
+                <h3 className="text-[17px] font-bold text-[#1A1A1A]">Getting started</h3>
+                <span className="text-[13px] text-gray-500 whitespace-nowrap">{checklistDone} of {checklist.length}</span>
+                <div className="flex-1 h-1.5 bg-pink-100 rounded-full overflow-hidden max-w-[160px] ml-auto" role="progressbar" aria-valuemin={0} aria-valuemax={checklist.length} aria-valuenow={checklistDone}>
+                  <div className="h-full bg-[#F52B8C] rounded-full transition-all duration-500" style={{ width: `${(checklistDone / checklist.length) * 100}%` }} />
+                </div>
+                <button onClick={dismissChecklist} aria-label="Hide getting started" title="Hide"
+                  className="-mr-1.5 w-8 h-8 flex items-center justify-center rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition">
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <ul className="mt-3 divide-y divide-gray-100">
+                {checklist.map((c) => {
+                  const isNext = c.id === nextStep?.id;
+                  if (done[c.id]) {
+                    return (
+                      <li key={c.id} className="flex items-center gap-3 min-h-[52px] py-2">
+                        <span className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-[#11733F] text-white">
+                          <Check className="w-3.5 h-3.5" strokeWidth={3} />
+                        </span>
+                        <p className="text-[15px] font-medium text-gray-400">{c.title}</p>
+                      </li>
+                    );
+                  }
+                  return (
+                    <li key={c.id}>
+                      <button onClick={c.run} className="group w-full flex items-center gap-3 min-h-[64px] py-2.5 text-left active:opacity-70 transition">
+                        <span className={`w-6 h-6 rounded-full flex-shrink-0 border-2 ${isNext ? 'border-[#F52B8C]' : 'border-gray-300'}`} />
+                        <span className="flex-1 min-w-0">
+                          <span className="block text-[15px] font-semibold text-[#1A1A1A] leading-snug">{c.title}</span>
+                          <span className="block text-[13px] text-gray-500 truncate">{c.hint}</span>
+                        </span>
+                        {isNext ? (
+                          <span className="flex-shrink-0 inline-flex items-center h-10 px-4 rounded-full bg-[#F52B8C] text-white text-sm font-bold group-hover:bg-[#E0167A] transition">
+                            {c.cta}
+                          </span>
+                        ) : (
+                          <ChevronRight className="w-5 h-5 text-gray-300 flex-shrink-0" />
+                        )}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            </motion.section>
+          )}
+
           {/* Recommended actions */}
+          {!showChecklist && (
           <motion.section {...rise(1)}>
             <div className="flex items-center justify-between gap-3 mb-3">
               <div className="flex items-center gap-2">
@@ -336,8 +426,26 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
               </div>
             </div>
           </motion.section>
+          )}
 
-          {/* Period + KPIs + chart */}
+          {/* Period + KPIs + chart: only once there is something to show */}
+          {!hasActivity ? (
+            <motion.section {...rise(2)} className="bg-gray-50 rounded-3xl p-6 lg:p-8 flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-2xl bg-white flex items-center justify-center">
+                <BarChart3 className="w-6 h-6 text-gray-400" strokeWidth={1.8} />
+              </div>
+              <p className="mt-3 font-semibold text-[#1A1A1A]">Your numbers will show up here</p>
+              <p className="mt-1 text-sm text-gray-500 max-w-sm leading-snug">
+                Visits, bookings and revenue appear as soon as a client opens your link.
+              </p>
+              {!showChecklist && (
+                <button onClick={copyLink}
+                  className="mt-4 inline-flex items-center h-10 px-5 rounded-full bg-[#fde8f3] text-[#F52B8C] text-sm font-bold hover:bg-[#fbd9eb] active:scale-95 transition">
+                  Copy my link
+                </button>
+              )}
+            </motion.section>
+          ) : (
           <motion.section {...rise(2)}>
             <div className="flex items-center justify-between gap-3 mb-3">
               <div className="inline-flex gap-1 bg-gray-100 rounded-full p-1">
@@ -407,14 +515,15 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
               </div>
             </div>
           </motion.section>
+          )}
 
           {/* Upcoming + balance */}
-          <motion.section {...rise(3)} className="grid md:grid-cols-[minmax(0,1fr)_260px] gap-3">
+          <motion.section {...rise(3)} className={`grid gap-3 ${showBalance ? 'md:grid-cols-[minmax(0,1fr)_260px]' : ''}`}>
             <div className="bg-white border border-gray-100 rounded-2xl p-4 lg:p-5">
               <div className="flex items-center justify-between mb-3">
-                <h3 className="font-semibold text-[#1A1A1A]">Upcoming appointments</h3>
+                <h3 className="font-semibold text-[#1A1A1A]">Upcoming<span className="hidden sm:inline"> appointments</span></h3>
                 <div className="flex items-center gap-3">
-                  <button onClick={() => onNavigate?.('calendar')} className="text-xs font-medium text-gray-500 hover:text-[#1A1A1A] transition">
+                  <button onClick={() => onNavigate?.('calendar')} className="text-xs font-medium text-gray-500 hover:text-[#1A1A1A] transition whitespace-nowrap">
                     View calendar
                   </button>
                   <button onClick={() => setShowAddBooking(true)} aria-label="Add appointment"
@@ -459,6 +568,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
               )}
             </div>
 
+            {showBalance && (
             <div className="bg-[#1A1A1A] rounded-2xl p-5 flex flex-col">
               <p className="text-white/50 text-[11px] font-semibold uppercase tracking-wider">Balance</p>
               {stripeReady ? (
@@ -480,6 +590,7 @@ export default function Home({ onNavigate }: { onNavigate?: (tab: string) => voi
                 </>
               )}
             </div>
+            )}
           </motion.section>
         </div>
 

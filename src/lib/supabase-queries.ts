@@ -127,6 +127,16 @@ export async function createService(data: Record<string, unknown>) {
     .single();
 }
 
+/** Same insert as createService for several services at once (all saved or none). */
+export async function createServices(rows: Record<string, unknown>[]) {
+  if (!supabase) throw new Error('Supabase not initialized');
+
+  return supabase
+    .from('services')
+    .insert(rows)
+    .select();
+}
+
 export async function updateService(id: string, updates: Record<string, unknown>) {
   if (!supabase) throw new Error('Supabase not initialized');
 
