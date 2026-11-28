@@ -42,6 +42,8 @@ export interface DbProfileRow {
     reminders: boolean;
     /** Client email reminder 24h before each booking. Absent = on. */
     client_reminders?: boolean;
+    /** Trial activation emails from Nelsy to the pro. Absent = on. */
+    lifecycle_emails?: boolean;
   } | null;
   created_at: string;
   updated_at: string;

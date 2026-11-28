@@ -78,6 +78,7 @@ const Login = lazy(() => import('./pages/Login'));
 const BookingConfirmed = lazy(() => import('./pages/BookingConfirmed'));
 const ProductDownload = lazy(() => import('./pages/ProductDownload'));
 const Unsubscribe = lazy(() => import('./pages/Unsubscribe'));
+const UnsubscribeLifecycle = lazy(() => import('./pages/UnsubscribeLifecycle'));
 // DEV-only sandboxes (digital products). import.meta.env.DEV is false in production builds.
 const ProductsSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.ProductsSandbox }))) : null;
 const KitSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.KitSandbox }))) : null;
@@ -368,6 +369,15 @@ export default function App() {
                 <>
                   <SEOMeta title="Unsubscribe" description="" noindex />
                   <Unsubscribe />
+                </>
+              }
+            />
+            <Route
+              path="/u/emails/:profileId"
+              element={
+                <>
+                  <SEOMeta title="Unsubscribe" description="" noindex />
+                  <UnsubscribeLifecycle />
                 </>
               }
             />
