@@ -15,7 +15,7 @@ interface BookingStore {
   closeModal: () => void;
   setStep: (step: number) => void;
   setSelectedDate: (date: string) => void;
-  setSelectedTime: (time: string) => void;
+  setSelectedTime: (time: string | null) => void;
   setClientInfo: (name: string, email: string, phone: string) => void;
   reset: () => void;
 }

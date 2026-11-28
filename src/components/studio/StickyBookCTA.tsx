@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useBookingStore } from '@/store/bookingStore';
 import type { Merchant } from '@/types';
+import { getTheme } from '@/lib/themes';
+import { bookingAccent } from './booking/accent';
 
 interface Props {
   merchant: Merchant;
@@ -9,7 +11,9 @@ interface Props {
 
 export function StickyBookCTA({ merchant, show }: Props) {
   const { isOpen, openModal } = useBookingStore();
-  const accent = merchant.color_accent ?? '#F52B8C';
+  // Same accent as the page and the booking dialog (the template's own when the pro picked none)
+  // The bar is white, so the accent goes through the same legibility rule as the dialog.
+  const { fill: accent, onFill } = bookingAccent(getTheme(merchant.theme_preset, merchant.color_accent, { background: merchant.color_background }));
   const visible = show && !isOpen;
 
   const scrollToServices = () => {
@@ -45,10 +49,10 @@ export function StickyBookCTA({ merchant, show }: Props) {
             style={{
               display: 'block', width: '100%',
               height: 52, borderRadius: 16,
-              backgroundColor: accent, color: '#FFFFFF',
+              backgroundColor: accent, color: onFill,
               fontSize: 16, fontWeight: 700,
               border: 'none', cursor: 'pointer',
-              boxShadow: `0 4px 20px ${accent}40`,
+              boxShadow: /^#[0-9a-f]{6}$/i.test(accent) ? `0 4px 20px ${accent}40` : undefined,
               letterSpacing: '-0.01em',
             }}
           >

@@ -1,31 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { CheckCircle, Calendar, Clock, Mail, Video } from 'lucide-react';
+import { Check, Calendar, CalendarPlus, Clock, Mail, Video } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { isValidVideoUrl, timezoneLabel } from '../lib/onlineSessions';
+import { downloadIcs } from '../lib/ics';
 
-function downloadIcs(booking: { id: string; booking_datetime: string; duration?: number | null; service_name?: string; video_url?: string | null }) {
-  const start = new Date(booking.booking_datetime);
-  const end = new Date(start.getTime() + (booking.duration ?? 60) * 60_000);
-  const stamp = (d: Date) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-  const ics = [
-    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Nelsy//Booking//EN',
-    'BEGIN:VEVENT',
-    `UID:${booking.id}@getnelsy.com`,
-    `DTSTAMP:${stamp(new Date())}`,
-    `DTSTART:${stamp(start)}`,
-    `DTEND:${stamp(end)}`,
-    `SUMMARY:${(booking.service_name ?? 'Appointment').replace(/[,;\n]/g, ' ')}`,
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function addToCalendar(booking: any) {
+  downloadIcs({
+    uid: booking.id,
+    start: booking.booking_datetime,
+    durationMinutes: booking.duration,
+    summary: booking.service_name ?? 'Appointment',
     // Online session: the video link as the event location
-    ...(booking.video_url && isValidVideoUrl(booking.video_url) ? [`LOCATION:${booking.video_url.replace(/([,;\\])/g, '\\$1')}`] : []),
-    'END:VEVENT', 'END:VCALENDAR',
-  ].join('\r\n');
-  const url = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' }));
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'appointment.ics';
-  a.click();
-  URL.revokeObjectURL(url);
+    location: booking.video_url && isValidVideoUrl(booking.video_url) ? booking.video_url : null,
+  });
 }
 
 /** DEV-only: /dev/coaching renders this page with an in-memory booking (never routed in production). */
@@ -117,17 +106,17 @@ export default function BookingConfirmed({ devBooking }: { devBooking?: any } = 
     <div className="min-h-screen bg-[#FAFAFA] flex items-center justify-center p-4">
       <div className="max-w-md w-full">
 
-        {/* Success Animation */}
+        {/* Success */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-4 animate-bounce">
-            <CheckCircle className="w-12 h-12 text-green-600" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-[#F52B8C] text-white rounded-full mb-4">
+            <Check className="w-8 h-8" strokeWidth={2.5} aria-hidden="true" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Booking Confirmed! 🎉</h1>
-          <p className="text-gray-600">Your payment was successful</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-1.5">You're booked</h1>
+          <p className="text-gray-600 text-sm">Your payment was successful</p>
         </div>
 
         {/* Booking Details Card */}
-        <div className="bg-white rounded-2xl p-6 shadow-lg mb-6 space-y-4">
+        <div className="bg-white rounded-2xl p-6 border border-gray-200 mb-4 space-y-4">
 
           <div className="flex items-start gap-3">
             <Calendar className="w-5 h-5 text-[#F52B8C] mt-0.5" />
@@ -213,12 +202,12 @@ export default function BookingConfirmed({ devBooking }: { devBooking?: any } = 
         </div>
 
         {/* Info Card */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+        <div className="bg-white border border-gray-200 rounded-2xl p-4 mb-4">
           <div className="flex items-start gap-3">
-            <Mail className="w-5 h-5 text-blue-600 mt-0.5" />
+            <Mail className="w-5 h-5 text-[#F52B8C] mt-0.5" aria-hidden="true" />
             <div>
-              <p className="text-sm font-semibold text-blue-900 mb-1">Confirmation sent!</p>
-              <p className="text-sm text-blue-700">
+              <p className="text-sm font-semibold text-gray-900 mb-1">Confirmation sent</p>
+              <p className="text-sm text-gray-600">
                 We've sent all the details to <strong>{booking.client_email}</strong>
               </p>
             </div>
@@ -226,7 +215,7 @@ export default function BookingConfirmed({ devBooking }: { devBooking?: any } = 
         </div>
 
         {/* Cancellation Policy */}
-        <div className="bg-gray-50 rounded-xl p-4 mb-6">
+        <div className="bg-gray-100 rounded-2xl p-4 mb-6">
           <p className="text-sm text-gray-600 mb-2">
             <strong>Need to change your appointment?</strong>
           </p>
@@ -236,18 +225,18 @@ export default function BookingConfirmed({ devBooking }: { devBooking?: any } = 
         </div>
 
         {/* Actions */}
-        <div className="flex gap-3">
+        <div className="flex flex-col gap-3">
           <button
-            onClick={() => navigate('/')}
-            className="flex-1 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:bg-gray-50 transition"
+            onClick={() => addToCalendar(booking)}
+            className="w-full h-[52px] bg-[#F52B8C] text-white rounded-2xl font-bold hover:opacity-90 transition inline-flex items-center justify-center gap-2"
           >
-            Back to Home
+            <CalendarPlus className="w-5 h-5" aria-hidden="true" /> Add to calendar
           </button>
           <button
-            onClick={() => downloadIcs(booking)}
-            className="flex-1 py-3 bg-[#F52B8C] text-white rounded-xl font-semibold hover:opacity-90 transition"
+            onClick={() => navigate('/')}
+            className="w-full h-[52px] border border-gray-300 bg-white text-gray-900 rounded-2xl font-semibold hover:bg-gray-50 transition"
           >
-            📅 Add to Calendar
+            Back to home
           </button>
         </div>
 
