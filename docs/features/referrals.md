@@ -1,6 +1,6 @@
 # Referral program ("Affiliates")
 
-A pro shares her link. Each time a pro she referred pays for a Nelsy plan, she earns 20% of that
+A pro shares her link. Each time a pro she referred pays for a Nelsy plan, she earns 30% of that
 payment, for as long as the referred pro stays subscribed. Model: Stan's referral program and
 TrendTrack's affiliate page.
 
@@ -13,7 +13,7 @@ The public page, the dashboard, the webhook and the payout function all read it.
 
 | term | value | constant |
 |---|---|---|
-| commission | 20% of every subscription payment actually collected, taxes excluded, recurring | `commissionRateBps: 2000` |
+| commission | 30% of every subscription payment actually collected, taxes excluded, recurring | `commissionRateBps: 3000` |
 | free trials | no commission ($0 invoices are skipped) | `commissionableCents()` |
 | refund / chargeback | commission reversed | `applyRefund()`, `referral_reverse_commission()` |
 | hold | 30 days before a commission is approved | `holdDays: 30` |
@@ -100,7 +100,7 @@ list comes from `my_referrals()`, which returns first name and slug only.
 
 1. `invoice.payment_succeeded` with `amount_paid > 0` on a subscription invoice of a referred pro:
    one `referral_commissions` row, `pending`, `available_at = paid_at + 30 days`,
-   `commission_cents = floor((amount_paid - tax) x 20%)`. Idempotent on the invoice id (lookup,
+   `commission_cents = floor((amount_paid - tax) x 30%)`. Idempotent on the invoice id (lookup,
    then unique constraint).
 2. After 30 days the dashboard shows it as approved (`effectiveStatus`). The row itself flips when
    she requests a payout or when the founder runs `referral_approve_due()`.

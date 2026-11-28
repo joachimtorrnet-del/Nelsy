@@ -9,8 +9,8 @@
 // them there too when you change them here.
 
 export const REFERRAL_TERMS = {
-  /** Share of each collected subscription payment, in basis points (2000 = 20%). */
-  commissionRateBps: 2000,
+  /** Share of each collected subscription payment, in basis points (3000 = 30%). */
+  commissionRateBps: 3000,
   /** Recurring: paid on every collected payment for as long as the referred pro stays subscribed. */
   recurring: true,
   /** Days a commission stays pending before it becomes approved (covers refunds and disputes). */

@@ -41,7 +41,7 @@ const commission = (patch: Partial<CommissionLike> & { paidDaysAgo?: number } = 
 
 describe('terms', () => {
   it('are the founder-approved ones', () => {
-    expect(REFERRAL_TERMS.commissionRateBps).toBe(2000);
+    expect(REFERRAL_TERMS.commissionRateBps).toBe(3000);
     expect(REFERRAL_TERMS.holdDays).toBe(30);
     expect(REFERRAL_TERMS.minPayoutCents).toBe(5000);
     expect(REFERRAL_TERMS.cookieDays).toBe(60);
@@ -49,14 +49,14 @@ describe('terms', () => {
 });
 
 describe('commission math', () => {
-  it('is 20% of what was collected', () => {
-    expect(commissionCents(2900)).toBe(580); // Independent monthly
-    expect(commissionCents(30000)).toBe(6000); // Independent yearly
+  it('is 30% of what was collected', () => {
+    expect(commissionCents(2900)).toBe(870); // Independent monthly
+    expect(commissionCents(30000)).toBe(9000); // Independent yearly
   });
 
   it('rounds down and never goes negative', () => {
-    expect(commissionCents(2999)).toBe(599);
-    expect(commissionCents(4)).toBe(0);
+    expect(commissionCents(2999)).toBe(899);
+    expect(commissionCents(3)).toBe(0);
     expect(commissionCents(0)).toBe(0);
     expect(commissionCents(-2900)).toBe(0);
     expect(commissionCents(Number.NaN)).toBe(0);
@@ -74,10 +74,10 @@ describe('commission math', () => {
     expect(commissionableCents({ amount_paid: 1000, subscription: 'sub_1' })).toBe(1000);
   });
 
-  it('simulator: n × $29 × 20% a month, × 12 a year', () => {
-    expect(simulateEarnings(1, 29)).toEqual({ monthly: 5.8, yearly: 69.6 });
-    expect(simulateEarnings(10, 29)).toEqual({ monthly: 58, yearly: 696 });
-    expect(simulateEarnings(200, 29)).toEqual({ monthly: 1160, yearly: 13920 });
+  it('simulator: n × $29 × 30% a month, × 12 a year', () => {
+    expect(simulateEarnings(1, 29)).toEqual({ monthly: 8.7, yearly: 104.4 });
+    expect(simulateEarnings(10, 29)).toEqual({ monthly: 87, yearly: 1044 });
+    expect(simulateEarnings(200, 29)).toEqual({ monthly: 1740, yearly: 20880 });
     expect(simulateEarnings(0, 29)).toEqual({ monthly: 0, yearly: 0 });
   });
 });
@@ -107,25 +107,25 @@ describe('reversal on refund or chargeback', () => {
   });
 
   it('flags a full refund that arrives after the payout', () => {
-    const out = applyRefund({ status: 'paid', commission_cents: 580, payout_id: 'p1' }, 2900, 2900);
+    const out = applyRefund({ status: 'paid', commission_cents: 870, payout_id: 'p1' }, 2900, 2900);
     expect(out.status).toBe('reversed');
     expect(out.needsReview).toBe(true);
   });
 
   it('recomputes the commission on a partial refund before payout', () => {
-    expect(applyRefund({ status: 'pending', commission_cents: 580, payout_id: null }, 2900, 900))
-      .toEqual({ status: 'pending', commission_cents: 400, changed: true, needsReview: false });
+    expect(applyRefund({ status: 'pending', commission_cents: 870, payout_id: null }, 2900, 900))
+      .toEqual({ status: 'pending', commission_cents: 600, changed: true, needsReview: false });
   });
 
   it('leaves a partial refund after payout to a person', () => {
-    expect(applyRefund({ status: 'paid', commission_cents: 580, payout_id: 'p1' }, 2900, 900))
-      .toEqual({ status: 'paid', commission_cents: 580, changed: false, needsReview: true });
+    expect(applyRefund({ status: 'paid', commission_cents: 870, payout_id: 'p1' }, 2900, 900))
+      .toEqual({ status: 'paid', commission_cents: 870, changed: false, needsReview: true });
   });
 
   it('is idempotent', () => {
-    expect(applyRefund({ status: 'reversed', commission_cents: 580, payout_id: null }, 2900, 2900).changed).toBe(false);
-    expect(applyRefund({ status: 'pending', commission_cents: 400, payout_id: null }, 2900, 900).changed).toBe(false);
-    expect(applyRefund({ status: 'pending', commission_cents: 580, payout_id: null }, 2900, 0).changed).toBe(false);
+    expect(applyRefund({ status: 'reversed', commission_cents: 870, payout_id: null }, 2900, 2900).changed).toBe(false);
+    expect(applyRefund({ status: 'pending', commission_cents: 600, payout_id: null }, 2900, 900).changed).toBe(false);
+    expect(applyRefund({ status: 'pending', commission_cents: 870, payout_id: null }, 2900, 0).changed).toBe(false);
   });
 });
 
