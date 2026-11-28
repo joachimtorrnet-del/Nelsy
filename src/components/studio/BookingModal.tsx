@@ -393,6 +393,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
   const stepTitle = step === STEP_TIME ? 'Pick a date and time' : step === STEP_DETAILS ? 'Your details' : 'Payment';
   const whenShort = selectedDate && selectedTime ? `${shortDayLabel(selectedDate, todayStr)} at ${selectedTime}` : null;
   const tzLabel = online ? timezoneLabel(proTz) : null;
+  const dueLine = payOnArrival ? `${formatCurrency(selectedService.price)} ${payPlace}` : `${formatCurrency(plan.dueToday)} today`;
 
   const summary = (showStudio: boolean) => (
     <BookingSummary
@@ -410,7 +411,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
   // Primary action of the current step, shared by the mobile footer and the desktop summary column
   const primaryAction = step === STEP_TIME ? (
     <PrimaryButton onClick={() => goTo(STEP_DETAILS)} disabled={!selectedDate || !selectedTime}>
-      Continue <ArrowRight className="w-4 h-4" aria-hidden="true" />
+      Continue
     </PrimaryButton>
   ) : step === STEP_DETAILS ? (
     <PrimaryButton type="submit" form={DETAILS_FORM_ID} disabled={isSubmitting}>
@@ -470,7 +471,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
               data-step={step}
             >
               {/* ── Header ───────────────────────────────────────── */}
-              <header className="flex-shrink-0 border-b border-gray-100 px-3 md:px-5 pt-[max(8px,env(safe-area-inset-top))] pb-3">
+              <header className="flex-shrink-0 px-3 md:px-5 pt-[max(8px,env(safe-area-inset-top))] pb-1">
                 <div className="flex items-center gap-1 min-h-[48px]">
                   {step === STEP_DETAILS ? (
                     <button
@@ -486,19 +487,15 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                   )}
                   <div className="flex-1 min-w-0 px-1">
                     {step < STEP_CONFIRMED ? (
-                      <>
-                        <p className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">
-                          Step {step} of {stepLabels.length}
-                        </p>
-                        <h2
-                          ref={titleRef}
-                          tabIndex={-1}
-                          className={`text-lg font-bold text-gray-900 leading-tight outline-none truncate ${theme.fontFamily ? '' : theme.fontClass}`}
-                          style={{ fontFamily: theme.fontFamily }}
-                        >
-                          {stepTitle}
-                        </h2>
-                      </>
+                      <h2
+                        ref={titleRef}
+                        tabIndex={-1}
+                        className={`text-base font-semibold text-gray-900 leading-tight outline-none truncate ${theme.fontFamily ? '' : theme.fontClass}`}
+                        style={{ fontFamily: theme.fontFamily }}
+                      >
+                        {stepTitle}
+                        <span className="sr-only">, step {step} of {stepLabels.length}</span>
+                      </h2>
                     ) : (
                       <p className="text-sm font-semibold text-gray-500 truncate">{studioName}</p>
                     )}
@@ -513,23 +510,19 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                   </button>
                 </div>
 
-                {/* Step indicator */}
+                {/* Step indicator: one thin bar, the step names are read out but not shown */}
                 {step < STEP_CONFIRMED && (
-                  <ol className="flex gap-1.5 px-2 md:px-3 mt-2" aria-label="Booking steps">
+                  <ol className="flex gap-1 px-2 md:px-3 mt-1" aria-label="Booking steps">
                     {stepLabels.map((label, i) => {
                       const n = i + 1;
                       const state = n < step ? 'done' : n === step ? 'current' : 'upcoming';
                       return (
                         <li key={label} className="flex-1 min-w-0" aria-current={state === 'current' ? 'step' : undefined}>
                           <span
-                            className="block h-1 rounded-full transition-colors"
-                            style={{ backgroundColor: state === 'upcoming' ? '#E5E7EB' : 'var(--bk-fill)', opacity: state === 'done' ? 0.45 : 1 }}
+                            className="block h-[3px] rounded-full transition-colors"
+                            style={{ backgroundColor: state === 'upcoming' ? '#EEEFF1' : 'var(--bk-fill)' }}
                           />
-                          <span className={`hidden md:flex items-center gap-1 mt-1.5 text-xs truncate ${state === 'current' ? 'font-semibold text-gray-900' : 'text-gray-500'}`}>
-                            {state === 'done' && <Check className="w-3 h-3" aria-hidden="true" />}
-                            {label}
-                            <span className="sr-only">{state === 'done' ? ' (done)' : state === 'current' ? ' (current step)' : ''}</span>
-                          </span>
+                          <span className="sr-only">{label}{state === 'done' ? ' (done)' : state === 'current' ? ' (current step)' : ''}</span>
                         </li>
                       );
                     })}
@@ -544,27 +537,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
                     {/* ── Step 1: date + time ─────────────────────── */}
                     {step === STEP_TIME && (
-                      <motion.div key="time" {...stepMotion} className="px-5 md:px-8 pt-5 pb-8">
-                        {/* Service recap (mobile: the summary column is desktop only) */}
-                        <div className="md:hidden flex items-center justify-between gap-3 rounded-2xl bg-gray-50 px-4 py-3 mb-5">
-                          <div className="min-w-0">
-                            <p className="font-semibold text-gray-900 text-sm truncate">{selectedService.name}</p>
-                            <p className="text-xs text-gray-500 mt-0.5 flex items-center gap-1.5">
-                              {selectedService.duration} min
-                              {online && (
-                                <span className="inline-flex items-center gap-1 font-semibold text-gray-700">
-                                  <Video className="w-3 h-3" aria-hidden="true" /> Video call
-                                </span>
-                              )}
-                            </p>
-                          </div>
-                          <div className="text-right flex-shrink-0">
-                            <p className="font-bold text-gray-900 tabular-nums">{formatCurrency(selectedService.price)}</p>
-                            {hasDeposit && <p className="text-xs text-gray-500 mt-0.5">Deposit {formatCurrency(chargeAmount)}</p>}
-                            {payOnArrival && <p className="text-xs text-gray-500 mt-0.5">Pay on arrival</p>}
-                          </div>
-                        </div>
-
+                      <motion.div key="time" {...stepMotion} className="px-5 md:px-8 pt-6 pb-10">
                         <DateTimeStep
                           days={days}
                           todayStr={todayStr}
@@ -780,7 +753,7 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
 
                 {/* ── Summary column (desktop) ────────────────────── */}
                 {step < STEP_CONFIRMED && (
-                  <aside className="hidden md:flex flex-col min-h-0 border-l border-gray-100 bg-gray-50 p-6 overflow-y-auto" aria-label="Booking summary">
+                  <aside className="hidden md:flex flex-col min-h-0 bg-gray-50 p-7 overflow-y-auto" aria-label="Booking summary">
                     {summary(true)}
                     {primaryAction && <div className="mt-auto pt-6">{primaryAction}</div>}
                   </aside>
@@ -793,15 +766,14 @@ export function BookingModal({ merchant }: { merchant: Merchant }) {
                       step === STEP_TIME ? 'items-center' : 'flex-col'
                     }`}
                   >
-                    <div className={`min-w-0 flex-1 ${step === STEP_TIME ? '' : 'flex items-baseline justify-between gap-3'}`}>
-                      <p className="text-[15px] font-bold text-gray-900 leading-tight tabular-nums truncate">
-                        {payOnArrival ? `${formatCurrency(selectedService.price)} ${payPlace}` : `${formatCurrency(plan.dueToday)} due today`}
-                      </p>
-                      <p className="text-xs text-gray-500 mt-0.5 truncate" aria-live="polite">
-                        {whenShort ?? 'Choose a time to continue'}
-                      </p>
-                    </div>
-                    <div className={step === STEP_TIME ? 'w-[44%] max-w-[200px] flex-shrink-0' : ''}>{primaryAction}</div>
+                    <p className="min-w-0 flex-1 text-sm text-gray-600 truncate" aria-live="polite">
+                      {whenShort ? (
+                        <><span className="font-semibold text-gray-900">{whenShort}</span> · {dueLine}</>
+                      ) : (
+                        <>{selectedService.name} · {formatCurrency(selectedService.price)}</>
+                      )}
+                    </p>
+                    <div className={step === STEP_TIME ? 'w-[132px] flex-shrink-0' : ''}>{primaryAction}</div>
                   </div>
                 )}
               </div>

@@ -113,13 +113,13 @@ appointment to a calendar and to go back. Neither celebrates loudly.
 | Day and time chosen in one step | both | one "date and time" step instead of two |
 | Horizontal day strip, greyed days without availability | Fresha | 28 day strip in the pro's timezone, Today and Tomorrow labels, month label, arrows |
 | Availability shown before the click | Planity | each day is checked through the existing slot lookup, cached per day, at most 4 requests at a time |
-| Times as chips in a grid | Planity mobile | 3 columns on mobile, 4 on desktop, 48px high, grouped Morning, Afternoon, Evening so a long day stays easy to scan |
+| Times as chips in a grid | Planity mobile | one quiet grid, 3 columns on mobile, 4 on desktop, 48px high, a small gap before the afternoon, the first 9 times then "Show more times" |
 | Open on the first day that has a slot | Planity | the first day with an opening is selected when the dialog opens |
 | Empty day with a jump to the next opening | Fresha | "No openings on this day" plus a "Next available" button |
-| Summary always in view, action pinned | Fresha | desktop: right column with studio, service, date, time, price breakdown and the button. Mobile: bottom bar with the amount due today, the chosen time and the button |
+| Summary always in view, action pinned | Fresha | desktop: right column with studio, service, date, time, price breakdown and the button. The price breakdown appears once a time is picked. Mobile: bottom bar with one line (chosen time and amount due today) and the button |
 | Decided things stay visible and editable | Planity | back keeps the day, the time and the typed details |
 | Full-screen flow on mobile, close button, back arrow | Fresha | full-screen sheet on mobile, centered two column dialog on desktop |
-| Step indicator | Fresha | "Step 1 of 3", a title and a segmented bar. Labels under the bar on desktop |
+| Step indicator | Fresha | one small title and a thin segmented bar (step names are read to screen readers only) |
 | Quiet confirmation with calendar and back actions | both | check mark, recap, Add to calendar (.ics), Back to the studio page |
 
 Things Nelsy deliberately does differently:
@@ -129,9 +129,9 @@ Things Nelsy deliberately does differently:
 - **No professional step.** A Nelsy page is one pro.
 - **One service per booking.** No cart, so the summary is a recap and not a
   basket.
-- **Price breakdown from the first step.** Deposit due today and what is left
-  to pay at the studio are shown from the start, since deposits are central to
-  Nelsy.
+- **Price breakdown before the details.** As soon as a time is picked, the
+  deposit due today and what is left to pay at the studio are shown, since
+  deposits are central to Nelsy.
 - **The template's colour.** The dialog uses the accent of the pro's template.
   When that accent is too light to read on white, it falls back to the
   template's dark page colour.

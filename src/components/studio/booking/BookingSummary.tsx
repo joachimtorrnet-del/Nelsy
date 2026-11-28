@@ -36,22 +36,21 @@ export function BookingSummary({ merchant, service, plan, selectedDate, selected
   const studioName = merchant.salon_name || merchant.name;
 
   return (
-    <div className="text-sm" data-testid="booking-summary">
+    <div className="text-[13px]" data-testid="booking-summary">
       {showStudio && (
-        <div className="flex items-center gap-3 pb-4 mb-4 border-b border-gray-200">
+        <div className="flex items-center gap-3 mb-6">
           {merchant.logo_url ? (
-            <img src={merchant.logo_url} alt="" className="w-11 h-11 rounded-full object-cover flex-shrink-0" />
+            <img src={merchant.logo_url} alt="" className="w-9 h-9 rounded-full object-cover flex-shrink-0" />
           ) : (
             <span
-              className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
-              style={{ backgroundColor: 'var(--bk-soft)', color: 'var(--bk-ink)' }}
+              className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 bg-white text-gray-700"
               aria-hidden="true"
             >
               {getInitials(studioName)}
             </span>
           )}
           <div className="min-w-0">
-            <p className="font-bold text-gray-900 truncate">{studioName}</p>
+            <p className="font-semibold text-gray-900 truncate">{studioName}</p>
             {merchant.location && !online && (
               <p className="text-xs text-gray-500 truncate flex items-center gap-1 mt-0.5">
                 <MapPin className="w-3 h-3 flex-shrink-0" aria-hidden="true" />
@@ -75,19 +74,19 @@ export function BookingSummary({ merchant, service, plan, selectedDate, selected
             )}
           </p>
         </div>
-        <p className="font-semibold text-gray-900 tabular-nums flex-shrink-0">{money(service.price)}</p>
+        <p className="text-gray-900 tabular-nums flex-shrink-0">{money(service.price)}</p>
       </div>
 
       {/* Date + time */}
       <div className="mt-4 space-y-2">
         <p className="flex items-center gap-2.5">
-          <CalendarDays className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--bk-ink)' }} aria-hidden="true" />
+          <CalendarDays className="w-4 h-4 flex-shrink-0 text-gray-400" aria-hidden="true" />
           {selectedDate
             ? <span className="font-medium text-gray-900">{formatDate(selectedDate)}</span>
             : <span className="text-gray-400">Choose a day</span>}
         </p>
         <p className="flex items-center gap-2.5">
-          <Clock className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--bk-ink)' }} aria-hidden="true" />
+          <Clock className="w-4 h-4 flex-shrink-0 text-gray-400" aria-hidden="true" />
           {selectedTime
             ? <span className="font-medium text-gray-900 tabular-nums">{selectedTime} to {addMinutes(selectedTime, service.duration)}</span>
             : <span className="text-gray-400">Choose a time</span>}
@@ -97,8 +96,9 @@ export function BookingSummary({ merchant, service, plan, selectedDate, selected
         )}
       </div>
 
-      {/* Price breakdown */}
-      <dl className="mt-4 pt-4 border-t border-gray-200 space-y-2">
+      {/* Price breakdown: only once a time is picked, to keep the first screen quiet */}
+      {selectedTime && (
+      <dl className="mt-5 pt-5 border-t border-gray-200/70 space-y-2">
         {(plan.hasDeposit || plan.payOnArrival) && (
           <div className="flex justify-between gap-3 text-gray-600">
             <dt>Service total</dt>
@@ -106,11 +106,11 @@ export function BookingSummary({ merchant, service, plan, selectedDate, selected
           </div>
         )}
         <div className="flex justify-between gap-3 items-baseline">
-          <dt className="font-bold text-gray-900">
+          <dt className="font-semibold text-gray-900">
             {plan.hasDeposit ? 'Deposit due today' : 'Due today'}
             {plan.payOnArrival && <span className="block text-xs font-normal text-gray-500">Nothing to pay now</span>}
           </dt>
-          <dd className="font-bold text-lg tabular-nums" style={{ color: 'var(--bk-ink)' }} data-testid="due-today">
+          <dd className="font-semibold text-base text-gray-900 tabular-nums" data-testid="due-today">
             {money(plan.dueToday)}
           </dd>
         </div>
@@ -124,6 +124,7 @@ export function BookingSummary({ merchant, service, plan, selectedDate, selected
           </div>
         )}
       </dl>
+      )}
     </div>
   );
 }
