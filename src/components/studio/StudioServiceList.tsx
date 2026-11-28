@@ -26,6 +26,12 @@ function ServiceCard({ service, theme, isPreview }: CardProps) {
   return (
     <div
       onClick={handleBook}
+      onKeyDown={(e) => {
+        // The card is a div with role="button": make Enter and Space work like a real one
+        if (isPreview || (e.key !== 'Enter' && e.key !== ' ')) return;
+        e.preventDefault();
+        handleBook();
+      }}
       role={isPreview ? undefined : 'button'}
       tabIndex={isPreview ? undefined : 0}
       style={{

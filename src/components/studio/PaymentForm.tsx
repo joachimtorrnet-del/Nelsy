@@ -13,11 +13,13 @@ import { useMoney } from '@/lib/currency';
 interface PaymentFormProps {
   amount: number;
   accent?: string;
+  /** Text colour on the pay button (templates with a light accent). */
+  accentText?: string;
   bookingId: string | null;
   onSuccess: () => void;
 }
 
-export default function PaymentForm({ amount, accent = '#F52B8C', bookingId, onSuccess }: PaymentFormProps) {
+export default function PaymentForm({ amount, accent = '#F52B8C', accentText = '#FFFFFF', bookingId, onSuccess }: PaymentFormProps) {
   const formatCurrency = useMoney();
   const stripe = useStripe();
   const elements = useElements();
@@ -122,8 +124,8 @@ export default function PaymentForm({ amount, accent = '#F52B8C', bookingId, onS
         <button
           type="submit"
           disabled={!stripe || isProcessing}
-          className="w-full py-4 text-white rounded-2xl font-bold text-base hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          style={{ backgroundColor: accent }}
+          className="w-full py-4 rounded-2xl font-bold text-base hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+          style={{ backgroundColor: accent, color: accentText }}
         >
           {isProcessing ? (
             <>

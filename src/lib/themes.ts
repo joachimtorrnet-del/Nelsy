@@ -297,7 +297,7 @@ function isDark(hex: string): boolean {
   return l !== null && l < 0.18;
 }
 
-function contrastRatio(a: string, b: string): number | null {
+export function contrastRatio(a: string, b: string): number | null {
   const la = luminance(a); const lb = luminance(b);
   if (la === null || lb === null) return null;
   return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);

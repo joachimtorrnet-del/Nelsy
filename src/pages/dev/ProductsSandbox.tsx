@@ -19,6 +19,9 @@ import { createDemoProductsApi } from '@/lib/productsDemo';
 import Kit from '@/pages/dashboard/Kit';
 import { createDemoKitApi } from '@/lib/kitDemo';
 import { getMerchantBySlug } from '@/lib/mockData';
+import { BookingModal } from '@/components/studio/BookingModal';
+import { CurrencyProvider } from '@/lib/currency';
+import type { Merchant } from '@/types';
 
 export function ProductsSandbox() {
   const [params] = useSearchParams();
@@ -62,15 +65,29 @@ export function AudienceSandbox() {
   );
 }
 
+// /dev/studio?preset=c_midnight&themeaccent=1   studio page + booking flow on any template
+// /dev/studio?preset=soft&pay=on_arrival   every service set to pay on arrival (or pay=full)
 export function StudioSandbox() {
   const [params] = useSearchParams();
   const base = getMerchantBySlug('studio-maya')!;
-  const merchant = { ...base, theme_preset: params.get('preset') ?? base.theme_preset };
+  const pay = params.get('pay');
+  const merchant: Merchant = {
+    ...base,
+    theme_preset: params.get('preset') ?? base.theme_preset,
+    // ?themeaccent=1 drops the demo pink so the template's own accent shows
+    color_accent: params.get('themeaccent') === '1' ? undefined : base.color_accent,
+    services: pay === 'on_arrival' || pay === 'full'
+      ? base.services.map((s) => ({ ...s, payment_mode: pay }))
+      : base.services,
+  };
   return (
     <div className="min-h-dvh" style={{ backgroundColor: '#E8E8E8' }}>
       <div className="w-full max-w-[480px] md:max-w-[560px] mx-auto min-h-dvh relative">
         <PublicStudioView merchant={merchant} mode="live" />
       </div>
+      <CurrencyProvider currency={merchant.currency}>
+        <BookingModal merchant={merchant} />
+      </CurrencyProvider>
     </div>
   );
 }

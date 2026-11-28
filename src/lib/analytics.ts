@@ -31,6 +31,14 @@ export function trackBookingStarted(profileId: string, serviceId: string) {
   track('booking_started', { profile_id: profileId, service_id: serviceId });
 }
 
+/** A day picked in the booking day strip ("strip") or through the next-available shortcut. */
+export function trackBookingDaySelected(
+  profileId: string,
+  props: { days_ahead: number; source: 'strip' | 'next_available' },
+) {
+  track('booking_day_selected', { profile_id: profileId, ...props });
+}
+
 export function trackSlotSelected(profileId: string) {
   track('slot_selected', { profile_id: profileId });
 }
