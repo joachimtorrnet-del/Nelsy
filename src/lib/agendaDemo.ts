@@ -110,6 +110,19 @@ export function createDemoAgendaApi({ empty = false, timezone }: DemoAgendaOptio
     async confirm(id) { await wait(); setStatus(id, 'confirmed'); },
     async cancel(id) { await wait(); setStatus(id, 'cancelled'); },
     async complete(id) { await wait(); setStatus(id, 'completed'); },
+    async noShow(id) { await wait(); setStatus(id, 'no_show'); },
+    async undoNoShow(id) {
+      await wait();
+      const current = bookings.find((b) => b.id === id);
+      if (current && findConflicts(bookings, current.start, current.end, id).length > 0) return 'conflict';
+      setStatus(id, 'confirmed');
+      return 'ok';
+    },
+    async saveNote(_profileId, bookingId, note) {
+      await wait();
+      const text = note.trim();
+      bookings = bookings.map((b) => (b.id === bookingId ? { ...b, note: text || undefined } : b));
+    },
 
     async reschedule(id, startIso) {
       await wait();

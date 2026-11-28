@@ -27,6 +27,8 @@ export interface AgendaBooking {
   status: BookingStatus;
   online: boolean;
   videoUrl: string | null;
+  /** Private note of the pro on this appointment. Never shown to the client. */
+  note?: string;
 }
 
 export interface AgendaService {

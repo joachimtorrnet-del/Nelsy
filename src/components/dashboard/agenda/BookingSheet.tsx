@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  CalendarClock, Check, ChevronRight, Copy, Loader2, Mail, MapPin, MessageSquare, Phone, UserRound, Video, XCircle,
+  CalendarClock, Check, ChevronRight, Copy, Loader2, Mail, MapPin, MessageSquare, Phone, RotateCcw, UserRound, UserX, Video, XCircle,
 } from 'lucide-react';
 import Sheet from './Sheet';
 import BookingPaymentPanel from '../BookingPaymentPanel';
@@ -30,7 +30,7 @@ interface BookingSheetProps {
   onViewClient: (booking: AgendaBooking) => void;
 }
 
-type Mode = 'view' | 'reschedule' | 'cancel';
+type Mode = 'view' | 'reschedule' | 'cancel' | 'noshow';
 
 const FIELD = 'h-12 w-full rounded-xl border border-gray-200 bg-white px-3.5 text-base text-[#1A1A1A] transition focus:border-[#1A1A1A] focus:outline-none focus:ring-1 focus:ring-[#1A1A1A]';
 const PRIMARY = 'flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#1A1A1A] px-5 text-[15px] font-semibold text-white transition hover:opacity-90 active:scale-[0.99] disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] focus-visible:ring-offset-2';
@@ -51,8 +51,13 @@ export default function BookingSheet({
   const [recording, setRecording] = useState(false);
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
+  const [note, setNote] = useState('');
+  const [noteBusy, setNoteBusy] = useState(false);
 
   const openId = booking?.id;
+  const savedNote = booking?.note ?? '';
+  // Reset the draft when another booking opens or when the saved note changes after a reload.
+  useEffect(() => { setNote(savedNote); }, [openId, savedNote]);
   useEffect(() => {
     setMode('view');
     setError(null);
@@ -92,7 +97,9 @@ export default function BookingSheet({
     try {
       const result = await action();
       if (result === 'conflict') {
-        setError('That time overlaps another booking. Pick a different time.');
+        setError(mode === 'reschedule'
+          ? 'That time overlaps another booking. Pick a different time.'
+          : 'Another booking has taken this time since. Move one of them first.');
         return;
       }
       await onChanged();
@@ -104,6 +111,22 @@ export default function BookingSheet({
       setError('That did not work. Check your connection and try again.');
     } finally {
       setBusy(false);
+    }
+  };
+
+  const noteDirty = note.trim() !== (b.note ?? '').trim();
+  const saveNote = async () => {
+    setNoteBusy(true);
+    setError(null);
+    try {
+      await api.saveNote(profileId, b.id, note);
+      await onChanged();
+      onToast(note.trim() ? 'Note saved' : 'Note removed');
+    } catch (err) {
+      console.error('Saving the note failed:', err);
+      setError('The note was not saved. Check your connection and try again.');
+    } finally {
+      setNoteBusy(false);
     }
   };
 
@@ -155,6 +178,18 @@ export default function BookingSheet({
         {busy && <Loader2 className="h-4 w-4 animate-spin" />} Cancel booking
       </button>
     </div>
+  ) : mode === 'noshow' ? (
+    <div className="flex gap-3">
+      <button type="button" className={SECONDARY} onClick={() => { setMode('view'); setError(null); }} disabled={busy}>Back</button>
+      <button
+        type="button"
+        disabled={busy}
+        onClick={() => void run(() => api.noShow(b.id), 'Marked as no-show')}
+        className="flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-[#C2410C] px-5 text-[15px] font-semibold text-white transition hover:bg-[#9A3412] active:scale-[0.99] disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C2410C] focus-visible:ring-offset-2"
+      >
+        {busy && <Loader2 className="h-4 w-4 animate-spin" />} Mark as no-show
+      </button>
+    </div>
   ) : b.status === 'pending' ? (
     <button type="button" className={PRIMARY} disabled={busy} onClick={() => void run(() => api.confirm(b.id), 'Booking confirmed')}>
       {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} Confirm booking
@@ -169,7 +204,7 @@ export default function BookingSheet({
     <Sheet
       open={!!booking}
       onClose={onClose}
-      title={mode === 'reschedule' ? 'Move this booking' : mode === 'cancel' ? 'Cancel this booking?' : b.clientName || 'Client'}
+      title={mode === 'reschedule' ? 'Move this booking' : mode === 'cancel' ? 'Cancel this booking?' : mode === 'noshow' ? `${firstName === 'your client' ? 'Your client' : firstName} did not come?` : b.clientName || 'Client'}
       eyebrow={mode === 'view' ? (
         <span className="inline-flex items-center gap-1.5">
           <span className={`h-2 w-2 rounded-full ${tone.dot}`} aria-hidden="true" />
@@ -218,6 +253,22 @@ export default function BookingSheet({
           <p>
             Nelsy does not message {firstName}, so tell them yourself.
             {payment.paid > 0 && ` The ${formatMoney(payment.paid, currency)} already paid is not refunded automatically.`}
+          </p>
+          {error && <p role="alert" className="text-sm font-medium text-red-600">{error}</p>}
+        </div>
+      )}
+
+      {mode === 'noshow' && (
+        <div className="space-y-3 pt-1 text-[15px] leading-relaxed text-gray-600">
+          <p>
+            {b.serviceName} on {formatDay(day, { weekday: 'long', month: 'long', day: 'numeric' })} at {formatRange(startMin, startMin + b.durationMin, hour12).split(' to ')[0]}.
+            The booking stays in your calendar, marked as a no-show.
+          </p>
+          <p>
+            {payment.paid > 0
+              ? `You keep the ${formatMoney(payment.paid, currency)} already paid. Nothing is refunded and nothing more is charged.`
+              : 'Nothing was paid online for this booking, so nothing is charged.'}
+            {' '}You can undo this later.
           </p>
           {error && <p role="alert" className="text-sm font-medium text-red-600">{error}</p>}
         </div>
@@ -317,6 +368,28 @@ export default function BookingSheet({
             )}
           </div>
 
+          {/* Private note */}
+          <div>
+            <label htmlFor="booking-note" className="mb-1.5 flex items-baseline justify-between gap-2">
+              <span className="text-sm font-semibold text-[#1A1A1A]">Note</span>
+              <span className="text-[12px] text-gray-500">Only you see this</span>
+            </label>
+            <textarea
+              id="booking-note"
+              value={note}
+              onChange={(e) => setNote(e.target.value.slice(0, 2000))}
+              rows={note.length > 80 ? 4 : 2}
+              placeholder="Shape, colour, allergies, anything to remember"
+              className="w-full resize-none rounded-xl border border-gray-200 bg-white px-3.5 py-3 text-base leading-snug text-[#1A1A1A] placeholder:text-gray-400 transition focus:border-[#1A1A1A] focus:outline-none focus:ring-1 focus:ring-[#1A1A1A]"
+            />
+            {noteDirty && (
+              <button type="button" onClick={() => void saveNote()} disabled={noteBusy}
+                className="mt-2 flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#1A1A1A] text-sm font-semibold text-white transition hover:opacity-90 disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1A1A1A] focus-visible:ring-offset-2">
+                {noteBusy && <Loader2 className="h-4 w-4 animate-spin" />} Save note
+              </button>
+            )}
+          </div>
+
           {/* Actions */}
           <div className="divide-y divide-gray-100 overflow-hidden rounded-2xl border border-gray-100">
             {active && (
@@ -331,6 +404,20 @@ export default function BookingSheet({
               <UserRound className="h-5 w-5 text-gray-400" aria-hidden="true" /> <span className="flex-1">View {firstName} in Customers</span>
               <ChevronRight className="h-4 w-4 text-gray-300" aria-hidden="true" />
             </button>
+            {active && started && b.status !== 'pending' && (
+              <button type="button" onClick={() => { setError(null); setMode('noshow'); }}
+                className="flex min-h-[52px] w-full items-center gap-3 px-4 text-left text-[15px] font-semibold text-[#C2410C] transition hover:bg-orange-50 focus-visible:bg-orange-50 focus-visible:outline-none">
+                <UserX className="h-5 w-5" aria-hidden="true" /> <span className="flex-1">Mark as no-show</span>
+                <ChevronRight className="h-4 w-4 text-orange-200" aria-hidden="true" />
+              </button>
+            )}
+            {b.status === 'no_show' && (
+              <button type="button" disabled={busy} onClick={() => void run(() => api.undoNoShow(b.id), 'No-show undone', false)}
+                className="flex min-h-[52px] w-full items-center gap-3 px-4 text-left text-[15px] font-semibold text-[#1A1A1A] transition hover:bg-gray-50 focus-visible:bg-gray-50 focus-visible:outline-none disabled:opacity-40">
+                {busy ? <Loader2 className="h-5 w-5 animate-spin text-gray-400" /> : <RotateCcw className="h-5 w-5 text-gray-400" aria-hidden="true" />}
+                <span className="flex-1">Undo no-show</span>
+              </button>
+            )}
             {active && (
               <button type="button" onClick={() => { setError(null); setMode('cancel'); }}
                 className="flex min-h-[52px] w-full items-center gap-3 px-4 text-left text-[15px] font-semibold text-red-600 transition hover:bg-red-50 focus-visible:bg-red-50 focus-visible:outline-none">

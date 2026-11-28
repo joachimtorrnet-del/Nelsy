@@ -50,6 +50,9 @@ export function BookingCard({ booking, timezone, currency, hour12, onOpen }: Boo
             </span>
           )}
         </span>
+        {booking.note && (
+          <span className="mt-1 block truncate text-[12px] italic text-gray-500">{booking.note}</span>
+        )}
       </span>
 
       <span className={`flex-shrink-0 text-[15px] font-bold tabular-nums text-[#1A1A1A] ${inactive ? 'opacity-50' : ''}`}>

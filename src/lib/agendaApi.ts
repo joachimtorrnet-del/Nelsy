@@ -46,6 +46,12 @@ export interface AgendaApi {
   confirm(id: string): Promise<void>;
   cancel(id: string): Promise<void>;
   complete(id: string): Promise<void>;
+  /** The client did not come. The slot no longer blocks the calendar. */
+  noShow(id: string): Promise<void>;
+  /** Undo a no-show. Resolves 'conflict' when another booking has taken the slot since. */
+  undoNoShow(id: string): Promise<'ok' | 'conflict'>;
+  /** Saves the private note of an appointment; an empty note removes it. */
+  saveNote(profileId: string, bookingId: string, note: string): Promise<void>;
   reschedule(id: string, startIso: string): Promise<'ok' | 'conflict'>;
   addClosedDate(profileId: string, day: DayKey, reason: string | null): Promise<void>;
   removeClosedDate(id: string): Promise<void>;
@@ -134,12 +140,13 @@ export const agendaApi: AgendaApi = {
 
   async load(profileId) {
     const db = client();
-    const [servicesRes, bookingsRes, availabilityRes, closedRes, paymentsRes] = await Promise.all([
+    const [servicesRes, bookingsRes, availabilityRes, closedRes, paymentsRes, notesRes] = await Promise.all([
       db.from('services').select('*').eq('profile_id', profileId).order('display_order', { ascending: true }),
       getBookings(profileId),
       getAvailabilities(profileId),
       db.from('closed_dates').select('id, closed_date, reason').eq('profile_id', profileId),
       db.from('booking_payments').select('booking_id, amount').eq('profile_id', profileId),
+      db.from('booking_notes').select('booking_id, note').eq('profile_id', profileId),
     ]);
     if (bookingsRes.error) throw bookingsRes.error;
 
@@ -154,10 +161,15 @@ export const agendaApi: AgendaApi = {
       paidByBooking.set(p.booking_id, (paidByBooking.get(p.booking_id) ?? 0) + Number(p.amount));
     }
 
+    // Notes are optional: a failed read must not hide the calendar.
+    const noteByBooking = new Map<string, string>();
+    for (const n of (notesRes.data ?? []) as { booking_id: string; note: string }[]) noteByBooking.set(n.booking_id, n.note);
+
     const now = new Date();
     const bookings = ((bookingsRes.data ?? []) as DbBookingRow[])
       .map((b) => toAgendaBooking(b, serviceMap, videoLinks, paidByBooking, now))
-      .filter((b): b is AgendaBooking => b !== null);
+      .filter((b): b is AgendaBooking => b !== null)
+      .map((b) => (noteByBooking.has(b.id) ? { ...b, note: noteByBooking.get(b.id) } : b));
 
     return {
       bookings,
@@ -225,6 +237,27 @@ export const agendaApi: AgendaApi = {
 
   async complete(id) {
     const { error } = await completeBooking(id);
+    if (error) throw error;
+  },
+
+  async noShow(id) {
+    const { error } = await updateBooking(id, { status: 'no_show' });
+    if (error) throw error;
+  },
+
+  async undoNoShow(id) {
+    const { error } = await updateBooking(id, { status: 'confirmed' });
+    if (error?.code === OVERLAP) return 'conflict';
+    if (error) throw error;
+    return 'ok';
+  },
+
+  async saveNote(profileId, bookingId, note) {
+    const text = note.trim().slice(0, 2000);
+    const table = client().from('booking_notes');
+    const { error } = text
+      ? await table.upsert({ booking_id: bookingId, profile_id: profileId, note: text, updated_at: new Date().toISOString() })
+      : await table.delete().eq('booking_id', bookingId);
     if (error) throw error;
   },
 
