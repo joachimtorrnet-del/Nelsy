@@ -9,7 +9,7 @@ const FOCUS = 'focus-visible:outline focus-visible:outline-2 focus-visible:outli
 
 const matches = (pathname: string, route: string) => pathname === route || pathname.startsWith(route + '/');
 
-// ─── Mobile drawer ────────────────────────────────────────────────────────────
+// ─── Mobile menu ──────────────────────────────────────────────────────────────
 
 const MOBILE_LINKS = [
   { label: 'Home', to: '/' },
@@ -18,8 +18,8 @@ const MOBILE_LINKS = [
   { label: 'Affiliates', to: '/affiliates' },
 ];
 
-function MobileMenu({ onClose, onCta, drawerRef }: { onClose: () => void; onCta: () => void; drawerRef: React.RefObject<HTMLDivElement | null> }) {
-  // Lock page scroll while the drawer is open.
+function MobileMenu({ onClose, onCta, drawerRef, pathname }: { onClose: () => void; onCta: () => void; drawerRef: React.RefObject<HTMLDivElement | null>; pathname: string }) {
+  // Lock page scroll while the menu is open.
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -27,24 +27,38 @@ function MobileMenu({ onClose, onCta, drawerRef }: { onClose: () => void; onCta:
   }, []);
 
   return (
-    <div ref={drawerRef} id="mobile-menu" className="lg:hidden fixed inset-0 z-40">
-      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" aria-hidden="true" onClick={onClose} />
-      <div className="relative bg-white w-full pt-[72px] pb-4 rounded-b-2xl shadow-lg max-h-[100dvh] overflow-y-auto overscroll-contain">
-        {/* Stan-style mobile menu: a few big links. The full map of pages lives in the footer. */}
-        <nav aria-label="Mobile" className="px-3">
-          {MOBILE_LINKS.map((l) => (
-            <Link
-              key={l.to}
-              to={l.to}
-              onClick={onClose}
-              className={`flex min-h-[56px] items-center px-3 rounded-xl text-[22px] font-bold text-[#1A1A1A] hover:bg-gray-50 transition ${FOCUS}`}
-            >
-              {l.label}
-            </Link>
-          ))}
+    <div ref={drawerRef} id="mobile-menu" className="lg:hidden fixed inset-0 z-40 px-4 pt-3">
+      {/* Stan-style: the page dims and the nav pill grows into a card (links, then Log in and the CTA). */}
+      <div className="nav-sheet-backdrop absolute inset-0 bg-[#1A1A1A]/70" aria-hidden="true" onClick={onClose} />
+      <div
+        className="nav-sheet relative max-w-6xl mx-auto bg-white rounded-2xl pt-[52px] max-h-[calc(100dvh-24px)] overflow-y-auto overscroll-contain"
+        style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.08)' }}
+      >
+        <nav aria-label="Mobile" className="nav-sheet-body px-2 pt-2 pb-4">
+          <ul>
+            {MOBILE_LINKS.map((l) => {
+              const current = l.to === '/' ? pathname === '/' : matches(pathname, l.to);
+              return (
+                <li key={l.to}>
+                  <Link
+                    to={l.to}
+                    onClick={onClose}
+                    aria-current={current ? 'page' : undefined}
+                    className={`flex min-h-[44px] items-center px-3 rounded-xl text-[17px] transition-colors ${FOCUS} ${current ? 'font-semibold text-[#1A1A1A]' : 'font-medium text-gray-600 hover:text-[#1A1A1A]'}`}
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
 
-          <div className="border-t border-gray-100 pt-3 mt-2 space-y-2 px-1">
-            <Link to="/login" onClick={onClose} className={`flex min-h-[48px] items-center justify-center rounded-xl bg-gray-100 text-[15px] font-medium text-gray-800 hover:bg-gray-200 transition ${FOCUS}`}>
+          <div className="mt-5 space-y-2.5 px-2">
+            <Link
+              to="/login"
+              onClick={onClose}
+              className={`flex min-h-[48px] items-center justify-center rounded-xl border border-[#1A1A1A]/20 text-[15px] font-semibold text-[#1A1A1A] hover:border-[#1A1A1A]/40 transition-colors ${FOCUS}`}
+            >
               Log in
             </Link>
             <Link
@@ -76,13 +90,22 @@ export default function SiteNav() {
   // Close everything on navigation.
   useEffect(() => { setMobileOpen(false); }, [pathname]);
 
-  // Escape closes the drawer and returns focus to the button that opened it.
+  // Escape closes the menu and returns focus to the button that opened it.
   useEffect(() => {
     if (!mobileOpen) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
-      setMobileOpen(false);
-      burgerRef.current?.focus();
+      if (e.key === 'Escape') {
+        setMobileOpen(false);
+        burgerRef.current?.focus();
+        return;
+      }
+      if (e.key !== 'Tab' || !burgerRef.current) return;
+      // Keep Tab inside the open menu: close button, links, then back to the close button.
+      const items = [burgerRef.current, ...(drawerRef.current?.querySelectorAll<HTMLElement>('a, button') ?? [])];
+      const i = items.indexOf(document.activeElement as HTMLElement);
+      const next = e.shiftKey ? (i <= 0 ? items.length - 1 : i - 1) : (i === items.length - 1 ? 0 : i + 1);
+      e.preventDefault();
+      items[next].focus();
     };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
@@ -113,8 +136,8 @@ export default function SiteNav() {
       >
         {/* Pill: position:relative anchors the wide menus so left-1/2 centers them on the pill */}
         <div
-          className="relative max-w-6xl mx-auto pl-5 pr-2 lg:pr-3 h-[52px] flex items-center gap-4 pointer-events-auto bg-white/95 backdrop-blur-md rounded-2xl"
-          style={{ boxShadow: '0 1px 2px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.08)' }}
+          className={`relative max-w-6xl mx-auto pl-5 pr-2 lg:pr-3 h-[52px] flex items-center gap-4 pointer-events-auto rounded-2xl ${mobileOpen ? 'bg-white' : 'bg-white/95 backdrop-blur-md'}`}
+          style={{ boxShadow: mobileOpen ? 'none' : '0 1px 2px rgba(0,0,0,0.04), 0 4px 20px rgba(0,0,0,0.08)' }}
         >
           <Link to="/" aria-label="Nelsy home" className={`flex items-center gap-2 shrink-0 rounded ${FOCUS}`}>
             <span className="w-5 h-5 rounded" style={{ backgroundColor: PINK }} aria-hidden="true" />
@@ -172,7 +195,7 @@ export default function SiteNav() {
             <Link
               to={NAV_CTA.to}
               onClick={trackCta}
-              className={`inline-flex min-h-[40px] items-center text-[13px] font-bold text-white px-3.5 rounded-xl transition hover:opacity-90 ${FOCUS}`}
+              className={`${mobileOpen ? 'hidden' : 'inline-flex'} min-h-[40px] items-center text-[13px] font-bold text-white px-3.5 rounded-xl transition hover:opacity-90 ${FOCUS}`}
               style={{ backgroundColor: PINK }}
             >
               {NAV_CTA.label}
@@ -184,7 +207,7 @@ export default function SiteNav() {
               aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
               onClick={() => { setMobileOpen((v) => !v); }}
-              className={`flex items-center justify-center w-11 h-11 rounded-xl text-gray-700 hover:bg-gray-100 transition ${FOCUS}`}
+              className={`flex items-center justify-center w-11 h-11 rounded-full transition ${FOCUS} ${mobileOpen ? 'bg-gray-100 text-[#1A1A1A]' : 'text-gray-700 hover:bg-gray-100'}`}
             >
               {mobileOpen ? (
                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -200,7 +223,7 @@ export default function SiteNav() {
         </div>
       </nav>
 
-      {mobileOpen && <MobileMenu drawerRef={drawerRef} onClose={() => setMobileOpen(false)} onCta={trackCta} />}
+      {mobileOpen && <MobileMenu drawerRef={drawerRef} pathname={pathname} onClose={() => setMobileOpen(false)} onCta={trackCta} />}
     </>
   );
 }

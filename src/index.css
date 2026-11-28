@@ -137,3 +137,29 @@
 .prose-article section {
   scroll-margin-top: 5rem;
 }
+
+/* ── Mobile nav menu: the pill grows into a card, the page dims behind it ──── */
+@keyframes nav-sheet-open {
+  from { clip-path: inset(0 0 calc(100% - 52px) 0 round 1rem); }
+  to { clip-path: inset(0 0 0 0 round 1rem); }
+}
+@keyframes nav-sheet-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.nav-sheet {
+  animation: nav-sheet-open 0.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.nav-sheet-backdrop {
+  animation: nav-sheet-fade 0.3s ease both;
+}
+.nav-sheet-body {
+  animation: nav-sheet-fade 0.3s ease 0.06s both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nav-sheet,
+  .nav-sheet-backdrop,
+  .nav-sheet-body {
+    animation: none;
+  }
+}

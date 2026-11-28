@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import type { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { Calculator, Search, Scissors, Sparkles, Users } from 'lucide-react';
+import { Calculator, ChevronDown, Search, Scissors, Sparkles, Users } from 'lucide-react';
 import SEOMeta from '@/components/SEOMeta';
 import SiteNav from '@/components/layout/SiteNav';
 import SiteFooter from '@/components/layout/SiteFooter';
 import ArticleCard from '@/components/article/ArticleCard';
-import { readMinutes } from '@/components/article/ArticleTemplateBlocks';
 import { TRIAL_PATH } from '@/components/article/ArticleBodyComponents';
 import {
   getAllArticles,
@@ -103,6 +102,7 @@ export default function BlogIndex() {
   const [activeAudience, setActiveAudience] = useState<ArticleAudience | 'all'>('all');
   const [activeCraft, setActiveCraft] = useState<ArticleCraft>('all');
   const [visible, setVisible] = useState(PAGE_SIZE);
+  const [topicsOpen, setTopicsOpen] = useState(false);
 
   // Deep links: /blog?category=pricing-money, ?audience=creators, ?craft=lashes
   // (read after mount, the prerendered page shows "All")
@@ -159,6 +159,23 @@ export default function BlogIndex() {
 
   const pick = (cat: ArticleCategory | 'all') => apply({ category: cat });
 
+  // Mobile: one "Filter" select replaces the audience doors and the two chip rows.
+  // It sets one dimension at a time (topic, audience or craft) and clears the others.
+  const mobileFilter =
+    activeCategory !== 'all' ? `category:${activeCategory}`
+      : activeCraft !== 'all' ? `craft:${activeCraft}`
+        : activeAudience !== 'all' ? `audience:${activeAudience}`
+          : 'all';
+
+  function pickMobileFilter(value: string) {
+    const [kind, key] = value.split(':');
+    apply({
+      category: kind === 'category' ? (key as ArticleCategory) : 'all',
+      audience: kind === 'audience' ? (key as ArticleAudience) : 'all',
+      craft: kind === 'craft' ? (key as ArticleCraft) : 'all',
+    });
+  }
+
   function openDoor(e: MouseEvent, aud: ArticleAudience) {
     e.preventDefault();
     apply({ audience: aud, category: 'all', craft: 'all' });
@@ -184,16 +201,16 @@ export default function BlogIndex() {
         <header className="relative overflow-hidden bg-[#FDF0F7]/60 border-b border-[#F4C2C2]/30">
           <div aria-hidden className="pointer-events-none absolute -top-24 -left-24 w-72 h-72 rounded-full bg-[#F52B8C]/10 blur-3xl" />
           <div aria-hidden className="pointer-events-none absolute -bottom-24 -right-16 w-80 h-80 rounded-full bg-[#F4C2C2]/40 blur-3xl" />
-          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-10 md:pt-16 md:pb-12 text-center">
-            <p className="text-xs font-bold uppercase tracking-[0.25em] mb-4" style={{ color: PINK }}>The Nelsy Blog · {all.length} guides</p>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl font-bold text-[#1A1A1A] leading-[1.05] tracking-tight mb-4">
+          <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-12 pb-11 md:pt-16 md:pb-12 text-center">
+            <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.25em] mb-4" style={{ color: PINK }}>The Nelsy Blog · {all.length} guides</p>
+            <h1 className="font-serif text-[40px] leading-[1.1] sm:text-5xl sm:leading-[1.05] md:text-6xl font-bold text-[#1A1A1A] tracking-tight mb-4">
               The Beauty Business Edit
             </h1>
-            <p className="text-gray-600 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
+            <p className="text-gray-600 text-[15px] leading-[1.6] sm:text-lg sm:leading-relaxed max-w-xl mx-auto">
               Practical guides for beauty pros, beauty creators and salons: getting clients, pricing, deposits, policies, content and selling what you know.
             </p>
 
-            <nav aria-label="Guides by audience" className="mt-8 md:mt-10 text-left">
+            <nav aria-label="Guides by audience" className="hidden sm:block mt-8 md:mt-10 text-left">
               <ul className="grid sm:grid-cols-3 gap-3">
                 {DOORS.map(({ audience, line, icon: Icon }) => {
                   const active = activeAudience === audience;
@@ -232,31 +249,59 @@ export default function BlogIndex() {
 
           {/* ── Featured ──────────────────────────────────────────────── */}
           {featured && (
-            <section aria-label="Featured article" className="pt-8 md:pt-10">
-              <ArticleCard article={featured} size="featured" minutes={readMinutes(featured)} priority="high" />
+            <section aria-label="Featured article" className="pt-10">
+              <ArticleCard article={featured} size="featured" priority="high" />
             </section>
           )}
 
           {/* ── Start here (editor's picks) ───────────────────────────── */}
           {spotlight.length > 0 && (
-            <section aria-labelledby="start-here" className="pt-12">
-              <h2 id="start-here" className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-6">Start here</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+            <section aria-labelledby="start-here" className="pt-14 sm:pt-12">
+              <h2 id="start-here" className="font-serif text-[28px] leading-tight sm:text-3xl font-bold text-[#1A1A1A] mb-6">Start here</h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-5 lg:gap-6">
                 {spotlight.map((a) => (
-                  <ArticleCard key={a.slug} article={a} size="spotlight" minutes={readMinutes(a)} priority="eager" />
+                  <ArticleCard key={a.slug} article={a} size="spotlight" priority="eager" />
                 ))}
               </div>
             </section>
           )}
 
           {/* ── More to explore: category nav + search + grid ─────────── */}
-          <section aria-labelledby="explore" className="pt-16 pb-14" id="explore-articles">
-            <div className="text-center mb-8">
-              <h2 id="explore" className="font-serif text-3xl sm:text-4xl font-bold text-[#1A1A1A]">More to explore</h2>
+          <section aria-labelledby="explore" className="pt-14 sm:pt-16 pb-14 scroll-mt-16" id="explore-articles">
+            <div className="md:text-center mb-6 md:mb-8">
+              <h2 id="explore" className="font-serif text-[28px] leading-tight sm:text-4xl font-bold text-[#1A1A1A]">More to explore</h2>
             </div>
 
-            <div className="flex flex-col md:flex-row md:items-center gap-4 mb-8">
-              <div className="-mx-4 px-4 md:mx-0 md:px-0 flex-1 overflow-x-auto">
+            <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4 mb-8">
+              {/* Mobile: one select (topics, audiences, crafts) instead of the chip rows */}
+              <label className="relative md:hidden">
+                <span className="sr-only">Filter guides</span>
+                <select
+                  value={query ? 'all' : mobileFilter}
+                  onChange={(e) => pickMobileFilter(e.target.value)}
+                  className="w-full h-12 appearance-none rounded-xl border border-[#1A1A1A]/15 bg-white pl-4 pr-11 text-base font-medium text-[#1A1A1A] focus:outline-none focus:border-[#F52B8C]"
+                >
+                  <option value="all">All guides</option>
+                  <optgroup label="Topic">
+                    {NAV_CATEGORIES.filter((c) => counts.get(c)).map((cat) => (
+                      <option key={cat} value={`category:${cat}`}>{CATEGORY_LABELS[cat]} ({counts.get(cat)})</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Written for">
+                    {DOORS.map(({ audience }) => (
+                      <option key={audience} value={`audience:${audience}`}>{AUDIENCE_LABELS[audience]}</option>
+                    ))}
+                  </optgroup>
+                  <optgroup label="Craft">
+                    {CRAFTS.map((c) => (
+                      <option key={c} value={`craft:${c}`}>{CRAFT_LABELS[c]} ({craftCounts.get(c)})</option>
+                    ))}
+                  </optgroup>
+                </select>
+                <ChevronDown size={18} className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#1A1A1A]" aria-hidden />
+              </label>
+
+              <div className="hidden md:block flex-1 overflow-x-auto">
                 <div className="flex gap-2 w-max md:w-auto md:flex-wrap" role="tablist" aria-label="Categories">
                   <button
                     role="tab"
@@ -295,12 +340,12 @@ export default function BlogIndex() {
                   placeholder="Search guides"
                   value={query}
                   onChange={(e) => { setQuery(e.target.value); setActiveCategory('all'); setActiveAudience('all'); setActiveCraft('all'); setVisible(PAGE_SIZE); }}
-                  className="w-full pl-10 pr-4 py-2.5 text-sm rounded-full border border-[#1A1A1A]/15 bg-[#F7F3F3] focus:bg-white focus:outline-none focus:border-[#F52B8C] transition"
+                  className="w-full h-12 md:h-auto pl-10 pr-4 md:py-2.5 text-base md:text-sm rounded-xl md:rounded-full border border-[#1A1A1A]/15 bg-[#F7F3F3] focus:bg-white focus:outline-none focus:border-[#F52B8C] transition"
                 />
               </label>
             </div>
 
-            <div className="-mx-4 px-4 md:mx-0 md:px-0 overflow-x-auto mb-8 -mt-4">
+            <div className="hidden md:block overflow-x-auto mb-8 -mt-4">
               <div className="flex items-center gap-2 w-max md:w-auto md:flex-wrap" role="group" aria-label="Filter by craft">
                 <span className="text-xs font-bold uppercase tracking-wider text-gray-400 mr-1">Craft</span>
                 <button
@@ -334,7 +379,7 @@ export default function BlogIndex() {
             {activeAudience !== 'all' && (
               <p className="flex flex-wrap items-center gap-2 text-sm text-gray-600 mb-5">
                 Showing guides for <strong className="text-[#1A1A1A]">{AUDIENCE_LABELS[activeAudience]}</strong>
-                <button onClick={() => apply({ audience: 'all' })} className="rounded-full border border-[#1A1A1A]/15 px-3 py-1 text-xs font-semibold hover:border-[#F52B8C]">
+                <button onClick={() => apply({ audience: 'all' })} className="rounded-full border border-[#1A1A1A]/15 px-3 py-2 md:py-1 text-xs font-semibold hover:border-[#F52B8C]">
                   Show all audiences
                 </button>
               </p>
@@ -350,13 +395,13 @@ export default function BlogIndex() {
               <p className="text-center py-16 text-gray-400 text-sm">No articles found. Try a different search, craft or category.</p>
             ) : (
               <>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-6">
+                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-7 sm:gap-5 lg:gap-6">
                   {filtered.slice(0, visible).map((a, i) => (
                     <ArticleCard
                       key={a.slug}
                       article={a}
                       size="grid"
-                      minutes={readMinutes(a)}
+                     
                       // Filtered views put the grid near the top: load its first row right away
                       priority={isFiltered && i < 3 ? 'eager' : 'lazy'}
                     />
@@ -366,7 +411,7 @@ export default function BlogIndex() {
                   <div className="mt-10 text-center">
                     <button
                       onClick={() => setVisible((v) => v + PAGE_SIZE)}
-                      className="rounded-full border border-[#1A1A1A] px-6 py-3 text-sm font-bold text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white transition"
+                      className="w-full sm:w-auto min-h-[48px] rounded-full border border-[#1A1A1A] px-6 py-3 text-sm font-bold text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white transition"
                     >
                       Show more guides ({filtered.length - visible} left)
                     </button>
@@ -379,17 +424,17 @@ export default function BlogIndex() {
 
         {/* ── Tools + trial band ───────────────────────────────────────── */}
         <section aria-labelledby="tools-band" className="px-4 sm:px-6 pb-16">
-          <div className="max-w-6xl mx-auto rounded-3xl bg-[#1A1A1A] text-white p-7 sm:p-12 grid lg:grid-cols-[1fr_1.2fr] gap-10 items-center">
+          <div className="max-w-6xl mx-auto rounded-3xl bg-[#1A1A1A] text-white px-5 py-9 sm:p-12 grid lg:grid-cols-[1fr_1.2fr] gap-9 sm:gap-10 items-center">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.2em] mb-3" style={{ color: PINK }}>Free tools</p>
-              <h2 id="tools-band" className="font-serif text-3xl sm:text-4xl font-bold leading-tight mb-4">Know your numbers before you change anything</h2>
-              <p className="text-white/70 text-sm leading-relaxed mb-6 max-w-md">
+              <h2 id="tools-band" className="font-serif text-[28px] sm:text-4xl font-bold leading-tight mb-4">Know your numbers before you change anything</h2>
+              <p className="text-white/70 text-[15px] sm:text-sm leading-relaxed mb-6 max-w-md">
                 Free calculators for deposits, no-shows and booking app fees. When you are ready, try Nelsy free for 14 days: $29/month after, 0% Nelsy commission.
               </p>
               <Link
                 to={TRIAL_PATH}
                 onClick={() => track('seo_cta_clicked', { landing_page: '/blog', page_type: 'blog_index', cta_position: 'footer_cta', cta_label: 'Start your free trial' })}
-                className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90"
+                className="inline-flex min-h-[48px] items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90"
                 style={{ background: PINK }}
               >
                 Start your free trial <span aria-hidden>→</span>
@@ -416,10 +461,21 @@ export default function BlogIndex() {
 
         {/* ── All guides by topic (plain links: every article reachable from /blog) ── */}
         {!isFiltered && (
-          <section aria-labelledby="by-topic" className="border-t border-[#F4C2C2]/30 bg-[#FFFBFB] px-4 sm:px-6 py-14">
+          <section aria-labelledby="by-topic" className="border-t border-[#F4C2C2]/30 bg-[#FFFBFB] px-4 sm:px-6 py-10 sm:py-14">
             <div className="max-w-6xl mx-auto">
-              <h2 id="by-topic" className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] mb-8">All guides by topic</h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+              <h2 id="by-topic" className="font-serif text-2xl sm:text-3xl font-bold text-[#1A1A1A] sm:mb-8">All guides by topic</h2>
+              {/* Mobile: the full list sits behind one button. The links stay in the HTML either way. */}
+              <button
+                type="button"
+                aria-expanded={topicsOpen}
+                aria-controls="by-topic-list"
+                onClick={() => setTopicsOpen((v) => !v)}
+                className="sm:hidden mt-4 flex w-full min-h-[48px] items-center justify-between rounded-xl border border-[#1A1A1A]/15 bg-white px-4 text-base font-medium text-[#1A1A1A]"
+              >
+                {topicsOpen ? 'Hide all guides' : 'Browse all guides'}
+                <ChevronDown size={18} aria-hidden className={`transition-transform ${topicsOpen ? 'rotate-180' : ''}`} />
+              </button>
+              <div id="by-topic-list" className={`${topicsOpen ? 'grid mt-8' : 'hidden'} sm:mt-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10`}>
                 {NAV_CATEGORIES.filter((c) => counts.get(c)).map((cat) => (
                   <details key={cat} className="group" open>
                     <summary className="cursor-pointer list-none flex items-center justify-between border-b border-[#1A1A1A]/10 pb-2 mb-3">
@@ -429,7 +485,7 @@ export default function BlogIndex() {
                     <ul className="space-y-2 max-h-72 overflow-y-auto pr-2">
                       {all.filter((a) => a.category === cat).map((a) => (
                         <li key={a.slug}>
-                          <Link to={`/blog/${a.slug}`} className="text-sm text-gray-700 hover:text-[#F52B8C] transition leading-snug">
+                          <Link to={`/blog/${a.slug}`} className="block py-1 sm:py-0 text-[15px] sm:text-sm text-gray-700 hover:text-[#F52B8C] transition leading-snug">
                             {a.title}
                           </Link>
                         </li>

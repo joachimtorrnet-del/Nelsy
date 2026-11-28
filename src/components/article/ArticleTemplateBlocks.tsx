@@ -36,14 +36,14 @@ export function ArticleMidCTA({ category, onClick }: { category: ArticleCategory
       <span className="absolute top-0 left-0 rounded-br-2xl bg-[#F52B8C] px-4 py-1.5 text-[11px] font-bold uppercase tracking-wider text-white">
         Nelsy
       </span>
-      <div className="grid sm:grid-cols-[1fr_260px] items-center gap-4 p-6 pt-12 sm:p-8 sm:pt-12">
+      <div className="grid sm:grid-cols-[1fr_260px] items-center gap-6 sm:gap-4 px-5 pb-7 pt-12 sm:p-8 sm:pt-12">
         <div>
           <p className="font-serif text-2xl font-bold text-[#1A1A1A] leading-tight mb-2">{copy.title}</p>
-          <p className="text-sm text-gray-700 leading-relaxed mb-5">{copy.body}</p>
+          <p className="text-[15px] sm:text-sm text-gray-700 leading-relaxed mb-5">{copy.body}</p>
           <Link
             to={TRIAL_PATH}
             onClick={onClick}
-            className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
+            className="inline-flex min-h-[48px] sm:min-h-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-white transition-opacity hover:opacity-90"
             style={{ background: PINK }}
           >
             Start your free trial <ArrowRight size={15} aria-hidden />
@@ -86,7 +86,7 @@ export function resolveArticleLinks(article: Article): { tools: ToolPath[]; page
 
 export function FreeToolsBox({ tools }: { tools: ToolPath[] }) {
   return (
-    <section aria-labelledby="free-tools" className="not-prose mt-12 rounded-3xl border border-[#1A1A1A]/10 bg-white p-6 sm:p-8">
+    <section aria-labelledby="free-tools" className="not-prose mt-12 rounded-3xl border border-[#1A1A1A]/10 bg-white px-5 py-6 sm:p-8">
       <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#F52B8C] mb-1">Free tools</p>
       <h2 id="free-tools" className="font-serif text-2xl font-bold text-[#1A1A1A] mb-5">Run the numbers for your business</h2>
       <ul className="grid sm:grid-cols-2 gap-3">
@@ -113,7 +113,7 @@ export function FreeToolsBox({ tools }: { tools: ToolPath[] }) {
 
 export function NelsyPagesBox({ pages }: { pages: PagePath[] }) {
   return (
-    <nav aria-label="Nelsy features" className="not-prose mt-8 rounded-3xl bg-[#FDF0F7] p-6 sm:p-8">
+    <nav aria-label="Nelsy features" className="not-prose mt-8 rounded-3xl bg-[#FDF0F7] px-5 py-6 sm:p-8">
       <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#F52B8C] mb-1">How Nelsy helps</p>
       <p className="font-serif text-2xl font-bold text-[#1A1A1A] mb-5">Put this into practice</p>
       <ul className="grid sm:grid-cols-2 gap-3">
@@ -140,10 +140,10 @@ export function KeepReadingInline({ articles }: { articles: Article[] }) {
   return (
     <aside aria-label="Keep reading" className="not-prose rounded-2xl border-l-4 border-[#F52B8C] bg-white px-5 py-4 shadow-sm">
       <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-gray-400 mb-2">Keep reading</p>
-      <ul className="space-y-1.5">
+      <ul className="space-y-2.5 sm:space-y-1.5">
         {articles.map((a) => (
           <li key={a.slug}>
-            <Link to={`/blog/${a.slug}`} className="text-[15px] font-semibold text-[#1A1A1A] hover:text-[#F52B8C] transition-colors leading-snug">
+            <Link to={`/blog/${a.slug}`} className="text-base sm:text-[15px] font-semibold text-[#1A1A1A] hover:text-[#F52B8C] transition-colors leading-snug">
               {a.title} <span aria-hidden className="text-[#F52B8C]">→</span>
             </Link>
           </li>
