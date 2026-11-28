@@ -25,6 +25,8 @@ export interface NewBookingInput {
   clientName: string;
   clientEmail: string;
   clientPhone: string;
+  /** The pro's currency (ISO code). Stored on the booking so it does not fall back to the DB default. */
+  currency?: string;
 }
 
 export interface NewServiceInput {
@@ -181,6 +183,7 @@ export const agendaApi: AgendaApi = {
       nelsy_fee: 0,
       status: 'confirmed',
       paid_at: new Date().toISOString(),
+      ...(input.currency && /^[a-z]{3}$/i.test(input.currency) ? { currency: input.currency.toLowerCase() } : {}),
     });
     if (error?.code === OVERLAP) return 'conflict';
     if (error) throw error;

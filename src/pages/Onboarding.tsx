@@ -220,6 +220,11 @@ export default function Onboarding() {
           data: {
             full_name: formData.fullName.trim(),
             slug: formData.username,
+            // The live profile trigger reads these three keys. Without them it built the link
+            // from the email address and named every page "Salon".
+            username: formData.username,
+            fullName: formData.fullName.trim(),
+            salonName: formData.fullName.trim(),
             phone: formData.phone,
             instagram: '',
             tiktok: '',

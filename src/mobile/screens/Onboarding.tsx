@@ -225,7 +225,7 @@ export default function Onboarding() {
         email: form.email,
         password: form.password,
         // full_name is a placeholder until "Share your details" (the trigger otherwise writes a French default)
-        options: { data: { full_name: form.username, slug: form.username } },
+        options: { data: { full_name: form.username, slug: form.username, username: form.username } },
       });
       if (signUpError?.message?.toLowerCase().includes('already registered') || (user && user.identities?.length === 0)) {
         track('app_onboarding_validation_error', { step: 'signup', field: 'email', error_type: 'already_registered' });

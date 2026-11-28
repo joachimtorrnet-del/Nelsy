@@ -13,7 +13,7 @@ import { StudioPhonePreview } from './StudioPhonePreview';
 import {
   SERVICE_PRESETS, DURATION_OPTIONS, TIME_OPTIONS, WEEK_DAYS,
   buildAvailabilityRows, buildServiceRow, defaultWeek, formatDuration, isUntouchedDefaultHours,
-  parsePrice, saveSetupState, summarizeWeek, validateDrafts, validateWeek, weekFromRows,
+  parsePrice, saveSetupState, summarizeWeek, deviceUses12h, displayTime, validateDrafts, validateWeek, weekFromRows,
 } from '../../lib/setup';
 import type { AvailabilityRowLike, ServiceDraft, Week } from '../../lib/setup';
 
@@ -58,6 +58,8 @@ function readableError(err: unknown): string {
   if (/fetch|network/i.test(raw)) return 'Check your connection and try again.';
   return 'Nothing was lost, please try again.';
 }
+
+const HOUR12 = deviceUses12h();
 
 export default function FirstRunSetup({ profile, onDone }: Props) {
   const [step, setStep] = useState(0);
@@ -426,7 +428,7 @@ export default function FirstRunSetup({ profile, onDone }: Props) {
                           value={created.slice(0, 3).map((s) => `${s.name} ${formatMoney(Number(s.price_total), currency)}`).join(' · ') + (created.length > 3 ? ` · +${created.length - 3}` : '')} />
                       )}
                       {liveWeek && (
-                        <SummaryRow label="Hours" value={summarizeWeek(liveWeek)}
+                        <SummaryRow label="Hours" value={summarizeWeek(liveWeek, HOUR12)}
                           note={hoursSaved ? undefined : 'You can change them in Settings.'} />
                       )}
                     </div>
@@ -530,8 +532,8 @@ function TimeSelect({ value, label, onChange }: { value: string; label: string; 
     <label className="block flex-1 min-w-0">
       <span className="sr-only">{label}</span>
       <select value={value} onChange={(e) => onChange(e.target.value)} className={`${selectCls} px-2`}>
-        {!TIME_OPTIONS.includes(value) && <option value={value}>{value}</option>}
-        {TIME_OPTIONS.map((t) => <option key={t} value={t}>{t}</option>)}
+        {!TIME_OPTIONS.includes(value) && <option value={value}>{displayTime(value, HOUR12)}</option>}
+        {TIME_OPTIONS.map((t) => <option key={t} value={t}>{displayTime(t, HOUR12)}</option>)}
       </select>
     </label>
   );

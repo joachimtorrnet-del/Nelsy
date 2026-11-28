@@ -187,15 +187,32 @@ export function buildAvailabilityRows(profileId: string, week: Week) {
   });
 }
 
+/** True when the device shows times as 9:00 AM (United States, Canada, Australia...). */
+export function deviceUses12h(): boolean {
+  try {
+    return new Intl.DateTimeFormat(undefined, { hour: 'numeric' }).resolvedOptions().hour12 ?? false;
+  } catch {
+    return false;
+  }
+}
+
+/** "09:00" stays "09:00" in 24h, becomes "9:00 AM" in 12h. Display only: stored values stay HH:MM. */
+export function displayTime(hhmmValue: string, hour12 = false): string {
+  if (!hour12) return hhmmValue;
+  const [h, m] = hhmmValue.split(':').map(Number);
+  if (Number.isNaN(h) || Number.isNaN(m)) return hhmmValue;
+  return `${h % 12 === 0 ? 12 : h % 12}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
+}
+
 /** "Tue to Sat, 09:00 to 18:00", or a per-group summary when days differ. */
-export function summarizeWeek(week: Week): string {
+export function summarizeWeek(week: Week, hour12 = false): string {
   const open = WEEK_DAYS.filter((d) => week[d.value].active);
   if (open.length === 0) return 'No open days';
   const groups: { from: string; to: string; hours: string }[] = [];
   let prevIndex = -2;
   for (const d of open) {
     const index = WEEK_DAYS.indexOf(d);
-    const hours = `${week[d.value].start} to ${week[d.value].end}`;
+    const hours = `${displayTime(week[d.value].start, hour12)} to ${displayTime(week[d.value].end, hour12)}`;
     const last = groups[groups.length - 1];
     if (last && index === prevIndex + 1 && last.hours === hours) last.to = d.short;
     else groups.push({ from: d.short, to: d.short, hours });

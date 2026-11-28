@@ -189,6 +189,7 @@ export default function AddBookingSheet({
         clientName: clientName.trim(),
         clientEmail: clientEmail.trim().toLowerCase(),
         clientPhone: clientPhone.trim(),
+        currency,
       });
       if (result === 'conflict') {
         setErrors({ submit: 'This time overlaps another booking. Pick a different time.' });
