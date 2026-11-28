@@ -41,7 +41,6 @@ interface FormData {
   phone: string; // "+33 612345678"
   password: string;
   plan: BillingInterval;
-  agreedToTerms: boolean;
 }
 
 type SlugState = 'idle' | 'checking' | 'free' | 'taken' | 'reserved';
@@ -97,7 +96,6 @@ export default function Onboarding() {
     password: '',
     // Billing interval picked on the landing pricing section; the trial screen lets her switch
     plan: SELECTED.interval,
-    agreedToTerms: false,
   });
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<ReactNode>('');
@@ -106,7 +104,6 @@ export default function Onboarding() {
   const [resumed, setResumed] = useState(false);
   // false: this account already used its free trial, the last screen reactivates with a payment
   const [trialEligible, setTrialEligible] = useState(true);
-  const [termsNudge, setTermsNudge] = useState(false);
 
   const name: StepName = STEPS[step];
   const viewedSteps = useRef<Set<number>>(new Set());
@@ -293,12 +290,6 @@ export default function Onboarding() {
 
   // ── Screen 5: start the trial (no card) ───────────────────────────────────
   const beginTrial = async () => {
-    if (!formData.agreedToTerms) {
-      setTermsNudge(true);
-      setTimeout(() => document.getElementById('onboarding-terms')?.scrollIntoView({ block: 'center', behavior: 'smooth' }), 50);
-      track('onboarding_validation_error', { step: 'start_trial', field: 'terms', error_type: 'not_accepted' });
-      return;
-    }
     const plan = planKey(SELECTED.tier, formData.plan);
     try {
       // Account created earlier (app, another tab): the claim is a no-op when already done or too late
@@ -425,13 +416,7 @@ export default function Onboarding() {
             {name === 'credentials' && <StepCredentials formData={formData} set={set} />}
             {name === 'phone' && <StepPhone formData={formData} set={set} />}
             {name === 'start_trial' && (
-              <StepTrial
-                formData={formData}
-                set={set}
-                eligible={trialEligible}
-                termsNudge={termsNudge}
-                clearNudge={() => setTermsNudge(false)}
-              />
+              <StepTrial formData={formData} set={set} eligible={trialEligible} />
             )}
             {error && (
               <p role="alert" className="mt-4 rounded-xl bg-[#FDECEC] px-3 py-2.5 text-[13px] font-medium text-[#B42318]">
@@ -453,6 +438,13 @@ export default function Onboarding() {
               <button type="button" onClick={skipPhone} disabled={busy} className="mt-1 h-11 w-full text-[15px] font-semibold disabled:opacity-50" style={{ color: PINK }}>
                 Skip
               </button>
+            )}
+            {name === 'start_trial' && (
+              <p className="mt-3 text-center text-[12px] leading-relaxed text-gray-500">
+                By {trialEligible ? 'starting' : 'continuing'}, you agree to the{' '}
+                <a href="/terms" target="_blank" rel="noopener noreferrer" className="underline">Terms</a> and{' '}
+                <a href="/privacy" target="_blank" rel="noopener noreferrer" className="underline">Privacy Policy</a>.
+              </p>
             )}
             {name === 'start_trial' && resumed && (
               <button type="button" onClick={() => navigate('/dashboard')} disabled={busy} className="mt-1 h-11 w-full text-[15px] font-semibold text-gray-500 disabled:opacity-50">
@@ -675,7 +667,7 @@ function StepPhone({ formData, set }: StepProps) {
 
 // ─── Screen 5: start the free trial (no card) ─────────────────────────────────
 
-function StepTrial({ formData, set, eligible, termsNudge, clearNudge }: StepProps & { eligible: boolean; termsNudge: boolean; clearNudge: () => void }) {
+function StepTrial({ formData, set, eligible }: StepProps & { eligible: boolean }) {
   const [endLabel] = useState(() => {
     const d = new Date();
     d.setDate(d.getDate() + TRIAL_DAYS);
@@ -684,32 +676,53 @@ function StepTrial({ formData, set, eligible, termsNudge, clearNudge }: StepProp
   const yearly = formData.plan === 'yearly';
   const price = yearly ? `$${SELECTED_PLAN.yearlyTotal}/year` : `$${SELECTED_PLAN.monthly}/month`;
 
+  // Free trial: nothing to pay and no card, so this is not a checkout. One promise, what she gets,
+  // and the price after the trial stated once.
+  if (eligible) {
+    return (
+      <>
+        <Heading title="Start your free trial" sub={<>{TRIAL_DAYS} days free. No card needed.</>} />
+
+        <div className="rounded-3xl bg-[#FFF5FA] p-5">
+          <p className="text-[15px] font-semibold text-gray-600">
+            <span className="mr-2 text-[34px] font-extrabold leading-none tracking-tight text-[#1A1A1A]">$0</span>
+            today
+          </p>
+          <ul className="mt-4 space-y-2.5">
+            {SELECTED_PLAN.highlights.map((h) => (
+              <li key={h} className="flex items-start gap-2.5 text-[15px] text-[#1A1A1A]">
+                <span className="mt-0.5 shrink-0" style={{ color: PINK }}><CheckIcon /></span>
+                {h}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="mt-4 text-[13px] leading-relaxed text-gray-500">
+          Your page goes live today. After {endLabel} it is {price}, only if you add a card. Without a card, your page simply pauses.
+        </p>
+        <button
+          type="button"
+          onClick={() => set({ plan: yearly ? 'monthly' : 'yearly' })}
+          className="mt-1 min-h-[44px] text-left text-[13px] font-semibold underline underline-offset-2"
+          style={{ color: PINK }}
+        >
+          {yearly ? `Switch to monthly ($${SELECTED_PLAN.monthly}/month)` : `Prefer yearly? Save ${YEARLY_SAVING_PCT}% ($${SELECTED_PLAN.yearly}/month, billed yearly)`}
+        </button>
+      </>
+    );
+  }
+
   return (
     <>
-      {eligible ? (
-        <Heading
-          title="Start your free trial"
-          sub={<>No card needed. {TRIAL_DAYS} days free, then {price}. We'll remind you 3 days before.</>}
-        />
-      ) : (
-        <Heading
-          title="Reactivate your page"
-          sub={<>Your free trial was already used on this account. {price}, starting today. Cancel anytime.</>}
-        />
-      )}
+      <Heading
+        title="Reactivate your page"
+        sub={<>Your free trial was already used on this account. {price}, starting today. Cancel anytime.</>}
+      />
 
       <div className="rounded-3xl border-2 p-5" style={{ borderColor: PINK, boxShadow: '0 10px 30px rgba(245,43,140,0.12)' }}>
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <p className="text-[18px] font-extrabold text-[#1A1A1A]">{SELECTED_PLAN.name}</p>
-            <p className="mt-0.5 text-[13px] text-gray-500">{SELECTED_PLAN.tagline}</p>
-          </div>
-          {eligible && (
-            <span className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold text-white" style={{ backgroundColor: PINK }}>
-              {TRIAL_DAYS} days free
-            </span>
-          )}
-        </div>
+        <p className="text-[18px] font-extrabold text-[#1A1A1A]">{SELECTED_PLAN.name}</p>
+        <p className="mt-0.5 text-[13px] text-gray-500">{SELECTED_PLAN.tagline}</p>
 
         {/* Billing interval */}
         <div className="mt-4 grid grid-cols-2 gap-1 rounded-full bg-gray-100 p-1" role="radiogroup" aria-label="Billing">
@@ -720,7 +733,7 @@ function StepTrial({ formData, set, eligible, termsNudge, clearNudge }: StepProp
               role="radio"
               aria-checked={formData.plan === p}
               onClick={() => set({ plan: p })}
-              className={`h-9 rounded-full text-[13px] font-bold transition ${formData.plan === p ? 'bg-white text-[#1A1A1A] shadow-sm' : 'text-gray-500'}`}
+              className={`h-11 rounded-full text-[13px] font-bold transition ${formData.plan === p ? 'bg-white text-[#1A1A1A] shadow-sm' : 'text-gray-500'}`}
             >
               {p === 'monthly' ? 'Monthly' : `Yearly, save ${YEARLY_SAVING_PCT}%`}
             </button>
@@ -728,11 +741,7 @@ function StepTrial({ formData, set, eligible, termsNudge, clearNudge }: StepProp
         </div>
 
         <p className="mt-4 text-[14px] text-gray-600">
-          {eligible ? (
-            <><span className="text-[26px] font-extrabold text-[#1A1A1A]">$0</span> for {TRIAL_DAYS} days, then {yearly ? `$${SELECTED_PLAN.yearly}/mo billed yearly` : `$${SELECTED_PLAN.monthly}/mo`}</>
-          ) : (
-            <><span className="text-[26px] font-extrabold text-[#1A1A1A]">${yearly ? SELECTED_PLAN.yearlyTotal : SELECTED_PLAN.monthly}</span> {yearly ? 'per year' : 'per month'}</>
-          )}
+          <span className="text-[26px] font-extrabold text-[#1A1A1A]">${yearly ? SELECTED_PLAN.yearlyTotal : SELECTED_PLAN.monthly}</span> {yearly ? 'per year' : 'per month'}
         </p>
         <ul className="mt-4 space-y-2">
           {SELECTED_PLAN.highlights.map((h) => (
@@ -743,41 +752,6 @@ function StepTrial({ formData, set, eligible, termsNudge, clearNudge }: StepProp
           ))}
         </ul>
       </div>
-
-      {eligible && (
-        <div className="mt-4 flex items-center justify-between rounded-2xl bg-gray-50 px-4 py-3.5">
-          <span className="text-[14px] font-semibold text-gray-600">Due today</span>
-          <span className="text-[20px] font-extrabold" style={{ color: PINK }}>$0</span>
-        </div>
-      )}
-
-      {eligible && (
-        <p className="mt-3 text-[12.5px] leading-relaxed text-gray-500">
-          Your page goes live today. Add a card anytime before {endLabel} to keep it live. Without a card, it simply pauses.
-        </p>
-      )}
-
-      {/* Terms */}
-      <label id="onboarding-terms" className={`mt-4 flex items-start gap-2 cursor-pointer rounded-xl transition ${termsNudge && !formData.agreedToTerms ? 'p-3 bg-red-50 ring-2 ring-red-300' : ''}`}>
-        <input
-          type="checkbox"
-          checked={formData.agreedToTerms}
-          onChange={(e) => { set({ agreedToTerms: e.target.checked }); if (e.target.checked) clearNudge(); }}
-          className="mt-0.5 w-4 h-4 rounded border-2 border-gray-300 accent-[#F52B8C]"
-        />
-        <span className="text-xs text-gray-600">
-          I agree to the{' '}
-          <a href="/terms" className="underline" style={{ color: PINK }}>Terms</a>{' '}
-          and{' '}
-          <a href="/privacy" className="underline" style={{ color: PINK }}>Privacy Policy</a>.
-          GDPR compliant.
-          {termsNudge && !formData.agreedToTerms && (
-            <span className="block mt-1 font-semibold text-red-600">
-              {eligible ? 'Tick this box to start your free trial.' : 'Tick this box to continue.'}
-            </span>
-          )}
-        </span>
-      </label>
     </>
   );
 }
