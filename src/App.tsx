@@ -85,6 +85,7 @@ const KitSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/Products
 const StudioSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.StudioSandbox }))) : null;
 const AudienceSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ProductsSandbox').then((m) => ({ default: m.AudienceSandbox }))) : null;
 const ReferralsSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/ReferralsSandbox').then((m) => ({ default: m.ReferralsSandbox }))) : null;
+const CalendarSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/CalendarSandbox').then((m) => ({ default: m.CalendarSandbox }))) : null;
 const CoachingSandbox = import.meta.env.DEV ? lazy(() => import('./pages/dev/CoachingSandbox').then((m) => ({ default: m.CoachingSandbox }))) : null;
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'));
 const ResetPassword = lazy(() => import('./pages/ResetPassword'));
@@ -387,6 +388,7 @@ export default function App() {
             {CoachingSandbox && <Route path="/dev/coaching" element={<CoachingSandbox />} />}
             {KitSandbox && <Route path="/dev/kit" element={<KitSandbox />} />}
             {ReferralsSandbox && <Route path="/dev/referrals" element={<ReferralsSandbox />} />}
+            {CalendarSandbox && <Route path="/dev/calendar" element={<CalendarSandbox />} />}
 
             {/* ── Catch-all studio slug (must stay last) ─────────────────── */}
             <Route path="/:slug" element={<Studio />} />

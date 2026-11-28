@@ -116,7 +116,10 @@ export default function Customers({ profile }: { profile: CustomersProfile | nul
   const [serviceNames, setServiceNames] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [query, setQuery] = useState('');
+  // The agenda links here with ?q=<client name> to land on that client.
+  const [query, setQuery] = useState(() => {
+    try { return new URLSearchParams(window.location.search).get('q') ?? ''; } catch { return ''; }
+  });
   const [sort, setSort] = useState<SortKey>('recent');
   const [selected, setSelected] = useState<Customer | null>(null);
 
